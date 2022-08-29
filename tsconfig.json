@@ -16,11 +16,6 @@
     "esModuleInterop": true,
     "noUncheckedIndexedAccess": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["src/*"],
-      "types/*": ["src/types/*"]
-    }
   },
   "include": [
     "src/**/*.ts",
