@@ -36,7 +36,7 @@ describe("Compiler: Function", function() {
   const symbol = exportedSymbols.find(s => s.name === "add")!;
   const exportedFunction = createFunctionBySymbol(symbol);
 
-  it("should have an exported function", function() {
+  it("should have a matching kind", function() {
     expect(exportedFunction.kind).to.equal(EntityKind.Function);
   });
 
@@ -72,6 +72,17 @@ describe("Compiler: Function", function() {
     it("should have matching examples", function() {
       expect(exportedFunction.signatures[0]!.example).to.equal("add(1, 2) // 3");
       expect(exportedFunction.signatures[1]!.example).to.equal("add(1, 2, 3) // 6");
+    }),
+
+    it("should have matching positions", function() {
+      expect(exportedFunction.signatures[0]!.position).to.not.be.undefined;
+      expect(exportedFunction.signatures[0]!.position.file).to.equal("/file.ts");
+      expect(exportedFunction.signatures[0]!.position.line).to.equal(9);
+      expect(exportedFunction.signatures[0]!.position.column).to.equal(4);
+      expect(exportedFunction.signatures[1]!.position).to.not.be.undefined;
+      expect(exportedFunction.signatures[1]!.position.file).to.equal("/file.ts");
+      expect(exportedFunction.signatures[1]!.position.line).to.equal(19);
+      expect(exportedFunction.signatures[1]!.position.column).to.equal(4);
     }),
 
 

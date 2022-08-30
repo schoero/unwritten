@@ -3,30 +3,57 @@ import { Description, Example, ID, Name, Position } from "./compositions.js";
 
 
 export enum EntityKind {
-  String = "String",
-  StringLiteral = "StringLiteral",
-  Number = "Number",
-  NumberLiteral = "NumberLiteral",
-  Boolean = "Boolean",
-  BooleanLiteral = "BooleanLiteral",
   BigInt = "BigInt",
   BigIntLiteral = "BigIntLiteral",
-  Symbol = "Symbol",
-  Void = "Void",
-  Undefined = "Undefined",
-  Null = "Null",
+  Boolean = "Boolean",
+  BooleanLiteral = "BooleanLiteral",
   Function = "Function",
+  Null = "Null",
+  Number = "Number",
+  NumberLiteral = "NumberLiteral",
+  Object = "Object",
   Parameter = "Parameter",
+  Property = "Property",
+  Signature = "Signature",
+  String = "String",
+  StringLiteral = "StringLiteral",
+  Symbol = "Symbol",
+  Undefined = "Undefined",
+  Variable = "Variable",
+  Void = "Void"
 }
 
 export interface Entity<Kind extends EntityKind>{
   id: ID;
   kind: Kind;
-  name?: Name;
-  description?: string;
 }
 
-export type Types = Function | PrimitiveTypes | LiteralTypes;
+export type Entities = |
+  Function |
+  PrimitiveTypes |
+  LiteralTypes |
+  Variable |
+  ObjectLiteral
+;
+
+
+//-- Wrapper
+
+export type FromSymbol<Child extends Entities> = Child & {
+  name: Name;
+};
+
+export type FromDeclaration<Child extends Entities> = Child & {
+  position: Position;
+};
+
+export type FromType<Child extends Entities> = Child & {
+
+};
+
+export type ChainedSymbol<Child extends Entities> = FromSymbol<FromDeclaration<FromType<Child>>>;
+export type ChainedDeclaration<Child extends Entities> = FromDeclaration<FromType<Child>>;
+export type ChainedType<Child extends Entities> = FromType<Child>;
 
 
 //-- Primitive types
@@ -68,25 +95,46 @@ export interface LiteralType<Kind extends LiteralTypeKinds> extends PrimitiveTyp
 export type LiteralTypes = LiteralType<LiteralTypeKinds>;
 
 
+//-- Object literal
+
+export interface ObjectLiteral extends Entity<EntityKind.Object> {
+  properties: Property[];
+}
+
+export interface Property extends Entity<EntityKind.Property> {
+  name: Name;
+  type: Entities;
+}
+
+
 //-- Function
 
 export interface Function extends Entity<EntityKind.Function> {
   signatures: FunctionSignature[];
 }
 
-export interface FunctionSignature {
-  id: ID;
-  position: Position;
+export interface FunctionSignature extends Entity<EntityKind.Signature> {
   parameters: Parameter[];
-  returnType: Types;
-  example?: Example;
+  position: Position;
+  returnType: Entities & { description?: Description; } ;
   description?: Description;
+  example?: Example;
 }
 
 export interface Parameter extends Entity<EntityKind.Parameter> {
-  position: Position;
+  name: Name;
   optional: boolean;
+  position: Position;
   rest: boolean;
-  type: Types;
+  type: Entities;
   description?: Description;
+}
+
+
+//-- Variable
+
+export interface Variable extends Entity<EntityKind.Variable> {
+  type: Entities;
+  description?: Description;
+  example?: Example;
 }

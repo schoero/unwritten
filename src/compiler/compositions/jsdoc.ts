@@ -5,6 +5,7 @@ import { getContext } from "../context/index.js";
 
 //-- Description
 
+/** @deprecated */
 export function getDescriptionByDeclaration(declaration: Declaration): string | undefined {
   // TODO: Find official way to get to the jsDoc comment
 
@@ -20,6 +21,7 @@ export function getDescriptionBySymbol(symbol: Symbol): string | undefined {
 }
 
 
+/** @deprecated */
 export function getDescriptionByType(type: ts.Type): string | undefined {
   const symbol = type.getSymbol();
   return symbol ? getDescriptionBySymbol(symbol) : undefined;

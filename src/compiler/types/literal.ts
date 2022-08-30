@@ -8,20 +8,17 @@ import {
 } from "../../typeguards/ts.js";
 import { EntityKind, LiteralTypeKinds, LiteralTypes } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
-import { getNameByType } from "../compositions/name.js";
 
 
 export function createLiteralType(type: Type): LiteralTypes {
 
   const kind = getLiteralTypeKind(type);
   const id = getIdByType(type);
-  const name = getNameByType(type);
   const value = getValueByType(type);
 
   return {
     kind,
     id,
-    name,
     value
   };
 
