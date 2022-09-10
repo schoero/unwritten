@@ -4,6 +4,7 @@ import { assert } from "vitest";
 
 import {
   isFunctionType,
+  isIntersectionType,
   isLiteralType,
   isObjectLiteralType,
   isPrimitiveType,
@@ -13,6 +14,7 @@ import {
 import { Entities } from "../../types/types.js";
 import { getContext } from "../context/index.js";
 import { createFunctionByType } from "../types/function.js";
+import { createIntersectionTypeByType } from "../types/intersection-type.js";
 import { createLiteralType } from "../types/literal.js";
 import { createObjectLiteralByType } from "../types/object-literal.js";
 import { createPrimitiveType } from "../types/primitive.js";
@@ -54,6 +56,8 @@ export function getTypeByType(type: Type): Entities {
     return createTypeLiteralByType(type);
   } else if(isUnionType(type)){
     return createUnionTypeByType(type);
+  } else if(isIntersectionType(type)){
+    return createIntersectionTypeByType(type);
   }
 
   throw new Error("Unsupported type");

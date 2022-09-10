@@ -9,6 +9,7 @@ export enum EntityKind {
   BooleanLiteral = "BooleanLiteral",
   Function = "Function",
   Interface = "Interface",
+  Intersection = "Intersection",
   Member = "Member",
   Never = "Never",
   Null = "Null",
@@ -45,6 +46,7 @@ export type Entities = |
   Variable |
   ObjectLiteral |
   UnionType |
+  IntersectionType |
   TypeAlias |
   Interface |
   TypeLiteral |
@@ -157,6 +159,13 @@ export interface Variable extends Entity<EntityKind.Variable> {
 //-- Union type
 
 export interface UnionType extends Entity<EntityKind.Union> {
+  types: Entities[];
+}
+
+
+//-- Intersection type
+
+export interface IntersectionType extends Entity<EntityKind.Intersection> {
   types: Entities[];
 }
 

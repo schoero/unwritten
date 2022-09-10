@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 import { createTypeAliasBySymbol } from "../../src/compiler/types/type-alias.js";
 
-import { EntityKind, LiteralType, TypeLiteral, UnionType } from "../../src/types/types.js";
+import { EntityKind, IntersectionType, LiteralType, TypeLiteral, UnionType } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -324,6 +324,34 @@ describe("Compiler: Type alias", function() {
     it("should have the right types", function() {
       expect((exportedVariable.type as UnionType).types[0]!.kind).to.equal(EntityKind.String);
       expect((exportedVariable.type as UnionType).types[1]!.kind).to.equal(EntityKind.Number);
+    });
+
+  });
+
+  describe("Intersection Types", function() {
+
+    const testFileContent = `
+      type A = {
+        a: string;
+      };
+      type B = {
+        b: string;
+      };
+      export type IntersectionType = A & B;
+    `;
+
+    const { exportedSymbols } = compile(testFileContent.trim());
+
+    const symbol = exportedSymbols.find(s => s.name === "IntersectionType")!;
+    const exportedVariable = createTypeAliasBySymbol(symbol);
+
+    it("should have a matching kind", function() {
+      expect(exportedVariable.kind).to.equal(EntityKind.TypeAlias);
+      expect(exportedVariable.type.kind).to.equal(EntityKind.Intersection);
+    });
+
+    it("should have the right amount of types", function() {
+      expect((exportedVariable.type as IntersectionType).types).to.have.lengthOf(2);
     });
 
   });
