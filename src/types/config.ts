@@ -69,7 +69,7 @@ export interface TypeSources {
   [EntityKind.Number]?: string;
   [EntityKind.Boolean]?: string;
   [EntityKind.BigInt]?: string;
-  [EntityKind.Object]?: string;
+  [EntityKind.ObjectLiteral]?: string;
   [EntityKind.Array]?: string;
   [EntityKind.Function]?: string;
   [EntityKind.Symbol]?: string;

@@ -270,7 +270,7 @@ export function isIntersectionType(type: Type): type is IntersectionType {
 }
 
 export function isLiteralType(type: Type): type is LiteralType {
-  return (type.flags & (ts.TypeFlags.StringOrNumberLiteral | ts.TypeFlags.BigIntLiteral)) !== 0;
+  return (type.flags & (ts.TypeFlags.StringOrNumberLiteral | ts.TypeFlags.BigIntLiteral | ts.TypeFlags.BooleanLiteral)) !== 0;
 }
 
 export function isNullType(type: ts.Type) {
@@ -379,7 +379,15 @@ export function isInterfaceType(type: Type): type is InterfaceType {
 }
 
 export function isPrimitiveType(type: Type): boolean {
-  return isNumberType(type) || isStringType(type) || isBooleanType(type);
+  return isNumberType(type) ||
+    isStringType(type) ||
+    isBooleanType(type) ||
+    isBigIntType(type) ||
+    isNullType(type) ||
+    isUndefinedType(type) ||
+    isVoidType(type) ||
+    isNeverType(type) ||
+    isAnyType(type);
 }
 
 export function isInstanceType(type: Type): type is TypeReference {

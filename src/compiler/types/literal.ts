@@ -1,4 +1,4 @@
-import { PseudoBigInt, Type } from "typescript";
+import { Type } from "typescript";
 
 import {
   isBigIntLiteralType,
@@ -42,7 +42,7 @@ function getLiteralTypeKind(type: Type): LiteralTypeKinds {
 }
 
 
-function getValueByType(type: Type): string | number | boolean | PseudoBigInt {
+function getValueByType(type: Type): string | number | boolean | BigInt {
 
   if(isStringLiteralType(type)){
     return type.value;
@@ -52,7 +52,8 @@ function getValueByType(type: Type): string | number | boolean | PseudoBigInt {
     // @ts-expect-error // Alternative way would be to use the typeChecker and typeToString()
     return type.intrinsicName === "true";
   } else if(isBigIntLiteralType(type)){
-    return type.value;
+    const sign = type.value.negative ? "-" : "";
+    return BigInt(sign + type.value.base10Value);
   }
 
   throw new Error("type is not a literal type");

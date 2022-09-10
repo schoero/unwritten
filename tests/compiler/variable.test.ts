@@ -1,7 +1,7 @@
 
 import { describe, expect, it } from "vitest";
-import { createVariableBySymbol } from "../../src/compiler/types/variable.js";
 
+import { createVariableBySymbol } from "../../src/compiler/types/variable.js";
 import { EntityKind, LiteralType, ObjectLiteral } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
@@ -53,9 +53,19 @@ describe("Compiler: Variable", function() {
   }
   {
     const testFileContent = `
+      /**
+       * Represents an object.
+       * @example
+       * {
+       *  a: "hello",
+       *  b: 1
+       * }
+       */
       export const objectVariable = {
-        a: 1,
-        b: 2
+        /** A string literal. */
+        a: "hello",
+        /** @example 7 */
+        b: 7
       } as const;
     `;
 
@@ -73,17 +83,33 @@ describe("Compiler: Variable", function() {
     });
 
     it("should have a matching type", function() {
-      expect(exportedVariable.type.kind).to.equal(EntityKind.Object);
+      expect(exportedVariable.type.kind).to.equal(EntityKind.ObjectLiteral);
       expect((exportedVariable.type as ObjectLiteral).properties.length).to.equal(2);
     });
 
     it("should have matching properties", function() {
       expect((exportedVariable.type as ObjectLiteral).properties[0]!.name).to.equal("a");
-      expect((exportedVariable.type as ObjectLiteral).properties[0]!.type.kind).to.equal(EntityKind.NumberLiteral);
-      expect(((exportedVariable.type as ObjectLiteral).properties[0]!.type as LiteralType<EntityKind.NumberLiteral>).value).to.equal(1);
+      expect((exportedVariable.type as ObjectLiteral).properties[0]!.description).to.equal("A string literal.");
+      expect((exportedVariable.type as ObjectLiteral).properties[0]!.position).to.deep.equal({ file: "/file.ts", line: 11, column: 8 });
+      expect((exportedVariable.type as ObjectLiteral).properties[0]!.type.kind).to.equal(EntityKind.StringLiteral);
+      expect(((exportedVariable.type as ObjectLiteral).properties[0]!.type as LiteralType<EntityKind.NumberLiteral>).value).to.equal("hello");
       expect((exportedVariable.type as ObjectLiteral).properties[1]!.name).to.equal("b");
+      expect((exportedVariable.type as ObjectLiteral).properties[1]!.example).to.equal("7");
+      expect((exportedVariable.type as ObjectLiteral).properties[1]!.position).to.deep.equal({ file: "/file.ts", line: 13, column: 8 });
       expect((exportedVariable.type as ObjectLiteral).properties[1]!.type.kind).to.equal(EntityKind.NumberLiteral);
-      expect(((exportedVariable.type as ObjectLiteral).properties[1]!.type as LiteralType<EntityKind.NumberLiteral>).value).to.equal(2);
+      expect(((exportedVariable.type as ObjectLiteral).properties[1]!.type as LiteralType<EntityKind.NumberLiteral>).value).to.equal(7);
+    });
+
+    it("should have a matching example", function() {
+      expect(exportedVariable.example?.replace(/\s/g, "")).to.equal("{a:\"hello\",b:1}");
+    });
+
+    it("should have a matching position", function() {
+      expect(exportedVariable.position).to.deep.equal({
+        file: "/file.ts",
+        line: 9,
+        column: 19
+      });
     });
 
   }

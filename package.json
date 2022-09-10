@@ -4,10 +4,10 @@
     "test": "DEBUG=vite-tsconfig-paths vitest"
   },
   "devDependencies": {
-    "@schoero/eslint-config": "^1.6.0",
-    "@types/node": "^18.7.13",
-    "@typescript-eslint/eslint-plugin": "^5.35.1",
-    "@typescript-eslint/parser": "^5.35.1",
+    "@schoero/eslint-config": "^1.6.1",
+    "@types/node": "^18.7.14",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "eslint": "^8.23.0",
     "eslint-plugin-import-newlines": "^1.2.3",
     "eslint-plugin-typescript-sort-keys": "^2.1.0",

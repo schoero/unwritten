@@ -8,7 +8,6 @@ import { getContext } from "../context/index.js";
 /** @deprecated */
 export function getDescriptionByDeclaration(declaration: Declaration): string | undefined {
   // TODO: Find official way to get to the jsDoc comment
-
   //@ts-expect-error
   const comment = declaration.jsDoc?.[0]?.comment;
   return comment === undefined ? undefined : comment.replace(/\r/g, "");
@@ -47,10 +46,20 @@ export function getExampleByDeclaration(declaration: Declaration): string | unde
   return exampleTag ? exampleTag.comment?.toString() : undefined;
 }
 
+export function getExampleBySymbol(symbol: Symbol): string | undefined {
+  const comment = symbol.getJsDocTags(getContext().checker).find(tag => tag.name === "example");
+  return comment?.text === undefined ? undefined : ts.displayPartsToString(comment.text);
+}
+
 
 //-- Remarks
 
 export function getRemarksByDeclaration(declaration: Declaration): string | undefined {
   const remarksTag = ts.getJSDocTags(declaration).find(tag => tag.tagName.text === "remarks");
   return remarksTag ? remarksTag.comment?.toString() : undefined;
+}
+
+export function getRemarksBySymbol(symbol: Symbol): string | undefined {
+  const comment = symbol.getJsDocTags(getContext().checker).find(tag => tag.name === "remarks");
+  return comment?.text === undefined ? undefined : ts.displayPartsToString(comment.text);
 }

@@ -41,10 +41,14 @@ export function createFunctionByDeclaration(declaration: FunctionLikeDeclaration
 
   const type = getContext().checker.getTypeAtLocation(declaration);
   const position = getPositionByDeclaration(declaration);
+  const example = getExampleByDeclaration(declaration);
+  const description = getDescriptionByDeclaration(declaration);
   const fromType = createFunctionByType(type);
 
   return {
     position,
+    example,
+    description,
     ...fromType
   };
 
@@ -86,9 +90,9 @@ export function createFunctionSignature(signature: Signature): FunctionSignature
   return {
     id,
     kind,
-    position,
-    description,
     example,
+    description,
+    position,
     parameters,
     returnType
   };

@@ -1,23 +1,28 @@
-import { PseudoBigInt } from "typescript";
 import { Description, Example, ID, Name, Position } from "./compositions.js";
 
 
 export enum EntityKind {
+  Any = "Any",
   BigInt = "BigInt",
   BigIntLiteral = "BigIntLiteral",
   Boolean = "Boolean",
   BooleanLiteral = "BooleanLiteral",
   Function = "Function",
+  Interface = "Interface",
+  Member = "Member",
+  Never = "Never",
   Null = "Null",
   Number = "Number",
   NumberLiteral = "NumberLiteral",
-  Object = "Object",
+  ObjectLiteral = "ObjectLiteral",
   Parameter = "Parameter",
   Property = "Property",
   Signature = "Signature",
   String = "String",
   StringLiteral = "StringLiteral",
   Symbol = "Symbol",
+  TypeAlias = "TypeAlias",
+  TypeLiteral = "TypeLiteral",
   Undefined = "Undefined",
   Variable = "Variable",
   Void = "Void"
@@ -26,6 +31,10 @@ export enum EntityKind {
 export interface Entity<Kind extends EntityKind>{
   id: ID;
   kind: Kind;
+  description?: Description;
+  example?: Example;
+  name?: Name;
+  position?: Position;
 }
 
 export type Entities = |
@@ -33,7 +42,12 @@ export type Entities = |
   PrimitiveTypes |
   LiteralTypes |
   Variable |
-  ObjectLiteral
+  ObjectLiteral |
+  TypeAlias |
+  Interface |
+  TypeLiteral |
+  Property |
+  Member
 ;
 
 
@@ -45,6 +59,8 @@ export type FromSymbol<Child extends Entities> = Child & {
 
 export type FromDeclaration<Child extends Entities> = Child & {
   position: Position;
+  description?: Description;
+  example?: Example;
 };
 
 export type FromType<Child extends Entities> = Child & {
@@ -70,7 +86,9 @@ export type PrimitiveTypeKinds =
   EntityKind.BigIntLiteral |
   EntityKind.Null |
   EntityKind.Undefined |
-  EntityKind.Void;
+  EntityKind.Void |
+  EntityKind.Any |
+  EntityKind.Never;
 
 
 export interface PrimitiveType<Kind extends PrimitiveTypeKinds> extends Entity<Kind> {
@@ -89,7 +107,7 @@ export type LiteralTypeKinds =
 ;
 
 export interface LiteralType<Kind extends LiteralTypeKinds> extends PrimitiveType<Kind> {
-  value: string | number | boolean | PseudoBigInt;
+  value: string | number | boolean | BigInt;
 }
 
 export type LiteralTypes = LiteralType<LiteralTypeKinds>;
@@ -97,12 +115,11 @@ export type LiteralTypes = LiteralType<LiteralTypeKinds>;
 
 //-- Object literal
 
-export interface ObjectLiteral extends Entity<EntityKind.Object> {
+export interface ObjectLiteral extends Entity<EntityKind.ObjectLiteral> {
   properties: Property[];
 }
 
 export interface Property extends Entity<EntityKind.Property> {
-  name: Name;
   type: Entities;
 }
 
@@ -117,8 +134,6 @@ export interface FunctionSignature extends Entity<EntityKind.Signature> {
   parameters: Parameter[];
   position: Position;
   returnType: Entities & { description?: Description; } ;
-  description?: Description;
-  example?: Example;
 }
 
 export interface Parameter extends Entity<EntityKind.Parameter> {
@@ -127,7 +142,6 @@ export interface Parameter extends Entity<EntityKind.Parameter> {
   position: Position;
   rest: boolean;
   type: Entities;
-  description?: Description;
 }
 
 
@@ -135,6 +149,34 @@ export interface Parameter extends Entity<EntityKind.Parameter> {
 
 export interface Variable extends Entity<EntityKind.Variable> {
   type: Entities;
-  description?: Description;
-  example?: Example;
+}
+
+
+//-- Type alias
+
+export interface TypeAlias extends Entity<EntityKind.TypeAlias> {
+  type: Entities;
+}
+
+
+//-- Type Literal
+
+export interface TypeLiteral extends Entity<EntityKind.TypeLiteral> {
+  members: Member[];
+}
+
+
+//-- Interface
+
+export interface Interface extends Entity<EntityKind.Interface> {
+  members: Member[];
+}
+
+export interface MergedInterface extends Interface {
+  examples: Example[];
+  positions: Position[];
+}
+
+export interface Member extends Entity<EntityKind.Member> {
+  type: Entities;
 }

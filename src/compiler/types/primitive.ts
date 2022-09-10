@@ -1,7 +1,9 @@
 import { Type } from "typescript";
 import {
+  isAnyType,
   isBigIntType,
   isBooleanType,
+  isNeverType,
   isNullType,
   isNumberType,
   isStringType,
@@ -11,19 +13,16 @@ import {
 import { EntityKind, PrimitiveTypeKinds, PrimitiveTypes } from "../../types/types.js";
 
 import { getIdByType } from "../compositions/id.js";
-import { getNameByType } from "../compositions/name.js";
 
 
 export function createPrimitiveType(type: Type): PrimitiveTypes {
 
   const kind = getPrimitiveTypeKind(type);
   const id = getIdByType(type);
-  const name = getNameByType(type);
 
   return {
     kind,
-    id,
-    name
+    id
   };
 
 }
@@ -45,6 +44,10 @@ function getPrimitiveTypeKind(type: Type): PrimitiveTypeKinds {
     return EntityKind.Undefined;
   } else if(isNullType(type)){
     return EntityKind.Null;
+  } else if(isNeverType(type)){
+    return EntityKind.Never;
+  } else if(isAnyType(type)){
+    return EntityKind.Any;
   }
 
   throw new Error("type is not a primitive type");

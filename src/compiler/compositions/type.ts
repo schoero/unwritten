@@ -2,13 +2,20 @@ import { Declaration, Symbol, Type } from "typescript";
 
 import { assert } from "vitest";
 
-import { isFunctionType, isLiteralType, isObjectLiteralType, isPrimitiveType } from "../../typeguards/ts.js";
+import {
+  isFunctionType,
+  isLiteralType,
+  isObjectLiteralType,
+  isPrimitiveType,
+  isTypeLiteralType
+} from "../../typeguards/ts.js";
 import { Entities } from "../../types/types.js";
 import { getContext } from "../context/index.js";
 import { createFunctionByType } from "../types/function.js";
 import { createLiteralType } from "../types/literal.js";
-import { createObjectLiteralType } from "../types/object-literal.js";
+import { createObjectLiteralByType } from "../types/object-literal.js";
 import { createPrimitiveType } from "../types/primitive.js";
+import { createTypeLiteralByType } from "../types/type-literal.js";
 
 
 export function getTypeBySymbol(symbol: Symbol): Entities {
@@ -40,9 +47,11 @@ export function getTypeByType(type: Type): Entities {
   } else if(isPrimitiveType(type)){
     return createPrimitiveType(type);
   } else if(isObjectLiteralType(type)){
-    return createObjectLiteralType(type);
+    return createObjectLiteralByType(type);
+  } else if(isTypeLiteralType(type)){
+    return createTypeLiteralByType(type);
   }
 
-  assert(false, "Unsupported type.");
+  throw new Error("Unsupported type");
 
 }
