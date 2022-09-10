@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "test": "DEBUG=vite-tsconfig-paths vitest"
+    "test": "vitest"
   },
   "devDependencies": {
     "@schoero/eslint-config": "^1.6.1",
@@ -12,7 +12,8 @@
     "eslint-plugin-import-newlines": "^1.2.3",
     "eslint-plugin-typescript-sort-keys": "^2.1.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "vitest": "^0.22.1"
+    "vitest": "^0.22.1",
+    "vitest-github-actions-reporter": "^0.8.1"
   },
   "dependencies": {
     "typescript": "^4.8.2"
