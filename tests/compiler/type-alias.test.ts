@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 import { createTypeAliasBySymbol } from "../../src/compiler/types/type-alias.js";
 
-import { EntityKind, LiteralType, TypeLiteral } from "../../src/types/types.js";
+import { EntityKind, LiteralType, TypeLiteral, UnionType } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -297,6 +297,33 @@ describe("Compiler: Type alias", function() {
         line: 2,
         column: 6
       });
+    });
+
+  });
+
+  describe("Union Types", function() {
+
+    const testFileContent = `
+      export type UnionType = string | number;
+    `;
+
+    const { exportedSymbols } = compile(testFileContent.trim());
+
+    const symbol = exportedSymbols.find(s => s.name === "UnionType")!;
+    const exportedVariable = createTypeAliasBySymbol(symbol);
+
+    it("should have a matching kind", function() {
+      expect(exportedVariable.kind).to.equal(EntityKind.TypeAlias);
+      expect(exportedVariable.type.kind).to.equal(EntityKind.Union);
+    });
+
+    it("should have the right amount of types", function() {
+      expect((exportedVariable.type as UnionType).types).to.have.lengthOf(2);
+    });
+
+    it("should have the right types", function() {
+      expect((exportedVariable.type as UnionType).types[0]!.kind).to.equal(EntityKind.String);
+      expect((exportedVariable.type as UnionType).types[1]!.kind).to.equal(EntityKind.Number);
     });
 
   });

@@ -24,6 +24,7 @@ export enum EntityKind {
   TypeAlias = "TypeAlias",
   TypeLiteral = "TypeLiteral",
   Undefined = "Undefined",
+  Union = "Union",
   Variable = "Variable",
   Void = "Void"
 }
@@ -43,6 +44,7 @@ export type Entities = |
   LiteralTypes |
   Variable |
   ObjectLiteral |
+  UnionType |
   TypeAlias |
   Interface |
   TypeLiteral |
@@ -149,6 +151,13 @@ export interface Parameter extends Entity<EntityKind.Parameter> {
 
 export interface Variable extends Entity<EntityKind.Variable> {
   type: Entities;
+}
+
+
+//-- Union type
+
+export interface UnionType extends Entity<EntityKind.Union> {
+  types: Entities[];
 }
 
 
