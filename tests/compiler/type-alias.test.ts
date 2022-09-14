@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/array-type */
 
 import { describe, expect, it } from "vitest";
+import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 
 import { createTypeAliasBySymbol } from "../../src/compiler/types/type-alias.js";
 import { Array, EntityKind, IntersectionType, LiteralType, TypeLiteral, UnionType } from "../../src/types/types.js";
@@ -29,6 +30,10 @@ describe("Compiler: Type alias", function() {
 
   it("should have a matching name", function() {
     expect(exportedTypeAlias.name).to.equal("StringType");
+  });
+
+  it("should have a matching id", function() {
+    expect(exportedTypeAlias.id).to.equal(getIdBySymbol(symbol));
   });
 
   it("should have a matching description", function() {

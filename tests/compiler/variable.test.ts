@@ -1,6 +1,7 @@
 
 import { describe, expect, it } from "vitest";
 
+import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 import { createVariableBySymbol } from "../../src/compiler/types/variable.js";
 import { EntityKind, LiteralType, ObjectLiteral } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
@@ -28,6 +29,10 @@ describe("Compiler: Variable", function() {
 
     it("should have a matching name", function() {
       expect(exportedVariable.name).to.equal("stringLiteral");
+    });
+
+    it("should have a matching id", function() {
+      expect(exportedVariable.id).to.equal(getIdBySymbol(symbol));
     });
 
     it("should have a matching type", function() {

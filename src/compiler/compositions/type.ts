@@ -5,6 +5,7 @@ import { assert } from "vitest";
 import {
   isClassType,
   isFunctionLikeType,
+  isInterfaceType,
   isIntersectionType,
   isLiteralType,
   isObjectLiteralType,
@@ -18,6 +19,7 @@ import { getContext } from "../context/index.js";
 import { createArrayByArrayTypeNode, createArrayByTypeReferenceNode } from "../types/array.js";
 import { createClassByType } from "../types/class.js";
 import { createFunctionByType } from "../types/function.js";
+import { createInterfaceByType } from "../types/interface.js";
 import { createIntersectionTypeByType } from "../types/intersection-type.js";
 import { createLiteralType } from "../types/literal.js";
 import { createObjectLiteralByType } from "../types/object-literal.js";
@@ -97,6 +99,8 @@ export function getTypeByType(type: Type): Entities {
     return createIntersectionTypeByType(type);
   } else if(isClassType(type)){
     return createClassByType(type);
+  } else if(isInterfaceType(type)){
+    return createInterfaceByType(type);
   }
 
   throw new Error("Unsupported type");

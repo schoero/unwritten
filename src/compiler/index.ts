@@ -95,7 +95,7 @@ function getCompilerOptions(entryFilePath: string, tsConfigFilePath?: string): C
 }
 
 
-export function reportCompilerDiagnostics(diagnostics: ReadonlyArray<ts.Diagnostic>) {
+export function reportCompilerDiagnostics(diagnostics: readonly ts.Diagnostic[]) {
 
   if(diagnostics.length > 0){
     for(const diagnostic of diagnostics){
@@ -105,6 +105,7 @@ export function reportCompilerDiagnostics(diagnostics: ReadonlyArray<ts.Diagnost
         const formattedMessage: string =
           `${diagnostic.file.fileName}(${location.line + 1},${location.character + 1}):` +
           ` [TypeScript] ${message}`;
+
         warn(formattedMessage);
       } else {
         warn(message);

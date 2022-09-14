@@ -3,8 +3,8 @@ import { Symbol, Type, VariableDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { isVariableDeclaration } from "../../typeguards/ts.js";
-import { ChainedDeclaration, ChainedSymbol, ChainedType, EntityKind, Variable } from "../../types/types.js";
-import { getIdByType } from "../compositions/id.js";
+import { EntityKind, Variable } from "../../types/types.js";
+import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
@@ -12,18 +12,22 @@ import { getTypeByType } from "../compositions/type.js";
 import { getContext } from "../context/index.js";
 
 
-export function createVariableBySymbol(symbol: Symbol): ChainedSymbol<Variable> {
+export function createVariableBySymbol(symbol: Symbol): Variable {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
   assert(declaration && isVariableDeclaration(declaration), "Variable declaration is not found");
 
+  const id = getIdBySymbol(symbol);
   const name = getNameBySymbol(symbol);
   const description = getDescriptionBySymbol(symbol);
-  const fromDeclaration = createVariableByDeclaration(declaration);
+  const fromDeclaration = _createVariableByDeclaration(declaration);
+  const kind = EntityKind.Variable;
 
   return {
     ...fromDeclaration,
+    kind,
+    id,
     description,
     name
   };
@@ -31,24 +35,24 @@ export function createVariableBySymbol(symbol: Symbol): ChainedSymbol<Variable> 
 }
 
 
-export function createVariableByDeclaration(declaration: VariableDeclaration): ChainedDeclaration<Variable> {
+function _createVariableByDeclaration(declaration: VariableDeclaration) {
 
-  const type = getContext().checker.getTypeAtLocation(declaration);
+  const tsType = getContext().checker.getTypeAtLocation(declaration);
 
-  const fromType = createVariableByType(type);
   const example = getExampleByDeclaration(declaration);
   const position = getPositionByDeclaration(declaration);
+  const type = getTypeByType(tsType);
 
   return {
-    ...fromType,
     example,
-    position
+    position,
+    type
   };
 
 }
 
 
-export function createVariableByType(type: Type): ChainedType<Variable> {
+export function createVariableByType(type: Type): Variable {
 
   const id = getIdByType(type);
   const tp = getTypeByType(type);

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 import { createFunctionBySymbol } from "../../src/compiler/types/function.js";
 
 import { EntityKind } from "../../src/types/types.js";
@@ -41,6 +42,10 @@ describe("Compiler: Function", function() {
 
   it("should have a matching name", function() {
     expect(exportedFunction.name).to.equal("add");
+  });
+
+  it("should have a matching id", function() {
+    expect(exportedFunction.id).to.equal(getIdBySymbol(symbol));
   });
 
 

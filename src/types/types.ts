@@ -30,7 +30,6 @@ export enum EntityKind {
   String = "String",
   StringLiteral = "StringLiteral",
   Symbol = "Symbol",
-  Target = "Target",
   TypeAlias = "TypeAlias",
   TypeLiteral = "TypeLiteral",
   Undefined = "Undefined",
@@ -76,7 +75,7 @@ export type Entities =
   | Property
   | Reference
   | Setter
-  | Target
+  | Setter
   | TypeAlias
   | TypeLiteral
   | UnionType
@@ -88,29 +87,17 @@ export type Entities =
 
 export type FromSymbol<Child extends Entities> = Child & {
   name: Name;
+  description?: Description;
 };
 
 export type FromDeclaration<Child extends Entities> = Child & {
   position: Position;
-  description?: Description;
   example?: Example;
 };
 
 export type FromType<Child extends Entities> = Child & {
 
 };
-
-export type FromTypeNode<Child extends Entities> = Child & {
-
-};
-
-export type ChainedSymbol<Child extends Entities> = FromSymbol<FromDeclaration<FromType<Child>>>;
-
-export type ChainedDeclaration<Child extends Entities> = FromDeclaration<FromType<Child>>;
-
-export type ChainedType<Child extends Entities> = FromType<Child>;
-
-export type ChainedTypeNode<Child extends Entities> = FromTypeNode<Child>;
 
 
 //-- Primitive types
@@ -159,11 +146,8 @@ export interface Array extends Entity<EntityKind.Array> {
 //-- Type reference
 
 export interface Reference extends Entity<EntityKind.Reference> {
-  target: Target;
-}
-
-export interface Target extends Entity<EntityKind.Target> {
   id: ID;
+  name: Name;
   position: Position;
   resolvedType?: Entities;
 }
@@ -270,6 +254,8 @@ export interface MergedInterface extends Interface {
 }
 
 export interface Member extends Entity<EntityKind.Member> {
+  name: Name;
+  optional: boolean;
   type: Entities;
 }
 
