@@ -1,11 +1,13 @@
 import { FunctionLikeDeclaration } from "typescript";
+import { getContext } from "../compiler/context/index.js";
 
 export function functionOverloadDeclarationFilter(declaration: FunctionLikeDeclaration) {
-  return declaration.body === undefined;
-}
-
-export function functionImplementationDeclarationFilter(declaration: FunctionLikeDeclaration) {
-  return declaration.body !== undefined;
+  if(declaration.body === undefined){
+    return true;
+  }
+  const symbol = getContext().checker.getSymbolAtLocation(declaration.name!);
+  const declarations = symbol?.declarations;
+  return declarations?.length === 1;
 }
 
 export function contentFilter(element: string | null | undefined): element is string {

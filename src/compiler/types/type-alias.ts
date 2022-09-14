@@ -1,18 +1,17 @@
-import { Symbol, Type, TypeAliasDeclaration } from "typescript";
+import { Symbol, TypeAliasDeclaration, TypeNode } from "typescript";
 
 import { assert } from "vitest";
 
 import { isTypeAliasDeclaration } from "../../typeguards/ts.js";
-import { ChainedDeclaration, ChainedSymbol, ChainedType, EntityKind, TypeAlias } from "../../types/types.js";
-import { getIdByType } from "../compositions/id.js";
+import { EntityKind, FromDeclaration, FromSymbol, FromTypeNode, TypeAlias } from "../../types/types.js";
+import { getIdByTypeNode } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { getTypeByType } from "../compositions/type.js";
-import { getContext } from "../context/index.js";
+import { getTypeByTypeNode } from "../compositions/type.js";
 
 
-export function createTypeAliasBySymbol(symbol: Symbol): ChainedSymbol<TypeAlias> {
+export function createTypeAliasBySymbol(symbol: Symbol): FromSymbol<FromDeclaration<TypeAlias>> {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -31,16 +30,16 @@ export function createTypeAliasBySymbol(symbol: Symbol): ChainedSymbol<TypeAlias
 }
 
 
-export function createTypeAliasByDeclaration(declaration: TypeAliasDeclaration): ChainedDeclaration<TypeAlias> {
+export function createTypeAliasByDeclaration(declaration: TypeAliasDeclaration): FromDeclaration<TypeAlias> {
 
-  const type = getContext().checker.getTypeAtLocation(declaration);
+  const typeNode = declaration.type;
 
-  const fromType = createTypeAliasByType(type);
+  const fromTypeNode = createTypeAliasByTypeNode(typeNode);
   const example = getExampleByDeclaration(declaration);
   const position = getPositionByDeclaration(declaration);
 
   return {
-    ...fromType,
+    ...fromTypeNode,
     example,
     position
   };
@@ -48,16 +47,16 @@ export function createTypeAliasByDeclaration(declaration: TypeAliasDeclaration):
 }
 
 
-export function createTypeAliasByType(type: Type): ChainedType<TypeAlias> {
+export function createTypeAliasByTypeNode(typeNode: TypeNode): FromTypeNode<TypeAlias> {
 
-  const id = getIdByType(type);
-  const tp = getTypeByType(type);
+  const id = getIdByTypeNode(typeNode);
+  const type = getTypeByTypeNode(typeNode);
   const kind = EntityKind.TypeAlias;
 
   return {
     id,
     kind,
-    type: tp
+    type
   };
 
 }

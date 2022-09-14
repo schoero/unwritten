@@ -5,7 +5,6 @@ import { getContext } from "../context/index.js";
 
 //-- Description
 
-/** @deprecated */
 export function getDescriptionByDeclaration(declaration: Declaration): string | undefined {
   // TODO: Find official way to get to the jsDoc comment
   //@ts-expect-error

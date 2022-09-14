@@ -1,4 +1,3 @@
-
 import { describe, expect, it } from "vitest";
 import { createFunctionBySymbol } from "../../src/compiler/types/function.js";
 

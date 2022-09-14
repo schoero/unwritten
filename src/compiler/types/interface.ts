@@ -29,6 +29,8 @@ export function createInterfaceBySymbol(symbol: Symbol): ChainedSymbol<Interface
   const description = getDescriptionBySymbol(symbol);
   const fromDeclarations = declarations.map(createInterfaceByDeclaration);
 
+  // TODO: support merging positions, descriptions and examples
+
   const mergedDeclarations = fromDeclarations.reduce((acc, declaration) => ({
     ...acc,
     ...declaration

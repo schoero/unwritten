@@ -4,10 +4,10 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@schoero/eslint-config": "^1.6.1",
-    "@types/node": "^18.7.14",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "@typescript-eslint/parser": "^5.36.1",
+    "@schoero/eslint-config": "^1.8.0",
+    "@types/node": "^18.7.16",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
     "eslint": "^8.23.0",
     "eslint-plugin-import-newlines": "^1.2.3",
     "eslint-plugin-typescript-sort-keys": "^2.1.0",
@@ -16,7 +16,7 @@
     "vitest-github-actions-reporter": "^0.8.1"
   },
   "dependencies": {
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.3"
   },
   "volta": {
     "node": "18.8.0"

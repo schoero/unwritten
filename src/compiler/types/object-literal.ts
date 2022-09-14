@@ -3,8 +3,8 @@ import { isObjectLiteralElement, ObjectLiteralElement, Symbol, Type } from "type
 import { assert } from "vitest";
 
 import { ChainedDeclaration, ChainedSymbol, ChainedType, EntityKind, ObjectLiteral } from "../../types/types.js";
-import { getIdByType } from "../compositions/id.js";
-import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
+import { getIdBySymbol, getIdByType } from "../compositions/id.js";
+import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { getContext } from "../context/index.js";
@@ -17,13 +17,13 @@ export function createObjectLiteralBySymbol(symbol: Symbol): ChainedSymbol<Objec
 
   assert(declaration && isObjectLiteralElement(declaration), "Object literal declaration is not found");
 
+  const id = getIdBySymbol(symbol);
   const name = getNameBySymbol(symbol);
-  const description = getDescriptionBySymbol(symbol);
   const fromDeclaration = createObjectLiteralByDeclaration(declaration);
 
   return {
     ...fromDeclaration,
-    description,
+    id,
     name
   };
 
@@ -35,11 +35,13 @@ export function createObjectLiteralByDeclaration(declaration: ObjectLiteralEleme
   const type = getContext().checker.getTypeAtLocation(declaration);
 
   const fromType = createObjectLiteralByType(type);
+  const description = getDescriptionByDeclaration(declaration);
   const example = getExampleByDeclaration(declaration);
   const position = getPositionByDeclaration(declaration);
 
   return {
     ...fromType,
+    description,
     example,
     position
   };

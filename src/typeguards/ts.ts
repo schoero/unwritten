@@ -19,19 +19,19 @@ import ts, {
 } from "typescript";
 
 
-export function isSymbol(typeNodeOrSymbolOrDeclarationOrType: TypeNode | Symbol | Declaration | Type): typeNodeOrSymbolOrDeclarationOrType is Symbol {
+export function isSymbol(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Symbol {
   return "getName" in typeNodeOrSymbolOrDeclarationOrType;
 }
 
-export function isDeclaration(typeNodeOrSymbolOrDeclarationOrType: TypeNode | Symbol | Declaration | Type): typeNodeOrSymbolOrDeclarationOrType is Declaration {
+export function isDeclaration(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Declaration {
   return "getText" in typeNodeOrSymbolOrDeclarationOrType && !isTypeNode(typeNodeOrSymbolOrDeclarationOrType);
 }
 
-export function isType(typeNodeOrSymbolOrDeclarationOrType: TypeNode | Symbol | Declaration | Type): typeNodeOrSymbolOrDeclarationOrType is Type {
+export function isType(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Type {
   return !isSymbol(typeNodeOrSymbolOrDeclarationOrType) && !isDeclaration(typeNodeOrSymbolOrDeclarationOrType) && !isTypeNode(typeNodeOrSymbolOrDeclarationOrType);
 }
 
-export function isTypeNode(typeNodeOrSymbolOrDeclarationOrType: TypeNode | Symbol | Declaration | Type): typeNodeOrSymbolOrDeclarationOrType is TypeNode {
+export function isTypeNode(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is TypeNode {
   return "kind" in typeNodeOrSymbolOrDeclarationOrType && ts.isTypeNode(typeNodeOrSymbolOrDeclarationOrType);
 }
 
@@ -337,7 +337,7 @@ export function isObjectLiteralType(type: Type): type is ObjectType {
   return isObjectType(type) && type.symbol.getName() === "__object";
 }
 
-export function isFunctionType(type: Type): boolean {
+export function isFunctionLikeType(type: Type): boolean {
   return isObjectType(type) && type.getCallSignatures().length !== 0;
 }
 
@@ -353,11 +353,11 @@ export function isAnonymousType(type: Type) {
   return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Anonymous) !== 0;
 }
 
-export function isTupleTypeReference(type: Type): type is TupleTypeReference {
-  return isTypeReference(type) && isTupleType(type.target);
+export function isTupleTypeReferenceType(type: Type): type is TupleTypeReference {
+  return isTypeReferenceType(type) && isTupleType(type.target);
 }
 
-export function isTypeReference(type: Type): type is TypeReference {
+export function isTypeReferenceType(type: Type): type is TypeReference {
   return isObjectType(type) &&
     (type.objectFlags & ts.ObjectFlags.Reference) !== 0;
 }

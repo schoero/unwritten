@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/array-type */
 
 import { describe, expect, it } from "vitest";
-import { createTypeAliasBySymbol } from "../../src/compiler/types/type-alias.js";
 
-import { EntityKind, IntersectionType, LiteralType, TypeLiteral, UnionType } from "../../src/types/types.js";
+import { createTypeAliasBySymbol } from "../../src/compiler/types/type-alias.js";
+import { Array, EntityKind, IntersectionType, LiteralType, TypeLiteral, UnionType } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
+
 
 
 describe("Compiler: Type alias", function() {
@@ -355,5 +357,32 @@ describe("Compiler: Type alias", function() {
     });
 
   });
+
+
+  describe("Array", function() {
+
+    const testFileContent = `
+      export type StringOrNumberArray1 = Array<string | number>;
+      export type StringOrNumberArray2 = (string | number)[];
+    `;
+
+    const { exportedSymbols } = compile(testFileContent.trim());
+
+    const exportedStringOrNumberArray1 = createTypeAliasBySymbol(exportedSymbols[0]!);
+    const exportedStringOrNumberArray2 = createTypeAliasBySymbol(exportedSymbols[1]!);
+
+    it("should support both array syntaxes", function() {
+      expect(exportedStringOrNumberArray1.name).to.equal("StringOrNumberArray1");
+      expect(exportedStringOrNumberArray1.type.kind).to.equal(EntityKind.Array);
+      expect((exportedStringOrNumberArray1.type as Array).type!.kind).to.equal(EntityKind.Union);
+      expect(((exportedStringOrNumberArray1.type as Array).type! as UnionType).types).to.have.lengthOf(2);
+      expect(exportedStringOrNumberArray2.name).to.equal("StringOrNumberArray2");
+      expect(exportedStringOrNumberArray2.type.kind).to.equal(EntityKind.Array);
+      expect((exportedStringOrNumberArray2.type as Array).type!.kind).to.equal(EntityKind.Union);
+      expect(((exportedStringOrNumberArray2.type as Array).type! as UnionType).types).to.have.lengthOf(2);
+    });
+
+  });
+
 
 });

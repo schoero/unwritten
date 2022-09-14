@@ -3,14 +3,20 @@ import { Description, Example, ID, Name, Position } from "./compositions.js";
 
 export enum EntityKind {
   Any = "Any",
+  Array = "Array",
   BigInt = "BigInt",
   BigIntLiteral = "BigIntLiteral",
   Boolean = "Boolean",
   BooleanLiteral = "BooleanLiteral",
+  Class = "Class",
+  ClassInstance = "ClassInstance",
+  Constructor = "Constructor",
   Function = "Function",
+  Getter = "Getter",
   Interface = "Interface",
   Intersection = "Intersection",
   Member = "Member",
+  Method = "Method",
   Never = "Never",
   Null = "Null",
   Number = "Number",
@@ -18,10 +24,13 @@ export enum EntityKind {
   ObjectLiteral = "ObjectLiteral",
   Parameter = "Parameter",
   Property = "Property",
+  Reference = "Reference",
+  Setter = "Setter",
   Signature = "Signature",
   String = "String",
   StringLiteral = "StringLiteral",
   Symbol = "Symbol",
+  Target = "Target",
   TypeAlias = "TypeAlias",
   TypeLiteral = "TypeLiteral",
   Undefined = "Undefined",
@@ -29,6 +38,15 @@ export enum EntityKind {
   Variable = "Variable",
   Void = "Void"
 }
+
+export type FunctionLikeEntityKinds =
+  | EntityKind.Constructor
+  | EntityKind.Function
+  | EntityKind.Getter
+  | EntityKind.Method
+  | EntityKind.Setter
+;
+
 
 export interface Entity<Kind extends EntityKind>{
   id: ID;
@@ -39,19 +57,30 @@ export interface Entity<Kind extends EntityKind>{
   position?: Position;
 }
 
-export type Entities = |
-  Function |
-  PrimitiveTypes |
-  LiteralTypes |
-  Variable |
-  ObjectLiteral |
-  UnionType |
-  IntersectionType |
-  TypeAlias |
-  Interface |
-  TypeLiteral |
-  Property |
-  Member
+export type Entities =
+  // eslint-disable-next-line @typescript-eslint/array-type
+  | Array
+  | Class
+  | ClassInstance
+  | Constructor
+  | Function
+  | Getter
+  | Interface
+  | IntersectionType
+  | LiteralTypes
+  | Member
+  | Method
+  | ObjectLiteral
+  | PrimitiveTypes
+  | Property
+  | Property
+  | Reference
+  | Setter
+  | Target
+  | TypeAlias
+  | TypeLiteral
+  | UnionType
+  | Variable
 ;
 
 
@@ -71,28 +100,23 @@ export type FromType<Child extends Entities> = Child & {
 
 };
 
+export type FromTypeNode<Child extends Entities> = Child & {
+
+};
+
 export type ChainedSymbol<Child extends Entities> = FromSymbol<FromDeclaration<FromType<Child>>>;
+
 export type ChainedDeclaration<Child extends Entities> = FromDeclaration<FromType<Child>>;
+
 export type ChainedType<Child extends Entities> = FromType<Child>;
+
+export type ChainedTypeNode<Child extends Entities> = FromTypeNode<Child>;
 
 
 //-- Primitive types
 
 export type PrimitiveTypeKinds =
-  EntityKind.String |
-  EntityKind.StringLiteral |
-  EntityKind.Number |
-  EntityKind.NumberLiteral |
-  EntityKind.Boolean |
-  EntityKind.BooleanLiteral |
-  EntityKind.Symbol |
-  EntityKind.BigInt |
-  EntityKind.BigIntLiteral |
-  EntityKind.Null |
-  EntityKind.Undefined |
-  EntityKind.Void |
-  EntityKind.Any |
-  EntityKind.Never;
+  EntityKind.Any | EntityKind.BigInt | EntityKind.BigIntLiteral | EntityKind.Boolean | EntityKind.BooleanLiteral | EntityKind.Never | EntityKind.Null | EntityKind.Number | EntityKind.NumberLiteral | EntityKind.String | EntityKind.StringLiteral | EntityKind.Symbol | EntityKind.Undefined | EntityKind.Void;
 
 
 export interface PrimitiveType<Kind extends PrimitiveTypeKinds> extends Entity<Kind> {
@@ -104,14 +128,11 @@ export type PrimitiveTypes = PrimitiveType<PrimitiveTypeKinds>;
 //-- Literal types
 
 export type LiteralTypeKinds =
-  EntityKind.NumberLiteral |
-  EntityKind.StringLiteral |
-  EntityKind.BooleanLiteral |
-  EntityKind.BigIntLiteral
+  EntityKind.BigIntLiteral | EntityKind.BooleanLiteral | EntityKind.NumberLiteral | EntityKind.StringLiteral
 ;
 
 export interface LiteralType<Kind extends LiteralTypeKinds> extends PrimitiveType<Kind> {
-  value: string | number | boolean | BigInt;
+  value: BigInt | boolean | number | string;
 }
 
 export type LiteralTypes = LiteralType<LiteralTypeKinds>;
@@ -128,13 +149,36 @@ export interface Property extends Entity<EntityKind.Property> {
 }
 
 
-//-- Function
+//-- Array
 
-export interface Function extends Entity<EntityKind.Function> {
-  signatures: FunctionSignature[];
+export interface Array extends Entity<EntityKind.Array> {
+  type: Entities;
 }
 
-export interface FunctionSignature extends Entity<EntityKind.Signature> {
+
+//-- Type reference
+
+export interface Reference extends Entity<EntityKind.Reference> {
+  target: Target;
+}
+
+export interface Target extends Entity<EntityKind.Target> {
+  id: ID;
+  position: Position;
+  resolvedType?: Entities;
+}
+
+
+//-- Function
+
+export interface FunctionLike<Kind extends EntityKind.Constructor | EntityKind.Function | EntityKind.Getter | EntityKind.Method | EntityKind.Setter> extends Entity<Kind> {
+  signatures: Signature[];
+}
+
+export interface Function extends FunctionLike<EntityKind.Function> {
+}
+
+export interface Signature extends Entity<EntityKind.Signature> {
   parameters: Parameter[];
   position: Position;
   returnType: Entities & { description?: Description; } ;
@@ -146,6 +190,36 @@ export interface Parameter extends Entity<EntityKind.Parameter> {
   position: Position;
   rest: boolean;
   type: Entities;
+}
+
+
+//-- Class
+
+export interface Class extends Entity<EntityKind.Class> {
+  getters: Getter[];
+  methods: Method[];
+  properties: Property[];
+  setters: Setter[];
+  ctor?: Constructor;
+}
+
+export interface ClassInstance extends Entity<EntityKind.ClassInstance> {
+  getters: Getter[];
+  methods: Method[];
+  properties: Property[];
+  setters: Setter[];
+}
+
+export interface Constructor extends FunctionLike<EntityKind.Constructor> {
+}
+
+export interface Method extends FunctionLike<EntityKind.Method> {
+}
+
+export interface Setter extends FunctionLike<EntityKind.Setter> {
+}
+
+export interface Getter extends FunctionLike<EntityKind.Getter> {
 }
 
 
@@ -198,3 +272,13 @@ export interface MergedInterface extends Interface {
 export interface Member extends Entity<EntityKind.Member> {
   type: Entities;
 }
+
+
+export type FunctionLikeEntityMap = {
+  [EntityKind.Class]: Class;
+  [EntityKind.Constructor]: Constructor;
+  [EntityKind.Function]: Function;
+  [EntityKind.Getter]: Getter;
+  [EntityKind.Method]: Method;
+  [EntityKind.Setter]: Setter;
+};

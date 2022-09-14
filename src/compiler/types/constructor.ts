@@ -1,23 +1,22 @@
 import { Symbol, Type } from "typescript";
 
-
-import { isFunctionLikeDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, FromSymbol, FromType, Function } from "../../types/types.js";
+import { isConstructorDeclaration } from "../../typeguards/ts.js";
+import { Constructor, EntityKind, FromSymbol, FromType } from "../../types/types.js";
 import { functionOverloadDeclarationFilter } from "../../utils/filter.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createFunctionBySymbol(symbol: Symbol): FromSymbol<Function> {
+export function createConstructorBySymbol(symbol: Symbol): FromSymbol<Constructor> {
 
-  const declarations = symbol.declarations?.filter(isFunctionLikeDeclaration).filter(functionOverloadDeclarationFilter) ?? [];
+  const declarations = symbol.declarations?.filter(isConstructorDeclaration).filter(functionOverloadDeclarationFilter) ?? [];
 
   const signatures = declarations.map(createSignatureByDeclaration);
 
   const id = getIdBySymbol(symbol);
   const name = getNameBySymbol(symbol);
-  const kind = EntityKind.Function;
+  const kind = EntityKind.Constructor;
 
   return {
     id,
@@ -29,14 +28,14 @@ export function createFunctionBySymbol(symbol: Symbol): FromSymbol<Function> {
 }
 
 
-export function createFunctionByType(type: Type): FromType<Function> {
+export function createConstructorByType(type: Type): FromType<Constructor> {
 
   const callSignatures = type.getCallSignatures();
   const declarations = callSignatures.map(s => s.getDeclaration());
   const signatures = declarations.map(createSignatureByDeclaration);
 
   const id = getIdByType(type);
-  const kind = EntityKind.Function;
+  const kind = EntityKind.Constructor;
 
   return {
     id,

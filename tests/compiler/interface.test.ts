@@ -59,6 +59,7 @@ describe("Compiler: Interface", function() {
     });
 
   }
+
   {
 
     const testFileContent = `
@@ -84,5 +85,35 @@ describe("Compiler: Interface", function() {
     });
 
   }
+
+  {
+
+    const testFileContent = `
+      export interface InterfaceA {
+        b: InterfaceB;
+      }
+      export interface InterfaceB {
+        a: InterfaceA;
+      }
+    `;
+
+    const { exportedSymbols } = compile(testFileContent.trim());
+
+    const symbolA = exportedSymbols.find(s => s.name === "InterfaceA")!;
+    const symbolB = exportedSymbols.find(s => s.name === "InterfaceB")!;
+    const exportedInterfaceA = createInterfaceBySymbol(symbolA);
+    const exportedInterfaceB = createInterfaceBySymbol(symbolB);
+
+    it("should be able to handle recursive interfaces", function() {
+      expect((exportedInterfaceA as Interface).members.length).to.equal(1);
+      expect((exportedInterfaceB as Interface).members.length).to.equal(1);
+      expect((exportedInterfaceA as Interface).members[0]!.name).to.equal("b");
+      expect((exportedInterfaceB as Interface).members[0]!.name).to.equal("a");
+      expect((exportedInterfaceA as Interface).members[0]!.type.kind).to.equal(EntityKind.Reference);
+      expect((exportedInterfaceB as Interface).members[0]!.type.kind).to.equal(EntityKind.Reference);
+    });
+
+  }
+
 
 });
