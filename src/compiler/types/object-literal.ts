@@ -2,7 +2,7 @@ import { isObjectLiteralElement, ObjectLiteralElement, Symbol, Type } from "type
 
 import { assert } from "vitest";
 
-import { ChainedDeclaration, ChainedSymbol, ChainedType, EntityKind, ObjectLiteral } from "../../types/types.js";
+import { EntityKind, ObjectLiteral } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -11,7 +11,7 @@ import { getContext } from "../context/index.js";
 import { createPropertyBySymbol } from "./property.js";
 
 
-export function createObjectLiteralBySymbol(symbol: Symbol): ChainedSymbol<ObjectLiteral> {
+export function createObjectLiteralBySymbol(symbol: Symbol): ObjectLiteral {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -24,13 +24,13 @@ export function createObjectLiteralBySymbol(symbol: Symbol): ChainedSymbol<Objec
   return {
     ...fromDeclaration,
     id,
-    name
+    name: name
   };
 
 }
 
 
-export function createObjectLiteralByDeclaration(declaration: ObjectLiteralElement): ChainedDeclaration<ObjectLiteral> {
+export function createObjectLiteralByDeclaration(declaration: ObjectLiteralElement): ObjectLiteral {
 
   const type = getContext().checker.getTypeAtLocation(declaration);
 
@@ -49,7 +49,7 @@ export function createObjectLiteralByDeclaration(declaration: ObjectLiteralEleme
 }
 
 
-export function createObjectLiteralByType(type: Type): ChainedType<ObjectLiteral> {
+export function createObjectLiteralByType(type: Type): ObjectLiteral {
 
   const id = getIdByType(type);
   const properties = type.getProperties().map(createPropertyBySymbol);

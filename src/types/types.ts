@@ -30,6 +30,7 @@ export enum EntityKind {
   String = "String",
   StringLiteral = "StringLiteral",
   Symbol = "Symbol",
+  Tuple = "Tuple",
   TypeAlias = "TypeAlias",
   TypeLiteral = "TypeLiteral",
   Undefined = "Undefined",
@@ -76,6 +77,7 @@ export type Entities =
   | Reference
   | Setter
   | Setter
+  | Tuple
   | TypeAlias
   | TypeLiteral
   | UnionType
@@ -139,6 +141,19 @@ export interface Property extends Entity<EntityKind.Property> {
 //-- Array
 
 export interface Array extends Entity<EntityKind.Array> {
+  type: Entities;
+}
+
+
+//-- Tuple
+
+export interface Tuple extends Entity<EntityKind.Tuple> {
+  members: TupleMember[];
+}
+
+export interface TupleMember extends Entity<EntityKind.Member> {
+  optional: boolean;
+  rest: boolean;
   type: Entities;
 }
 
@@ -246,12 +261,15 @@ export interface TypeLiteral extends Entity<EntityKind.TypeLiteral> {
 
 export interface Interface extends Entity<EntityKind.Interface> {
   members: Member[];
+  heritage?: Interface;
 }
 
 export interface MergedInterface extends Interface {
-  examples: Example[];
-  positions: Position[];
+  declarations: Interface[];
 }
+
+
+//-- Member
 
 export interface Member extends Entity<EntityKind.Member> {
   name: Name;

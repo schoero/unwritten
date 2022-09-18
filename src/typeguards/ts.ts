@@ -6,11 +6,13 @@ import ts, {
   InterfaceType,
   IntersectionType,
   LiteralType,
+  NamedTupleMember,
   NumberLiteralType,
   ObjectType,
   StringLiteralType,
   Symbol,
   TupleType,
+  TupleTypeNode,
   TupleTypeReference,
   Type,
   TypeNode,
@@ -347,6 +349,14 @@ export function isClassType(type: Type): boolean {
 
 export function isTupleType(type: Type): type is TupleType {
   return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Tuple) !== 0;
+}
+
+export function isTupleTypeNode(typeNode: TypeNode): typeNode is TupleTypeNode {
+  return ts.isTupleTypeNode(typeNode);
+}
+
+export function isNamedTupleMember(member: NamedTupleMember | TypeNode): member is NamedTupleMember {
+  return ts.isNamedTupleMember(member);
 }
 
 export function isAnonymousType(type: Type) {

@@ -24,7 +24,7 @@ export function createMemberBySymbol(memberSymbol: Symbol): FromSymbol<FromDecla
   return {
     ...fromDeclaration,
     id,
-    name
+    name: name
   };
 
 }
@@ -48,7 +48,7 @@ export function createMemberByDeclaration(declaration: PropertySignature | TypeE
     id,
     example,
     position,
-    name,
+    name: name,
     optional,
     description,
     kind,

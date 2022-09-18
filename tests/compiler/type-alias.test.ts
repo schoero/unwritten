@@ -4,7 +4,15 @@ import { describe, expect, it } from "vitest";
 import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 
 import { createTypeAliasBySymbol } from "../../src/compiler/types/type-alias.js";
-import { Array, EntityKind, IntersectionType, LiteralType, TypeLiteral, UnionType } from "../../src/types/types.js";
+import {
+  Array,
+  EntityKind,
+  IntersectionType,
+  LiteralType,
+  Tuple,
+  TypeLiteral,
+  UnionType
+} from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -385,6 +393,112 @@ describe("Compiler: Type alias", function() {
       expect(exportedStringOrNumberArray2.type.kind).to.equal(EntityKind.Array);
       expect((exportedStringOrNumberArray2.type as Array).type!.kind).to.equal(EntityKind.Union);
       expect(((exportedStringOrNumberArray2.type as Array).type! as UnionType).types).to.have.lengthOf(2);
+    });
+
+  });
+
+
+  describe("Tuple", function() {
+
+    const testFileContent = `
+      export type Tuple = [string, number];
+      export type TupleWithRest = [string, ...number[]];
+      export type TupleWithOptional = [string, number?];
+      /** 
+       * Description 
+       * @example [prefix: "<div>", suffix: "</div>"]
+       */
+      export type NamedTuple = [prefix: string, suffix: string];;
+    `;
+
+    const { exportedSymbols } = compile(testFileContent.trim());
+
+    const exportedTupleAlias = createTypeAliasBySymbol(exportedSymbols[0]!);
+    const exportedTupleWithRestAlias = createTypeAliasBySymbol(exportedSymbols[1]!);
+    const exportedTupleWithOptionalAlias = createTypeAliasBySymbol(exportedSymbols[2]!);
+    const exportedNamedTupleAlias = createTypeAliasBySymbol(exportedSymbols[3]!);
+
+    const exportedTuple = exportedTupleAlias.type as Tuple;
+    const exportedTupleWithRest = exportedTupleWithRestAlias.type as Tuple;
+    const exportedTupleWithOptional = exportedTupleWithOptionalAlias.type as Tuple;
+    const exportedNamedTuple = exportedNamedTupleAlias.type as Tuple;
+
+    it("should have exported tuple types alias", function() {
+      expect(exportedTupleAlias.name).to.equal("Tuple");
+      expect(exportedTupleWithRestAlias.name).to.equal("TupleWithRest");
+      expect(exportedTupleWithOptionalAlias.name).to.equal("TupleWithOptional");
+      expect(exportedNamedTupleAlias.name).to.equal("NamedTuple");
+    });
+
+    it("should have matching ids", function() {
+      expect(exportedTuple.id).to.equal(getIdBySymbol(exportedSymbols[0]!));
+      expect(exportedTupleWithRest.id).to.equal(getIdBySymbol(exportedSymbols[1]!));
+      expect(exportedTupleWithOptional.id).to.equal(getIdBySymbol(exportedSymbols[2]!));
+      expect(exportedNamedTuple.id).to.equal(getIdBySymbol(exportedSymbols[3]!));
+    });
+
+    it("should have matching positions", function() {
+      expect(exportedTuple.position).to.deep.equal({
+        file: "/file.ts",
+        line: 1,
+        column: 0
+      });
+      expect(exportedTupleWithRest.position).to.deep.equal({
+        file: "/file.ts",
+        line: 2,
+        column: 6
+      });
+      expect(exportedTupleWithOptional.position).to.deep.equal({
+        file: "/file.ts",
+        line: 3,
+        column: 6
+      });
+      expect(exportedNamedTuple.position).to.deep.equal({
+        file: "/file.ts",
+        line: 8,
+        column: 6
+      });
+    });
+
+    it("should have exactly two members", function() {
+      expect(exportedTuple.members.length).to.equal(2);
+      expect(exportedTupleWithRest.members.length).to.equal(2);
+      expect(exportedTupleWithOptional.members.length).to.equal(2);
+      expect(exportedNamedTuple.members.length).to.equal(2);
+    });
+
+    it("should have a matching member types", function() {
+      expect(exportedTuple.members[0]!.type.kind).to.equal(EntityKind.String);
+      expect(exportedTuple.members[1]!.type.kind).to.equal(EntityKind.Number);
+      expect(exportedTupleWithRest.members[0]!.type.kind).to.equal(EntityKind.String);
+      expect(exportedTupleWithRest.members[1]!.type.kind).to.equal(EntityKind.Number);
+      expect(exportedTupleWithOptional.members[0]!.type.kind).to.equal(EntityKind.String);
+      expect(exportedTupleWithOptional.members[1]!.type.kind).to.equal(EntityKind.Number);
+      expect(exportedNamedTuple.members[0]!.type.kind).to.equal(EntityKind.String);
+      expect(exportedNamedTuple.members[1]!.type.kind).to.equal(EntityKind.String);
+    });
+
+    it("should have a matching rest element indicators", function() {
+      expect(exportedTupleWithRest.members[0]!.rest).to.not.equal(true);
+      expect(exportedTupleWithRest.members[1]?.rest).to.equal(true);
+    });
+
+    it("should have a matching optional element indicators", function() {
+      expect(exportedTupleWithOptional.members[0]!.optional).to.not.equal(true);
+      expect(exportedTupleWithOptional.members[1]?.optional).to.equal(true);
+    });
+
+    it("should have matching labels", function() {
+      expect(exportedNamedTuple.members[0]!.name).to.equal("prefix");
+      expect(exportedNamedTuple.members[1]!.name).to.equal("suffix");
+    });
+
+    it("should have a matching description", function() {
+      expect(exportedNamedTupleAlias.description).to.equal("Description");
+    });
+
+    it("should have a matching example", function() {
+      expect(exportedNamedTupleAlias.example).to.equal(`[prefix: "<div>", suffix: "</div>"]`);
     });
 
   });

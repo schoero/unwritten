@@ -10,6 +10,7 @@ import {
   isLiteralType,
   isObjectLiteralType,
   isPrimitiveType,
+  isTupleTypeReferenceType,
   isTypeLiteralType,
   isTypeReferenceType,
   isUnionType
@@ -25,6 +26,7 @@ import { createLiteralType } from "../types/literal.js";
 import { createObjectLiteralByType } from "../types/object-literal.js";
 import { createPrimitiveType } from "../types/primitive.js";
 import { createTypeReferenceByType, createTypeReferenceByTypeNode } from "../types/reference.js";
+import { createTupleTypeByTypeReference } from "../types/tuple.js";
 import { createTypeLiteralByType } from "../types/type-literal.js";
 import { createUnionTypeByType } from "../types/union-type.js";
 
@@ -81,7 +83,9 @@ export function getTypeByType(type: Type): Entities {
 
   //-- Order is important here. Check reference types first.
 
-  if(isTypeReferenceType(type)){
+  if(isTupleTypeReferenceType(type)){
+    return createTupleTypeByTypeReference(type);
+  } else if(isTypeReferenceType(type)){
     return createTypeReferenceByType(type);
   } else if(isFunctionLikeType(type)){
     return createFunctionByType(type);

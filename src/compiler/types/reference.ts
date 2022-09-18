@@ -1,4 +1,4 @@
-import { Symbol, TypeReference, TypeReferenceNode } from "typescript";
+import { Symbol, TupleTypeReference, TypeReference, TypeReferenceNode } from "typescript";
 
 import { assert } from "vitest";
 
@@ -14,7 +14,7 @@ import { getContext } from "../context/index.js";
 
 export function createTypeReferenceByTypeNode(typeNode: TypeReferenceNode): Reference {
 
-  const targetSymbol = _getTargetSymbolByTypeReference(typeNode);
+  const targetSymbol = getTargetSymbolByTypeReference(typeNode);
   const target = _createTargetBySymbol(targetSymbol);
   const kind = EntityKind.Reference;
 
@@ -26,9 +26,9 @@ export function createTypeReferenceByTypeNode(typeNode: TypeReferenceNode): Refe
 }
 
 
-export function createTypeReferenceByType(type: TypeReference): Reference {
+export function createTypeReferenceByType(typeReference: TypeReference): Reference {
 
-  const targetSymbol = _getTargetSymbolByTypeReference(type);
+  const targetSymbol = getTargetSymbolByTypeReference(typeReference);
   const target = _createTargetBySymbol(targetSymbol);
   const kind = EntityKind.Reference;
 
@@ -74,12 +74,12 @@ export function resolveSymbol(targetSymbol: Symbol) {
 }
 
 
-function _getTargetSymbolByTypeReference(typeNodeOrType: TypeReference | TypeReferenceNode): Symbol {
+export function getTargetSymbolByTypeReference(typeNodeOrType: TupleTypeReference | TypeReference | TypeReferenceNode): Symbol {
 
   let targetSymbol: Symbol | undefined;
 
   if(isType(typeNodeOrType)){
-    targetSymbol = typeNodeOrType.target.symbol;
+    targetSymbol = typeNodeOrType.aliasSymbol ?? typeNodeOrType.target.symbol;
   } else if(isTypeNode(typeNodeOrType)){
     const type = getContext().checker.getTypeFromTypeNode(typeNodeOrType);
 

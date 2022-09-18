@@ -3,8 +3,8 @@ import { InterfaceDeclaration, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
 import { isInterfaceDeclaration } from "../../typeguards/ts.js";
-import { Interface, MergedInterface } from "../../types/types.js";
-import { getIdBySymbol } from "../compositions/id.js";
+import { EntityKind, Interface, MergedInterface } from "../../types/types.js";
+import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
@@ -21,20 +21,27 @@ export function createInterfaceBySymbol(symbol: Symbol): Interface | MergedInter
   const id = getIdBySymbol(symbol);
   const description = getDescriptionBySymbol(symbol);
   const fromDeclarations = declarations.map(_createInterfaceByDeclaration);
+  const kind = EntityKind.Interface;
 
-  // TODO: support merging positions, descriptions and examples
-
-  const mergedDeclarations = fromDeclarations.reduce((acc, declaration) => ({
-    ...acc,
-    ...declaration
-  }), <Interface>{});
-
-  return {
-    ...mergedDeclarations,
-    description,
-    id,
-    name
-  };
+  if(fromDeclarations.length === 1){
+    return <Interface>{
+      ...fromDeclarations[0],
+      id,
+      kind,
+      name: name,
+      description
+    };
+  } else {
+    const members = _mergeMembers(fromDeclarations);
+    return <MergedInterface>{
+      declarations: fromDeclarations,
+      members,
+      id,
+      kind,
+      name: name,
+      description
+    };
+  }
 
 }
 
@@ -44,13 +51,27 @@ export function createInterfaceByType(type: Type): Interface {
 }
 
 
-function _createInterfaceByDeclaration(declaration: InterfaceDeclaration) {
+function _mergeMembers(declarations: ReturnType<typeof _createInterfaceByDeclaration>[]): Interface["members"] {
+  return declarations.reduce((acc, declaration) => {
+    return [
+      ...acc,
+      ...declaration.members
+    ];
+  }, <Interface["members"]>[]);
+}
+
+
+function _createInterfaceByDeclaration(declaration: InterfaceDeclaration): Interface {
 
   const members = declaration.members.map(createMemberByDeclaration);
   const example = getExampleByDeclaration(declaration);
   const position = getPositionByDeclaration(declaration);
+  const id = getIdByDeclaration(declaration);
+  const kind = EntityKind.Interface;
 
   return {
+    id,
+    kind,
     members,
     example,
     position

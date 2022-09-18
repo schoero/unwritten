@@ -21,7 +21,7 @@ export function createConstructorBySymbol(symbol: Symbol): FromSymbol<Constructo
   return {
     id,
     kind,
-    name,
+    name: name,
     signatures
   };
 

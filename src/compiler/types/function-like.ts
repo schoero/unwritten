@@ -31,7 +31,7 @@ export function createFunctionBySymbol(symbol: Symbol) {
   return <FunctionLikeEntityMap[typeof kind]>{
     id,
     kind,
-    name,
+    name: name,
     signatures
   };
 

@@ -34,7 +34,7 @@ export function createClassBySymbol(symbol: Symbol): FromSymbol<Class> {
 
   return {
     ...fromDeclaration,
-    name
+    name: name
   };
 
 }
