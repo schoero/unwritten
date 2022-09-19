@@ -21,7 +21,7 @@ export function createSetterBySymbol(symbol: Symbol): FromSymbol<Setter> {
   return {
     id,
     kind,
-    name: name,
+    name,
     signatures
   };
 

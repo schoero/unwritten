@@ -21,7 +21,7 @@ export function createGetterBySymbol(symbol: Symbol): FromSymbol<Getter> {
   return {
     id,
     kind,
-    name: name,
+    name,
     signatures
   };
 

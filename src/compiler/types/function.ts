@@ -21,7 +21,7 @@ export function createFunctionBySymbol(symbol: Symbol): FromSymbol<Function> {
   return {
     id,
     kind,
-    name: name,
+    name,
     signatures
   };
 

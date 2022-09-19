@@ -17,7 +17,7 @@ import { compile } from "../utils/compile.js";
 
 
 
-describe("Compiler: Type alias", function() {
+describe("Compiler: Type alias", () => {
 
   const testFileContent = `
     /**
@@ -32,27 +32,27 @@ describe("Compiler: Type alias", function() {
   const symbol = exportedSymbols.find(s => s.name === "StringType")!;
   const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-  it("should have a matching kind", function() {
+  it("should have a matching kind", () => {
     expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
   });
 
-  it("should have a matching name", function() {
+  it("should have a matching name", () => {
     expect(exportedTypeAlias.name).to.equal("StringType");
   });
 
-  it("should have a matching id", function() {
+  it("should have a matching id", () => {
     expect(exportedTypeAlias.id).to.equal(getIdBySymbol(symbol));
   });
 
-  it("should have a matching description", function() {
+  it("should have a matching description", () => {
     expect(exportedTypeAlias.description).to.equal("Type alias description");
   });
 
-  it("should have a matching example", function() {
+  it("should have a matching example", () => {
     expect(exportedTypeAlias.example).to.equal("\"hello\"");
   });
 
-  it("should have a matching position", function() {
+  it("should have a matching position", () => {
     expect(exportedTypeAlias.position).to.deep.equal({
       file: "/file.ts",
       line: 5,
@@ -61,9 +61,9 @@ describe("Compiler: Type alias", function() {
   });
 
 
-  describe("Primitive", function() {
+  describe("Primitive", () => {
 
-    it("should be able to handle string type aliases", function() {
+    it("should be able to handle string type aliases", () => {
 
       const testFileContent = `
         export type StringType = string;
@@ -78,7 +78,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle number type aliases", function() {
+    it("should be able to handle number type aliases", () => {
 
       const testFileContent = `
         export type NumberType = number;
@@ -93,7 +93,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle boolean type aliases", function() {
+    it("should be able to handle boolean type aliases", () => {
 
       const testFileContent = `
         export type BooleanType = boolean;
@@ -108,7 +108,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle bigInt type aliases", function() {
+    it("should be able to handle bigInt type aliases", () => {
 
       const testFileContent = `
         export type BigIntType = bigint;
@@ -123,7 +123,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle null type aliases", function() {
+    it("should be able to handle null type aliases", () => {
 
       const testFileContent = `
         export type NullType = null;
@@ -138,7 +138,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle undefined type aliases", function() {
+    it("should be able to handle undefined type aliases", () => {
 
       const testFileContent = `
         export type UndefinedType = undefined;
@@ -153,7 +153,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle void type aliases", function() {
+    it("should be able to handle void type aliases", () => {
 
       const testFileContent = `
         export type VoidType = void;
@@ -168,7 +168,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle never type aliases", function() {
+    it("should be able to handle never type aliases", () => {
 
       const testFileContent = `
         export type NeverType = never;
@@ -185,9 +185,9 @@ describe("Compiler: Type alias", function() {
 
   });
 
-  describe("Literal types", function() {
+  describe("Literal types", () => {
 
-    it("should be able to handle string literal type aliases", function() {
+    it("should be able to handle string literal type aliases", () => {
 
       const testFileContent = `
         export type StringLiteralType = "Hello world";
@@ -203,7 +203,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle number literal type aliases", function() {
+    it("should be able to handle number literal type aliases", () => {
 
       const testFileContent = `
         export type NumberLiteralType = 7;
@@ -219,7 +219,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle bigInt literal type aliases", function() {
+    it("should be able to handle bigInt literal type aliases", () => {
 
       const testFileContent = `
         export type BigIntLiteralType = 7n;
@@ -242,7 +242,7 @@ describe("Compiler: Type alias", function() {
 
     });
 
-    it("should be able to handle boolean literal type aliases", function() {
+    it("should be able to handle boolean literal type aliases", () => {
 
       const testFileContent = `
         export type BooleanLiteralType = true;
@@ -260,7 +260,7 @@ describe("Compiler: Type alias", function() {
 
   });
 
-  describe("Type Literal", function() {
+  describe("Type Literal", () => {
 
     const testFileContent = `
       /** TypeLiteral description */
@@ -278,20 +278,20 @@ describe("Compiler: Type alias", function() {
     const exportedVariable = createTypeAliasBySymbol(symbol);
     const typeLiteralType = exportedVariable.type as TypeLiteral;
 
-    it("should have a matching kind", function() {
+    it("should have a matching kind", () => {
       expect(exportedVariable.kind).to.equal(EntityKind.TypeAlias);
     });
 
-    it("should have a matching name", function() {
+    it("should have a matching name", () => {
       expect(exportedVariable.name).to.equal("TypeLiteral");
     });
 
-    it("should have a matching type", function() {
+    it("should have a matching type", () => {
       expect(exportedVariable.type.kind).to.equal(EntityKind.TypeLiteral);
       expect(typeLiteralType.members.length).to.equal(2);
     });
 
-    it("should have matching members", function() {
+    it("should have matching members", () => {
       expect(typeLiteralType.members[0]!.name).to.equal("a");
       expect(typeLiteralType.members[0]!.type.kind).to.equal(EntityKind.String);
       expect(typeLiteralType.members[0]!.position).to.deep.equal({ file: "/file.ts", line: 4, column: 8 });
@@ -302,11 +302,11 @@ describe("Compiler: Type alias", function() {
       expect(typeLiteralType.members[1]!.position).to.deep.equal({ file: "/file.ts", line: 6, column: 8 });
     });
 
-    it("should have a matching description", function() {
+    it("should have a matching description", () => {
       expect(exportedVariable.description).to.equal("TypeLiteral description");
     });
 
-    it("should have a matching position", function() {
+    it("should have a matching position", () => {
       expect(exportedVariable.position).to.deep.equal({
         file: "/file.ts",
         line: 2,
@@ -316,7 +316,7 @@ describe("Compiler: Type alias", function() {
 
   });
 
-  describe("Union Types", function() {
+  describe("Union Types", () => {
 
     const testFileContent = `
       export type UnionType = string | number;
@@ -327,23 +327,23 @@ describe("Compiler: Type alias", function() {
     const symbol = exportedSymbols.find(s => s.name === "UnionType")!;
     const exportedVariable = createTypeAliasBySymbol(symbol);
 
-    it("should have a matching kind", function() {
+    it("should have a matching kind", () => {
       expect(exportedVariable.kind).to.equal(EntityKind.TypeAlias);
       expect(exportedVariable.type.kind).to.equal(EntityKind.Union);
     });
 
-    it("should have the right amount of types", function() {
+    it("should have the right amount of types", () => {
       expect((exportedVariable.type as UnionType).types).to.have.lengthOf(2);
     });
 
-    it("should have the right types", function() {
+    it("should have the right types", () => {
       expect((exportedVariable.type as UnionType).types[0]!.kind).to.equal(EntityKind.String);
       expect((exportedVariable.type as UnionType).types[1]!.kind).to.equal(EntityKind.Number);
     });
 
   });
 
-  describe("Intersection Types", function() {
+  describe("Intersection Types", () => {
 
     const testFileContent = `
       type A = {
@@ -360,19 +360,19 @@ describe("Compiler: Type alias", function() {
     const symbol = exportedSymbols.find(s => s.name === "IntersectionType")!;
     const exportedVariable = createTypeAliasBySymbol(symbol);
 
-    it("should have a matching kind", function() {
+    it("should have a matching kind", () => {
       expect(exportedVariable.kind).to.equal(EntityKind.TypeAlias);
       expect(exportedVariable.type.kind).to.equal(EntityKind.Intersection);
     });
 
-    it("should have the right amount of types", function() {
+    it("should have the right amount of types", () => {
       expect((exportedVariable.type as IntersectionType).types).to.have.lengthOf(2);
     });
 
   });
 
 
-  describe("Array", function() {
+  describe("Array", () => {
 
     const testFileContent = `
       export type StringOrNumberArray1 = Array<string | number>;
@@ -384,7 +384,7 @@ describe("Compiler: Type alias", function() {
     const exportedStringOrNumberArray1 = createTypeAliasBySymbol(exportedSymbols[0]!);
     const exportedStringOrNumberArray2 = createTypeAliasBySymbol(exportedSymbols[1]!);
 
-    it("should support both array syntaxes", function() {
+    it("should support both array syntaxes", () => {
       expect(exportedStringOrNumberArray1.name).to.equal("StringOrNumberArray1");
       expect(exportedStringOrNumberArray1.type.kind).to.equal(EntityKind.Array);
       expect((exportedStringOrNumberArray1.type as Array).type!.kind).to.equal(EntityKind.Union);
@@ -398,7 +398,7 @@ describe("Compiler: Type alias", function() {
   });
 
 
-  describe("Tuple", function() {
+  describe("Tuple", () => {
 
     const testFileContent = `
       export type Tuple = [string, number];
@@ -423,21 +423,21 @@ describe("Compiler: Type alias", function() {
     const exportedTupleWithOptional = exportedTupleWithOptionalAlias.type as Tuple;
     const exportedNamedTuple = exportedNamedTupleAlias.type as Tuple;
 
-    it("should have exported tuple types alias", function() {
+    it("should have exported tuple types alias", () => {
       expect(exportedTupleAlias.name).to.equal("Tuple");
       expect(exportedTupleWithRestAlias.name).to.equal("TupleWithRest");
       expect(exportedTupleWithOptionalAlias.name).to.equal("TupleWithOptional");
       expect(exportedNamedTupleAlias.name).to.equal("NamedTuple");
     });
 
-    it("should have matching ids", function() {
+    it("should have matching ids", () => {
       expect(exportedTuple.id).to.equal(getIdBySymbol(exportedSymbols[0]!));
       expect(exportedTupleWithRest.id).to.equal(getIdBySymbol(exportedSymbols[1]!));
       expect(exportedTupleWithOptional.id).to.equal(getIdBySymbol(exportedSymbols[2]!));
       expect(exportedNamedTuple.id).to.equal(getIdBySymbol(exportedSymbols[3]!));
     });
 
-    it("should have matching positions", function() {
+    it("should have matching positions", () => {
       expect(exportedTuple.position).to.deep.equal({
         file: "/file.ts",
         line: 1,
@@ -460,14 +460,14 @@ describe("Compiler: Type alias", function() {
       });
     });
 
-    it("should have exactly two members", function() {
+    it("should have exactly two members", () => {
       expect(exportedTuple.members.length).to.equal(2);
       expect(exportedTupleWithRest.members.length).to.equal(2);
       expect(exportedTupleWithOptional.members.length).to.equal(2);
       expect(exportedNamedTuple.members.length).to.equal(2);
     });
 
-    it("should have a matching member types", function() {
+    it("should have a matching member types", () => {
       expect(exportedTuple.members[0]!.type.kind).to.equal(EntityKind.String);
       expect(exportedTuple.members[1]!.type.kind).to.equal(EntityKind.Number);
       expect(exportedTupleWithRest.members[0]!.type.kind).to.equal(EntityKind.String);
@@ -478,26 +478,26 @@ describe("Compiler: Type alias", function() {
       expect(exportedNamedTuple.members[1]!.type.kind).to.equal(EntityKind.String);
     });
 
-    it("should have a matching rest element indicators", function() {
+    it("should have a matching rest element indicators", () => {
       expect(exportedTupleWithRest.members[0]!.rest).to.not.equal(true);
       expect(exportedTupleWithRest.members[1]?.rest).to.equal(true);
     });
 
-    it("should have a matching optional element indicators", function() {
+    it("should have a matching optional element indicators", () => {
       expect(exportedTupleWithOptional.members[0]!.optional).to.not.equal(true);
       expect(exportedTupleWithOptional.members[1]?.optional).to.equal(true);
     });
 
-    it("should have matching labels", function() {
+    it("should have matching labels", () => {
       expect(exportedNamedTuple.members[0]!.name).to.equal("prefix");
       expect(exportedNamedTuple.members[1]!.name).to.equal("suffix");
     });
 
-    it("should have a matching description", function() {
+    it("should have a matching description", () => {
       expect(exportedNamedTupleAlias.description).to.equal("Description");
     });
 
-    it("should have a matching example", function() {
+    it("should have a matching example", () => {
       expect(exportedNamedTupleAlias.example).to.equal(`[prefix: "<div>", suffix: "</div>"]`);
     });
 

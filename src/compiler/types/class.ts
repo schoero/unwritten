@@ -1,4 +1,4 @@
-import { ClassLikeDeclaration, Symbol, Type } from "typescript";
+import { ClassLikeDeclaration, Symbol } from "typescript";
 import { assert } from "vitest";
 
 import {
@@ -9,8 +9,8 @@ import {
   isPropertyDeclaration,
   isSetterDeclaration
 } from "../../typeguards/ts.js";
-import { Class, ClassInstance, EntityKind, FromDeclaration, FromSymbol, FromType } from "../../types/types.js";
-import { getIdByDeclaration, getIdByType } from "../compositions/id.js";
+import { Class, EntityKind, FromDeclaration, FromSymbol } from "../../types/types.js";
+import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
@@ -29,11 +29,13 @@ export function createClassBySymbol(symbol: Symbol): FromSymbol<Class> {
   assert(declaration && isClassDeclaration(declaration), "Class declaration is not found");
 
   const fromDeclaration = createClassByDeclaration(declaration);
+  const id = getIdBySymbol(symbol);
   const name = getNameBySymbol(symbol);
 
   return {
     ...fromDeclaration,
-    name: name
+    id,
+    name
   };
 
 }
@@ -70,26 +72,26 @@ export function createClassByDeclaration(declaration: ClassLikeDeclaration): Fro
 }
 
 
-export function createClassByType(type: Type): FromType<ClassInstance> {
+// export function createClassByType(type: Type): Class {
 
-  const methods = type.getProperties().filter(p => p.valueDeclaration && isMethodDeclaration(p.valueDeclaration)).map(createMethodBySymbol);
-  const properties = type.getProperties().filter(p => p.valueDeclaration && isPropertyDeclaration(p.valueDeclaration)).map(createPropertyBySymbol);
-  const setters = type.getProperties().filter(p => p.valueDeclaration && isSetterDeclaration(p.valueDeclaration)).map(createSetterBySymbol);
-  const getters = type.getProperties().filter(p => p.valueDeclaration && isGetterDeclaration(p.valueDeclaration)).map(createGetterBySymbol);
+//   const methods = type.getProperties().filter(p => p.valueDeclaration && isMethodDeclaration(p.valueDeclaration)).map(createMethodBySymbol);
+//   const properties = type.getProperties().filter(p => p.valueDeclaration && isPropertyDeclaration(p.valueDeclaration)).map(createPropertyBySymbol);
+//   const setters = type.getProperties().filter(p => p.valueDeclaration && isSetterDeclaration(p.valueDeclaration)).map(createSetterBySymbol);
+//   const getters = type.getProperties().filter(p => p.valueDeclaration && isGetterDeclaration(p.valueDeclaration)).map(createGetterBySymbol);
 
-  const id = getIdByType(type);
-  const kind = EntityKind.ClassInstance;
+//   const id = getIdByType(type);
+//   const kind = EntityKind.Instance;
 
-  return {
-    id,
-    kind,
-    methods,
-    properties,
-    setters,
-    getters
-  };
+//   return {
+//     id,
+//     kind,
+//     methods,
+//     properties,
+//     setters,
+//     getters
+//   };
 
-}
+// }
 
 
 function _getSymbolsByTypeFromClassLikeDeclaration(classLikeDeclaration: ClassLikeDeclaration,

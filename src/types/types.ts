@@ -9,10 +9,10 @@ export enum EntityKind {
   Boolean = "Boolean",
   BooleanLiteral = "BooleanLiteral",
   Class = "Class",
-  ClassInstance = "ClassInstance",
   Constructor = "Constructor",
   Function = "Function",
   Getter = "Getter",
+  Instance = "Instance",
   Interface = "Interface",
   Intersection = "Intersection",
   Member = "Member",
@@ -61,10 +61,10 @@ export type Entities =
   // eslint-disable-next-line @typescript-eslint/array-type
   | Array
   | Class
-  | ClassInstance
   | Constructor
   | Function
   | Getter
+  | Instance
   | Interface
   | IntersectionType
   | LiteralTypes
@@ -105,7 +105,20 @@ export type FromType<Child extends Entities> = Child & {
 //-- Primitive types
 
 export type PrimitiveTypeKinds =
-  EntityKind.Any | EntityKind.BigInt | EntityKind.BigIntLiteral | EntityKind.Boolean | EntityKind.BooleanLiteral | EntityKind.Never | EntityKind.Null | EntityKind.Number | EntityKind.NumberLiteral | EntityKind.String | EntityKind.StringLiteral | EntityKind.Symbol | EntityKind.Undefined | EntityKind.Void;
+  | EntityKind.Any
+  | EntityKind.BigInt
+  | EntityKind.BigIntLiteral
+  | EntityKind.Boolean
+  | EntityKind.BooleanLiteral
+  | EntityKind.Never
+  | EntityKind.Null
+  | EntityKind.Number
+  | EntityKind.NumberLiteral
+  | EntityKind.String
+  | EntityKind.StringLiteral
+  | EntityKind.Symbol
+  | EntityKind.Undefined
+  | EntityKind.Void;
 
 
 export interface PrimitiveType<Kind extends PrimitiveTypeKinds> extends Entity<Kind> {
@@ -168,6 +181,16 @@ export interface Reference extends Entity<EntityKind.Reference> {
 }
 
 
+//-- Instance
+
+export interface Instance extends Entity<EntityKind.Instance> {
+  id: ID;
+  name: Name;
+  position: Position;
+  resolvedType?: Entities;
+}
+
+
 //-- Function
 
 export interface FunctionLike<Kind extends EntityKind.Constructor | EntityKind.Function | EntityKind.Getter | EntityKind.Method | EntityKind.Setter> extends Entity<Kind> {
@@ -200,13 +223,6 @@ export interface Class extends Entity<EntityKind.Class> {
   properties: Property[];
   setters: Setter[];
   ctor?: Constructor;
-}
-
-export interface ClassInstance extends Entity<EntityKind.ClassInstance> {
-  getters: Getter[];
-  methods: Method[];
-  properties: Property[];
-  setters: Setter[];
 }
 
 export interface Constructor extends FunctionLike<EntityKind.Constructor> {

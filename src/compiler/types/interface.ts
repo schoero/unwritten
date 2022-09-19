@@ -27,7 +27,7 @@ export function createInterfaceBySymbol(symbol: Symbol): Interface | MergedInter
       ...fromDeclarations[0],
       id,
       kind,
-      name: name,
+      name,
       description
     };
   } else {
@@ -37,7 +37,7 @@ export function createInterfaceBySymbol(symbol: Symbol): Interface | MergedInter
       members,
       id,
       kind,
-      name: name,
+      name,
       description
     };
   }

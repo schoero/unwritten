@@ -22,7 +22,7 @@ export function createPropertyBySymbol(memberSymbol: Symbol): FromSymbol<FromDec
 
   return {
     ...fromDeclaration,
-    name: name,
+    name,
     id
 
   };

@@ -23,7 +23,7 @@ export function createObjectLiteralBySymbol(symbol: Symbol): ObjectLiteral {
   return {
     ...fromDeclaration,
     id,
-    name: name
+    name
   };
 
 }

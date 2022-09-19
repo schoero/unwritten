@@ -21,7 +21,7 @@ export function createMethodBySymbol(symbol: Symbol): FromSymbol<Method> {
   return {
     id,
     kind,
-    name: name,
+    name,
     signatures
   };
 

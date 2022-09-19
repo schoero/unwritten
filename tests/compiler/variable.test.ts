@@ -7,7 +7,7 @@ import { EntityKind, LiteralType, ObjectLiteral } from "../../src/types/types.js
 import { compile } from "../utils/compile.js";
 
 
-describe("Compiler: Variable", function() {
+describe("Compiler: Variable", () => {
   {
     const testFileContent = `
       /**
@@ -23,32 +23,32 @@ describe("Compiler: Variable", function() {
     const symbol = exportedSymbols.find(s => s.name === "stringLiteral")!;
     const exportedVariable = createVariableBySymbol(symbol);
 
-    it("should have a matching kind", function() {
+    it("should have a matching kind", () => {
       expect(exportedVariable.kind).to.equal(EntityKind.Variable);
     });
 
-    it("should have a matching name", function() {
+    it("should have a matching name", () => {
       expect(exportedVariable.name).to.equal("stringLiteral");
     });
 
-    it("should have a matching id", function() {
+    it("should have a matching id", () => {
       expect(exportedVariable.id).to.equal(getIdBySymbol(symbol));
     });
 
-    it("should have a matching type", function() {
+    it("should have a matching type", () => {
       expect(exportedVariable.type.kind).to.equal(EntityKind.StringLiteral);
       expect((exportedVariable.type as LiteralType<EntityKind.StringLiteral>).value).to.equal("Hello World");
     });
 
-    it("should have a matching description", function() {
+    it("should have a matching description", () => {
       expect(exportedVariable.description).to.equal("Represents a string literal.");
     });
 
-    it("should have a matching example", function() {
+    it("should have a matching example", () => {
       expect(exportedVariable.example).to.equal("\"hello\"");
     });
 
-    it("should have a matching position", function() {
+    it("should have a matching position", () => {
       expect(exportedVariable.position).to.deep.equal({
         file: "/file.ts",
         line: 6,
@@ -79,20 +79,20 @@ describe("Compiler: Variable", function() {
     const symbol = exportedSymbols.find(s => s.name === "objectVariable")!;
     const exportedVariable = createVariableBySymbol(symbol);
 
-    it("should have a matching kind", function() {
+    it("should have a matching kind", () => {
       expect(exportedVariable.kind).to.equal(EntityKind.Variable);
     });
 
-    it("should have a matching name", function() {
+    it("should have a matching name", () => {
       expect(exportedVariable.name).to.equal("objectVariable");
     });
 
-    it("should have a matching type", function() {
+    it("should have a matching type", () => {
       expect(exportedVariable.type.kind).to.equal(EntityKind.ObjectLiteral);
       expect((exportedVariable.type as ObjectLiteral).properties.length).to.equal(2);
     });
 
-    it("should have matching properties", function() {
+    it("should have matching properties", () => {
       expect((exportedVariable.type as ObjectLiteral).properties[0]!.name).to.equal("a");
       expect((exportedVariable.type as ObjectLiteral).properties[0]!.description).to.equal("A string literal.");
       expect((exportedVariable.type as ObjectLiteral).properties[0]!.position).to.deep.equal({ file: "/file.ts", line: 11, column: 8 });
@@ -105,11 +105,11 @@ describe("Compiler: Variable", function() {
       expect(((exportedVariable.type as ObjectLiteral).properties[1]!.type as LiteralType<EntityKind.NumberLiteral>).value).to.equal(7);
     });
 
-    it("should have a matching example", function() {
+    it("should have a matching example", () => {
       expect(exportedVariable.example?.replace(/\s/g, "")).to.equal("{a:\"hello\",b:1}");
     });
 
-    it("should have a matching position", function() {
+    it("should have a matching position", () => {
       expect(exportedVariable.position).to.deep.equal({
         file: "/file.ts",
         line: 9,

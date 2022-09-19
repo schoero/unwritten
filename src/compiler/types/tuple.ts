@@ -109,7 +109,7 @@ function _getMembers(tupleTypeReference: TupleTypeReference, typeArguments?: rea
 
 //     return {
 //       id,
-//       name: name,
+//       name,
 //       optional,
 //       rest,
 //       type,

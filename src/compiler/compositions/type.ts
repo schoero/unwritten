@@ -2,8 +2,8 @@ import ts, { Declaration, Symbol, Type, TypeNode } from "typescript";
 import { assert } from "vitest";
 
 import {
-  isClassType,
   isFunctionLikeType,
+  isInstanceType,
   isInterfaceType,
   isIntersectionType,
   isLiteralType,
@@ -17,8 +17,8 @@ import {
 import { Entities } from "../../types/types.js";
 import { getContext } from "../context/index.js";
 import { createArrayByArrayTypeNode, createArrayByTypeReferenceNode } from "../types/array.js";
-import { createClassByType } from "../types/class.js";
 import { createFunctionByType } from "../types/function.js";
+import { createInstanceByType } from "../types/instance.js";
 import { createInterfaceByType } from "../types/interface.js";
 import { createIntersectionTypeByType } from "../types/intersection-type.js";
 import { createLiteralType } from "../types/literal.js";
@@ -84,6 +84,8 @@ export function getTypeByType(type: Type): Entities {
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(type);
+  } else if(isInstanceType(type)){
+    return createInstanceByType(type);
   } else if(isTypeReferenceType(type)){
     return createTypeReferenceByType(type);
   } else if(isFunctionLikeType(type)){
@@ -100,8 +102,6 @@ export function getTypeByType(type: Type): Entities {
     return createUnionTypeByType(type);
   } else if(isIntersectionType(type)){
     return createIntersectionTypeByType(type);
-  } else if(isClassType(type)){
-    return createClassByType(type);
   } else if(isInterfaceType(type)){
     return createInterfaceByType(type);
   }

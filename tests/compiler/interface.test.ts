@@ -8,7 +8,7 @@ import { EntityKind, Interface } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
-describe("Compiler: Interface", function() {
+describe("Compiler: Interface", () => {
   {
     const testFileContent = `
       /** Interface description */
@@ -25,23 +25,23 @@ describe("Compiler: Interface", function() {
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(symbol);
 
-    it("should have a matching kind", function() {
+    it("should have a matching kind", () => {
       expect(exportedInterface.kind).to.equal(EntityKind.Interface);
     });
 
-    it("should have a matching name", function() {
+    it("should have a matching name", () => {
       expect(exportedInterface.name).to.equal("Interface");
     });
 
-    it("should have a matching id", function() {
+    it("should have a matching id", () => {
       expect(exportedInterface.id).to.equal(getIdBySymbol(symbol));
     });
 
-    it("should have a matching type", function() {
+    it("should have a matching type", () => {
       expect((exportedInterface as Interface).members.length).to.equal(2);
     });
 
-    it("should have matching members", function() {
+    it("should have matching members", () => {
       expect((exportedInterface as Interface).members[0]!.name).to.equal("a");
       expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(EntityKind.String);
       expect((exportedInterface as Interface).members[0]!.position).to.deep.equal({ file: "/file.ts", line: 4, column: 8 });
@@ -52,11 +52,11 @@ describe("Compiler: Interface", function() {
       expect((exportedInterface as Interface).members[1]!.position).to.deep.equal({ file: "/file.ts", line: 6, column: 8 });
     });
 
-    it("should have a matching description", function() {
+    it("should have a matching description", () => {
       expect(exportedInterface.description).to.equal("Interface description");
     });
 
-    it("should have a matching position", function() {
+    it("should have a matching position", () => {
       expect(exportedInterface.position).to.deep.equal({
         file: "/file.ts",
         line: 2,
@@ -82,7 +82,7 @@ describe("Compiler: Interface", function() {
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(symbol);
 
-    it("should merge multiple interfaces with the same name", function() {
+    it("should merge multiple interfaces with the same name", () => {
       expect((exportedInterface as Interface).members.length).to.equal(2);
       expect((exportedInterface as Interface).members[0]!.name).to.equal("a");
       expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(EntityKind.String);
@@ -110,7 +110,7 @@ describe("Compiler: Interface", function() {
     const exportedInterfaceA = exportedSymbols.find(s => s.name === "InterfaceA")! as Interface;
     const exportedInterfaceB = exportedSymbols.find(s => s.name === "InterfaceB")! as Interface;
 
-    it("should be able to handle recursive interfaces", function() {
+    it("should be able to handle recursive interfaces", () => {
       expect((exportedInterfaceA as Interface).members.length).to.equal(1);
       expect((exportedInterfaceB as Interface).members.length).to.equal(1);
       expect((exportedInterfaceA as Interface).members[0]!.name).to.equal("b");

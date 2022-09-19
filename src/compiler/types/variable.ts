@@ -28,7 +28,7 @@ export function createVariableBySymbol(symbol: Symbol): Variable {
     kind,
     id,
     description,
-    name: name
+    name
   };
 
 }
