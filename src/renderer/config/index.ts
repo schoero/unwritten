@@ -1,5 +1,6 @@
 import { CategoryNames, RenderCategories } from "src/types/renderer.js";
 import { TypeKind } from "types/types.js";
+
 import { Complete, Config, Encapsulation, RenderConfig, TypeSources } from "../../types/config.js";
 import { defaultRenderConfig } from "./default-renderconfig.js";
 import { defaultTypeSources } from "./default-typescources.js";
@@ -7,12 +8,12 @@ import { defaultTypeSources } from "./default-typescources.js";
 
 let _config: Config | undefined;
 
-interface FinalRenderConfig extends Omit<Complete<RenderConfig>, "typeEncapsulation" | "parameterEncapsulation"> {
-  typeEncapsulation: Encapsulation;
+interface FinalRenderConfig extends Omit<Complete<RenderConfig>, "parameterEncapsulation" | "typeEncapsulation"> {
+  literalTypeEncapsulation: Encapsulation;
   parameterEncapsulation: Encapsulation;
   propertyEncapsulation: Encapsulation;
   tagEncapsulation: Encapsulation;
-  literalTypeEncapsulation: Encapsulation;
+  typeEncapsulation: Encapsulation;
 }
 
 export function setConfig(config: Config) {

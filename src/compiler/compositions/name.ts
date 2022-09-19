@@ -26,6 +26,6 @@ export function getNameByType(type: Type): string | undefined {
 
 
 export function getNameByTypeNode(typeNode: TypeNode): string | undefined {
-  //@ts-expect-error
+  // @ts-expect-error
   return typeNode.intrinsicName;
 }

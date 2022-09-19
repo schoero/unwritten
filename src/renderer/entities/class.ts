@@ -1,6 +1,7 @@
 import { getRenderConfig } from "renderer/config/index.js";
 import { RenderedClassForDocumentation, RenderedClassForTableOfContents } from "src/types/renderer.js";
 import { renderLink } from "src/utils/renderer.js";
+
 import { ClassEntity } from "../../types/entities.js";
 import { renderFunctionEntityForDocumentation, renderFunctionEntityForTableOfContents } from "./function.js";
 import { renderPropertyEntityForDocumentation, renderPropertyEntityForTableOfContents } from "./property.js";
@@ -20,11 +21,13 @@ export function renderClassEntityForTableOfContents(classEntity: ClassEntity): R
   if(classEntity.ctor !== undefined){
     const constructorTitle = renderConfig.categoryNames.constructor;
     const renderedConstructor = renderFunctionEntityForTableOfContents(classEntity.ctor);
+
     constructors = [[constructorTitle, [renderedConstructor]]];
   }
   if(classEntity.properties !== undefined){
     const propertiesTitle = renderConfig.categoryNames.properties;
     const renderedProperties = classEntity.properties.map(renderPropertyEntityForTableOfContents);
+
     properties = [[propertiesTitle, [renderedProperties]]];
   }
   if(classEntity.methods !== undefined && classEntity.methods.length > 0){
@@ -33,16 +36,19 @@ export function renderClassEntityForTableOfContents(classEntity: ClassEntity): R
       acc.push(...renderFunctionEntityForTableOfContents(method));
       return acc;
     }, <string[]>[]);
+
     methods = [[nameTitle, [renderedMethods]]];
   }
   if(classEntity.setters !== undefined){
     const settersTitle = renderConfig.categoryNames.setters;
     const renderedSetters = classEntity.setters.map(renderFunctionEntityForTableOfContents);
+
     setters = [[settersTitle, renderedSetters]];
   }
   if(classEntity.getters !== undefined){
     const gettersTitle = renderConfig.categoryNames.getters;
     const renderedGetters = classEntity.getters.map(renderFunctionEntityForTableOfContents);
+
     getters = [[gettersTitle, renderedGetters]];
   }
 
@@ -75,26 +81,31 @@ export function renderClassEntityForDocumentation(classEntity: ClassEntity): Ren
   if(classEntity.ctor !== undefined){
     const constructorTitle = renderConfig.categoryNames.constructor;
     const renderedConstructor = renderFunctionEntityForDocumentation(classEntity.ctor);
+
     constructor = { [constructorTitle]: renderedConstructor };
   }
   if(classEntity.properties !== undefined){
     const propertiesTitle = renderConfig.categoryNames.properties;
     const renderedProperties = classEntity.properties.map(renderPropertyEntityForDocumentation);
+
     properties = { [propertiesTitle]: renderedProperties };
   }
   if(classEntity.methods !== undefined){
     const methodsTitle = renderConfig.categoryNames.methods;
     const renderedMethods = classEntity.methods.map(renderFunctionEntityForDocumentation);
+
     methods = { [methodsTitle]: renderedMethods };
   }
   if(classEntity.setters !== undefined){
     const settersTitle = renderConfig.categoryNames.setters;
     const renderedSetters = classEntity.setters.map(renderFunctionEntityForDocumentation);
+
     setters = { [settersTitle]: renderedSetters };
   }
   if(classEntity.getters !== undefined){
     const gettersTitle = renderConfig.categoryNames.getters;
     const renderedGetters = classEntity.getters.map(renderFunctionEntityForDocumentation);
+
     getters = { [gettersTitle]: renderedGetters };
   }
 

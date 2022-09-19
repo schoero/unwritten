@@ -1,6 +1,6 @@
-const _registry: Map<string, (string | number)[]> = new Map();
+const _registry = new Map<string, (number | string)[]>();
 
-export function createAnchor(name: string, id: string | number): string {
+export function createAnchor(name: string, id: number | string): string {
 
   if(_registry.has(name)){
     const idArray = _registry.get(name)!;
@@ -18,7 +18,7 @@ export function createAnchor(name: string, id: string | number): string {
 }
 
 
-function getAnchor(name: string, id: string | number): string {
+function getAnchor(name: string, id: number | string): string {
 
   if(!_registry.has(name)){
     return name;

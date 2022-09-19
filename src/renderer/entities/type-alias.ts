@@ -1,6 +1,7 @@
 import { RenderedTypeAliasForDocumentation, RenderedTypeAliasForTableOfContents } from "src/types/renderer.js";
 import { renderLink } from "src/utils/renderer.js";
 import { TypeAliasEntity } from "types/entities.js";
+
 import { renderType } from "./type.js";
 
 

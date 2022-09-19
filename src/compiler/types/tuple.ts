@@ -1,5 +1,4 @@
 import { ElementFlags, Symbol, TupleTypeNode, TupleTypeReference, Type, TypeAliasDeclaration } from "typescript";
-
 import { assert } from "vitest";
 
 import { isTupleTypeNode, isTypeAliasDeclaration } from "../../typeguards/ts.js";

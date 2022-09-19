@@ -3,13 +3,13 @@ import { EntityKind } from "../../types/entities.js";
 import { RenderCategories } from "../../types/renderer.js";
 
 export const defaultRenderConfig: Complete<RenderConfig> = {
-  "parameterEncapsulation": ["`", "`"],
-  "propertyEncapsulation": ["`", "`"],
-  "typeEncapsulation":  ["&lt;", "&gt;"],
-  "linkBasicTypesToExternalDocs": true,
-  "tagEncapsulation":  ["`", "`"],
-  "literalTypeEncapsulation": ["`", "`"],
-  "renderOrder": [
+  parameterEncapsulation: ["`", "`"],
+  propertyEncapsulation: ["`", "`"],
+  typeEncapsulation:  ["&lt;", "&gt;"],
+  linkBasicTypesToExternalDocs: true,
+  tagEncapsulation:  ["`", "`"],
+  literalTypeEncapsulation: ["`", "`"],
+  renderOrder: [
     EntityKind.Namespace,
     EntityKind.Module,
     EntityKind.Function,
@@ -19,7 +19,7 @@ export const defaultRenderConfig: Complete<RenderConfig> = {
     EntityKind.TypeAlias,
     EntityKind.Interface
   ],
-  "categoryNames": {
+  categoryNames: {
     [RenderCategories.Function]: "Function",
     [RenderCategories.Functions]: "Functions",
     [RenderCategories.Class]: "Class",

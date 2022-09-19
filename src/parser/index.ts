@@ -1,5 +1,4 @@
 import { Program, Symbol } from "typescript";
-
 import { assert } from "vitest";
 
 import { cacheSymbol, createSymbolCache } from "../compiler/cache/index.js";
@@ -21,16 +20,13 @@ import { resolveSymbolInCaseOfImport } from "../utils/ts.js";
 
 
 export function parse(moduleOrNamespaceSymbol: Symbol) {
-  return createSymbolCache(() => {
-    return getExportedSymbols(moduleOrNamespaceSymbol).map(cacheSymbol).reduce((parsedSymbols, exportedSymbol) => {
-      const parsedSymbol = parseSymbol(exportedSymbol);
-      if(parsedSymbol){
-        parsedSymbols.push(parsedSymbol);
-      }
-      return parsedSymbols;
-    }, <Entities[]>[]);
-
-  });
+  return createSymbolCache(() => getExportedSymbols(moduleOrNamespaceSymbol).map(cacheSymbol).reduce((parsedSymbols, exportedSymbol) => {
+    const parsedSymbol = parseSymbol(exportedSymbol);
+    if(parsedSymbol){
+      parsedSymbols.push(parsedSymbol);
+    }
+    return parsedSymbols;
+  }, <Entities[]>[]));
 }
 
 

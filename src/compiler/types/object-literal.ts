@@ -1,5 +1,4 @@
 import { isObjectLiteralElement, ObjectLiteralElement, Symbol, Type } from "typescript";
-
 import { assert } from "vitest";
 
 import { EntityKind, ObjectLiteral } from "../../types/types.js";

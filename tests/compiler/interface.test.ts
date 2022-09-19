@@ -121,5 +121,4 @@ describe("Compiler: Interface", function() {
 
   }
 
-
 });

@@ -42,7 +42,7 @@ function getLiteralTypeKind(type: Type): LiteralTypeKinds {
 }
 
 
-function getValueByType(type: Type): string | number | boolean | BigInt {
+function getValueByType(type: Type): BigInt | boolean | number | string {
 
   if(isStringLiteralType(type)){
     return type.value;

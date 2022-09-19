@@ -17,16 +17,16 @@ export function cacheSymbol(symbol: ts.Symbol) {
 
   ensureSymbolHasId(symbol);
 
-  //@ts-expect-error
+  // @ts-expect-error
   getSymbolCache().push(symbol.id);
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(symbol);
 
   ensureSymbolHasId(resolvedSymbol);
 
-  //@ts-expect-error
+  // @ts-expect-error
   if(resolvedSymbol.id !== symbol.id){
-  //@ts-expect-error
+  // @ts-expect-error
     getSymbolCache().push(resolvedSymbol.id);
   }
 
@@ -41,7 +41,7 @@ export function removeCachedSymbol(symbol: ts.Symbol) {
 
   const symbolCache = getSymbolCache();
 
-  //@ts-expect-error
+  // @ts-expect-error
   const index = symbolCache.indexOf(symbol.id);
 
   if(index !== -1){
@@ -64,7 +64,7 @@ export function isSymbolCached(symbol: ts.Symbol): boolean {
 
   ensureSymbolHasId(symbol);
 
-  //@ts-expect-error
+  // @ts-expect-error
   return getSymbolCache().includes(symbol.id);
 
 }

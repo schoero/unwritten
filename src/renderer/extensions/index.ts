@@ -1,6 +1,5 @@
-import { assert } from "vitest";
-
 import { RenderExtension } from "types/renderer.js";
+import { assert } from "vitest";
 
 
 let _renderExtension: RenderExtension | undefined;

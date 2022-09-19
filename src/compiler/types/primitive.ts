@@ -1,4 +1,5 @@
 import { Type } from "typescript";
+
 import {
   isAnyType,
   isBigIntType,
@@ -11,7 +12,6 @@ import {
   isVoidType
 } from "../../typeguards/ts.js";
 import { EntityKind, PrimitiveTypeKinds, PrimitiveTypes } from "../../types/types.js";
-
 import { getIdByType } from "../compositions/id.js";
 
 

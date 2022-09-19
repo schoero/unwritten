@@ -1,5 +1,4 @@
 import { Symbol, TypeAliasDeclaration, TypeNode } from "typescript";
-
 import { assert } from "vitest";
 
 import { isTypeAliasDeclaration } from "../../typeguards/ts.js";

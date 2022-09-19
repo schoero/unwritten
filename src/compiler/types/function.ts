@@ -1,6 +1,5 @@
 import { Symbol, Type } from "typescript";
 
-
 import { isFunctionLikeDeclaration } from "../../typeguards/ts.js";
 import { EntityKind, FromSymbol, FromType, Function } from "../../types/types.js";
 import { functionOverloadDeclarationFilter } from "../../utils/filter.js";

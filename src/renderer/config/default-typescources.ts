@@ -1,4 +1,5 @@
 import { TypeKind } from "types/types.js";
+
 import { Complete, TypeSources } from "../../types/config.js";
 
 export const defaultTypeSources: Complete<TypeSources> = {

@@ -1,5 +1,4 @@
 import { FunctionLikeDeclaration, SignatureDeclaration, Symbol, Type } from "typescript";
-
 import { assert } from "vitest";
 
 import {

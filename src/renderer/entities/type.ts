@@ -16,6 +16,7 @@ import {
   TypeReferenceType,
   UnionType
 } from "types/types.js";
+
 import {
   isArrayType,
   isBasicType,
@@ -67,7 +68,7 @@ export function renderType(type: Type<TypeKind>, enableEncapsulation: boolean = 
 }
 
 
-function _renderLiteralType(type: StringLiteralType | NumberLiteralType | BooleanLiteralType | BigIntLiteralType) {
+function _renderLiteralType(type: BigIntLiteralType | BooleanLiteralType | NumberLiteralType | StringLiteralType) {
   if(isStringLiteralType(type)){
     return encapsulate(`"${type.value}"`, config.renderConfig.literalTypeEncapsulation);
   } else {
@@ -88,9 +89,7 @@ function _renderBasicType(type: BasicType<BasicTypeKinds>): string {
 
 
 function _renderUnionType(type: UnionType) {
-  return type.types.map(type => {
-    return renderType(type, false);
-  }).join(" | ");
+  return type.types.map(type => renderType(type, false)).join(" | ");
 }
 
 
@@ -113,9 +112,7 @@ function _renderTupleType(type: TupleType) {
 
 
 function _renderIntersectionType(type: IntersectionType) {
-  return type.types.map(type => {
-    return renderType(type, false);
-  }).join(" & ");
+  return type.types.map(type => renderType(type, false)).join(" & ");
 }
 
 

@@ -22,24 +22,9 @@ export type Complete<Config> = {
 export interface RenderConfig {
 
   /**
-   * Defines how parameters should be encapsulated in the rendered output.
-   */
-  parameterEncapsulation?: boolean | Encapsulation;
-
-  /**
-   * Defines how properties should be encapsulated in the rendered output.
-   */
-  propertyEncapsulation?: boolean | Encapsulation;
-
-  /**
-   * Defines how type annotations should be encapsulated in the rendered output.
-   */
-  typeEncapsulation?: boolean | Encapsulation;
-
-  /**
-   * Defines how literal type annotations should be encapsulated in the rendered output.
-   */
-  literalTypeEncapsulation?: boolean | Encapsulation;
+    * Defines the title of the categories for the rendered entities.
+    */
+  categoryNames?: CategoryNames;
 
   /**
    * Defines whether basic types should be linked to external documentation.
@@ -48,19 +33,34 @@ export interface RenderConfig {
   linkBasicTypesToExternalDocs?: boolean;
 
   /**
-   * Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output.
+   * Defines how literal type annotations should be encapsulated in the rendered output.
    */
-   tagEncapsulation?: boolean | Encapsulation;
+  literalTypeEncapsulation?: Encapsulation | boolean;
 
-   /**
+  /**
+   * Defines how parameters should be encapsulated in the rendered output.
+   */
+  parameterEncapsulation?: Encapsulation | boolean;
+
+  /**
+   * Defines how properties should be encapsulated in the rendered output.
+   */
+  propertyEncapsulation?: Encapsulation | boolean;
+
+  /**
     * Defines the order in which entities should be rendered.
     */
-   renderOrder?: ExportableEntities["kind"][];
+  renderOrder?: ExportableEntities["kind"][];
 
-   /**
-    * Defines the title of the categories for the rendered entities.
-    */
-   categoryNames?: CategoryNames;
+  /**
+   * Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output.
+   */
+  tagEncapsulation?: Encapsulation | boolean;
+
+  /**
+   * Defines how type annotations should be encapsulated in the rendered output.
+   */
+  typeEncapsulation?: Encapsulation | boolean;
 
 }
 

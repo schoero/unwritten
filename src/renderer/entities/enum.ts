@@ -1,5 +1,6 @@
 import { renderLink } from "src/utils/renderer.js";
 import { EnumEntity } from "types/entities.js";
+
 import { RenderedEnumForDocumentation, RenderedEnumForTableOfContents } from "../../types/renderer.js";
 
 
@@ -13,7 +14,7 @@ export function renderEnumEntityForDocumentation(enumEntity: EnumEntity): Render
 
   const enumName = enumEntity.name;
   const description = enumEntity.description;
-  const members = (enumEntity.members.map(member => member.name));
+  const members = enumEntity.members.map(member => member.name);
 
   return {
     [enumName]: [

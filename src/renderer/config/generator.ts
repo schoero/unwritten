@@ -24,7 +24,7 @@ export function generateConfig() {
   //-- Add schema to config
 
   const config: ConfigWithSchema = {
-    "$schema": "https://raw.githubusercontent.com/schoero/doc-creator/release/schemas/renderer/config.json",
+    $schema: "https://raw.githubusercontent.com/schoero/doc-creator/release/schemas/renderer/config.json",
     ...getConfig()
   };
 

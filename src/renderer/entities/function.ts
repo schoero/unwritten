@@ -11,6 +11,7 @@ import {
   FunctionLikeEntityKinds,
   FunctionOverload
 } from "types/entities.js";
+
 import { renderParameterEntitiesForSignature, renderParameterEntityForDocumentation } from "./parameter.js";
 import { renderType } from "./type.js";
 

@@ -1,5 +1,4 @@
 import { PropertyAssignment, PropertyDeclaration, PropertySignature, Symbol } from "typescript";
-
 import { assert } from "vitest";
 
 import { isPropertyAssignment, isPropertyDeclaration, isPropertySignature } from "../../typeguards/ts.js";

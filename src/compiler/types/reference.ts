@@ -1,5 +1,4 @@
 import { Symbol, TupleTypeReference, TypeReference, TypeReferenceNode } from "typescript";
-
 import { assert } from "vitest";
 
 import { isType, isTypeNode } from "../../typeguards/ts.js";

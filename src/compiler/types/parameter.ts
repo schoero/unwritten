@@ -1,10 +1,9 @@
 import { ParameterDeclaration } from "typescript";
-
 import { assert } from "vitest";
-import { EntityKind, Parameter } from "../../types/types.js";
-import { getParameterDescription } from "../compositions/jsdoc.js";
 
+import { EntityKind, Parameter } from "../../types/types.js";
 import { getIdByDeclaration } from "../compositions/id.js";
+import { getParameterDescription } from "../compositions/jsdoc.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { getTypeByDeclaration } from "../compositions/type.js";

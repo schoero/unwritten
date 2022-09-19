@@ -1,24 +1,25 @@
 import { Declaration, Symbol, Type, TypeNode } from "typescript";
+
 import { getContext } from "../context/index.js";
 
 
 export function getIdBySymbol(symbol: Symbol): number {
-  //@ts-expect-error
+  // @ts-expect-error
   return symbol.id;
 }
 
 export function getIdByDeclaration(declaration: Declaration): number {
-  //@ts-expect-error
+  // @ts-expect-error
   return declaration.id;
 }
 
 export function getIdByType(type: Type): number {
-  //@ts-expect-error
+  // @ts-expect-error
   return type.id;
 }
 
 export function getIdByTypeNode(typeNode: TypeNode): number {
-  //@ts-expect-error
+  // @ts-expect-error
   return typeNode.id;
 }
 

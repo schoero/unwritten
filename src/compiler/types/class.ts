@@ -1,5 +1,4 @@
 import { ClassLikeDeclaration, Symbol, Type } from "typescript";
-
 import { assert } from "vitest";
 
 import {
@@ -104,7 +103,7 @@ function _getSymbolsByTypeFromClassLikeDeclaration(classLikeDeclaration: ClassLi
   const declarations = classLikeDeclaration.members.filter(filter);
 
   const symbols = declarations.reduce((acc, declaration) => {
-    //@ts-expect-error
+    // @ts-expect-error
     const symbol = getContext().checker.getSymbolAtLocation(classLikeDeclaration) ?? declaration.symbol;
     if(symbol !== undefined && acc.includes(symbol) === false){
       acc.push(symbol);

@@ -1,55 +1,55 @@
 
 export interface RenderExtension {
-  name: string;
   fileExtension: string;
+  name: string;
   renderAnchorLink: (text: string, anchor: string) => string;
-  renderSourceCodeLink: (text: string, file: string, line: number, column: number) => string;
-  renderHyperLink: (text: string, url: string) => string;
-  renderNewLine: () => string;
-  renderLineBreak: () => string;
-  renderParagraph: (text: string) => string;
-  renderList: (items: string[]) => string;
-  renderListStart: () => string | void | undefined;
-  renderListEnd: () => string | void | undefined;
-  renderListItem: (item: string) => string;
-  renderTitle: (title: string, size: number, anchor?: string) => string;
-  renderHorizontalRule: () => string;
-  renderStrikeThroughText: (text: string) => string;
   renderBoldText: (text: string) => string;
-  renderItalicText: (text: string) => string;
-  renderUnderlineText: (text: string) => string;
   renderCode: (code: string, language?: string) => string;
+  renderHorizontalRule: () => string;
+  renderHyperLink: (text: string, url: string) => string;
+  renderItalicText: (text: string) => string;
+  renderLineBreak: () => string;
+  renderList: (items: string[]) => string;
+  renderListEnd: () => string | undefined | void;
+  renderListItem: (item: string) => string;
+  renderListStart: () => string | undefined | void;
+  renderNewLine: () => string;
+  renderParagraph: (text: string) => string;
   renderSmallText: (text: string) => string;
+  renderSourceCodeLink: (text: string, file: string, line: number, column: number) => string;
+  renderUnderlineText: (text: string) => string;
+  renderTitle: (title: string, size: number, anchor?: string) => string;
+  renderStrikeThroughText: (text: string) => string;
   renderWarning: (text: string) => string;
 }
 
 export enum RenderCategories {
-  Function = "function",
-  Functions = "functions",
   Class = "class",
   Classes = "classes",
   Constructor = "constructor",
   Constructors = "constructors",
-  Property = "property",
-  Properties = "properties",
-  Method = "method",
-  Methods = "methods",
-  Setter = "setter",
-  Setters = "setters",
+  Enum = "enum",
+  Enums = "enums",
+  Function = "function",
+  Functions = "functions",
   Getter = "getter",
   Getters = "getters",
   Interface = "interface",
   Interfaces = "interfaces",
-  Enum = "enum",
-  Enums = "enums",
-  TypeAlias = "type",
+  Method = "method",
+  Methods = "methods",
+  Module = "module",
+  Setters = "setters",
+  Namespace = "namespace",
+  Namespaces = "namespaces",
+  Properties = "properties",
   TypeAliases = "types",
   Variable = "variable",
   Variables = "variables",
-  Namespace = "namespace",
-  Namespaces = "namespaces",
-  Module = "module",
-  Modules = "modules",
+  Property = "property",
+  TypeAlias = "type",
+  Setter = "setter",
+  Modules = "modules"
 }
 
 export type CategoryNames = {
@@ -59,25 +59,22 @@ export type CategoryNames = {
 
 //-- Renderer Object
 
-export type RenderObject = string |
-  RenderedMultilineContent |
-  RenderedTitle |
-  RenderedList;
+export type RenderObject = RenderedList | RenderedMultilineContent | RenderedTitle | string;
 
 export type RenderedTitle = {
   [title: string]: RenderObject;
 };
 
-export type RenderedMultilineContent = (string | undefined | RenderedTitle | RenderedList | RenderObject)[];
+export type RenderedMultilineContent = (RenderedList | RenderedTitle | RenderObject | string | undefined)[];
 
-export type RenderedList = [RenderObject[] | RenderedMultilineContent];
+export type RenderedList = [RenderedMultilineContent | RenderObject[]];
 
 
 
 //-- Rendered entities
 
-export type RenderedEntitiesForTableOfContents = RenderedFunctionForTableOfContents | RenderedClassForTableOfContents | RenderedInterfaceForTableOfContents | RenderedEnumForTableOfContents | RenderedNamespaceForTableOfContents | RenderedVariableForTableOfContents | RenderedTypeAliasForTableOfContents;
-export type RenderedEntitiesForDocumentation = RenderedFunctionForDocumentation | RenderedClassForDocumentation | RenderedInterfaceForDocumentation | RenderedEnumForDocumentation | RenderedNamespaceForDocumentation | RenderedVariableForDocumentation | RenderedObjectLiteralVariable | RenderedTypeAliasForDocumentation;
+export type RenderedEntitiesForTableOfContents = RenderedClassForTableOfContents | RenderedEnumForTableOfContents | RenderedFunctionForTableOfContents | RenderedInterfaceForTableOfContents | RenderedNamespaceForTableOfContents | RenderedTypeAliasForTableOfContents | RenderedVariableForTableOfContents;
+export type RenderedEntitiesForDocumentation = RenderedClassForDocumentation | RenderedEnumForDocumentation | RenderedFunctionForDocumentation | RenderedInterfaceForDocumentation | RenderedNamespaceForDocumentation | RenderedObjectLiteralVariable | RenderedTypeAliasForDocumentation | RenderedVariableForDocumentation;
 
 
 //-- Entity categories
@@ -206,6 +203,6 @@ export type RenderedTypeAliasForTableOfContents = string;
 export type RenderedTypeAliasForDocumentation = {
   [typeAliasName: string]: [
     description: string | undefined,
-    type: string | undefined,
+    type: string | undefined
   ];
 };

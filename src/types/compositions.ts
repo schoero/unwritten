@@ -5,7 +5,7 @@ export type Example = string;
 export type Modifier = string;
 
 export type Position = {
+  column: number;
   file: string;
   line: number;
-  column: number;
 };

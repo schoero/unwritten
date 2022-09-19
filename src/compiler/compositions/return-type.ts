@@ -1,5 +1,4 @@
 import { Signature } from "typescript";
-
 import { assert } from "vitest";
 
 import { getReturnTypeDescription } from "./jsdoc.js";

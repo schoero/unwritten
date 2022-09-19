@@ -1,5 +1,4 @@
 import { PropertySignature, Symbol, TypeElement } from "typescript";
-
 import { assert } from "vitest";
 
 import { isPropertySignature } from "../../typeguards/ts.js";
@@ -33,7 +32,7 @@ export function createMemberBySymbol(memberSymbol: Symbol): FromSymbol<FromDecla
 export function createMemberByDeclaration(declaration: PropertySignature | TypeElement): FromDeclaration<Member> {
 
   const id = getIdByDeclaration(declaration);
-  //@ts-expect-error
+  // @ts-expect-error
   const type = declaration.type ? getTypeByTypeNode(declaration.type) : getTypeByDeclaration(declaration);
   const example = getExampleByDeclaration(declaration);
   const name = getNameByDeclaration(declaration);

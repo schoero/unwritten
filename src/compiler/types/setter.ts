@@ -1,6 +1,5 @@
 import { Symbol, Type } from "typescript";
 
-
 import { isSetterDeclaration } from "../../typeguards/ts.js";
 import { EntityKind, FromSymbol, FromType, Setter } from "../../types/types.js";
 import { functionOverloadDeclarationFilter } from "../../utils/filter.js";

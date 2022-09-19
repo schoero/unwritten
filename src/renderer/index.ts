@@ -36,6 +36,7 @@ import {
   RenderedEntityCategoryForTableOfContents,
   RenderObject
 } from "types/renderer.js";
+
 import {
   renderNamespaceEntityForDocumentation,
   renderNamespaceEntityForTableOfContents
@@ -76,7 +77,7 @@ export function renderEntitiesForTableOfContents(entities: ExportableEntities[])
     const existingCategory = tableOfContents.find(category => category[0]?.[0] === categoryName);
 
     if(existingCategory === undefined){
-      tableOfContents.push([[categoryName, [(<RenderedEntitiesForTableOfContents[]>[])]]]);
+      tableOfContents.push([[categoryName, [<RenderedEntitiesForTableOfContents[]>[]]]]);
     }
 
     const category = tableOfContents.find(category => category[0]?.[0] === categoryName)!;
@@ -193,6 +194,7 @@ export function renderRenderObject(renderObject: RenderObject): string {
         // For semantically valid html we need to render nested lists inside the current list item
         if(element[0][i + 1] !== undefined && isRenderedList(element[0][i + 1]!)){
           const renderedNestedElement = element[0][i + 1] !== undefined ? renderExtension.renderNewLine() + renderNestedElement(element[0][i + 1]!) : "";
+
           currentOutput.push(renderExtension.renderListItem(renderNestedElement(element[0][i]!) + renderedNestedElement));
           i++; // Skip next element
           continue;
@@ -214,6 +216,7 @@ export function renderRenderObject(renderObject: RenderObject): string {
 
     if(isRenderedMultilineContent(element)){
       const renderedElements = element.filter(el => el !== undefined).map(el => renderNestedElement(el!));
+
       currentOutput.push(...renderedElements);
     }
 
@@ -225,10 +228,12 @@ export function renderRenderObject(renderObject: RenderObject): string {
       for(const key in element){
 
         const title = renderExtension.renderTitle(key, size);
+
         currentOutput.push(title);
         size++;
 
         const content = renderNestedElement(element[key]!);
+
         currentOutput.push(content);
         size--;
 

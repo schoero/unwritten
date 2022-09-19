@@ -1,4 +1,5 @@
 import { RenderedParameterForDocumentation } from "src/types/renderer.js";
+
 import { ParameterEntity } from "../../types/entities.js";
 import { encapsulate, spaceBetween } from "../../utils/renderer.js";
 import { config } from "../config/index.js";
@@ -26,7 +27,7 @@ export function renderParameterEntitiesForSignature(parameterEntities: Parameter
       if(parameterEntities![p]!.optional === true){
         joinedParameters += `[, ${renderedParameter}]`;
       } else {
-        joinedParameters += ", " + renderedParameter;
+        joinedParameters += `, ${ renderedParameter}`;
       }
     }
   }

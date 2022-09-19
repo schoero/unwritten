@@ -1,5 +1,4 @@
 import { InterfaceDeclaration, Symbol, Type } from "typescript";
-
 import { assert } from "vitest";
 
 import { isInterfaceDeclaration } from "../../typeguards/ts.js";
@@ -52,12 +51,10 @@ export function createInterfaceByType(type: Type): Interface {
 
 
 function _mergeMembers(declarations: ReturnType<typeof _createInterfaceByDeclaration>[]): Interface["members"] {
-  return declarations.reduce((acc, declaration) => {
-    return [
-      ...acc,
-      ...declaration.members
-    ];
-  }, <Interface["members"]>[]);
+  return declarations.reduce((acc, declaration) => [
+    ...acc,
+    ...declaration.members
+  ], <Interface["members"]>[]);
 }
 
 

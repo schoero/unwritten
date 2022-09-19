@@ -1,5 +1,4 @@
 import { FunctionLikeDeclaration, SignatureDeclaration } from "typescript";
-
 import { assert } from "vitest";
 
 import { EntityKind, Signature } from "../../types/types.js";

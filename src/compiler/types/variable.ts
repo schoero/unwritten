@@ -1,5 +1,4 @@
 import { Symbol, Type, VariableDeclaration } from "typescript";
-
 import { assert } from "vitest";
 
 import { isVariableDeclaration } from "../../typeguards/ts.js";

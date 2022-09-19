@@ -1,4 +1,5 @@
 import { FunctionLikeDeclaration } from "typescript";
+
 import { getContext } from "../compiler/context/index.js";
 
 export function functionOverloadDeclarationFilter(declaration: FunctionLikeDeclaration) {

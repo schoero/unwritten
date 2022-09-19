@@ -3,6 +3,7 @@ import { RenderExtension } from "../../types/renderer.js";
 class HTMLRenderExtension implements RenderExtension {
 
   public name: string = "HTML";
+
   public fileExtension: string = ".html";
 
 

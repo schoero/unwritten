@@ -5,6 +5,7 @@ import {
   RenderedVariableForTableOfContents
 } from "src/types/renderer.js";
 import { renderLink } from "src/utils/renderer.js";
+
 import { VariableEntity } from "../../types/entities.js";
 import { renderPropertyEntityForDocumentation } from "./property.js";
 import { renderType } from "./type.js";
@@ -15,7 +16,7 @@ export function renderVariableEntityForTableOfContents(variableEntity: VariableE
 }
 
 
-export function renderVariableEntityForDocumentation(variableEntity: VariableEntity): RenderedVariableForDocumentation | RenderedObjectLiteralVariable {
+export function renderVariableEntityForDocumentation(variableEntity: VariableEntity): RenderedObjectLiteralVariable | RenderedVariableForDocumentation {
 
 
   //-- Special case for object literals

@@ -2,6 +2,7 @@ import { config } from "renderer/config/index.js";
 import { RenderedPropertyForDocumentation, RenderedPropertyForTableOfContents } from "src/types/renderer.js";
 import { encapsulate, renderLink, spaceBetween } from "src/utils/renderer.js";
 import { PropertyEntity } from "types/entities.js";
+
 import { renderType } from "./type.js";
 
 

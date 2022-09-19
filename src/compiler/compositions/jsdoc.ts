@@ -7,7 +7,7 @@ import { getContext } from "../context/index.js";
 
 export function getDescriptionByDeclaration(declaration: Declaration): string | undefined {
   // TODO: Find official way to get to the jsDoc comment
-  //@ts-expect-error
+  // @ts-expect-error
   const comment = declaration.jsDoc?.[0]?.comment;
   return comment === undefined ? undefined : comment.replace(/\r/g, "");
 }

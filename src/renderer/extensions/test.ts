@@ -3,6 +3,7 @@ import { RenderExtension } from "../../types/renderer.js";
 class TestRenderExtension implements RenderExtension {
 
   public name: string = "test";
+
   public fileExtension: string = ".txt";
 
   public renderAnchorLink(name: string, anchor: string): string {
@@ -90,6 +91,7 @@ class TestRenderExtension implements RenderExtension {
 
   private _textToAnchorLink(text: string): string {
     let link = text.toLowerCase();
+
     link = link.replace(/[^a-z0-9\s-]/gi, "");
     link = link.replace(/\s/g, "-");
     return link;

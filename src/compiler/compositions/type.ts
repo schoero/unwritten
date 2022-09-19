@@ -1,5 +1,4 @@
 import ts, { Declaration, Symbol, Type, TypeNode } from "typescript";
-
 import { assert } from "vitest";
 
 import {
