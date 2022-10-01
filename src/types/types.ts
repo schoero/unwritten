@@ -233,6 +233,7 @@ export interface Parameter extends Entity<EntityKind.Parameter> {
 export interface Class extends Entity<EntityKind.Class> {
   getters: Getter[];
   methods: Method[];
+  modifiers: Modifiers[];
   properties: Property[];
   setters: Setter[];
   ctor?: Constructor;

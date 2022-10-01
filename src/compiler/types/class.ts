@@ -12,6 +12,7 @@ import {
 import { Class, EntityKind, Getter, Method, Property, Setter } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
+import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { getContext } from "../context/index.js";
@@ -54,6 +55,7 @@ export function createClassByDeclaration(declaration: ClassLikeDeclaration): Cla
   const position = getPositionByDeclaration(declaration);
   const example = getExampleByDeclaration(declaration);
   const description = getDescriptionByDeclaration(declaration);
+  const modifiers = getModifiersByDeclaration(declaration);
 
   const id = getIdByDeclaration(declaration);
   const kind = EntityKind.Class;
@@ -67,6 +69,7 @@ export function createClassByDeclaration(declaration: ClassLikeDeclaration): Cla
     id,
     kind,
     methods: _mergeWithInheritedClass(methods, heritage?.methods ?? []),
+    modifiers,
     position,
     properties: _mergeWithInheritedClass(properties, heritage?.properties ?? []),
     setters: _mergeWithInheritedClass(setters, heritage?.setters ?? [])

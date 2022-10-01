@@ -68,6 +68,7 @@ describe("Compiler: Class", () => {
     });
 
     it("should handle modifiers correctly", () => {
+      expect(exportedClass.modifiers).to.contain(Modifiers.Abstract);
       expect(exportedClass.properties[0]!.modifiers).to.contain(Modifiers.Public);
       expect(exportedClass.properties[1]!.modifiers).to.contain(Modifiers.Static);
       expect(exportedClass.properties[2]!.modifiers).to.contain(Modifiers.Private);
@@ -84,11 +85,11 @@ describe("Compiler: Class", () => {
         public add(a: number, b: number, c?: number): number {
           return a + b + c ?? 0;
         }
-        
+
         public getThis() {
           return this;
         }
-        
+
       }
     `;
 
@@ -114,7 +115,7 @@ describe("Compiler: Class", () => {
   {
     const testFileContent = `
       export class Class {
-        
+
         public set kind(value: string) {
           this._kind = value;
         }
