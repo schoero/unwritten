@@ -3,10 +3,10 @@ import { assert } from "vitest";
 
 import { cacheSymbol, createSymbolCache } from "../compiler/cache/index.js";
 import { getContext } from "../compiler/context/index.js";
+import { createTypeAliasBySymbol } from "../compiler/types/alias.js";
 import { createClassBySymbol } from "../compiler/types/class.js";
 import { createFunctionBySymbol } from "../compiler/types/function.js";
 import { createInterfaceBySymbol } from "../compiler/types/interface.js";
-import { createTypeAliasBySymbol } from "../compiler/types/type-alias.js";
 import { createVariableBySymbol } from "../compiler/types/variable.js";
 import {
   isClassSymbol,
@@ -56,7 +56,7 @@ export function getEntryFileSymbolFromProgram(program: Program) {
 
   const entryFile = program.getSourceFile(rootFileName);
 
-  assert(entryFile, "Entry file not found.");
+  assert(entryFile, `Entry file not found. ${rootFileName}`);
 
   const entryFileSymbol = getContext().checker.getSymbolAtLocation(entryFile);
 

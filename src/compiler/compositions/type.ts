@@ -9,6 +9,7 @@ import {
   isLiteralType,
   isObjectLiteralType,
   isPrimitiveType,
+  isThisType,
   isTupleTypeReferenceType,
   isTypeLiteralType,
   isTypeReferenceType,
@@ -16,7 +17,7 @@ import {
 } from "../../typeguards/ts.js";
 import { Entities } from "../../types/types.js";
 import { getContext } from "../context/index.js";
-import { createArrayByArrayTypeNode, createArrayByTypeReferenceNode } from "../types/array.js";
+import { createArrayByArrayTypeNode } from "../types/array.js";
 import { createFunctionByType } from "../types/function.js";
 import { createInstanceByType } from "../types/instance.js";
 import { createInterfaceByType } from "../types/interface.js";
@@ -25,9 +26,10 @@ import { createLiteralType } from "../types/literal.js";
 import { createObjectLiteralByType } from "../types/object-literal.js";
 import { createPrimitiveType } from "../types/primitive.js";
 import { createTypeReferenceByType, createTypeReferenceByTypeNode } from "../types/reference.js";
+import { createThisByType } from "../types/this.js";
 import { createTupleTypeByTypeReference } from "../types/tuple.js";
 import { createTypeLiteralByType } from "../types/type-literal.js";
-import { createUnionTypeByType } from "../types/union-type.js";
+import { createUnionTypeByType } from "../types/union.js";
 
 
 export function getTypeBySymbol(symbol: Symbol): Entities {
@@ -59,11 +61,18 @@ export function getTypeByTypeNode(typeNode: TypeNode): Entities {
 
   if(ts.isArrayTypeNode(typeNode)){
     return createArrayByArrayTypeNode(typeNode);
-  } else if(ts.isTypeReferenceNode(typeNode)){
-    if(typeNode.typeName.getText() === "Array" && typeNode.typeArguments && typeNode.typeArguments.length === 1){
-      return createArrayByTypeReferenceNode(typeNode);
-    }
   }
+
+  // if(ts.isTypeReferenceNode(typeNode)){
+
+
+  //   //-- Array
+
+  //   if(typeNode.typeName.getText() === "Array" && typeNode.typeArguments && typeNode.typeArguments.length === 1){
+  //     return createArrayByTypeReferenceNode(typeNode);
+  //   }
+
+  // }
 
 
   //-- Type references
@@ -75,7 +84,6 @@ export function getTypeByTypeNode(typeNode: TypeNode): Entities {
   return getTypeByType(type);
 
 }
-
 
 export function getTypeByType(type: Type): Entities {
 
@@ -104,6 +112,8 @@ export function getTypeByType(type: Type): Entities {
     return createIntersectionTypeByType(type);
   } else if(isInterfaceType(type)){
     return createInterfaceByType(type);
+  } else if(isThisType(type)){
+    return createThisByType(type);
   }
 
   throw new Error("Unsupported type");

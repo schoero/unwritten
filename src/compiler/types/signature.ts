@@ -4,6 +4,7 @@ import { assert } from "vitest";
 import { EntityKind, Signature } from "../../types/types.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
+import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getParametersBySignatureDeclaration } from "../compositions/parameters.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { getReturnTypeByCallSignature } from "../compositions/return-type.js";
@@ -22,16 +23,18 @@ export function createSignatureByDeclaration(declaration: FunctionLikeDeclaratio
   const parameters = getParametersBySignatureDeclaration(declaration);
   const returnType = getReturnTypeByCallSignature(signature);
   const description = getDescriptionByDeclaration(declaration);
+  const modifiers = getModifiersByDeclaration(declaration);
 
   const kind = EntityKind.Signature;
 
   return {
+    description,
+    example,
     id,
     kind,
-    example,
-    description,
-    position,
+    modifiers,
     parameters,
+    position,
     returnType
   };
 

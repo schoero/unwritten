@@ -12,9 +12,9 @@ export function getPositionByNode(declaration: Node) {
   const column = start.character;
 
   return {
+    column,
     file,
-    line,
-    column
+    line
   };
 
 }

@@ -1,8 +1,8 @@
 import { RenderedParameterForDocumentation } from "src/types/renderer.js";
 
+import { config } from "../../config/index.js";
 import { ParameterEntity } from "../../types/entities.js";
 import { encapsulate, spaceBetween } from "../../utils/renderer.js";
-import { config } from "../config/index.js";
 import { renderType } from "./type.js";
 
 

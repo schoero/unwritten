@@ -1,14 +1,14 @@
 import { Symbol, Type } from "typescript";
 
 import { isFunctionLikeDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, FromSymbol, FromType, Function } from "../../types/types.js";
+import { EntityKind, Function } from "../../types/types.js";
 import { functionOverloadDeclarationFilter } from "../../utils/filter.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createFunctionBySymbol(symbol: Symbol): FromSymbol<Function> {
+export function createFunctionBySymbol(symbol: Symbol): Function {
 
   const declarations = symbol.declarations?.filter(isFunctionLikeDeclaration).filter(functionOverloadDeclarationFilter) ?? [];
 
@@ -28,7 +28,7 @@ export function createFunctionBySymbol(symbol: Symbol): FromSymbol<Function> {
 }
 
 
-export function createFunctionByType(type: Type): FromType<Function> {
+export function createFunctionByType(type: Type): Function {
 
   const callSignatures = type.getCallSignatures();
   const declarations = callSignatures.map(s => s.getDeclaration());

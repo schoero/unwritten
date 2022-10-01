@@ -50,9 +50,9 @@ describe("Compiler: Variable", () => {
 
     it("should have a matching position", () => {
       expect(exportedVariable.position).to.deep.equal({
+        column: 19,
         file: "/file.ts",
-        line: 6,
-        column: 19
+        line: 6
       });
     });
   }
@@ -95,12 +95,12 @@ describe("Compiler: Variable", () => {
     it("should have matching properties", () => {
       expect((exportedVariable.type as ObjectLiteral).properties[0]!.name).to.equal("a");
       expect((exportedVariable.type as ObjectLiteral).properties[0]!.description).to.equal("A string literal.");
-      expect((exportedVariable.type as ObjectLiteral).properties[0]!.position).to.deep.equal({ file: "/file.ts", line: 11, column: 8 });
+      expect((exportedVariable.type as ObjectLiteral).properties[0]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 11 });
       expect((exportedVariable.type as ObjectLiteral).properties[0]!.type.kind).to.equal(EntityKind.StringLiteral);
       expect(((exportedVariable.type as ObjectLiteral).properties[0]!.type as LiteralType<EntityKind.NumberLiteral>).value).to.equal("hello");
       expect((exportedVariable.type as ObjectLiteral).properties[1]!.name).to.equal("b");
       expect((exportedVariable.type as ObjectLiteral).properties[1]!.example).to.equal("7");
-      expect((exportedVariable.type as ObjectLiteral).properties[1]!.position).to.deep.equal({ file: "/file.ts", line: 13, column: 8 });
+      expect((exportedVariable.type as ObjectLiteral).properties[1]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 13 });
       expect((exportedVariable.type as ObjectLiteral).properties[1]!.type.kind).to.equal(EntityKind.NumberLiteral);
       expect(((exportedVariable.type as ObjectLiteral).properties[1]!.type as LiteralType<EntityKind.NumberLiteral>).value).to.equal(7);
     });
@@ -111,9 +111,9 @@ describe("Compiler: Variable", () => {
 
     it("should have a matching position", () => {
       expect(exportedVariable.position).to.deep.equal({
+        column: 19,
         file: "/file.ts",
-        line: 9,
-        column: 19
+        line: 9
       });
     });
 

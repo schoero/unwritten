@@ -1,12 +1,11 @@
-import { ExportableEntities } from "./entities.js";
-import { CategoryNames } from "./renderer.js";
-import { EntityKind } from "./types.js";
 
 export interface Config {
+  /** Compiler configuration. */
+  compilerConfig?: CompilerConfig;
+  /** Links to external documentation of native types. */
+  externalTypes?: ExternalTypes;
   /** Render configuration. */
   renderConfig?: RenderConfig;
-  /** Links to external documentation of primitive types. */
-  typeSources?: TypeSources;
 }
 
 export interface ConfigWithSchema extends Config {
@@ -19,18 +18,20 @@ export type Complete<Config> = {
   [key in keyof Config]-?: Config[key];
 };
 
+
+export interface CompilerConfig {
+
+  /** An array of excluded directories. */
+  exclude?: string[];
+
+}
+
 export interface RenderConfig {
 
   /**
     * Defines the title of the categories for the rendered entities.
     */
-  categoryNames?: CategoryNames;
-
-  /**
-   * Defines whether basic types should be linked to external documentation.
-   * @default true
-   */
-  linkBasicTypesToExternalDocs?: boolean;
+  // categoryNames?: CategoryNames;
 
   /**
    * Defines how literal type annotations should be encapsulated in the rendered output.
@@ -50,7 +51,7 @@ export interface RenderConfig {
   /**
     * Defines the order in which entities should be rendered.
     */
-  renderOrder?: ExportableEntities["kind"][];
+  // renderOrder?: Entities["kind"][];
 
   /**
    * Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output.
@@ -64,15 +65,6 @@ export interface RenderConfig {
 
 }
 
-export interface TypeSources {
-  [EntityKind.String]?: string;
-  [EntityKind.Number]?: string;
-  [EntityKind.Boolean]?: string;
-  [EntityKind.BigInt]?: string;
-  [EntityKind.ObjectLiteral]?: string;
-  [EntityKind.Array]?: string;
-  [EntityKind.Function]?: string;
-  [EntityKind.Symbol]?: string;
-  [EntityKind.Undefined]?: string;
-  [EntityKind.Null]?: string;
+export interface ExternalTypes {
+  [key: string]: string;
 }

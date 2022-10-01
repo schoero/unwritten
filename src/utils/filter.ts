@@ -7,7 +7,7 @@ export function functionOverloadDeclarationFilter(declaration: FunctionLikeDecla
     return true;
   }
   const symbol = getContext().checker.getSymbolAtLocation(declaration.name!);
-  const declarations = symbol?.declarations;
+  const declarations = symbol?.declarations?.filter(d => d.kind === declaration.kind);
   return declarations?.length === 1;
 }
 

@@ -25,20 +25,20 @@ export function createInterfaceBySymbol(symbol: Symbol): Interface | MergedInter
   if(fromDeclarations.length === 1){
     return <Interface>{
       ...fromDeclarations[0],
+      description,
       id,
       kind,
-      name,
-      description
+      name
     };
   } else {
     const members = _mergeMembers(fromDeclarations);
     return <MergedInterface>{
       declarations: fromDeclarations,
-      members,
+      description,
       id,
       kind,
-      name,
-      description
+      members,
+      name
     };
   }
 
@@ -67,10 +67,10 @@ function _createInterfaceByDeclaration(declaration: InterfaceDeclaration): Inter
   const kind = EntityKind.Interface;
 
   return {
+    example,
     id,
     kind,
     members,
-    example,
     position
   };
 

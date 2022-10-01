@@ -21,8 +21,10 @@ export enum EntityKind {
   Null = "Null",
   Number = "Number",
   NumberLiteral = "NumberLiteral",
+  Object = "Object",
   ObjectLiteral = "ObjectLiteral",
   Parameter = "Parameter",
+  Promise = "Promise",
   Property = "Property",
   Reference = "Reference",
   Setter = "Setter",
@@ -30,6 +32,7 @@ export enum EntityKind {
   String = "String",
   StringLiteral = "StringLiteral",
   Symbol = "Symbol",
+  This = "This",
   Tuple = "Tuple",
   TypeAlias = "TypeAlias",
   TypeLiteral = "TypeLiteral",
@@ -37,6 +40,17 @@ export enum EntityKind {
   Union = "Union",
   Variable = "Variable",
   Void = "Void"
+}
+
+export enum Modifiers {
+  Abstract = "abstract",
+  Async = "async",
+  Override = "override",
+  Private = "private",
+  Protected = "protected",
+  Public = "public",
+  Readonly = "readonly",
+  Static = "static"
 }
 
 export type FunctionLikeEntityKinds =
@@ -66,21 +80,21 @@ export type Entities =
   | Getter
   | Instance
   | Interface
-  | IntersectionType
+  | Intersection
   | LiteralTypes
   | Member
   | Method
   | ObjectLiteral
   | PrimitiveTypes
   | Property
-  | Property
   | Reference
   | Setter
   | Setter
+  | This
   | Tuple
   | TypeAlias
   | TypeLiteral
-  | UnionType
+  | Union
   | Variable
 ;
 
@@ -147,6 +161,8 @@ export interface ObjectLiteral extends Entity<EntityKind.ObjectLiteral> {
 }
 
 export interface Property extends Entity<EntityKind.Property> {
+  modifiers: Modifiers[];
+  optional: boolean;
   type: Entities;
 }
 
@@ -178,12 +194,23 @@ export interface Reference extends Entity<EntityKind.Reference> {
   name: Name;
   position: Position;
   resolvedType?: Entities;
+  typeArguments?: Entities[];
 }
 
 
 //-- Instance
 
 export interface Instance extends Entity<EntityKind.Instance> {
+  id: ID;
+  name: Name;
+  position: Position;
+  resolvedType?: Entities;
+}
+
+
+//-- This
+
+export interface This extends Entity<EntityKind.This> {
   id: ID;
   name: Name;
   position: Position;
@@ -201,6 +228,7 @@ export interface Function extends FunctionLike<EntityKind.Function> {
 }
 
 export interface Signature extends Entity<EntityKind.Signature> {
+  modifiers: Modifiers[];
   parameters: Parameter[];
   position: Position;
   returnType: Entities & { description?: Description; } ;
@@ -241,20 +269,21 @@ export interface Getter extends FunctionLike<EntityKind.Getter> {
 //-- Variable
 
 export interface Variable extends Entity<EntityKind.Variable> {
+  odifiers: Modifiers[];
   type: Entities;
 }
 
 
 //-- Union type
 
-export interface UnionType extends Entity<EntityKind.Union> {
+export interface Union extends Entity<EntityKind.Union> {
   types: Entities[];
 }
 
 
 //-- Intersection type
 
-export interface IntersectionType extends Entity<EntityKind.Intersection> {
+export interface Intersection extends Entity<EntityKind.Intersection> {
   types: Entities[];
 }
 

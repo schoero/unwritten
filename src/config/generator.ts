@@ -1,8 +1,8 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { error, success } from "../../log/index.js";
-import { ConfigWithSchema } from "../../types/config.js";
+import { error, success } from "../log/index.js";
+import { ConfigWithSchema } from "../types/config.js";
 import { getConfig } from "./index.js";
 
 

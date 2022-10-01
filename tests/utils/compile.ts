@@ -1,5 +1,5 @@
+import { readFileSync } from "fs";
 import ts from "typescript";
-
 import { assert } from "vitest";
 
 import { createContext } from "../../src/compiler/context/index.js";
@@ -14,23 +14,23 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions) {
   const sourceFile = ts.createSourceFile(dummyFilePath, content, ts.ScriptTarget.Latest);
 
   const compilerHost: ts.CompilerHost = {
-    fileExists: filePath => filePath === dummyFilePath,
     directoryExists: dirPath => dirPath === "/",
-    getCurrentDirectory: () => "/",
-    getDirectories: () => [],
+    fileExists: filePath => filePath === dummyFilePath,
     getCanonicalFileName: fileName => fileName,
+    getCurrentDirectory: () => "/",
+    getDefaultLibFileName: () => "node_modules/typescript/lib/lib.esnext.d.ts",
+    getDirectories: () => [],
     getNewLine: () => "\n",
-    getDefaultLibFileName: () => "",
-    getSourceFile: filePath => filePath === dummyFilePath ? sourceFile : undefined,
+    getSourceFile: filePath => filePath === dummyFilePath ? sourceFile : ts.createSourceFile(filePath, readFileSync(filePath, { encoding: "utf-8" }), ts.ScriptTarget.Latest),
     readFile: filePath => filePath === dummyFilePath ? content : undefined,
     useCaseSensitiveFileNames: () => true,
     writeFile: () => {}
   };
 
   const program = ts.createProgram({
+    host: compilerHost,
     options: compilerOptions ?? { target: ts.ScriptTarget.ES2016 },
-    rootNames: [dummyFilePath],
-    host: compilerHost
+    rootNames: [dummyFilePath]
   });
 
 
@@ -42,7 +42,7 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions) {
 
   createContext(program, checker);
 
-  const file = program.getSourceFiles()[0];
+  const file = program.getSourceFiles().find(file => file.fileName === dummyFilePath);
 
   assert(file, "file is not defined");
 
@@ -57,6 +57,6 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions) {
 
   setRenderExtension(testRenderExtension);
 
-  return { program, checker, fileSymbol, exportedSymbols };
+  return { checker, exportedSymbols, fileSymbol, program };
 
 }

@@ -14,6 +14,9 @@ export function resolveSymbolInCaseOfImport(symbol: Symbol): Symbol {
   return symbol;
 }
 
+export function getFilePathOfDeclaration(declaration: Declaration): string {
+  return declaration.getSourceFile().fileName;
+}
 
 export function isSymbolExported(symbol: Symbol) {
 

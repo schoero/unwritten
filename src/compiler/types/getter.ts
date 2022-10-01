@@ -1,14 +1,14 @@
 import { Symbol, Type } from "typescript";
 
 import { isGetterDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, FromSymbol, FromType, Getter } from "../../types/types.js";
+import { EntityKind, Getter } from "../../types/types.js";
 import { functionOverloadDeclarationFilter } from "../../utils/filter.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createGetterBySymbol(symbol: Symbol): FromSymbol<Getter> {
+export function createGetterBySymbol(symbol: Symbol): Getter {
 
   const declarations = symbol.declarations?.filter(isGetterDeclaration).filter(functionOverloadDeclarationFilter) ?? [];
 
@@ -28,7 +28,7 @@ export function createGetterBySymbol(symbol: Symbol): FromSymbol<Getter> {
 }
 
 
-export function createGetterByType(type: Type): FromType<Getter> {
+export function createGetterByType(type: Type): Getter {
 
   const callSignatures = type.getCallSignatures();
   const declarations = callSignatures.map(s => s.getDeclaration());

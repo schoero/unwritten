@@ -44,13 +44,13 @@ export function createMemberByDeclaration(declaration: PropertySignature | TypeE
   assert(name, "Member name not found");
 
   return {
-    id,
+    description,
     example,
-    position,
+    id,
+    kind,
     name,
     optional,
-    description,
-    kind,
+    position,
     type
   };
 

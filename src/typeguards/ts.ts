@@ -368,8 +368,7 @@ export function isTupleTypeReferenceType(type: Type): type is TupleTypeReference
 }
 
 export function isTypeReferenceType(type: Type): type is TypeReference {
-  return isObjectType(type) &&
-    (type.objectFlags & ts.ObjectFlags.Reference) !== 0;
+  return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Reference) !== 0;
 }
 
 export function isGenericType(type: Type): type is GenericType {
@@ -388,6 +387,11 @@ export function isInterfaceType(type: Type): type is InterfaceType {
     (type.objectFlags & ts.ObjectFlags.Interface) !== 0;
 }
 
+export function isThisType(type: Type): boolean {
+  // @ts-expect-error
+  return type.isThisType === true;
+}
+
 export function isPrimitiveType(type: Type): boolean {
   return isNumberType(type) ||
     isStringType(type) ||
@@ -401,5 +405,5 @@ export function isPrimitiveType(type: Type): boolean {
 }
 
 export function isInstanceType(type: Type): type is TypeReference {
-  return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Reference) !== 0;
+  return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Reference) !== 0 && (type.objectFlags & ts.ObjectFlags.Class) !== 0;
 }

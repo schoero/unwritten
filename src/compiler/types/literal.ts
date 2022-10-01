@@ -17,8 +17,8 @@ export function createLiteralType(type: Type): LiteralTypes {
   const value = getValueByType(type);
 
   return {
-    kind,
     id,
+    kind,
     value
   };
 

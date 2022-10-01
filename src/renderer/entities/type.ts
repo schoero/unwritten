@@ -17,6 +17,7 @@ import {
   UnionType
 } from "types/types.js";
 
+import { config } from "../../config/index.js";
 import {
   isArrayType,
   isBasicType,
@@ -29,7 +30,6 @@ import {
   isTypeReferenceType,
   isUnionType
 } from "../../typeguards/types.js";
-import { config } from "../config/index.js";
 import { getRenderExtension } from "../extensions/index.js";
 
 

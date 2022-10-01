@@ -3,7 +3,7 @@ import { assert } from "vitest";
 
 import { isTypeAliasDeclaration } from "../../typeguards/ts.js";
 import { EntityKind, FromDeclaration, FromSymbol, TypeAlias } from "../../types/types.js";
-import { getIdByTypeNode } from "../compositions/id.js";
+import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
@@ -17,12 +17,14 @@ export function createTypeAliasBySymbol(symbol: Symbol): FromSymbol<FromDeclarat
   assert(declaration && isTypeAliasDeclaration(declaration), "Type alias declaration is not found");
 
   const name = getNameBySymbol(symbol);
+  const id = getIdBySymbol(symbol);
   const description = getDescriptionBySymbol(symbol);
   const fromDeclaration = createTypeAliasByDeclaration(declaration);
 
   return {
     ...fromDeclaration,
     description,
+    id,
     name
   };
 

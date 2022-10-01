@@ -4,21 +4,25 @@ import { getContext } from "../context/index.js";
 
 
 export function getIdBySymbol(symbol: Symbol): number {
+  ensureSymbolHasId(symbol);
   // @ts-expect-error
   return symbol.id;
 }
 
 export function getIdByDeclaration(declaration: Declaration): number {
+  ensureDeclarationHasId(declaration);
   // @ts-expect-error
   return declaration.id;
 }
 
 export function getIdByType(type: Type): number {
+  ensureTypeHasId(type);
   // @ts-expect-error
   return type.id;
 }
 
 export function getIdByTypeNode(typeNode: TypeNode): number {
+  ensureTypeNodeHasId(typeNode);
   // @ts-expect-error
   return typeNode.id;
 }
@@ -26,7 +30,7 @@ export function getIdByTypeNode(typeNode: TypeNode): number {
 
 export function ensureSymbolHasId(symbol: Symbol) {
 
-  // If a declaration has no id, we need to let it interact with the checker to get an id.
+  // If a symbol has no id, we need to let it interact with the checker to get an id.
 
   if("id" in symbol === false){
     getContext().checker.symbolToString(symbol);
