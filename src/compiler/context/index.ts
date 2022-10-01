@@ -13,7 +13,7 @@ export function createContext(program: ts.Program, checker: ts.TypeChecker) {
 export function getContext() {
   assert(_program && _checker, "Context not initialized");
   return {
-    program: _program,
-    checker: _checker
+    checker: _checker,
+    program: _program
   };
 }

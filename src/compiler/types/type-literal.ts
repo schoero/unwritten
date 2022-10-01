@@ -2,7 +2,7 @@ import { Symbol, Type, TypeLiteralNode } from "typescript";
 import { assert } from "vitest";
 
 import { isTypeLiteralDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, FromDeclaration, FromSymbol, FromType, TypeLiteral } from "../../types/types.js";
+import { EntityKind, TypeLiteral } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -11,7 +11,7 @@ import { getContext } from "../context/index.js";
 import { createMemberBySymbol } from "./member.js";
 
 
-export function createTypeLiteralBySymbol(symbol: Symbol): FromSymbol<TypeLiteral> {
+export function createTypeLiteralBySymbol(symbol: Symbol): TypeLiteral {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -30,7 +30,7 @@ export function createTypeLiteralBySymbol(symbol: Symbol): FromSymbol<TypeLitera
 }
 
 
-export function createTypeLiteralByDeclaration(declaration: TypeLiteralNode): FromDeclaration<TypeLiteral> {
+export function createTypeLiteralByDeclaration(declaration: TypeLiteralNode): TypeLiteral {
 
   const type = getContext().checker.getTypeAtLocation(declaration);
 
@@ -47,7 +47,7 @@ export function createTypeLiteralByDeclaration(declaration: TypeLiteralNode): Fr
 }
 
 
-export function createTypeLiteralByType(type: Type): FromType<TypeLiteral> {
+export function createTypeLiteralByType(type: Type): TypeLiteral {
 
   const id = getIdByType(type);
   const members = type.getProperties().map(createMemberBySymbol);

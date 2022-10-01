@@ -99,23 +99,6 @@ export type Entities =
 ;
 
 
-//-- Wrapper
-
-export type FromSymbol<Child extends Entities> = Child & {
-  name: Name;
-  description?: Description;
-};
-
-export type FromDeclaration<Child extends Entities> = Child & {
-  position: Position;
-  example?: Example;
-};
-
-export type FromType<Child extends Entities> = Child & {
-
-};
-
-
 //-- Primitive types
 
 export type PrimitiveTypeKinds =
@@ -162,6 +145,7 @@ export interface ObjectLiteral extends Entity<EntityKind.ObjectLiteral> {
 
 export interface Property extends Entity<EntityKind.Property> {
   modifiers: Modifiers[];
+  name: Name;
   optional: boolean;
   type: Entities;
 }
@@ -221,6 +205,7 @@ export interface This extends Entity<EntityKind.This> {
 //-- Function
 
 export interface FunctionLike<Kind extends EntityKind.Constructor | EntityKind.Function | EntityKind.Getter | EntityKind.Method | EntityKind.Setter> extends Entity<Kind> {
+  name: Name;
   signatures: Signature[];
 }
 
@@ -251,6 +236,7 @@ export interface Class extends Entity<EntityKind.Class> {
   properties: Property[];
   setters: Setter[];
   ctor?: Constructor;
+  heritage?: Class;
 }
 
 export interface Constructor extends FunctionLike<EntityKind.Constructor> {

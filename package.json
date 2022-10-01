@@ -16,5 +16,32 @@
   },
   "volta": {
     "node": "18.8.0"
-  }
+  },
+  "name": "doc-creator",
+  "description": "A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
+  "version": "0.0.0",
+  "main": "lib/api/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schoero/doc-creator.git"
+  },
+  "keywords": [
+    "documentation",
+    "docs",
+    "api",
+    "description",
+    "generation",
+    "generator",
+    "typescript",
+    "javascript"
+  ],
+  "author": "Roger Schönbächler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/schoero/doc-creator/issues"
+  },
+  "homepage": "https://github.com/schoero/doc-creator#readme"
 }

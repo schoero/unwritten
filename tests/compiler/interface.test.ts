@@ -44,12 +44,12 @@ describe("Compiler: Interface", () => {
     it("should have matching members", () => {
       expect((exportedInterface as Interface).members[0]!.name).to.equal("a");
       expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(EntityKind.String);
-      expect((exportedInterface as Interface).members[0]!.position).to.deep.equal({ file: "/file.ts", line: 4, column: 8 });
+      expect((exportedInterface as Interface).members[0]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 4 });
       expect((exportedInterface as Interface).members[0]!.description).to.equal("Member description");
       expect((exportedInterface as Interface).members[1]!.name).to.equal("b");
       expect((exportedInterface as Interface).members[1]!.example).to.equal("7");
       expect((exportedInterface as Interface).members[1]!.type.kind).to.equal(EntityKind.Number);
-      expect((exportedInterface as Interface).members[1]!.position).to.deep.equal({ file: "/file.ts", line: 6, column: 8 });
+      expect((exportedInterface as Interface).members[1]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 6 });
     });
 
     it("should have a matching description", () => {
@@ -58,9 +58,9 @@ describe("Compiler: Interface", () => {
 
     it("should have a matching position", () => {
       expect(exportedInterface.position).to.deep.equal({
+        column: 6,
         file: "/file.ts",
-        line: 2,
-        column: 6
+        line: 2
       });
     });
 
@@ -117,6 +117,38 @@ describe("Compiler: Interface", () => {
       expect((exportedInterfaceB as Interface).members[0]!.name).to.equal("a");
       expect((exportedInterfaceA as Interface).members[0]!.type.kind).to.equal(EntityKind.Reference);
       expect((exportedInterfaceB as Interface).members[0]!.type.kind).to.equal(EntityKind.Reference);
+    });
+
+  }
+  {
+
+    const testFileContent = `
+      interface InterfaceA {
+        a: string;
+      }
+      export interface InterfaceB extends InterfaceA {
+        b: string;
+      }
+      export interface InterfaceC extends InterfaceB {
+        c: string;
+      }
+    `;
+
+    const { exportedSymbols } = compile(testFileContent.trim());
+
+    const exportedInterfaceBSymbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
+    const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
+    const exportedInterfaceB = createInterfaceBySymbol(exportedInterfaceBSymbol);
+    const exportedInterfaceC = createInterfaceBySymbol(exportedInterfaceCSymbol);
+
+    it("should be able to handle extended interfaces", () => {
+      expect((exportedInterfaceB as Interface).members).to.have.lengthOf(2);
+      expect((exportedInterfaceB as Interface).members[0]!.name).to.equal("a");
+      expect((exportedInterfaceB as Interface).members[1]!.name).to.equal("b");
+      expect((exportedInterfaceC as Interface).members).to.have.lengthOf(3);
+      expect((exportedInterfaceC as Interface).members[0]!.name).to.equal("a");
+      expect((exportedInterfaceC as Interface).members[1]!.name).to.equal("b");
+      expect((exportedInterfaceC as Interface).members[2]!.name).to.equal("c");
     });
 
   }

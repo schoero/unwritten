@@ -1,4 +1,4 @@
-import { InterfaceDeclaration, Symbol, Type } from "typescript";
+import { HeritageClause, InterfaceDeclaration, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
 import { isInterfaceDeclaration } from "../../typeguards/ts.js";
@@ -7,6 +7,7 @@ import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { getContext } from "../context/index.js";
 import { createMemberByDeclaration } from "./member.js";
 
 
@@ -23,11 +24,13 @@ export function createInterfaceBySymbol(symbol: Symbol): Interface | MergedInter
   const kind = EntityKind.Interface;
 
   if(fromDeclarations.length === 1){
+    const members = _mergeMembers(fromDeclarations);
     return <Interface>{
       ...fromDeclarations[0],
       description,
       id,
       kind,
+      members,
       name
     };
   } else {
@@ -50,9 +53,10 @@ export function createInterfaceByType(type: Type): Interface {
 }
 
 
-function _mergeMembers(declarations: ReturnType<typeof _createInterfaceByDeclaration>[]): Interface["members"] {
-  return declarations.reduce((acc, declaration) => [
+function _mergeMembers(interfaces: Interface[]): Interface["members"] {
+  return interfaces.reduce((acc, declaration) => [
     ...acc,
+    ...declaration.heritage?.members ?? [],
     ...declaration.members
   ], <Interface["members"]>[]);
 }
@@ -63,15 +67,24 @@ function _createInterfaceByDeclaration(declaration: InterfaceDeclaration): Inter
   const members = declaration.members.map(createMemberByDeclaration);
   const example = getExampleByDeclaration(declaration);
   const position = getPositionByDeclaration(declaration);
+  const heritage = declaration.heritageClauses?.map(_createInterfaceByHeritageClause)[0];
   const id = getIdByDeclaration(declaration);
   const kind = EntityKind.Interface;
 
   return {
     example,
+    heritage,
     id,
     kind,
     members,
     position
   };
 
+}
+
+
+function _createInterfaceByHeritageClause(heritageClause: HeritageClause): Interface {
+  const typeNode = heritageClause.types[0]!;
+  const type = getContext().checker.getTypeFromTypeNode(typeNode);
+  return createInterfaceByType(type);
 }

@@ -26,13 +26,13 @@ export function createParameter(declaration: ParameterDeclaration): Parameter {
   assert(type, "Parameter type is missing.");
 
   return {
-    name,
+    description,
     id,
     kind,
+    name,
     optional,
-    rest,
-    description,
     position,
+    rest,
     type
   };
 

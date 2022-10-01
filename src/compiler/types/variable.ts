@@ -25,9 +25,9 @@ export function createVariableBySymbol(symbol: Symbol): Variable {
 
   return {
     ...fromDeclaration,
-    kind,
-    id,
     description,
+    id,
+    kind,
     name
   };
 

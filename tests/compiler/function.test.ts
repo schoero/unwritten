@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 import { createFunctionBySymbol } from "../../src/compiler/types/function.js";
-import { EntityKind } from "../../src/types/types.js";
+import { EntityKind, Reference } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -110,7 +110,6 @@ describe("Compiler: Function", () => {
           expect(exportedFunction.signatures[1]!.parameters![2]!.name).to.equal("c");
         });
 
-
         it("should have matching parameter descriptions", () => {
           expect(exportedFunction.signatures[0]!.parameters![0]!.description).to.equal("The first number.");
           expect(exportedFunction.signatures[0]!.parameters![1]!.description).to.equal("The second number.");
@@ -160,6 +159,12 @@ describe("Compiler: Function", () => {
 
     it("should have the `async` modifier", () => {
       expect(exportedFunction.signatures[0]?.modifiers).to.include("async");
+    });
+
+    it("should return a `Promise` type reference with a `number` type argument.", () => {
+      expect(exportedFunction.signatures[0]?.returnType.kind).to.equal(EntityKind.Reference);
+      expect((exportedFunction.signatures[0]?.returnType as Reference).typeArguments).to.have.lengthOf(1);
+      expect((exportedFunction.signatures[0]?.returnType as Reference).typeArguments![0]!.kind).to.equal(EntityKind.Number);
     });
 
   }

@@ -2,7 +2,7 @@ import { Symbol, TypeAliasDeclaration, TypeNode } from "typescript";
 import { assert } from "vitest";
 
 import { isTypeAliasDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, FromDeclaration, FromSymbol, TypeAlias } from "../../types/types.js";
+import { EntityKind, TypeAlias } from "../../types/types.js";
 import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -10,7 +10,7 @@ import { getPositionByDeclaration } from "../compositions/position.js";
 import { getTypeByTypeNode } from "../compositions/type.js";
 
 
-export function createTypeAliasBySymbol(symbol: Symbol): FromSymbol<FromDeclaration<TypeAlias>> {
+export function createTypeAliasBySymbol(symbol: Symbol): TypeAlias {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -31,7 +31,7 @@ export function createTypeAliasBySymbol(symbol: Symbol): FromSymbol<FromDeclarat
 }
 
 
-export function createTypeAliasByDeclaration(declaration: TypeAliasDeclaration): FromDeclaration<TypeAlias> {
+export function createTypeAliasByDeclaration(declaration: TypeAliasDeclaration): TypeAlias {
 
   const typeNode = declaration.type;
 

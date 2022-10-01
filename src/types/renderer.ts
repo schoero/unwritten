@@ -17,9 +17,9 @@ export interface RenderExtension {
   renderParagraph: (text: string) => string;
   renderSmallText: (text: string) => string;
   renderSourceCodeLink: (text: string, file: string, line: number, column: number) => string;
-  renderUnderlineText: (text: string) => string;
-  renderTitle: (title: string, size: number, anchor?: string) => string;
   renderStrikeThroughText: (text: string) => string;
+  renderTitle: (title: string, size: number, anchor?: string) => string;
+  renderUnderlineText: (text: string) => string;
   renderWarning: (text: string) => string;
 }
 
@@ -39,17 +39,17 @@ export enum RenderCategories {
   Method = "method",
   Methods = "methods",
   Module = "module",
-  Setters = "setters",
+  Modules = "modules",
   Namespace = "namespace",
   Namespaces = "namespaces",
   Properties = "properties",
+  Property = "property",
+  Setter = "setter",
+  Setters = "setters",
+  TypeAlias = "type",
   TypeAliases = "types",
   Variable = "variable",
-  Variables = "variables",
-  Property = "property",
-  TypeAlias = "type",
-  Setter = "setter",
-  Modules = "modules"
+  Variables = "variables"
 }
 
 export type CategoryNames = {

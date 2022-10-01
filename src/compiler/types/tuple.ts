@@ -39,9 +39,9 @@ export function createTupleBySymbol(symbol: Symbol) {
 
   return {
     ...fromDeclaration,
+    description,
     id,
     kind,
-    description,
     name,
     position
   };
@@ -83,11 +83,11 @@ function _getMembers(tupleTypeReference: TupleTypeReference, typeArguments?: rea
 
     return <TupleMember>{
       id,
-      type,
+      kind,
+      name,
       optional,
       rest,
-      name,
-      kind
+      type
     };
 
   });

@@ -21,8 +21,8 @@ export function createPrimitiveType(type: Type): PrimitiveTypes {
   const id = getIdByType(type);
 
   return {
-    kind,
-    id
+    id,
+    kind
   };
 
 }

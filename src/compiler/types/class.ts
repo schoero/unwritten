@@ -1,4 +1,4 @@
-import { ClassLikeDeclaration, Symbol } from "typescript";
+import { ClassLikeDeclaration, HeritageClause, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
 import {
@@ -9,7 +9,7 @@ import {
   isPropertyDeclaration,
   isSetterDeclaration
 } from "../../typeguards/ts.js";
-import { Class, EntityKind, FromDeclaration, FromSymbol } from "../../types/types.js";
+import { Class, EntityKind, Getter, Method, Property, Setter } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -22,7 +22,7 @@ import { createPropertyBySymbol } from "./property.js";
 import { createSetterBySymbol } from "./setter.js";
 
 
-export function createClassBySymbol(symbol: Symbol): FromSymbol<Class> {
+export function createClassBySymbol(symbol: Symbol): Class {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -41,13 +41,15 @@ export function createClassBySymbol(symbol: Symbol): FromSymbol<Class> {
 }
 
 
-export function createClassByDeclaration(declaration: ClassLikeDeclaration): FromDeclaration<Class> {
+export function createClassByDeclaration(declaration: ClassLikeDeclaration): Class {
 
   const ctor = _getSymbolsByTypeFromClassLikeDeclaration(declaration, isConstructorDeclaration).map(createConstructorBySymbol)[0];
   const getters = _getSymbolsByTypeFromClassLikeDeclaration(declaration, isGetterDeclaration).map(createGetterBySymbol);
   const methods = _getSymbolsByTypeFromClassLikeDeclaration(declaration, isMethodDeclaration).map(createMethodBySymbol);
   const properties = _getSymbolsByTypeFromClassLikeDeclaration(declaration, isPropertyDeclaration).map(createPropertyBySymbol);
   const setters = _getSymbolsByTypeFromClassLikeDeclaration(declaration, isSetterDeclaration).map(createSetterBySymbol);
+
+  const heritage = declaration.heritageClauses?.map(_createClassByHeritageClause)[0];
 
   const position = getPositionByDeclaration(declaration);
   const example = getExampleByDeclaration(declaration);
@@ -57,41 +59,44 @@ export function createClassByDeclaration(declaration: ClassLikeDeclaration): Fro
   const kind = EntityKind.Class;
 
   return {
+    ctor,
+    description,
+    example,
+    getters: _mergeWithInheritedClass(getters, heritage?.getters ?? []),
+    heritage,
     id,
     kind,
-    ctor,
-    methods,
-    properties,
-    setters,
-    getters,
+    methods: _mergeWithInheritedClass(methods, heritage?.methods ?? []),
     position,
-    example,
-    description
+    properties: _mergeWithInheritedClass(properties, heritage?.properties ?? []),
+    setters: _mergeWithInheritedClass(setters, heritage?.setters ?? [])
   };
 
 }
 
 
-// export function createClassByType(type: Type): Class {
+export function createClassByType(type: Type): Class {
 
-//   const methods = type.getProperties().filter(p => p.valueDeclaration && isMethodDeclaration(p.valueDeclaration)).map(createMethodBySymbol);
-//   const properties = type.getProperties().filter(p => p.valueDeclaration && isPropertyDeclaration(p.valueDeclaration)).map(createPropertyBySymbol);
-//   const setters = type.getProperties().filter(p => p.valueDeclaration && isSetterDeclaration(p.valueDeclaration)).map(createSetterBySymbol);
-//   const getters = type.getProperties().filter(p => p.valueDeclaration && isGetterDeclaration(p.valueDeclaration)).map(createGetterBySymbol);
+  return createClassBySymbol(type.symbol);
 
-//   const id = getIdByType(type);
-//   const kind = EntityKind.Instance;
+  // const methods = type.getProperties().filter(p => p.valueDeclaration && isMethodDeclaration(p.valueDeclaration)).map(createMethodBySymbol);
+  // const properties = type.getProperties().filter(p => p.valueDeclaration && isPropertyDeclaration(p.valueDeclaration)).map(createPropertyBySymbol);
+  // const setters = type.getProperties().filter(p => p.valueDeclaration && isSetterDeclaration(p.valueDeclaration)).map(createSetterBySymbol);
+  // const getters = type.getProperties().filter(p => p.valueDeclaration && isGetterDeclaration(p.valueDeclaration)).map(createGetterBySymbol);
 
-//   return {
-//     id,
-//     kind,
-//     methods,
-//     properties,
-//     setters,
-//     getters
-//   };
+  // const id = getIdByType(type);
+  // const kind = EntityKind.Class;
 
-// }
+  // return {
+  //   getters,
+  //   id,
+  //   kind,
+  //   methods,
+  //   properties,
+  //   setters
+  // };
+
+}
 
 
 function _getSymbolsByTypeFromClassLikeDeclaration(classLikeDeclaration: ClassLikeDeclaration,
@@ -118,7 +123,25 @@ function _getSymbolsByTypeFromClassLikeDeclaration(classLikeDeclaration: ClassLi
 }
 
 
-// function _getSymbolsByTypeFromClassLikeDeclaration(classLikeDeclaration: ClassLikeDeclaration, flags: SymbolFlags) {
-//   const symbols = getContext().checker.getSymbolsInScope(classLikeDeclaration.name!, flags);
-//   return symbols;
-// }
+function _createClassByHeritageClause(heritageClause: HeritageClause): Class {
+  const typeNode = heritageClause.types[0]!;
+  const type = getContext().checker.getTypeFromTypeNode(typeNode);
+  return createClassByType(type);
+}
+
+
+function _mergeWithInheritedClass<T extends Getter | Method | Property | Setter>(fromClass: T[], fromInheritedClass: T[]): T[] {
+
+  const merged = [...fromInheritedClass, ...fromClass];
+
+  return merged.filter((item, index) => {
+    const indices = merged.reduce((acc, i, idx) => {
+      if(item.name === i.name){
+        acc.push(idx);
+      }
+      return acc;
+    }, <number[]>[]);
+    return indices.length < 2 || index === indices[0];
+  });
+
+}
