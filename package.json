@@ -1,33 +1,25 @@
 {
-  "type": "module",
-  "scripts": {
-    "test": "vitest -c ./vite.config.ts"
-  },
-  "devDependencies": {
-    "@schoero/eslint-config": "^1.10.1",
-    "@types/minimatch": "^5.1.2",
-    "@types/node": "^18.7.23",
-    "vitest": "^0.23.4",
-    "vitest-github-actions-reporter": "^0.8.3"
+  "author": "Roger Schönbächler",
+  "bugs": {
+    "url": "https://github.com/schoero/doc-creator/issues"
   },
   "dependencies": {
     "minimatch": "^5.1.0",
     "typescript": "^4.8.4"
   },
-  "volta": {
-    "node": "18.8.0"
-  },
-  "name": "doc-creator",
   "description": "A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
-  "version": "0.0.0",
-  "main": "lib/api/index.js",
+  "devDependencies": {
+    "@schoero/eslint-config": "^1.10.1",
+    "@schoero/tsconfig": "^0.1.0",
+    "@types/minimatch": "^5.1.2",
+    "@types/node": "^18.7.23",
+    "vitest": "^0.23.4",
+    "vitest-github-actions-reporter": "^0.8.3"
+  },
   "directories": {
     "test": "tests"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/schoero/doc-creator.git"
-  },
+  "homepage": "https://github.com/schoero/doc-creator#readme",
   "keywords": [
     "documentation",
     "docs",
@@ -38,10 +30,19 @@
     "typescript",
     "javascript"
   ],
-  "author": "Roger Schönbächler",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/schoero/doc-creator/issues"
+  "main": "lib/api/index.js",
+  "name": "doc-creator",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schoero/doc-creator.git"
   },
-  "homepage": "https://github.com/schoero/doc-creator#readme"
+  "scripts": {
+    "test": "vitest -c ./vite.config.ts"
+  },
+  "type": "module",
+  "version": "0.1.0",
+  "volta": {
+    "node": "18.8.0"
+  }
 }
