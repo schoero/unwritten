@@ -115,6 +115,8 @@ describe("Compiler: Class", () => {
   {
     const testFileContent = `
       export class Class {
+        
+        private _kind: string;
 
         public set kind(value: string) {
           this._kind = value;
