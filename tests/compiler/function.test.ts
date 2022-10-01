@@ -144,6 +144,7 @@ describe("Compiler: Function", () => {
     });
 
   }
+
   {
 
     const testFileContent = `
