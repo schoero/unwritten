@@ -7,6 +7,7 @@
     "@schoero/eslint-config": "^1.5.3",
     "@schoero/tsconfig": "^0.1.0",
     "@types/node": "^18.7.13",
+    "markdownlint": "^0.26.2",
     "vitest": "^0.22.1",
     "vitest-github-actions-reporter": "^0.8.3"
   }
