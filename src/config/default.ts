@@ -1,5 +1,5 @@
 import { CompilerConfig, Complete, ExternalTypes, RenderConfig } from "../types/config.js";
-import { EntityKind } from "../types/types.js";
+import { TypeKind } from "../types/types.js";
 
 
 export const defaultCompilerConfig: Complete<CompilerConfig> = {
@@ -7,6 +7,64 @@ export const defaultCompilerConfig: Complete<CompilerConfig> = {
 };
 
 export const defaultRenderConfig: Complete<RenderConfig> = {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  parameterEncapsulation: ["`", "`"],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  propertyEncapsulation: ["`", "`"],
   // categoryNames: {
   //   [RenderCategories.Function]: "Function",
   //   [RenderCategories.Functions]: "Functions",
@@ -35,9 +93,7 @@ export const defaultRenderConfig: Complete<RenderConfig> = {
   //   [RenderCategories.Module]: "Module",
   //   [RenderCategories.Modules]: "Modules"
   // },
-  literalTypeEncapsulation: ["`", "`"],
-  parameterEncapsulation: ["`", "`"],
-  propertyEncapsulation: ["`", "`"],
+  stringLiteralTypeEncapsulation: ["`", "`"],
   // renderOrder: [
   //   // EntityKind.Namespace,
   //   // EntityKind.Module,
@@ -54,15 +110,15 @@ export const defaultRenderConfig: Complete<RenderConfig> = {
 
 
 export const defaultExternalTypes: ExternalTypes = {
-  [EntityKind.String]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
-  [EntityKind.BigInt]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt",
-  [EntityKind.Number]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
-  [EntityKind.Boolean]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
-  [EntityKind.Object]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
-  [EntityKind.Promise]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
-  [EntityKind.Array]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
-  [EntityKind.Function]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
-  [EntityKind.Symbol]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
-  [EntityKind.Undefined]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
-  [EntityKind.Null]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null"
+  [TypeKind.String]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+  [TypeKind.BigInt]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt",
+  [TypeKind.Number]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+  [TypeKind.Boolean]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+  [TypeKind.Object]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+  [TypeKind.Promise]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+  [TypeKind.Array]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+  [TypeKind.Function]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+  [TypeKind.Symbol]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+  [TypeKind.Undefined]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+  [TypeKind.Null]: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null"
 };

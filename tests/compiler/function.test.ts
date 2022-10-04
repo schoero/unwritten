@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 import { createFunctionBySymbol } from "../../src/compiler/types/function.js";
-import { EntityKind, Reference } from "../../src/types/types.js";
+import { Reference, TypeKind } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -38,7 +38,7 @@ describe("Compiler: Function", () => {
     const exportedFunction = createFunctionBySymbol(symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedFunction.kind).to.equal(EntityKind.Function);
+      expect(exportedFunction.kind).to.equal(TypeKind.Function);
     });
 
     it("should have a matching name", () => {
@@ -65,8 +65,8 @@ describe("Compiler: Function", () => {
       });
 
       it("should have matching signature returnTypes", () => {
-        expect(exportedFunction.signatures[0]!.returnType.kind).to.equal(EntityKind.Number);
-        expect(exportedFunction.signatures[1]!.returnType.kind).to.equal(EntityKind.Number);
+        expect(exportedFunction.signatures[0]!.returnType.kind).to.equal(TypeKind.Number);
+        expect(exportedFunction.signatures[1]!.returnType.kind).to.equal(TypeKind.Number);
       });
 
       it("should have matching signature returnType descriptions", () => {
@@ -119,11 +119,11 @@ describe("Compiler: Function", () => {
         }),
 
         it("should have matching parameter types", () => {
-          expect(exportedFunction.signatures[0]!.parameters![0]!.type.kind).to.equal(EntityKind.Number);
-          expect(exportedFunction.signatures[0]!.parameters![1]!.type.kind).to.equal(EntityKind.Number);
-          expect(exportedFunction.signatures[1]!.parameters![0]!.type.kind).to.equal(EntityKind.Number);
-          expect(exportedFunction.signatures[1]!.parameters![1]!.type.kind).to.equal(EntityKind.Number);
-          expect(exportedFunction.signatures[1]!.parameters![2]!.type.kind).to.equal(EntityKind.Number);
+          expect(exportedFunction.signatures[0]!.parameters![0]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[0]!.parameters![1]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[1]!.parameters![0]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[1]!.parameters![1]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[1]!.parameters![2]!.type.kind).to.equal(TypeKind.Number);
         });
 
         it("should have matching parameter modifiers", () => {
@@ -163,9 +163,9 @@ describe("Compiler: Function", () => {
     });
 
     it("should return a `Promise` type reference with a `number` type argument.", () => {
-      expect(exportedFunction.signatures[0]?.returnType.kind).to.equal(EntityKind.Reference);
+      expect(exportedFunction.signatures[0]?.returnType.kind).to.equal(TypeKind.Reference);
       expect((exportedFunction.signatures[0]?.returnType as Reference).typeArguments).to.have.lengthOf(1);
-      expect((exportedFunction.signatures[0]?.returnType as Reference).typeArguments![0]!.kind).to.equal(EntityKind.Number);
+      expect((exportedFunction.signatures[0]?.returnType as Reference).typeArguments![0]!.kind).to.equal(TypeKind.Number);
     });
 
   }

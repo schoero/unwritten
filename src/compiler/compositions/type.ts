@@ -15,7 +15,7 @@ import {
   isTypeReferenceType,
   isUnionType
 } from "../../typeguards/ts.js";
-import { Entities } from "../../types/types.js";
+import { Types } from "../../types/types.js";
 import { getContext } from "../context/index.js";
 import { createArrayByArrayTypeNode } from "../types/array.js";
 import { createFunctionByType } from "../types/function.js";
@@ -32,7 +32,7 @@ import { createTypeLiteralByType } from "../types/type-literal.js";
 import { createUnionTypeByType } from "../types/union.js";
 
 
-export function getTypeBySymbol(symbol: Symbol): Entities {
+export function getTypeBySymbol(symbol: Symbol): Types {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -43,7 +43,7 @@ export function getTypeBySymbol(symbol: Symbol): Entities {
 }
 
 
-export function getTypeByDeclaration(declaration: Declaration): Entities {
+export function getTypeByDeclaration(declaration: Declaration): Types {
   const type = getContext().checker.getTypeAtLocation(declaration);
   return getTypeByType(type);
 }
@@ -52,7 +52,7 @@ export function getTypeByDeclaration(declaration: Declaration): Entities {
 /**
  * Some types like generic types or arrays must be handled by the typeNode
  */
-export function getTypeByTypeNode(typeNode: TypeNode): Entities {
+export function getTypeByTypeNode(typeNode: TypeNode): Types {
 
   const type = getContext().checker.getTypeFromTypeNode(typeNode);
 
@@ -85,7 +85,7 @@ export function getTypeByTypeNode(typeNode: TypeNode): Entities {
 
 }
 
-export function getTypeByType(type: Type): Entities {
+export function getTypeByType(type: Type): Types {
 
 
   //-- Order is important here. Check reference types first.

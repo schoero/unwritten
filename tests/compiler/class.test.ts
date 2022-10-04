@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 import { createClassBySymbol } from "../../src/compiler/types/class.js";
-import { EntityKind, Modifiers } from "../../src/types/types.js";
+import { Modifiers, TypeKind } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -57,14 +57,14 @@ describe("Compiler: Class", () => {
     it("should have matching properties", () => {
       expect(exportedClass.properties).to.have.lengthOf(3);
       expect(exportedClass.properties[0]!.name).to.equal("publicProperty");
-      expect(exportedClass.properties[0]!.kind).to.equal(EntityKind.Property);
-      expect(exportedClass.properties[0]!.type.kind).to.equal(EntityKind.String);
+      expect(exportedClass.properties[0]!.kind).to.equal(TypeKind.Property);
+      expect(exportedClass.properties[0]!.type.kind).to.equal(TypeKind.String);
       expect(exportedClass.properties[1]!.name).to.equal("staticProperty");
-      expect(exportedClass.properties[1]!.kind).to.equal(EntityKind.Property);
-      expect(exportedClass.properties[1]!.type.kind).to.equal(EntityKind.String);
+      expect(exportedClass.properties[1]!.kind).to.equal(TypeKind.Property);
+      expect(exportedClass.properties[1]!.type.kind).to.equal(TypeKind.String);
       expect(exportedClass.properties[2]!.name).to.equal("privateProperty");
-      expect(exportedClass.properties[2]!.kind).to.equal(EntityKind.Property);
-      expect(exportedClass.properties[2]!.type.kind).to.equal(EntityKind.String);
+      expect(exportedClass.properties[2]!.kind).to.equal(TypeKind.Property);
+      expect(exportedClass.properties[2]!.type.kind).to.equal(TypeKind.String);
     });
 
     it("should handle modifiers correctly", () => {
@@ -106,7 +106,7 @@ describe("Compiler: Class", () => {
     });
 
     it("should be able to handle methods that return this", () => {
-      expect(exportedClass.methods[1]!.signatures[0]!.returnType.kind).to.equal(EntityKind.This);
+      expect(exportedClass.methods[1]!.signatures[0]!.returnType.kind).to.equal(TypeKind.This);
       expect(exportedClass.methods[1]!.signatures[0]!.returnType.id).to.equal(exportedClass.id);
     });
 
@@ -137,10 +137,10 @@ describe("Compiler: Class", () => {
       expect(exportedClass.setters).to.have.lengthOf(1);
       expect(exportedClass.setters[0]!.signatures).to.have.lengthOf(1);
       expect(exportedClass.setters[0]!.signatures[0]?.parameters).to.have.lengthOf(1);
-      expect(exportedClass.setters[0]!.signatures[0]?.parameters[0]?.type.kind).to.equal(EntityKind.String);
+      expect(exportedClass.setters[0]!.signatures[0]?.parameters[0]?.type.kind).to.equal(TypeKind.String);
       expect(exportedClass.getters).to.have.lengthOf(1);
       expect(exportedClass.getters[0]!.signatures).to.have.lengthOf(1);
-      expect(exportedClass.getters[0]!.signatures[0]?.returnType.kind).to.equal(EntityKind.String);
+      expect(exportedClass.getters[0]!.signatures[0]?.returnType.kind).to.equal(TypeKind.String);
     });
 
   }

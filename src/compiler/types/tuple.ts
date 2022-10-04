@@ -2,7 +2,7 @@ import { ElementFlags, Symbol, TupleTypeNode, TupleTypeReference, Type, TypeAlia
 import { assert } from "vitest";
 
 import { isTupleTypeNode, isTypeAliasDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, Tuple, TupleMember } from "../../types/types.js";
+import { Tuple, TupleMember, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType, getIdByTypeNode } from "../compositions/id.js";
 import { getDescriptionBySymbol } from "../compositions/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
@@ -15,7 +15,7 @@ export function createTupleTypeByTypeReference(typeReference: TupleTypeReference
   const targetSymbol = getTargetSymbolByTypeReference(typeReference);
   const members = _getMembers(typeReference, typeReference.typeArguments);
   const fromSymbol = createTupleBySymbol(targetSymbol);
-  const kind = EntityKind.Tuple;
+  const kind = TypeKind.Tuple;
   return {
     ...fromSymbol,
     kind,
@@ -35,7 +35,7 @@ export function createTupleBySymbol(symbol: Symbol) {
   const fromDeclaration = createTupleByDeclaration(declaration);
   const description = getDescriptionBySymbol(symbol);
   const position = getPositionByDeclaration(declaration);
-  const kind = EntityKind.Tuple;
+  const kind = TypeKind.Tuple;
 
   return {
     ...fromDeclaration,
@@ -59,7 +59,7 @@ export function createTupleByDeclaration(declaration: TypeAliasDeclaration) {
 
 export function createTupleByTypeNode(type: TupleTypeNode) {
   const id = getIdByTypeNode(type);
-  const kind = EntityKind.Tuple;
+  const kind = TypeKind.Tuple;
   return {
     id,
     kind
@@ -79,7 +79,7 @@ function _getMembers(tupleTypeReference: TupleTypeReference, typeArguments?: rea
     const rest = (elementFlag && elementFlag & ElementFlags.Rest) !== 0;
     const labelDeclaration = tupleTypeReference.target.labeledElementDeclarations?.[index];
     const name = labelDeclaration && getNameByDeclaration(labelDeclaration);
-    const kind = EntityKind.Member;
+    const kind = TypeKind.Member;
 
     return <TupleMember>{
       id,

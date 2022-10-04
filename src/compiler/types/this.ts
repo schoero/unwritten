@@ -1,7 +1,7 @@
 import { Type } from "typescript";
 import { assert } from "vitest";
 
-import { EntityKind, This } from "../../types/types.js";
+import { This, TypeKind } from "../../types/types.js";
 import { createTargetBySymbol } from "./reference.js";
 
 
@@ -12,7 +12,7 @@ export function createThisByType(type: Type): This {
   assert(symbol, "Symbol is not found");
 
   const target = createTargetBySymbol(symbol);
-  const kind = EntityKind.This;
+  const kind = TypeKind.This;
 
   return {
     ...target,

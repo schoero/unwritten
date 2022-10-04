@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 import { createInterfaceBySymbol } from "../../src/compiler/types/interface.js";
 import { parse } from "../../src/parser/index.js";
-import { EntityKind, Interface } from "../../src/types/types.js";
+import { Interface, TypeKind } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -26,7 +26,7 @@ describe("Compiler: Interface", () => {
     const exportedInterface = createInterfaceBySymbol(symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedInterface.kind).to.equal(EntityKind.Interface);
+      expect(exportedInterface.kind).to.equal(TypeKind.Interface);
     });
 
     it("should have a matching name", () => {
@@ -43,12 +43,12 @@ describe("Compiler: Interface", () => {
 
     it("should have matching members", () => {
       expect((exportedInterface as Interface).members[0]!.name).to.equal("a");
-      expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(EntityKind.String);
+      expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(TypeKind.String);
       expect((exportedInterface as Interface).members[0]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 4 });
       expect((exportedInterface as Interface).members[0]!.description).to.equal("Member description");
       expect((exportedInterface as Interface).members[1]!.name).to.equal("b");
       expect((exportedInterface as Interface).members[1]!.example).to.equal("7");
-      expect((exportedInterface as Interface).members[1]!.type.kind).to.equal(EntityKind.Number);
+      expect((exportedInterface as Interface).members[1]!.type.kind).to.equal(TypeKind.Number);
       expect((exportedInterface as Interface).members[1]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 6 });
     });
 
@@ -85,9 +85,9 @@ describe("Compiler: Interface", () => {
     it("should merge multiple interfaces with the same name", () => {
       expect((exportedInterface as Interface).members.length).to.equal(2);
       expect((exportedInterface as Interface).members[0]!.name).to.equal("a");
-      expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(EntityKind.String);
+      expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(TypeKind.String);
       expect((exportedInterface as Interface).members[1]!.name).to.equal("b");
-      expect((exportedInterface as Interface).members[1]!.type.kind).to.equal(EntityKind.Number);
+      expect((exportedInterface as Interface).members[1]!.type.kind).to.equal(TypeKind.Number);
     });
 
   }
@@ -115,8 +115,8 @@ describe("Compiler: Interface", () => {
       expect((exportedInterfaceB as Interface).members.length).to.equal(1);
       expect((exportedInterfaceA as Interface).members[0]!.name).to.equal("b");
       expect((exportedInterfaceB as Interface).members[0]!.name).to.equal("a");
-      expect((exportedInterfaceA as Interface).members[0]!.type.kind).to.equal(EntityKind.Reference);
-      expect((exportedInterfaceB as Interface).members[0]!.type.kind).to.equal(EntityKind.Reference);
+      expect((exportedInterfaceA as Interface).members[0]!.type.kind).to.equal(TypeKind.Reference);
+      expect((exportedInterfaceB as Interface).members[0]!.type.kind).to.equal(TypeKind.Reference);
     });
 
   }

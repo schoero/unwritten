@@ -1,7 +1,7 @@
 import { Symbol, Type } from "typescript";
 
 import { isSetterDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, Setter } from "../../types/types.js";
+import { TypeKind, Setter } from "../../types/types.js";
 import { functionOverloadDeclarationFilter } from "../../utils/filter.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -16,7 +16,7 @@ export function createSetterBySymbol(symbol: Symbol): Setter {
 
   const id = getIdBySymbol(symbol);
   const name = getNameBySymbol(symbol);
-  const kind = EntityKind.Setter;
+  const kind = TypeKind.Setter;
 
   return {
     id,
@@ -35,7 +35,7 @@ export function createSetterByType(type: Type): Setter {
   const signatures = declarations.map(createSignatureByDeclaration);
 
   const id = getIdByType(type);
-  const kind = EntityKind.Setter;
+  const kind = TypeKind.Setter;
 
   return {
     id,

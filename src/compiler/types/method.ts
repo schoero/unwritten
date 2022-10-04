@@ -1,7 +1,7 @@
 import { Symbol, Type } from "typescript";
 
 import { isMethodDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, Method } from "../../types/types.js";
+import { TypeKind, Method } from "../../types/types.js";
 import { functionOverloadDeclarationFilter } from "../../utils/filter.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -16,7 +16,7 @@ export function createMethodBySymbol(symbol: Symbol): Method {
 
   const id = getIdBySymbol(symbol);
   const name = getNameBySymbol(symbol);
-  const kind = EntityKind.Method;
+  const kind = TypeKind.Method;
 
   return {
     id,
@@ -35,7 +35,7 @@ export function createMethodByType(type: Type): Method {
   const signatures = declarations.map(createSignatureByDeclaration);
 
   const id = getIdByType(type);
-  const kind = EntityKind.Method;
+  const kind = TypeKind.Method;
 
   return {
     id,

@@ -2,7 +2,7 @@ import { Symbol, TypeAliasDeclaration, TypeNode } from "typescript";
 import { assert } from "vitest";
 
 import { isTypeAliasDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, TypeAlias } from "../../types/types.js";
+import { TypeKind, TypeAlias } from "../../types/types.js";
 import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -52,7 +52,7 @@ export function createTypeAliasByTypeNode(typeNode: TypeNode): TypeAlias {
 
   const id = getIdByTypeNode(typeNode);
   const type = getTypeByTypeNode(typeNode);
-  const kind = EntityKind.TypeAlias;
+  const kind = TypeKind.TypeAlias;
 
   return {
     id,

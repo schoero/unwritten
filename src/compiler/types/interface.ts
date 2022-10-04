@@ -2,7 +2,7 @@ import { HeritageClause, InterfaceDeclaration, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
 import { isInterfaceDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, Interface, MergedInterface } from "../../types/types.js";
+import { Interface, MergedInterface, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -21,7 +21,7 @@ export function createInterfaceBySymbol(symbol: Symbol): Interface | MergedInter
   const id = getIdBySymbol(symbol);
   const description = getDescriptionBySymbol(symbol);
   const fromDeclarations = declarations.map(_createInterfaceByDeclaration);
-  const kind = EntityKind.Interface;
+  const kind = TypeKind.Interface;
 
   if(fromDeclarations.length === 1){
     const members = _mergeMembers(fromDeclarations);
@@ -69,7 +69,7 @@ function _createInterfaceByDeclaration(declaration: InterfaceDeclaration): Inter
   const position = getPositionByDeclaration(declaration);
   const heritage = declaration.heritageClauses?.map(_createInterfaceByHeritageClause)[0];
   const id = getIdByDeclaration(declaration);
-  const kind = EntityKind.Interface;
+  const kind = TypeKind.Interface;
 
   return {
     example,

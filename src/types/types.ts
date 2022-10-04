@@ -1,7 +1,7 @@
 import { Description, Example, ID, Name, Position } from "./compositions.js";
 
 
-export enum EntityKind {
+export enum TypeKind {
   Any = "Any",
   Array = "Array",
   BigInt = "BigInt",
@@ -53,25 +53,21 @@ export enum Modifiers {
   Static = "static"
 }
 
-export type FunctionLikeEntityKinds =
-  | EntityKind.Constructor
-  | EntityKind.Function
-  | EntityKind.Getter
-  | EntityKind.Method
-  | EntityKind.Setter
+export type FunctionLikeTypeKinds =
+  | TypeKind.Constructor
+  | TypeKind.Function
+  | TypeKind.Getter
+  | TypeKind.Method
+  | TypeKind.Setter
 ;
 
 
-export interface Entity<Kind extends EntityKind>{
+export interface Type<Kind extends TypeKind>{
   id: ID;
   kind: Kind;
-  description?: Description;
-  example?: Example;
-  name?: Name;
-  position?: Position;
 }
 
-export type Entities =
+export type Types =
   // eslint-disable-next-line @typescript-eslint/array-type
   | Array
   | Class
@@ -89,7 +85,6 @@ export type Entities =
   | Property
   | Reference
   | Setter
-  | Setter
   | This
   | Tuple
   | TypeAlias
@@ -99,26 +94,39 @@ export type Entities =
 ;
 
 
+export type ExportableTypes =
+  | Class
+  | Function
+  | Interface
+  | TypeAlias
+  | Variable
+;
+
+
 //-- Primitive types
 
 export type PrimitiveTypeKinds =
-  | EntityKind.Any
-  | EntityKind.BigInt
-  | EntityKind.BigIntLiteral
-  | EntityKind.Boolean
-  | EntityKind.BooleanLiteral
-  | EntityKind.Never
-  | EntityKind.Null
-  | EntityKind.Number
-  | EntityKind.NumberLiteral
-  | EntityKind.String
-  | EntityKind.StringLiteral
-  | EntityKind.Symbol
-  | EntityKind.Undefined
-  | EntityKind.Void;
+  | TypeKind.Any
+  | TypeKind.BigInt
+  | TypeKind.BigIntLiteral
+  | TypeKind.Boolean
+  | TypeKind.BooleanLiteral
+  | TypeKind.Never
+  | TypeKind.Null
+  | TypeKind.Number
+  | TypeKind.NumberLiteral
+  | TypeKind.String
+  | TypeKind.StringLiteral
+  | TypeKind.Symbol
+  | TypeKind.Undefined
+  | TypeKind.Void;
 
 
-export interface PrimitiveType<Kind extends PrimitiveTypeKinds> extends Entity<Kind> {
+export interface PrimitiveType<Kind extends PrimitiveTypeKinds> extends Type<Kind> {
+  name: Name;
+  position: Position;
+  description?: Description;
+  example?: Example;
 }
 
 export type PrimitiveTypes = PrimitiveType<PrimitiveTypeKinds>;
@@ -127,172 +135,229 @@ export type PrimitiveTypes = PrimitiveType<PrimitiveTypeKinds>;
 //-- Literal types
 
 export type LiteralTypeKinds =
-  EntityKind.BigIntLiteral | EntityKind.BooleanLiteral | EntityKind.NumberLiteral | EntityKind.StringLiteral
+  TypeKind.BigIntLiteral | TypeKind.BooleanLiteral | TypeKind.NumberLiteral | TypeKind.StringLiteral
 ;
 
 export interface LiteralType<Kind extends LiteralTypeKinds> extends PrimitiveType<Kind> {
   value: BigInt | boolean | number | string;
 }
 
-export type LiteralTypes = LiteralType<LiteralTypeKinds>;
+export interface StringLiteralType extends LiteralType<TypeKind.StringLiteral> {
+  value: string;
+}
+
+export interface NumberLiteralType extends LiteralType<TypeKind.NumberLiteral> {
+  value: number;
+}
+
+export interface BooleanLiteralType extends LiteralType<TypeKind.BooleanLiteral> {
+  value: boolean;
+}
+
+export interface BigIntLiteralType extends LiteralType<TypeKind.BigIntLiteral> {
+  value: BigInt;
+}
+
+export type LiteralTypes = BigIntLiteralType | BooleanLiteralType | NumberLiteralType | StringLiteralType;
 
 
 //-- Object literal
 
-export interface ObjectLiteral extends Entity<EntityKind.ObjectLiteral> {
+export interface ObjectLiteral extends Type<TypeKind.ObjectLiteral> {
+  name: Name;
+  position: Position;
   properties: Property[];
+  description?: Description;
+  example?: Example;
 }
 
-export interface Property extends Entity<EntityKind.Property> {
+export interface Property extends Type<TypeKind.Property> {
   modifiers: Modifiers[];
   name: Name;
   optional: boolean;
-  type: Entities;
+  position: Position;
+  type: Types;
+  description?: Description;
+  example?: Example;
 }
 
 
 //-- Array
 
-export interface Array extends Entity<EntityKind.Array> {
-  type: Entities;
+export interface Array extends Type<TypeKind.Array> {
+  name: Name;
+  position: Position;
+  type: Types;
+  description?: Description;
+  example?: Example;
 }
 
 
 //-- Tuple
 
-export interface Tuple extends Entity<EntityKind.Tuple> {
+export interface Tuple extends Type<TypeKind.Tuple> {
   members: TupleMember[];
+  name: Name;
+  position: Position;
+  description?: Description;
+  example?: Example;
 }
 
-export interface TupleMember extends Entity<EntityKind.Member> {
+export interface TupleMember extends Type<TypeKind.Member> {
   optional: boolean;
+  position: Position;
   rest: boolean;
-  type: Entities;
+  type: Types;
+  name?: Name;
 }
 
 
 //-- Type reference
 
-export interface Reference extends Entity<EntityKind.Reference> {
+export interface Reference extends Type<TypeKind.Reference> {
   id: ID;
-  name: Name;
   position: Position;
-  resolvedType?: Entities;
-  typeArguments?: Entities[];
+  resolvedType?: Types;
+  typeArguments?: Types[];
 }
 
 
 //-- Instance
 
-export interface Instance extends Entity<EntityKind.Instance> {
+export interface Instance extends Type<TypeKind.Instance> {
   id: ID;
   name: Name;
   position: Position;
-  resolvedType?: Entities;
+  resolvedType?: Types;
 }
 
 
 //-- This
 
-export interface This extends Entity<EntityKind.This> {
+export interface This extends Type<TypeKind.This> {
   id: ID;
   name: Name;
   position: Position;
-  resolvedType?: Entities;
+  resolvedType?: Types;
 }
 
 
 //-- Function
 
-export interface FunctionLike<Kind extends EntityKind.Constructor | EntityKind.Function | EntityKind.Getter | EntityKind.Method | EntityKind.Setter> extends Entity<Kind> {
+export interface FunctionLike<Kind extends TypeKind.Constructor | TypeKind.Function | TypeKind.Getter | TypeKind.Method | TypeKind.Setter> extends Type<Kind> {
   name: Name;
+  position: Position;
   signatures: Signature[];
 }
 
-export interface Function extends FunctionLike<EntityKind.Function> {
+export interface Function extends FunctionLike<TypeKind.Function> {
 }
 
-export interface Signature extends Entity<EntityKind.Signature> {
+export interface Signature extends Type<TypeKind.Signature> {
   modifiers: Modifiers[];
   parameters: Parameter[];
   position: Position;
-  returnType: Entities & { description?: Description; } ;
+  returnType: Types & { description?: Description; } ;
+  description?: Description;
+  example?: Example;
 }
 
-export interface Parameter extends Entity<EntityKind.Parameter> {
+export interface Parameter extends Type<TypeKind.Parameter> {
   name: Name;
   optional: boolean;
   position: Position;
   rest: boolean;
-  type: Entities;
+  type: Types;
+  description?: Description;
+  example?: Example;
 }
 
 
 //-- Class
 
-export interface Class extends Entity<EntityKind.Class> {
+export interface Class extends Type<TypeKind.Class> {
   getters: Getter[];
   methods: Method[];
   modifiers: Modifiers[];
+  name: Name;
+  position: Position;
   properties: Property[];
   setters: Setter[];
   ctor?: Constructor;
+  description?: Description;
+  example?: Example;
   heritage?: Class;
 }
 
-export interface Constructor extends FunctionLike<EntityKind.Constructor> {
+export interface Constructor extends FunctionLike<TypeKind.Constructor> {
 }
 
-export interface Method extends FunctionLike<EntityKind.Method> {
+export interface Method extends FunctionLike<TypeKind.Method> {
 }
 
-export interface Setter extends FunctionLike<EntityKind.Setter> {
+export interface Setter extends FunctionLike<TypeKind.Setter> {
 }
 
-export interface Getter extends FunctionLike<EntityKind.Getter> {
+export interface Getter extends FunctionLike<TypeKind.Getter> {
 }
 
 
 //-- Variable
 
-export interface Variable extends Entity<EntityKind.Variable> {
-  odifiers: Modifiers[];
-  type: Entities;
+export interface Variable extends Type<TypeKind.Variable> {
+  modifiers: Modifiers[];
+  name: Name;
+  position: Position;
+  type: Types;
+  description?: Description;
+  example?: Example;
 }
 
 
 //-- Union type
 
-export interface Union extends Entity<EntityKind.Union> {
-  types: Entities[];
+export interface Union extends Type<TypeKind.Union> {
+  types: Types[];
 }
 
 
 //-- Intersection type
 
-export interface Intersection extends Entity<EntityKind.Intersection> {
-  types: Entities[];
+export interface Intersection extends Type<TypeKind.Intersection> {
+  types: Types[];
 }
 
 
 //-- Type alias
 
-export interface TypeAlias extends Entity<EntityKind.TypeAlias> {
-  type: Entities;
+export interface TypeAlias extends Type<TypeKind.TypeAlias> {
+  name: Name;
+  position: Position;
+  type: Types;
+  description?: Description;
+  example?: Example;
 }
 
 
 //-- Type Literal
 
-export interface TypeLiteral extends Entity<EntityKind.TypeLiteral> {
+export interface TypeLiteral extends Type<TypeKind.TypeLiteral> {
   members: Member[];
+  name: Name;
+  position: Position;
+  description?: Description;
+  example?: Example;
 }
 
 
 //-- Interface
 
-export interface Interface extends Entity<EntityKind.Interface> {
+export interface Interface extends Type<TypeKind.Interface> {
   members: Member[];
+  name: Name;
+  position: Position;
+  description?: Description;
+  example?: Example;
   heritage?: Interface;
 }
 
@@ -303,18 +368,21 @@ export interface MergedInterface extends Interface {
 
 //-- Member
 
-export interface Member extends Entity<EntityKind.Member> {
+export interface Member extends Type<TypeKind.Member> {
   name: Name;
   optional: boolean;
-  type: Entities;
+  position: Position;
+  type: Types;
+  description?: Description;
+  example?: Example;
 }
 
 
-export type FunctionLikeEntityMap = {
-  [EntityKind.Class]: Class;
-  [EntityKind.Constructor]: Constructor;
-  [EntityKind.Function]: Function;
-  [EntityKind.Getter]: Getter;
-  [EntityKind.Method]: Method;
-  [EntityKind.Setter]: Setter;
+export type FunctionLikeTypeMap = {
+  [TypeKind.Class]: Class;
+  [TypeKind.Constructor]: Constructor;
+  [TypeKind.Function]: Function;
+  [TypeKind.Getter]: Getter;
+  [TypeKind.Method]: Method;
+  [TypeKind.Setter]: Setter;
 };

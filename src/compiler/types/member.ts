@@ -2,7 +2,7 @@ import { PropertySignature, Symbol, TypeElement } from "typescript";
 import { assert } from "vitest";
 
 import { isPropertySignature } from "../../typeguards/ts.js";
-import { EntityKind, Member } from "../../types/types.js";
+import { Member, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
@@ -39,7 +39,7 @@ export function createMemberByDeclaration(declaration: PropertySignature | TypeE
   const position = getPositionByDeclaration(declaration);
   const description = getDescriptionByDeclaration(declaration);
   const optional = declaration.questionToken !== undefined;
-  const kind = EntityKind.Member;
+  const kind = TypeKind.Member;
 
   assert(name, "Member name not found");
 

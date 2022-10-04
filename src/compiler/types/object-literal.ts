@@ -1,7 +1,7 @@
 import { isObjectLiteralElement, ObjectLiteralElement, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
-import { EntityKind, ObjectLiteral } from "../../types/types.js";
+import { ObjectLiteral, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -52,7 +52,7 @@ export function createObjectLiteralByType(type: Type): ObjectLiteral {
 
   const id = getIdByType(type);
   const properties = type.getProperties().map(createPropertyBySymbol);
-  const kind = EntityKind.ObjectLiteral;
+  const kind = TypeKind.ObjectLiteral;
 
   return {
     id,

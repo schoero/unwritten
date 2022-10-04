@@ -8,7 +8,7 @@ import {
   isMethodDeclaration,
   isSetterDeclaration
 } from "../../typeguards/ts.js";
-import { EntityKind, FunctionLikeEntityMap } from "../../types/types.js";
+import { TypeKind, FunctionLikeTypeMap } from "../../types/types.js";
 import { functionOverloadDeclarationFilter } from "../../utils/filter.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -27,7 +27,7 @@ export function createFunctionBySymbol(symbol: Symbol) {
   const name = getNameBySymbol(symbol);
   const kind = getFunctionLikeKindByDeclaration(declarations[0]!);
 
-  return <FunctionLikeEntityMap[typeof kind]>{
+  return <FunctionLikeTypeMap[typeof kind]>{
     id,
     kind,
     name,
@@ -48,7 +48,7 @@ export function createFunctionByType(type: Type) {
   const id = getIdByType(type);
   const kind = getFunctionLikeKindByDeclaration(declarations[0]!);
 
-  return <FunctionLikeEntityMap[typeof kind]>{
+  return <FunctionLikeTypeMap[typeof kind]>{
     id,
     kind,
     signatures
@@ -60,15 +60,15 @@ export function createFunctionByType(type: Type) {
 function getFunctionLikeKindByDeclaration(declaration: FunctionLikeDeclaration | SignatureDeclaration) {
 
   if(isConstructorDeclaration(declaration)){
-    return EntityKind.Constructor;
+    return TypeKind.Constructor;
   } else if(isMethodDeclaration(declaration)){
-    return EntityKind.Method;
+    return TypeKind.Method;
   } else if(isSetterDeclaration(declaration)){
-    return EntityKind.Setter;
+    return TypeKind.Setter;
   } else if(isGetterDeclaration(declaration)){
-    return EntityKind.Getter;
+    return TypeKind.Getter;
   } else {
-    return EntityKind.Function;
+    return TypeKind.Function;
   }
 
 }

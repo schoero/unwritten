@@ -2,7 +2,7 @@ import { Symbol, Type, VariableDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { isVariableDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, Variable } from "../../types/types.js";
+import { TypeKind, Variable } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -21,7 +21,7 @@ export function createVariableBySymbol(symbol: Symbol): Variable {
   const name = getNameBySymbol(symbol);
   const description = getDescriptionBySymbol(symbol);
   const fromDeclaration = _createVariableByDeclaration(declaration);
-  const kind = EntityKind.Variable;
+  const kind = TypeKind.Variable;
 
   return {
     ...fromDeclaration,
@@ -55,7 +55,7 @@ export function createVariableByType(type: Type): Variable {
 
   const id = getIdByType(type);
   const tp = getTypeByType(type);
-  const kind = EntityKind.Variable;
+  const kind = TypeKind.Variable;
 
   return {
     id,

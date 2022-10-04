@@ -2,7 +2,7 @@ import { Symbol, Type, TypeLiteralNode } from "typescript";
 import { assert } from "vitest";
 
 import { isTypeLiteralDeclaration } from "../../typeguards/ts.js";
-import { EntityKind, TypeLiteral } from "../../types/types.js";
+import { TypeKind, TypeLiteral } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -51,7 +51,7 @@ export function createTypeLiteralByType(type: Type): TypeLiteral {
 
   const id = getIdByType(type);
   const members = type.getProperties().map(createMemberBySymbol);
-  const kind = EntityKind.TypeLiteral;
+  const kind = TypeKind.TypeLiteral;
 
   return {
     id,

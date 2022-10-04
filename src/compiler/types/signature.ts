@@ -1,7 +1,7 @@
 import { FunctionLikeDeclaration, SignatureDeclaration } from "typescript";
 import { assert } from "vitest";
 
-import { EntityKind, Signature } from "../../types/types.js";
+import { Signature, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
@@ -25,7 +25,7 @@ export function createSignatureByDeclaration(declaration: FunctionLikeDeclaratio
   const description = getDescriptionByDeclaration(declaration);
   const modifiers = getModifiersByDeclaration(declaration);
 
-  const kind = EntityKind.Signature;
+  const kind = TypeKind.Signature;
 
   return {
     description,

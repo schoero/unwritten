@@ -1,13 +1,13 @@
 
 import { CompilerConfig, Complete, Config, Encapsulation, ExternalTypes, RenderConfig } from "../types/config.js";
-import { EntityKind } from "../types/types.js";
+import { TypeKind } from "../types/types.js";
 import { defaultCompilerConfig, defaultExternalTypes, defaultRenderConfig } from "./default.js";
 
 
 let _config: Config | undefined;
 
 interface FinalRenderConfig extends Omit<Complete<RenderConfig>, "parameterEncapsulation" | "typeEncapsulation"> {
-  literalTypeEncapsulation: Encapsulation;
+  stringLiteralTypeEncapsulation: Encapsulation;
   parameterEncapsulation: Encapsulation;
   propertyEncapsulation: Encapsulation;
   tagEncapsulation: Encapsulation;
@@ -36,13 +36,13 @@ const renderConfig: FinalRenderConfig = {
   //   return categoryNames;
   // },
 
-  get literalTypeEncapsulation() {
-    if(_config?.renderConfig?.literalTypeEncapsulation === false){
+  get stringLiteralTypeEncapsulation() {
+    if(_config?.renderConfig?.stringLiteralTypeEncapsulation === false){
       return <Encapsulation>["", ""];
-    } else if(typeof _config?.renderConfig?.literalTypeEncapsulation === "object"){
-      return _config.renderConfig.literalTypeEncapsulation;
+    } else if(typeof _config?.renderConfig?.stringLiteralTypeEncapsulation === "object"){
+      return _config.renderConfig.stringLiteralTypeEncapsulation;
     }
-    return <Encapsulation>defaultRenderConfig.literalTypeEncapsulation;
+    return <Encapsulation>defaultRenderConfig.stringLiteralTypeEncapsulation;
   },
 
   get parameterEncapsulation() {
@@ -215,49 +215,49 @@ export function getTypeSource(EntityKind: keyof typeof externalTypes): string | 
 
 const externalTypes: ExternalTypes = {
 
-  [EntityKind.String]:
-    _config?.externalTypes?.[EntityKind.String] ??
-    defaultExternalTypes[EntityKind.String]!,
+  [TypeKind.String]:
+    _config?.externalTypes?.[TypeKind.String] ??
+    defaultExternalTypes[TypeKind.String]!,
 
-  [EntityKind.Number]:
-    _config?.externalTypes?.[EntityKind.Number] ??
-    defaultExternalTypes[EntityKind.Number]!,
+  [TypeKind.Number]:
+    _config?.externalTypes?.[TypeKind.Number] ??
+    defaultExternalTypes[TypeKind.Number]!,
 
-  [EntityKind.Boolean]:
-    _config?.externalTypes?.[EntityKind.Boolean] ??
-    defaultExternalTypes[EntityKind.Boolean]!,
+  [TypeKind.Boolean]:
+    _config?.externalTypes?.[TypeKind.Boolean] ??
+    defaultExternalTypes[TypeKind.Boolean]!,
 
-  [EntityKind.BigInt]:
-    _config?.externalTypes?.[EntityKind.BigInt] ??
-    defaultExternalTypes[EntityKind.BigInt]!,
+  [TypeKind.BigInt]:
+    _config?.externalTypes?.[TypeKind.BigInt] ??
+    defaultExternalTypes[TypeKind.BigInt]!,
 
-  [EntityKind.Object]:
-    _config?.externalTypes?.[EntityKind.Object] ??
-    defaultExternalTypes[EntityKind.Object]!,
+  [TypeKind.Object]:
+    _config?.externalTypes?.[TypeKind.Object] ??
+    defaultExternalTypes[TypeKind.Object]!,
 
-  [EntityKind.Array]:
-    _config?.externalTypes?.[EntityKind.Array] ??
-    defaultExternalTypes[EntityKind.Array]!,
+  [TypeKind.Array]:
+    _config?.externalTypes?.[TypeKind.Array] ??
+    defaultExternalTypes[TypeKind.Array]!,
 
-  [EntityKind.Promise]:
-    _config?.externalTypes?.[EntityKind.Promise] ??
-    defaultExternalTypes[EntityKind.Promise]!,
+  [TypeKind.Promise]:
+    _config?.externalTypes?.[TypeKind.Promise] ??
+    defaultExternalTypes[TypeKind.Promise]!,
 
-  [EntityKind.Function]:
-    _config?.externalTypes?.[EntityKind.Function] ??
-    defaultExternalTypes[EntityKind.Function]!,
+  [TypeKind.Function]:
+    _config?.externalTypes?.[TypeKind.Function] ??
+    defaultExternalTypes[TypeKind.Function]!,
 
-  [EntityKind.Symbol]:
-    _config?.externalTypes?.[EntityKind.Symbol] ??
-    defaultExternalTypes[EntityKind.Symbol]!,
+  [TypeKind.Symbol]:
+    _config?.externalTypes?.[TypeKind.Symbol] ??
+    defaultExternalTypes[TypeKind.Symbol]!,
 
-  [EntityKind.Undefined]:
-    _config?.externalTypes?.[EntityKind.Undefined] ??
-    defaultExternalTypes[EntityKind.Undefined]!,
+  [TypeKind.Undefined]:
+    _config?.externalTypes?.[TypeKind.Undefined] ??
+    defaultExternalTypes[TypeKind.Undefined]!,
 
-  [EntityKind.Null]:
-    _config?.externalTypes?.[EntityKind.Null] ??
-    defaultExternalTypes[EntityKind.Null]!
+  [TypeKind.Null]:
+    _config?.externalTypes?.[TypeKind.Null] ??
+    defaultExternalTypes[TypeKind.Null]!
 
 };
 

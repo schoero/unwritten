@@ -3,7 +3,7 @@ import { assert } from "vitest";
 
 import { getCompilerConfig } from "../../config/index.js";
 import { isType, isTypeNode } from "../../typeguards/ts.js";
-import { EntityKind, Reference } from "../../types/types.js";
+import { Reference, TypeKind } from "../../types/types.js";
 import { isPathExcluded } from "../../utils/general.js";
 import { cacheSymbol, isSymbolCached } from "../cache/index.js";
 import { getIdBySymbol } from "../compositions/id.js";
@@ -18,7 +18,7 @@ export function createTypeReferenceByTypeNode(typeNode: TypeReferenceNode): Refe
   const typeArguments = typeNode.typeArguments?.map(getTypeByTypeNode);
   const targetSymbol = getTargetSymbolByTypeReference(typeNode);
   const target = createTargetBySymbol(targetSymbol);
-  const kind = EntityKind.Reference;
+  const kind = TypeKind.Reference;
 
   return {
     ...target,
@@ -34,7 +34,7 @@ export function createTypeReferenceByType(typeReference: TypeReference): Referen
   const typeArguments = typeReference.typeArguments?.map(getTypeByType);
   const targetSymbol = getTargetSymbolByTypeReference(typeReference);
   const target = createTargetBySymbol(targetSymbol);
-  const kind = EntityKind.Reference;
+  const kind = TypeKind.Reference;
 
   return {
     ...target,

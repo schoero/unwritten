@@ -1,7 +1,7 @@
 import { ParameterDeclaration } from "typescript";
 import { assert } from "vitest";
 
-import { EntityKind, Parameter } from "../../types/types.js";
+import { TypeKind, Parameter } from "../../types/types.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getParameterDescription } from "../compositions/jsdoc.js";
 import { getNameByDeclaration } from "../compositions/name.js";
@@ -20,7 +20,7 @@ export function createParameter(declaration: ParameterDeclaration): Parameter {
   const optional = declaration.questionToken != null;
   const rest = declaration.dotDotDotToken != null;
 
-  const kind = EntityKind.Parameter;
+  const kind = TypeKind.Parameter;
 
   assert(name, "Parameter name is missing.");
   assert(type, "Parameter type is missing.");

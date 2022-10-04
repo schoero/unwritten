@@ -2,7 +2,7 @@ import { PropertyAssignment, PropertyDeclaration, PropertySignature, Symbol } fr
 import { assert } from "vitest";
 
 import { isPropertyAssignment, isPropertyDeclaration, isPropertySignature } from "../../typeguards/ts.js";
-import { EntityKind, Property } from "../../types/types.js";
+import { Property, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
@@ -39,7 +39,7 @@ export function createPropertyByDeclaration(declaration: PropertyAssignment | Pr
   const description = getDescriptionByDeclaration(declaration);
   const modifiers = getModifiersByDeclaration(declaration);
   const optional = declaration.questionToken !== undefined;
-  const kind = EntityKind.Property;
+  const kind = TypeKind.Property;
 
   return {
     description,

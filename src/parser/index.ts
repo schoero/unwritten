@@ -15,22 +15,22 @@ import {
   isTypeAliasSymbol,
   isVariableSymbol
 } from "../typeguards/ts.js";
-import { Entities } from "../types/types.js";
+import { ExportableTypes } from "../types/types.js";
 import { resolveSymbolInCaseOfImport } from "../utils/ts.js";
 
 
-export function parse(moduleOrNamespaceSymbol: Symbol) {
+export function parse(moduleOrNamespaceSymbol: Symbol): ExportableTypes[] {
   return createSymbolCache(() => getExportedSymbols(moduleOrNamespaceSymbol).map(cacheSymbol).reduce((parsedSymbols, exportedSymbol) => {
     const parsedSymbol = parseSymbol(exportedSymbol);
     if(parsedSymbol){
       parsedSymbols.push(parsedSymbol);
     }
     return parsedSymbols;
-  }, <Entities[]>[]));
+  }, <ExportableTypes[]>[]));
 }
 
 
-export function parseSymbol(symbol: Symbol): Entities | undefined {
+export function parseSymbol(symbol: Symbol): ExportableTypes | undefined {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(symbol);
 

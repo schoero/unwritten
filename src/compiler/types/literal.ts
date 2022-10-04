@@ -1,4 +1,9 @@
-import { Type } from "typescript";
+import {
+  BigIntLiteralType as TSBigIntLiteralType,
+  LiteralType,
+  NumberLiteralType as TSNumberLiteralType,
+  StringLiteralType as TSStringLiteralType
+} from "typescript";
 
 import {
   isBigIntLiteralType,
@@ -6,15 +11,39 @@ import {
   isNumberLiteralType,
   isStringLiteralType
 } from "../../typeguards/ts.js";
-import { EntityKind, LiteralTypeKinds, LiteralTypes } from "../../types/types.js";
+import {
+  BigIntLiteralType,
+  BooleanLiteralType,
+  LiteralTypes,
+  NumberLiteralType,
+  StringLiteralType,
+  TypeKind
+} from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 
 
-export function createLiteralType(type: Type): LiteralTypes {
+export function createLiteralType(type: LiteralType): LiteralTypes {
 
-  const kind = getLiteralTypeKind(type);
+  if(isStringLiteralType(type)){
+    return _createStringLiteralType(type);
+  } else if(isNumberLiteralType(type)){
+    return _createNumberLiteralType(type);
+  } else if(isBooleanLiteralType(type)){
+    return _createBooleanLiteralType(type);
+  } else if(isBigIntLiteralType(type)){
+    return _createBigIntLiteralType(type);
+  }
+
+  throw new Error("type is not a literal type");
+
+}
+
+
+function _createStringLiteralType(type: TSStringLiteralType): StringLiteralType {
+
   const id = getIdByType(type);
-  const value = getValueByType(type);
+  const value = type.value;
+  const kind = TypeKind.StringLiteral;
 
   return {
     id,
@@ -25,37 +54,48 @@ export function createLiteralType(type: Type): LiteralTypes {
 }
 
 
-function getLiteralTypeKind(type: Type): LiteralTypeKinds {
+function _createNumberLiteralType(type: TSNumberLiteralType): NumberLiteralType {
 
-  if(isStringLiteralType(type)){
-    return EntityKind.StringLiteral;
-  } else if(isNumberLiteralType(type)){
-    return EntityKind.NumberLiteral;
-  } else if(isBooleanLiteralType(type)){
-    return EntityKind.BooleanLiteral;
-  } else if(isBigIntLiteralType(type)){
-    return EntityKind.BigIntLiteral;
-  }
+  const id = getIdByType(type);
+  const value = type.value;
+  const kind = TypeKind.NumberLiteral;
 
-  throw new Error("type is not a literal type");
+  return {
+    id,
+    kind,
+    value
+  };
 
 }
 
 
-function getValueByType(type: Type): BigInt | boolean | number | string {
+function _createBooleanLiteralType(type: LiteralType): BooleanLiteralType {
 
-  if(isStringLiteralType(type)){
-    return type.value;
-  } else if(isNumberLiteralType(type)){
-    return type.value;
-  } else if(isBooleanLiteralType(type)){
-    // @ts-expect-error // Alternative way would be to use the typeChecker and typeToString()
-    return type.intrinsicName === "true";
-  } else if(isBigIntLiteralType(type)){
-    const sign = type.value.negative ? "-" : "";
-    return BigInt(sign + type.value.base10Value);
-  }
+  const id = getIdByType(type);
+  // @ts-expect-error // Alternative way would be to use the typeChecker and typeToString()
+  const value = type.intrinsicName === "true";
+  const kind = TypeKind.BooleanLiteral;
 
-  throw new Error("type is not a literal type");
+  return {
+    id,
+    kind,
+    value
+  };
+
+}
+
+
+function _createBigIntLiteralType(type: TSBigIntLiteralType): BigIntLiteralType {
+
+  const id = getIdByType(type);
+  const sign = type.value.negative ? "-" : "";
+  const value = BigInt(sign + type.value.base10Value);
+  const kind = TypeKind.BigIntLiteral;
+
+  return {
+    id,
+    kind,
+    value
+  };
 
 }

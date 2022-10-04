@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 import { createTypeAliasBySymbol } from "../../src/compiler/types/alias.js";
-import { EntityKind, Intersection, LiteralType, TypeLiteral, Union } from "../../src/types/types.js";
+import { Intersection, LiteralType, TypeKind, TypeLiteral, Union } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -25,7 +25,7 @@ describe("Compiler: Type alias", () => {
   const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
   it("should have a matching kind", () => {
-    expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
+    expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
   });
 
   it("should have a matching name", () => {
@@ -66,7 +66,7 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "StringType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.String);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.String);
 
     });
 
@@ -81,7 +81,7 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "NumberType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.Number);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Number);
 
     });
 
@@ -96,7 +96,7 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "BooleanType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.Boolean);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Boolean);
 
     });
 
@@ -111,7 +111,7 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "BigIntType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.BigInt);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.BigInt);
 
     });
 
@@ -126,7 +126,7 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "NullType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.Null);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Null);
 
     });
 
@@ -141,7 +141,7 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "UndefinedType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.Undefined);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Undefined);
 
     });
 
@@ -156,7 +156,7 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "VoidType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.Void);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Void);
 
     });
 
@@ -171,7 +171,7 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "NeverType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.Never);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Never);
 
     });
 
@@ -190,8 +190,8 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "StringLiteralType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.StringLiteral);
-      expect((exportedTypeAlias.type as LiteralType<EntityKind.StringLiteral>).value).to.equal("Hello world");
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.StringLiteral);
+      expect((exportedTypeAlias.type as LiteralType<TypeKind.StringLiteral>).value).to.equal("Hello world");
 
     });
 
@@ -206,8 +206,8 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "NumberLiteralType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.NumberLiteral);
-      expect((exportedTypeAlias.type as LiteralType<EntityKind.NumberLiteral>).value).to.equal(7);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.NumberLiteral);
+      expect((exportedTypeAlias.type as LiteralType<TypeKind.NumberLiteral>).value).to.equal(7);
 
     });
 
@@ -223,14 +223,14 @@ describe("Compiler: Type alias", () => {
       const symbol1 = exportedSymbols.find(s => s.name === "BigIntLiteralType")!;
       const exportedTypeAlias1 = createTypeAliasBySymbol(symbol1);
 
-      expect(exportedTypeAlias1.type.kind).to.equal(EntityKind.BigIntLiteral);
-      expect((exportedTypeAlias1.type as LiteralType<EntityKind.BigIntLiteral>).value).to.equal(7n);
+      expect(exportedTypeAlias1.type.kind).to.equal(TypeKind.BigIntLiteral);
+      expect((exportedTypeAlias1.type as LiteralType<TypeKind.BigIntLiteral>).value).to.equal(7n);
 
       const symbol2 = exportedSymbols.find(s => s.name === "BigIntLiteralTypeNegative")!;
       const exportedTypeAlias2 = createTypeAliasBySymbol(symbol2);
 
-      expect(exportedTypeAlias2.type.kind).to.equal(EntityKind.BigIntLiteral);
-      expect((exportedTypeAlias2.type as LiteralType<EntityKind.BigIntLiteral>).value).to.equal(-7n);
+      expect(exportedTypeAlias2.type.kind).to.equal(TypeKind.BigIntLiteral);
+      expect((exportedTypeAlias2.type as LiteralType<TypeKind.BigIntLiteral>).value).to.equal(-7n);
 
     });
 
@@ -245,8 +245,8 @@ describe("Compiler: Type alias", () => {
       const symbol = exportedSymbols.find(s => s.name === "BooleanLiteralType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(symbol);
 
-      expect(exportedTypeAlias.type.kind).to.equal(EntityKind.BooleanLiteral);
-      expect((exportedTypeAlias.type as LiteralType<EntityKind.BooleanLiteral>).value).to.equal(true);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.BooleanLiteral);
+      expect((exportedTypeAlias.type as LiteralType<TypeKind.BooleanLiteral>).value).to.equal(true);
 
     });
 
@@ -271,7 +271,7 @@ describe("Compiler: Type alias", () => {
     const typeLiteralType = exportedVariable.type as TypeLiteral;
 
     it("should have a matching kind", () => {
-      expect(exportedVariable.kind).to.equal(EntityKind.TypeAlias);
+      expect(exportedVariable.kind).to.equal(TypeKind.TypeAlias);
     });
 
     it("should have a matching name", () => {
@@ -279,18 +279,18 @@ describe("Compiler: Type alias", () => {
     });
 
     it("should have a matching type", () => {
-      expect(exportedVariable.type.kind).to.equal(EntityKind.TypeLiteral);
+      expect(exportedVariable.type.kind).to.equal(TypeKind.TypeLiteral);
       expect(typeLiteralType.members.length).to.equal(2);
     });
 
     it("should have matching members", () => {
       expect(typeLiteralType.members[0]!.name).to.equal("a");
-      expect(typeLiteralType.members[0]!.type.kind).to.equal(EntityKind.String);
+      expect(typeLiteralType.members[0]!.type.kind).to.equal(TypeKind.String);
       expect(typeLiteralType.members[0]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 4 });
       expect(typeLiteralType.members[0]!.description).to.equal("Member description");
       expect(typeLiteralType.members[1]!.name).to.equal("b");
       expect(typeLiteralType.members[1]!.example).to.equal("7");
-      expect(typeLiteralType.members[1]!.type.kind).to.equal(EntityKind.Number);
+      expect(typeLiteralType.members[1]!.type.kind).to.equal(TypeKind.Number);
       expect(typeLiteralType.members[1]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 6 });
     });
 
@@ -320,8 +320,8 @@ describe("Compiler: Type alias", () => {
     const exportedVariable = createTypeAliasBySymbol(symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedVariable.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedVariable.type.kind).to.equal(EntityKind.Union);
+      expect(exportedVariable.kind).to.equal(TypeKind.TypeAlias);
+      expect(exportedVariable.type.kind).to.equal(TypeKind.Union);
     });
 
     it("should have the right amount of types", () => {
@@ -329,8 +329,8 @@ describe("Compiler: Type alias", () => {
     });
 
     it("should have the right types", () => {
-      expect((exportedVariable.type as Union).types[0]!.kind).to.equal(EntityKind.String);
-      expect((exportedVariable.type as Union).types[1]!.kind).to.equal(EntityKind.Number);
+      expect((exportedVariable.type as Union).types[0]!.kind).to.equal(TypeKind.String);
+      expect((exportedVariable.type as Union).types[1]!.kind).to.equal(TypeKind.Number);
     });
 
   });
@@ -353,8 +353,8 @@ describe("Compiler: Type alias", () => {
     const exportedVariable = createTypeAliasBySymbol(symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedVariable.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedVariable.type.kind).to.equal(EntityKind.Intersection);
+      expect(exportedVariable.kind).to.equal(TypeKind.TypeAlias);
+      expect(exportedVariable.type.kind).to.equal(TypeKind.Intersection);
     });
 
     it("should have the right amount of types", () => {

@@ -37,11 +37,8 @@ import {
   RenderObject
 } from "types/renderer.js";
 
-import {
-  renderNamespaceEntityForDocumentation,
-  renderNamespaceEntityForTableOfContents
-} from "./entities/namespace.js";
 import { getRenderExtension } from "./extensions/index.js";
+import { renderNamespaceEntityForDocumentation, renderNamespaceEntityForTableOfContents } from "./types/namespace.js";
 
 
 export function render(entities: ExportableEntities[]) {

@@ -11,7 +11,7 @@ import {
   isUndefinedType,
   isVoidType
 } from "../../typeguards/ts.js";
-import { EntityKind, PrimitiveTypeKinds, PrimitiveTypes } from "../../types/types.js";
+import { PrimitiveTypeKinds, PrimitiveTypes, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 
 
@@ -31,23 +31,23 @@ export function createPrimitiveType(type: Type): PrimitiveTypes {
 function getPrimitiveTypeKind(type: Type): PrimitiveTypeKinds {
 
   if(isStringType(type)){
-    return EntityKind.String;
+    return TypeKind.String;
   } else if(isNumberType(type)){
-    return EntityKind.Number;
+    return TypeKind.Number;
   } else if(isBooleanType(type)){
-    return EntityKind.Boolean;
+    return TypeKind.Boolean;
   } else if(isBigIntType(type)){
-    return EntityKind.BigInt;
+    return TypeKind.BigInt;
   } else if(isVoidType(type)){
-    return EntityKind.Void;
+    return TypeKind.Void;
   } else if(isUndefinedType(type)){
-    return EntityKind.Undefined;
+    return TypeKind.Undefined;
   } else if(isNullType(type)){
-    return EntityKind.Null;
+    return TypeKind.Null;
   } else if(isNeverType(type)){
-    return EntityKind.Never;
+    return TypeKind.Never;
   } else if(isAnyType(type)){
-    return EntityKind.Any;
+    return TypeKind.Any;
   }
 
   throw new Error("type is not a primitive type");

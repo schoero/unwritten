@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
 import { createTypeAliasBySymbol } from "../../src/compiler/types/alias.js";
-import { EntityKind, Tuple } from "../../src/types/types.js";
+import { Tuple, TypeKind } from "../../src/types/types.js";
 import { compile } from "../utils/compile.js";
 
 
@@ -78,14 +78,14 @@ describe("Tuple", () => {
   });
 
   it("should have a matching member types", () => {
-    expect(exportedTuple.members[0]!.type.kind).to.equal(EntityKind.String);
-    expect(exportedTuple.members[1]!.type.kind).to.equal(EntityKind.Number);
-    expect(exportedTupleWithRest.members[0]!.type.kind).to.equal(EntityKind.String);
-    expect(exportedTupleWithRest.members[1]!.type.kind).to.equal(EntityKind.Number);
-    expect(exportedTupleWithOptional.members[0]!.type.kind).to.equal(EntityKind.String);
-    expect(exportedTupleWithOptional.members[1]!.type.kind).to.equal(EntityKind.Number);
-    expect(exportedNamedTuple.members[0]!.type.kind).to.equal(EntityKind.String);
-    expect(exportedNamedTuple.members[1]!.type.kind).to.equal(EntityKind.String);
+    expect(exportedTuple.members[0]!.type.kind).to.equal(TypeKind.String);
+    expect(exportedTuple.members[1]!.type.kind).to.equal(TypeKind.Number);
+    expect(exportedTupleWithRest.members[0]!.type.kind).to.equal(TypeKind.String);
+    expect(exportedTupleWithRest.members[1]!.type.kind).to.equal(TypeKind.Number);
+    expect(exportedTupleWithOptional.members[0]!.type.kind).to.equal(TypeKind.String);
+    expect(exportedTupleWithOptional.members[1]!.type.kind).to.equal(TypeKind.Number);
+    expect(exportedNamedTuple.members[0]!.type.kind).to.equal(TypeKind.String);
+    expect(exportedNamedTuple.members[1]!.type.kind).to.equal(TypeKind.String);
   });
 
   it("should have a matching rest element indicators", () => {

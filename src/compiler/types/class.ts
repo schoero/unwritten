@@ -9,7 +9,7 @@ import {
   isPropertyDeclaration,
   isSetterDeclaration
 } from "../../typeguards/ts.js";
-import { Class, EntityKind, Getter, Method, Property, Setter } from "../../types/types.js";
+import { Class, Getter, Method, Property, Setter, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
@@ -42,7 +42,7 @@ export function createClassBySymbol(symbol: Symbol): Class {
 }
 
 
-export function createClassByDeclaration(declaration: ClassLikeDeclaration): Class {
+export function createClassByDeclaration(declaration: ClassLikeDeclaration): Omit<Class, "name"> {
 
   const ctor = _getSymbolsByTypeFromClassLikeDeclaration(declaration, isConstructorDeclaration).map(createConstructorBySymbol)[0];
   const getters = _getSymbolsByTypeFromClassLikeDeclaration(declaration, isGetterDeclaration).map(createGetterBySymbol);
@@ -58,7 +58,7 @@ export function createClassByDeclaration(declaration: ClassLikeDeclaration): Cla
   const modifiers = getModifiersByDeclaration(declaration);
 
   const id = getIdByDeclaration(declaration);
-  const kind = EntityKind.Class;
+  const kind = TypeKind.Class;
 
   return {
     ctor,

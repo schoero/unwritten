@@ -1,3 +1,4 @@
+import { TypeKind } from "./types.js";
 
 export interface RenderExtension {
   fileExtension: string;
@@ -21,6 +22,10 @@ export interface RenderExtension {
   renderTitle: (title: string, size: number, anchor?: string) => string;
   renderUnderlineText: (text: string) => string;
   renderWarning: (text: string) => string;
+}
+
+export interface RendererAPI {
+  renderFunction: (entity: Function) => RenderedFunction;
 }
 
 export enum RenderCategories {
@@ -57,152 +62,104 @@ export type CategoryNames = {
 };
 
 
-//-- Renderer Object
+//-- Renderer API
 
-export type RenderObject = RenderedList | RenderedMultilineContent | RenderedTitle | string;
+export enum RenderKinds {
+  NewLine = "br",
+  OrderedList = "ol",
+  Title = "title",
+  UnorderedList = "ul",
+  link = "link",
+  tag = "tag",
+  text = "text",
+  type = "type"
+}
 
-export type RenderedTitle = {
-  [title: string]: RenderObject;
-};
+export enum RenderTarget {
+  documentation = "documentation",
+  tableOfContents = "tableOfContents"
+}
 
-export type RenderedMultilineContent = (RenderedList | RenderedTitle | RenderObject | string | undefined)[];
+export type RenderedElements = (RenderedElement<RenderKinds> | RenderedEntity<TypeKind>)[];
 
-export type RenderedList = [RenderedMultilineContent | RenderObject[]];
+export interface RenderedElement<Kind extends RenderKinds> {
+  kind: Kind;
+}
+
+export interface RenderedTitle<
+  Title extends RenderedElements,
+  Content extends RenderedElements | undefined = undefined
+> extends RenderedElement<RenderKinds.Title> {
+  title: Title;
+  content?: Content;
+}
+
+export interface RenderedOrderedList<
+  Content extends RenderedElements
+> extends RenderedElement<RenderKinds.OrderedList> {
+  content: Content;
+}
+
+export interface RenderedUnorderedList<
+  Content extends RenderedElements
+> extends RenderedElement<RenderKinds.UnorderedList> {
+  content: Content;
+}
+
+export interface RenderedLink<Content extends RenderedElements> extends RenderedElement<RenderKinds.link> {
+  content: Content;
+  url: string;
+}
+
+export interface RenderedText <Content extends RenderedElements | string> extends RenderedElement<RenderKinds.text> {
+  text: Content;
+}
+
+export interface RenderedNewLine extends RenderedElement<RenderKinds.NewLine> {}
 
 
+export interface RenderedType extends RenderedElement<RenderKinds.type> {
+  label: string;
+}
 
-//-- Rendered entities
+export interface RenderedTag extends RenderedElement<RenderKinds.tag> {
+  label: string;
+}
 
-export type RenderedEntitiesForTableOfContents = RenderedClassForTableOfContents | RenderedEnumForTableOfContents | RenderedFunctionForTableOfContents | RenderedInterfaceForTableOfContents | RenderedNamespaceForTableOfContents | RenderedTypeAliasForTableOfContents | RenderedVariableForTableOfContents;
-export type RenderedEntitiesForDocumentation = RenderedClassForDocumentation | RenderedEnumForDocumentation | RenderedFunctionForDocumentation | RenderedInterfaceForDocumentation | RenderedNamespaceForDocumentation | RenderedObjectLiteralVariable | RenderedTypeAliasForDocumentation | RenderedVariableForDocumentation;
 
+//-- Entities
 
-//-- Entity categories
-
-export type RenderedEntityCategoryForTableOfContents = [
-  entityCategoryName: string,
-  entityCategoryContent: [RenderedEntitiesForTableOfContents[]]
-];
-
-export type RenderedEntityCategoryForDocumentation = {
-  [categoryName: string]: RenderedEntitiesForDocumentation[];
-};
+export interface RenderedEntity<Kind extends TypeKind> {
+  kind: Kind;
+}
 
 
 //-- Function
 
-export type RenderedFunctionForTableOfContents = string[];
+export interface RenderedFunction extends RenderedEntity<TypeKind.Function> {
+  [RenderTarget.documentation]: {
+    body: [
+      RenderedUnorderedList<RenderedParameter[RenderTarget.documentation][]>,
+      RenderedText<string>
+    ];
+    title: RenderedTitle<[
+      name: RenderedText<string>,
+      ...parameters: RenderedParameter[RenderTarget.tableOfContents][]
+    ]>;
+  };
+  [RenderTarget.tableOfContents]: RenderedLink<[
+    RenderedText<string>,
+    ...RenderedParameter[RenderTarget.tableOfContents][]
+  ]>;
+}
 
-export type RenderedFunctionForDocumentation = {
-  [key in keyof RenderedFunctionImplementationOrOverloadForDocumentation]: RenderedFunctionImplementationOrOverloadForDocumentation[key]
-};
-
-export type RenderedFunctionImplementationOrOverloadForDocumentation = {
-  [implementationOrOverloadName: string]: [
-    parametersAndReturnType: [string[]],
-    description: string | undefined,
-    example: string | undefined
-  ];
-};
-
-
-//-- Class
-
-export type RenderedClassForTableOfContents = [
-  className: string,
-  members: [
-    constructor: [[title: string, content: string[][]]] | undefined,
-    properties: [[title: string, content: string[][]]] | undefined,
-    methods: [[title: string, content: string[][]]] | undefined,
-    setters: [[title: string, content: string[][]]] | undefined,
-    getters: [[title: string, content: string[][]]] | undefined
-  ]
-];
-
-export type RenderedClassForDocumentation = {
-  [className: string]: [
-    description: string | undefined,
-    constructor: { [constructorTitle: string]: RenderedFunctionForDocumentation; } | undefined,
-    properties: { [propertiesTitle: string]: RenderedPropertyForDocumentation[]; } | undefined,
-    methods: { [methodsTitle: string]: RenderedFunctionImplementationOrOverloadForDocumentation[]; } | undefined,
-    setters: { [settersTitle: string]: RenderedFunctionImplementationOrOverloadForDocumentation[]; } | undefined,
-    getters: { [gettersTitle: string]: RenderedFunctionImplementationOrOverloadForDocumentation[]; } | undefined
-  ];
-};
-
-
-//-- Property
-
-export type RenderedPropertyForTableOfContents = string;
-export type RenderedPropertyForDocumentation = string;
-
-
-//-- Parameter
-
-export type RenderedParameterForTableOfContents = string;
-export type RenderedParameterForDocumentation = string;
-
-
-//-- Enum
-
-export type RenderedEnumForTableOfContents = string;
-export type RenderedEnumForDocumentation = {
-  [enumName: string]: [
-    description: string | undefined,
-    members: [RenderedPropertyForDocumentation[]]
-  ];
-};
-
-
-//-- Interface
-
-export type RenderedInterfaceForTableOfContents = string;
-export type RenderedInterfaceForDocumentation = {
-  [interfaceName: string]: [
-    description: string | undefined,
-    members: [RenderedPropertyForDocumentation[]]
-  ];
-};
-
-
-//-- Namespace
-
-export type RenderedNamespaceForTableOfContents = [
-  namespaceName: string,
-  namespaceContent: RenderedEntityCategoryForTableOfContents[]
-];
-
-export type RenderedNamespaceForDocumentation = {
-  [namespaceName: string]: RenderedEntityCategoryForDocumentation;
-};
-
-
-//-- Variable
-
-export type RenderedVariableForTableOfContents = string;
-export type RenderedVariableForDocumentation = {
-  [variableName: string]: [
-    description: string | undefined,
-    type: string | undefined,
-    example: string | undefined
-  ];
-};
-
-export type RenderedObjectLiteralVariable = {
-  [variableName: string]: [
-    description: string | undefined,
-    properties: [RenderedPropertyForDocumentation[]],
-    example: string | undefined
-  ];
-};
-
-
-//-- Type alias
-
-export type RenderedTypeAliasForTableOfContents = string;
-export type RenderedTypeAliasForDocumentation = {
-  [typeAliasName: string]: [
-    description: string | undefined,
-    type: string | undefined
-  ];
-};
+export interface RenderedParameter extends RenderedEntity<TypeKind.Parameter> {
+  [RenderTarget.documentation]: RenderedText<[
+    rest: RenderedText<string>,
+    name: RenderedText<string>,
+    type: RenderedType,
+    description: RenderedText<string>,
+    ...modifiers: RenderedTag[]
+  ]>;
+  [RenderTarget.tableOfContents]: RenderedText<string>;
+}

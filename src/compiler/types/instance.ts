@@ -1,13 +1,13 @@
 import { TypeReference } from "typescript";
 
-import { EntityKind, Instance } from "../../types/types.js";
+import { Instance, TypeKind } from "../../types/types.js";
 import { createTypeReferenceByType } from "./reference.js";
 
 
 export function createInstanceByType(type: TypeReference): Instance {
 
   const fromReference = createTypeReferenceByType(type);
-  const kind = EntityKind.Instance;
+  const kind = TypeKind.Instance;
 
   return {
     ...fromReference,

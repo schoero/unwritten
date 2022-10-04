@@ -28,15 +28,6 @@ export interface CompilerConfig {
 
 export interface RenderConfig {
 
-  /**
-    * Defines the title of the categories for the rendered entities.
-    */
-  // categoryNames?: CategoryNames;
-
-  /**
-   * Defines how literal type annotations should be encapsulated in the rendered output.
-   */
-  literalTypeEncapsulation?: Encapsulation | boolean;
 
   /**
    * Defines how parameters should be encapsulated in the rendered output.
@@ -47,6 +38,15 @@ export interface RenderConfig {
    * Defines how properties should be encapsulated in the rendered output.
    */
   propertyEncapsulation?: Encapsulation | boolean;
+
+  /**
+    * Defines the title of the categories for the rendered entities.
+    */
+  // categoryNames?: CategoryNames;
+  /**
+   * Defines how string literal type annotations should be encapsulated in the rendered output.
+   */
+  stringLiteralTypeEncapsulation?: Encapsulation | boolean;
 
   /**
     * Defines the order in which entities should be rendered.
