@@ -17,6 +17,8 @@ export enum TypeKind {
   Intersection = "Intersection",
   Member = "Member",
   Method = "Method",
+  Module = "Module",
+  Namespace = "Namespace",
   Never = "Never",
   Null = "Null",
   Number = "Number",
@@ -80,6 +82,8 @@ export type Types =
   | LiteralTypes
   | Member
   | Method
+  | Module
+  | Namespace
   | ObjectLiteral
   | PrimitiveTypes
   | Property
@@ -98,6 +102,8 @@ export type ExportableTypes =
   | Class
   | Function
   | Interface
+  | Module
+  | Namespace
   | TypeAlias
   | Variable
 ;
@@ -377,6 +383,21 @@ export interface Member extends Type<TypeKind.Member> {
   example?: Example;
 }
 
+
+//-- Module
+
+export interface Module extends Type<TypeKind.Module> {
+  exports: ExportableTypes[];
+  name: Name;
+}
+
+
+//-- Namespace
+
+export interface Namespace extends Type<TypeKind.Namespace> {
+  exports: ExportableTypes[];
+  name: Name;
+}
 
 export type FunctionLikeTypeMap = {
   [TypeKind.Class]: Class;

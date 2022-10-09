@@ -1,0 +1,28 @@
+import { describe, expect, it } from "vitest";
+
+import { createNamespaceBySymbol } from "../../src/compiler/types/namespace.js";
+import { compile } from "../utils/compile.js";
+
+
+describe("Compiler: Namespace", () => {
+
+  const testFileContent = `
+    export namespace TestNamespace {
+      export type TestType = string;
+    }
+  `;
+
+  const { exportedSymbols } = compile(testFileContent.trim());
+
+  const exportedNamespace = createNamespaceBySymbol(exportedSymbols[0]!);
+
+  it("should export a namespace", () => {
+    expect(exportedNamespace.name).to.equal("TestNamespace");
+  });
+
+  it("should have parsed exports", () => {
+    expect(exportedNamespace.exports.length).to.equal(1);
+  });
+
+});
+
