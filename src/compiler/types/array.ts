@@ -2,16 +2,16 @@
 
 import { ArrayTypeNode } from "typescript";
 
+import { CompilerContext } from "../../types/context.js";
 import { Array, TypeKind } from "../../types/types.js";
 import { getIdByTypeNode } from "../compositions/id.js";
-import { getTypeByType } from "../compositions/type.js";
-import { getContext } from "../context/index.js";
+import { createTypeByType } from "./type.js";
 
 
-export function createArrayByArrayTypeNode(typeNode: ArrayTypeNode): Array {
+export function createArrayByArrayTypeNode(ctx: CompilerContext, typeNode: ArrayTypeNode): Array {
 
-  const id = getIdByTypeNode(typeNode);
-  const type = getTypeByType(getContext().checker.getTypeFromTypeNode(typeNode.elementType));
+    const id = getIdByTypeNode(ctx, typeNode);
+  const type = createTypeByType(ctx, ctx.checker.getTypeFromTypeNode(typeNode.elementType));
   const kind = TypeKind.Array;
 
   return {

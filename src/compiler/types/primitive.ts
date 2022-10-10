@@ -11,14 +11,15 @@ import {
   isUndefinedType,
   isVoidType
 } from "../../typeguards/ts.js";
+import { CompilerContext } from "../../types/context.js";
 import { PrimitiveTypeKinds, PrimitiveTypes, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 
 
-export function createPrimitiveType(type: Type): PrimitiveTypes {
+export function createPrimitiveType(ctx: CompilerContext, type: Type): PrimitiveTypes {
 
-  const kind = getPrimitiveTypeKind(type);
-  const id = getIdByType(type);
+  const kind = getPrimitiveTypeKind(ctx, type);
+  const id = getIdByType(ctx, type);
 
   return {
     id,
@@ -28,7 +29,7 @@ export function createPrimitiveType(type: Type): PrimitiveTypes {
 }
 
 
-function getPrimitiveTypeKind(type: Type): PrimitiveTypeKinds {
+function getPrimitiveTypeKind(ctx: CompilerContext, type: Type): PrimitiveTypeKinds {
 
   if(isStringType(type)){
     return TypeKind.String;

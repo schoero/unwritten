@@ -1,14 +1,15 @@
 import { IntersectionType as TSIntersectionType } from "typescript";
 
+import { CompilerContext } from "../../types/context.js";
 import { Intersection, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
-import { getTypeByType } from "../compositions/type.js";
+import { createTypeByType } from "./type.js";
 
 
-export function createIntersectionTypeByType(type: TSIntersectionType): Intersection {
+export function createIntersectionTypeByType(ctx: CompilerContext, type: TSIntersectionType): Intersection {
 
-  const id = getIdByType(type);
-  const types = type.types.map(getTypeByType);
+  const id = getIdByType(ctx, type);
+  const types = type.types.map(type => createTypeByType(ctx, type));
   const kind = TypeKind.Intersection;
 
   return {

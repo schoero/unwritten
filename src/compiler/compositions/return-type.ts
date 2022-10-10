@@ -1,20 +1,21 @@
 import { Signature } from "typescript";
 import { assert } from "vitest";
 
+import { CompilerContext } from "../../types/context.js";
+import { createTypeByType } from "../types/type.js";
 import { getReturnTypeDescription } from "./jsdoc.js";
-import { getTypeByType } from "./type.js";
 
 
-export function getReturnTypeByCallSignature(callSignature: Signature) {
+export function getReturnTypeByCallSignature(ctx: CompilerContext, callSignature: Signature) {
 
   const returnType = callSignature.getReturnType();
-  const returnTypeDescription = getReturnTypeDescription(callSignature.getDeclaration());
+  const returnTypeDescription = getReturnTypeDescription(ctx, callSignature.getDeclaration());
 
   assert(returnType, "Function return type is missing.");
 
   return {
     description: returnTypeDescription,
-    ...getTypeByType(returnType)
+    ...createTypeByType(ctx, returnType)
   };
 
 }

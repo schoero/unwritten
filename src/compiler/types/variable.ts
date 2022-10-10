@@ -2,25 +2,26 @@ import { Symbol, Type, VariableDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { isVariableDeclaration } from "../../typeguards/ts.js";
+import { CompilerContext } from "../../types/context.js";
 import { TypeKind, Variable } from "../../types/types.js";
-import { getIdBySymbol, getIdByType } from "../compositions/id.js";
+import { getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
+import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { getTypeByType } from "../compositions/type.js";
-import { getContext } from "../context/index.js";
+import { createTypeByType } from "./type.js";
 
 
-export function createVariableBySymbol(symbol: Symbol): Variable {
+export function createVariableBySymbol(ctx: CompilerContext, symbol: Symbol): Variable {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
   assert(declaration && isVariableDeclaration(declaration), "Variable declaration is not found");
 
-  const id = getIdBySymbol(symbol);
-  const name = getNameBySymbol(symbol);
-  const description = getDescriptionBySymbol(symbol);
-  const fromDeclaration = _createVariableByDeclaration(declaration);
+  const id = getIdBySymbol(ctx, symbol);
+  const name = getNameBySymbol(ctx, symbol);
+  const description = getDescriptionBySymbol(ctx, symbol);
+  const fromDeclaration = _createVariableByDeclaration(ctx, declaration);
   const kind = TypeKind.Variable;
 
   return {
@@ -34,16 +35,18 @@ export function createVariableBySymbol(symbol: Symbol): Variable {
 }
 
 
-function _createVariableByDeclaration(declaration: VariableDeclaration) {
+function _createVariableByDeclaration(ctx: CompilerContext, declaration: VariableDeclaration) {
 
-  const tsType = getContext().checker.getTypeAtLocation(declaration);
+  const tsType = ctx.checker.getTypeAtLocation(declaration);
 
-  const example = getExampleByDeclaration(declaration);
-  const position = getPositionByDeclaration(declaration);
-  const type = getTypeByType(tsType);
+  const example = getExampleByDeclaration(ctx, declaration);
+  const position = getPositionByDeclaration(ctx, declaration);
+  const modifiers = getModifiersByDeclaration(ctx, declaration);
+  const type = createTypeByType(ctx, tsType);
 
   return {
     example,
+    modifiers,
     position,
     type
   };
@@ -51,17 +54,19 @@ function _createVariableByDeclaration(declaration: VariableDeclaration) {
 }
 
 
-export function createVariableByType(type: Type): Variable {
+export function createVariableByType(ctx: CompilerContext, type: Type): Variable {
 
-  const id = getIdByType(type);
-  const tp = getTypeByType(type);
-  const kind = TypeKind.Variable;
+  return createVariableBySymbol(ctx, type.symbol);
 
-  return {
-    id,
-    kind,
-    type: tp
-  };
+  // const id = getIdByType(ctx, type);
+  // const tp = createTypeByType(ctx, type);
+  // const kind = TypeKind.Variable;
+
+  // return {
+  //   id,
+  //   kind,
+  //   type: tp
+  // };
 
 }
 

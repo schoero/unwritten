@@ -1,16 +1,17 @@
 import { Symbol } from "typescript";
 
 import { parse } from "../../parser/index.js";
+import { CompilerContext } from "../../types/context.js";
 import { Namespace, TypeKind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 
 
-export function createNamespaceBySymbol(symbol: Symbol): Namespace {
+export function createNamespaceBySymbol(ctx: CompilerContext, symbol: Symbol): Namespace {
 
-  const exports = parse(symbol);
-  const id = getIdBySymbol(symbol);
-  const name = getNameBySymbol(symbol);
+  const exports = parse(ctx, symbol);
+  const id = getIdBySymbol(ctx, symbol);
+  const name = getNameBySymbol(ctx, symbol);
   const kind = TypeKind.Namespace;
 
   return {

@@ -1,15 +1,15 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-import { compile } from "compiler/index.js";
-import { getEntryFileSymbolFromProgram, parse } from "compiler/parser/index.js";
-import { setConfig } from "renderer/config/index.js";
-import { getRenderExtension, setRenderExtension } from "renderer/extensions/index.js";
-import { render } from "renderer/index.js";
-import { disableLog, error, log } from "src/log/index.js";
-import { Config } from "src/types/config.js";
-import { APIOptions } from "src/types/options.js";
-import { findFile } from "src/utils/finder.js";
+import { assert } from "vitest";
+
+import { compile } from "../compiler/index.js";
+import { createConfig } from "../config/index.js";
+import { disableLog } from "../log/index.js";
+import { getEntryFileSymbolFromProgram, parse } from "../parser/index.js";
+import { APIOptions } from "../types/options.js";
+import { Renderer } from "../types/renderer.js";
+import { validateRenderer } from "../utils/general.js";
 
 
 export async function docCreator(entryFilePath: string, options?: APIOptions) {
@@ -24,65 +24,38 @@ export async function docCreator(entryFilePath: string, options?: APIOptions) {
   }
 
 
-  //-- Set renderer extension
+  //-- Get renderer
 
-  if(options?.renderer === "markdown" || options?.renderer === undefined){
-    const markdownRenderExtension = await import("renderer/extensions/markdown.js");
+  let renderer: Renderer | undefined;
 
-    setRenderExtension(markdownRenderExtension.markdownRenderExtension);
+  if(options?.renderer === undefined || options.renderer === "markdown"){
+    renderer = validateRenderer(await import("../renderer/markup/markdown/index.js"));
   } else if(options.renderer === "html"){
-    const htmlRenderExtension = await import("renderer/extensions/html.js");
-
-    setRenderExtension(htmlRenderExtension.htmlRenderExtension);
+    renderer = validateRenderer(await import("../renderer/markup/html/index.js"));
+  } else if(typeof options.renderer === "string"){
+    renderer = validateRenderer(await import(options.renderer));
   } else if(typeof options.renderer === "object"){
-    setRenderExtension(options.renderer);
+    renderer = validateRenderer(options.renderer);
   }
 
-
-  //-- Set config
-
-  let absoluteConfigPath: string | undefined;
-
-  if(typeof options?.config === "object"){
-    setConfig(options.config);
-    log("Using provided config.");
-  } else if(typeof options?.config === "string"){
-    absoluteConfigPath = resolve(options.config);
-    if(existsSync(absoluteConfigPath) === false){
-      throw error(`Config file does not exist at ${absoluteConfigPath}`);
-    }
-  } else if(options?.config === undefined){
-    absoluteConfigPath = findFile(".doc-creator.json", absoluteEntryFilePath);
-    if(absoluteConfigPath === undefined){
-      log("Using default config.");
-    } else {
-      log(`Using config found at ${absoluteConfigPath}`);
-    }
-  }
-
-  if(absoluteConfigPath !== undefined){
-    const config = readFileSync(absoluteConfigPath, "utf8");
-    try {
-      const parsedConfig: Config = JSON.parse(config);
-
-      setConfig(parsedConfig);
-    } catch (err){
-      throw error(`Error parsing config file: ${err} at ${absoluteConfigPath}`);
-    }
-  }
+  assert(renderer, "Invalid renderer");
 
 
   //-- Compile, parse and render
 
-  const program = compile(absoluteEntryFilePath, options?.tsconfig);
+  const { checker, program } = compile(absoluteEntryFilePath, options?.tsconfig);
+
+  const context = createContext(program, checker);
+  const config = createConfig(options?.config);
+
   const entryFileSymbol = getEntryFileSymbolFromProgram(program);
-  const parsedSymbols = parse(entryFileSymbol);
-  const renderedSymbols = render(parsedSymbols);
+  const parsedSymbols = parse({ config, ctx: context }, entryFileSymbol);
+  const renderedSymbols = renderer.render({ config }, parsedSymbols);
 
 
   //-- Write output to file
 
-  const fileExtension = getRenderExtension().fileExtension;
+  const fileExtension = renderer.fileExtension;
   const outputPath = options?.output ?? `./docs/api${fileExtension}`;
   const absoluteOutputDir = resolve(dirname(outputPath));
 

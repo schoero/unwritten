@@ -2,24 +2,25 @@ import { Symbol, TypeAliasDeclaration, TypeNode } from "typescript";
 import { assert } from "vitest";
 
 import { isTypeAliasDeclaration } from "../../typeguards/ts.js";
-import { TypeKind, TypeAlias } from "../../types/types.js";
+import { CompilerContext } from "../../types/context.js";
+import { TypeAlias, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
-import { getNameBySymbol } from "../compositions/name.js";
-import { getPositionByDeclaration } from "../compositions/position.js";
-import { getTypeByTypeNode } from "../compositions/type.js";
+import { getNameBySymbol, getNameByTypeNode } from "../compositions/name.js";
+import { getPositionByDeclaration, getPositionByTypeNode } from "../compositions/position.js";
+import { createTypeByTypeNode } from "./type.js";
 
 
-export function createTypeAliasBySymbol(symbol: Symbol): TypeAlias {
+export function createTypeAliasBySymbol(ctx: CompilerContext, symbol: Symbol): TypeAlias {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
   assert(declaration && isTypeAliasDeclaration(declaration), "Type alias declaration is not found");
 
-  const name = getNameBySymbol(symbol);
-  const id = getIdBySymbol(symbol);
-  const description = getDescriptionBySymbol(symbol);
-  const fromDeclaration = createTypeAliasByDeclaration(declaration);
+  const name = getNameBySymbol(ctx, symbol);
+  const id = getIdBySymbol(ctx, symbol);
+  const description = getDescriptionBySymbol(ctx, symbol);
+  const fromDeclaration = createTypeAliasByDeclaration(ctx, declaration);
 
   return {
     ...fromDeclaration,
@@ -31,13 +32,14 @@ export function createTypeAliasBySymbol(symbol: Symbol): TypeAlias {
 }
 
 
-export function createTypeAliasByDeclaration(declaration: TypeAliasDeclaration): TypeAlias {
+export function createTypeAliasByDeclaration(ctx: CompilerContext, declaration: TypeAliasDeclaration) {
 
   const typeNode = declaration.type;
 
-  const fromTypeNode = createTypeAliasByTypeNode(typeNode);
-  const example = getExampleByDeclaration(declaration);
-  const position = getPositionByDeclaration(declaration);
+  // TODO: check if typeNode is the correct way to go here
+  const fromTypeNode = createTypeAliasByTypeNode(ctx, typeNode);
+  const example = getExampleByDeclaration(ctx, declaration);
+  const position = getPositionByDeclaration(ctx, declaration);
 
   return {
     ...fromTypeNode,
@@ -48,17 +50,21 @@ export function createTypeAliasByDeclaration(declaration: TypeAliasDeclaration):
 }
 
 
-export function createTypeAliasByTypeNode(typeNode: TypeNode): TypeAlias {
+export function createTypeAliasByTypeNode(ctx: CompilerContext, typeNode: TypeNode) {
 
-  const id = getIdByTypeNode(typeNode);
-  const type = getTypeByTypeNode(typeNode);
+  const id = getIdByTypeNode(ctx, typeNode);
+  const type = createTypeByTypeNode(ctx, typeNode);
+  const name = getNameByTypeNode(ctx, typeNode);
+  const position = getPositionByTypeNode(ctx, typeNode);
   const kind = TypeKind.TypeAlias;
 
   return {
     id,
     kind,
+    name,
+    position,
     type
-  };
+  } as const;
 
 }
 

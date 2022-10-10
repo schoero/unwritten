@@ -1,10 +1,9 @@
-import { RenderExtension } from "../../types/renderer.js";
+import { MarkupRenderer } from "../types/renderer.js";
 
 
-class MarkdownRenderExtension implements RenderExtension {
+class MarkdownRenderExtension implements MarkupRenderer {
 
   public name: string = "markdown";
-
   public fileExtension: string = ".md";
 
   private _listIndentation: number = -2;
@@ -130,7 +129,6 @@ class MarkdownRenderExtension implements RenderExtension {
 
   private _textToAnchorLink(text: string): string {
     let link = text.toLowerCase();
-
     link = link.replace(/[^a-z0-9\s-]/gi, "");
     link = link.replace(/\s/g, "-");
     return link;

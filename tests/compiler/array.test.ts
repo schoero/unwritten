@@ -16,9 +16,9 @@ describe("Compiler: Array", () => {
       export type StringOrNumberArray = (string | number)[];
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
     const exportedStringOrNumberArraySymbol = exportedSymbols.find(s => s.name === "StringOrNumberArray")!;
-    const exportedStringOrNumberArray = createTypeAliasBySymbol(exportedStringOrNumberArraySymbol);
+    const exportedStringOrNumberArray = createTypeAliasBySymbol(ctx, exportedStringOrNumberArraySymbol);
 
     it("should generate an array type", () => {
       expect(exportedStringOrNumberArray.name).to.equal("StringOrNumberArray");
@@ -37,9 +37,9 @@ describe("Compiler: Array", () => {
       export type StringOrNumberArray = Array<string>;
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
     const exportedStringOrNumberArraySymbol = exportedSymbols.find(s => s.name === "StringOrNumberArray")!;
-    const exportedStringOrNumberArray = createTypeAliasBySymbol(exportedStringOrNumberArraySymbol);
+    const exportedStringOrNumberArray = createTypeAliasBySymbol(ctx, exportedStringOrNumberArraySymbol);
 
     it("should generate a type alias > type reference > array with string as a type argument", () => {
       expect(exportedStringOrNumberArray.name).to.equal("StringOrNumberArray");

@@ -4,7 +4,6 @@ import { dirname, resolve } from "node:path";
 import ts, { CompilerOptions } from "typescript";
 
 import { error, log, warn } from "../log/index.js";
-import { createContext } from "./context/index.js";
 
 
 export function compile(entryFilePath: string, tsConfigFilePath?: string) {
@@ -24,16 +23,11 @@ export function compile(entryFilePath: string, tsConfigFilePath?: string) {
   const checker = program.getTypeChecker();
 
 
-  //-- Set compiler context
-
-  createContext(program, checker);
-
-
   //-- Report any compiler messages
 
   reportCompilerDiagnostics(program.getSemanticDiagnostics());
 
-  return program;
+  return { checker, program };
 
 }
 

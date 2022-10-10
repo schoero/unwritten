@@ -1,86 +1,53 @@
 
 import ts from "typescript";
 
-import { resolveSymbolInCaseOfImport } from "../../utils/ts.js";
-import { ensureSymbolHasId } from "../compositions/id.js";
+import { CompilerContext } from "../../types/context.js";
+import { ensureSymbolHasId, getIdBySymbol } from "../compositions/id.js";
+import { resolveSymbolInCaseOfImport } from "../utils/ts.js";
 
 
 type SymbolCache = number[];
 
-const _symbolCaches: SymbolCache[] = [[]];
+export class Cache {
 
-export function getSymbolCache() {
-  return _symbolCaches[_symbolCaches.length - 1]!;
-}
+  private _symbolCache: SymbolCache = [];
 
-export function cacheSymbol(symbol: ts.Symbol) {
+  public cacheSymbol(ctx: CompilerContext, symbol: ts.Symbol) {
 
-  ensureSymbolHasId(symbol);
+    ensureSymbolHasId(ctx, symbol);
 
-  // @ts-expect-error
-  getSymbolCache().push(symbol.id);
+    this._symbolCache.push(getIdBySymbol(ctx, symbol));
 
-  const resolvedSymbol = resolveSymbolInCaseOfImport(symbol);
+    const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 
-  ensureSymbolHasId(resolvedSymbol);
+    ensureSymbolHasId(ctx, resolvedSymbol);
 
-  // @ts-expect-error
-  if(resolvedSymbol.id !== symbol.id){
-  // @ts-expect-error
-    getSymbolCache().push(resolvedSymbol.id);
+    if(getIdBySymbol(ctx, resolvedSymbol) !== getIdBySymbol(ctx, symbol)){
+      this._symbolCache.push(getIdBySymbol(ctx, resolvedSymbol));
+    }
+
+    return symbol;
+
   }
 
-  return symbol;
 
-}
+  public removeCachedSymbol(ctx: CompilerContext, symbol: ts.Symbol) {
+
+    ensureSymbolHasId(ctx, symbol);
+
+    const index = this._symbolCache.indexOf(getIdBySymbol(ctx, symbol));
+
+    if(index !== -1){
+      this._symbolCache.splice(index, 1);
+    }
+
+  }
 
 
-export function removeCachedSymbol(symbol: ts.Symbol) {
-
-  ensureSymbolHasId(symbol);
-
-  const symbolCache = getSymbolCache();
-
-  // @ts-expect-error
-  const index = symbolCache.indexOf(symbol.id);
-
-  if(index !== -1){
-    symbolCache.splice(index, 1);
+  public isSymbolCached(ctx: CompilerContext, symbol: ts.Symbol): boolean {
+    ensureSymbolHasId(ctx, symbol);
+    return this._symbolCache.includes(getIdBySymbol(ctx, symbol));
   }
 
 }
 
-export function cacheSymbolTemporarily<R>(symbol: ts.Symbol, callback: (symbol: ts.Symbol) => R) {
-  cacheSymbol(symbol);
-
-  const returnValue = callback(symbol);
-
-  removeCachedSymbol(symbol);
-  return returnValue;
-}
-
-
-export function isSymbolCached(symbol: ts.Symbol): boolean {
-
-  ensureSymbolHasId(symbol);
-
-  // @ts-expect-error
-  return getSymbolCache().includes(symbol.id);
-
-}
-
-
-export function createSymbolCache<R>(callback: (cache: SymbolCache) => R) {
-  _symbolCaches.push([]);
-
-  const returnValue = callback(getSymbolCache());
-
-  closeSymbolCache();
-  return returnValue;
-}
-
-function closeSymbolCache() {
-  if(_symbolCaches.length > 1){
-    _symbolCaches.pop();
-  }
-}

@@ -12,9 +12,9 @@ describe("Compiler: Module", () => {
     }
   `;
 
-  const { exportedSymbols } = compile(testFileContent.trim());
+  const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
-  const exportedModule = createModuleBySymbol(exportedSymbols[0]!);
+  const exportedModule = createModuleBySymbol(ctx, exportedSymbols[0]!);
 
   it("should export a module", () => {
     expect(exportedModule.name).to.equal("TestModule");

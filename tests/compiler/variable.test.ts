@@ -18,10 +18,10 @@ describe("Compiler: Variable", () => {
       export const stringLiteral = "Hello World";
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "stringLiteral")!;
-    const exportedVariable = createVariableBySymbol(symbol);
+    const exportedVariable = createVariableBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
       expect(exportedVariable.kind).to.equal(TypeKind.Variable);
@@ -32,7 +32,7 @@ describe("Compiler: Variable", () => {
     });
 
     it("should have a matching id", () => {
-      expect(exportedVariable.id).to.equal(getIdBySymbol(symbol));
+      expect(exportedVariable.id).to.equal(getIdBySymbol(ctx, symbol));
     });
 
     it("should have a matching type", () => {
@@ -74,10 +74,10 @@ describe("Compiler: Variable", () => {
       } as const;
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "objectVariable")!;
-    const exportedVariable = createVariableBySymbol(symbol);
+    const exportedVariable = createVariableBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
       expect(exportedVariable.kind).to.equal(TypeKind.Variable);

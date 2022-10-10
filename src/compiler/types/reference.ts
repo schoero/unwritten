@@ -1,23 +1,21 @@
 import { Symbol, TupleTypeReference, TypeReference, TypeReferenceNode } from "typescript";
 import { assert } from "vitest";
 
-import { getCompilerConfig } from "../../config/index.js";
 import { isType, isTypeNode } from "../../typeguards/ts.js";
+import { CompilerContext } from "../../types/context.js";
 import { Reference, TypeKind } from "../../types/types.js";
 import { isPathExcluded } from "../../utils/general.js";
-import { cacheSymbol, isSymbolCached } from "../cache/index.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { getTypeBySymbol, getTypeByType, getTypeByTypeNode } from "../compositions/type.js";
-import { getContext } from "../context/index.js";
+import { createTypeBySymbol, createTypeByType, createTypeByTypeNode } from "./type.js";
 
 
-export function createTypeReferenceByTypeNode(typeNode: TypeReferenceNode): Reference {
+export function createTypeReferenceByTypeNode(ctx: CompilerContext, typeNode: TypeReferenceNode): Reference {
 
-  const typeArguments = typeNode.typeArguments?.map(getTypeByTypeNode);
-  const targetSymbol = getTargetSymbolByTypeReference(typeNode);
-  const target = createTargetBySymbol(targetSymbol);
+  const typeArguments = typeNode.typeArguments?.map(typeArgument => createTypeByTypeNode(ctx, typeArgument));
+  const targetSymbol = getTargetSymbolByTypeReference(ctx, typeNode);
+  const target = createTargetBySymbol(ctx, targetSymbol);
   const kind = TypeKind.Reference;
 
   return {
@@ -29,11 +27,11 @@ export function createTypeReferenceByTypeNode(typeNode: TypeReferenceNode): Refe
 }
 
 
-export function createTypeReferenceByType(typeReference: TypeReference): Reference {
+export function createTypeReferenceByType(ctx: CompilerContext, typeReference: TypeReference): Reference {
 
-  const typeArguments = typeReference.typeArguments?.map(getTypeByType);
-  const targetSymbol = getTargetSymbolByTypeReference(typeReference);
-  const target = createTargetBySymbol(targetSymbol);
+  const typeArguments = typeReference.typeArguments?.map(typeArgument => createTypeByType(ctx, typeArgument));
+  const targetSymbol = getTargetSymbolByTypeReference(ctx, typeReference);
+  const target = createTargetBySymbol(ctx, targetSymbol);
   const kind = TypeKind.Reference;
 
   return {
@@ -45,16 +43,16 @@ export function createTypeReferenceByType(typeReference: TypeReference): Referen
 }
 
 
-export function createTargetBySymbol(symbol: Symbol) {
+export function createTargetBySymbol(ctx: CompilerContext, symbol: Symbol) {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
   assert(declaration, "Target declaration is not found");
 
-  const id = getIdBySymbol(symbol);
-  const name = getNameBySymbol(symbol);
-  const resolvedType = getResolvedTypeBySymbol(symbol);
-  const position = getPositionByDeclaration(declaration);
+  const id = getIdBySymbol(ctx, symbol);
+  const name = getNameBySymbol(ctx, symbol);
+  const resolvedType = getResolvedTypeBySymbol(ctx, symbol);
+  const position = getPositionByDeclaration(ctx, declaration);
 
   return {
     id,
@@ -66,36 +64,37 @@ export function createTargetBySymbol(symbol: Symbol) {
 }
 
 
-export function getResolvedTypeBySymbol(targetSymbol: Symbol) {
+export function getResolvedTypeBySymbol(ctx: CompilerContext, targetSymbol: Symbol) {
 
+  const { config, cache } = ctx;
   const declaration = targetSymbol.valueDeclaration ?? targetSymbol.getDeclarations()?.[0];
   if(declaration){
-    const excludePaths = getCompilerConfig().exclude;
-    const position = getPositionByDeclaration(declaration);
+    const excludePaths = config.compilerConfig.exclude ?? [];
+    const position = getPositionByDeclaration(ctx, declaration);
     if(isPathExcluded(position.file, excludePaths)){
       return;
     }
   }
 
-  if(isSymbolCached(targetSymbol)){
+  if(cache.isSymbolCached(ctx, targetSymbol)){
     return;
   } else {
-    cacheSymbol(targetSymbol);
+    cache.cacheSymbol(ctx, targetSymbol);
   }
 
-  return getTypeBySymbol(targetSymbol);
+  return createTypeBySymbol(ctx, targetSymbol);
 
 }
 
 
-export function getTargetSymbolByTypeReference(typeNodeOrType: TupleTypeReference | TypeReference | TypeReferenceNode): Symbol {
+export function getTargetSymbolByTypeReference(ctx: CompilerContext, typeNodeOrType: TupleTypeReference | TypeReference | TypeReferenceNode): Symbol {
 
   let targetSymbol: Symbol | undefined;
 
   if(isType(typeNodeOrType)){
     targetSymbol = typeNodeOrType.aliasSymbol ?? typeNodeOrType.target.symbol;
   } else if(isTypeNode(typeNodeOrType)){
-    const type = getContext().checker.getTypeFromTypeNode(typeNodeOrType);
+    const type = ctx.checker.getTypeFromTypeNode(typeNodeOrType);
 
     targetSymbol = type.symbol; // alias symbol referes back to the "original" symbol
   }

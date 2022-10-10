@@ -19,9 +19,9 @@ describe("Compiler: Class", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
-    const exportedClass = createClassBySymbol(exportedClassSymbol);
+    const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should have an exported class", () => {
       expect(exportedClass).not.to.be.undefined;
@@ -32,7 +32,7 @@ describe("Compiler: Class", () => {
     });
 
     it("should have a matching id", () => {
-      expect(exportedClass.id).to.equal(getIdBySymbol(exportedSymbols[0]!));
+      expect(exportedClass.id).to.equal(getIdBySymbol(ctx, exportedSymbols[0]!));
     });
 
     it("should have a description", () => {
@@ -50,9 +50,9 @@ describe("Compiler: Class", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
-    const exportedClass = createClassBySymbol(exportedClassSymbol);
+    const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should have matching properties", () => {
       expect(exportedClass.properties).to.have.lengthOf(3);
@@ -93,9 +93,9 @@ describe("Compiler: Class", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
-    const exportedClass = createClassBySymbol(exportedClassSymbol);
+    const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should have 2 methods", () => {
       expect(exportedClass.methods).to.have.lengthOf(2);
@@ -129,9 +129,9 @@ describe("Compiler: Class", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
-    const exportedClass = createClassBySymbol(exportedClassSymbol);
+    const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should have a setter and a getter", () => {
       expect(exportedClass.setters).to.have.lengthOf(1);
@@ -166,9 +166,9 @@ describe("Compiler: Class", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
-    const exportedClass = createClassBySymbol(exportedClassSymbol);
+    const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should merge different properties from inherited class", () => {
       expect(exportedClass.properties).to.have.lengthOf(2);
@@ -199,9 +199,9 @@ describe("Compiler: Class", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
-    const exportedClass = createClassBySymbol(exportedClassSymbol);
+    const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should override identical properties from inherited class", () => {
       expect(exportedClass.properties).to.have.lengthOf(1);

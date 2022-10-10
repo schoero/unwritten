@@ -1,3 +1,5 @@
+import { MarkupRenderConfig } from "../renderer/markup/types/config.js";
+import { BuiltInRenderers } from "./renderer.js";
 
 export interface Config {
   /** Compiler configuration. */
@@ -8,11 +10,17 @@ export interface Config {
   renderConfig?: RenderConfig;
 }
 
+export interface RenderConfig {
+  [BuiltInRenderers.Markdown]: MarkupRenderConfig;
+  [BuiltInRenderers.HTML]: MarkupRenderConfig;
+  [key: string]: {
+    [key: string]: any;
+  };
+}
+
 export interface ConfigWithSchema extends Config {
   $schema: string;
 }
-
-export type Encapsulation = [prefix: string, suffix: string];
 
 export type Complete<Config> = {
   [key in keyof Config]-?: Config[key];
@@ -26,44 +34,6 @@ export interface CompilerConfig {
 
 }
 
-export interface RenderConfig {
-
-
-  /**
-   * Defines how parameters should be encapsulated in the rendered output.
-   */
-  parameterEncapsulation?: Encapsulation | boolean;
-
-  /**
-   * Defines how properties should be encapsulated in the rendered output.
-   */
-  propertyEncapsulation?: Encapsulation | boolean;
-
-  /**
-    * Defines the title of the categories for the rendered entities.
-    */
-  // categoryNames?: CategoryNames;
-  /**
-   * Defines how string literal type annotations should be encapsulated in the rendered output.
-   */
-  stringLiteralTypeEncapsulation?: Encapsulation | boolean;
-
-  /**
-    * Defines the order in which entities should be rendered.
-    */
-  // renderOrder?: Entities["kind"][];
-
-  /**
-   * Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output.
-   */
-  tagEncapsulation?: Encapsulation | boolean;
-
-  /**
-   * Defines how type annotations should be encapsulated in the rendered output.
-   */
-  typeEncapsulation?: Encapsulation | boolean;
-
-}
 
 export interface ExternalTypes {
   [key: string]: string;

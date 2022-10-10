@@ -1,9 +1,10 @@
 import ts, { Declaration } from "typescript";
 
+import { CompilerContext } from "../../types/context.js";
 import { Modifiers } from "../../types/types.js";
 
 
-export function getModifiersByDeclaration(declaration: Declaration): Modifiers[] {
+export function getModifiersByDeclaration(ctx: CompilerContext, declaration: Declaration): Modifiers[] {
 
   if(ts.canHaveModifiers(declaration)){
     return ts.getModifiers(declaration)?.reduce((modifiers, modifier) => {

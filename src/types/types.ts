@@ -129,10 +129,6 @@ export type PrimitiveTypeKinds =
 
 
 export interface PrimitiveType<Kind extends PrimitiveTypeKinds> extends Type<Kind> {
-  name: Name;
-  position: Position;
-  description?: Description;
-  example?: Example;
 }
 
 export type PrimitiveTypes = PrimitiveType<PrimitiveTypeKinds>;
@@ -170,8 +166,6 @@ export type LiteralTypes = BigIntLiteralType | BooleanLiteralType | NumberLitera
 //-- Object literal
 
 export interface ObjectLiteral extends Type<TypeKind.ObjectLiteral> {
-  name: Name;
-  position: Position;
   properties: Property[];
   description?: Description;
   example?: Example;
@@ -191,8 +185,6 @@ export interface Property extends Type<TypeKind.Property> {
 //-- Array
 
 export interface Array extends Type<TypeKind.Array> {
-  name: Name;
-  position: Position;
   type: Types;
   description?: Description;
   example?: Example;
@@ -232,8 +224,8 @@ export interface Reference extends Type<TypeKind.Reference> {
 
 export interface Instance extends Type<TypeKind.Instance> {
   id: ID;
-  name: Name;
   position: Position;
+  name?: Name;
   resolvedType?: Types;
 }
 
@@ -251,9 +243,8 @@ export interface This extends Type<TypeKind.This> {
 //-- Function
 
 export interface FunctionLike<Kind extends TypeKind.Constructor | TypeKind.Function | TypeKind.Getter | TypeKind.Method | TypeKind.Setter> extends Type<Kind> {
-  name: Name;
-  position: Position;
   signatures: Signature[];
+  name?: Name;
 }
 
 export interface Function extends FunctionLike<TypeKind.Function> {
@@ -349,8 +340,6 @@ export interface TypeAlias extends Type<TypeKind.TypeAlias> {
 
 export interface TypeLiteral extends Type<TypeKind.TypeLiteral> {
   members: Member[];
-  name: Name;
-  position: Position;
   description?: Description;
   example?: Example;
 }

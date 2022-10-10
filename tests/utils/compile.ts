@@ -2,10 +2,10 @@ import { readFileSync } from "fs";
 import ts from "typescript";
 import { assert } from "vitest";
 
-import { createContext } from "../../src/compiler/context/index.js";
+import { Cache } from "../../src/compiler/cache/index.js";
 import { reportCompilerDiagnostics } from "../../src/compiler/index.js";
-import { setRenderExtension } from "../../src/renderer/extensions/index.js";
-import { testRenderExtension } from "../../src/renderer/extensions/test.js";
+import { createConfig } from "../../src/config/index.js";
+import { CompilerContext } from "../../src/types/context.js";
 
 
 export function compile(content: string, compilerOptions?: ts.CompilerOptions) {
@@ -40,7 +40,14 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions) {
 
   const checker = program.getTypeChecker();
 
-  createContext(program, checker);
+
+  //-- Create context
+
+  const ctx: CompilerContext = {
+    cache: new Cache(),
+    checker,
+    config: createConfig()
+  };
 
   const file = program.getSourceFiles().find(file => file.fileName === dummyFilePath);
 
@@ -52,11 +59,6 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions) {
 
   const exportedSymbols = checker.getExportsOfModule(fileSymbol);
 
-
-  //-- Set render extension
-
-  setRenderExtension(testRenderExtension);
-
-  return { checker, exportedSymbols, fileSymbol, program };
+  return { ctx, exportedSymbols, fileSymbol };
 
 }

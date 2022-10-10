@@ -32,10 +32,10 @@ describe("Compiler: Function", () => {
     export function add(a: number, b: number, c?: number): number { return a + b + (c ?? 0); }
   `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "add")!;
-    const exportedFunction = createFunctionBySymbol(symbol);
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
       expect(exportedFunction.kind).to.equal(TypeKind.Function);
@@ -46,7 +46,7 @@ describe("Compiler: Function", () => {
     });
 
     it("should have a matching id", () => {
-      expect(exportedFunction.id).to.equal(getIdBySymbol(symbol));
+      expect(exportedFunction.id).to.equal(getIdBySymbol(ctx, symbol));
     });
 
 
@@ -153,10 +153,10 @@ describe("Compiler: Function", () => {
       });
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "getNumber")!;
-    const exportedFunction = createFunctionBySymbol(symbol);
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
 
     it("should have the `async` modifier", () => {
       expect(exportedFunction.signatures[0]?.modifiers).to.include("async");

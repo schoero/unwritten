@@ -12,9 +12,9 @@ describe("Compiler: Namespace", () => {
     }
   `;
 
-  const { exportedSymbols } = compile(testFileContent.trim());
+  const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
-  const exportedNamespace = createNamespaceBySymbol(exportedSymbols[0]!);
+  const exportedNamespace = createNamespaceBySymbol(ctx, exportedSymbols[0]!);
 
   it("should export a namespace", () => {
     expect(exportedNamespace.name).to.equal("TestNamespace");

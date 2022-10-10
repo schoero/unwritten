@@ -1,21 +1,22 @@
 import { ParameterDeclaration } from "typescript";
 import { assert } from "vitest";
 
-import { TypeKind, Parameter } from "../../types/types.js";
+import { CompilerContext } from "../../types/context.js";
+import { Parameter, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getParameterDescription } from "../compositions/jsdoc.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { getTypeByDeclaration } from "../compositions/type.js";
+import { createTypeByDeclaration } from "./type.js";
 
 
-export function createParameter(declaration: ParameterDeclaration): Parameter {
+export function createParameter(ctx: CompilerContext, declaration: ParameterDeclaration): Parameter {
 
-  const name = getNameByDeclaration(declaration);
-  const type = getTypeByDeclaration(declaration);
-  const id = getIdByDeclaration(declaration);
-  const position = getPositionByDeclaration(declaration);
-  const description = getParameterDescription(declaration);
+  const name = getNameByDeclaration(ctx, declaration);
+  const type = createTypeByDeclaration(ctx, declaration);
+  const id = getIdByDeclaration(ctx, declaration);
+  const position = getPositionByDeclaration(ctx, declaration);
+  const description = getParameterDescription(ctx, declaration);
 
   const optional = declaration.questionToken != null;
   const rest = declaration.dotDotDotToken != null;

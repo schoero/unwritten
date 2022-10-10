@@ -1,7 +1,9 @@
 import { Declaration, Node, TypeNode } from "typescript";
 
+import { CompilerContext } from "../../types/context.js";
 
-export function getPositionByNode(declaration: Node) {
+
+export function getPositionByNode(ctx: CompilerContext, declaration: Node) {
 
   const sourceFile = declaration.getSourceFile();
   const position = declaration.getStart();
@@ -20,10 +22,11 @@ export function getPositionByNode(declaration: Node) {
 }
 
 
-export function getPositionByDeclaration(declaration: Declaration) {
-  return getPositionByNode(declaration);
+export function getPositionByDeclaration(ctx: CompilerContext, declaration: Declaration) {
+
+  return getPositionByNode(ctx, declaration);
 }
 
-export function getPositionByTypeNode(typeNode: TypeNode) {
-  return getPositionByNode(typeNode);
+export function getPositionByTypeNode(ctx: CompilerContext, typeNode: TypeNode) {
+  return getPositionByNode(ctx, typeNode);
 }

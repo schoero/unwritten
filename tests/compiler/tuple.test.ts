@@ -21,12 +21,12 @@ describe("Tuple", () => {
     export type NamedTuple = [prefix: string, suffix: string];;
   `;
 
-  const { exportedSymbols } = compile(testFileContent.trim());
+  const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
-  const exportedTupleAlias = createTypeAliasBySymbol(exportedSymbols[0]!);
-  const exportedTupleWithRestAlias = createTypeAliasBySymbol(exportedSymbols[1]!);
-  const exportedTupleWithOptionalAlias = createTypeAliasBySymbol(exportedSymbols[2]!);
-  const exportedNamedTupleAlias = createTypeAliasBySymbol(exportedSymbols[3]!);
+  const exportedTupleAlias = createTypeAliasBySymbol(ctx, exportedSymbols[0]!);
+  const exportedTupleWithRestAlias = createTypeAliasBySymbol(ctx, exportedSymbols[1]!);
+  const exportedTupleWithOptionalAlias = createTypeAliasBySymbol(ctx, exportedSymbols[2]!);
+  const exportedNamedTupleAlias = createTypeAliasBySymbol(ctx, exportedSymbols[3]!);
 
   const exportedTuple = exportedTupleAlias.type as Tuple;
   const exportedTupleWithRest = exportedTupleWithRestAlias.type as Tuple;
@@ -41,10 +41,10 @@ describe("Tuple", () => {
   });
 
   it("should have matching ids", () => {
-    expect(exportedTuple.id).to.equal(getIdBySymbol(exportedSymbols[0]!));
-    expect(exportedTupleWithRest.id).to.equal(getIdBySymbol(exportedSymbols[1]!));
-    expect(exportedTupleWithOptional.id).to.equal(getIdBySymbol(exportedSymbols[2]!));
-    expect(exportedNamedTuple.id).to.equal(getIdBySymbol(exportedSymbols[3]!));
+    expect(exportedTuple.id).to.equal(getIdBySymbol(ctx, exportedSymbols[0]!));
+    expect(exportedTupleWithRest.id).to.equal(getIdBySymbol(ctx, exportedSymbols[1]!));
+    expect(exportedTupleWithOptional.id).to.equal(getIdBySymbol(ctx, exportedSymbols[2]!));
+    expect(exportedNamedTuple.id).to.equal(getIdBySymbol(ctx, exportedSymbols[3]!));
   });
 
   it("should have matching positions", () => {

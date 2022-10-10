@@ -20,10 +20,10 @@ describe("Compiler: Interface", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
-    const exportedInterface = createInterfaceBySymbol(symbol);
+    const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
       expect(exportedInterface.kind).to.equal(TypeKind.Interface);
@@ -34,7 +34,7 @@ describe("Compiler: Interface", () => {
     });
 
     it("should have a matching id", () => {
-      expect(exportedInterface.id).to.equal(getIdBySymbol(symbol));
+      expect(exportedInterface.id).to.equal(getIdBySymbol(ctx, symbol));
     });
 
     it("should have a matching type", () => {
@@ -77,10 +77,10 @@ describe("Compiler: Interface", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
-    const exportedInterface = createInterfaceBySymbol(symbol);
+    const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should merge multiple interfaces with the same name", () => {
       expect((exportedInterface as Interface).members.length).to.equal(2);
@@ -103,9 +103,9 @@ describe("Compiler: Interface", () => {
       }
     `;
 
-    const { fileSymbol } = compile(testFileContent.trim());
+    const { fileSymbol, ctx } = compile(testFileContent.trim());
 
-    const exportedSymbols = parse(fileSymbol);
+    const exportedSymbols = parse(ctx, fileSymbol);
 
     const exportedInterfaceA = exportedSymbols.find(s => s.name === "InterfaceA")! as Interface;
     const exportedInterfaceB = exportedSymbols.find(s => s.name === "InterfaceB")! as Interface;
@@ -134,12 +134,12 @@ describe("Compiler: Interface", () => {
       }
     `;
 
-    const { exportedSymbols } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const exportedInterfaceBSymbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
     const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
-    const exportedInterfaceB = createInterfaceBySymbol(exportedInterfaceBSymbol);
-    const exportedInterfaceC = createInterfaceBySymbol(exportedInterfaceCSymbol);
+    const exportedInterfaceB = createInterfaceBySymbol(ctx, exportedInterfaceBSymbol);
+    const exportedInterfaceC = createInterfaceBySymbol(ctx, exportedInterfaceCSymbol);
 
     it("should be able to handle extended interfaces", () => {
       expect((exportedInterfaceB as Interface).members).to.have.lengthOf(2);

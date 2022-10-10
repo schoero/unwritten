@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 import { error, success } from "../log/index.js";
 import { ConfigWithSchema } from "../types/config.js";
-import { getConfig } from "./index.js";
+import { getDefaultConfig } from "./index.js";
 
 
 export function generateConfig() {
@@ -25,7 +25,7 @@ export function generateConfig() {
 
   const config: ConfigWithSchema = {
     $schema: "https://raw.githubusercontent.com/schoero/doc-creator/release/schemas/renderer/config.json",
-    ...getConfig()
+    ...getDefaultConfig()
   };
 
   writeFileSync(outputFilePath, JSON.stringify(config, null, 2));

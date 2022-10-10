@@ -33,7 +33,7 @@ program.command("generate")
   .option("-e, --exclude [path...]", "Exclude a file or directory from the documentation.")
   .option("-c, --config <path>", `Provide a ${name} config used to render the documentation. ${name} will try to find the .${name}.json config by itself if none is provided or uses the default config.`)
   .option("-o, --output <path>", "Specify the output directory and file name. Defaults to ./docs/api based on the current working directory.")
-  .option("-r, --renderer <markdown | html>", "Choose the format of the rendered output.", "markdown")
+  .option("-r, --renderer <markdown | html | <pathToCustomRenderer>>", "Choose the format of the rendered output.", "markdown")
   .option("-s, --silent", "Disables any console output.")
   .action((entryPoint, options) => {
     docCreator(entryPoint, options);

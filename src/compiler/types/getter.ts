@@ -1,21 +1,23 @@
 import { Symbol, Type } from "typescript";
 
 import { isGetterDeclaration } from "../../typeguards/ts.js";
-import { TypeKind, Getter } from "../../types/types.js";
-import { functionOverloadDeclarationFilter } from "../../utils/filter.js";
+import { CompilerContext } from "../../types/context.js";
+import { Getter, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
+import { functionOverloadDeclarationFilter } from "../utils/filter.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createGetterBySymbol(symbol: Symbol): Getter {
+export function createGetterBySymbol(ctx: CompilerContext, symbol: Symbol): Getter {
 
-  const declarations = symbol.declarations?.filter(isGetterDeclaration).filter(functionOverloadDeclarationFilter) ?? [];
+  const declarations = symbol.declarations?.filter(isGetterDeclaration)
+    .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration)) ?? [];
 
-  const signatures = declarations.map(createSignatureByDeclaration);
+  const signatures = declarations.map(declaration => createSignatureByDeclaration(ctx, declaration));
 
-  const id = getIdBySymbol(symbol);
-  const name = getNameBySymbol(symbol);
+  const id = getIdBySymbol(ctx, symbol);
+  const name = getNameBySymbol(ctx, symbol);
   const kind = TypeKind.Getter;
 
   return {
@@ -28,13 +30,13 @@ export function createGetterBySymbol(symbol: Symbol): Getter {
 }
 
 
-export function createGetterByType(type: Type): Getter {
+export function createGetterByType(ctx: CompilerContext, type: Type): Getter {
 
   const callSignatures = type.getCallSignatures();
   const declarations = callSignatures.map(s => s.getDeclaration());
-  const signatures = declarations.map(createSignatureByDeclaration);
+  const signatures = declarations.map(declaration => createSignatureByDeclaration(ctx, declaration));
 
-  const id = getIdByType(type);
+  const id = getIdByType(ctx, type);
   const kind = TypeKind.Getter;
 
   return {
