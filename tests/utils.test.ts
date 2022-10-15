@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { isPathExcluded } from "../../src/utils/general.js";
+import { isPathExcluded } from "../src/utils/general.js";
 
 describe("Utils: ", () => {
 

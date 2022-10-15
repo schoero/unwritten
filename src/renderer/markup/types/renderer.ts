@@ -1,5 +1,9 @@
+import { Renderer } from "../../../types/renderer.js";
 
-export interface MarkupRenderer {
+
+export interface MarkupRenderImplementation {
+  fileExtension: string;
+  name: string;
   renderAnchorLink: (text: string, anchor: string) => string;
   renderBoldText: (text: string) => string;
   renderCode: (code: string, language?: string) => string;
@@ -20,6 +24,8 @@ export interface MarkupRenderer {
   renderUnderlineText: (text: string) => string;
   renderWarning: (text: string) => string;
 }
+
+export type MarkupRenderer = MarkupRenderImplementation & Renderer;
 
 export enum RenderCategories {
   Class = "class",
@@ -92,11 +98,11 @@ export type RenderedCategoryForDocumentation = {
 export type RenderedFunctionForTableOfContents = string[];
 
 export type RenderedFunctionForDocumentation = {
-  [key in keyof RenderedFunctionImplementationOrOverloadForDocumentation]: RenderedFunctionImplementationOrOverloadForDocumentation[key]
+  [key in keyof RenderedFunctionSignatureForDocumentation]: RenderedFunctionSignatureForDocumentation[key]
 };
 
-export type RenderedFunctionImplementationOrOverloadForDocumentation = {
-  [implementationOrOverloadName: string]: [
+export type RenderedFunctionSignatureForDocumentation = {
+  [signature: string]: [
     parametersAndReturnType: [string[]],
     description: string | undefined,
     example: string | undefined
@@ -122,9 +128,9 @@ export type RenderedClassForDocumentation = {
     description: string | undefined,
     constructor: { [constructorTitle: string]: RenderedFunctionForDocumentation; } | undefined,
     properties: { [propertiesTitle: string]: RenderedPropertyForDocumentation[]; } | undefined,
-    methods: { [methodsTitle: string]: RenderedFunctionImplementationOrOverloadForDocumentation[]; } | undefined,
-    setters: { [settersTitle: string]: RenderedFunctionImplementationOrOverloadForDocumentation[]; } | undefined,
-    getters: { [gettersTitle: string]: RenderedFunctionImplementationOrOverloadForDocumentation[]; } | undefined
+    methods: { [methodsTitle: string]: RenderedFunctionSignatureForDocumentation[]; } | undefined,
+    setters: { [settersTitle: string]: RenderedFunctionSignatureForDocumentation[]; } | undefined,
+    getters: { [gettersTitle: string]: RenderedFunctionSignatureForDocumentation[]; } | undefined
   ];
 };
 

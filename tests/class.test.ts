@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
-import { createClassBySymbol } from "../../src/compiler/types/class.js";
-import { Modifiers, TypeKind } from "../../src/types/types.js";
-import { compile } from "../utils/compile.js";
+import { getIdBySymbol } from "../src/compiler/compositions/id.js";
+import { createClassBySymbol } from "../src/compiler/types/class.js";
+import { Modifiers, TypeKind } from "../src/types/types.js";
+import { compile } from "./utils/compile.js";
 
 
 describe("Compiler: Class", () => {

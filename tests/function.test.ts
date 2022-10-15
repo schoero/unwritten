@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { getIdBySymbol } from "../../src/compiler/compositions/id.js";
-import { createFunctionBySymbol } from "../../src/compiler/types/function.js";
-import { Reference, TypeKind } from "../../src/types/types.js";
-import { compile } from "../utils/compile.js";
+import { getIdBySymbol } from "../src/compiler/compositions/id.js";
+import { createFunctionBySymbol } from "../src/compiler/types/function.js";
+import { NumberLiteralType, Reference, TypeKind } from "../src/types/types.js";
+import { compile } from "./utils/compile.js";
 
 
 describe("Compiler: Function", () => {
@@ -150,7 +150,7 @@ describe("Compiler: Function", () => {
     const testFileContent = `
       export async function getNumber(): Promise<number> {
         return Promise.resolve(7);
-      });
+      };
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
@@ -166,6 +166,28 @@ describe("Compiler: Function", () => {
       expect(exportedFunction.signatures[0]?.returnType.kind).to.equal(TypeKind.Reference);
       expect((exportedFunction.signatures[0]?.returnType as Reference).typeArguments).to.have.lengthOf(1);
       expect((exportedFunction.signatures[0]?.returnType as Reference).typeArguments![0]!.kind).to.equal(TypeKind.Number);
+    });
+
+  }
+
+  {
+
+    const testFileContent = `
+      export function getNumber(num: number = 7): number {
+        return num;
+      };
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+    const symbol = exportedSymbols.find(s => s.name === "getNumber")!;
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
+
+    it("should have a parameter with an initializer", () => {
+      expect(exportedFunction.signatures[0]?.parameters).to.have.lengthOf(1);
+      expect(exportedFunction.signatures[0]?.parameters![0]?.initializer).to.not.be.undefined;
+      expect(exportedFunction.signatures[0]?.parameters![0]!.initializer?.kind).to.equal(TypeKind.NumberLiteral);
+      expect((exportedFunction.signatures[0]?.parameters![0]!.initializer as NumberLiteralType).value).to.equal(7);
     });
 
   }

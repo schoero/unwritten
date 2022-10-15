@@ -1,8 +1,9 @@
-import { MarkupRenderer } from "../types/renderer.js";
+import { MarkupRenderImplementation } from "../types/renderer.js";
 
-class HTMLRenderExtension implements MarkupRenderer {
+class HTMLRenderer implements MarkupRenderImplementation {
 
   public name: string = "HTML";
+
   public fileExtension: string = ".html";
 
 
@@ -96,4 +97,4 @@ class HTMLRenderExtension implements MarkupRenderer {
 
 }
 
-export const htmlRenderExtension = new HTMLRenderExtension();
+export const htmlRenderer = new HTMLRenderer();

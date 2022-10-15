@@ -79,5 +79,5 @@ type DeepRequiredByKeyObject<T, K extends keyof any> =
 
 //-- Test
 
-export type TestableEntity<Entity extends Types> = DeepPartialByKey<Entity, "id" | "position">;
-export type CompleteEntity<Entity extends Types> = DeepRequiredByKey<Entity, "id" | "position">;
+export type Testable<Entity extends Types> = DeepPartialByKey<Entity, "id" | "modifiers" | "position">;
+export type Complete<Entity extends Types> = DeepRequiredByKey<Entity, "id" | "modifiers" | "position">;

@@ -4,18 +4,18 @@ import {
   isInterfaceType,
   isTypeAliasType,
   isVariableType
-} from "../../../typeguards/types.js";
-import { RenderContext } from "../../../types/context.js";
-import { ExportableTypes } from "../../../types/types.js";
+} from "../../typeguards/types.js";
+import { RenderContext } from "../../types/context.js";
+import { ExportableTypes } from "../../types/types.js";
 import {
   RenderedCategoryForDocumentation,
   RenderedCategoryForTableOfContents,
   RenderedEntitiesForDocumentation,
   RenderedEntitiesForTableOfContents,
   RenderObject
-} from "../types/renderer.js";
-import { getCategoryName } from "../utils/renderer.js";
-import { sortExportableTypes } from "../utils/sort.js";
+} from "./types/renderer.js";
+import { getCategoryName } from "./utils/renderer.js";
+import { sortExportableTypes } from "./utils/sort.js";
 
 
 export function render(ctx: RenderContext, types: ExportableTypes[]): string {

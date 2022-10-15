@@ -2,10 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { createTypeAliasBySymbol } from "../../src/compiler/types/alias.js";
-import { Array, TypeKind, Union } from "../../src/types/types.js";
-import { compile } from "../utils/compile.js";
-
+import { createTypeAliasBySymbol } from "../src/compiler/types/alias.js";
+import { Array, TypeKind, Union } from "../src/types/types.js";
+import { compile } from "./utils/compile.js";
 
 
 describe("Compiler: Array", () => {

@@ -21,7 +21,7 @@ export enum TypeKind {
   Namespace = "Namespace",
   Never = "Never",
   Null = "Null",
-  Number = "Number",
+  Number = "number",
   NumberLiteral = "NumberLiteral",
   Object = "Object",
   ObjectLiteral = "ObjectLiteral",
@@ -129,6 +129,7 @@ export type PrimitiveTypeKinds =
 
 
 export interface PrimitiveType<Kind extends PrimitiveTypeKinds> extends Type<Kind> {
+  name?: Name;
 }
 
 export type PrimitiveTypes = PrimitiveType<PrimitiveTypeKinds>;
@@ -267,6 +268,7 @@ export interface Parameter extends Type<TypeKind.Parameter> {
   type: Types;
   description?: Description;
   example?: Example;
+  initializer?: Types;
 }
 
 

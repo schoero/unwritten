@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { createModuleBySymbol } from "../../src/compiler/types/module.js";
-import { compile } from "../utils/compile.js";
+import { createModuleBySymbol } from "../src/compiler/types/module.js";
+import { compile } from "./utils/compile.js";
 
 
 describe("Compiler: Module", () => {

@@ -4,9 +4,11 @@ import { dirname, resolve } from "node:path";
 import { assert } from "vitest";
 
 import { compile } from "../compiler/index.js";
-import { createConfig } from "../config/index.js";
+import { createContext as createCompilerContext } from "../compiler/utils/context.js";
+import { createConfig as createRenderConfig } from "../config/index.js";
 import { disableLog } from "../log/index.js";
 import { getEntryFileSymbolFromProgram, parse } from "../parser/index.js";
+import { createContext as createRenderContext } from "../renderer/utils/context.js";
 import { APIOptions } from "../types/options.js";
 import { Renderer } from "../types/renderer.js";
 import { validateRenderer } from "../utils/general.js";
@@ -41,16 +43,23 @@ export async function docCreator(entryFilePath: string, options?: APIOptions) {
   assert(renderer, "Invalid renderer");
 
 
-  //-- Compile, parse and render
+  //-- Compile
 
   const { checker, program } = compile(absoluteEntryFilePath, options?.tsconfig);
 
-  const context = createContext(program, checker);
-  const config = createConfig(options?.config);
 
-  const entryFileSymbol = getEntryFileSymbolFromProgram(program);
-  const parsedSymbols = parse({ config, ctx: context }, entryFileSymbol);
-  const renderedSymbols = renderer.render({ config }, parsedSymbols);
+  //-- Create config and contexts
+
+  const config = createRenderConfig(options?.config);
+  const compilerContext = createCompilerContext(checker, config);
+  const renderContext = createRenderContext(renderer, config);
+
+
+  //-- Parse and render
+
+  const entryFileSymbol = getEntryFileSymbolFromProgram(compilerContext, program);
+  const parsedSymbols = parse(compilerContext, entryFileSymbol);
+  const renderedSymbols = renderer.render(renderContext, parsedSymbols);
 
 
   //-- Write output to file

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { createNamespaceBySymbol } from "../../src/compiler/types/namespace.js";
-import { compile } from "../utils/compile.js";
+import { createNamespaceBySymbol } from "../src/compiler/types/namespace.js";
+import { compile } from "./utils/compile.js";
 
 
 describe("Compiler: Namespace", () => {

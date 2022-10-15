@@ -12,12 +12,12 @@ export interface MarkupRenderConfig {
   /**
    * Defines how parameters should be encapsulated in the rendered output.
    */
-  parameterEncapsulation?: Encapsulation | boolean;
+  parameterEncapsulation?: Encapsulation | false;
 
   /**
    * Defines how properties should be encapsulated in the rendered output.
    */
-  propertyEncapsulation?: Encapsulation | boolean;
+  propertyEncapsulation?: Encapsulation | false;
 
   /**
     * Defines the order in which entities should be rendered.
@@ -26,17 +26,17 @@ export interface MarkupRenderConfig {
   /**
    * Defines how string literal type annotations should be encapsulated in the rendered output.
    */
-  stringLiteralTypeEncapsulation?: Encapsulation | boolean;
+  stringLiteralTypeEncapsulation?: Encapsulation | false;
 
   /**
    * Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output.
    */
-  tagEncapsulation?: Encapsulation | boolean;
+  tagEncapsulation?: Encapsulation | false;
 
   /**
    * Defines how type annotations should be encapsulated in the rendered output.
    */
-  typeEncapsulation?: Encapsulation | boolean;
+  typeEncapsulation?: Encapsulation | false;
 
 }
 

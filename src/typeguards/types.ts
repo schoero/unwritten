@@ -6,9 +6,11 @@ import {
   Function,
   Getter,
   Interface,
+  Intersection,
   LiteralTypes,
   Method,
   NumberLiteralType,
+  ObjectLiteral,
   PrimitiveTypes,
   Property,
   Setter,
@@ -16,6 +18,7 @@ import {
   Type,
   TypeAlias,
   TypeKind,
+  Union,
   Variable
 } from "../types/types.js";
 
@@ -42,6 +45,14 @@ export function isPrimitiveType(type: Type<TypeKind>): type is PrimitiveTypes {
     type.kind === TypeKind.Symbol ||
     type.kind === TypeKind.Undefined ||
     type.kind === TypeKind.Void;
+}
+
+export function isUnionType(type: Type<TypeKind>): type is Union {
+  return type.kind === TypeKind.Union;
+}
+
+export function isIntersectionType(type: Type<TypeKind>): type is Intersection {
+  return type.kind === TypeKind.Intersection;
 }
 
 export function isFunctionType(type: Type<TypeKind>): type is Function {
@@ -78,6 +89,10 @@ export function isInterfaceType(type: Type<TypeKind>): type is Interface {
 
 export function isVariableType(type: Type<TypeKind>): type is Variable {
   return type.kind === TypeKind.Variable;
+}
+
+export function isObjectLiteralType(type: Type<TypeKind>): type is ObjectLiteral {
+  return type.kind === TypeKind.ObjectLiteral;
 }
 
 // export function isEnumType(type: Type<TypeKind>): type is Enum {
