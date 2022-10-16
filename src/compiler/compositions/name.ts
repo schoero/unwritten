@@ -1,15 +1,16 @@
 import ts, { Declaration, Symbol, Type, TypeNode } from "typescript";
 
 import { isConstructorDeclaration } from "../../typeguards/ts.js";
+import { Name } from "../../types/compositions.js";
 import { CompilerContext } from "../../types/context.js";
 
 
-export function getNameBySymbol(ctx: CompilerContext, symbol: Symbol): string {
+export function getNameBySymbol(ctx: CompilerContext, symbol: Symbol): Name {
   return symbol.getName();
 }
 
 
-export function getNameByDeclaration(ctx: CompilerContext, declaration: Declaration): string | undefined {
+export function getNameByDeclaration(ctx: CompilerContext, declaration: Declaration): Name | undefined {
 
   if(isConstructorDeclaration(declaration)){
     return "constructor";
@@ -20,13 +21,13 @@ export function getNameByDeclaration(ctx: CompilerContext, declaration: Declarat
 }
 
 
-export function getNameByType(ctx: CompilerContext, type: Type): string | undefined {
+export function getNameByType(ctx: CompilerContext, type: Type): Name | undefined {
   const symbol = type.getSymbol();
   return symbol ? getNameBySymbol(ctx, symbol) : undefined;
 }
 
 
-export function getNameByTypeNode(ctx: CompilerContext, typeNode: TypeNode): string | undefined {
+export function getNameByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Name | undefined {
   // @ts-expect-error
   return typeNode.intrinsicName;
 }
