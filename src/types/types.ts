@@ -10,6 +10,7 @@ export enum TypeKind {
   BooleanLiteral = "BooleanLiteral",
   Class = "Class",
   Constructor = "Constructor",
+  Enum = "Enum",
   Function = "Function",
   Getter = "Getter",
   Instance = "Instance",
@@ -359,7 +360,27 @@ export interface Interface extends Type<TypeKind.Interface> {
 }
 
 export interface MergedInterface extends Interface {
-  declarations: Interface[];
+
+//-- Enum
+
+export interface Enum extends Type<TypeKind.Enum> {
+  members: EnumMember[];
+  name: Name;
+  description?: Description;
+  example?: Example;
+  position?: Position;
+}
+
+export interface MergedEnum extends Enum {
+  declarations: Omit<Enum, "id" | "name">[];
+}
+
+export interface EnumMember extends Type<TypeKind.Member> {
+  name: Name;
+  position: Position;
+  type: Types;
+  description?: Description;
+  example?: Example;
 }
 
 

@@ -1,4 +1,4 @@
-import { PropertySignature, Symbol, TypeElement } from "typescript";
+import { EnumMember, PropertySignature, Symbol, TypeElement } from "typescript";
 import { assert } from "vitest";
 
 import { isPropertySignature } from "../../typeguards/ts.js";
@@ -30,7 +30,7 @@ export function createMemberBySymbol(ctx: CompilerContext, memberSymbol: Symbol)
 }
 
 
-export function createMemberByDeclaration(ctx: CompilerContext, declaration: PropertySignature | TypeElement): Member {
+export function createMemberByDeclaration(ctx: CompilerContext, declaration: EnumMember | PropertySignature | TypeElement): Member {
 
   const id = getIdByDeclaration(ctx, declaration);
   // @ts-expect-error
@@ -39,7 +39,7 @@ export function createMemberByDeclaration(ctx: CompilerContext, declaration: Pro
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
-  const optional = declaration.questionToken !== undefined;
+  const optional = "questionToken" in declaration && declaration.questionToken !== undefined;
   const kind = TypeKind.Member;
 
   assert(name, "Member name not found");
