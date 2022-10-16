@@ -22,9 +22,9 @@ export function createInterfaceBySymbol(ctx: CompilerContext, symbol: Symbol): I
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclarations = declarations.map(declaration => _createInterfaceByDeclaration(ctx, declaration));
   const kind = TypeKind.Interface;
+  const members = _mergeMembers(fromDeclarations);
 
   if(fromDeclarations.length === 1){
-    const members = _mergeMembers(fromDeclarations);
     return <Interface>{
       ...fromDeclarations[0],
       description,
@@ -34,7 +34,6 @@ export function createInterfaceBySymbol(ctx: CompilerContext, symbol: Symbol): I
       name
     };
   } else {
-    const members = _mergeMembers(fromDeclarations);
     return <MergedInterface>{
       declarations: fromDeclarations,
       description,

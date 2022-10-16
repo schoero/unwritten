@@ -353,13 +353,16 @@ export interface TypeLiteral extends Type<TypeKind.TypeLiteral> {
 export interface Interface extends Type<TypeKind.Interface> {
   members: Member[];
   name: Name;
-  position: Position;
   description?: Description;
   example?: Example;
   heritage?: Interface;
+  position?: Position;
 }
 
 export interface MergedInterface extends Interface {
+  declarations: Omit<Interface, "id" | "name">[];
+}
+
 
 //-- Enum
 
