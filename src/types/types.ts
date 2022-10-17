@@ -3,7 +3,6 @@ import { Description, Example, ID, Name, Position } from "./compositions.js";
 
 export enum TypeKind {
   Any = "Any",
-  Array = "Array",
   BigInt = "BigInt",
   BigIntLiteral = "BigIntLiteral",
   Boolean = "Boolean",
@@ -71,8 +70,6 @@ export interface Type<Kind extends TypeKind>{
 }
 
 export type Types =
-  // eslint-disable-next-line @typescript-eslint/array-type
-  | Array
   | Class
   | Constructor
   | Function
@@ -178,15 +175,6 @@ export interface Property extends Type<TypeKind.Property> {
   name: Name;
   optional: boolean;
   position: Position;
-  type: Types;
-  description?: Description;
-  example?: Example;
-}
-
-
-//-- Array
-
-export interface Array extends Type<TypeKind.Array> {
   type: Types;
   description?: Description;
   example?: Example;

@@ -17,7 +17,6 @@ import {
 } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
-import { createArrayByArrayTypeNode } from "./array.js";
 import { createFunctionByType } from "./function.js";
 import { createInstanceByType } from "./instance.js";
 import { createInterfaceByType } from "./interface.js";
@@ -54,26 +53,7 @@ export function createTypeByDeclaration(ctx: CompilerContext, declaration: Decla
  */
 export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
 
-
   const type = ctx.checker.getTypeFromTypeNode(typeNode);
-
-
-  //-- Handle Array special cases: https://stackoverflow.com/a/60622707
-
-  if(ts.isArrayTypeNode(typeNode)){
-    return createArrayByArrayTypeNode(ctx, typeNode);
-  }
-
-  // if(ts.isTypeReferenceNode(typeNode)){
-
-
-  //   //-- Array
-
-  //   if(typeNode.typeName.getText() === "Array" && typeNode.typeArguments && typeNode.typeArguments.length === 1){
-  //     return createArrayByTypeReferenceNode(typeNode);
-  //   }
-
-  // }
 
 
   //-- Type references
