@@ -204,6 +204,7 @@ export interface TupleMember extends Type<TypeKind.Member> {
 
 export interface Reference extends Type<TypeKind.Reference> {
   id: ID;
+  name: Name;
   position: Position;
   resolvedType?: Types;
   typeArguments?: Types[];
