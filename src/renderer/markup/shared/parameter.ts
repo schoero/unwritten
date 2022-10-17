@@ -43,7 +43,7 @@ export function renderParameterForDocumentation(ctx: RenderContext<MarkupRendere
   const optional = parameterEntity.optional === true ? encapsulate("optional", renderConfig.tagEncapsulation) : "";
   const initializer = parameterEntity.initializer !== undefined ? `Default: ${renderType(ctx, parameterEntity.initializer)}` : "";
 
-  return `${name}: ${spaceBetween(type, description, rest, optional, initializer)}`;
+  return `${name}: ${spaceBetween(type, description, optional, rest, initializer)}`;
 
 }
 

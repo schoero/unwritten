@@ -24,7 +24,6 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
   const returnType = getReturnTypeByCallSignature(ctx, signature);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
-
   const kind = TypeKind.Signature;
 
   return {
