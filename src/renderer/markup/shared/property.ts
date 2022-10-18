@@ -6,22 +6,25 @@ import {
   RenderedPropertyForDocumentation,
   RenderedPropertyForTableOfContents
 } from "../types/renderer.js";
-import { encapsulate, renderLink } from "../utils/renderer.js";
+import { getRenderConfig } from "../utils/config.js";
+import { encapsulate, renderLink, spaceBetween } from "../utils/renderer.js";
 import { renderType } from "./type.js";
 
 
-export function renderPropertyEntityForTableOfContents(ctx: RenderContext<MarkupRenderer>, propertyEntity: Property): RenderedPropertyForTableOfContents {
-  const link = renderLink(propertyEntity.name, propertyEntity.id);
+export function renderPropertyEntityForTableOfContents(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForTableOfContents {
+  const link = renderLink(ctx, property.name, property.id);
   return link;
 }
 
 
-export function renderPropertyEntityForDocumentation(ctx: RenderContext<MarkupRenderer>, propertyEntity: Property): RenderedPropertyForDocumentation {
+export function renderPropertyEntityForDocumentation(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForDocumentation {
 
-  const description = propertyEntity.description ? propertyEntity.description : "";
-  const name = encapsulate(propertyEntity.name, config.renderConfig.propertyEncapsulation);
-  const type = `${renderType(propertyEntity.type)}`;
-  const optional = propertyEntity.optional === true ? encapsulate("optional", config.renderConfig.tagEncapsulation) : "";
+  const renderConfig = getRenderConfig(ctx);
+
+  const description = property.description ? property.description : "";
+  const name = encapsulate(property.name, renderConfig.propertyEncapsulation);
+  const type = `${renderType(ctx, property.type)}`;
+  const optional = property.optional === true ? encapsulate("optional", renderConfig.tagEncapsulation) : "";
 
   return `${name}: ${spaceBetween(type, description, optional)}`;
 

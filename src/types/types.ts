@@ -379,6 +379,7 @@ export interface EnumMember extends Type<TypeKind.Member> {
 //-- Member
 
 export interface Member extends Type<TypeKind.Member> {
+  modifiers: Modifiers[];
   name: Name;
   optional: boolean;
   position: Position;
