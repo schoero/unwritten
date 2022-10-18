@@ -24,7 +24,7 @@ describe("Compiler: Class", () => {
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should have an exported class", () => {
-      expect(exportedClass).not.to.be.undefined;
+      expect(exportedClass).not.to.equal(undefined);
     });
 
     it("should have a matching name", () => {

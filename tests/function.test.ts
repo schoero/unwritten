@@ -55,7 +55,7 @@ describe("Compiler: Function", () => {
     describe("Signatures", () => {
 
       it("should have matching signatures", () => {
-        expect(exportedFunction.signatures).to.not.be.undefined;
+        expect(exportedFunction.signatures).to.not.equal(undefined);
         expect(exportedFunction.signatures).to.have.lengthOf(2);
       });
 
@@ -77,18 +77,18 @@ describe("Compiler: Function", () => {
       it("should have matching examples", () => {
         expect(exportedFunction.signatures[0]!.example).to.equal("add(1, 2) // 3");
         expect(exportedFunction.signatures[1]!.example).to.equal("add(1, 2, 3) // 6");
-      }),
+      });
 
       it("should have matching positions", () => {
-        expect(exportedFunction.signatures[0]!.position).to.not.be.undefined;
+        expect(exportedFunction.signatures[0]!.position).to.not.equal(undefined);
         expect(exportedFunction.signatures[0]!.position.file).to.equal("/file.ts");
         expect(exportedFunction.signatures[0]!.position.line).to.equal(9);
         expect(exportedFunction.signatures[0]!.position.column).to.equal(4);
-        expect(exportedFunction.signatures[1]!.position).to.not.be.undefined;
+        expect(exportedFunction.signatures[1]!.position).to.not.equal(undefined);
         expect(exportedFunction.signatures[1]!.position.file).to.equal("/file.ts");
         expect(exportedFunction.signatures[1]!.position.line).to.equal(19);
         expect(exportedFunction.signatures[1]!.position.column).to.equal(4);
-      }),
+      });
 
 
       //-- Parameters
@@ -96,9 +96,9 @@ describe("Compiler: Function", () => {
       describe("Parameters", () => {
 
         it("should have the right amount of parameters", () => {
-          expect(exportedFunction.signatures[0]!.parameters).to.not.be.undefined;
+          expect(exportedFunction.signatures[0]!.parameters).to.not.equal(undefined);
           expect(exportedFunction.signatures[0]!.parameters!.length).to.equal(2);
-          expect(exportedFunction.signatures[1]!.parameters).to.not.be.undefined;
+          expect(exportedFunction.signatures[1]!.parameters).to.not.equal(undefined);
           expect(exportedFunction.signatures[1]!.parameters!.length).to.equal(3);
         });
 
@@ -116,7 +116,7 @@ describe("Compiler: Function", () => {
           expect(exportedFunction.signatures[1]!.parameters![0]!.description).to.equal("The first number.");
           expect(exportedFunction.signatures[1]!.parameters![1]!.description).to.equal("The second number.");
           expect(exportedFunction.signatures[1]!.parameters![2]!.description).to.equal("The third number.");
-        }),
+        });
 
         it("should have matching parameter types", () => {
           expect(exportedFunction.signatures[0]!.parameters![0]!.type.kind).to.equal(TypeKind.Number);
@@ -185,7 +185,7 @@ describe("Compiler: Function", () => {
 
     it("should have a parameter with an initializer", () => {
       expect(exportedFunction.signatures[0]?.parameters).to.have.lengthOf(1);
-      expect(exportedFunction.signatures[0]?.parameters![0]?.initializer).to.not.be.undefined;
+      expect(exportedFunction.signatures[0]?.parameters![0]?.initializer).to.not.equal(undefined);
       expect(exportedFunction.signatures[0]?.parameters![0]!.initializer?.kind).to.equal(TypeKind.NumberLiteral);
       expect((exportedFunction.signatures[0]?.parameters![0]!.initializer as NumberLiteralType).value).to.equal(7);
     });
