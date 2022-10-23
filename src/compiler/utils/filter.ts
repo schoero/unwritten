@@ -1,14 +1,13 @@
-import { FunctionLikeDeclaration } from "typescript";
+import { FunctionLikeDeclaration, Symbol } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
 
 
-export function functionOverloadDeclarationFilter(ctx: CompilerContext, declaration: FunctionLikeDeclaration) {
+export function functionOverloadDeclarationFilter(ctx: CompilerContext, declaration: FunctionLikeDeclaration, symbol: Symbol): boolean {
   if(declaration.body === undefined){
     return true;
   }
-  const symbol = ctx.checker.getSymbolAtLocation(declaration.name!);
-  const declarations = symbol?.declarations?.filter(d => d.kind === declaration.kind);
+  const declarations = symbol.declarations?.filter(d => d.kind === declaration.kind);
   return declarations?.length === 1;
 }
 

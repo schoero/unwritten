@@ -1,5 +1,6 @@
 import { MarkupRenderConfig } from "../renderer/markup/types/config.js";
 import { BuiltInRenderers } from "./renderer.js";
+import { Complete } from "./utils.js";
 
 export interface Config {
   /** Compiler configuration. */
@@ -10,9 +11,21 @@ export interface Config {
   renderConfig?: RenderConfig;
 }
 
+export interface CompleteConfig extends Config {
+  compilerConfig: Complete<CompilerConfig>;
+  externalTypes: ExternalTypes;
+  renderConfig: CompleteRenderConfig;
+}
+
+export interface CompleteRenderConfig {
+  [BuiltInRenderers.Markdown]: Complete<MarkupRenderConfig>;
+  [BuiltInRenderers.HTML]: Complete<MarkupRenderConfig>;
+  [key: string]: {
+    [key: string]: any;
+  };
+}
+
 export interface RenderConfig {
-  [BuiltInRenderers.Markdown]: MarkupRenderConfig;
-  [BuiltInRenderers.HTML]: MarkupRenderConfig;
   [key: string]: {
     [key: string]: any;
   };
@@ -21,11 +34,6 @@ export interface RenderConfig {
 export interface ConfigWithSchema extends Config {
   $schema: string;
 }
-
-export type Complete<Config> = {
-  [key in keyof Config]-?: Config[key];
-};
-
 
 export interface CompilerConfig {
 

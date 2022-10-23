@@ -2,5 +2,11 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.markdownlint": true
-  }
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${basename}.${extname},${basename}.test.${extname}"
+  },
 }

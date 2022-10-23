@@ -3,7 +3,6 @@ import { CategoryNames } from "./renderer.js";
 
 export interface MarkupRenderConfig {
 
-
   /**
     * Defines the title of the categories for the rendered entities.
     */

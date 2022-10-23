@@ -1,19 +1,18 @@
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import merge from "lodash.merge";
-
 import { error, log } from "../log/index.js";
 import { defaultRenderConfig } from "../renderer/markup/config/default.js";
-import { Complete, Config } from "../types/config.js";
+import { CompleteConfig, Config } from "../types/config.js";
 import { BuiltInRenderers } from "../types/renderer.js";
 import { findFile } from "../utils/finder.js";
+import { override } from "../utils/override.js";
 import { defaultCompilerConfig, defaultExternalTypes } from "./default.js";
 
 
-export function createConfig(configOrPath?: Config | string): Complete<Config> {
+export function createConfig(configOrPath?: Config | string): CompleteConfig {
 
-  const defaultConfig = getDefaultConfig();
+  const defaultConfig = _getDefaultConfig();
 
   let userConfig: Config | undefined;
   let absoluteConfigPath: string | undefined;
@@ -49,14 +48,18 @@ export function createConfig(configOrPath?: Config | string): Complete<Config> {
     }
   }
 
-  return merge(defaultConfig, userConfig);
+  if(userConfig === undefined){
+    return defaultConfig;
+  }
+
+  return override(defaultConfig, userConfig);
 
 }
 
 
-export function getDefaultConfig(): Complete<Config> {
+function _getDefaultConfig(): CompleteConfig {
 
-  const defaultConfig: Complete<Config> = {
+  const defaultConfig: CompleteConfig = {
     compilerConfig: defaultCompilerConfig,
     externalTypes: defaultExternalTypes,
     renderConfig: {

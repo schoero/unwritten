@@ -12,7 +12,7 @@ import { createSignatureByDeclaration } from "./signature.js";
 export function createSetterBySymbol(ctx: CompilerContext, symbol: Symbol): Setter {
 
   const declarations = symbol.declarations?.filter(isSetterDeclaration)
-    .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration)) ?? [];
+    .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];
 
   const signatures = declarations.map(declaration => createSignatureByDeclaration(ctx, declaration));
 

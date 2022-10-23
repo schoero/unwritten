@@ -11,7 +11,7 @@ export interface Renderer {
   /** The file extension the renderer generates */
   fileExtension: string;
   /** The name of the render extension */
-  name: string;
+  name: BuiltInRenderers | string;
   /** The render function */
   render: (context: RenderContext, types: ExportableTypes[]) => string;
 }

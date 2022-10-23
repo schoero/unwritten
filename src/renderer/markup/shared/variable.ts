@@ -2,7 +2,6 @@ import { RenderContext } from "../../../types/context.js";
 import { Variable } from "../../../types/types.js";
 import {
   MarkupRenderer,
-  RenderedObjectLiteralVariable,
   RenderedVariableForDocumentation,
   RenderedVariableForTableOfContents
 } from "../types/renderer.js";
@@ -16,7 +15,7 @@ export function renderVariableForTableOfContents(ctx: RenderContext<MarkupRender
 }
 
 
-export function renderVariableForDocumentation(ctx: RenderContext<MarkupRenderer>, variable: Variable): RenderedObjectLiteralVariable | RenderedVariableForDocumentation {
+export function renderVariableForDocumentation(ctx: RenderContext<MarkupRenderer>, variable: Variable): RenderedVariableForDocumentation {
 
 
   //-- Special case for object literals

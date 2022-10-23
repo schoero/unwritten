@@ -1,11 +1,11 @@
+import { BuiltInRenderers } from "../../../types/renderer.js";
 import { MarkupRenderImplementation } from "../types/renderer.js";
 
 
 class MarkdownRenderer implements MarkupRenderImplementation {
 
-  public name: string = "markdown";
-
-  public fileExtension: string = ".md";
+  public name = BuiltInRenderers.Markdown;
+  public fileExtension = ".md";
 
   private _listIndentation: number = -2;
 

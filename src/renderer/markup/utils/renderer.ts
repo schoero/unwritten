@@ -1,10 +1,10 @@
 import { contentFilter } from "../../../compiler/utils/filter.js";
 import { RenderContext } from "../../../types/context.js";
+import { DeepOmit } from "../../../types/utils.js";
 import { createAnchor } from "../linker/index.js";
 import { Encapsulation } from "../types/config.js";
-import { RenderCategories } from "../types/renderer.js";
+import { MarkupRenderer, RenderCategories } from "../types/renderer.js";
 import { getRenderConfig } from "./config.js";
-
 
 
 export function spaceBetween(...strings: string[]) {
@@ -19,7 +19,7 @@ export function encapsulate(text: string, encapsulation: Encapsulation | false |
 }
 
 
-export function renderLink(ctx: RenderContext, text: string, id?: number): string {
+export function renderLink(ctx: RenderContext<MarkupRenderer>, text: string, id?: number): string {
   if(id !== undefined){
     const anchor = createAnchor(text, id);
     return ctx.renderer.renderAnchorLink(text, anchor);
@@ -29,9 +29,9 @@ export function renderLink(ctx: RenderContext, text: string, id?: number): strin
 }
 
 
-export function getCategoryName(key: RenderCategories | string, plural: boolean = false): string {
+export function getCategoryName(ctx: RenderContext<MarkupRenderer>, key: RenderCategories | string, plural: boolean = false): string {
 
-  const renderConfig = getRenderConfig();
+  const renderConfig = getRenderConfig(ctx);
 
   const isValidRenderCategory = (key: RenderCategories | string): key is RenderCategories => key in renderConfig.categoryNames;
 
@@ -39,7 +39,7 @@ export function getCategoryName(key: RenderCategories | string, plural: boolean 
     return key;
   }
 
-  return plural ? getRenderConfig().categoryNames[pluralizeCategoryKey(key)] : getRenderConfig().categoryNames[key];
+  return plural ? renderConfig.categoryNames[pluralizeCategoryKey(key)] : renderConfig.categoryNames[key];
 
 }
 

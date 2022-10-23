@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { describe, it } from "vitest";
 
 import { Interface, TypeKind } from "../../../types/types.js";
-import { Complete, Testable } from "../../../types/utils.js";
+import { Real, Testable } from "../../../types/utils.js";
 import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "../shared/interface.js";
 import { createRenderContext } from "./utils/context.js";
 
@@ -37,42 +37,31 @@ describe("Renderer: Interfaces", function() {
     name: "Address"
   };
 
-  describe("Table of Contents", function() {
+  const ctx = createRenderContext();
 
-    const ctx = createRenderContext();
-    const renderedInterfaceForTableOfContents = renderInterfaceForTableOfContents(ctx, <Complete<Interface>>simpleInterface);
+  const renderedInterfaceForTableOfContents = renderInterfaceForTableOfContents(ctx, <Real<Interface>>simpleInterface);
+  const renderedInterfaceForDocumentation = renderInterfaceForDocumentation(ctx, <Real<Interface>>simpleInterface);
 
-    it("should have matching interface", function() {
-      expect(renderedInterfaceForTableOfContents).to.equal("Address");
-    });
+  const interfaceName = Object.keys(renderedInterfaceForDocumentation)[0]!;
+  const interfaceContent = renderedInterfaceForDocumentation[interfaceName]!;
 
+  it("should have matching interface name", function() {
+    expect(renderedInterfaceForTableOfContents).to.equal("Address");
+    expect(interfaceName).to.equal("Address");
   });
 
-  describe("Documentation", function() {
+  it("should have a matching description", () => {
+    expect(interfaceContent[0]).to.equal("Address of a person");
+  });
 
-    const ctx = createRenderContext();
-    const renderedInterface = renderInterfaceForDocumentation(ctx, <Complete<Interface>>simpleInterface);
-    const interfaceName = Object.keys(renderedInterface)[0]!;
-    const interfaceContent = renderedInterface[interfaceName]!;
+  it("should have no example", () => {
+    expect(interfaceContent[1]).to.equal(undefined);
+  });
 
-    it("should have matching interface name", function() {
-      expect(interfaceName).to.equal("Address");
-    });
-
-    it("should have a matching description", () => {
-      expect(interfaceContent[0]).to.equal("Address of a person");
-    });
-
-    it("should have no example", () => {
-      expect(interfaceContent[1]).to.equal(undefined);
-    });
-
-    it("should have matching members", function() {
-      expect(interfaceContent.length).to.equal(3);
-      expect(interfaceContent[2][0][0]).to.equal("street: string Street name");
-      expect(interfaceContent[2][0][1]).to.equal("building: number Building number optional");
-    });
-
+  it("should have matching members", function() {
+    expect(interfaceContent.length).to.equal(3);
+    expect(interfaceContent[2][0][0]).to.equal("street: string Street name");
+    expect(interfaceContent[2][0][1]).to.equal("building: number Building number optional");
   });
 
 });

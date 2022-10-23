@@ -1,8 +1,9 @@
 import { TypeKind } from "../../../types/types.js";
+import { Complete } from "../../../types/utils.js";
 import { MarkupRenderConfig } from "../types/config.js";
 import { RenderCategories } from "../types/renderer.js";
 
-export const defaultRenderConfig: MarkupRenderConfig = {
+export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   categoryNames: {
     [RenderCategories.Function]: "Function",
     [RenderCategories.Functions]: "Functions",
@@ -44,6 +45,6 @@ export const defaultRenderConfig: MarkupRenderConfig = {
     TypeKind.Interface
   ],
   stringLiteralTypeEncapsulation: ["`", "`"],
-  tagEncapsulation:  ["`", "`"],
-  typeEncapsulation:  ["&lt;", "&gt;"]
+  tagEncapsulation: ["`", "`"],
+  typeEncapsulation: ["&lt;", "&gt;"]
 };

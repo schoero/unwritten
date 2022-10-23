@@ -1,5 +1,9 @@
 import { Types } from "./types.js";
 
+export type Complete<Object> = {
+  [key in keyof Object]-?: Object[key];
+};
+
 export type DeepPartial<T> =
   T extends Function
     ? T
@@ -80,4 +84,4 @@ type DeepRequiredByKeyObject<T, K extends keyof any> =
 //-- Test
 
 export type Testable<Entity extends Types> = DeepPartialByKey<Entity, "id" | "modifiers" | "position">;
-export type Complete<Entity extends Types> = DeepRequiredByKey<Entity, "id" | "modifiers" | "position">;
+export type Real<Entity extends Types> = DeepRequiredByKey<Entity, "id" | "modifiers" | "position">;

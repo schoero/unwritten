@@ -1,9 +1,10 @@
-import { Renderer } from "../../../types/renderer.js";
+import { Description, Example } from "../../../types/compositions.js";
+import { BuiltInRenderers, Renderer } from "../../../types/renderer.js";
 
 
 export interface MarkupRenderImplementation {
   fileExtension: string;
-  name: string;
+  name: BuiltInRenderers;
   renderAnchorLink: (text: string, anchor: string) => string;
   renderBoldText: (text: string) => string;
   renderCode: (code: string, language?: string) => string;
@@ -78,7 +79,7 @@ export type RenderedList = [RenderedMultilineContent | RenderObject[]];
 //-- Rendered entities
 
 export type RenderedEntitiesForTableOfContents = RenderedClassForTableOfContents | RenderedEnumForTableOfContents | RenderedFunctionForTableOfContents | RenderedInterfaceForTableOfContents | RenderedNamespaceForTableOfContents | RenderedTypeAliasForTableOfContents | RenderedVariableForTableOfContents;
-export type RenderedEntitiesForDocumentation = RenderedClassForDocumentation | RenderedEnumForDocumentation | RenderedFunctionForDocumentation | RenderedInterfaceForDocumentation | RenderedNamespaceForDocumentation | RenderedObjectLiteralVariable | RenderedTypeAliasForDocumentation | RenderedVariableForDocumentation;
+export type RenderedEntitiesForDocumentation = RenderedClassForDocumentation | RenderedEnumForDocumentation | RenderedFunctionForDocumentation | RenderedInterfaceForDocumentation | RenderedNamespaceForDocumentation | RenderedTypeAliasForDocumentation | RenderedVariableForDocumentation;
 
 
 //-- Categories
@@ -91,6 +92,22 @@ export type RenderedCategoryForTableOfContents = [
 export type RenderedCategoryForDocumentation = {
   [categoryName: string]: RenderedEntitiesForDocumentation[];
 };
+
+
+//-- Primitive types
+
+export type RenderedPrimitiveType = string;
+
+
+//-- Literal types
+
+export type RenderedLiteralType = string;
+
+export type RenderedObjectLiteralType = [
+  description: string | undefined,
+  example: string | undefined,
+  properties: [RenderedPropertyForDocumentation[]]
+];
 
 
 //-- Function
@@ -125,7 +142,8 @@ export type RenderedClassForTableOfContents = [
 
 export type RenderedClassForDocumentation = {
   [className: string]: [
-    description: string | undefined,
+    description: Description | undefined,
+    example: Example | undefined,
     constructor: { [constructorTitle: string]: RenderedFunctionForDocumentation; } | undefined,
     properties: { [propertiesTitle: string]: RenderedPropertyForDocumentation[]; } | undefined,
     methods: { [methodsTitle: string]: RenderedFunctionSignatureForDocumentation[]; } | undefined,
@@ -195,14 +213,6 @@ export type RenderedVariableForDocumentation = {
   [variableName: string]: [
     description: string | undefined,
     type: string | undefined,
-    example: string | undefined
-  ];
-};
-
-export type RenderedObjectLiteralVariable = {
-  [variableName: string]: [
-    description: string | undefined,
-    properties: [RenderedPropertyForDocumentation[]],
     example: string | undefined
   ];
 };

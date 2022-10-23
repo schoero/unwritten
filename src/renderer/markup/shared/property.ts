@@ -11,13 +11,13 @@ import { encapsulate, renderLink, spaceBetween } from "../utils/renderer.js";
 import { renderType } from "./type.js";
 
 
-export function renderPropertyEntityForTableOfContents(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForTableOfContents {
+export function renderPropertyForTableOfContents(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForTableOfContents {
   const link = renderLink(ctx, property.name, property.id);
   return link;
 }
 
 
-export function renderPropertyEntityForDocumentation(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForDocumentation {
+export function renderPropertyForDocumentation(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
 

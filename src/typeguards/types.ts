@@ -5,6 +5,7 @@ import {
   Constructor,
   Function,
   Getter,
+  Instance,
   Interface,
   Intersection,
   LiteralTypes,
@@ -77,6 +78,10 @@ export function isGetterType(type: Type<TypeKind>): type is Getter {
 
 export function isClassType(type: Type<TypeKind>): type is Class {
   return type.kind === TypeKind.Class;
+}
+
+export function isInstanceType(type: Type<TypeKind>): type is Instance {
+  return type.kind === TypeKind.Instance;
 }
 
 export function isInterfaceType(type: Type<TypeKind>): type is Interface {

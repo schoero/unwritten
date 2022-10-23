@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
 import { createClassBySymbol } from "../src/compiler/types/class.js";
-import { Modifiers, TypeKind } from "../src/types/types.js";
+import { parse } from "../src/parser/index.js";
+import { isClassType } from "../src/typeguards/types.js";
+import { Instance, Modifiers, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
 
 
@@ -19,9 +21,9 @@ describe("Compiler: Class", () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
-    const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
-    const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
+    const { fileSymbol, exportedSymbols, ctx } = compile(testFileContent.trim());
+    const exportedTypes = parse(ctx, fileSymbol);
+    const exportedClass = exportedTypes.find(isClassType)!;
 
     it("should have an exported class", () => {
       expect(exportedClass).not.to.equal(undefined);
@@ -37,6 +39,18 @@ describe("Compiler: Class", () => {
 
     it("should have a description", () => {
       expect(exportedClass.description).to.equal("A class.");
+    });
+
+    it("should have a matching constructor", () => {
+      expect(exportedClass.ctor).not.to.equal(undefined);
+      expect(exportedClass.ctor?.signatures).not.to.equal(undefined);
+      expect(exportedClass.ctor?.signatures).to.have.lengthOf(1);
+    });
+
+    it("should return a reference to the class instance on the constructor", function() {
+      expect(exportedClass.ctor!.signatures[0]!.returnType.kind).to.equal(TypeKind.Instance);
+      expect((exportedClass.ctor!.signatures[0]!.returnType as Instance).id).to.equal(exportedClass.id);
+      expect((exportedClass.ctor!.signatures[0]!.returnType as Instance).position).to.deep.equal(exportedClass.position);
     });
 
   }
@@ -55,23 +69,24 @@ describe("Compiler: Class", () => {
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should have matching properties", () => {
+      expect(exportedClass.properties).to.not.equal(undefined);
       expect(exportedClass.properties).to.have.lengthOf(3);
-      expect(exportedClass.properties[0]!.name).to.equal("publicProperty");
-      expect(exportedClass.properties[0]!.kind).to.equal(TypeKind.Property);
-      expect(exportedClass.properties[0]!.type.kind).to.equal(TypeKind.String);
-      expect(exportedClass.properties[1]!.name).to.equal("staticProperty");
-      expect(exportedClass.properties[1]!.kind).to.equal(TypeKind.Property);
-      expect(exportedClass.properties[1]!.type.kind).to.equal(TypeKind.String);
-      expect(exportedClass.properties[2]!.name).to.equal("privateProperty");
-      expect(exportedClass.properties[2]!.kind).to.equal(TypeKind.Property);
-      expect(exportedClass.properties[2]!.type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.properties![0]!.name).to.equal("publicProperty");
+      expect(exportedClass.properties![0]!.kind).to.equal(TypeKind.Property);
+      expect(exportedClass.properties![0]!.type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.properties![1]!.name).to.equal("staticProperty");
+      expect(exportedClass.properties![1]!.kind).to.equal(TypeKind.Property);
+      expect(exportedClass.properties![1]!.type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.properties![2]!.name).to.equal("privateProperty");
+      expect(exportedClass.properties![2]!.kind).to.equal(TypeKind.Property);
+      expect(exportedClass.properties![2]!.type.kind).to.equal(TypeKind.String);
     });
 
     it("should handle modifiers correctly", () => {
       expect(exportedClass.modifiers).to.contain(Modifiers.Abstract);
-      expect(exportedClass.properties[0]!.modifiers).to.contain(Modifiers.Public);
-      expect(exportedClass.properties[1]!.modifiers).to.contain(Modifiers.Static);
-      expect(exportedClass.properties[2]!.modifiers).to.contain(Modifiers.Private);
+      expect(exportedClass.properties![0]!.modifiers).to.contain(Modifiers.Public);
+      expect(exportedClass.properties![1]!.modifiers).to.contain(Modifiers.Static);
+      expect(exportedClass.properties![2]!.modifiers).to.contain(Modifiers.Private);
     });
 
   }
@@ -98,16 +113,17 @@ describe("Compiler: Class", () => {
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should have 2 methods", () => {
+      expect(exportedClass.methods).to.not.equal(undefined);
       expect(exportedClass.methods).to.have.lengthOf(2);
     });
 
     it("should be able to handle method overloads", () => {
-      expect(exportedClass.methods[0]!.signatures).to.have.lengthOf(2);
+      expect(exportedClass.methods![0]!.signatures).to.have.lengthOf(2);
     });
 
     it("should be able to handle methods that return this", () => {
-      expect(exportedClass.methods[1]!.signatures[0]!.returnType.kind).to.equal(TypeKind.This);
-      expect(exportedClass.methods[1]!.signatures[0]!.returnType.id).to.equal(exportedClass.id);
+      expect(exportedClass.methods![1]!.signatures[0]!.returnType.kind).to.equal(TypeKind.This);
+      expect(exportedClass.methods![1]!.signatures[0]!.returnType.id).to.equal(exportedClass.id);
     });
 
   }
@@ -134,13 +150,15 @@ describe("Compiler: Class", () => {
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should have a setter and a getter", () => {
+      expect(exportedClass.setters).to.not.equal(undefined);
       expect(exportedClass.setters).to.have.lengthOf(1);
-      expect(exportedClass.setters[0]!.signatures).to.have.lengthOf(1);
-      expect(exportedClass.setters[0]!.signatures[0]?.parameters).to.have.lengthOf(1);
-      expect(exportedClass.setters[0]!.signatures[0]?.parameters[0]?.type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.setters![0]!.signatures).to.have.lengthOf(1);
+      expect(exportedClass.setters![0]!.signatures[0]?.parameters).to.have.lengthOf(1);
+      expect(exportedClass.setters![0]!.signatures[0]?.parameters[0]?.type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.getters).to.not.equal(undefined);
       expect(exportedClass.getters).to.have.lengthOf(1);
-      expect(exportedClass.getters[0]!.signatures).to.have.lengthOf(1);
-      expect(exportedClass.getters[0]!.signatures[0]?.returnType.kind).to.equal(TypeKind.String);
+      expect(exportedClass.getters![0]!.signatures).to.have.lengthOf(1);
+      expect(exportedClass.getters![0]!.signatures[0]?.returnType.kind).to.equal(TypeKind.String);
     });
 
   }
@@ -148,21 +166,14 @@ describe("Compiler: Class", () => {
   {
     const testFileContent = `
       class Base {
-        constructor(){
-        }
-
         public propertyA: string = "A";
-
       }
 
       export class Class extends Base {
-
         constructor(){
           super();
         }
-
         public propertyB: string = "B";
-
       }
     `;
 
@@ -171,9 +182,10 @@ describe("Compiler: Class", () => {
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should merge different properties from inherited class", () => {
+      expect(exportedClass.properties).to.not.equal(undefined);
       expect(exportedClass.properties).to.have.lengthOf(2);
-      expect(exportedClass.properties[0]!.name).to.equal("propertyA");
-      expect(exportedClass.properties[1]!.name).to.equal("propertyB");
+      expect(exportedClass.properties![0]!.name).to.equal("propertyA");
+      expect(exportedClass.properties![1]!.name).to.equal("propertyB");
     });
 
   }
@@ -181,21 +193,14 @@ describe("Compiler: Class", () => {
   {
     const testFileContent = `
       class Base {
-        constructor() {
-        }
-      
         public readonly property: number = 1;
-      
       }
       
       export class Class extends Base {
-      
         constructor() {
           super();
         }
-      
         public override readonly property: number = 2;
-      
       }
     `;
 
@@ -204,8 +209,9 @@ describe("Compiler: Class", () => {
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
     it("should override identical properties from inherited class", () => {
+      expect(exportedClass.properties).to.not.equal(undefined);
       expect(exportedClass.properties).to.have.lengthOf(1);
-      expect(exportedClass.properties[0]!.name).to.equal("property");
+      expect(exportedClass.properties![0]!.name).to.equal("property");
     });
 
   }

@@ -215,9 +215,10 @@ export interface Reference extends Type<TypeKind.Reference> {
 
 export interface Instance extends Type<TypeKind.Instance> {
   id: ID;
+  name: Name;
   position: Position;
-  name?: Name;
   resolvedType?: Types;
+  typeArguments?: Types[];
 }
 
 
@@ -265,17 +266,17 @@ export interface Parameter extends Type<TypeKind.Parameter> {
 //-- Class
 
 export interface Class extends Type<TypeKind.Class> {
-  getters: Getter[];
-  methods: Method[];
   modifiers: Modifiers[];
   name: Name;
   position: Position;
-  properties: Property[];
-  setters: Setter[];
   ctor?: Constructor;
   description?: Description;
   example?: Example;
+  getters?: Getter[];
   heritage?: Class;
+  methods?: Method[];
+  properties?: Property[];
+  setters?: Setter[];
 }
 
 export interface Constructor extends FunctionLike<TypeKind.Constructor> {
