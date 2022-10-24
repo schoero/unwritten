@@ -98,6 +98,7 @@ export type Types =
 
 export type ExportableTypes =
   | Class
+  | Enum
   | Function
   | Interface
   | Module

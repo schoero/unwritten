@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { dirname, parse, resolve } from "node:path";
+
 import { error } from "../log/index.js";
 
 
@@ -15,18 +16,18 @@ export function findFile(fileName: string, entryPath?: string): string | undefin
     entryPath = process.cwd();
   }
 
-  const absoluteEntryPath = resolve(entryPath);
-  if(existsSync(absoluteEntryPath) === false){
-    throw error(`Entry path does not exist: ${absoluteEntryPath}`);
+  const absoluteEntryDir = parse(resolve(entryPath)).dir;
+  if(existsSync(absoluteEntryDir) === false){
+    throw error(`Entry path does not exist: ${absoluteEntryDir}`);
   }
 
-  const absoluteFilePath = resolve(absoluteEntryPath, fileName);
+  const absoluteFilePath = resolve(absoluteEntryDir, fileName);
   if(existsSync(absoluteFilePath) === true){
     return absoluteFilePath;
   }
 
-  const absoluteParentPath = dirname(absoluteEntryPath);
-  if(absoluteParentPath === absoluteEntryPath){
+  const absoluteParentPath = dirname(absoluteEntryDir);
+  if(absoluteParentPath === absoluteEntryDir){
     return undefined;
   }
 

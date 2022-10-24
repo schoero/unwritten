@@ -26,3 +26,5 @@ export const htmlRenderer: MarkupRenderer = {
   renderUnderlineText: _htmlRenderer.renderUnderlineText,
   renderWarning: _htmlRenderer.renderWarning
 };
+
+export default htmlRenderer;

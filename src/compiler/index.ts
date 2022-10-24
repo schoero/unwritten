@@ -3,7 +3,8 @@ import { dirname, resolve } from "node:path";
 
 import ts, { CompilerOptions } from "typescript";
 
-import { error, log, warn } from "../log/index.js";
+import { log, warn } from "../log/index.js";
+import { findFile } from "../utils/finder.js";
 
 
 export function compile(entryFilePath: string, tsConfigFilePath?: string) {
@@ -42,41 +43,55 @@ function getCompilerOptions(entryFilePath: string, tsConfigFilePath?: string): C
 
   //-- Get compiler options from provided tsconfig.json
 
-  if(tsConfigFilePath !== undefined){
-
-    const configFileBasePath = dirname(tsConfigFilePath);
-    const configFile = ts.readConfigFile(tsConfigFilePath, ts.sys.readFile);
-
-    if(configFile.error !== undefined){
-      throw error(`Error reading tsconfig.json: ${configFile.error.messageText}.`);
-    } else {
-      log(`Using tsconfig.json at ${tsConfigFilePath}`);
+  {
+    if(tsConfigFilePath !== undefined){
+      const compilerOptions = _readConfigFile(tsConfigFilePath);
+      if(compilerOptions !== undefined){
+        return compilerOptions;
+      }
     }
-
-    const options = ts.parseJsonConfigFileContent(configFile.config, ts.sys, configFileBasePath).options;
-    return options;
-
   }
 
 
-  //-- Try to find tsconfig
+  //-- Try to find tsconfig via ts.findConfigFile
 
-  const foundTSConfigFilePath = ts.findConfigFile(entryFilePath, ts.sys.fileExists);
-
-  if(foundTSConfigFilePath !== undefined){
-
-    const configFileBasePath = dirname(foundTSConfigFilePath);
-    const configFile = ts.readConfigFile(foundTSConfigFilePath, ts.sys.readFile);
-
-    if(configFile.error !== undefined){
-      throw error(`Error reading tsconfig.json: ${configFile.error.messageText}`);
-    } else {
-      log(`Using tsconfig.json found at ${foundTSConfigFilePath}`);
+  {
+    const foundTSConfigFilePath = ts.findConfigFile(entryFilePath, ts.sys.fileExists);
+    if(foundTSConfigFilePath !== undefined){
+      const compilerOptions = _readConfigFile(foundTSConfigFilePath);
+      if(compilerOptions !== undefined){
+        return compilerOptions;
+      }
     }
+  }
 
-    const options = ts.parseJsonConfigFileContent(configFile.config, ts.sys, configFileBasePath).options;
-    return options;
 
+  //-- Try to find tsconfig via custom finder
+
+  {
+    const foundTSConfigFilePath = findFile("tsconfig.json", entryFilePath);
+    if(foundTSConfigFilePath !== undefined){
+      const compilerOptions = _readConfigFile(foundTSConfigFilePath);
+      if(compilerOptions !== undefined){
+        return compilerOptions;
+      }
+    }
+  }
+
+
+  //-- Try to find project root by searching package.json via custom finder
+
+  {
+    const foundPackageJsonFilePath = findFile("package.json", entryFilePath);
+    if(foundPackageJsonFilePath !== undefined){
+      const foundTSConfigFilePath = ts.findConfigFile(foundPackageJsonFilePath, ts.sys.fileExists);
+      if(foundTSConfigFilePath !== undefined){
+        const compilerOptions = _readConfigFile(foundTSConfigFilePath);
+        if(compilerOptions !== undefined){
+          return compilerOptions;
+        }
+      }
+    }
   }
 
 
@@ -85,6 +100,23 @@ function getCompilerOptions(entryFilePath: string, tsConfigFilePath?: string): C
   warn("No tsconfig found, continue using default compiler options but this may fail...");
 
   return ts.getDefaultCompilerOptions();
+
+}
+
+
+function _readConfigFile(path: string): ts.CompilerOptions | undefined {
+  const configFileBasePath = dirname(path);
+  const configFile = ts.readConfigFile(path, ts.sys.readFile);
+
+  if(configFile.error !== undefined){
+    warn(`Couldn't read tsconfig.json: ${configFile.error.messageText}`);
+    return;
+  }
+
+  log(`Use tsconfig.json found at ${path}`);
+
+  const options = ts.parseJsonConfigFileContent(configFile.config, ts.sys, configFileBasePath).options;
+  return options;
 
 }
 

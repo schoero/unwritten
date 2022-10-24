@@ -4,12 +4,14 @@ import { assert } from "vitest";
 import { Cache } from "../compiler/cache/index.js";
 import { createTypeAliasBySymbol } from "../compiler/types/alias.js";
 import { createClassBySymbol } from "../compiler/types/class.js";
+import { createEnumBySymbol } from "../compiler/types/enum.js";
 import { createFunctionBySymbol } from "../compiler/types/function.js";
 import { createInterfaceBySymbol } from "../compiler/types/interface.js";
 import { createVariableBySymbol } from "../compiler/types/variable.js";
 import { resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
 import {
   isClassSymbol,
+  isEnumSymbol,
   isFunctionSymbol,
   isInterfaceSymbol,
   isTypeAliasSymbol,
@@ -56,6 +58,8 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): ExportableTyp
     return createInterfaceBySymbol(ctx, resolvedSymbol);
   } else if(isTypeAliasSymbol(resolvedSymbol)){
     return createTypeAliasBySymbol(ctx, resolvedSymbol);
+  } else if(isEnumSymbol(resolvedSymbol)){
+    return createEnumBySymbol(ctx, resolvedSymbol);
   }
 
 }

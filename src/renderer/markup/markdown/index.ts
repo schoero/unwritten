@@ -26,3 +26,5 @@ export const markdownRenderer: MarkupRenderer = {
   renderUnderlineText: _markdownRenderer.renderUnderlineText,
   renderWarning: _markdownRenderer.renderWarning
 };
+
+export default markdownRenderer;

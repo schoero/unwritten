@@ -8,6 +8,7 @@ import {
   isIntersectionType,
   isLiteralType,
   isObjectLiteralType,
+  isObjectType,
   isPrimitiveType,
   isThisType,
   isTupleTypeReferenceType,
@@ -95,8 +96,10 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
     return createInterfaceByType(ctx, type);
   } else if(isThisType(type)){
     return createThisByType(ctx, type);
+  } else if(isObjectType(type)){
+    return createObjectLiteralByType(ctx, type);
   }
 
-  throw new Error("Unsupported type");
+  throw new Error(`Unsupported type: ${type.symbol.name}`);
 
 }

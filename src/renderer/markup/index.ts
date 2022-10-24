@@ -1,13 +1,24 @@
+import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "../../typeguards/renderer.js";
 import {
   isClassType,
+  isEnumType,
   isFunctionType,
   isInterfaceType,
+  isNamespaceType,
   isTypeAliasType,
   isVariableType
 } from "../../typeguards/types.js";
 import { RenderContext } from "../../types/context.js";
 import { ExportableTypes } from "../../types/types.js";
+import { renderClassForDocumentation, renderClassForTableOfContents } from "./shared/class.js";
+import { renderEnumForDocumentation, renderEnumForTableOfContents } from "./shared/enum.js";
+import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./shared/function.js";
+import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./shared/interface.js";
+import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "./shared/namespace.js";
+import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./shared/type-alias.js";
+import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./shared/variable.js";
 import {
+  MarkupRenderer,
   RenderedCategoryForDocumentation,
   RenderedCategoryForTableOfContents,
   RenderedEntitiesForDocumentation,
@@ -18,12 +29,12 @@ import { getCategoryName } from "./utils/renderer.js";
 import { sortExportableTypes } from "./utils/sort.js";
 
 
-export function render(ctx: RenderContext, types: ExportableTypes[]): string {
+export function render(ctx: RenderContext<MarkupRenderer>, types: ExportableTypes[]): string {
 
   const sortedEntities = sortExportableTypes(ctx, types);
 
-  const tableOfContents = renderEntitiesForTableOfContents(sortedEntities);
-  const documentation = renderEntitiesForDocumentation(sortedEntities);
+  const tableOfContents = renderForTableOfContents(ctx, sortedEntities);
+  const documentation = renderForDocumentation(ctx, sortedEntities);
 
   const renderObject: RenderObject = {
     ["API Documentation"]: [
@@ -32,21 +43,21 @@ export function render(ctx: RenderContext, types: ExportableTypes[]): string {
     ]
   };
 
-  return renderRenderObject(renderObject);
+  return renderRenderObject(ctx, renderObject);
 
 }
 
 
-export function renderEntitiesForTableOfContents(entities: ExportableTypes[]): [RenderedCategoryForTableOfContents[]] {
+export function renderForTableOfContents(ctx: RenderContext<MarkupRenderer>, types: ExportableTypes[]): [RenderedCategoryForTableOfContents[]] {
 
   const tableOfContents: RenderedCategoryForTableOfContents[][] = [];
 
 
   //-- Render entities
 
-  for(const entity of entities){
+  for(const type of types){
 
-    const categoryName = getCategoryName(entity.kind, true);
+    const categoryName = getCategoryName(ctx, type.kind, true);
 
     const existingCategory = tableOfContents.find(category => category[0]?.[0] === categoryName);
 
@@ -55,7 +66,7 @@ export function renderEntitiesForTableOfContents(entities: ExportableTypes[]): [
     }
 
     const category = tableOfContents.find(category => category[0]?.[0] === categoryName)!;
-    const renderedType = renderTypeForTableOfContents(entity);
+    const renderedType = renderTypeForTableOfContents(ctx, type);
 
     category[0]![1][0].push(renderedType);
 
@@ -66,22 +77,22 @@ export function renderEntitiesForTableOfContents(entities: ExportableTypes[]): [
 }
 
 
-export function renderEntitiesForDocumentation(entities: ExportableTypes[]): RenderedCategoryForDocumentation {
+export function renderForDocumentation(ctx: RenderContext<MarkupRenderer>, types: ExportableTypes[]): RenderedCategoryForDocumentation {
 
   const documentation: RenderedCategoryForDocumentation = {};
 
 
   //-- Render entities
 
-  for(const entity of entities){
+  for(const type of types){
 
-    const title = getCategoryName(entity.kind, true);
+    const title = getCategoryName(ctx, type.kind, true);
 
     if(documentation[title] === undefined){
       documentation[title] = [];
     }
 
-    documentation[title]!.push(renderTypeForDocumentation(entity));
+    documentation[title]!.push(renderTypeForDocumentation(ctx, type));
 
   }
 
@@ -90,55 +101,53 @@ export function renderEntitiesForDocumentation(entities: ExportableTypes[]): Ren
 }
 
 
-export function renderTypeForTableOfContents(entity: ExportableTypes): RenderedEntitiesForTableOfContents {
+export function renderTypeForTableOfContents(ctx: RenderContext<MarkupRenderer>, type: ExportableTypes): RenderedEntitiesForTableOfContents {
 
-  if(isFunctionType(entity)){
-    return renderFunctionTypeForTableOfContents(entity);
-  } else if(isClassType(entity)){
-    return renderClassTypeForTableOfContents(entity);
-  } else if(isTypeAliasType(entity)){
-    return renderTypeAliasTypeForTableOfContents(entity);
-  } else if(isInterfaceType(entity)){
-    return renderInterfaceTypeForTableOfContents(entity);
-  } else if(isVariableType(entity)){
-    return renderVariableTypeForTableOfContents(entity);
-  } else if(isEnumType(entity)){
-    return renderEnumTypeForTableOfContents(entity);
-  } else if(isNamespaceType(entity)){
-    return renderNamespaceTypeForTableOfContents(entity);
+  if(isFunctionType(type)){
+    return renderFunctionForTableOfContents(ctx, type);
+  } else if(isClassType(type)){
+    return renderClassForTableOfContents(ctx, type);
+  } else if(isTypeAliasType(type)){
+    return renderTypeAliasForTableOfContents(ctx, type);
+  } else if(isInterfaceType(type)){
+    return renderInterfaceForTableOfContents(ctx, type);
+  } else if(isVariableType(type)){
+    return renderVariableForTableOfContents(ctx, type);
+  } else if(isEnumType(type)){
+    return renderEnumForTableOfContents(ctx, type);
+  } else if(isNamespaceType(type)){
+    return renderNamespaceForTableOfContents(ctx, type);
   }
 
-  throw new Error(`Unexpected entity kind: ${entity.kind}`);
+  throw new Error(`Unexpected entity kind: ${type.kind}`);
 
 }
 
 
-export function renderTypeForDocumentation(entity: ExportableTypes): RenderedEntitiesForDocumentation {
+export function renderTypeForDocumentation(ctx: RenderContext<MarkupRenderer>, type: ExportableTypes): RenderedEntitiesForDocumentation {
 
-  if(isFunctionType(entity)){
-    return renderFunctionTypeForDocumentation(entity);
-  } else if(isClassType(entity)){
-    return renderClassTypeForDocumentation(entity);
-  } else if(isTypeAliasType(entity)){
-    return renderTypeAliasTypeForDocumentation(entity);
-  } else if(isInterfaceType(entity)){
-    return renderInterfaceTypeForDocumentation(entity);
-  } else if(isVariableType(entity)){
-    return renderVariableTypeForDocumentation(entity);
-  } else if(isEnumType(entity)){
-    return renderEnumTypeForDocumentation(entity);
-  } else if(isNamespaceType(entity)){
-    return renderNamespaceTypeForDocumentation(entity);
+  if(isFunctionType(type)){
+    return renderFunctionForDocumentation(ctx, type);
+  } else if(isClassType(type)){
+    return renderClassForDocumentation(ctx, type);
+  } else if(isTypeAliasType(type)){
+    return renderTypeAliasForDocumentation(ctx, type);
+  } else if(isInterfaceType(type)){
+    return renderInterfaceForDocumentation(ctx, type);
+  } else if(isVariableType(type)){
+    return renderVariableForDocumentation(ctx, type);
+  } else if(isEnumType(type)){
+    return renderEnumForDocumentation(ctx, type);
+  } else if(isNamespaceType(type)){
+    return renderNamespaceForDocumentation(ctx, type);
   }
 
-  throw new Error(`Unexpected entity kind: ${entity.kind}`);
+  throw new Error(`Unexpected entity kind: ${type.kind}`);
 
 }
 
 
-export function renderRenderObject(renderObject: RenderObject): string {
-
-  const renderExtension = getRenderExtension();
+export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObject: RenderObject): string {
 
 
   //-- State
@@ -158,7 +167,7 @@ export function renderRenderObject(renderObject: RenderObject): string {
 
     if(isRenderedList(element)){
 
-      const listStart = renderExtension.renderListStart();
+      const listStart = ctx.renderer.renderListStart();
       if(listStart !== undefined){
         currentOutput.push(listStart);
       }
@@ -167,18 +176,18 @@ export function renderRenderObject(renderObject: RenderObject): string {
 
         // For semantically valid html we need to render nested lists inside the current list item
         if(element[0][i + 1] !== undefined && isRenderedList(element[0][i + 1]!)){
-          const renderedNestedElement = element[0][i + 1] !== undefined ? renderExtension.renderNewLine() + renderNestedElement(element[0][i + 1]!) : "";
+          const renderedNestedElement = element[0][i + 1] !== undefined ? ctx.renderer.renderNewLine() + renderNestedElement(element[0][i + 1]!) : "";
 
-          currentOutput.push(renderExtension.renderListItem(renderNestedElement(element[0][i]!) + renderedNestedElement));
+          currentOutput.push(ctx.renderer.renderListItem(renderNestedElement(element[0][i]!) + renderedNestedElement));
           i++; // Skip next element
           continue;
         }
 
-        currentOutput.push(renderExtension.renderListItem(renderNestedElement(element[0][i]!)));
+        currentOutput.push(ctx.renderer.renderListItem(renderNestedElement(element[0][i]!)));
 
       }
 
-      const listEnd = renderExtension.renderListEnd();
+      const listEnd = ctx.renderer.renderListEnd();
       if(listEnd !== undefined){
         currentOutput.push(listEnd);
       }
@@ -201,7 +210,7 @@ export function renderRenderObject(renderObject: RenderObject): string {
 
       for(const key in element){
 
-        const title = renderExtension.renderTitle(key, size);
+        const title = ctx.renderer.renderTitle(key, size);
 
         currentOutput.push(title);
         size++;
@@ -215,7 +224,7 @@ export function renderRenderObject(renderObject: RenderObject): string {
 
     }
 
-    return currentOutput.join(renderExtension.renderNewLine());
+    return currentOutput.join(ctx.renderer.renderNewLine());
 
   };
 

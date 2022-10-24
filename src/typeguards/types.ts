@@ -3,6 +3,7 @@ import {
   BooleanLiteralType,
   Class,
   Constructor,
+  Enum,
   Function,
   Getter,
   Instance,
@@ -10,6 +11,7 @@ import {
   Intersection,
   LiteralTypes,
   Method,
+  Namespace,
   NumberLiteralType,
   ObjectLiteral,
   PrimitiveTypes,
@@ -88,9 +90,9 @@ export function isInterfaceType(type: Type<TypeKind>): type is Interface {
   return type.kind === TypeKind.Interface;
 }
 
-// export function isNamespaceType(type: Type<TypeKind>): type is Namespace {
-//   return type.kind === TypeKind.Namespace;
-// }
+export function isNamespaceType(type: Type<TypeKind>): type is Namespace {
+  return type.kind === TypeKind.Namespace;
+}
 
 export function isVariableType(type: Type<TypeKind>): type is Variable {
   return type.kind === TypeKind.Variable;
@@ -100,9 +102,9 @@ export function isObjectLiteralType(type: Type<TypeKind>): type is ObjectLiteral
   return type.kind === TypeKind.ObjectLiteral;
 }
 
-// export function isEnumType(type: Type<TypeKind>): type is Enum {
-//   return type.kind === TypeKind.Enum;
-// }
+export function isEnumType(type: Type<TypeKind>): type is Enum {
+  return type.kind === TypeKind.Enum;
+}
 
 export function isTypeAliasType(type: Type<TypeKind>): type is TypeAlias {
   return type.kind === TypeKind.TypeAlias;

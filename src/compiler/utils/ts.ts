@@ -8,7 +8,7 @@ import { CompilerContext } from "../../types/context.js";
  * Resolves symbols from imports to their actual symbols.
  */
 export function resolveSymbolInCaseOfImport(ctx: CompilerContext, symbol: Symbol): Symbol {
-    if(isAliasedSymbol(symbol)){
+  if(isAliasedSymbol(symbol)){
     return ctx.checker.getAliasedSymbol(symbol);
   }
   return symbol;
