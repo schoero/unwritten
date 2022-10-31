@@ -6,10 +6,10 @@ import { CompilerContext } from "../../types/context.js";
 import { Enum, MergedEnum, TypeKind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import {
-getDescriptionByDeclaration,
-getDescriptionBySymbol,
-getExampleByDeclaration
-} from "../compositions/jsdoc.js"
+  getDescriptionByDeclaration,
+  getDescriptionBySymbol,
+  getExampleByDeclaration
+} from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { createMemberByDeclaration } from "./member.js";

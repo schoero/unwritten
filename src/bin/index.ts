@@ -35,8 +35,8 @@ program.command("generate")
   .option("-o, --output <path>", "Specify the output directory and file name. Defaults to ./docs/api based on the current working directory.")
   .option("-r, --renderer <markdown | html | <pathToCustomRenderer>>", "Choose the format of the rendered output.", "markdown")
   .option("-s, --silent", "Disables any console output.")
-  .action((entryPoint, options) => {
-    docCreator(entryPoint, options);
+  .action(async(entryPoint, options) => {
+    await docCreator(entryPoint, options);
   });
 
 

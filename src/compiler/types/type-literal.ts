@@ -29,10 +29,8 @@ export function createTypeLiteralBySymbol(ctx: CompilerContext, symbol: Symbol):
 
 export function createTypeLiteralByDeclaration(ctx: CompilerContext, declaration: TypeLiteralNode) {
 
-    const type = ctx.checker.getTypeAtLocation(declaration);
-
+  const type = ctx.checker.getTypeAtLocation(declaration);
   const fromType = createTypeLiteralByType(ctx, type);
-
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
 
