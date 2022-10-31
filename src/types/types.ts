@@ -38,6 +38,7 @@ export enum TypeKind {
   Tuple = "Tuple",
   TypeAlias = "TypeAlias",
   TypeLiteral = "TypeLiteral",
+  TypeParameter = "TypeParameter",
   Undefined = "Undefined",
   Union = "Union",
   Variable = "Variable",
@@ -69,33 +70,6 @@ export interface Type<Kind extends TypeKind>{
   kind: Kind;
 }
 
-export type Types =
-  | Class
-  | Constructor
-  | Function
-  | Getter
-  | Instance
-  | Interface
-  | Intersection
-  | LiteralTypes
-  | Member
-  | Method
-  | Module
-  | Namespace
-  | ObjectLiteral
-  | PrimitiveTypes
-  | Property
-  | Reference
-  | Setter
-  | This
-  | Tuple
-  | TypeAlias
-  | TypeLiteral
-  | Union
-  | Variable
-;
-
-
 export type ExportableTypes =
   | Class
   | Enum
@@ -105,6 +79,27 @@ export type ExportableTypes =
   | Namespace
   | TypeAlias
   | Variable
+;
+
+export type Types =
+  | Constructor
+  | ExportableTypes
+  | Getter
+  | Instance
+  | Intersection
+  | LiteralTypes
+  | Member
+  | Method
+  | ObjectLiteral
+  | PrimitiveTypes
+  | Property
+  | Reference
+  | Setter
+  | This
+  | Tuple
+  | TypeLiteral
+  | TypeParameter
+  | Union
 ;
 
 
@@ -186,10 +181,10 @@ export interface Property extends Type<TypeKind.Property> {
 
 export interface Tuple extends Type<TypeKind.Tuple> {
   members: TupleMember[];
-  name: Name;
-  position: Position;
   description?: Description;
   example?: Example;
+  name?: Name;
+  position?: Position;
 }
 
 export interface TupleMember extends Type<TypeKind.Member> {
@@ -205,8 +200,8 @@ export interface TupleMember extends Type<TypeKind.Member> {
 
 export interface Reference extends Type<TypeKind.Reference> {
   id: ID;
-  name: Name;
-  position: Position;
+  name?: Name;
+  position?: Position;
   resolvedType?: Types;
   typeArguments?: Types[];
 }
@@ -216,8 +211,8 @@ export interface Reference extends Type<TypeKind.Reference> {
 
 export interface Instance extends Type<TypeKind.Instance> {
   id: ID;
-  name: Name;
   position: Position;
+  name?: Name;
   resolvedType?: Types;
   typeArguments?: Types[];
 }
@@ -404,6 +399,15 @@ export interface Module extends Type<TypeKind.Module> {
 export interface Namespace extends Type<TypeKind.Namespace> {
   exports: ExportableTypes[];
   name: Name;
+}
+
+
+//-- TypeParameter
+
+export interface TypeParameter extends Type<TypeKind.TypeParameter> {
+  name: Name;
+  position: Position;
+  constraints?: Types;
 }
 
 export type FunctionLikeTypeMap = {

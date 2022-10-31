@@ -8,7 +8,7 @@ import { CompilerContext } from "../../types/context.js";
 
 export function getDescriptionByDeclaration(ctx: CompilerContext, declaration: Declaration): Description | undefined {
   // TODO: Find official way to get to the jsDoc comment
-  // @ts-expect-error
+  // @ts-expect-error - Internal API
   const comment = declaration.jsDoc?.[0]?.comment;
   return comment === undefined ? undefined : comment.replace(/\r/g, "");
 }

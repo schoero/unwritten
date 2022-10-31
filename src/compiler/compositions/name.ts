@@ -28,6 +28,6 @@ export function getNameByType(ctx: CompilerContext, type: Type): Name | undefine
 
 
 export function getNameByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Name | undefined {
-  // @ts-expect-error
+  // @ts-expect-error - Internal API
   return typeNode.intrinsicName;
 }

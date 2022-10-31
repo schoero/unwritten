@@ -1,12 +1,50 @@
 {
+
+
+  //-- ESLint
+
+  "[json]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[json5]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "eslint.validate": ["javascript", "typescript", "json", "jsonc", "json5", "yaml"],
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.markdownlint": true
   },
+
+
+  //-- File nesting
+
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
-  "typescript.preferences.importModuleSpecifierEnding": "js",
   "explorer.fileNesting.patterns": {
     "*.ts": "${basename}.${extname},${basename}.test.${extname}"
   },
+
+
+  //-- ES module import
+
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+
+
+  //-- Markdown
+
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+
 }

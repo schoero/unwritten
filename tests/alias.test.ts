@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/array-type */
-
 import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
 import { createTypeAliasBySymbol } from "../src/compiler/types/alias.js";
 import { Intersection, LiteralType, TypeKind, TypeLiteral, Union } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
-
 
 
 describe("Compiler: Type alias", () => {

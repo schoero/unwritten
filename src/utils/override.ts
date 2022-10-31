@@ -6,8 +6,7 @@ type AnyObject = {
 
 export function override<Original extends AnyObject, Overrides extends AnyObject>(original: Original, overrides: Overrides): Original & Overrides {
 
-  const result: Original & Overrides = {
-  } as Original & Overrides;
+  const result: Original & Overrides = <Original & Overrides>{};
 
   // Allow overriding whole object with {}
   if(Object.keys(overrides).length === 0){
@@ -17,18 +16,18 @@ export function override<Original extends AnyObject, Overrides extends AnyObject
   for(const originalKey in original){
     if(typeof original[originalKey] === "object" && typeof overrides[originalKey] === "object"){
       if(Array.isArray(original[originalKey]) || Array.isArray(overrides[originalKey])){
-        // @ts-expect-error
+        // @ts-expect-error - TS type inference is not working here
         result[originalKey] = overrides[originalKey];
       } else {
-      // @ts-expect-error
+      // @ts-expect-error - TS type inference is not working here
         result[originalKey] = override(original[originalKey], overrides[originalKey]);
       }
     } else {
       if(overrides[originalKey] !== undefined){
-        // @ts-expect-error
+        // @ts-expect-error - TS type inference is not working here
         result[originalKey] = overrides[originalKey];
       } else {
-        // @ts-expect-error
+        // @ts-expect-error - TS type inference is not working here
         result[originalKey] = original[originalKey];
       }
     }
@@ -39,7 +38,7 @@ export function override<Original extends AnyObject, Overrides extends AnyObject
       continue;
     }
 
-    // @ts-expect-error
+    // @ts-expect-error - TS type inference is not working here
     result[overrideKey] = overrides[overrideKey];
   }
 

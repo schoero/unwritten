@@ -7,18 +7,25 @@ import { createClassBySymbol } from "../compiler/types/class.js";
 import { createEnumBySymbol } from "../compiler/types/enum.js";
 import { createFunctionBySymbol } from "../compiler/types/function.js";
 import { createInterfaceBySymbol } from "../compiler/types/interface.js";
+import { createNamespaceBySymbol } from "../compiler/types/namespace.js";
+import { createTypeParameterBySymbol } from "../compiler/types/type-parameter.js";
 import { createVariableBySymbol } from "../compiler/types/variable.js";
 import { resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
+import { error } from "../log/index.js";
 import {
   isClassSymbol,
   isEnumSymbol,
   isFunctionSymbol,
   isInterfaceSymbol,
+  isNamespaceSymbol,
+  isSourceFileSymbol,
   isTypeAliasSymbol,
+  isTypeParameterSymbol,
   isVariableSymbol
 } from "../typeguards/ts.js";
+import { isExportableType } from "../typeguards/types.js";
 import { CompilerContext } from "../types/context.js";
-import { ExportableTypes } from "../types/types.js";
+import { ExportableTypes, Types } from "../types/types.js";
 
 
 export function parse(ctx: CompilerContext, moduleOrNamespaceSymbol: Symbol): ExportableTypes[] {
@@ -35,16 +42,21 @@ export function parse(ctx: CompilerContext, moduleOrNamespaceSymbol: Symbol): Ex
     .map(symbol => newCtx.cache.cacheSymbol(newCtx, symbol))
     .reduce((parsedSymbols, exportedSymbol) => {
       const parsedSymbol = parseSymbol(newCtx, exportedSymbol);
-      if(parsedSymbol){
-        parsedSymbols.push(parsedSymbol);
-      }
+      assert(isExportableType(parsedSymbol), "Parsed symbol is not an exportable type");
+      parsedSymbols.push(parsedSymbol);
       return parsedSymbols;
     }, <ExportableTypes[]>[]);
 
 }
 
-
-export function parseSymbol(ctx: CompilerContext, symbol: Symbol): ExportableTypes | undefined {
+/**
+ * Parses a TypeScript symbol.
+ * This is the main entry point for parsing a TypeScript symbol.
+ * @param ctx Compiler context
+ * @param symbol File symbol
+ * @returns Parsed symbol
+ */
+export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 
@@ -60,9 +72,16 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): ExportableTyp
     return createTypeAliasBySymbol(ctx, resolvedSymbol);
   } else if(isEnumSymbol(resolvedSymbol)){
     return createEnumBySymbol(ctx, resolvedSymbol);
+  } else if(isNamespaceSymbol(symbol) && isSourceFileSymbol(resolvedSymbol)){
+    return createNamespaceBySymbol(ctx, symbol);
+  } else if(isTypeParameterSymbol(symbol)){
+    return createTypeParameterBySymbol(ctx, symbol);
   }
 
+  throw error(`Symbol ${resolvedSymbol.getName()} is not supported`);
+
 }
+
 
 export function getEntryFileSymbolFromProgram(ctx: CompilerContext, program: Program) {
 

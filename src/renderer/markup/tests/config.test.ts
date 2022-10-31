@@ -38,6 +38,7 @@ describe("Config", () => {
     }
     {
       ctx.config.renderConfig.markdown.typeEncapsulation = false;
+
       const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, <Real<Variable>>testVariable);
 
       const variableName = Object.keys(renderedVariableForDocumentation)[0]!;
@@ -49,6 +50,7 @@ describe("Config", () => {
     }
     {
       ctx.config.renderConfig.markdown.typeEncapsulation = ["`", "`"];
+
       const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, <Real<Variable>>testVariable);
 
       const variableName = Object.keys(renderedVariableForDocumentation)[0]!;

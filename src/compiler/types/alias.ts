@@ -37,9 +37,9 @@ export function createTypeAliasByDeclaration(ctx: CompilerContext, declaration: 
   const typeNode = declaration.type;
 
   // TODO: check if typeNode is the correct way to go here
-  const fromTypeNode = createTypeAliasByTypeNode(ctx, typeNode);
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
+  const fromTypeNode = createTypeAliasByTypeNode(ctx, typeNode);
 
   return {
     ...fromTypeNode,
@@ -53,9 +53,9 @@ export function createTypeAliasByDeclaration(ctx: CompilerContext, declaration: 
 export function createTypeAliasByTypeNode(ctx: CompilerContext, typeNode: TypeNode) {
 
   const id = getIdByTypeNode(ctx, typeNode);
-  const type = createTypeByTypeNode(ctx, typeNode);
   const name = getNameByTypeNode(ctx, typeNode);
   const position = getPositionByTypeNode(ctx, typeNode);
+  const type = createTypeByTypeNode(ctx, typeNode);
   const kind = TypeKind.TypeAlias;
 
   return {

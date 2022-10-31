@@ -13,15 +13,20 @@ import { createTypeByType } from "./type.js";
 
 
 export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): Tuple {
+
   const targetSymbol = getTargetSymbolByTypeReference(ctx, typeReference);
   const members = _getMembers(ctx, typeReference, typeReference.typeArguments);
-  const fromSymbol = createTupleBySymbol(ctx, targetSymbol);
+  const fromSymbol = targetSymbol && createTupleBySymbol(ctx, targetSymbol);
+  const id = getIdByType(ctx, typeReference);
   const kind = TypeKind.Tuple;
+
   return {
+    id,
     ...fromSymbol,
     kind,
     members
   };
+
 }
 
 

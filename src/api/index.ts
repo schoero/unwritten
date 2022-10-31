@@ -3,7 +3,7 @@ import { dirname, resolve } from "node:path";
 
 import { compile } from "../compiler/index.js";
 import { createContext as createCompilerContext } from "../compiler/utils/context.js";
-import { createConfig as createRenderConfig } from "../config/index.js";
+import { createConfig } from "../config/index.js";
 import { disableLog } from "../log/index.js";
 import { getEntryFileSymbolFromProgram, parse } from "../parser/index.js";
 import { getRenderer } from "../renderer/index.js";
@@ -35,7 +35,7 @@ export async function docCreator(entryFilePath: string, options?: APIOptions) {
 
   //-- Create config and contexts
 
-  const config = createRenderConfig(options?.config);
+  const config = createConfig(options?.config);
   const compilerContext = createCompilerContext(checker, config);
   const renderContext = createRenderContext(renderer, config);
 

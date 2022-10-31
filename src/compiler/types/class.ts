@@ -113,7 +113,7 @@ function _getSymbolsByTypeFromClassLikeDeclaration(ctx: CompilerContext, classLi
   const declarations = classLikeDeclaration.members.filter(filter);
 
   const symbols = declarations.reduce((acc, declaration) => {
-    // @ts-expect-error
+    // @ts-expect-error - Internal API
     const symbol = ctx.checker.getSymbolAtLocation(classLikeDeclaration) ?? declaration.symbol;
     if(symbol !== undefined && acc.includes(symbol) === false){
       acc.push(symbol);

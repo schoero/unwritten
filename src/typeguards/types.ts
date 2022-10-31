@@ -4,6 +4,7 @@ import {
   Class,
   Constructor,
   Enum,
+  ExportableTypes,
   Function,
   Getter,
   Instance,
@@ -128,4 +129,14 @@ export function isBooleanLiteralType(type: Type<TypeKind>): type is BooleanLiter
 
 export function isBigIntLiteralType(type: Type<TypeKind>): type is BigIntLiteralType {
   return type.kind === TypeKind.BigIntLiteral;
+}
+
+export function isExportableType(type: Type<TypeKind>): type is ExportableTypes {
+  return isClassType(type) ||
+    isEnumType(type) ||
+    isFunctionType(type) ||
+    isInterfaceType(type) ||
+    isNamespaceType(type) ||
+    isTypeAliasType(type) ||
+    isVariableType(type);
 }

@@ -25,7 +25,7 @@ describe("Compiler: Interface", () => {
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
-    it("should have a matching kind", () => {
+    it.only("should have a matching kind", () => {
       expect(exportedInterface.kind).to.equal(TypeKind.Interface);
     });
 

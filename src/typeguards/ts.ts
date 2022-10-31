@@ -16,6 +16,7 @@ import ts, {
   TupleTypeReference,
   Type,
   TypeNode,
+  TypeParameter,
   TypeReference,
   UnionType
 } from "typescript";
@@ -92,6 +93,12 @@ export function isTypeSymbol(symbol: ts.Symbol): boolean {
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
   return declaration !== undefined && isTypeAliasDeclaration(declaration);
   // return (symbol.getFlags() & ts.SymbolFlags.Type) !== 0;
+}
+
+export function isTypeParameterSymbol(symbol: ts.Symbol): boolean {
+  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
+  return declaration !== undefined && isTypeParameterDeclaration(declaration);
+  // return (symbol.getFlags() & ts.SymbolFlags.TypeParameter) !== 0;
 }
 
 export function isInterfaceSymbol(symbol: ts.Symbol): boolean {
@@ -189,6 +196,10 @@ export function isTypeAliasDeclaration(declaration: Declaration): declaration is
   return ts.isTypeAliasDeclaration(declaration);
 }
 
+export function isTypeParameterDeclaration(declaration: Declaration): declaration is ts.TypeParameterDeclaration {
+  return ts.isTypeParameterDeclaration(declaration);
+}
+
 export function isInterfaceDeclaration(declaration: Declaration): declaration is ts.InterfaceDeclaration {
   return ts.isInterfaceDeclaration(declaration);
 }
@@ -275,23 +286,23 @@ export function isLiteralType(type: Type): type is LiteralType {
   return (type.flags & (ts.TypeFlags.StringOrNumberLiteral | ts.TypeFlags.BigIntLiteral | ts.TypeFlags.BooleanLiteral)) !== 0;
 }
 
-export function isNullType(type: ts.Type) {
+export function isNullType(type: Type) {
   return (type.flags & ts.TypeFlags.Null) !== 0;
 }
 
-export function isUndefinedType(type: ts.Type) {
+export function isUndefinedType(type: Type) {
   return (type.flags & ts.TypeFlags.Undefined) !== 0;
 }
 
-export function isNeverType(type: ts.Type) {
+export function isNeverType(type: Type) {
   return (type.flags & ts.TypeFlags.Never) !== 0;
 }
 
-export function isVoidType(type: ts.Type) {
+export function isVoidType(type: Type) {
   return (type.flags & ts.TypeFlags.Void) !== 0;
 }
 
-export function isAnyType(type: ts.Type) {
+export function isAnyType(type: Type) {
   return (type.flags & ts.TypeFlags.Any) !== 0;
 }
 
@@ -388,8 +399,12 @@ export function isInterfaceType(type: Type): type is InterfaceType {
 }
 
 export function isThisType(type: Type): boolean {
-  // @ts-expect-error
+  // @ts-expect-error - internal API
   return type.isThisType === true;
+}
+
+export function isTypeParameterType(type: Type): type is TypeParameter {
+  return (type.flags & ts.TypeFlags.TypeParameter) !== 0;
 }
 
 export function isPrimitiveType(type: Type): boolean {

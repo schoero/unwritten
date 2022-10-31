@@ -1,6 +1,6 @@
 import ts, { Declaration, Symbol, Type, TypeNode } from "typescript";
-import { assert } from "vitest";
 
+import { parseSymbol } from "../../parser/index.js";
 import {
   isFunctionLikeType,
   isInstanceType,
@@ -8,11 +8,11 @@ import {
   isIntersectionType,
   isLiteralType,
   isObjectLiteralType,
-  isObjectType,
   isPrimitiveType,
   isThisType,
   isTupleTypeReferenceType,
   isTypeLiteralType,
+  isTypeParameterType,
   isTypeReferenceType,
   isUnionType
 } from "../../typeguards/ts.js";
@@ -29,17 +29,12 @@ import { createTypeReferenceByType, createTypeReferenceByTypeNode } from "./refe
 import { createThisByType } from "./this.js";
 import { createTupleTypeByTypeReference } from "./tuple.js";
 import { createTypeLiteralByType } from "./type-literal.js";
+import { createTypeParameterByType } from "./type-parameter.js";
 import { createUnionTypeByType } from "./union.js";
 
 
 export function createTypeBySymbol(ctx: CompilerContext, symbol: Symbol): Types {
-
-  const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
-
-  assert(declaration, "Symbol has no declaration");
-
-  return createTypeByDeclaration(ctx, declaration);
-
+  return parseSymbol(ctx, symbol);
 }
 
 
@@ -70,7 +65,7 @@ export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode): 
 export function createTypeByType(ctx: CompilerContext, type: Type): Types {
 
 
-  //-- Order is important here. Check reference types first.
+  //-- Order is important! Sort by most specific to least specific
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
@@ -96,10 +91,11 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
     return createInterfaceByType(ctx, type);
   } else if(isThisType(type)){
     return createThisByType(ctx, type);
-  } else if(isObjectType(type)){
-    return createObjectLiteralByType(ctx, type);
+  } else if(isTypeParameterType(type)){
+    return createTypeParameterByType(ctx, type);
   }
 
+  // @ts-expect-error - Internal API
   throw new Error(`Unsupported type: ${type.symbol.name}`);
 
 }

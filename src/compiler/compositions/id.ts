@@ -5,25 +5,25 @@ import { CompilerContext } from "../../types/context.js";
 
 export function getIdBySymbol(ctx: CompilerContext, symbol: Symbol): number {
   ensureSymbolHasId(ctx, symbol);
-  // @ts-expect-error
+  // @ts-expect-error - Internal API
   return symbol.id;
 }
 
 export function getIdByDeclaration(ctx: CompilerContext, declaration: Declaration): number {
   ensureDeclarationHasId(ctx, declaration);
-  // @ts-expect-error
+  // @ts-expect-error - Internal API
   return declaration.id;
 }
 
 export function getIdByType(ctx: CompilerContext, type: Type): number {
   ensureTypeHasId(ctx, type);
-  // @ts-expect-error
+  // @ts-expect-error - Internal API
   return type.id;
 }
 
 export function getIdByTypeNode(ctx: CompilerContext, typeNode: TypeNode): number {
   ensureTypeNodeHasId(ctx, typeNode);
-  // @ts-expect-error
+  // @ts-expect-error - Internal API
   return typeNode.id;
 }
 
