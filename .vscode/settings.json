@@ -3,24 +3,24 @@
 
   //-- ESLint
 
-  "[json]": {
+  "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "[jsonc]": {
+  "[json]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[json5]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "[javascript]": {
+  "[jsonc]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "eslint.validate": ["javascript", "typescript", "json", "jsonc", "json5", "yaml"],
-  "prettier.enable": false,
-  "editor.formatOnSave": false,
+  "prettier.enable": false, // eslint-disable-next-line jsonc/sort-keys
+  "editor.formatOnSave": false, // eslint-disable-next-line jsonc/sort-keys
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.markdownlint": true
@@ -43,8 +43,9 @@
 
   //-- Markdown
 
+  // eslint-disable-next-line jsonc/sort-keys
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
-  },
+  }
 
 }

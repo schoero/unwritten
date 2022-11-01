@@ -47,7 +47,7 @@ describe("Compiler: Class", () => {
       expect(exportedClass.ctor?.signatures).to.have.lengthOf(1);
     });
 
-    it("should return a reference to the class instance on the constructor", function() {
+    it("should return a reference to the class instance on the constructor", () => {
       expect(exportedClass.ctor!.signatures[0]!.returnType.kind).to.equal(TypeKind.Instance);
       expect((exportedClass.ctor!.signatures[0]!.returnType as Instance).id).to.equal(exportedClass.id);
       expect((exportedClass.ctor!.signatures[0]!.returnType as Instance).position).to.deep.equal(exportedClass.position);

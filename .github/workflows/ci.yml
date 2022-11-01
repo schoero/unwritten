@@ -1,37 +1,36 @@
 name: CI
 
 on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+
   push:
     paths-ignore:
-      - 'docs/**'
-  pull_request:
-    branches: [ main ]
-    paths-ignore:
-      - 'docs/**'
+      - "docs/**"
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint:ci
+
   test:
     runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node: [14, 16, 18]
-        os: [macos-latest, windows-latest, ubuntu-latest]
-
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Configures the node version used on GitHub-hosted runners
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          # The Node.js version to configure
           node-version: ${{ matrix.node }}
 
       - name: Install dependencies
@@ -39,3 +38,8 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+    strategy:
+      matrix:
+        node: [14, 16, 18]
+        os: [macos-latest, windows-latest, ubuntu-latest]

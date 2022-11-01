@@ -6,23 +6,15 @@ A cli tool that auto generates documentation from your JavaScript or TypeScript 
 
 ## Installation
 
-<center>
-
 ```sh
 npm i doc-creator
 ```
 
-</center>
-
 ## Usage
-
-<center>
 
 ```sh
 doc-creator generate <path/to/entry-file.ts> [options]
 ```
-
-</center>
 
 ## Options
 
