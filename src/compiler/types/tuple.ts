@@ -99,7 +99,7 @@ function _getMembers(ctx: CompilerContext, tupleTypeReference: TupleTypeReferenc
 
   });
 
-  return members ?? [] ;
+  return members ?? [];
 
 }
 

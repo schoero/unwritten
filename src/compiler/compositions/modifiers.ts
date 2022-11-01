@@ -29,6 +29,5 @@ function isSupportedModifier(modifier: string): modifier is Modifiers {
     modifier === Modifiers.Private ||
     modifier === Modifiers.Protected ||
     modifier === Modifiers.Static ||
-    modifier === Modifiers.Readonly
-  ;
+    modifier === Modifiers.Readonly;
 }

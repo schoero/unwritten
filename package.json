@@ -23,8 +23,8 @@
     "typescript": "^4.8.4"
   },
   "devDependencies": {
-    "@schoero/eslint-config": "^1.17.0",
-    "@schoero/ts-config": "^0.2.1",
+    "@schoero/eslint-config": "^1.18.0",
+    "@schoero/ts-config": "^0.2.2",
     "@types/minimatch": "^5.1.2",
     "@types/node": "^18.11.8",
     "vitest": "^0.24.4",

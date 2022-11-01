@@ -29,11 +29,11 @@ export function renderVariableForDocumentation(ctx: RenderContext<MarkupRenderer
 
   const name = variable.name;
   const description = variable.description;
-  const type = `Type: ${renderType(ctx, variable.type) }`;
+  const type = `Type: ${renderType(ctx, variable.type)}`;
   const example = variable.example;
 
   return {
-    [name]:[
+    [name]: [
       description,
       type,
       example

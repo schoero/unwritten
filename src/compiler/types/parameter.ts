@@ -20,8 +20,8 @@ export function createParameter(ctx: CompilerContext, declaration: ParameterDecl
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getParameterDescription(ctx, declaration);
 
-  const optional = declaration.questionToken != null;
-  const rest = declaration.dotDotDotToken != null;
+  const optional = declaration.questionToken !== undefined;
+  const rest = declaration.dotDotDotToken !== undefined;
 
   const kind = TypeKind.Parameter;
 

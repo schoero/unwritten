@@ -37,7 +37,8 @@ export function render(ctx: RenderContext<MarkupRenderer>, types: ExportableType
   const documentation = renderForDocumentation(ctx, sortedEntities);
 
   const renderObject: RenderObject = {
-    ["API Documentation"]: [
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    "API Documentation": [
       tableOfContents,
       documentation
     ]

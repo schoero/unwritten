@@ -7,7 +7,7 @@ import { renderVariableForDocumentation, renderVariableForTableOfContents } from
 import { createRenderContext } from "./utils/context.js";
 
 
-describe("Renderer: Variable", function() {
+describe("Renderer: Variable", () => {
 
   const testVariable: Testable<Variable> = {
     description: "Default TCP Port.",
@@ -27,19 +27,19 @@ describe("Renderer: Variable", function() {
   const variableName = Object.keys(renderedVariableForDocumentation)[0]!;
   const variableContent = renderedVariableForDocumentation[variableName]!;
 
-  it("should have a matching table of contents entry", function() {
+  it("should have a matching table of contents entry", () => {
     expect(renderedVariableForTableOfContents).to.equal("TCP_PORT");
   });
 
-  it("should have a matching variable title", function() {
+  it("should have a matching variable title", () => {
     expect(variableName).to.equal("TCP_PORT");
   });
 
-  it("should have matching variable description", function() {
+  it("should have matching variable description", () => {
     expect(variableContent[0]).to.equal("Default TCP Port.");
   });
 
-  it("should have matching variable type", function() {
+  it("should have matching variable type", () => {
     expect(variableContent[1]).to.equal("Type: 80");
   });
 

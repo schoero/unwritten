@@ -61,10 +61,7 @@ export type FunctionLikeTypeKinds =
   | TypeKind.Function
   | TypeKind.Getter
   | TypeKind.Method
-  | TypeKind.Setter
-;
-
-
+  | TypeKind.Setter;
 export interface Type<Kind extends TypeKind>{
   id: ID;
   kind: Kind;
@@ -78,8 +75,7 @@ export type ExportableTypes =
   | Module
   | Namespace
   | TypeAlias
-  | Variable
-;
+  | Variable;
 
 export type Types =
   | Constructor
@@ -99,8 +95,7 @@ export type Types =
   | Tuple
   | TypeLiteral
   | TypeParameter
-  | Union
-;
+  | Union;
 
 
 //-- Primitive types
@@ -132,9 +127,7 @@ export type PrimitiveTypes = PrimitiveType<PrimitiveTypeKinds>;
 //-- Literal types
 
 export type LiteralTypeKinds =
-  TypeKind.BigIntLiteral | TypeKind.BooleanLiteral | TypeKind.NumberLiteral | TypeKind.StringLiteral
-;
-
+  TypeKind.BigIntLiteral | TypeKind.BooleanLiteral | TypeKind.NumberLiteral | TypeKind.StringLiteral;
 export interface LiteralType<Kind extends LiteralTypeKinds> extends PrimitiveType<Kind> {
   value: BigInt | boolean | number | string;
 }
@@ -211,8 +204,8 @@ export interface Reference extends Type<TypeKind.Reference> {
 
 export interface Instance extends Type<TypeKind.Instance> {
   id: ID;
-  position: Position;
   name?: Name;
+  position?: Position;
   resolvedType?: Types;
   typeArguments?: Types[];
 }

@@ -32,7 +32,7 @@ describe("Config", () => {
       const variableName = Object.keys(renderedVariableForDocumentation)[0]!;
       const variableContent = renderedVariableForDocumentation[variableName]!;
 
-      it("should use the default encapsulation", function() {
+      it("should use the default encapsulation", () => {
         expect(variableContent[1]).to.equal("Type: &lt;string&gt;");
       });
     }
@@ -44,7 +44,7 @@ describe("Config", () => {
       const variableName = Object.keys(renderedVariableForDocumentation)[0]!;
       const variableContent = renderedVariableForDocumentation[variableName]!;
 
-      it("should be possible to disable the encapsulation", function() {
+      it("should be possible to disable the encapsulation", () => {
         expect(variableContent[1]).to.equal("Type: string");
       });
     }
@@ -56,7 +56,7 @@ describe("Config", () => {
       const variableName = Object.keys(renderedVariableForDocumentation)[0]!;
       const variableContent = renderedVariableForDocumentation[variableName]!;
 
-      it("should be possible to change the encapsulation", function() {
+      it("should be possible to change the encapsulation", () => {
         expect(variableContent[1]).to.equal("Type: `string`");
       });
     }

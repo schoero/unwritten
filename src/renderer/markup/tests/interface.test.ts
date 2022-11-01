@@ -7,7 +7,7 @@ import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } fr
 import { createRenderContext } from "./utils/context.js";
 
 
-describe("Renderer: Interfaces", function() {
+describe("Renderer: Interfaces", () => {
 
   const simpleInterface: Testable<Interface> = {
     description: "Address of a person",
@@ -45,7 +45,7 @@ describe("Renderer: Interfaces", function() {
   const interfaceName = Object.keys(renderedInterfaceForDocumentation)[0]!;
   const interfaceContent = renderedInterfaceForDocumentation[interfaceName]!;
 
-  it("should have matching interface name", function() {
+  it("should have matching interface name", () => {
     expect(renderedInterfaceForTableOfContents).to.equal("Address");
     expect(interfaceName).to.equal("Address");
   });
@@ -58,7 +58,7 @@ describe("Renderer: Interfaces", function() {
     expect(interfaceContent[1]).to.equal(undefined);
   });
 
-  it("should have matching members", function() {
+  it("should have matching members", () => {
     expect(interfaceContent.length).to.equal(3);
     expect(interfaceContent[2][0][0]).to.equal("street: string Street name");
     expect(interfaceContent[2][0][1]).to.equal("building: number Building number optional");

@@ -22,7 +22,7 @@ export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>,
       if(parameter![p]!.optional === true){
         joinedParameters += `[, ${renderedParameter}]`;
       } else {
-        joinedParameters += `, ${ renderedParameter}`;
+        joinedParameters += `, ${renderedParameter}`;
       }
     }
   }

@@ -50,7 +50,7 @@ export async function docCreator(entryFilePath: string, options?: APIOptions) {
   //-- Write output to file
 
   const fileExtension = renderer.fileExtension;
-  const outputPath = options?.output ?? `./docs/api${ fileExtension}`;
+  const outputPath = options?.output ?? `./docs/api${fileExtension}`;
   const absoluteOutputDir = resolve(dirname(outputPath));
 
   if(existsSync(absoluteOutputDir) === false){
