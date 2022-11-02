@@ -11,15 +11,15 @@ export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>,
   let joinedParameters: string = "";
 
   for(let p = 0; p < parameter.length; p++){
-    const renderedParameter = _renderParameterForSignature(ctx, parameter![p]!);
+    const renderedParameter = _renderParameterForSignature(ctx, parameter[p]!);
     if(p === 0){
-      if(parameter![p]!.optional === true){
+      if(parameter[p]!.optional === true){
         joinedParameters += `[${renderedParameter}]`;
       } else {
         joinedParameters += renderedParameter;
       }
     } else {
-      if(parameter![p]!.optional === true){
+      if(parameter[p]!.optional === true){
         joinedParameters += `[, ${renderedParameter}]`;
       } else {
         joinedParameters += `, ${renderedParameter}`;

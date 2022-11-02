@@ -150,9 +150,15 @@ export function isModuleSymbol(symbol: ts.Symbol): boolean {
 }
 
 export function isSourceFileSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isSourceFileDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.SourceFile) !== 0;
+  // const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
+  // return declaration !== undefined && isSourceFileDeclaration(declaration);
+  return (symbol.getFlags() & ts.SymbolFlags.ValueModule) !== 0;
+}
+
+export function isObjectLiteralSymbol(symbol: ts.Symbol): boolean {
+  // const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
+  // return declaration !== undefined && isObjectLiteralExpression(declaration);
+  return (symbol.getFlags() & ts.SymbolFlags.ObjectLiteral) !== 0;
 }
 
 export function isAliasedSymbol(symbol: ts.Symbol): boolean {
@@ -264,6 +270,10 @@ export function isParameterDeclaration(declaration: ts.Declaration): declaration
   return ts.isParameter(declaration);
 }
 
+export function isObjectLiteralExpression(declaration: ts.Declaration): declaration is ts.ObjectLiteralExpression {
+  return ts.isObjectLiteralExpression(declaration);
+}
+
 
 //-- Types
 
@@ -296,6 +306,10 @@ export function isUndefinedType(type: Type) {
 
 export function isNeverType(type: Type) {
   return (type.flags & ts.TypeFlags.Never) !== 0;
+}
+
+export function isUnknownType(type: Type) {
+  return (type.flags & ts.TypeFlags.Unknown) !== 0;
 }
 
 export function isVoidType(type: Type) {
@@ -354,7 +368,7 @@ export function isFunctionLikeType(type: Type): boolean {
   return isObjectType(type) && type.getCallSignatures().length !== 0;
 }
 
-export function isClassType(type: Type): boolean {
+export function isClassType(type: Type): type is InterfaceType {
   return type.isClass();
 }
 

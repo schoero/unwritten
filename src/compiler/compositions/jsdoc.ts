@@ -10,7 +10,8 @@ export function getDescriptionByDeclaration(ctx: CompilerContext, declaration: D
   // TODO: Find official way to get to the jsDoc comment
   // @ts-expect-error - Internal API
   const comment = declaration.jsDoc?.[0]?.comment;
-  return comment === undefined ? undefined : comment.replace(/\r/g, "");
+  console.log("comment", comment);
+  return typeof comment !== "string" ? undefined : comment.replace(/\r/g, "");
 }
 
 

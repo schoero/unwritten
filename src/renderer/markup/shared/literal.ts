@@ -9,8 +9,8 @@ import { encapsulate } from "../utils/renderer.js";
 export function renderLiteralType(ctx: RenderContext<MarkupRenderer>, type: BigIntLiteralType | BooleanLiteralType | NumberLiteralType | StringLiteralType): RenderedLiteralType {
   const renderConfig = getRenderConfig(ctx);
   if(isStringLiteralType(type)){
-    return encapsulate(`"${type.value}"`, renderConfig.stringLiteralTypeEncapsulation);
+    return encapsulate(`${type.value}`, renderConfig.stringLiteralTypeEncapsulation);
   } else {
-    return `${type.value}`;
+    return `${type.value.toString()}`;
   }
 }

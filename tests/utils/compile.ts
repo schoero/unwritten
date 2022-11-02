@@ -6,6 +6,7 @@ import { assert } from "vitest";
 import { Cache } from "../../src/compiler/cache/index.js";
 import { reportCompilerDiagnostics } from "../../src/compiler/index.js";
 import { createConfig } from "../../src/config/index.js";
+import { disableLog } from "../../src/log/index.js";
 import { Config } from "../../src/types/config.js";
 import { CompilerContext } from "../../src/types/context.js";
 
@@ -41,6 +42,11 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions, c
   reportCompilerDiagnostics(program.getSemanticDiagnostics());
 
   const checker = program.getTypeChecker();
+
+
+  //-- Disable log
+
+  disableLog();
 
 
   //-- Create context

@@ -97,46 +97,46 @@ describe("Compiler: Function", () => {
 
         it("should have the right amount of parameters", () => {
           expect(exportedFunction.signatures[0]!.parameters).to.not.equal(undefined);
-          expect(exportedFunction.signatures[0]!.parameters!.length).to.equal(2);
+          expect(exportedFunction.signatures[0]!.parameters.length).to.equal(2);
           expect(exportedFunction.signatures[1]!.parameters).to.not.equal(undefined);
-          expect(exportedFunction.signatures[1]!.parameters!.length).to.equal(3);
+          expect(exportedFunction.signatures[1]!.parameters.length).to.equal(3);
         });
 
         it("should have matching parameter names", () => {
-          expect(exportedFunction.signatures[0]!.parameters![0]!.name).to.equal("a");
-          expect(exportedFunction.signatures[0]!.parameters![1]!.name).to.equal("b");
-          expect(exportedFunction.signatures[1]!.parameters![0]!.name).to.equal("a");
-          expect(exportedFunction.signatures[1]!.parameters![1]!.name).to.equal("b");
-          expect(exportedFunction.signatures[1]!.parameters![2]!.name).to.equal("c");
+          expect(exportedFunction.signatures[0]!.parameters[0]!.name).to.equal("a");
+          expect(exportedFunction.signatures[0]!.parameters[1]!.name).to.equal("b");
+          expect(exportedFunction.signatures[1]!.parameters[0]!.name).to.equal("a");
+          expect(exportedFunction.signatures[1]!.parameters[1]!.name).to.equal("b");
+          expect(exportedFunction.signatures[1]!.parameters[2]!.name).to.equal("c");
         });
 
         it("should have matching parameter descriptions", () => {
-          expect(exportedFunction.signatures[0]!.parameters![0]!.description).to.equal("The first number.");
-          expect(exportedFunction.signatures[0]!.parameters![1]!.description).to.equal("The second number.");
-          expect(exportedFunction.signatures[1]!.parameters![0]!.description).to.equal("The first number.");
-          expect(exportedFunction.signatures[1]!.parameters![1]!.description).to.equal("The second number.");
-          expect(exportedFunction.signatures[1]!.parameters![2]!.description).to.equal("The third number.");
+          expect(exportedFunction.signatures[0]!.parameters[0]!.description).to.equal("The first number.");
+          expect(exportedFunction.signatures[0]!.parameters[1]!.description).to.equal("The second number.");
+          expect(exportedFunction.signatures[1]!.parameters[0]!.description).to.equal("The first number.");
+          expect(exportedFunction.signatures[1]!.parameters[1]!.description).to.equal("The second number.");
+          expect(exportedFunction.signatures[1]!.parameters[2]!.description).to.equal("The third number.");
         });
 
         it("should have matching parameter types", () => {
-          expect(exportedFunction.signatures[0]!.parameters![0]!.type.kind).to.equal(TypeKind.Number);
-          expect(exportedFunction.signatures[0]!.parameters![1]!.type.kind).to.equal(TypeKind.Number);
-          expect(exportedFunction.signatures[1]!.parameters![0]!.type.kind).to.equal(TypeKind.Number);
-          expect(exportedFunction.signatures[1]!.parameters![1]!.type.kind).to.equal(TypeKind.Number);
-          expect(exportedFunction.signatures[1]!.parameters![2]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[0]!.parameters[0]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[0]!.parameters[1]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[1]!.parameters[0]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[1]!.parameters[1]!.type.kind).to.equal(TypeKind.Number);
+          expect(exportedFunction.signatures[1]!.parameters[2]!.type.kind).to.equal(TypeKind.Number);
         });
 
         it("should have matching parameter modifiers", () => {
-          expect(exportedFunction.signatures[0]!.parameters![0]!.optional).to.equal(false);
-          expect(exportedFunction.signatures[0]!.parameters![0]!.rest).to.equal(false);
-          expect(exportedFunction.signatures[0]!.parameters![1]!.optional).to.equal(false);
-          expect(exportedFunction.signatures[0]!.parameters![1]!.rest).to.equal(false);
-          expect(exportedFunction.signatures[1]!.parameters![0]!.optional).to.equal(false);
-          expect(exportedFunction.signatures[1]!.parameters![0]!.rest).to.equal(false);
-          expect(exportedFunction.signatures[1]!.parameters![1]!.optional).to.equal(false);
-          expect(exportedFunction.signatures[1]!.parameters![1]!.rest).to.equal(false);
-          expect(exportedFunction.signatures[1]!.parameters![2]!.optional).to.equal(true);
-          expect(exportedFunction.signatures[1]!.parameters![2]!.rest).to.equal(false);
+          expect(exportedFunction.signatures[0]!.parameters[0]!.optional).to.equal(false);
+          expect(exportedFunction.signatures[0]!.parameters[0]!.rest).to.equal(false);
+          expect(exportedFunction.signatures[0]!.parameters[1]!.optional).to.equal(false);
+          expect(exportedFunction.signatures[0]!.parameters[1]!.rest).to.equal(false);
+          expect(exportedFunction.signatures[1]!.parameters[0]!.optional).to.equal(false);
+          expect(exportedFunction.signatures[1]!.parameters[0]!.rest).to.equal(false);
+          expect(exportedFunction.signatures[1]!.parameters[1]!.optional).to.equal(false);
+          expect(exportedFunction.signatures[1]!.parameters[1]!.rest).to.equal(false);
+          expect(exportedFunction.signatures[1]!.parameters[2]!.optional).to.equal(true);
+          expect(exportedFunction.signatures[1]!.parameters[2]!.rest).to.equal(false);
         });
 
       });

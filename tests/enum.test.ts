@@ -31,11 +31,11 @@ describe("Compiler: Enum", () => {
 
     it("should have a matching member types with values", () => {
       expect(exportedEnum.members[0]!.name).to.equal("A");
-      expect(exportedEnum.members[0]!.type!.kind).to.equal(TypeKind.NumberLiteral);
-      expect((exportedEnum.members[0]!.type! as NumberLiteralType).value).to.equal(0);
+      expect(exportedEnum.members[0]!.type.kind).to.equal(TypeKind.NumberLiteral);
+      expect((exportedEnum.members[0]!.type as NumberLiteralType).value).to.equal(0);
       expect(exportedEnum.members[1]!.name).to.equal("B");
-      expect(exportedEnum.members[1]!.type!.kind).to.equal(TypeKind.NumberLiteral);
-      expect((exportedEnum.members[1]!.type! as NumberLiteralType).value).to.equal(1);
+      expect(exportedEnum.members[1]!.type.kind).to.equal(TypeKind.NumberLiteral);
+      expect((exportedEnum.members[1]!.type as NumberLiteralType).value).to.equal(1);
     });
   }
   {
@@ -55,11 +55,11 @@ describe("Compiler: Enum", () => {
     it("should be able to merge multiple enums with the same name", () => {
       expect(exportedEnum.members.length).to.equal(2);
       expect(exportedEnum.members[0]!.name).to.equal("A");
-      expect(exportedEnum.members[0]!.type!.kind).to.equal(TypeKind.NumberLiteral);
-      expect((exportedEnum.members[0]!.type! as NumberLiteralType).value).to.equal(0);
+      expect(exportedEnum.members[0]!.type.kind).to.equal(TypeKind.NumberLiteral);
+      expect((exportedEnum.members[0]!.type as NumberLiteralType).value).to.equal(0);
       expect(exportedEnum.members[1]!.name).to.equal("B");
-      expect(exportedEnum.members[1]!.type!.kind).to.equal(TypeKind.NumberLiteral);
-      expect((exportedEnum.members[1]!.type! as NumberLiteralType).value).to.equal(1);
+      expect(exportedEnum.members[1]!.type.kind).to.equal(TypeKind.NumberLiteral);
+      expect((exportedEnum.members[1]!.type as NumberLiteralType).value).to.equal(1);
     });
 
   }

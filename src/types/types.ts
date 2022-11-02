@@ -31,6 +31,7 @@ export enum TypeKind {
   Reference = "Reference",
   Setter = "Setter",
   Signature = "Signature",
+  SourceFile = "SourceFile",
   String = "String",
   StringLiteral = "StringLiteral",
   Symbol = "Symbol",
@@ -41,6 +42,8 @@ export enum TypeKind {
   TypeParameter = "TypeParameter",
   Undefined = "Undefined",
   Union = "Union",
+  Unknown = "Unknown",
+  Unresolved = "Unresolved",
   Variable = "Variable",
   Void = "Void"
 }
@@ -91,11 +94,13 @@ export type Types =
   | Property
   | Reference
   | Setter
+  | SourceFile
   | This
   | Tuple
   | TypeLiteral
   | TypeParameter
-  | Union;
+  | Union
+  | Unresolved;
 
 
 //-- Primitive types
@@ -114,6 +119,7 @@ export type PrimitiveTypeKinds =
   | TypeKind.StringLiteral
   | TypeKind.Symbol
   | TypeKind.Undefined
+  | TypeKind.Unknown
   | TypeKind.Void;
 
 
@@ -218,6 +224,15 @@ export interface This extends Type<TypeKind.This> {
   name: Name;
   position: Position;
   resolvedType?: Types;
+}
+
+
+//-- Unresolved
+
+export interface Unresolved extends Type<TypeKind.Unresolved> {
+  id: ID;
+  name?: Name;
+  position?: Position;
 }
 
 
@@ -382,6 +397,14 @@ export interface Member extends Type<TypeKind.Member> {
 //-- Module
 
 export interface Module extends Type<TypeKind.Module> {
+  exports: ExportableTypes[];
+  name: Name;
+}
+
+
+//-- Source file (module)
+
+export interface SourceFile extends Type<TypeKind.SourceFile> {
   exports: ExportableTypes[];
   name: Name;
 }

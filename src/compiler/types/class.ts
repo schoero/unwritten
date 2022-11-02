@@ -112,14 +112,14 @@ function _getSymbolsByTypeFromClassLikeDeclaration(ctx: CompilerContext, classLi
 
   const declarations = classLikeDeclaration.members.filter(filter);
 
-  const symbols = declarations.reduce((acc, declaration) => {
+  const symbols = declarations.reduce<Symbol[]>((acc, declaration) => {
     // @ts-expect-error - Internal API
     const symbol = ctx.checker.getSymbolAtLocation(classLikeDeclaration) ?? declaration.symbol;
     if(symbol !== undefined && acc.includes(symbol) === false){
       acc.push(symbol);
     }
     return acc;
-  }, <Symbol[]>[]);
+  }, []);
 
   return symbols;
 
@@ -138,12 +138,12 @@ function _mergeWithInheritedClass<T extends Getter | Method | Property | Setter>
   const merged = [...fromInheritedClass, ...fromClass];
 
   return merged.filter((item, index) => {
-    const indices = merged.reduce((acc, i, idx) => {
+    const indices = merged.reduce<number[]>((acc, i, idx) => {
       if(item.name === i.name){
         acc.push(idx);
       }
       return acc;
-    }, <number[]>[]);
+    }, []);
     return indices.length < 2 || index === indices[0];
   });
 

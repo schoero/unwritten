@@ -53,11 +53,11 @@ export function createInterfaceByType(ctx: CompilerContext, type: Type): Interfa
 
 
 function _mergeMembers(interfaces: ReturnType<typeof _createInterfaceByDeclaration>[]): Interface["members"] {
-  return interfaces.reduce((acc, declaration) => [
+  return interfaces.reduce<Interface["members"]>((acc, declaration) => [
     ...acc,
     ...declaration.heritage?.members ?? [],
     ...declaration.members
-  ], <Interface["members"]>[]);
+  ], []);
 }
 
 

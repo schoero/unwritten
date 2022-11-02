@@ -52,10 +52,10 @@ export function createEnumBySymbol(ctx: CompilerContext, symbol: Symbol): Enum {
 
 
 function _mergeMembers(enums: ReturnType<typeof _createEnumByDeclaration>[]): Enum["members"] {
-  return enums.reduce((acc, declaration) => [
+  return enums.reduce<Enum["members"]>((acc, declaration) => [
     ...acc,
     ...declaration.members
-  ], <Enum["members"]>[]);
+  ], []);
 }
 
 

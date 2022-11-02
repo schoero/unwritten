@@ -16,7 +16,7 @@ export function createPropertyBySymbol(ctx: CompilerContext, memberSymbol: Symbo
 
   const declaration = memberSymbol.valueDeclaration ?? memberSymbol.getDeclarations()?.[0];
 
-  assert(declaration && (isPropertySignature(declaration) || isPropertyAssignment(declaration) || isPropertyDeclaration(declaration)), "Property signature not found");
+  assert(declaration && (isPropertySignature(declaration) || isPropertyAssignment(declaration) || isPropertyDeclaration(declaration)), `Property signature not found ${declaration?.kind}`);
 
   const id = getIdBySymbol(ctx, memberSymbol);
   const name = getNameBySymbol(ctx, memberSymbol);

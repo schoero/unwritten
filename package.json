@@ -15,7 +15,7 @@
   },
   "main": "lib/api/index.js",
   "scripts": {
-    "lint": "node_modules/.bin/eslint --ext .ts,.js,.json,.yml ./",
+    "lint": "node_modules/.bin/eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml ./",
     "lint:ci": "npm run lint -- --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "test": "vitest -c ./vite.config.ts"
@@ -26,11 +26,11 @@
     "typescript": "^4.8.4"
   },
   "devDependencies": {
-    "@schoero/eslint-config": "^1.19.1",
+    "@schoero/eslint-config": "^1.21.0",
     "@schoero/ts-config": "^0.2.2",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^18.11.8",
-    "vitest": "^0.24.4",
+    "@types/node": "^18.11.9",
+    "vitest": "^0.24.5",
     "vitest-github-actions-reporter": "^0.9.0"
   },
   "keywords": [

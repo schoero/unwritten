@@ -9,6 +9,7 @@ import {
   isNumberType,
   isStringType,
   isUndefinedType,
+  isUnknownType,
   isVoidType
 } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
@@ -51,6 +52,8 @@ function _getPrimitiveTypeKind(ctx: CompilerContext, type: Type): PrimitiveTypeK
     return TypeKind.Never;
   } else if(isAnyType(type)){
     return TypeKind.Any;
+  } else if(isUnknownType(type)){
+    return TypeKind.Unknown;
   }
 
   throw new Error("type is not a primitive type");

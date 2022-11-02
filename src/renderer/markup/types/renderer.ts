@@ -75,7 +75,6 @@ export type RenderedMultilineContent = (RenderedList | RenderedTitle | RenderObj
 export type RenderedList = [RenderedMultilineContent | RenderObject[]];
 
 
-
 //-- Rendered entities
 
 export type RenderedEntitiesForTableOfContents = RenderedClassForTableOfContents | RenderedEnumForTableOfContents | RenderedFunctionForTableOfContents | RenderedInterfaceForTableOfContents | RenderedNamespaceForTableOfContents | RenderedTypeAliasForTableOfContents | RenderedVariableForTableOfContents;

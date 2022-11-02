@@ -86,19 +86,16 @@ function pluralizeCategoryKey(key: RenderCategories): RenderCategories {
 type MultilineOutput = (MultilineOutput | string | undefined)[];
 
 export function filterContentRecursively(strings: MultilineOutput): DeepOmit<MultilineOutput, "undefined"> {
-  // @ts-expect-error - TS type inference is not working here
-  return strings.reduce((acc, string) => {
+  return strings.reduce<DeepOmit<MultilineOutput, "undefined">>((acc, string) => {
     if(typeof string === "string"){
-      // @ts-expect-error - TS type inference is not working here
       acc.push(string);
     }
     if(Array.isArray(string)){
       const filtered = filterContentRecursively(string);
       if(filtered.length > 0){
-        // @ts-expect-error - TS type inference is not working here
         acc.push(filtered);
       }
     }
     return acc;
-  }, <DeepOmit<MultilineOutput, "undefined">>[]);
+  }, []);
 }

@@ -1,4 +1,4 @@
-import { isObjectLiteralElement, ObjectLiteralElement, Symbol, Type } from "typescript";
+import { isObjectLiteralExpression, ObjectLiteralExpression, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
@@ -13,7 +13,7 @@ export function createObjectLiteralBySymbol(ctx: CompilerContext, symbol: Symbol
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration && isObjectLiteralElement(declaration), "Object literal declaration is not found");
+  assert(declaration && isObjectLiteralExpression(declaration), "Object literal declaration is not found");
 
   const id = getIdBySymbol(ctx, symbol);
   const fromDeclaration = createObjectLiteralByDeclaration(ctx, declaration);
@@ -26,7 +26,7 @@ export function createObjectLiteralBySymbol(ctx: CompilerContext, symbol: Symbol
 }
 
 
-export function createObjectLiteralByDeclaration(ctx: CompilerContext, declaration: ObjectLiteralElement) {
+export function createObjectLiteralByDeclaration(ctx: CompilerContext, declaration: ObjectLiteralExpression) {
 
   const type = ctx.checker.getTypeAtLocation(declaration);
   const fromType = createObjectLiteralByType(ctx, type);

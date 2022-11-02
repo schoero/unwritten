@@ -31,6 +31,7 @@ import { createTupleTypeByTypeReference } from "./tuple.js";
 import { createTypeLiteralByType } from "./type-literal.js";
 import { createTypeParameterByType } from "./type-parameter.js";
 import { createUnionTypeByType } from "./union.js";
+import { createUnresolvedByType } from "./unresolved.js";
 
 
 export function createTypeBySymbol(ctx: CompilerContext, symbol: Symbol): Types {
@@ -93,9 +94,8 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
     return createThisByType(ctx, type);
   } else if(isTypeParameterType(type)){
     return createTypeParameterByType(ctx, type);
+  } else {
+    return createUnresolvedByType(ctx, type);
   }
-
-  // @ts-expect-error - Internal API
-  throw new Error(`Unsupported type: ${type.symbol.name}`);
 
 }

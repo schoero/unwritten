@@ -109,7 +109,11 @@ function _readConfigFile(path: string): ts.CompilerOptions | undefined {
   const configFile = ts.readConfigFile(path, ts.sys.readFile);
 
   if(configFile.error !== undefined){
-    warn(`Couldn't read tsconfig.json: ${configFile.error.messageText}`);
+    if(typeof configFile.error.messageText === "string"){
+      warn(`Could not read tsconfig.json: ${configFile.error.messageText}`);
+    } else {
+      warn(`Could not read tsconfig.json: ${configFile.error.messageText.messageText}`);
+    }
     return;
   }
 

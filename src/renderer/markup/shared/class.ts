@@ -19,7 +19,7 @@ export function renderClassForTableOfContents(ctx: RenderContext<MarkupRenderer>
   let getters: RenderedClassForTableOfContents[1][0];
 
   if(classType.ctor !== undefined){
-    const constructorTitle = renderConfig.categoryNames!.constructor;
+    const constructorTitle = renderConfig.categoryNames.constructor;
     classType.ctor.name = "constructor";
     const renderedConstructor = renderFunctionForTableOfContents(ctx, classType.ctor);
     constructors = [[constructorTitle, [renderedConstructor]]];
@@ -32,10 +32,10 @@ export function renderClassForTableOfContents(ctx: RenderContext<MarkupRenderer>
   }
   if(classType.methods !== undefined && classType.methods.length > 0){
     const nameTitle = renderConfig.categoryNames.methods;
-    const renderedMethods = classType.methods.reduce((acc, method) => {
+    const renderedMethods = classType.methods.reduce<string[]>((acc, method) => {
       acc.push(...renderFunctionForTableOfContents(ctx, method));
       return acc;
-    }, <string[]>[]);
+    }, []);
 
     methods = [[nameTitle, [renderedMethods]]];
   }

@@ -111,12 +111,12 @@ describe("Compiler: Interface", () => {
     const exportedInterfaceB = exportedSymbols.find(s => s.name === "InterfaceB")! as Interface;
 
     it("should be able to handle recursive interfaces", () => {
-      expect((exportedInterfaceA as Interface).members.length).to.equal(1);
-      expect((exportedInterfaceB as Interface).members.length).to.equal(1);
-      expect((exportedInterfaceA as Interface).members[0]!.name).to.equal("b");
-      expect((exportedInterfaceB as Interface).members[0]!.name).to.equal("a");
-      expect((exportedInterfaceA as Interface).members[0]!.type.kind).to.equal(TypeKind.Reference);
-      expect((exportedInterfaceB as Interface).members[0]!.type.kind).to.equal(TypeKind.Reference);
+      expect(exportedInterfaceA.members.length).to.equal(1);
+      expect(exportedInterfaceB.members.length).to.equal(1);
+      expect(exportedInterfaceA.members[0]!.name).to.equal("b");
+      expect(exportedInterfaceB.members[0]!.name).to.equal("a");
+      expect(exportedInterfaceA.members[0]!.type.kind).to.equal(TypeKind.Reference);
+      expect(exportedInterfaceB.members[0]!.type.kind).to.equal(TypeKind.Reference);
     });
 
   }

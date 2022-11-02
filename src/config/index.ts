@@ -18,9 +18,12 @@ export function createConfig(configOrPath?: Config | string): CompleteConfig {
   let absoluteConfigPath: string | undefined;
 
   if(typeof configOrPath === "object"){
+
     userConfig = configOrPath;
     log("Using provided config.");
+
   } else if(typeof configOrPath === "string"){
+
     absoluteConfigPath = resolve(configOrPath);
 
     if(existsSync(absoluteConfigPath) === false){
@@ -40,12 +43,17 @@ export function createConfig(configOrPath?: Config | string): CompleteConfig {
   }
 
   if(typeof absoluteConfigPath === "string"){
+
     const stringifiedConfig = readFileSync(absoluteConfigPath, "utf8");
+
     try {
       userConfig = JSON.parse(stringifiedConfig);
     } catch (err){
-      throw error(`Error parsing config file: ${err} at ${absoluteConfigPath}`);
+      if(err instanceof Error){
+        throw error(`Could not parse config file at ${absoluteConfigPath}. ${err.message}`);
+      }
     }
+
   }
 
   if(userConfig === undefined){

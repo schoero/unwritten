@@ -11,5 +11,5 @@ export function getRenderConfig(ctx: RenderContext): Complete<MarkupRenderConfig
 
   assert(name === BuiltInRenderers.HTML || name === BuiltInRenderers.Markdown, "Invalid renderer");
 
-  return ctx.config.renderConfig[name] as Complete<MarkupRenderConfig>;
+  return ctx.config.renderConfig[name];
 }
