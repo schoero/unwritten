@@ -105,6 +105,7 @@ function getCompilerOptions(entryFilePath: string, tsConfigFilePath?: string): C
 
 
 function _readConfigFile(path: string): ts.CompilerOptions | undefined {
+
   const configFileBasePath = dirname(path);
   const configFile = ts.readConfigFile(path, ts.sys.readFile);
 
