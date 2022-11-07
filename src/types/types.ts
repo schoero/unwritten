@@ -65,6 +65,7 @@ export type FunctionLikeTypeKinds =
   | TypeKind.Getter
   | TypeKind.Method
   | TypeKind.Setter;
+
 export interface Type<Kind extends TypeKind>{
   id: ID;
   kind: Kind;
@@ -134,6 +135,7 @@ export type PrimitiveTypes = PrimitiveType<PrimitiveTypeKinds>;
 
 export type LiteralTypeKinds =
   TypeKind.BigIntLiteral | TypeKind.BooleanLiteral | TypeKind.NumberLiteral | TypeKind.StringLiteral;
+
 export interface LiteralType<Kind extends LiteralTypeKinds> extends PrimitiveType<Kind> {
   value: BigInt | boolean | number | string;
 }
