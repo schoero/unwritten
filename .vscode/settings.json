@@ -21,10 +21,6 @@
   "eslint.validate": ["javascript", "typescript", "json", "jsonc", "json5", "yaml"],
   "prettier.enable": false, // eslint-disable-next-line jsonc/sort-keys
   "editor.formatOnSave": false, // eslint-disable-next-line jsonc/sort-keys
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.markdownlint": true
-  },
 
 
   //-- File nesting
@@ -45,7 +41,22 @@
 
   // eslint-disable-next-line jsonc/sort-keys
   "[markdown]": {
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
-  }
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "editor.formatOnSave": true,
+    "editor.wordWrapColumn": 119
+  },
+
+
+  //-- VSCode
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.markdownlint": true,
+    "source.fixAll.shellcheck": true
+  },
+
+  "editor.rulers": [
+    119
+  ]
 
 }
