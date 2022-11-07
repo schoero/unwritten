@@ -7,5 +7,5 @@ export default defineConfig({
     reporters: process.env.GITHUB_ACTIONS
       ? new GithubActionsReporter()
       : "default"
-  },
+  }
 });
