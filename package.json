@@ -15,9 +15,15 @@
   },
   "main": "lib/api/index.js",
   "scripts": {
-    "lint": "node_modules/.bin/eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml ./",
-    "lint:ci": "npm run lint -- --max-warnings 0",
-    "lint:fix": "npm run lint -- --fix",
+    "eslint": "node_modules/.bin/eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml ./",
+    "eslint:ci": "npm run lint -- --max-warnings 0",
+    "eslint:fix": "npm run lint -- --fix",
+    "lint": "npm run eslint && npm run markdownlint",
+    "lint:ci": "npm run eslint:ci && npm run markdownlint:ci",
+    "lint:fix": "npm run eslint:fix && npm run markdownlint:fix",
+    "markdownlint": "node_modules/markdownlint-cli2/markdownlint-cli2.js '**/*.md' '#node_modules'",
+    "markdownlint:ci": "npm run markdownlint",
+    "markdownlint:fix": "node_modules/markdownlint-cli2/markdownlint-cli2-fix.js '**/*.md' '#node_modules'",
     "test": "vitest -c ./vite.config.ts"
   },
   "dependencies": {
@@ -27,7 +33,7 @@
   },
   "devDependencies": {
     "@schoero/eslint-config": "^1.22.0",
-    "@schoero/markdownlint-config": "^1.0.0",
+    "@schoero/markdownlint-config": "^1.1.0",
     "@schoero/ts-config": "^0.2.2",
     "@types/minimatch": "^5.1.2",
     "@types/node": "^18.11.9",
