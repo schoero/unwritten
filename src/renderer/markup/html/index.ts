@@ -2,6 +2,7 @@ import { render } from "../index.js";
 import { MarkupRenderer } from "../types/renderer.js";
 import { htmlRenderer as _htmlRenderer } from "./renderer.js";
 
+
 export const htmlRenderer: MarkupRenderer = {
   fileExtension: _htmlRenderer.fileExtension,
   name: _htmlRenderer.name,

@@ -69,4 +69,3 @@ export function createVariableByType(ctx: CompilerContext, type: Type): Variable
   // };
 
 }
-

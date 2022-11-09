@@ -46,4 +46,3 @@ export function createGetterByType(ctx: CompilerContext, type: Type): Getter {
   };
 
 }
-

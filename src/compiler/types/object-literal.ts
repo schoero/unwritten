@@ -57,4 +57,3 @@ export function createObjectLiteralByType(ctx: CompilerContext, type: Type) {
   } as const;
 
 }
-

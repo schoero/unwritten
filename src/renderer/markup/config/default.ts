@@ -3,6 +3,7 @@ import { Complete } from "../../../types/utils.js";
 import { MarkupRenderConfig } from "../types/config.js";
 import { RenderCategories } from "../types/renderer.js";
 
+
 export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   categoryNames: {
     [RenderCategories.Function]: "Function",

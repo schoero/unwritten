@@ -46,4 +46,3 @@ export function createMethodByType(ctx: CompilerContext, type: Type): Method {
   };
 
 }
-

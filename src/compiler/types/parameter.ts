@@ -41,4 +41,3 @@ export function createParameter(ctx: CompilerContext, declaration: ParameterDecl
   };
 
 }
-

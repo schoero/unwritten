@@ -1,4 +1,3 @@
-
 import ts from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
@@ -50,4 +49,3 @@ export class Cache {
   }
 
 }
-

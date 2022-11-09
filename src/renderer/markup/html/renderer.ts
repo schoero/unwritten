@@ -1,6 +1,7 @@
 import { BuiltInRenderers } from "../../../types/renderer.js";
 import { MarkupRenderImplementation } from "../types/renderer.js";
 
+
 class HTMLRenderer implements MarkupRenderImplementation {
 
   public name = BuiltInRenderers.HTML;

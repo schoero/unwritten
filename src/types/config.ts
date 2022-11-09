@@ -2,6 +2,7 @@ import { MarkupRenderConfig } from "../renderer/markup/types/config.js";
 import { BuiltInRenderers } from "./renderer.js";
 import { Complete } from "./utils.js";
 
+
 export interface Config {
   /** Compiler configuration. */
   compilerConfig?: CompilerConfig;

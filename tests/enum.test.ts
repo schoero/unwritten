@@ -4,6 +4,7 @@ import { createEnumBySymbol } from "../src/compiler/types/enum.js";
 import { NumberLiteralType, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
 
+
 describe("Compiler: Enum", () => {
   {
 

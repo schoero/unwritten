@@ -3,6 +3,7 @@ import { ExportableTypes } from "../../../types/types.js";
 import { MarkupRenderConfig } from "../types/config.js";
 import { getCategoryName } from "./renderer.js";
 
+
 export function sortExportableTypes(ctx: RenderContext, types: ExportableTypes[]): ExportableTypes[] {
 
   const { config } = ctx;

@@ -1,6 +1,7 @@
 import { Types } from "../../../types/types.js";
 import { CategoryNames } from "./renderer.js";
 
+
 export interface MarkupRenderConfig {
 
   /**

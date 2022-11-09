@@ -67,4 +67,3 @@ export function createTypeAliasByTypeNode(ctx: CompilerContext, typeNode: TypeNo
   } as const;
 
 }
-

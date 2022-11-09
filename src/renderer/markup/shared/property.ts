@@ -1,4 +1,3 @@
-
 import { RenderContext } from "../../../types/context.js";
 import { Property } from "../../../types/types.js";
 import {

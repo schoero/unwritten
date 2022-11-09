@@ -1,5 +1,6 @@
 import { Types } from "./types.js";
 
+
 export type Complete<Object> = {
   [key in keyof Object]-?: Object[key];
 };

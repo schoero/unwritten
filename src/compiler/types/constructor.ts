@@ -46,4 +46,3 @@ export function createConstructorByType(ctx: CompilerContext, type: Type): Const
   };
 
 }
-

@@ -46,4 +46,3 @@ export function createSetterByType(ctx: CompilerContext, type: Type): Setter {
   };
 
 }
-

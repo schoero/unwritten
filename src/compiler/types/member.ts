@@ -59,4 +59,3 @@ export function createMemberByDeclaration(ctx: CompilerContext, declaration: Enu
   };
 
 }
-

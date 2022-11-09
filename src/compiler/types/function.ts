@@ -46,4 +46,3 @@ export function createFunctionByType(ctx: CompilerContext, type: Type): Function
   };
 
 }
-

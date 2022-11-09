@@ -24,4 +24,3 @@ export function createUnresolvedBySymbol(ctx: CompilerContext, symbol: Symbol): 
 export function createUnresolvedByType(ctx: CompilerContext, type: Type): Unresolved {
   return createUnresolvedBySymbol(ctx, type.symbol);
 }
-

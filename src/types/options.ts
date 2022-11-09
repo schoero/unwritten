@@ -1,6 +1,7 @@
 import { Config } from "./config.js";
 import { BuiltInRenderers } from "./renderer.js";
 
+
 export interface Options {
   /** Array of paths that should not be included in the documentation. */
   exclude?: string[];
