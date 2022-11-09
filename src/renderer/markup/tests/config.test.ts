@@ -4,7 +4,7 @@ import { describe, it } from "vitest";
 import { createConfig } from "../../../config/index.js";
 import { TypeKind, Variable } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
-import { renderVariableForDocumentation } from "../shared/variable.js";
+import { renderVariableForDocumentation } from "../entities/variable.js";
 import { createRenderContext } from "./utils/context.js";
 
 

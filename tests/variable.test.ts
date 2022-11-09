@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
-import { createVariableBySymbol } from "../src/compiler/types/variable.js";
+import { createVariableBySymbol } from "../src/compiler/entities/variable.js";
 import { LiteralType, ObjectLiteral, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
 

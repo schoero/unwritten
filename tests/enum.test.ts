@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { createEnumBySymbol } from "../src/compiler/types/enum.js";
+import { createEnumBySymbol } from "../src/compiler/entities/enum.js";
 import { NumberLiteralType, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
 

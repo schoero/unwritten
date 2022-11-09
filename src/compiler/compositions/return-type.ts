@@ -2,7 +2,7 @@ import { Signature } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { createTypeByType } from "../types/type.js";
+import { createTypeByType } from "../entities/type.js";
 import { getReturnTypeDescription } from "./jsdoc.js";
 
 

@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { createTypeAliasBySymbol } from "../src/compiler/types/alias.js";
+import { createTypeAliasBySymbol } from "../src/compiler/entities/alias.js";
 import { Reference, TypeKind, Union } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
 

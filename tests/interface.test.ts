@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
-import { createInterfaceBySymbol } from "../src/compiler/types/interface.js";
+import { createInterfaceBySymbol } from "../src/compiler/entities/interface.js";
 import { parse } from "../src/parser/index.js";
 import { Interface, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";

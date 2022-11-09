@@ -10,13 +10,13 @@ import {
 } from "../../typeguards/types.js";
 import { RenderContext } from "../../types/context.js";
 import { ExportableTypes } from "../../types/types.js";
-import { renderClassForDocumentation, renderClassForTableOfContents } from "./shared/class.js";
-import { renderEnumForDocumentation, renderEnumForTableOfContents } from "./shared/enum.js";
-import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./shared/function.js";
-import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./shared/interface.js";
-import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "./shared/namespace.js";
-import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./shared/type-alias.js";
-import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./shared/variable.js";
+import { renderClassForDocumentation, renderClassForTableOfContents } from "./entities/class.js";
+import { renderEnumForDocumentation, renderEnumForTableOfContents } from "./entities/enum.js";
+import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./entities/function.js";
+import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./entities/interface.js";
+import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "./entities/namespace.js";
+import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./entities/type-alias.js";
+import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./entities/variable.js";
 import {
   MarkupRenderer,
   RenderedCategoryForDocumentation,

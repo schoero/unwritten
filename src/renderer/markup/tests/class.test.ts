@@ -3,7 +3,7 @@ import { describe, it } from "vitest";
 
 import { Class, TypeKind } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
-import { renderClassForDocumentation, renderClassForTableOfContents } from "../shared/class.js";
+import { renderClassForDocumentation, renderClassForTableOfContents } from "../entities/class.js";
 import { createRenderContext } from "./utils/context.js";
 
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
-import { createClassBySymbol } from "../src/compiler/types/class.js";
+import { createClassBySymbol } from "../src/compiler/entities/class.js";
 import { parse } from "../src/parser/index.js";
 import { isClassType } from "../src/typeguards/types.js";
 import { Instance, Modifiers, TypeKind } from "../src/types/types.js";

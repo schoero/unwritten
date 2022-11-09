@@ -1,7 +1,7 @@
 import { SignatureDeclaration } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { createParameter } from "../types/parameter.js";
+import { createParameter } from "../entities/parameter.js";
 
 
 export function getParametersBySignatureDeclaration(ctx: CompilerContext, declaration: SignatureDeclaration) {

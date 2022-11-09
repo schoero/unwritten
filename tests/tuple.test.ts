@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
-import { createTypeAliasBySymbol } from "../src/compiler/types/alias.js";
+import { createTypeAliasBySymbol } from "../src/compiler/entities/alias.js";
 import { Tuple, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
 

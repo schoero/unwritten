@@ -3,7 +3,7 @@ import { describe, it } from "vitest";
 
 import { Interface, TypeKind } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
-import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "../shared/interface.js";
+import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "../entities/interface.js";
 import { createRenderContext } from "./utils/context.js";
 
 

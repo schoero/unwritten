@@ -3,7 +3,7 @@ import { describe, it } from "vitest";
 
 import { NumberLiteralType, TypeKind, Variable } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
-import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../shared/variable.js";
+import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../entities/variable.js";
 import { createRenderContext } from "./utils/context.js";
 
 
