@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { isPathExcluded } from "./general.js";
 
+
 describe("Utils: ", () => {
 
   describe("isPathExcluded", () => {
@@ -25,6 +26,11 @@ describe("Utils: ", () => {
       expect(isPathExcluded(path, ["node_modules/typescript/lib/*"])).to.equal(true);
       expect(isPathExcluded(path, ["node_modules/typescript/lib/*.d.ts"])).to.equal(true);
       expect(isPathExcluded(path, ["node_modules/typescript/lib/*.test.d.ts"])).to.equal(false);
+    });
+
+    it("should not exclude inverted excludes", () => {
+      expect(isPathExcluded(path, ["node_modules/**/*", "!node_modules/typescript/lib/lib.esnext.d.ts"])).to.equal(false);
+      expect(isPathExcluded(path, ["node_modules/**/*", "!node_modules/typescript/lib/lib.es2016.d.ts"])).to.equal(true);
     });
 
   });
