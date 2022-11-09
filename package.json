@@ -15,15 +15,18 @@
   },
   "main": "lib/api/index.js",
   "scripts": {
+    "build": "node_modules/.bin/tsc --project tsconfig.production.json && npm run schema",
+    "build:ci": "npm run build -- --noEmit",
     "eslint": "node_modules/.bin/eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml ./",
     "eslint:ci": "npm run eslint -- --max-warnings 0",
     "eslint:fix": "npm run eslint -- --fix",
     "lint": "npm run eslint && npm run markdownlint",
     "lint:ci": "npm run eslint:ci && npm run markdownlint:ci",
     "lint:fix": "npm run eslint:fix && npm run markdownlint:fix",
-    "markdownlint": "node_modules/markdownlint-cli2/markdownlint-cli2.js '**/*.md' '#node_modules'",
+    "markdownlint": "node_modules/.bin/markdownlint-cli2 '**/*.md' '#node_modules'",
     "markdownlint:ci": "npm run markdownlint",
-    "markdownlint:fix": "node_modules/markdownlint-cli2/markdownlint-cli2-fix.js '**/*.md' '#node_modules'",
+    "markdownlint:fix": "node_modules/.bin/markdownlint-cli2-fix '**/*.md' '#node_modules'",
+    "schema": "npx node_modules/.bin/ts-json-schema-generator --path './src/types/config.ts' --type ConfigWithSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
     "test": "vitest -c ./vite.config.ts"
   },
   "dependencies": {
@@ -37,6 +40,7 @@
     "@schoero/ts-config": "^0.2.2",
     "@types/minimatch": "^5.1.2",
     "@types/node": "^18.11.9",
+    "ts-json-schema-generator": "^1.1.2",
     "vitest": "^0.25.1",
     "vitest-github-actions-reporter": "^0.9.0"
   },
