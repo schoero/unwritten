@@ -5,7 +5,7 @@ import GithubActionsReporter from "vitest-github-actions-reporter";
 export default defineConfig({
   test: {
     reporters: process.env.GITHUB_ACTIONS
-      ? new GithubActionsReporter()
+      ? [new GithubActionsReporter(), "verbose"]
       : "default"
   }
 });
