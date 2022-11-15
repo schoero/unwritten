@@ -1,4 +1,4 @@
-import { FunctionLikeDeclaration, SignatureDeclaration } from "typescript";
+import { FunctionLikeDeclaration, Signature as TSSignature, SignatureDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
@@ -20,6 +20,7 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
   const id = getIdByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const example = getExampleByDeclaration(ctx, declaration);
+
   const parameters = getParametersBySignatureDeclaration(ctx, declaration);
   const returnType = getReturnTypeByCallSignature(ctx, signature);
   const description = getDescriptionByDeclaration(ctx, declaration);
@@ -37,4 +38,22 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
     returnType
   };
 
+}
+
+
+export function createSignatureBySignature(ctx: CompilerContext, signature: TSSignature): Signature {
+
+  /*
+   * If we would try and create the signature directly, signatures.parameters would be a symbol array instead of a declaration array.
+   * The reason for that is that parameters are actually symbols. We would need the figure out the index of the signature if
+   * it was overloaded, and then get the parameter declaration with the same index. If we just go with the signatrure declaration,
+   * we can just use the parameters array directly as TypeScript already did the work for us.
+   * ```ts
+   * function test(sameParameterSymbol: string): string;
+   * function test(sameParameterSymbol: string, somethingElse: string): string;
+   * ```
+   */
+
+  const signatureDeclaration = signature.getDeclaration();
+  return createSignatureByDeclaration(ctx, signatureDeclaration);
 }

@@ -42,122 +42,82 @@ export function isTypeNode(typeNodeOrSymbolOrDeclarationOrType: Declaration | Sy
 //-- Symbols
 
 export function isFunctionSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isFunctionDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Function) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Function) !== 0;
 }
 
 export function isConstructorSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isConstructorDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Constructor) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Constructor) !== 0;
 }
 
 export function isMethodSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isMethodDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Method) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Method) !== 0;
 }
 
 export function isSetterSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isSetterDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.SetAccessor) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.SetAccessor) !== 0;
 }
 
 export function isGetterSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isGetterDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.GetAccessor) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.GetAccessor) !== 0;
 }
 
 export function isFunctionLikeSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isFunctionLikeDeclaration(declaration);
-  // return isFunctionSymbol(symbol) || isConstructorSymbol(symbol) || isMethodSymbol(symbol) || isSetterSymbol(symbol);
+  return isFunctionSymbol(symbol) || isConstructorSymbol(symbol) || isMethodSymbol(symbol) || isSetterSymbol(symbol);
 }
 
 export function isClassSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isClassDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Class) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Class) !== 0;
 }
 
 export function isVariableSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isVariableDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Variable) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Variable) !== 0;
 }
 
 export function isTypeSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isTypeAliasDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Type) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Type) !== 0;
 }
 
 export function isTypeParameterSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isTypeParameterDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.TypeParameter) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.TypeParameter) !== 0;
 }
 
 export function isInterfaceSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isInterfaceDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Interface) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Interface) !== 0;
 }
 
 export function isEnumSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isEnumDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Enum) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Enum) !== 0;
 }
 
 export function isTypeLiteralSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isTypeLiteralDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.TypeLiteral) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.TypeLiteral) !== 0;
 }
 
 export function isTypeAliasSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isTypeAliasDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.TypeAlias) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.TypeAlias) !== 0;
 }
 
 export function isPropertySymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && (isPropertyDeclaration(declaration) || isPropertyAssignment(declaration));
-  // return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0;
 }
 
 export function isEnumMemberSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isEnumMemberDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.EnumMember) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.EnumMember) !== 0;
 }
 
 export function isNamespaceSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isNamespaceDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Namespace) !== 0 || (symbol.getFlags() & ts.SymbolFlags.NamespaceModule) !== 0;
+  return (symbol.getFlags() & ts.SymbolFlags.Namespace) !== 0 || (symbol.getFlags() & ts.SymbolFlags.NamespaceModule) !== 0;
 }
 
 export function isModuleSymbol(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  return declaration !== undefined && isModuleDeclaration(declaration);
-  // return (symbol.getFlags() & ts.SymbolFlags.Module) !== 0 /*|| (symbol.getFlags() & ts.SymbolFlags.ModuleMember) !== 0*/;
+  return (symbol.getFlags() & ts.SymbolFlags.Module) !== 0;
 }
 
 export function isSourceFileSymbol(symbol: ts.Symbol): boolean {
-  // const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  // return declaration !== undefined && isSourceFileDeclaration(declaration);
   return (symbol.getFlags() & ts.SymbolFlags.ValueModule) !== 0;
 }
 
 export function isObjectLiteralSymbol(symbol: ts.Symbol): boolean {
-  // const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-  // return declaration !== undefined && isObjectLiteralExpression(declaration);
   return (symbol.getFlags() & ts.SymbolFlags.ObjectLiteral) !== 0;
 }
 
@@ -365,7 +325,10 @@ export function isObjectLiteralType(type: Type): type is ObjectType {
 }
 
 export function isFunctionLikeType(type: Type): boolean {
-  return isObjectType(type) && type.getCallSignatures().length !== 0;
+  return isObjectType(type) &&
+    type.getCallSignatures().length > 0 &&
+    type.getConstructSignatures().length === 0 &&
+    type.getProperties().length === 0;
 }
 
 export function isClassType(type: Type): type is InterfaceType {

@@ -21,7 +21,6 @@ export function getDescriptionBySymbol(ctx: CompilerContext, symbol: Symbol): De
 }
 
 
-/** @deprecated */
 export function getDescriptionByType(ctx: CompilerContext, type: ts.Type): Description | undefined {
   const symbol = type.getSymbol();
   return symbol ? getDescriptionBySymbol(ctx, symbol) : undefined;

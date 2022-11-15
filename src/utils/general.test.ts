@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 
+import { scope } from "../../tests/utils/scope.js";
 import { isPathExcluded } from "./general.js";
 
 
-describe("Utils: ", () => {
+scope("Compiler", "Utils", () => {
 
   describe("isPathExcluded", () => {
 

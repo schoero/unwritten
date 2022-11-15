@@ -1,14 +1,18 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
 import { createVariableBySymbol } from "../src/compiler/entities/variable.js";
 import { LiteralType, ObjectLiteral, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
+import { scope } from "./utils/scope.js";
+import { ts } from "./utils/template.js";
 
 
-describe("Compiler: Variable", () => {
+scope("Compiler", TypeKind.Variable, () => {
+
   {
-    const testFileContent = `
+
+    const testFileContent = ts`
       /**
        * Represents a string literal.
        * @example
@@ -54,9 +58,12 @@ describe("Compiler: Variable", () => {
         line: 6
       });
     });
+
   }
+
   {
-    const testFileContent = `
+
+    const testFileContent = ts`
       /**
        * Represents an object.
        * @example

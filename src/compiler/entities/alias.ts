@@ -7,7 +7,7 @@ import { TypeAlias, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol, getNameByTypeNode } from "../compositions/name.js";
-import { getPositionByDeclaration, getPositionByTypeNode } from "../compositions/position.js";
+import { getPositionByDeclaration, getPositionByNode } from "../compositions/position.js";
 import { createTypeByTypeNode } from "./type.js";
 
 
@@ -54,7 +54,7 @@ export function createTypeAliasByTypeNode(ctx: CompilerContext, typeNode: TypeNo
 
   const id = getIdByTypeNode(ctx, typeNode);
   const name = getNameByTypeNode(ctx, typeNode);
-  const position = getPositionByTypeNode(ctx, typeNode);
+  const position = getPositionByNode(ctx, typeNode);
   const type = createTypeByTypeNode(ctx, typeNode);
   const kind = TypeKind.TypeAlias;
 

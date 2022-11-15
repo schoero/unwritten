@@ -1,15 +1,17 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
 import { createInterfaceBySymbol } from "../src/compiler/entities/interface.js";
 import { parse } from "../src/parser/index.js";
 import { Interface, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
+import { scope } from "./utils/scope.js";
+import { ts } from "./utils/template.js";
 
 
-describe("Compiler: Interface", () => {
+scope("Compiler", TypeKind.Interface, () => {
   {
-    const testFileContent = `
+    const testFileContent = ts`
       /** Interface description */
       export interface Interface {
         /** Member description */
@@ -67,7 +69,7 @@ describe("Compiler: Interface", () => {
 
   {
 
-    const testFileContent = `
+    const testFileContent = ts`
       export interface Interface {
         a: string;
       }
@@ -93,7 +95,7 @@ describe("Compiler: Interface", () => {
 
   {
 
-    const testFileContent = `
+    const testFileContent = ts`
       export interface InterfaceA {
         b: InterfaceB;
       }
@@ -121,7 +123,7 @@ describe("Compiler: Interface", () => {
   }
   {
 
-    const testFileContent = `
+    const testFileContent = ts`
       interface InterfaceA {
         a: string;
       }

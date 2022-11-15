@@ -1,41 +1,43 @@
 import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "../src/compiler/compositions/id.js";
-import { createFunctionBySymbol } from "../src/compiler/entities/function.js";
+import { createFunctionEntity } from "../src/compiler/entities/function.js";
 import { NumberLiteralType, Reference, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
+import { scope } from "./utils/scope.js";
+import { ts } from "./utils/template.js";
 
 
-describe("Compiler: Function", () => {
+scope("Compiler", TypeKind.Function, () => {
   {
 
-    const testFileContent = `
-    /**
-     * Adds two numbers together.
-     * @param a The first number.
-     * @param b The second number.
-     * @returns The sum of a and b.
-     * @example
-     * add(1, 2) // 3
-     */
-    export function add(a: number, b: number): number;
-    /**
-     * Adds three numbers together.
-     * @param a The first number.
-     * @param b The second number.
-     * @param c The third number.
-     * @returns The sum of a, b and c.
-     * @example
-     * add(1, 2, 3) // 6
-     */
-    export function add(a: number, b: number, c?: number): number;
-    export function add(a: number, b: number, c?: number): number { return a + b + (c ?? 0); }
-  `;
+    const testFileContent = ts`
+      /**
+       * Adds two numbers together.
+       * @param a The first number.
+       * @param b The second number.
+       * @returns The sum of a and b.
+       * @example
+       * add(1, 2) // 3
+       */
+      export function add(a: number, b: number): number;
+      /**
+       * Adds three numbers together.
+       * @param a The first number.
+       * @param b The second number.
+       * @param c The third number.
+       * @returns The sum of a, b and c.
+       * @example
+       * add(1, 2, 3) // 6
+       */
+      export function add(a: number, b: number, c?: number): number;
+      export function add(a: number, b: number, c?: number): number { return a + b + (c ?? 0); }
+    `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "add")!;
-    const exportedFunction = createFunctionBySymbol(ctx, symbol);
+    const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
       expect(exportedFunction.kind).to.equal(TypeKind.Function);
@@ -147,7 +149,7 @@ describe("Compiler: Function", () => {
 
   {
 
-    const testFileContent = `
+    const testFileContent = ts`
       export async function getNumber(): Promise<number> {
         return Promise.resolve(7);
       };
@@ -156,7 +158,7 @@ describe("Compiler: Function", () => {
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "getNumber")!;
-    const exportedFunction = createFunctionBySymbol(ctx, symbol);
+    const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should have the `async` modifier", () => {
       expect(exportedFunction.signatures[0]?.modifiers).to.include("async");
@@ -172,7 +174,7 @@ describe("Compiler: Function", () => {
 
   {
 
-    const testFileContent = `
+    const testFileContent = ts`
       export function getNumber(num: number = 7): number {
         return num;
       };
@@ -181,7 +183,7 @@ describe("Compiler: Function", () => {
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "getNumber")!;
-    const exportedFunction = createFunctionBySymbol(ctx, symbol);
+    const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should have a parameter with an initializer", () => {
       expect(exportedFunction.signatures[0]?.parameters).to.have.lengthOf(1);

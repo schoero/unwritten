@@ -1,14 +1,16 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
 import { parse } from "../src/parser/index.js";
 import { Reference, TypeAlias, TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
+import { scope } from "./utils/scope.js";
+import { ts } from "./utils/template.js";
 
 
-describe("Compiler: Reference", () => {
+scope("Compiler", TypeKind.Reference, () => {
 
   {
-    const testFileContent = `
+    const testFileContent = ts`
       type A = string;
       export type Reference = A;
     `;

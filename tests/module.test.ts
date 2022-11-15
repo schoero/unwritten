@@ -1,12 +1,15 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
 import { createModuleBySymbol } from "../src/compiler/entities/module.js";
+import { TypeKind } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
+import { scope } from "./utils/scope.js";
+import { ts } from "./utils/template.js";
 
 
-describe("Compiler: Module", () => {
+scope("Compiler", TypeKind.Module, () => {
 
-  const testFileContent = `
+  const testFileContent = ts`
     export module TestModule {
       export type TestType = string;
     }

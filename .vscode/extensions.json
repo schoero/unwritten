@@ -2,6 +2,7 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "streetsidesoftware.code-spell-checker",
-    "DavidAnson.vscode-markdownlint"
+    "DavidAnson.vscode-markdownlint",
+    "ncpa0cpl.ts-template-literal"
   ]
 }

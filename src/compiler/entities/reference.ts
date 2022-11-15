@@ -4,7 +4,6 @@ import { assert } from "vitest";
 import { isType, isTypeNode } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Reference, TypeKind } from "../../types/types.js";
-import { isPathExcluded } from "../../utils/general.js";
 import { getIdBySymbol, getIdByType, getIdByTypeNode } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
@@ -28,7 +27,7 @@ export function createTypeReferenceByTypeNode(ctx: CompilerContext, typeNode: Ty
 
 }
 
-
+/** @deprecated - Check if this is still valid */
 export function createTypeReferenceByType(ctx: CompilerContext, typeReference: TypeReference): Reference {
 
   const typeArguments = typeReference.typeArguments?.map(typeArgument => createTypeByType(ctx, typeArgument));
@@ -47,6 +46,7 @@ export function createTypeReferenceByType(ctx: CompilerContext, typeReference: T
 }
 
 
+/** @deprecated - Check if this is still valid */
 export function createTargetBySymbol(ctx: CompilerContext, symbol: Symbol) {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
@@ -73,7 +73,7 @@ export function getTargetSymbolByTypeReference(ctx: CompilerContext, typeNodeOrT
   let targetSymbol: Symbol | undefined;
 
   if(isType(typeNodeOrType)){
-    targetSymbol = typeNodeOrType.aliasSymbol ?? typeNodeOrType.target.symbol;
+    targetSymbol = typeNodeOrType.target.symbol;
   } else if(isTypeNode(typeNodeOrType)){
     targetSymbol = ctx.checker.getSymbolAtLocation(typeNodeOrType.typeName);
   }
@@ -85,16 +85,7 @@ export function getTargetSymbolByTypeReference(ctx: CompilerContext, typeNodeOrT
 
 function _getResolvedTypeBySymbol(ctx: CompilerContext, targetSymbol: Symbol) {
 
-  const { config, cache } = ctx;
-  const declaration = targetSymbol.valueDeclaration ?? targetSymbol.getDeclarations()?.[0];
-
-  if(declaration){
-    const excludePaths = config.compilerConfig.exclude;
-    const position = getPositionByDeclaration(ctx, declaration);
-    if(isPathExcluded(position.file, excludePaths)){
-      return;
-    }
-  }
+  const { cache } = ctx;
 
   if(cache.isSymbolCached(ctx, targetSymbol)){
     return;

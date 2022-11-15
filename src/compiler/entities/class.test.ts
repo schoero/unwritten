@@ -1,20 +1,20 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
-import { getIdBySymbol } from "../src/compiler/compositions/id.js";
-import { createClassBySymbol } from "../src/compiler/entities/class.js";
-import { parse } from "../src/parser/index.js";
-import { isClassType } from "../src/typeguards/types.js";
-import { Instance, Modifiers, TypeKind } from "../src/types/types.js";
-import { compile } from "./utils/compile.js";
+import { compile } from "../../../tests/utils/compile.js";
+import { scope } from "../../../tests/utils/scope.js";
+import { ts } from "../../../tests/utils/template.js";
+import { parse } from "../../parser/index.js";
+import { isClassType } from "../../typeguards/types.js";
+import { Instance, Modifiers, TypeKind } from "../../types/types.js";
+import { getIdBySymbol } from "../compositions/id.js";
+import { createClassBySymbol } from "./class.js";
 
 
-describe("Compiler: Class", () => {
+scope("Compiler", TypeKind.Class, () => {
   {
 
-    const testFileContent = `
-      /**
-       * A class.
-       */
+    const testFileContent = ts`
+      /**  Class description */
       export class Class {
         constructor() {
         }
@@ -38,7 +38,7 @@ describe("Compiler: Class", () => {
     });
 
     it("should have a description", () => {
-      expect(exportedClass.description).to.equal("A class.");
+      expect(exportedClass.description).to.equal("Class description");
     });
 
     it("should have a matching constructor", () => {
@@ -56,7 +56,7 @@ describe("Compiler: Class", () => {
   }
 
   {
-    const testFileContent = `
+    const testFileContent = ts`
       export abstract class Class {
         public publicProperty: string;
         static staticProperty: string;
@@ -92,7 +92,7 @@ describe("Compiler: Class", () => {
   }
 
   {
-    const testFileContent = `
+    const testFileContent = ts`
       export class Class {
 
         public add(a: number, b: number): number;
@@ -129,7 +129,7 @@ describe("Compiler: Class", () => {
   }
 
   {
-    const testFileContent = `
+    const testFileContent = ts`
       export class Class {
         
         private _kind: string;
@@ -164,7 +164,7 @@ describe("Compiler: Class", () => {
   }
 
   {
-    const testFileContent = `
+    const testFileContent = ts`
       class Base {
         public propertyA: string = "A";
       }
@@ -191,7 +191,7 @@ describe("Compiler: Class", () => {
   }
 
   {
-    const testFileContent = `
+    const testFileContent = ts`
       class Base {
         public readonly property: number = 1;
       }

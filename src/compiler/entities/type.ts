@@ -8,6 +8,7 @@ import {
   isIntersectionType,
   isLiteralType,
   isObjectLiteralType,
+  isObjectType,
   isPrimitiveType,
   isThisType,
   isTupleTypeReferenceType,
@@ -18,11 +19,12 @@ import {
 } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
-import { createFunctionByType } from "./function.js";
+import { createFunctionType } from "./function.js";
 import { createInstanceByType } from "./instance.js";
 import { createInterfaceByType } from "./interface.js";
-import { createIntersectionTypeByType } from "./intersection-type.js";
+import { createIntersectionTypeByType } from "./intersection.js";
 import { createLiteralType } from "./literal.js";
+import { createObjectTypeByType } from "./object.js";
 import { createObjectLiteralByType } from "./object-literal.js";
 import { createPrimitiveType } from "./primitive.js";
 import { createTypeReferenceByType, createTypeReferenceByTypeNode } from "./reference.js";
@@ -46,7 +48,7 @@ export function createTypeByDeclaration(ctx: CompilerContext, declaration: Decla
 
 
 /**
- * Some types like generic types or arrays must be handled by the typeNode
+ * Type references must be handled by type node, otherwise we don't have access to the type arguments.
  */
 export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
 
@@ -66,6 +68,11 @@ export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode): 
 export function createTypeByType(ctx: CompilerContext, type: Type): Types {
 
 
+  if(isObjectType(type)){
+    return createObjectTypeByType(ctx, type);
+  }
+
+
   //-- Order is important! Sort by most specific to least specific
 
   if(isTupleTypeReferenceType(type)){
@@ -75,7 +82,7 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
   } else if(isTypeReferenceType(type)){
     return createTypeReferenceByType(ctx, type);
   } else if(isFunctionLikeType(type)){
-    return createFunctionByType(ctx, type);
+    return createFunctionType(ctx, type);
   } else if(isLiteralType(type)){
     return createLiteralType(ctx, type);
   } else if(isPrimitiveType(type)){

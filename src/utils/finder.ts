@@ -6,8 +6,8 @@ import { error } from "../log/index.js";
 
 /**
  * Finds a file in a directory or its parent directories.
- * @param fileName Name of the file to find.
- * @param entryPath Entry point for the search to begin.
+ * @param fileName - Name of the file to find.
+ * @param entryPath - Entry point for the search to begin.
  * @returns The absolute file path if found, otherwise undefined.
  */
 export function findFile(fileName: string, entryPath?: string): string | undefined {

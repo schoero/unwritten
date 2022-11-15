@@ -2,23 +2,24 @@
 
 import { describe, expect, it } from "vitest";
 
-import { getIdBySymbol } from "../src/compiler/compositions/id.js";
-import { createTypeAliasBySymbol } from "../src/compiler/entities/alias.js";
-import { Tuple, TypeKind } from "../src/types/types.js";
-import { compile } from "./utils/compile.js";
+import { compile } from "../../../tests/utils/compile.js";
+import { ts } from "../../../tests/utils/template.js";
+import { Tuple, TypeKind } from "../../types/types.js";
+import { createTypeAliasBySymbol } from "./alias.js";
 
 
 describe("Tuple", () => {
 
-  const testFileContent = `
+  const testFileContent = ts`
     export type Tuple = [string, number];
     export type TupleWithRest = [string, ...number[]];
     export type TupleWithOptional = [string, number?];
+    export type NamedTuple = [prefix: string, suffix: string];
     /** 
      * Description 
      * @example [prefix: "<div>", suffix: "</div>"]
      */
-    export type NamedTuple = [prefix: string, suffix: string];;
+    export type TupleWithDescriptionAndExample = [string, number];
   `;
 
   const { exportedSymbols, ctx } = compile(testFileContent.trim());
@@ -27,46 +28,47 @@ describe("Tuple", () => {
   const exportedTupleWithRestAlias = createTypeAliasBySymbol(ctx, exportedSymbols[1]!);
   const exportedTupleWithOptionalAlias = createTypeAliasBySymbol(ctx, exportedSymbols[2]!);
   const exportedNamedTupleAlias = createTypeAliasBySymbol(ctx, exportedSymbols[3]!);
+  const exportedTupleWithDescriptionAndExampleAlias = createTypeAliasBySymbol(ctx, exportedSymbols[4]!);
 
   const exportedTuple = exportedTupleAlias.type as Tuple;
   const exportedTupleWithRest = exportedTupleWithRestAlias.type as Tuple;
   const exportedTupleWithOptional = exportedTupleWithOptionalAlias.type as Tuple;
   const exportedNamedTuple = exportedNamedTupleAlias.type as Tuple;
+  const exportedTupleWithDescriptionAndExample = exportedTupleWithDescriptionAndExampleAlias.type as Tuple;
 
   it("should have exported tuple types alias", () => {
     expect(exportedTupleAlias.name).to.equal("Tuple");
     expect(exportedTupleWithRestAlias.name).to.equal("TupleWithRest");
     expect(exportedTupleWithOptionalAlias.name).to.equal("TupleWithOptional");
     expect(exportedNamedTupleAlias.name).to.equal("NamedTuple");
-  });
-
-  it("should have matching ids", () => {
-    expect(exportedTuple.id).to.equal(getIdBySymbol(ctx, exportedSymbols[0]!));
-    expect(exportedTupleWithRest.id).to.equal(getIdBySymbol(ctx, exportedSymbols[1]!));
-    expect(exportedTupleWithOptional.id).to.equal(getIdBySymbol(ctx, exportedSymbols[2]!));
-    expect(exportedNamedTuple.id).to.equal(getIdBySymbol(ctx, exportedSymbols[3]!));
+    expect(exportedTupleWithDescriptionAndExampleAlias.name).to.equal("TupleWithDescriptionAndExample");
   });
 
   it("should have matching positions", () => {
     expect(exportedTuple.position).to.deep.equal({
-      column: 0,
+      column: 20,
       file: "/file.ts",
       line: 1
     });
     expect(exportedTupleWithRest.position).to.deep.equal({
-      column: 4,
+      column: 32,
       file: "/file.ts",
       line: 2
     });
     expect(exportedTupleWithOptional.position).to.deep.equal({
-      column: 4,
+      column: 36,
       file: "/file.ts",
       line: 3
     });
     expect(exportedNamedTuple.position).to.deep.equal({
-      column: 4,
+      column: 29,
       file: "/file.ts",
-      line: 8
+      line: 4
+    });
+    expect(exportedTupleWithDescriptionAndExample.position).to.deep.equal({
+      column: 49,
+      file: "/file.ts",
+      line: 9
     });
   });
 
@@ -104,11 +106,11 @@ describe("Tuple", () => {
   });
 
   it("should have a matching description", () => {
-    expect(exportedNamedTupleAlias.description).to.equal("Description");
+    expect(exportedTupleWithDescriptionAndExampleAlias.description).to.equal("Description");
   });
 
   it("should have a matching example", () => {
-    expect(exportedNamedTupleAlias.example).to.equal(`[prefix: "<div>", suffix: "</div>"]`);
+    expect(exportedTupleWithDescriptionAndExampleAlias.example).to.equal(`[prefix: "<div>", suffix: "</div>"]`);
   });
 
 });

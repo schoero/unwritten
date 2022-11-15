@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/array-type */
 import { Description, Example, ID, Name, Position } from "./compositions.js";
 
 
 export enum TypeKind {
   Any = "Any",
+  Array = "Array",
   BigInt = "BigInt",
   BigIntLiteral = "BigIntLiteral",
   Boolean = "Boolean",
@@ -82,6 +84,7 @@ export type ExportableTypes =
   | Variable;
 
 export type Types =
+  | Array
   | Constructor
   | ExportableTypes
   | Getter
@@ -91,6 +94,7 @@ export type Types =
   | Member
   | Method
   | ObjectLiteral
+  | ObjectType
   | PrimitiveTypes
   | Property
   | Reference
@@ -159,6 +163,19 @@ export interface BigIntLiteralType extends LiteralType<TypeKind.BigIntLiteral> {
 export type LiteralTypes = BigIntLiteralType | BooleanLiteralType | NumberLiteralType | StringLiteralType;
 
 
+//-- Object type
+
+export interface ObjectType extends Type<TypeKind.Object> {
+  callSignatures: Signature[];
+  constructSignatures: Signature[];
+  getters: Getter[];
+  methods: Method[];
+  properties: Property[];
+  setters: Setter[];
+  name?: Name;
+}
+
+
 //-- Object literal
 
 export interface ObjectLiteral extends Type<TypeKind.ObjectLiteral> {
@@ -178,13 +195,21 @@ export interface Property extends Type<TypeKind.Property> {
 }
 
 
+//-- Array
+
+export interface Array extends Type<TypeKind.Array> {
+  type: Types;
+  description?: Description;
+  example?: Example;
+}
+
+
 //-- Tuple
 
 export interface Tuple extends Type<TypeKind.Tuple> {
   members: TupleMember[];
   description?: Description;
   example?: Example;
-  name?: Name;
   position?: Position;
 }
 
@@ -203,7 +228,7 @@ export interface Reference extends Type<TypeKind.Reference> {
   id: ID;
   name?: Name;
   position?: Position;
-  resolvedType?: Types;
+  target?: Types;
   typeArguments?: Types[];
 }
 

@@ -1,11 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
-import { createEnumBySymbol } from "../src/compiler/entities/enum.js";
-import { NumberLiteralType, TypeKind } from "../src/types/types.js";
-import { compile } from "./utils/compile.js";
+import { compile } from "../../../tests/utils/compile.js";
+import { scope } from "../../../tests/utils/scope.js";
+import { NumberLiteralType, TypeKind } from "../../types/types.js";
+import { createEnumBySymbol } from "./enum.js";
 
 
-describe("Compiler: Enum", () => {
+scope("Compiler", TypeKind.Enum, () => {
+
   {
 
     const testFileContent = `
@@ -38,7 +40,9 @@ describe("Compiler: Enum", () => {
       expect(exportedEnum.members[1]!.type.kind).to.equal(TypeKind.NumberLiteral);
       expect((exportedEnum.members[1]!.type as NumberLiteralType).value).to.equal(1);
     });
+
   }
+
   {
 
     const testFileContent = `
@@ -64,6 +68,7 @@ describe("Compiler: Enum", () => {
     });
 
   }
+
   {
 
     const testFileContent = `
@@ -79,4 +84,5 @@ describe("Compiler: Enum", () => {
     });
 
   }
+
 });

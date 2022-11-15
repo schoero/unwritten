@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.0.1",
   "type": "module",
   "name": "doc-creator",
   "description": "A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
@@ -27,7 +27,8 @@
     "markdownlint:ci": "npm run markdownlint",
     "markdownlint:fix": "node_modules/.bin/markdownlint-cli2-fix '**/*.md' '#node_modules'",
     "schema": "npx node_modules/.bin/ts-json-schema-generator --path './src/types/config.ts' --type ConfigWithSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
-    "test": "vitest -c ./vite.config.ts"
+    "test": "vitest -c ./vite.config.ts",
+    "typecheck": "vitest typecheck --run -c ./vite.config.ts test-d.ts"
   },
   "dependencies": {
     "commander": "^9.4.1",
@@ -35,13 +36,13 @@
     "typescript": "^4.8.4"
   },
   "devDependencies": {
-    "@schoero/eslint-config": "^1.22.2",
+    "@schoero/eslint-config": "^1.23.0",
     "@schoero/markdownlint-config": "^1.1.1",
     "@schoero/ts-config": "^0.2.2",
     "@types/minimatch": "^5.1.2",
     "@types/node": "^18.11.9",
     "ts-json-schema-generator": "^1.1.2",
-    "vitest": "^0.25.1",
+    "vitest": "^0.25.2",
     "vitest-github-actions-reporter": "^0.9.0"
   },
   "keywords": [

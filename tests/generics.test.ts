@@ -1,14 +1,16 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
 import { parse } from "../src/parser/index.js";
 import { Reference, TypeAlias, TypeKind, TypeParameter } from "../src/types/types.js";
 import { compile } from "./utils/compile.js";
+import { scope } from "./utils/scope.js";
+import { ts } from "./utils/template.js";
 
 
-describe("Compiler: Generics", () => {
+scope("Compiler", "Generics", () => {
 
   {
-    const testFileContent = `
+    const testFileContent = ts`
       export type Generic<T> = T;
     `;
 
@@ -39,7 +41,7 @@ describe("Compiler: Generics", () => {
   }
 
   {
-    const testFileContent = `
+    const testFileContent = ts`
       type Generic<T extends string> = T;
       export type Hello = Generic<"World">;
     `;

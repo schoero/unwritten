@@ -1,76 +1,28 @@
-import { ElementFlags, Symbol, TupleTypeNode, TupleTypeReference, Type, TypeAliasDeclaration } from "typescript";
-import { assert } from "vitest";
+import { ElementFlags, TupleTypeReference, Type } from "typescript";
 
-import { isTupleTypeNode, isTypeAliasDeclaration } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Tuple, TupleMember, TypeKind } from "../../types/types.js";
-import { getIdBySymbol, getIdByType, getIdByTypeNode } from "../compositions/id.js";
-import { getDescriptionBySymbol } from "../compositions/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
-import { getPositionByDeclaration } from "../compositions/position.js";
-import { getTargetSymbolByTypeReference } from "./reference.js";
+import { getIdByType } from "../compositions/id.js";
+import { getNameByDeclaration } from "../compositions/name.js";
+import { getPositionByNode } from "../compositions/position.js";
 import { createTypeByType } from "./type.js";
 
 
 export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): Tuple {
 
-  const targetSymbol = getTargetSymbolByTypeReference(ctx, typeReference);
+  const node = typeReference.node;
   const members = _getMembers(ctx, typeReference, typeReference.typeArguments);
-  const fromSymbol = targetSymbol && createTupleBySymbol(ctx, targetSymbol);
+  const position = node && getPositionByNode(ctx, node);
   const id = getIdByType(ctx, typeReference);
   const kind = TypeKind.Tuple;
 
   return {
     id,
-    ...fromSymbol,
     kind,
-    members
-  };
-
-}
-
-
-export function createTupleBySymbol(ctx: CompilerContext, symbol: Symbol) {
-
-  const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
-
-  assert(declaration && isTypeAliasDeclaration(declaration), "Tuple declaration is not found");
-
-  const fromDeclaration = createTupleByDeclaration(ctx, declaration);
-
-  const id = getIdBySymbol(ctx, symbol);
-  const name = getNameBySymbol(ctx, symbol);
-  const description = getDescriptionBySymbol(ctx, symbol);
-  const position = getPositionByDeclaration(ctx, declaration);
-  const kind = TypeKind.Tuple;
-
-  return {
-    ...fromDeclaration,
-    description,
-    id,
-    kind,
-    name,
+    members,
     position
   };
 
-}
-
-
-export function createTupleByDeclaration(ctx: CompilerContext, declaration: TypeAliasDeclaration) {
-  const typeNode = declaration.type;
-
-  assert(isTupleTypeNode(typeNode), "Tuple type node is not found");
-  return createTupleByTypeNode(ctx, typeNode);
-}
-
-
-export function createTupleByTypeNode(ctx: CompilerContext, type: TupleTypeNode) {
-  const id = getIdByTypeNode(ctx, type);
-  const kind = TypeKind.Tuple;
-  return {
-    id,
-    kind
-  };
 }
 
 
@@ -102,43 +54,3 @@ function _getMembers(ctx: CompilerContext, tupleTypeReference: TupleTypeReferenc
   return members ?? [];
 
 }
-
-
-// function _createTupleMemberByTypeNode(typeNode: NamedTupleMember | TypeNode): TupleMember {
-//   if(isNamedTupleMember(typeNode)){
-
-//     const id = getIdByTypeNode(ctx, typeNode);
-//     const name = getNameByTypeNode(typeNode);
-//     const optional = typeNode.questionToken !== undefined;
-//     const rest = typeNode.dotDotDotToken !== undefined;
-//     const type = getTypeByTypeNode(typeNode.type);
-//     const kind = EntityKind.Member;
-
-//     return {
-//       id,
-//       name,
-//       optional,
-//       rest,
-//       type,
-//       kind
-//     };
-
-//   } else {
-
-//     const id = getIdByTypeNode(ctx, typeNode);
-//     const type = getTypeByTypeNode(typeNode);
-//     const rest = false;
-//     const optional = false;
-//     const kind = EntityKind.Member;
-
-//     return {
-//       id,
-//       type,
-//       kind,
-//       rest,
-//       optional
-//     };
-
-//   }
-
-// }

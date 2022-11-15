@@ -9,7 +9,7 @@ import { functionOverloadDeclarationFilter } from "../utils/filter.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createFunctionBySymbol(ctx: CompilerContext, symbol: Symbol): Function {
+export function createFunctionEntity(ctx: CompilerContext, symbol: Symbol): Function {
 
   const declarations = symbol.declarations?.filter(isFunctionLikeDeclaration)
     .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];
@@ -30,7 +30,7 @@ export function createFunctionBySymbol(ctx: CompilerContext, symbol: Symbol): Fu
 }
 
 
-export function createFunctionByType(ctx: CompilerContext, type: Type): Function {
+export function createFunctionType(ctx: CompilerContext, type: Type): Function {
 
   const callSignatures = type.getCallSignatures();
   const declarations = callSignatures.map(s => s.getDeclaration());

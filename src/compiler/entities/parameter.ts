@@ -11,7 +11,7 @@ import { getPositionByDeclaration } from "../compositions/position.js";
 import { createTypeByDeclaration } from "./type.js";
 
 
-export function createParameter(ctx: CompilerContext, declaration: ParameterDeclaration): Parameter {
+export function createParameterByDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration): Parameter {
 
   const name = getNameByDeclaration(ctx, declaration);
   const type = createTypeByDeclaration(ctx, declaration);

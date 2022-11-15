@@ -2,16 +2,18 @@
 
 import { describe, expect, it } from "vitest";
 
-import { createTypeAliasBySymbol } from "../src/compiler/entities/alias.js";
-import { Reference, TypeKind, Union } from "../src/types/types.js";
-import { compile } from "./utils/compile.js";
+import { compile } from "../../../tests/utils/compile.js";
+import { scope } from "../../../tests/utils/scope.js";
+import { ts } from "../../../tests/utils/template.js";
+import { Reference, TypeKind, Union } from "../../types/types.js";
+import { createTypeAliasBySymbol } from "./alias.js";
 
 
-describe("Compiler: Array", () => {
+scope("Compiler", TypeKind.Array, () => {
 
   describe("Native Syntax", () => {
 
-    const testFileContent = `
+    const testFileContent = ts`
       export type StringOrNumberArray = (string | number)[];
     `;
 
@@ -34,7 +36,7 @@ describe("Compiler: Array", () => {
 
   describe("Generic Syntax", () => {
 
-    const testFileContent = `
+    const testFileContent = ts`
       export type StringOrNumberArray = Array<string | number>;
     `;
 

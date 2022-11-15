@@ -4,7 +4,7 @@ import { assert } from "vitest";
 import { createTypeAliasBySymbol } from "../compiler/entities/alias.js";
 import { createClassBySymbol } from "../compiler/entities/class.js";
 import { createEnumBySymbol } from "../compiler/entities/enum.js";
-import { createFunctionBySymbol } from "../compiler/entities/function.js";
+import { createFunctionEntity } from "../compiler/entities/function.js";
 import { createInterfaceBySymbol } from "../compiler/entities/interface.js";
 import { createModuleBySymbol } from "../compiler/entities/module.js";
 import { createNamespaceBySymbol } from "../compiler/entities/namespace.js";
@@ -12,6 +12,7 @@ import { createObjectLiteralBySymbol } from "../compiler/entities/object-literal
 import { createPropertyBySymbol } from "../compiler/entities/property.js";
 import { createSourceFileBySymbol } from "../compiler/entities/source-file.js";
 import { createTypeParameterBySymbol } from "../compiler/entities/type-parameter.js";
+import { createUnresolvedBySymbol } from "../compiler/entities/unresolved.js";
 import { createVariableBySymbol } from "../compiler/entities/variable.js";
 import { resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
 import { error } from "../log/index.js";
@@ -31,29 +32,33 @@ import {
 } from "../typeguards/ts.js";
 import { CompilerContext } from "../types/context.js";
 import { ExportableTypes, Types } from "../types/types.js";
+import { isSymbolExcluded } from "../utils/general.js";
 
 
 export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): ExportableTypes[] {
   return createSourceFileBySymbol(ctx, sourceFileSymbol).exports;
-
 }
 
 
 /**
  * Parses a TypeScript symbol.
  * This is the main entry point for parsing a TypeScript symbol.
- * @param ctx Compiler context
- * @param symbol File symbol
+ * @param ctx - Compiler context
+ * @param symbol - File symbol
  * @returns Parsed symbol
  */
 export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 
+  if(isSymbolExcluded(ctx, resolvedSymbol)){
+    return createUnresolvedBySymbol(ctx, resolvedSymbol);
+  }
+
   if(isVariableSymbol(resolvedSymbol)){
     return createVariableBySymbol(ctx, resolvedSymbol);
   } else if(isFunctionSymbol(resolvedSymbol)){
-    return createFunctionBySymbol(ctx, resolvedSymbol);
+    return createFunctionEntity(ctx, resolvedSymbol);
   } else if(isClassSymbol(resolvedSymbol)){
     return createClassBySymbol(ctx, resolvedSymbol);
   } else if(isInterfaceSymbol(resolvedSymbol)){
