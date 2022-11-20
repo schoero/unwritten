@@ -1,4 +1,4 @@
-import { Types } from "../../../types/types.js";
+import { ExportableTypeKinds } from "../../../types/types.js";
 import { CategoryNames } from "./renderer.js";
 
 
@@ -28,7 +28,7 @@ export interface MarkupRenderConfig {
   /**
     * Defines the order in which entities should be rendered.
     */
-  renderOrder?: Types["kind"][];
+  renderOrder?: ExportableTypeKinds[];
 
   /**
    * Defines how string literal type annotations should be encapsulated in the rendered output.

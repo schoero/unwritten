@@ -35,13 +35,14 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   },
   parameterEncapsulation: ["`", "`"],
   propertyEncapsulation: ["`", "`"],
+  removeHyphenAtStartOfTag: true,
   renderOrder: [
     TypeKind.Namespace,
     TypeKind.Module,
     TypeKind.Function,
     TypeKind.Class,
     TypeKind.Variable,
-    // TypeKind.Enum,
+    TypeKind.Enum,
     TypeKind.TypeAlias,
     TypeKind.Interface
   ],

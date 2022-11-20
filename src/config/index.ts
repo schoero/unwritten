@@ -12,7 +12,7 @@ import { defaultCompilerConfig, defaultExternalTypes } from "./default.js";
 
 export function createConfig(configOrPath?: Config | string): CompleteConfig {
 
-  const defaultConfig = _getDefaultConfig();
+  const defaultConfig = getDefaultConfig();
 
   let userConfig: Config | undefined;
   let absoluteConfigPath: string | undefined;
@@ -65,7 +65,7 @@ export function createConfig(configOrPath?: Config | string): CompleteConfig {
 }
 
 
-function _getDefaultConfig(): CompleteConfig {
+export function getDefaultConfig(): CompleteConfig {
 
   const defaultConfig: CompleteConfig = {
     compilerConfig: defaultCompilerConfig,

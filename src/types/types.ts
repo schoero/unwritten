@@ -75,6 +75,16 @@ export interface Type<Kind extends TypeKind>{
   kind: Kind;
 }
 
+export type ExportableTypeKinds =
+  | TypeKind.Class
+  | TypeKind.Enum
+  | TypeKind.Function
+  | TypeKind.Interface
+  | TypeKind.Module
+  | TypeKind.Namespace
+  | TypeKind.TypeAlias
+  | TypeKind.Variable;
+
 export type ExportableTypes =
   | Class
   | Enum
@@ -83,7 +93,6 @@ export type ExportableTypes =
   | Module
   | Namespace
   | TypeAlias
-  | Unresolved
   | Variable;
 
 export type Types =
