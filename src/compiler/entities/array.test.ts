@@ -5,7 +5,8 @@ import { describe, expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Array, TypeKind, Union } from "../../types/types.js";
+import { Array, TypeKind } from "../../types/types.js";
+import { getIdBySymbol } from "../compositions/id.js";
 import { createTypeAliasBySymbol } from "./alias.js";
 
 
@@ -13,46 +14,150 @@ scope("Compiler", TypeKind.Array, () => {
 
   describe("Native Syntax", () => {
 
-    const testFileContent = ts`
-      export type StringOrNumberArray = (string | number)[];
-    `;
+    {
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
-    const exportedStringOrNumberArraySymbol = exportedSymbols.find(s => s.name === "StringOrNumberArray")!;
-    const exportedStringOrNumberArray = createTypeAliasBySymbol(ctx, exportedStringOrNumberArraySymbol);
+      const testFileContent = ts`
+        export type ArrayType = string[];
+      `;
 
-    it("should generate a type alias > type reference > array with an union type as a type argument", () => {
-      expect(exportedStringOrNumberArray.name).to.equal("StringOrNumberArray");
-      expect(exportedStringOrNumberArray.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedStringOrNumberArray.type.kind).to.equal(TypeKind.Array);
-      expect((exportedStringOrNumberArray.type as Array).type.kind).to.equal(TypeKind.Union);
-      expect(((exportedStringOrNumberArray.type as Array).type as Union).types).to.have.lengthOf(2);
-      expect(((exportedStringOrNumberArray.type as Array).type as Union).types[0]!.kind).to.equal(TypeKind.String);
-      expect(((exportedStringOrNumberArray.type as Array).type as Union).types[1]!.kind).to.equal(TypeKind.Number);
-    });
+      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+      const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
+      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+
+      it("should be able to parse an array type", () => {
+        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+      });
+
+    }
+
+    {
+
+      const testFileContent = ts`
+        /**
+         * Array type description
+         * @example string[]
+         */
+        export type ArrayType = string[];
+      `;
+
+      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
+      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+
+      it("should have a matching kind", () => {
+        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+      });
+
+      it("should have a matching name", () => {
+        expect(exportedTypeAlias.name).to.equal("ArrayType");
+      });
+
+      it("should have a matching id", () => {
+        expect(exportedTypeAlias.id).to.equal(getIdBySymbol(ctx, symbol));
+      });
+
+      it("should have a matching description", () => {
+        expect(exportedTypeAlias.description).to.equal("Array type description");
+      });
+
+      it("should have a matching example", () => {
+        expect(exportedTypeAlias.example).to.equal("string[]");
+      });
+
+      it("should have a matching position", () => {
+        expect(exportedTypeAlias.position).to.deep.equal({
+          column: 8,
+          file: "/file.ts",
+          line: 5
+        });
+      });
+
+      it("should generate a type alias > array with a string type as a type argument", () => {
+        expect(exportedTypeAlias.name).to.equal("ArrayType");
+        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+        expect((exportedTypeAlias.type as Array).type.kind).to.equal(TypeKind.String);
+      });
+
+    }
 
   });
 
 
   describe("Generic Syntax", () => {
 
-    const testFileContent = ts`
-      export type StringOrNumberArray = Array<string | number>;
-    `;
+    {
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
-    const exportedStringOrNumberArraySymbol = exportedSymbols.find(s => s.name === "StringOrNumberArray")!;
-    const exportedStringOrNumberArray = createTypeAliasBySymbol(ctx, exportedStringOrNumberArraySymbol);
+      const testFileContent = ts`
+        export type ArrayType = Array<string>;
+      `;
 
-    it("should generate a type alias > type reference > array with an union type as a type argument", () => {
-      expect(exportedStringOrNumberArray.name).to.equal("StringOrNumberArray");
-      expect(exportedStringOrNumberArray.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedStringOrNumberArray.type.kind).to.equal(TypeKind.Array);
-      expect((exportedStringOrNumberArray.type as Array).type.kind).to.equal(TypeKind.Union);
-      expect(((exportedStringOrNumberArray.type as Array).type as Union).types).to.have.lengthOf(2);
-      expect(((exportedStringOrNumberArray.type as Array).type as Union).types[0]!.kind).to.equal(TypeKind.String);
-      expect(((exportedStringOrNumberArray.type as Array).type as Union).types[1]!.kind).to.equal(TypeKind.Number);
-    });
+      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+      const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
+      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+
+      it("should be able to parse an array type", () => {
+        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+      });
+
+    }
+
+    {
+
+      const testFileContent = ts`
+        /**
+         * Array type description
+         * @example string[]
+         */
+        export type ArrayType = Array<string>;
+      `;
+
+      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
+      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+
+      it("should have a matching kind", () => {
+        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+      });
+
+      it("should have a matching name", () => {
+        expect(exportedTypeAlias.name).to.equal("ArrayType");
+      });
+
+      it("should have a matching id", () => {
+        expect(exportedTypeAlias.id).to.equal(getIdBySymbol(ctx, symbol));
+      });
+
+      it("should have a matching description", () => {
+        expect(exportedTypeAlias.description).to.equal("Array type description");
+      });
+
+      it("should have a matching example", () => {
+        expect(exportedTypeAlias.example).to.equal("string[]");
+      });
+
+      it("should have a matching position", () => {
+        expect(exportedTypeAlias.position).to.deep.equal({
+          column: 8,
+          file: "/file.ts",
+          line: 5
+        });
+      });
+
+      it("should generate a type alias > array with a string type as a type argument", () => {
+        expect(exportedTypeAlias.name).to.equal("ArrayType");
+        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+        expect((exportedTypeAlias.type as Array).type.kind).to.equal(TypeKind.String);
+      });
+
+    }
 
   });
 
