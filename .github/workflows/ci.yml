@@ -27,6 +27,9 @@ jobs:
       - name: Lint
         run: npm run lint:ci
 
+      - name: Spellcheck
+        run: npm run spellcheck
+
   test:
     runs-on: ${{ matrix.os }}
     steps:
@@ -37,7 +40,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Install dependencies
-        run: npm ci --loglevel verbose
+        run: npm ci
 
       - name: Run tests
         run: npm test
