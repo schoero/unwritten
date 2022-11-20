@@ -28,7 +28,7 @@
     "markdownlint:fix": "node_modules/.bin/markdownlint-cli2-fix '**/*.md' '#node_modules'",
     "schema": "npx node_modules/.bin/ts-json-schema-generator --path './src/types/config.ts' --type ConfigWithSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
     "spellcheck": "node_modules/.bin/cspell lint **/{*,.*}/**/* --no-default-configuration",
-    "spellcheck:ci": "node_modules/.bin/cspell lint **/{*,.*}/**/* --no-default-configuration  --no-progress",
+    "spellcheck:ci": "node_modules/.bin/cspell lint **/{*,.*}/**/* --no-default-configuration --no-progress",
     "test": "vitest -c ./vite.config.ts",
     "typecheck": "vitest typecheck --run -c ./vite.config.ts test-d.ts"
   },
@@ -36,12 +36,12 @@
     "lib"
   ],
   "dependencies": {
-    "@schoero/cspell-config": "^1.2.0",
     "commander": "^9.4.1",
     "minimatch": "^5.1.0",
     "typescript": "^4.9.3"
   },
   "devDependencies": {
+    "@schoero/cspell-config": "^1.2.1",
     "@schoero/eslint-config": "^1.26.1",
     "@schoero/markdownlint-config": "^1.1.2",
     "@schoero/ts-config": "^0.3.0",
