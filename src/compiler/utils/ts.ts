@@ -13,3 +13,16 @@ export function resolveSymbolInCaseOfImport(ctx: CompilerContext, symbol: Symbol
   }
   return symbol;
 }
+
+
+export function getExportedSymbols(ctx: CompilerContext, moduleSymbol: Symbol, exclude?: string[]) {
+  const name = moduleSymbol.getName();
+  const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, moduleSymbol);
+  const exportedSymbols = ctx.checker.getExportsOfModule(resolvedSymbol);
+  return exportedSymbols;
+}
+
+
+export function isSymbolExported(ctx: CompilerContext, symbol: Symbol) {
+  return ctx.exportedSymbols?.isSymbolExported(ctx, symbol) ?? false;
+}

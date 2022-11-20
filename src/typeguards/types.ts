@@ -23,6 +23,7 @@ import {
   TypeAlias,
   TypeKind,
   Union,
+  Unresolved,
   Variable
 } from "../types/types.js";
 
@@ -99,6 +100,10 @@ export function isVariableType(type: Type<TypeKind>): type is Variable {
   return type.kind === TypeKind.Variable;
 }
 
+export function isUnresolvedType(type: Type<TypeKind>): type is Unresolved {
+  return type.kind === TypeKind.Unresolved;
+}
+
 export function isObjectLiteralType(type: Type<TypeKind>): type is ObjectLiteral {
   return type.kind === TypeKind.ObjectLiteral;
 }
@@ -138,5 +143,6 @@ export function isExportableType(type: Type<TypeKind>): type is ExportableTypes 
     isInterfaceType(type) ||
     isNamespaceType(type) ||
     isTypeAliasType(type) ||
-    isVariableType(type);
+    isVariableType(type) ||
+    isUnresolvedType(type);
 }

@@ -17,6 +17,7 @@ export enum TypeKind {
   Instance = "Instance",
   Interface = "Interface",
   Intersection = "Intersection",
+  Link = "Link",
   Member = "Member",
   Method = "Method",
   Module = "Module",
@@ -81,6 +82,7 @@ export type ExportableTypes =
   | Module
   | Namespace
   | TypeAlias
+  | Unresolved
   | Variable;
 
 export type Types =
@@ -90,6 +92,7 @@ export type Types =
   | Getter
   | Instance
   | Intersection
+  | Link
   | LiteralTypes
   | Member
   | Method
@@ -199,8 +202,7 @@ export interface Property extends Type<TypeKind.Property> {
 
 export interface Array extends Type<TypeKind.Array> {
   type: Types;
-  description?: Description;
-  example?: Example;
+  position?: Position;
 }
 
 
@@ -208,8 +210,6 @@ export interface Array extends Type<TypeKind.Array> {
 
 export interface Tuple extends Type<TypeKind.Tuple> {
   members: TupleMember[];
-  description?: Description;
-  example?: Example;
   position?: Position;
 }
 
@@ -226,7 +226,6 @@ export interface TupleMember extends Type<TypeKind.Member> {
 
 export interface Reference extends Type<TypeKind.Reference> {
   id: ID;
-  name?: Name;
   position?: Position;
   target?: Types;
   typeArguments?: Types[];
@@ -254,8 +253,19 @@ export interface This extends Type<TypeKind.This> {
 }
 
 
+//-- Link
+
+/** The link type will be used for recursive types */
+export interface Link extends Type<TypeKind.Link> {
+  id: ID;
+  name?: Name;
+  position?: Position;
+}
+
+
 //-- Unresolved
 
+/** The unresolved type will be used if a type cannot be parsed, or it is excluded from parsing */
 export interface Unresolved extends Type<TypeKind.Unresolved> {
   id: ID;
   name?: Name;

@@ -15,7 +15,6 @@ import { createTypeParameterBySymbol } from "../compiler/entities/type-parameter
 import { createUnresolvedBySymbol } from "../compiler/entities/unresolved.js";
 import { createVariableBySymbol } from "../compiler/entities/variable.js";
 import { resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
-import { error } from "../log/index.js";
 import {
   isClassSymbol,
   isEnumSymbol,
@@ -72,16 +71,16 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
   } else if(isModuleSymbol(symbol)){
     return createModuleBySymbol(ctx, resolvedSymbol);
   } else if(isSourceFileSymbol(symbol)){
-    return createSourceFileBySymbol(ctx, symbol);
+    return createSourceFileBySymbol(ctx, resolvedSymbol);
   } else if(isTypeParameterSymbol(symbol)){
-    return createTypeParameterBySymbol(ctx, symbol);
+    return createTypeParameterBySymbol(ctx, resolvedSymbol);
   } else if(isPropertySymbol(symbol)){
-    return createPropertyBySymbol(ctx, symbol);
+    return createPropertyBySymbol(ctx, resolvedSymbol);
   } else if(isObjectLiteralSymbol(symbol)){
-    return createObjectLiteralBySymbol(ctx, symbol);
+    return createObjectLiteralBySymbol(ctx, resolvedSymbol);
+  } else {
+    return createUnresolvedBySymbol(ctx, resolvedSymbol);
   }
-
-  throw error(`Symbol ${resolvedSymbol.getName()} is not supported`);
 
 }
 

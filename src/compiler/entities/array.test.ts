@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Reference, TypeKind, Union } from "../../types/types.js";
+import { Array, TypeKind, Union } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./alias.js";
 
 
@@ -24,11 +24,11 @@ scope("Compiler", TypeKind.Array, () => {
     it("should generate a type alias > type reference > array with an union type as a type argument", () => {
       expect(exportedStringOrNumberArray.name).to.equal("StringOrNumberArray");
       expect(exportedStringOrNumberArray.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedStringOrNumberArray.type.kind).to.equal(TypeKind.Reference);
-      expect((exportedStringOrNumberArray.type as Reference).typeArguments).to.have.lengthOf(1);
-      expect(((exportedStringOrNumberArray.type as Reference).typeArguments![0]! as Union).types).to.have.lengthOf(2);
-      expect(((exportedStringOrNumberArray.type as Reference).typeArguments![0]! as Union).types[0]!.kind).to.equal(TypeKind.String);
-      expect(((exportedStringOrNumberArray.type as Reference).typeArguments![0]! as Union).types[1]!.kind).to.equal(TypeKind.Number);
+      expect(exportedStringOrNumberArray.type.kind).to.equal(TypeKind.Array);
+      expect((exportedStringOrNumberArray.type as Array).type.kind).to.equal(TypeKind.Union);
+      expect(((exportedStringOrNumberArray.type as Array).type as Union).types).to.have.lengthOf(2);
+      expect(((exportedStringOrNumberArray.type as Array).type as Union).types[0]!.kind).to.equal(TypeKind.String);
+      expect(((exportedStringOrNumberArray.type as Array).type as Union).types[1]!.kind).to.equal(TypeKind.Number);
     });
 
   });
@@ -47,11 +47,11 @@ scope("Compiler", TypeKind.Array, () => {
     it("should generate a type alias > type reference > array with an union type as a type argument", () => {
       expect(exportedStringOrNumberArray.name).to.equal("StringOrNumberArray");
       expect(exportedStringOrNumberArray.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedStringOrNumberArray.type.kind).to.equal(TypeKind.Reference);
-      expect((exportedStringOrNumberArray.type as Reference).typeArguments).to.have.lengthOf(1);
-      expect(((exportedStringOrNumberArray.type as Reference).typeArguments![0]! as Union).types).to.have.lengthOf(2);
-      expect(((exportedStringOrNumberArray.type as Reference).typeArguments![0]! as Union).types[0]!.kind).to.equal(TypeKind.String);
-      expect(((exportedStringOrNumberArray.type as Reference).typeArguments![0]! as Union).types[1]!.kind).to.equal(TypeKind.Number);
+      expect(exportedStringOrNumberArray.type.kind).to.equal(TypeKind.Array);
+      expect((exportedStringOrNumberArray.type as Array).type.kind).to.equal(TypeKind.Union);
+      expect(((exportedStringOrNumberArray.type as Array).type as Union).types).to.have.lengthOf(2);
+      expect(((exportedStringOrNumberArray.type as Array).type as Union).types[0]!.kind).to.equal(TypeKind.String);
+      expect(((exportedStringOrNumberArray.type as Array).type as Union).types[1]!.kind).to.equal(TypeKind.Number);
     });
 
   });

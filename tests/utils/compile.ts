@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import ts from "typescript";
 import { assert } from "vitest";
 
-import { Cache } from "../../src/compiler/cache/index.js";
+import { ExportedSymbols } from "../../src/compiler/exported-symbols/index.js";
 import { reportCompilerDiagnostics } from "../../src/compiler/index.js";
 import { createConfig } from "../../src/config/index.js";
 import { disableLog } from "../../src/log/index.js";
@@ -49,21 +49,26 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions, c
   disableLog();
 
 
+  //-- Get file
+
+  const file = program.getSourceFiles().find(file => file.fileName === dummyFilePath);
+  assert(file, "file is not defined");
+
+  const fileSymbol = checker.getSymbolAtLocation(file);
+  assert(fileSymbol, "Entry file not found.");
+
+
   //-- Create context
 
   const ctx: CompilerContext = {
-    cache: new Cache(),
     checker,
     config: createConfig(config)
   };
 
-  const file = program.getSourceFiles().find(file => file.fileName === dummyFilePath);
+  ctx.exportedSymbols = new ExportedSymbols(ctx, fileSymbol);
 
-  assert(file, "file is not defined");
 
-  const fileSymbol = checker.getSymbolAtLocation(file);
-
-  assert(fileSymbol, "Entry file not found.");
+  //-- Get exported Symbols
 
   const exportedSymbols = checker.getExportsOfModule(fileSymbol);
 

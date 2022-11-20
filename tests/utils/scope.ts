@@ -14,5 +14,5 @@ type DescribeParams = (typeof describe) extends (name: infer Name, factory?: inf
 } : never;
 
 export function scope(scope: Scopes, unit: Units, factory?: DescribeParams["factory"], options?: DescribeParams["options"]): DescribeReturnType {
-  return describe(`${scope}: ${unit}`, factory, options);
+  return describe(`${scope}: ${unit}`, factory);
 }

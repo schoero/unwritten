@@ -2,24 +2,24 @@ import { ObjectType as TSObjectType } from "typescript";
 
 import { parseSymbol } from "../../parser/index.js";
 import {
+  isArrayTypeReferenceType,
   isFunctionLikeType,
   isGetterSymbol,
   isMethodSymbol,
   isPropertySymbol,
   isSetterSymbol,
-  isTupleTypeReferenceType,
-  isTypeReferenceType
+  isTupleTypeReferenceType
 } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TypeKind, Types } from "../../types/types.js";
 import { isSymbolExcluded, isSymbolExported } from "../../utils/general.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
+import { createArrayByTypeReference } from "./array.js";
 import { createFunctionType } from "./function.js";
 import { createGetterBySymbol } from "./getter.js";
 import { createMethodBySymbol } from "./method.js";
 import { createPropertyBySymbol } from "./property.js";
-import { createTypeReferenceByType } from "./reference.js";
 import { createSetterBySymbol } from "./setter.js";
 import { createSignatureBySignature } from "./signature.js";
 import { createTupleTypeByTypeReference } from "./tuple.js";
@@ -29,18 +29,19 @@ import { createUnresolvedBySymbol } from "./unresolved.js";
 export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType): Types {
 
 
+  //-- Array
+
+  if(isArrayTypeReferenceType(type)){
+    return createArrayByTypeReference(ctx, type);
+  }
+
+
   //-- Tuple
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
   }
 
-
-  //-- Type reference
-
-  if(isTypeReferenceType(type)){
-    return createTypeReferenceByType(ctx, type);
-  }
 
   const symbol = type.symbol;
 

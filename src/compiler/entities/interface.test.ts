@@ -1,12 +1,11 @@
 import { expect, it } from "vitest";
 
-import { getIdBySymbol } from "../src/compiler/compositions/id.js";
-import { createInterfaceBySymbol } from "../src/compiler/entities/interface.js";
-import { parse } from "../src/parser/index.js";
-import { Interface, TypeKind } from "../src/types/types.js";
-import { compile } from "./utils/compile.js";
-import { scope } from "./utils/scope.js";
-import { ts } from "./utils/template.js";
+import { compile } from "../../../tests/utils/compile.js";
+import { scope } from "../../../tests/utils/scope.js";
+import { ts } from "../../../tests/utils/template.js";
+import { Interface, TypeKind } from "../../types/types.js";
+import { getIdBySymbol } from "../compositions/id.js";
+import { createInterfaceBySymbol } from "./interface.js";
 
 
 scope("Compiler", TypeKind.Interface, () => {
@@ -104,12 +103,12 @@ scope("Compiler", TypeKind.Interface, () => {
       }
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
-    const exportedSymbols = parse(ctx, fileSymbol);
-
-    const exportedInterfaceA = exportedSymbols.find(s => s.name === "InterfaceA")! as Interface;
-    const exportedInterfaceB = exportedSymbols.find(s => s.name === "InterfaceB")! as Interface;
+    const exportedInterfaceASymbol = exportedSymbols.find(s => s.name === "InterfaceA")!;
+    const exportedInterfaceBSymbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
+    const exportedInterfaceA = createInterfaceBySymbol(ctx, exportedInterfaceASymbol);
+    const exportedInterfaceB = createInterfaceBySymbol(ctx, exportedInterfaceBSymbol);
 
     it("should be able to handle recursive interfaces", () => {
       expect(exportedInterfaceA.members.length).to.equal(1);
@@ -121,6 +120,7 @@ scope("Compiler", TypeKind.Interface, () => {
     });
 
   }
+
   {
 
     const testFileContent = ts`

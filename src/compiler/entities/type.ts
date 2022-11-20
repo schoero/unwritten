@@ -1,7 +1,9 @@
-import ts, { Declaration, Symbol, Type, TypeNode } from "typescript";
+import { Declaration, Symbol, Type, TypeNode } from "typescript";
 
 import { parseSymbol } from "../../parser/index.js";
 import {
+  isArrayTypeNode,
+  isArrayTypeReferenceTypeNode,
   isFunctionLikeType,
   isInstanceType,
   isInterfaceType,
@@ -11,14 +13,15 @@ import {
   isObjectType,
   isPrimitiveType,
   isThisType,
-  isTupleTypeReferenceType,
+  isTupleTypeNode,
   isTypeLiteralType,
   isTypeParameterType,
-  isTypeReferenceType,
+  isTypeReferenceNode,
   isUnionType
 } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
+import { createArrayByArrayTypeNode } from "./array.js";
 import { createFunctionType } from "./function.js";
 import { createInstanceByType } from "./instance.js";
 import { createInterfaceByType } from "./interface.js";
@@ -27,9 +30,9 @@ import { createLiteralType } from "./literal.js";
 import { createObjectTypeByType } from "./object.js";
 import { createObjectLiteralByType } from "./object-literal.js";
 import { createPrimitiveType } from "./primitive.js";
-import { createTypeReferenceByType, createTypeReferenceByTypeNode } from "./reference.js";
+import { createTypeReferenceByTypeNode } from "./reference.js";
 import { createThisByType } from "./this.js";
-import { createTupleTypeByTypeReference } from "./tuple.js";
+import { createTupleByTupleTypeNode } from "./tuple.js";
 import { createTypeLiteralByType } from "./type-literal.js";
 import { createTypeParameterByType } from "./type-parameter.js";
 import { createUnionTypeByType } from "./union.js";
@@ -48,25 +51,27 @@ export function createTypeByDeclaration(ctx: CompilerContext, declaration: Decla
 
 
 /**
- * Type references must be handled by type node, otherwise we don't have access to the type arguments.
+ * Type references must be handled by type node because the type would be the referenced type.
  */
 export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
 
-  const type = ctx.checker.getTypeFromTypeNode(typeNode);
-
-
-  //-- Type references
-
-  if(ts.isTypeReferenceNode(typeNode)){
+  if(isArrayTypeNode(typeNode)){
+    return createArrayByArrayTypeNode(ctx, typeNode);
+  } else if(isArrayTypeReferenceTypeNode(typeNode)){
+    return createArrayByArrayTypeNode(ctx, typeNode);
+  } else if(isTupleTypeNode(typeNode)){
+    return createTupleByTupleTypeNode(ctx, typeNode);
+  } else if(isTypeReferenceNode(typeNode)){
     return createTypeReferenceByTypeNode(ctx, typeNode);
   }
 
+  const type = ctx.checker.getTypeFromTypeNode(typeNode);
   return createTypeByType(ctx, type);
 
 }
 
-export function createTypeByType(ctx: CompilerContext, type: Type): Types {
 
+export function createTypeByType(ctx: CompilerContext, type: Type): Types {
 
   if(isObjectType(type)){
     return createObjectTypeByType(ctx, type);
@@ -75,12 +80,8 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
 
   //-- Order is important! Sort by most specific to least specific
 
-  if(isTupleTypeReferenceType(type)){
-    return createTupleTypeByTypeReference(ctx, type);
-  } else if(isInstanceType(type)){
+  if(isInstanceType(type)){
     return createInstanceByType(ctx, type);
-  } else if(isTypeReferenceType(type)){
-    return createTypeReferenceByType(ctx, type);
   } else if(isFunctionLikeType(type)){
     return createFunctionType(ctx, type);
   } else if(isLiteralType(type)){

@@ -1,5 +1,7 @@
-import { ElementFlags, TupleTypeReference, Type } from "typescript";
+import { ElementFlags, TupleTypeNode, TupleTypeReference, Type } from "typescript";
+import { assert } from "vitest";
 
+import { isTupleTypeReferenceType } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Tuple, TupleMember, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
@@ -23,6 +25,13 @@ export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReferen
     position
   };
 
+}
+
+
+export function createTupleByTupleTypeNode(ctx: CompilerContext, tupleTypeNode: TupleTypeNode): Tuple {
+  const type = ctx.checker.getTypeFromTypeNode(tupleTypeNode);
+  assert(isTupleTypeReferenceType(type), "Type is not a type reference");
+  return createTupleTypeByTypeReference(ctx, type);
 }
 
 

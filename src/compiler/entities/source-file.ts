@@ -7,13 +7,12 @@ import { CompilerContext } from "../../types/context.js";
 import { ExportableTypes, SourceFile, TypeKind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
-import { resolveSymbolInCaseOfImport } from "../utils/ts.js";
+import { getExportedSymbols } from "../utils/ts.js";
 
 
 export function createSourceFileBySymbol(ctx: CompilerContext, symbol: Symbol): SourceFile {
 
   const exports = getExportedSymbols(ctx, symbol)
-    .map(symbol => ctx.cache.cacheSymbol(ctx, symbol))
     .reduce<ExportableTypes[]>((parsedSymbols, exportedSymbol) => {
 
     const parsedSymbol = parseSymbol(ctx, exportedSymbol);
@@ -35,12 +34,4 @@ export function createSourceFileBySymbol(ctx: CompilerContext, symbol: Symbol): 
     name
   };
 
-}
-
-
-function getExportedSymbols(ctx: CompilerContext, moduleSymbol: Symbol, exclude?: string[]) {
-  const name = moduleSymbol.getName();
-  const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, moduleSymbol);
-  const exportedSymbols = ctx.checker.getExportsOfModule(resolvedSymbol);
-  return exportedSymbols;
 }

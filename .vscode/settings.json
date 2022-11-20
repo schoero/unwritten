@@ -52,7 +52,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.markdownlint": true,
-    "source.fixAll.shellcheck": true
+    "source.fixAll.shellcheck": true,
+    "source.organizeImports": false
   },
 
   "editor.rulers": [

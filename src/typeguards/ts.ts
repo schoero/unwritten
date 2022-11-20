@@ -1,4 +1,5 @@
 import ts, {
+  ArrayTypeNode,
   BigIntLiteralType,
   Declaration,
   FunctionLikeDeclaration,
@@ -18,6 +19,7 @@ import ts, {
   TypeNode,
   TypeParameter,
   TypeReference,
+  TypeReferenceNode,
   UnionType
 } from "typescript";
 
@@ -343,6 +345,17 @@ export function isTupleTypeNode(typeNode: TypeNode): typeNode is TupleTypeNode {
   return ts.isTupleTypeNode(typeNode);
 }
 
+export function isArrayTypeNode(typeNode: TypeNode): typeNode is ArrayTypeNode {
+  return ts.isArrayTypeNode(typeNode);
+}
+
+export function isArrayTypeReferenceTypeNode(typeNode: TypeNode): typeNode is TypeReferenceNode {
+  return isTypeReferenceNode(typeNode) && typeNode.typeName.getText() === "Array" && typeNode.typeArguments?.length === 1;
+}
+
+export function isArrayTypeReferenceType(type: Type): type is TypeReference {
+  return isTypeReferenceType(type) && type.target.symbol.getName() === "Array" && type.target.typeParameters?.length === 1;
+}
 export function isNamedTupleMember(member: NamedTupleMember | TypeNode): member is NamedTupleMember {
   return ts.isNamedTupleMember(member);
 }
@@ -357,6 +370,10 @@ export function isTupleTypeReferenceType(type: Type): type is TupleTypeReference
 
 export function isTypeReferenceType(type: Type): type is TypeReference {
   return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Reference) !== 0;
+}
+
+export function isTypeReferenceNode(typeNode: TypeNode): typeNode is TypeReferenceNode {
+  return ts.isTypeReferenceNode(typeNode);
 }
 
 export function isGenericType(type: Type): type is GenericType {

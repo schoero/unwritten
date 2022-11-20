@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import { ExportedSymbols } from "../compiler/exported-symbols/index.js";
 import { compile } from "../compiler/index.js";
 import { createContext as createCompilerContext } from "../compiler/utils/context.js";
 import { createConfig } from "../config/index.js";
@@ -28,22 +29,19 @@ export async function docCreator(entryFilePath: string, options?: APIOptions) {
   const { checker, program } = compile(absoluteEntryFilePath, options?.tsconfig);
 
 
-  //-- Get renderer
-
-  const renderer = await getRenderer(options?.renderer);
-
-
-  //-- Create config and contexts
+  //-- Parse
 
   const config = createConfig(options?.config);
-  const compilerContext = createCompilerContext(checker, config);
-  const renderContext = createRenderContext(renderer, config);
-
-
-  //-- Parse and render
-
-  const entryFileSymbol = getEntryFileSymbolFromProgram(compilerContext, program);
+  const initialCompilerContext = createCompilerContext(checker, config);
+  const entryFileSymbol = getEntryFileSymbolFromProgram(initialCompilerContext, program);
+  const compilerContext = { ...initialCompilerContext, exportedSymbols: new ExportedSymbols(initialCompilerContext, entryFileSymbol) };
   const parsedSymbols = parse(compilerContext, entryFileSymbol);
+
+
+  //-- Render
+
+  const renderer = await getRenderer(options?.renderer);
+  const renderContext = createRenderContext(renderer, config);
   const renderedSymbols = renderer.render(renderContext, parsedSymbols);
 
 

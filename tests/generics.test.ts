@@ -10,6 +10,7 @@ import { ts } from "./utils/template.js";
 scope("Compiler", "Generics", () => {
 
   {
+
     const testFileContent = ts`
       export type Generic<T> = T;
     `;
@@ -21,9 +22,10 @@ scope("Compiler", "Generics", () => {
       expect(parsedSymbols).to.have.lengthOf(1);
       expect(parsedSymbols[0]!.kind).toBe(TypeKind.TypeAlias);
       expect((parsedSymbols[0]! as TypeAlias).type.kind).toBe(TypeKind.Reference);
-      expect(((parsedSymbols[0]! as TypeAlias).type as Reference).resolvedType).to.not.equal(undefined);
-      expect(((parsedSymbols[0]! as TypeAlias).type as Reference).resolvedType!.kind).to.equal(TypeKind.TypeParameter);
+      expect(((parsedSymbols[0]! as TypeAlias).type as Reference).target).to.not.equal(undefined);
+      expect(((parsedSymbols[0]! as TypeAlias).type as Reference).target!.kind).to.equal(TypeKind.TypeParameter);
     });
+
   }
 
   {
@@ -35,8 +37,8 @@ scope("Compiler", "Generics", () => {
     const parsedSymbols = parse(ctx, fileSymbol);
 
     it("should have a `string` constraint", () => {
-      expect((((parsedSymbols[0]! as TypeAlias).type as Reference).resolvedType as TypeParameter).constraints).to.not.equal(undefined);
-      expect((((parsedSymbols[0]! as TypeAlias).type as Reference).resolvedType as TypeParameter).constraints!.kind).to.equal(TypeKind.String);
+      expect((((parsedSymbols[0]! as TypeAlias).type as Reference).target as TypeParameter).constraints).to.not.equal(undefined);
+      expect((((parsedSymbols[0]! as TypeAlias).type as Reference).target as TypeParameter).constraints!.kind).to.equal(TypeKind.String);
     });
   }
 
