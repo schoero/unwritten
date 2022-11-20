@@ -30,11 +30,11 @@ import { createLiteralType } from "./literal.js";
 import { createObjectTypeByType } from "./object.js";
 import { createObjectLiteralByType } from "./object-literal.js";
 import { createPrimitiveType } from "./primitive.js";
-import { createTypeReferenceByTypeNode } from "./type-reference.js";
 import { createThisByType } from "./this.js";
 import { createTupleByTupleTypeNode } from "./tuple-type.js";
 import { createTypeLiteralByType } from "./type-literal.js";
 import { createTypeParameterByType } from "./type-parameter.js";
+import { createTypeReferenceByTypeNode } from "./type-reference.js";
 import { createUnionTypeByType } from "./union-type.js";
 import { createUnresolvedByType } from "./unresolved.js";
 
