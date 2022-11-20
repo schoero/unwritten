@@ -12,7 +12,7 @@ import {
 } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TypeKind, Types } from "../../types/types.js";
-import { isSymbolExcluded, isSymbolExported } from "../../utils/general.js";
+import { isSymbolExcluded } from "../../utils/general.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createArrayByTypeReference } from "./array.js";
@@ -57,7 +57,7 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
 
   //-- Symbol
 
-  if(isSymbolExported(ctx, symbol) && !name.startsWith("__")){
+  if(!name.startsWith("__")){
     return parseSymbol(ctx, symbol);
   }
 

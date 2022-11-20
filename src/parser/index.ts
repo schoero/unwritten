@@ -4,8 +4,9 @@ import { assert } from "vitest";
 import { createTypeAliasBySymbol } from "../compiler/entities/alias.js";
 import { createClassBySymbol } from "../compiler/entities/class.js";
 import { createEnumBySymbol } from "../compiler/entities/enum.js";
-import { createFunctionEntity } from "../compiler/entities/function.js";
+import { createFunction } from "../compiler/entities/function.js";
 import { createInterfaceBySymbol } from "../compiler/entities/interface.js";
+import { createLinkBySymbol } from "../compiler/entities/link.js";
 import { createModuleBySymbol } from "../compiler/entities/module.js";
 import { createNamespaceBySymbol } from "../compiler/entities/namespace.js";
 import { createObjectLiteralBySymbol } from "../compiler/entities/object-literal.js";
@@ -14,7 +15,7 @@ import { createSourceFileBySymbol } from "../compiler/entities/source-file.js";
 import { createTypeParameterBySymbol } from "../compiler/entities/type-parameter.js";
 import { createUnresolvedBySymbol } from "../compiler/entities/unresolved.js";
 import { createVariableBySymbol } from "../compiler/entities/variable.js";
-import { resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
+import { isSymbolLocked, lockSymbol, resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
 import {
   isClassSymbol,
   isEnumSymbol,
@@ -54,10 +55,16 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
     return createUnresolvedBySymbol(ctx, resolvedSymbol);
   }
 
+  if(isSymbolLocked(ctx, resolvedSymbol)){
+    return createLinkBySymbol(ctx, resolvedSymbol);
+  } else {
+    lockSymbol(ctx, resolvedSymbol);
+  }
+
   if(isVariableSymbol(resolvedSymbol)){
     return createVariableBySymbol(ctx, resolvedSymbol);
   } else if(isFunctionSymbol(resolvedSymbol)){
-    return createFunctionEntity(ctx, resolvedSymbol);
+    return createFunction(ctx, resolvedSymbol);
   } else if(isClassSymbol(resolvedSymbol)){
     return createClassBySymbol(ctx, resolvedSymbol);
   } else if(isInterfaceSymbol(resolvedSymbol)){

@@ -33,7 +33,7 @@ scope("Compiler", TypeKind.Union, () => {
     const testFileContent = ts`
       /**
        * Union type description
-       * @example "hello" | 7
+       * @example Union type example
        */
       export type UnionType = string | number;
     `;
@@ -61,7 +61,7 @@ scope("Compiler", TypeKind.Union, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedTypeAlias.example).to.equal("\"hello\" | 7");
+      expect(exportedTypeAlias.example).to.equal("Union type example");
     });
 
     it("should have a matching position", () => {

@@ -37,7 +37,7 @@ scope("Compiler", TypeKind.Array, () => {
       const testFileContent = ts`
         /**
          * Array type description
-         * @example string[]
+         * @example Array type example
          */
         export type ArrayType = string[];
       `;
@@ -64,7 +64,7 @@ scope("Compiler", TypeKind.Array, () => {
       });
 
       it("should have a matching example", () => {
-        expect(exportedTypeAlias.example).to.equal("string[]");
+        expect(exportedTypeAlias.example).to.equal("Array type example");
       });
 
       it("should have a matching position", () => {
@@ -112,7 +112,7 @@ scope("Compiler", TypeKind.Array, () => {
       const testFileContent = ts`
         /**
          * Array type description
-         * @example string[]
+         * @example Array type example
          */
         export type ArrayType = Array<string>;
       `;
@@ -139,7 +139,7 @@ scope("Compiler", TypeKind.Array, () => {
       });
 
       it("should have a matching example", () => {
-        expect(exportedTypeAlias.example).to.equal("string[]");
+        expect(exportedTypeAlias.example).to.equal("Array type example");
       });
 
       it("should have a matching position", () => {

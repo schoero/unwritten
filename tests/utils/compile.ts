@@ -5,6 +5,7 @@ import { assert } from "vitest";
 
 import { ExportedSymbols } from "../../src/compiler/exported-symbols/index.js";
 import { reportCompilerDiagnostics } from "../../src/compiler/index.js";
+import { LockedSymbols } from "../../src/compiler/locked-symbols/index.js";
 import { createConfig } from "../../src/config/index.js";
 import { disableLog } from "../../src/log/index.js";
 import { Config } from "../../src/types/config.js";
@@ -62,7 +63,8 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions, c
 
   const ctx: CompilerContext = {
     checker,
-    config: createConfig(config)
+    config: createConfig(config),
+    lockedSymbols: new LockedSymbols()
   };
 
   ctx.exportedSymbols = new ExportedSymbols(ctx, fileSymbol);

@@ -1,9 +1,9 @@
-import { expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Reference, TypeKind, TypeParameter } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createTypeAliasBySymbol } from "./alias.js";
 
@@ -32,7 +32,7 @@ scope("Compiler", TypeKind.TypeAlias, () => {
     const testFileContent = ts`
       /**
        * Type alias description 
-       * @example "hello"
+       * @example Type alias example
        */
       export type TypeAlias = string;
     `;
@@ -59,7 +59,7 @@ scope("Compiler", TypeKind.TypeAlias, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedTypeAlias.example).to.equal("\"hello\"");
+      expect(exportedTypeAlias.example).to.equal("Type alias example");
     });
 
     it("should have a matching position", () => {
@@ -71,5 +71,66 @@ scope("Compiler", TypeKind.TypeAlias, () => {
     });
 
   }
+
+
+  describe("Generics", () => {
+
+    {
+
+      const testFileContent = ts`
+        export type GenericTypeAlias<T> = T;
+      `;
+
+      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+      const symbol = exportedSymbols.find(s => s.name === "GenericTypeAlias")!;
+      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+
+      it("should be able to parse generic types", () => {
+        expect(exportedTypeAlias.type.kind).toBe(TypeKind.Reference);
+        expect((exportedTypeAlias.type as Reference).target).to.not.equal(undefined);
+        expect((exportedTypeAlias.type as Reference).target!.kind).to.equal(TypeKind.TypeParameter);
+      });
+
+    }
+
+    {
+
+      const testFileContent = ts`
+        export type Generic<T extends string> = T;
+      `;
+
+      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+      const symbol = exportedSymbols.find(s => s.name === "Generic")!;
+      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+
+      it("should have a `string` constraint", () => {
+        expect((((exportedTypeAlias.type as Reference).target as Reference).target as TypeParameter).constraints).to.not.equal(undefined);
+        expect((((exportedTypeAlias.type as Reference).target as Reference).target as TypeParameter).constraints!.kind).to.equal(TypeKind.String);
+      });
+
+    }
+
+    {
+
+      const testFileContent = ts`
+        type Generic<T extends string> = T;
+        export type Hello = Generic<"World">;
+      `;
+
+      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+      const symbol = exportedSymbols.find(s => s.name === "Generic")!;
+      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+
+      it("should have a matching type argument", () => {
+        expect(((exportedTypeAlias.type as Reference).target as Reference).typeArguments).to.have.lengthOf(1);
+        expect(((exportedTypeAlias.type as Reference).target as Reference).typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
+      });
+
+    }
+
+  });
 
 });

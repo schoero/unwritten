@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Reference, TypeKind } from "../../types/types.js";
+import { Interface, Reference, TypeKind } from "../../types/types.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
 
@@ -38,11 +38,55 @@ scope("Compiler", TypeKind.Link, () => {
       expect((exportedInterfaceA.members[0]!.type as Reference).target!.id).to.equal(exportedInterfaceB.id);
     });
 
-    it("should not create links if the targeted symbol is not exported", () => {
+    it("should not create links if the targeted symbol is not exported and not recursive", () => {
       expect(exportedInterfaceB.members.length).to.equal(1);
       expect(exportedInterfaceB.members[0]!.type.kind).to.equal(TypeKind.Reference);
       expect((exportedInterfaceB.members[0]!.type as Reference).target).to.not.equal(undefined);
       expect((exportedInterfaceB.members[0]!.type as Reference).target!.kind).to.equal(TypeKind.Interface);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export interface InterfaceA {
+        b: InterfaceB;
+      }
+      interface InterfaceB {
+        c: InterfaceC;
+      }
+      interface InterfaceC {
+        b: InterfaceB
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+    const exportedInterfaceASymbol = exportedSymbols.find(s => s.name === "InterfaceA")!;
+    const exportedInterfaceA = createInterfaceBySymbol(ctx, exportedInterfaceASymbol);
+
+    it("should create links if the targeted symbol is not exported but is recursive", () => {
+
+      expect(exportedInterfaceA.members.length).to.equal(1);
+      expect(exportedInterfaceA.members[0]!.type.kind).to.equal(TypeKind.Reference);
+      expect((exportedInterfaceA.members[0]!.type as Reference).target).to.not.equal(undefined);
+      expect((exportedInterfaceA.members[0]!.type as Reference).target!.kind).to.equal(TypeKind.Interface);
+
+      const interfaceB = (exportedInterfaceA.members[0]!.type as Reference).target! as Interface;
+
+      expect(interfaceB.members.length).to.equal(1);
+      expect(interfaceB.members[0]!.type.kind).to.equal(TypeKind.Reference);
+      expect((interfaceB.members[0]!.type as Reference).target).to.not.equal(undefined);
+      expect((interfaceB.members[0]!.type as Reference).target!.kind).to.equal(TypeKind.Interface);
+
+      const interfaceC = (interfaceB.members[0]!.type as Reference).target! as Interface;
+
+      expect(interfaceC.members.length).to.equal(1);
+      expect(interfaceC.members[0]!.type.kind).to.equal(TypeKind.Reference);
+      expect((interfaceC.members[0]!.type as Reference).target).to.not.equal(undefined);
+      expect((interfaceC.members[0]!.type as Reference).target!.kind).to.equal(TypeKind.Link);
+
     });
 
   }

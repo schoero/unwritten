@@ -367,6 +367,7 @@ export interface TypeAlias extends Type<TypeKind.TypeAlias> {
   type: Types;
   description?: Description;
   example?: Example;
+  typeParameters?: TypeParameter[];
 }
 
 

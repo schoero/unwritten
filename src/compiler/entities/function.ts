@@ -9,7 +9,7 @@ import { functionOverloadDeclarationFilter } from "../utils/filter.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createFunctionEntity(ctx: CompilerContext, symbol: Symbol): Function {
+export function createFunction(ctx: CompilerContext, symbol: Symbol): Function {
 
   const declarations = symbol.declarations?.filter(isFunctionLikeDeclaration)
     .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];

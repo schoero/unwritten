@@ -33,7 +33,7 @@ scope("Compiler", TypeKind.Intersection, () => {
     const testFileContent = ts`
       /**
        * Intersection type description
-       * @example { a: string } & { b: number }
+       * @example Intersection type example
        */
       export type IntersectionType = { a: string } & { b: number };
     `;
@@ -61,7 +61,7 @@ scope("Compiler", TypeKind.Intersection, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedTypeAlias.example).to.equal("{ a: string } & { b: number }");
+      expect(exportedTypeAlias.example).to.equal("Intersection type example");
     });
 
     it("should have a matching position", () => {

@@ -1,4 +1,4 @@
-import { Symbol, TypeNode, TypeParameter as TSTypeParameter } from "typescript";
+import { Symbol, TypeNode, TypeParameter as TSTypeParameter, TypeParameterDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { isTypeParameterDeclaration } from "../../typeguards/ts.js";
@@ -29,6 +29,17 @@ export function createTypeParameterBySymbol(ctx: CompilerContext, symbol: Symbol
     name,
     position
   };
+
+}
+
+
+export function createTypeParameterByDeclaration(ctx: CompilerContext, declaration: TypeParameterDeclaration): TypeParameter {
+
+  const symbol = ctx.checker.getSymbolAtLocation(declaration.name);
+
+  assert(symbol, "Symbol is not found");
+
+  return createTypeParameterBySymbol(ctx, symbol);
 
 }
 

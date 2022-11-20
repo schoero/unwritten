@@ -9,6 +9,7 @@ import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { createTypeByTypeNode } from "./type.js";
+import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
 export function createTypeAliasBySymbol(ctx: CompilerContext, symbol: Symbol): TypeAlias {
@@ -38,6 +39,7 @@ function _parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAlias
 
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
+  const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
 
   // We have to use typeNode here for type references
   const typeNode = declaration.type;
@@ -46,7 +48,8 @@ function _parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAlias
   return {
     example,
     position,
-    type
+    type,
+    typeParameters
   };
 
 }

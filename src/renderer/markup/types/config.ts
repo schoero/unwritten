@@ -20,9 +20,16 @@ export interface MarkupRenderConfig {
   propertyEncapsulation?: Encapsulation | false;
 
   /**
+   * As per {@link https://tsdoc.org/pages/tags/param/ | specification}, parameters should be separated by a hyphen from the description.
+   * You can remove this hyphen from the output by setting this option to `false`.
+   */
+  removeHyphenAtStartOfTag?: boolean;
+
+  /**
     * Defines the order in which entities should be rendered.
     */
   renderOrder?: Types["kind"][];
+
   /**
    * Defines how string literal type annotations should be encapsulated in the rendered output.
    */
@@ -37,7 +44,6 @@ export interface MarkupRenderConfig {
    * Defines how type annotations should be encapsulated in the rendered output.
    */
   typeEncapsulation?: Encapsulation | false;
-
 }
 
 export type Encapsulation = [prefix: string, suffix: string];

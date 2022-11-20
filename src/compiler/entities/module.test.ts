@@ -1,10 +1,10 @@
 import { expect, it } from "vitest";
 
-import { createModuleBySymbol } from "../src/compiler/entities/module.js";
-import { TypeKind } from "../src/types/types.js";
-import { compile } from "./utils/compile.js";
-import { scope } from "./utils/scope.js";
-import { ts } from "./utils/template.js";
+import { compile } from "../../../tests/utils/compile.js";
+import { scope } from "../../../tests/utils/scope.js";
+import { ts } from "../../../tests/utils/template.js";
+import { TypeKind } from "../../types/types.js";
+import { createModuleBySymbol } from "./module.js";
 
 
 scope("Compiler", TypeKind.Module, () => {
@@ -17,7 +17,8 @@ scope("Compiler", TypeKind.Module, () => {
 
   const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
-  const exportedModule = createModuleBySymbol(ctx, exportedSymbols[0]!);
+  const symbol = exportedSymbols.find(s => s.name === "TestModule")!;
+  const exportedModule = createModuleBySymbol(ctx, symbol);
 
   it("should export a module", () => {
     expect(exportedModule.name).to.equal("TestModule");

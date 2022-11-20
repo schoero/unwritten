@@ -3,13 +3,52 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Interface, TypeKind } from "../../types/types.js";
+import { TypeKind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
 
 scope("Compiler", TypeKind.Interface, () => {
+
   {
+
+    const testFileContent = ts`
+      export interface Interface {
+        a: string;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+    const symbol = exportedSymbols.find(s => s.name === "Interface")!;
+    const exportedInterface = createInterfaceBySymbol(ctx, symbol);
+
+    it("should be able to parse an interface", () => {
+      expect(exportedInterface.kind).to.equal(TypeKind.Interface);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export interface Interface {};
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+    const symbol = exportedSymbols.find(s => s.name === "Interface")!;
+    const exportedEnum = createInterfaceBySymbol(ctx, symbol);
+
+    it("should be able to handle empty interfaces", () => {
+      expect(exportedEnum.kind).to.equal(TypeKind.Interface);
+      expect(exportedEnum.members.length).to.equal(0);
+    });
+
+  }
+
+  {
+
     const testFileContent = ts`
       /** Interface description */
       export interface Interface {
@@ -38,18 +77,18 @@ scope("Compiler", TypeKind.Interface, () => {
     });
 
     it("should have a matching type", () => {
-      expect((exportedInterface as Interface).members.length).to.equal(2);
+      expect(exportedInterface.members.length).to.equal(2);
     });
 
     it("should have matching members", () => {
-      expect((exportedInterface as Interface).members[0]!.name).to.equal("a");
-      expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(TypeKind.String);
-      expect((exportedInterface as Interface).members[0]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 4 });
-      expect((exportedInterface as Interface).members[0]!.description).to.equal("Member description");
-      expect((exportedInterface as Interface).members[1]!.name).to.equal("b");
-      expect((exportedInterface as Interface).members[1]!.example).to.equal("7");
-      expect((exportedInterface as Interface).members[1]!.type.kind).to.equal(TypeKind.Number);
-      expect((exportedInterface as Interface).members[1]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 6 });
+      expect(exportedInterface.members[0]!.name).to.equal("a");
+      expect(exportedInterface.members[0]!.type.kind).to.equal(TypeKind.String);
+      expect(exportedInterface.members[0]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 4 });
+      expect(exportedInterface.members[0]!.description).to.equal("Member description");
+      expect(exportedInterface.members[1]!.name).to.equal("b");
+      expect(exportedInterface.members[1]!.example).to.equal("7");
+      expect(exportedInterface.members[1]!.type.kind).to.equal(TypeKind.Number);
+      expect(exportedInterface.members[1]!.position).to.deep.equal({ column: 8, file: "/file.ts", line: 6 });
     });
 
     it("should have a matching description", () => {
@@ -83,11 +122,11 @@ scope("Compiler", TypeKind.Interface, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should merge multiple interfaces with the same name", () => {
-      expect((exportedInterface as Interface).members.length).to.equal(2);
-      expect((exportedInterface as Interface).members[0]!.name).to.equal("a");
-      expect((exportedInterface as Interface).members[0]!.type.kind).to.equal(TypeKind.String);
-      expect((exportedInterface as Interface).members[1]!.name).to.equal("b");
-      expect((exportedInterface as Interface).members[1]!.type.kind).to.equal(TypeKind.Number);
+      expect(exportedInterface.members.length).to.equal(2);
+      expect(exportedInterface.members[0]!.name).to.equal("a");
+      expect(exportedInterface.members[0]!.type.kind).to.equal(TypeKind.String);
+      expect(exportedInterface.members[1]!.name).to.equal("b");
+      expect(exportedInterface.members[1]!.type.kind).to.equal(TypeKind.Number);
     });
 
   }
@@ -143,13 +182,13 @@ scope("Compiler", TypeKind.Interface, () => {
     const exportedInterfaceC = createInterfaceBySymbol(ctx, exportedInterfaceCSymbol);
 
     it("should be able to handle extended interfaces", () => {
-      expect((exportedInterfaceB as Interface).members).to.have.lengthOf(2);
-      expect((exportedInterfaceB as Interface).members[0]!.name).to.equal("a");
-      expect((exportedInterfaceB as Interface).members[1]!.name).to.equal("b");
-      expect((exportedInterfaceC as Interface).members).to.have.lengthOf(3);
-      expect((exportedInterfaceC as Interface).members[0]!.name).to.equal("a");
-      expect((exportedInterfaceC as Interface).members[1]!.name).to.equal("b");
-      expect((exportedInterfaceC as Interface).members[2]!.name).to.equal("c");
+      expect(exportedInterfaceB.members).to.have.lengthOf(2);
+      expect(exportedInterfaceB.members[0]!.name).to.equal("a");
+      expect(exportedInterfaceB.members[1]!.name).to.equal("b");
+      expect(exportedInterfaceC.members).to.have.lengthOf(3);
+      expect(exportedInterfaceC.members[0]!.name).to.equal("a");
+      expect(exportedInterfaceC.members[1]!.name).to.equal("b");
+      expect(exportedInterfaceC.members[2]!.name).to.equal("c");
     });
 
   }
