@@ -3,7 +3,7 @@ import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { This, TypeKind } from "../../types/types.js";
-import { createTargetBySymbol } from "./reference.js";
+import { createTargetBySymbol } from "./type-reference.js";
 
 
 export function createThisByType(ctx: CompilerContext, type: Type): This {

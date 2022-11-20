@@ -4,8 +4,7 @@ import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
 import { TypeKind, Union } from "../../types/types.js";
-import { getIdBySymbol } from "../compositions/id.js";
-import { createTypeAliasBySymbol } from "./alias.js";
+import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
 scope("Compiler", TypeKind.Union, () => {
@@ -46,30 +45,6 @@ scope("Compiler", TypeKind.Union, () => {
     it("should have a matching kind", () => {
       expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
       expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Union);
-    });
-
-    it("should have a matching name", () => {
-      expect(exportedTypeAlias.name).to.equal("UnionType");
-    });
-
-    it("should have a matching id", () => {
-      expect(exportedTypeAlias.id).to.equal(getIdBySymbol(ctx, symbol));
-    });
-
-    it("should have a matching description", () => {
-      expect(exportedTypeAlias.description).to.equal("Union type description");
-    });
-
-    it("should have a matching example", () => {
-      expect(exportedTypeAlias.example).to.equal("Union type example");
-    });
-
-    it("should have a matching position", () => {
-      expect(exportedTypeAlias.position).to.deep.equal({
-        column: 6,
-        file: "/file.ts",
-        line: 5
-      });
     });
 
     it("should have the right amount of types", () => {

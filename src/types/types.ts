@@ -41,6 +41,7 @@ export enum TypeKind {
   This = "This",
   Tuple = "Tuple",
   TypeAlias = "TypeAlias",
+  TypeArgument = "TypeArgument",
   TypeLiteral = "TypeLiteral",
   TypeParameter = "TypeParameter",
   Undefined = "Undefined",
@@ -105,6 +106,7 @@ export type Types =
   | SourceFile
   | This
   | Tuple
+  | TypeArgument
   | TypeLiteral
   | TypeParameter
   | Union
@@ -462,6 +464,14 @@ export interface TypeParameter extends Type<TypeKind.TypeParameter> {
   name: Name;
   position: Position;
   constraints?: Types;
+}
+
+
+//-- TypeArgument
+
+export interface TypeArgument extends Type<TypeKind.TypeArgument> {
+  position: Position;
+  type?: Types;
 }
 
 export type FunctionLikeTypeMap = {

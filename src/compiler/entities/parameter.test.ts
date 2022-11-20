@@ -4,10 +4,10 @@ import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
 import { TypeKind } from "../../types/types.js";
-import { createFunction } from "./function.js";
+import { createFunctionBySymbol } from "./function.js";
 
 
-scope("Compiler", TypeKind.Intersection, () => {
+scope("Compiler", TypeKind.Parameter, () => {
 
   {
 
@@ -18,7 +18,7 @@ scope("Compiler", TypeKind.Intersection, () => {
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
-    const exportedFunction = createFunction(ctx, symbol);
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
 
     it("should be able to parse a parameter", () => {
       expect(exportedFunction.kind).to.equal(TypeKind.Function);
@@ -40,7 +40,7 @@ scope("Compiler", TypeKind.Intersection, () => {
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
-    const exportedFunction = createFunction(ctx, symbol);
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
     const parameter = exportedFunction.signatures[0]!.parameters[0]!;
 
     it("should have a matching kind", () => {
@@ -78,7 +78,7 @@ scope("Compiler", TypeKind.Intersection, () => {
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
-    const exportedFunction = createFunction(ctx, symbol);
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
     const parameter = exportedFunction.signatures[0]!.parameters[0]!;
 
     it("should be able to handle optional types", () => {
@@ -97,7 +97,7 @@ scope("Compiler", TypeKind.Intersection, () => {
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
-    const exportedFunction = createFunction(ctx, symbol);
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
     const parameter = exportedFunction.signatures[0]!.parameters[0]!;
 
     it("should be able to handle initialized types", () => {
@@ -117,7 +117,7 @@ scope("Compiler", TypeKind.Intersection, () => {
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
-    const exportedFunction = createFunction(ctx, symbol);
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
     const parameter = exportedFunction.signatures[0]!.parameters[0]!;
 
     it("should be able to handle rest types", () => {

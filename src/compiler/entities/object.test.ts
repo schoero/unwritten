@@ -4,7 +4,7 @@ import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
 import { ObjectType, TypeKind } from "../../types/types.js";
-import { createTypeAliasBySymbol } from "./alias.js";
+import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
 scope("Compiler", TypeKind.Object, () => {

@@ -16,13 +16,13 @@ import { isSymbolExcluded } from "../../utils/general.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createArrayByTypeReference } from "./array.js";
-import { createFunctionType } from "./function.js";
+import { createFunctionByType } from "./function.js";
 import { createGetterBySymbol } from "./getter.js";
 import { createMethodBySymbol } from "./method.js";
 import { createPropertyBySymbol } from "./property.js";
 import { createSetterBySymbol } from "./setter.js";
 import { createSignatureBySignature } from "./signature.js";
-import { createTupleTypeByTypeReference } from "./tuple.js";
+import { createTupleTypeByTypeReference } from "./tuple-type.js";
 import { createUnresolvedBySymbol } from "./unresolved.js";
 
 
@@ -69,7 +69,7 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
   //-- Function
 
   if(isFunctionLikeType(type)){
-    return createFunctionType(ctx, type);
+    return createFunctionByType(ctx, type);
   }
 
 

@@ -1,10 +1,10 @@
 import { Program, Symbol } from "typescript";
 import { assert } from "vitest";
 
-import { createTypeAliasBySymbol } from "../compiler/entities/alias.js";
+import { createTypeAliasBySymbol } from "../compiler/entities/type-alias.js";
 import { createClassBySymbol } from "../compiler/entities/class.js";
 import { createEnumBySymbol } from "../compiler/entities/enum.js";
-import { createFunction } from "../compiler/entities/function.js";
+import { createFunctionBySymbol } from "../compiler/entities/function.js";
 import { createInterfaceBySymbol } from "../compiler/entities/interface.js";
 import { createLinkBySymbol } from "../compiler/entities/link.js";
 import { createModuleBySymbol } from "../compiler/entities/module.js";
@@ -64,7 +64,7 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
   if(isVariableSymbol(resolvedSymbol)){
     return createVariableBySymbol(ctx, resolvedSymbol);
   } else if(isFunctionSymbol(resolvedSymbol)){
-    return createFunction(ctx, resolvedSymbol);
+    return createFunctionBySymbol(ctx, resolvedSymbol);
   } else if(isClassSymbol(resolvedSymbol)){
     return createClassBySymbol(ctx, resolvedSymbol);
   } else if(isInterfaceSymbol(resolvedSymbol)){

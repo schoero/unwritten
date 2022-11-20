@@ -22,20 +22,20 @@ import {
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
 import { createArrayByArrayTypeNode } from "./array.js";
-import { createFunctionType } from "./function.js";
+import { createFunctionByType } from "./function.js";
 import { createInstanceByType } from "./instance.js";
 import { createInterfaceByType } from "./interface.js";
-import { createIntersectionTypeByType } from "./intersection.js";
+import { createIntersectionTypeByType } from "./intersection-type.js";
 import { createLiteralType } from "./literal.js";
 import { createObjectTypeByType } from "./object.js";
 import { createObjectLiteralByType } from "./object-literal.js";
 import { createPrimitiveType } from "./primitive.js";
-import { createTypeReferenceByTypeNode } from "./reference.js";
+import { createTypeReferenceByTypeNode } from "./type-reference.js";
 import { createThisByType } from "./this.js";
-import { createTupleByTupleTypeNode } from "./tuple.js";
+import { createTupleByTupleTypeNode } from "./tuple-type.js";
 import { createTypeLiteralByType } from "./type-literal.js";
 import { createTypeParameterByType } from "./type-parameter.js";
-import { createUnionTypeByType } from "./union.js";
+import { createUnionTypeByType } from "./union-type.js";
 import { createUnresolvedByType } from "./unresolved.js";
 
 
@@ -83,7 +83,7 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
   if(isInstanceType(type)){
     return createInstanceByType(ctx, type);
   } else if(isFunctionLikeType(type)){
-    return createFunctionType(ctx, type);
+    return createFunctionByType(ctx, type);
   } else if(isLiteralType(type)){
     return createLiteralType(ctx, type);
   } else if(isPrimitiveType(type)){
