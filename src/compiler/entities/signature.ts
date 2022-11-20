@@ -46,7 +46,7 @@ export function createSignatureBySignature(ctx: CompilerContext, signature: TSSi
   /*
    * If we would try and create the signature directly, signatures.parameters would be a symbol array instead of a declaration array.
    * The reason for that is that parameters are actually symbols. We would need the figure out the index of the signature if
-   * it was overloaded, and then get the parameter declaration with the same index. If we just go with the signatrure declaration,
+   * it was overloaded, and then get the parameter declaration with the same index. If we just go with the signature declaration,
    * we can just use the parameters array directly as TypeScript already did the work for us.
    * ```ts
    * function test(sameParameterSymbol: string): string;

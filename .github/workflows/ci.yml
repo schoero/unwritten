@@ -28,7 +28,7 @@ jobs:
         run: npm run lint:ci
 
       - name: Spellcheck
-        run: npm run spellcheck
+        run: npm run spellcheck:ci
 
   test:
     runs-on: ${{ matrix.os }}

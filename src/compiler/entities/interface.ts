@@ -64,7 +64,7 @@ function _mergeMembers(interfaces: ReturnType<typeof _createInterfaceByDeclarati
 function _createInterfaceByDeclaration(ctx: CompilerContext, declaration: InterfaceDeclaration) {
 
   const members = declaration.members.map(declaration => createMemberByDeclaration(ctx, declaration));
-  const heritage = declaration.heritageClauses?.map(heritaceClause => _createInterfaceByHeritageClause(ctx, heritaceClause))[0];
+  const heritage = declaration.heritageClauses?.map(heritageClause => _createInterfaceByHeritageClause(ctx, heritageClause))[0];
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const id = getIdByDeclaration(ctx, declaration);

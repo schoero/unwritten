@@ -1,5 +1,9 @@
 {
   "import": [
-    "node_modules/@schoero/cspell-config/.cspell.json"
+    "@schoero/cspell-config"
+  ],
+  "words": [
+    "typeguards",
+    "mozilla"
   ]
 }
