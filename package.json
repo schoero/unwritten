@@ -30,6 +30,9 @@
     "test": "vitest -c ./vite.config.ts",
     "typecheck": "vitest typecheck --run -c ./vite.config.ts test-d.ts"
   },
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "commander": "^9.4.1",
     "minimatch": "^5.1.0",
