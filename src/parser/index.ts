@@ -1,7 +1,6 @@
 import { Program, Symbol } from "typescript";
 import { assert } from "vitest";
 
-import { createTypeAliasBySymbol } from "../compiler/entities/type-alias.js";
 import { createClassBySymbol } from "../compiler/entities/class.js";
 import { createEnumBySymbol } from "../compiler/entities/enum.js";
 import { createFunctionBySymbol } from "../compiler/entities/function.js";
@@ -12,6 +11,7 @@ import { createNamespaceBySymbol } from "../compiler/entities/namespace.js";
 import { createObjectLiteralBySymbol } from "../compiler/entities/object-literal.js";
 import { createPropertyBySymbol } from "../compiler/entities/property.js";
 import { createSourceFileBySymbol } from "../compiler/entities/source-file.js";
+import { createTypeAliasBySymbol } from "../compiler/entities/type-alias.js";
 import { createTypeParameterBySymbol } from "../compiler/entities/type-parameter.js";
 import { createUnresolvedBySymbol } from "../compiler/entities/unresolved.js";
 import { createVariableBySymbol } from "../compiler/entities/variable.js";
