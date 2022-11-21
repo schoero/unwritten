@@ -7,25 +7,28 @@ import { Reference, TypeKind } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.Reference, () => {
+scope("Compiler", TypeKind.Unresolved, () => {
 
   {
 
     const testFileContent = ts`
-      type A = string;
-      export type Reference = A;
+      export type Unresolved = Symbol;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent.trim(), undefined, {
+      compilerConfig: {
+        exclude: ["node_modules/**/*"]
+      }
+    });
 
-    const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "Reference")!;
+    const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "Unresolved")!;
     const exportedReferenceTypeAlias = createTypeAliasBySymbol(ctx, exportedTypeAliasSymbol);
 
     it("should export a type alias, which is a type reference to another type alias", () => {
       expect(exportedReferenceTypeAlias.kind).toBe(TypeKind.TypeAlias);
       expect(exportedReferenceTypeAlias.type.kind).toBe(TypeKind.Reference);
       expect((exportedReferenceTypeAlias.type as Reference).target).to.not.equal(undefined);
-      expect((exportedReferenceTypeAlias.type as Reference).target!.kind).to.equal(TypeKind.TypeAlias);
+      expect((exportedReferenceTypeAlias.type as Reference).target!.kind).to.equal(TypeKind.Unresolved);
     });
 
   }

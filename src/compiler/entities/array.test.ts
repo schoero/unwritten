@@ -43,6 +43,7 @@ scope("Compiler", TypeKind.Array, () => {
       `;
 
       const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
       const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
@@ -118,6 +119,7 @@ scope("Compiler", TypeKind.Array, () => {
       `;
 
       const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
       const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 

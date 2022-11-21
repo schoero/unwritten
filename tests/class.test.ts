@@ -65,6 +65,7 @@ scope("Compiler", TypeKind.Class, () => {
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
@@ -109,6 +110,7 @@ scope("Compiler", TypeKind.Class, () => {
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
@@ -146,6 +148,7 @@ scope("Compiler", TypeKind.Class, () => {
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
@@ -178,6 +181,7 @@ scope("Compiler", TypeKind.Class, () => {
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 
@@ -205,6 +209,7 @@ scope("Compiler", TypeKind.Class, () => {
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
     const exportedClassSymbol = exportedSymbols.find(symbol => symbol.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, exportedClassSymbol);
 

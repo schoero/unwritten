@@ -27,7 +27,7 @@
     "markdownlint:ci": "npm run markdownlint",
     "markdownlint:fix": "node_modules/.bin/markdownlint-cli2-fix '**/*.md' '#node_modules'",
     "schema": "npx node_modules/.bin/ts-json-schema-generator --path './src/types/config.ts' --type ConfigWithSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
-    "spellcheck": "node_modules/.bin/cspell lint --no-default-configuration",
+    "spellcheck": "node_modules/.bin/cspell lint",
     "spellcheck:ci": "npm run spellcheck -- --no-progress",
     "test": "vitest -c ./vite.config.ts",
     "typecheck": "vitest typecheck --run -c ./vite.config.ts test-d.ts"

@@ -400,6 +400,7 @@ export interface Interface extends Type<TypeKind.Interface> {
   example?: Example;
   heritage?: Interface;
   position?: Position;
+  typeParameters?: TypeParameter[];
 }
 
 export interface MergedInterface extends Interface {
