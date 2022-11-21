@@ -24,9 +24,11 @@ describe("Config", () => {
     const config = createConfig({
       externalTypes: {}
     });
+
     const ctx = createRenderContext(config);
 
     {
+
       const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, <Real<Variable>>testVariable);
 
       const variableName = Object.keys(renderedVariableForDocumentation)[0]!;
@@ -35,8 +37,11 @@ describe("Config", () => {
       it("should use the default encapsulation", () => {
         expect(variableContent[1]).to.equal("Type: &lt;string&gt;");
       });
+
     }
+
     {
+
       ctx.config.renderConfig.markdown.typeEncapsulation = false;
 
       const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, <Real<Variable>>testVariable);
@@ -48,7 +53,9 @@ describe("Config", () => {
         expect(variableContent[1]).to.equal("Type: string");
       });
     }
+
     {
+
       ctx.config.renderConfig.markdown.typeEncapsulation = ["`", "`"];
 
       const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, <Real<Variable>>testVariable);
@@ -59,6 +66,7 @@ describe("Config", () => {
       it("should be possible to change the encapsulation", () => {
         expect(variableContent[1]).to.equal("Type: `string`");
       });
+
     }
 
   });
