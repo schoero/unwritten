@@ -4,6 +4,7 @@ import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
 import { TypeKind } from "../../types/types.js";
+import { createClassBySymbol } from "./class.js";
 import { createFunctionBySymbol } from "./function.js";
 
 
@@ -33,14 +34,14 @@ scope("Compiler", TypeKind.Signature, () => {
   {
 
     const testFileContent = ts`
-        /**
-         * Function description
-         * @example Function example
-         */
-        export function functionSymbol(): boolean {
-          return true;
-        }
-      `;
+      /**
+       * Function description
+       * @example Function example
+       */
+      export function functionSymbol(): boolean {
+        return true;
+      }
+    `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
@@ -66,7 +67,7 @@ scope("Compiler", TypeKind.Signature, () => {
 
     it("should have a matching position", () => {
       expect(exportedFunction.signatures[0]!.position).to.deep.equal({
-        column: 8,
+        column: 6,
         file: "/file.ts",
         line: 5
       });
@@ -81,12 +82,12 @@ scope("Compiler", TypeKind.Signature, () => {
   {
 
     const testFileContent = ts`
-        export function add(a: number, b: number): number;
-        export function add(a: number, b: number, c: number): number;
-        export function add(a: number, b: number, c?: number): number {
-          return a + b + (c ?? 0);
-        }
-      `;
+      export function add(a: number, b: number): number;
+      export function add(a: number, b: number, c: number): number;
+      export function add(a: number, b: number, c?: number): number {
+        return a + b + (c ?? 0);
+      }
+    `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
@@ -95,6 +96,32 @@ scope("Compiler", TypeKind.Signature, () => {
 
     it("should be able to handle overloads", () => {
       expect(exportedFunction.signatures).to.have.lengthOf(2);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export class Class {
+        public publicMethod() {}
+        private privateMethod() {}
+        static staticMethod() {}
+        private static privateStaticMethod() {}
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const exportedClass = createClassBySymbol(ctx, symbol);
+
+    it("should have matching modifiers", () => {
+      expect(exportedClass.methods![0]!.signatures[0]!.modifiers).to.contain("public");
+      expect(exportedClass.methods![1]!.signatures[0]!.modifiers).to.contain("private");
+      expect(exportedClass.methods![2]!.signatures[0]!.modifiers).to.contain("static");
+      expect(exportedClass.methods![3]!.signatures[0]!.modifiers).to.contain("private");
+      expect(exportedClass.methods![3]!.signatures[0]!.modifiers).to.contain("static");
     });
 
   }

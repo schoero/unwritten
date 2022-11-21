@@ -8,11 +8,14 @@ import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { lockSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration } from "./member.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
 export function createInterfaceBySymbol(ctx: CompilerContext, symbol: Symbol): Interface | MergedInterface {
+
+  lockSymbol(ctx, symbol);
 
   const declarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
 
@@ -21,7 +24,7 @@ export function createInterfaceBySymbol(ctx: CompilerContext, symbol: Symbol): I
   const name = getNameBySymbol(ctx, symbol);
   const id = getIdBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
-  const fromDeclarations = declarations.map(declaration => _createInterfaceByDeclaration(ctx, declaration));
+  const fromDeclarations = declarations.map(declaration => _parseInterfaceDeclaration(ctx, declaration));
   const kind = TypeKind.Interface;
   const members = _mergeMembers(fromDeclarations);
 
@@ -53,7 +56,7 @@ export function createInterfaceByType(ctx: CompilerContext, type: Type): Interfa
 }
 
 
-function _mergeMembers(interfaces: ReturnType<typeof _createInterfaceByDeclaration>[]): Interface["members"] {
+function _mergeMembers(interfaces: ReturnType<typeof _parseInterfaceDeclaration>[]): Interface["members"] {
   return interfaces.reduce<Interface["members"]>((acc, declaration) => [
     ...acc,
     ...declaration.heritage?.members ?? [],
@@ -62,7 +65,7 @@ function _mergeMembers(interfaces: ReturnType<typeof _createInterfaceByDeclarati
 }
 
 
-function _createInterfaceByDeclaration(ctx: CompilerContext, declaration: InterfaceDeclaration) {
+function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceDeclaration) {
 
   const members = declaration.members.map(declaration => createMemberByDeclaration(ctx, declaration));
   const heritage = declaration.heritageClauses?.map(heritageClause => _createInterfaceByHeritageClause(ctx, heritageClause))[0];

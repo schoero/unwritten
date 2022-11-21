@@ -7,10 +7,13 @@ import { TypeKind, TypeParameter } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { lockSymbol } from "../utils/ts.js";
 import { createTypeByTypeNode } from "./type.js";
 
 
 export function createTypeParameterBySymbol(ctx: CompilerContext, symbol: Symbol): TypeParameter {
+
+  lockSymbol(ctx, symbol);
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 

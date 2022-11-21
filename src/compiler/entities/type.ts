@@ -14,7 +14,6 @@ import {
   isPrimitiveType,
   isThisType,
   isTupleTypeNode,
-  isTypeLiteralType,
   isTypeParameterType,
   isTypeReferenceNode,
   isUnionType
@@ -26,13 +25,12 @@ import { createFunctionByType } from "./function.js";
 import { createInstanceByType } from "./instance.js";
 import { createInterfaceByType } from "./interface.js";
 import { createIntersectionTypeByType } from "./intersection-type.js";
-import { createLiteralType } from "./literal.js";
+import { createLiteralType } from "./literal-type.js";
 import { createObjectTypeByType } from "./object.js";
 import { createObjectLiteralByType } from "./object-literal.js";
 import { createPrimitiveType } from "./primitive.js";
-import { createThisByType } from "./this.js";
+import { createThisByType } from "./this-type.js";
 import { createTupleByTupleTypeNode } from "./tuple-type.js";
-import { createTypeLiteralByType } from "./type-literal.js";
 import { createTypeParameterByType } from "./type-parameter.js";
 import { createTypeReferenceByTypeNode } from "./type-reference.js";
 import { createUnionTypeByType } from "./union-type.js";
@@ -80,7 +78,9 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
 
   //-- Order is important! Sort by most specific to least specific
 
-  if(isInstanceType(type)){
+  if(isThisType(type)){
+    return createThisByType(ctx, type);
+  } else if(isInstanceType(type)){
     return createInstanceByType(ctx, type);
   } else if(isFunctionLikeType(type)){
     return createFunctionByType(ctx, type);
@@ -90,16 +90,12 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
     return createPrimitiveType(ctx, type);
   } else if(isObjectLiteralType(type)){
     return createObjectLiteralByType(ctx, type);
-  } else if(isTypeLiteralType(type)){
-    return createTypeLiteralByType(ctx, type);
   } else if(isUnionType(type)){
     return createUnionTypeByType(ctx, type);
   } else if(isIntersectionType(type)){
     return createIntersectionTypeByType(ctx, type);
   } else if(isInterfaceType(type)){
     return createInterfaceByType(ctx, type);
-  } else if(isThisType(type)){
-    return createThisByType(ctx, type);
   } else if(isTypeParameterType(type)){
     return createTypeParameterByType(ctx, type);
   } else {

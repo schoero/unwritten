@@ -9,18 +9,21 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { lockSymbol } from "../utils/ts.js";
 import { createTypeByDeclaration } from "./type.js";
 
 
-export function createPropertyBySymbol(ctx: CompilerContext, memberSymbol: Symbol): Property {
+export function createPropertyBySymbol(ctx: CompilerContext, symbol: Symbol): Property {
 
-  const declaration = memberSymbol.valueDeclaration ?? memberSymbol.getDeclarations()?.[0];
+  lockSymbol(ctx, symbol);
+
+  const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
   assert(declaration && (isPropertySignature(declaration) || isPropertyAssignment(declaration) || isPropertyDeclaration(declaration)), `Property signature not found ${declaration?.kind}`);
 
-  const id = getIdBySymbol(ctx, memberSymbol);
-  const name = getNameBySymbol(ctx, memberSymbol);
-  const fromDeclaration = _createPropertyByDeclaration(ctx, declaration);
+  const id = getIdBySymbol(ctx, symbol);
+  const name = getNameBySymbol(ctx, symbol);
+  const fromDeclaration = _parsePropertyDeclaration(ctx, declaration);
 
   return {
     ...fromDeclaration,
@@ -31,7 +34,7 @@ export function createPropertyBySymbol(ctx: CompilerContext, memberSymbol: Symbo
 
 }
 
-function _createPropertyByDeclaration(ctx: CompilerContext, declaration: PropertyAssignment | PropertyDeclaration | PropertySignature) {
+function _parsePropertyDeclaration(ctx: CompilerContext, declaration: PropertyAssignment | PropertyDeclaration | PropertySignature) {
 
   const id = getIdByDeclaration(ctx, declaration);
   const example = getExampleByDeclaration(ctx, declaration);

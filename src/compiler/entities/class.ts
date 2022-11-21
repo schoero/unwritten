@@ -16,20 +16,24 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { lockSymbol } from "../utils/ts.js";
 import { createConstructorBySymbol } from "./constructor.js";
 import { createGetterBySymbol } from "./getter.js";
 import { createMethodBySymbol } from "./method.js";
 import { createPropertyBySymbol } from "./property.js";
 import { createSetterBySymbol } from "./setter.js";
+import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
 export function createClassBySymbol(ctx: CompilerContext, symbol: Symbol): Class {
+
+  lockSymbol(ctx, symbol);
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
   assert(declaration && isClassDeclaration(declaration), "Class declaration is not found");
 
-  const fromDeclaration = createClassByDeclaration(ctx, declaration);
+  const fromDeclaration = _parseClassDeclaration(ctx, declaration);
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
 
@@ -42,7 +46,7 @@ export function createClassBySymbol(ctx: CompilerContext, symbol: Symbol): Class
 }
 
 
-export function createClassByDeclaration(ctx: CompilerContext, declaration: ClassLikeDeclaration): Omit<Class, "name"> {
+function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDeclaration): Omit<Class, "name"> {
 
   const ctor = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isConstructorDeclaration).map(symbol => createConstructorBySymbol(ctx, symbol))[0];
   const getters = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isGetterDeclaration).map(symbol => createGetterBySymbol(ctx, symbol));
@@ -56,6 +60,7 @@ export function createClassByDeclaration(ctx: CompilerContext, declaration: Clas
   const example = getExampleByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
+  const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
 
   const id = getIdByDeclaration(ctx, declaration);
   const kind = TypeKind.Class;
@@ -72,7 +77,8 @@ export function createClassByDeclaration(ctx: CompilerContext, declaration: Clas
     modifiers,
     position,
     properties: _mergeWithInheritedClass(properties, heritage?.properties ?? []),
-    setters: _mergeWithInheritedClass(setters, heritage?.setters ?? [])
+    setters: _mergeWithInheritedClass(setters, heritage?.setters ?? []),
+    typeParameters
   };
 
 }

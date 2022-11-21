@@ -12,10 +12,13 @@ import {
 } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { lockSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration } from "./member.js";
 
 
 export function createEnumBySymbol(ctx: CompilerContext, symbol: Symbol): Enum {
+
+  lockSymbol(ctx, symbol);
 
   const declarations = symbol.getDeclarations()?.filter(isEnumDeclaration);
 
@@ -24,7 +27,7 @@ export function createEnumBySymbol(ctx: CompilerContext, symbol: Symbol): Enum {
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
-  const fromDeclarations = declarations.map(declaration => _createEnumByDeclaration(ctx, declaration));
+  const fromDeclarations = declarations.map(declaration => _parseEnumDeclaration(ctx, declaration));
   const kind = TypeKind.Enum;
   const members = _mergeMembers(fromDeclarations);
 
@@ -51,7 +54,7 @@ export function createEnumBySymbol(ctx: CompilerContext, symbol: Symbol): Enum {
 }
 
 
-function _mergeMembers(enums: ReturnType<typeof _createEnumByDeclaration>[]): Enum["members"] {
+function _mergeMembers(enums: ReturnType<typeof _parseEnumDeclaration>[]): Enum["members"] {
   return enums.reduce<Enum["members"]>((acc, declaration) => [
     ...acc,
     ...declaration.members
@@ -59,7 +62,7 @@ function _mergeMembers(enums: ReturnType<typeof _createEnumByDeclaration>[]): En
 }
 
 
-function _createEnumByDeclaration(ctx: CompilerContext, declaration: EnumDeclaration) {
+function _parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaration) {
 
   const description = getDescriptionByDeclaration(ctx, declaration);
   const example = getExampleByDeclaration(ctx, declaration);

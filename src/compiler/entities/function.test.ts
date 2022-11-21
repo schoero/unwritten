@@ -57,6 +57,10 @@ scope("Compiler", TypeKind.Function, () => {
         expect(exportedFunction.id).to.equal(getIdBySymbol(ctx, symbol));
       });
 
+      it("should have one signature", () => {
+        expect(exportedFunction.signatures).to.have.lengthOf(1);
+      });
+
     }
 
   });
@@ -84,10 +88,6 @@ scope("Compiler", TypeKind.Function, () => {
     {
 
       const testFileContent = ts`
-        /**
-         * Function type description
-         * @example Function type example
-         */
         export type FunctionType = () => boolean;
       `;
 

@@ -7,13 +7,14 @@ import { TypeKind } from "../../types/types.js";
 import { createClassBySymbol } from "./class.js";
 
 
-scope("Compiler", TypeKind.Class, () => {
+scope("Compiler", TypeKind.This, () => {
 
   {
 
     const testFileContent = ts`
       export class Class {
-        constructor() {
+        getThis() {
+          return this;
         }
       }
     `;
@@ -23,14 +24,11 @@ scope("Compiler", TypeKind.Class, () => {
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, symbol);
 
-    it("should be able to parse a constructor", () => {
-      expect(exportedClass.ctor).not.to.equal(undefined);
-      expect(exportedClass.ctor!.kind).equal(TypeKind.Constructor);
-    });
-
-    it("should have one signature", () => {
-      expect(exportedClass.ctor!.signatures).not.to.equal(undefined);
-      expect(exportedClass.ctor!.signatures).to.have.lengthOf(1);
+    it("should be able to parse a this type", () => {
+      expect(exportedClass.methods).not.to.equal(undefined);
+      expect(exportedClass.methods!).to.have.lengthOf(1);
+      expect(exportedClass.methods![0]!.signatures).to.have.lengthOf(1);
+      expect(exportedClass.methods![0]!.signatures[0]!.returnType.kind).to.equal(TypeKind.This);
     });
 
   }

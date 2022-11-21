@@ -208,6 +208,10 @@ export function isEnumMemberDeclaration(declaration: Declaration): declaration i
   return ts.isEnumMember(declaration);
 }
 
+export function isTypeElement(declaration: Declaration): declaration is ts.TypeElement {
+  return ts.isTypeElement(declaration);
+}
+
 export function isArrowFunctionDeclaration(declaration: Declaration): declaration is ts.ArrowFunction {
   return ts.isArrowFunction(declaration);
 }

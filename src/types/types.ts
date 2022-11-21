@@ -258,9 +258,7 @@ export interface Instance extends Type<TypeKind.Instance> {
 
 export interface This extends Type<TypeKind.This> {
   id: ID;
-  name: Name;
-  position: Position;
-  resolvedType?: Types;
+  type?: Types;
 }
 
 
@@ -329,6 +327,7 @@ export interface Class extends Type<TypeKind.Class> {
   methods?: Method[];
   properties?: Property[];
   setters?: Setter[];
+  typeParameters?: TypeParameter[];
 }
 
 export interface Constructor extends FunctionLike<TypeKind.Constructor> {
@@ -388,6 +387,7 @@ export interface TypeLiteral extends Type<TypeKind.TypeLiteral> {
   members: Member[];
   description?: Description;
   example?: Example;
+  name?: Name;
 }
 
 
@@ -428,6 +428,7 @@ export interface EnumMember extends Type<TypeKind.Member> {
   type: Types;
   description?: Description;
   example?: Example;
+  parent?: Types;
 }
 
 
@@ -441,6 +442,7 @@ export interface Member extends Type<TypeKind.Member> {
   type: Types;
   description?: Description;
   example?: Example;
+  parent?: Types;
 }
 
 

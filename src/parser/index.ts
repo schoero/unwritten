@@ -15,7 +15,7 @@ import { createTypeAliasBySymbol } from "../compiler/entities/type-alias.js";
 import { createTypeParameterBySymbol } from "../compiler/entities/type-parameter.js";
 import { createUnresolvedBySymbol } from "../compiler/entities/unresolved.js";
 import { createVariableBySymbol } from "../compiler/entities/variable.js";
-import { isSymbolLocked, lockSymbol, resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
+import { isSymbolLocked, resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
 import {
   isClassSymbol,
   isEnumSymbol,
@@ -57,8 +57,6 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
 
   if(isSymbolLocked(ctx, resolvedSymbol)){
     return createLinkBySymbol(ctx, resolvedSymbol);
-  } else {
-    lockSymbol(ctx, resolvedSymbol);
   }
 
   if(isVariableSymbol(resolvedSymbol)){

@@ -6,10 +6,13 @@ import { Setter, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { functionOverloadDeclarationFilter } from "../utils/filter.js";
+import { lockSymbol } from "../utils/ts.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
 export function createSetterBySymbol(ctx: CompilerContext, symbol: Symbol): Setter {
+
+  lockSymbol(ctx, symbol);
 
   const declarations = symbol.declarations?.filter(isSetterDeclaration)
     .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];

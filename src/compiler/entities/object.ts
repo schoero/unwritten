@@ -8,7 +8,8 @@ import {
   isMethodSymbol,
   isPropertySymbol,
   isSetterSymbol,
-  isTupleTypeReferenceType
+  isTupleTypeReferenceType,
+  isTypeLiteralType
 } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TypeKind, Types } from "../../types/types.js";
@@ -23,6 +24,7 @@ import { createPropertyBySymbol } from "./property.js";
 import { createSetterBySymbol } from "./setter.js";
 import { createSignatureBySignature } from "./signature.js";
 import { createTupleTypeByTypeReference } from "./tuple-type.js";
+import { createTypeLiteralByType } from "./type-literal.js";
 import { createUnresolvedBySymbol } from "./unresolved.js";
 
 
@@ -70,6 +72,13 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
 
   if(isFunctionLikeType(type)){
     return createFunctionByType(ctx, type);
+  }
+
+
+  //-- Type literal
+
+  if(isTypeLiteralType(type)){
+    return createTypeLiteralByType(ctx, type);
   }
 
 
