@@ -9,6 +9,7 @@ import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { createMemberByDeclaration } from "./member.js";
+import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
 export function createInterfaceBySymbol(ctx: CompilerContext, symbol: Symbol): Interface | MergedInterface {
@@ -67,6 +68,7 @@ function _createInterfaceByDeclaration(ctx: CompilerContext, declaration: Interf
   const heritage = declaration.heritageClauses?.map(heritageClause => _createInterfaceByHeritageClause(ctx, heritageClause))[0];
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
+  const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
   const id = getIdByDeclaration(ctx, declaration);
   const kind = TypeKind.Interface;
 
@@ -76,8 +78,9 @@ function _createInterfaceByDeclaration(ctx: CompilerContext, declaration: Interf
     id,
     kind,
     members,
-    position
-  } as const;
+    position,
+    typeParameters
+  };
 
 }
 

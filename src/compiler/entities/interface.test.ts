@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Reference, TypeKind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
@@ -149,6 +149,30 @@ scope("Compiler", TypeKind.Interface, () => {
     it("should be able to handle extended interfaces", () => {
       expect(exportedInterfaceB.members).to.have.lengthOf(2);
       expect(exportedInterfaceC.members).to.have.lengthOf(3);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export interface GenericInterface<T> {
+        b: T;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "GenericInterface")!;
+    const exportedInterface = createInterfaceBySymbol(ctx, exportedInterfaceSymbol);
+
+    it("should support generics in interfaces", () => {
+      expect(exportedInterface.typeParameters).to.not.equal(undefined);
+      expect(exportedInterface.typeParameters).to.have.lengthOf(1);
+      expect(exportedInterface.members).to.have.lengthOf(1);
+      expect(exportedInterface.members[0]!.type.kind).to.equal(TypeKind.Reference);
+      expect((exportedInterface.members[0]!.type as Reference).target).to.not.equal(undefined);
+      expect((exportedInterface.members[0]!.type as Reference).target!.kind).to.equal(TypeKind.TypeParameter);
     });
 
   }
