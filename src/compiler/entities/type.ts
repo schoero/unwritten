@@ -4,7 +4,6 @@ import { parseSymbol } from "../../parser/index.js";
 import {
   isArrayTypeNode,
   isArrayTypeReferenceTypeNode,
-  isFunctionLikeType,
   isInstanceType,
   isInterfaceType,
   isIntersectionType,
