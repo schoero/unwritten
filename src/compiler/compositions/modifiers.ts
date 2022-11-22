@@ -9,7 +9,7 @@ export function getModifiersByDeclaration(ctx: CompilerContext, declaration: Dec
   if(ts.canHaveModifiers(declaration)){
     return ts.getModifiers(declaration)?.reduce((modifiers, modifier) => {
       const modifierText = modifier.getText();
-      if(isSupportedModifier(modifierText)){
+      if(_isSupportedModifier(modifierText)){
         modifiers.push(modifierText);
       }
       return modifiers;
@@ -21,7 +21,7 @@ export function getModifiersByDeclaration(ctx: CompilerContext, declaration: Dec
 }
 
 
-function isSupportedModifier(modifier: string): modifier is Modifiers {
+function _isSupportedModifier(modifier: string): modifier is Modifiers {
   return modifier === Modifiers.Abstract ||
     modifier === Modifiers.Async ||
     modifier === Modifiers.Override ||

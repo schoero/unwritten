@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Array, TypeKind } from "../../types/types.js";
+import { ArrayType, TypeKind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
@@ -80,7 +80,7 @@ scope("Compiler", TypeKind.Array, () => {
         expect(exportedTypeAlias.name).to.equal("ArrayType");
         expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
         expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
-        expect((exportedTypeAlias.type as Array).type.kind).to.equal(TypeKind.String);
+        expect((exportedTypeAlias.type as ArrayType).type.kind).to.equal(TypeKind.String);
       });
 
     }
@@ -156,7 +156,7 @@ scope("Compiler", TypeKind.Array, () => {
         expect(exportedTypeAlias.name).to.equal("ArrayType");
         expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
         expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
-        expect((exportedTypeAlias.type as Array).type.kind).to.equal(TypeKind.String);
+        expect((exportedTypeAlias.type as ArrayType).type.kind).to.equal(TypeKind.String);
       });
 
     }

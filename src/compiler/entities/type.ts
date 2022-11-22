@@ -21,7 +21,6 @@ import {
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
 import { createArrayByArrayTypeNode } from "./array.js";
-import { createFunctionByType } from "./function.js";
 import { createInstanceByType } from "./instance.js";
 import { createInterfaceByType } from "./interface.js";
 import { createIntersectionTypeByType } from "./intersection-type.js";
@@ -82,8 +81,6 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
     return createThisByType(ctx, type);
   } else if(isInstanceType(type)){
     return createInstanceByType(ctx, type);
-  } else if(isFunctionLikeType(type)){
-    return createFunctionByType(ctx, type);
   } else if(isLiteralType(type)){
     return createLiteralType(ctx, type);
   } else if(isPrimitiveType(type)){

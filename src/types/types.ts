@@ -16,7 +16,7 @@ export enum TypeKind {
   Getter = "Getter",
   Instance = "Instance",
   Interface = "Interface",
-  Intersection = "Intersection",
+  IntersectionType = "Intersection",
   Link = "Link",
   Member = "Member",
   Method = "Method",
@@ -31,21 +31,21 @@ export enum TypeKind {
   Parameter = "Parameter",
   Promise = "Promise",
   Property = "Property",
-  Reference = "Reference",
   Setter = "Setter",
   Signature = "Signature",
   SourceFile = "SourceFile",
   String = "String",
   StringLiteral = "StringLiteral",
   Symbol = "Symbol",
-  This = "This",
+  ThisType = "This",
   Tuple = "Tuple",
   TypeAlias = "TypeAlias",
   TypeArgument = "TypeArgument",
   TypeLiteral = "TypeLiteral",
   TypeParameter = "TypeParameter",
+  TypeReference = "Reference",
   Undefined = "Undefined",
-  Union = "Union",
+  UnionType = "Union",
   Unknown = "Unknown",
   Unresolved = "Unresolved",
   Variable = "Variable",
@@ -96,12 +96,12 @@ export type ExportableTypes =
   | Variable;
 
 export type Types =
-  | Array
+  | ArrayType
   | Constructor
   | ExportableTypes
   | Getter
   | Instance
-  | Intersection
+  | IntersectionType
   | Link
   | LiteralTypes
   | Member
@@ -110,15 +110,15 @@ export type Types =
   | ObjectType
   | PrimitiveTypes
   | Property
-  | Reference
   | Setter
   | SourceFile
-  | This
-  | Tuple
+  | ThisType
+  | TupleType
   | TypeArgument
   | TypeLiteral
   | TypeParameter
-  | Union
+  | TypeReference
+  | UnionType
   | Unresolved;
 
 
@@ -211,7 +211,7 @@ export interface Property extends Type<TypeKind.Property> {
 
 //-- Array
 
-export interface Array extends Type<TypeKind.Array> {
+export interface ArrayType extends Type<TypeKind.Array> {
   type: Types;
   position?: Position;
 }
@@ -219,7 +219,7 @@ export interface Array extends Type<TypeKind.Array> {
 
 //-- Tuple
 
-export interface Tuple extends Type<TypeKind.Tuple> {
+export interface TupleType extends Type<TypeKind.Tuple> {
   members: TupleMember[];
   position?: Position;
 }
@@ -235,7 +235,7 @@ export interface TupleMember extends Type<TypeKind.Member> {
 
 //-- Type reference
 
-export interface Reference extends Type<TypeKind.Reference> {
+export interface TypeReference extends Type<TypeKind.TypeReference> {
   id: ID;
   position?: Position;
   target?: Types;
@@ -256,7 +256,7 @@ export interface Instance extends Type<TypeKind.Instance> {
 
 //-- This
 
-export interface This extends Type<TypeKind.This> {
+export interface ThisType extends Type<TypeKind.ThisType> {
   id: ID;
   type?: Types;
 }
@@ -357,14 +357,14 @@ export interface Variable extends Type<TypeKind.Variable> {
 
 //-- Union type
 
-export interface Union extends Type<TypeKind.Union> {
+export interface UnionType extends Type<TypeKind.UnionType> {
   types: Types[];
 }
 
 
 //-- Intersection type
 
-export interface Intersection extends Type<TypeKind.Intersection> {
+export interface IntersectionType extends Type<TypeKind.IntersectionType> {
   types: Types[];
 }
 

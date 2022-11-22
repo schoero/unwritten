@@ -4,13 +4,13 @@ import { assert } from "vitest";
 
 import { isTypeReferenceType } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
-import { Array, TypeKind } from "../../types/types.js";
+import { ArrayType, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getPositionByNode } from "../compositions/position.js";
 import { createTypeByType } from "./type.js";
 
 
-export function createArrayByTypeReference(ctx: CompilerContext, typeReference: TypeReference): Array {
+export function createArrayByTypeReference(ctx: CompilerContext, typeReference: TypeReference): ArrayType {
 
   const node = typeReference.node;
   const id = getIdByType(ctx, typeReference);
@@ -28,7 +28,7 @@ export function createArrayByTypeReference(ctx: CompilerContext, typeReference: 
 }
 
 
-export function createArrayByArrayTypeNode(ctx: CompilerContext, arrayTypeNode: ArrayTypeNode | TypeReferenceNode): Array {
+export function createArrayByArrayTypeNode(ctx: CompilerContext, arrayTypeNode: ArrayTypeNode | TypeReferenceNode): ArrayType {
   const type = ctx.checker.getTypeFromTypeNode(arrayTypeNode);
   assert(isTypeReferenceType(type), "Type is not a type reference");
   return createArrayByTypeReference(ctx, type);

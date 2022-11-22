@@ -401,6 +401,10 @@ export function isThisType(type: Type): boolean {
   return type.isThisType === true;
 }
 
+export function isThisTypeNode(typeNode: TypeNode): boolean {
+  return ts.isThisTypeNode(typeNode);
+}
+
 export function isTypeParameterType(type: Type): type is TypeParameter {
   return (type.flags & ts.TypeFlags.TypeParameter) !== 0;
 }

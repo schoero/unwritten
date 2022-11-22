@@ -3,14 +3,14 @@ import { assert } from "vitest";
 
 import { isTupleTypeReferenceType } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
-import { Tuple, TupleMember, TypeKind } from "../../types/types.js";
+import { TupleType, TupleMember, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByNode } from "../compositions/position.js";
 import { createTypeByType } from "./type.js";
 
 
-export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): Tuple {
+export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): TupleType {
 
   const node = typeReference.node;
   const members = _getMembers(ctx, typeReference, typeReference.typeArguments);
@@ -28,7 +28,7 @@ export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReferen
 }
 
 
-export function createTupleByTupleTypeNode(ctx: CompilerContext, tupleTypeNode: TupleTypeNode): Tuple {
+export function createTupleByTupleTypeNode(ctx: CompilerContext, tupleTypeNode: TupleTypeNode): TupleType {
   const type = ctx.checker.getTypeFromTypeNode(tupleTypeNode);
   assert(isTupleTypeReferenceType(type), "Type is not a type reference");
   return createTupleTypeByTypeReference(ctx, type);

@@ -7,7 +7,7 @@ import { TypeKind } from "../../types/types.js";
 import { createClassBySymbol } from "./class.js";
 
 
-scope("Compiler", TypeKind.This, () => {
+scope("Compiler", TypeKind.ThisType, () => {
 
   {
 
@@ -28,7 +28,7 @@ scope("Compiler", TypeKind.This, () => {
       expect(exportedClass.methods).not.to.equal(undefined);
       expect(exportedClass.methods!).to.have.lengthOf(1);
       expect(exportedClass.methods![0]!.signatures).to.have.lengthOf(1);
-      expect(exportedClass.methods![0]!.signatures[0]!.returnType.kind).to.equal(TypeKind.This);
+      expect(exportedClass.methods![0]!.signatures[0]!.returnType.kind).to.equal(TypeKind.ThisType);
     });
 
   }

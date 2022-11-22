@@ -9,7 +9,7 @@ import {
   Getter,
   Instance,
   Interface,
-  Intersection,
+  IntersectionType,
   LiteralTypes,
   Method,
   Namespace,
@@ -22,7 +22,7 @@ import {
   Type,
   TypeAlias,
   TypeKind,
-  Union,
+  UnionType,
   Unresolved,
   Variable
 } from "../types/types.js";
@@ -52,12 +52,12 @@ export function isPrimitiveType(type: Type<TypeKind>): type is PrimitiveTypes {
     type.kind === TypeKind.Void;
 }
 
-export function isUnionType(type: Type<TypeKind>): type is Union {
-  return type.kind === TypeKind.Union;
+export function isUnionType(type: Type<TypeKind>): type is UnionType {
+  return type.kind === TypeKind.UnionType;
 }
 
-export function isIntersectionType(type: Type<TypeKind>): type is Intersection {
-  return type.kind === TypeKind.Intersection;
+export function isIntersectionType(type: Type<TypeKind>): type is IntersectionType {
+  return type.kind === TypeKind.IntersectionType;
 }
 
 export function isFunctionType(type: Type<TypeKind>): type is Function {

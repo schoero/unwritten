@@ -64,7 +64,7 @@ describe("Renderer: Function", () => {
               optional: false,
               rest: true,
               type: {
-                kind: TypeKind.Reference,
+                kind: TypeKind.TypeReference,
                 name: "Array",
                 typeArguments: [
                   {
@@ -158,7 +158,7 @@ describe("Renderer: Function", () => {
               optional: true,
               rest: true,
               type: {
-                kind: TypeKind.Reference,
+                kind: TypeKind.TypeReference,
                 name: "Array",
                 typeArguments: [
                   {

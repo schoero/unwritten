@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Reference, TypeKind, TypeParameter } from "../../types/types.js";
+import { TypeKind, TypeParameter, TypeReference } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
@@ -87,9 +87,9 @@ scope("Compiler", TypeKind.TypeAlias, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should be able to parse generic types", () => {
-        expect(exportedTypeAlias.type.kind).toBe(TypeKind.Reference);
-        expect((exportedTypeAlias.type as Reference).target).to.not.equal(undefined);
-        expect((exportedTypeAlias.type as Reference).target!.kind).to.equal(TypeKind.TypeParameter);
+        expect(exportedTypeAlias.type.kind).toBe(TypeKind.TypeReference);
+        expect((exportedTypeAlias.type as TypeReference).target).to.not.equal(undefined);
+        expect((exportedTypeAlias.type as TypeReference).target!.kind).to.equal(TypeKind.TypeParameter);
       });
 
     }
@@ -106,8 +106,8 @@ scope("Compiler", TypeKind.TypeAlias, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should have a `string` constraint", () => {
-        expect((((exportedTypeAlias.type as Reference).target as Reference).target as TypeParameter).constraints).to.not.equal(undefined);
-        expect((((exportedTypeAlias.type as Reference).target as Reference).target as TypeParameter).constraints!.kind).to.equal(TypeKind.String);
+        expect((((exportedTypeAlias.type as TypeReference).target as TypeReference).target as TypeParameter).constraints).to.not.equal(undefined);
+        expect((((exportedTypeAlias.type as TypeReference).target as TypeReference).target as TypeParameter).constraints!.kind).to.equal(TypeKind.String);
       });
 
     }
@@ -125,8 +125,8 @@ scope("Compiler", TypeKind.TypeAlias, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should have a matching type argument", () => {
-        expect(((exportedTypeAlias.type as Reference).target as Reference).typeArguments).to.have.lengthOf(1);
-        expect(((exportedTypeAlias.type as Reference).target as Reference).typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
+        expect(((exportedTypeAlias.type as TypeReference).target as TypeReference).typeArguments).to.have.lengthOf(1);
+        expect(((exportedTypeAlias.type as TypeReference).target as TypeReference).typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
       });
 
     }

@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Reference, TypeKind } from "../../types/types.js";
+import { TypeKind, TypeReference } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
@@ -170,9 +170,9 @@ scope("Compiler", TypeKind.Interface, () => {
       expect(exportedInterface.typeParameters).to.not.equal(undefined);
       expect(exportedInterface.typeParameters).to.have.lengthOf(1);
       expect(exportedInterface.members).to.have.lengthOf(1);
-      expect(exportedInterface.members[0]!.type.kind).to.equal(TypeKind.Reference);
-      expect((exportedInterface.members[0]!.type as Reference).target).to.not.equal(undefined);
-      expect((exportedInterface.members[0]!.type as Reference).target!.kind).to.equal(TypeKind.TypeParameter);
+      expect(exportedInterface.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
+      expect((exportedInterface.members[0]!.type as TypeReference).target).to.not.equal(undefined);
+      expect((exportedInterface.members[0]!.type as TypeReference).target!.kind).to.equal(TypeKind.TypeParameter);
     });
 
   }
