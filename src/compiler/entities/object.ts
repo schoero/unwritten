@@ -5,6 +5,7 @@ import {
   isArrayTypeReferenceType,
   isFunctionLikeType,
   isGetterSymbol,
+  isMappedType,
   isMethodSymbol,
   isPropertySymbol,
   isSetterSymbol,
@@ -19,6 +20,7 @@ import { getNameBySymbol } from "../compositions/name.js";
 import { createArrayByTypeReference } from "./array.js";
 import { createFunctionByType } from "./function.js";
 import { createGetterBySymbol } from "./getter.js";
+import { createMappedTypeByType } from "./mapped-type.js";
 import { createMethodBySymbol } from "./method.js";
 import { createPropertyBySymbol } from "./property.js";
 import { createSetterBySymbol } from "./setter.js";
@@ -61,6 +63,13 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
 
   if(!name.startsWith("__")){
     return parseSymbol(ctx, symbol);
+  }
+
+
+  //-- Mapped type
+
+  if(isMappedType(type)){
+    return createMappedTypeByType(ctx, type);
   }
 
   const constructSignatures = type.getConstructSignatures();

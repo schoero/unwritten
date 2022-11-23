@@ -7,6 +7,7 @@ import ts, {
   InterfaceType,
   IntersectionType,
   LiteralType,
+  MappedTypeNode,
   NamedTupleMember,
   NumberLiteralType,
   ObjectType,
@@ -250,6 +251,10 @@ export function isUnionType(type: Type): type is UnionType {
   return (type.flags & ts.TypeFlags.Union) !== 0;
 }
 
+export function isUnionTypeNode(node: ts.Node): node is ts.UnionTypeNode {
+  return ts.isUnionTypeNode(node);
+}
+
 export function isEnumType(type: Type): boolean {
   return (type.flags & ts.TypeFlags.Enum) !== 0;
 }
@@ -339,6 +344,14 @@ export function isFunctionLikeType(type: Type): boolean {
 
 export function isClassType(type: Type): type is InterfaceType {
   return type.isClass();
+}
+
+export function isMappedType(type: Type): boolean {
+  return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Mapped) !== 0;
+}
+
+export function isMappedTypeNode(typeNode: TypeNode): typeNode is MappedTypeNode {
+  return ts.isMappedTypeNode(typeNode);
 }
 
 export function isTupleType(type: Type): type is TupleType {

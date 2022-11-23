@@ -40,8 +40,8 @@ scope("Compiler", TypeKind.TypeParameter, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should have a `string` constraint", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.constraints).to.not.equal(undefined);
-      expect(exportedTypeAlias.typeParameters![0]!.constraints!.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.typeParameters![0]!.constraint).to.not.equal(undefined);
+      expect(exportedTypeAlias.typeParameters![0]!.constraint!.kind).to.equal(TypeKind.String);
     });
 
   }

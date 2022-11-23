@@ -32,6 +32,26 @@ scope("Compiler", TypeKind.Member, () => {
   {
 
     const testFileContent = ts`
+      export interface Interface {
+        7: string;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+    const symbol = exportedSymbols.find(s => s.name === "Interface")!;
+    const exportedInterface = createInterfaceBySymbol(ctx, symbol);
+
+    it("should be able to have numbers as keys", () => {
+      expect(exportedInterface.kind).to.equal(TypeKind.Interface);
+      expect(exportedInterface.members).to.not.equal(undefined);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
       /** 
        * Interface description 
        * @example Interface example
@@ -64,8 +84,8 @@ scope("Compiler", TypeKind.Member, () => {
     });
 
     it("should have matching types", () => {
-      expect(member1.type.kind).to.equal(TypeKind.String);
-      expect(member2.type.kind).to.equal(TypeKind.Number);
+      expect(member1.valueType.kind).to.equal(TypeKind.String);
+      expect(member2.valueType.kind).to.equal(TypeKind.Number);
     });
 
     it("should have matching descriptions", () => {

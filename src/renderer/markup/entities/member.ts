@@ -21,7 +21,7 @@ export function renderMemberForDocumentation(ctx: RenderContext<MarkupRenderer>,
 
   const description = member.description ? member.description : "";
   const name = encapsulate(member.name, renderConfig.propertyEncapsulation);
-  const type = `${renderType(ctx, member.type)}`;
+  const type = `${renderType(ctx, member.valueType)}`;
   const optional = "optional" in member && member.optional === true
     ? encapsulate("optional", renderConfig.tagEncapsulation)
     : "";

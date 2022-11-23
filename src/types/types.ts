@@ -18,6 +18,8 @@ export enum TypeKind {
   Interface = "Interface",
   IntersectionType = "Intersection",
   Link = "Link",
+  MappedType = "MappedType",
+  MappedTypeMember = "MappedTypeMember",
   Member = "Member",
   Method = "Method",
   Module = "Module",
@@ -104,6 +106,7 @@ export type Types =
   | IntersectionType
   | Link
   | LiteralTypes
+  | MappedType
   | Member
   | Method
   | ObjectLiteral
@@ -391,6 +394,25 @@ export interface TypeLiteral extends Type<TypeKind.TypeLiteral> {
 }
 
 
+//-- Mapped type
+
+export interface MappedType extends Type<TypeKind.MappedType> {
+  members: MappedTypeMember[];
+  optional: boolean;
+  readonly: boolean;
+  typeParameter: TypeParameter;
+  position?: Position;
+}
+
+
+//-- Mapped Type mMember
+
+export interface MappedTypeMember extends Type<TypeKind.MappedTypeMember> {
+  keyType: LiteralTypes;
+  valueType: Types;
+}
+
+
 //-- Interface
 
 export interface Interface extends Type<TypeKind.Interface> {
@@ -435,11 +457,11 @@ export interface EnumMember extends Type<TypeKind.Member> {
 //-- Member
 
 export interface Member extends Type<TypeKind.Member> {
+  keyType: LiteralTypes;
   modifiers: Modifiers[];
-  name: Name;
   optional: boolean;
   position: Position;
-  type: Types;
+  valueType: Types;
   description?: Description;
   example?: Example;
   parent?: Types;
@@ -475,7 +497,7 @@ export interface Namespace extends Type<TypeKind.Namespace> {
 export interface TypeParameter extends Type<TypeKind.TypeParameter> {
   name: Name;
   position: Position;
-  constraints?: Types;
+  constraint?: Types;
 }
 
 

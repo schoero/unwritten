@@ -18,7 +18,7 @@ describe("Renderer: Interfaces", () => {
         kind: TypeKind.Member,
         name: "street",
         optional: false,
-        type: {
+        valueType: {
           kind: TypeKind.String,
           name: "string"
         }
@@ -28,7 +28,7 @@ describe("Renderer: Interfaces", () => {
         kind: TypeKind.Member,
         name: "building",
         optional: true,
-        type: {
+        valueType: {
           kind: TypeKind.Number,
           name: "number"
         }

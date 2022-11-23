@@ -22,11 +22,11 @@ export function createTypeParameterBySymbol(ctx: CompilerContext, symbol: Symbol
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
-  const constraints = declaration.constraint && createTypeByTypeNode(ctx, declaration.constraint);
+  const constraint = declaration.constraint && createTypeByTypeNode(ctx, declaration.constraint);
   const kind = TypeKind.TypeParameter;
 
   return {
-    constraints,
+    constraint,
     id,
     kind,
     name,

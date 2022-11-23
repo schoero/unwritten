@@ -62,7 +62,7 @@ export function createMemberByDeclaration(ctx: CompilerContext, declaration: Enu
     optional,
     parent,
     position,
-    type
+    valueType: type
   };
 
 }

@@ -32,17 +32,17 @@ scope("Compiler", TypeKind.Link, () => {
 
     it("should create links if the targeted symbol is exported", () => {
       expect(exportedInterfaceA.members.length).to.equal(1);
-      expect(exportedInterfaceA.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
-      expect((exportedInterfaceA.members[0]!.type as TypeReference).target).to.not.equal(undefined);
-      expect((exportedInterfaceA.members[0]!.type as TypeReference).target!.kind).to.equal(TypeKind.Link);
-      expect((exportedInterfaceA.members[0]!.type as TypeReference).target!.id).to.equal(exportedInterfaceB.id);
+      expect(exportedInterfaceA.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
+      expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
+      expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Link);
+      expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target!.id).to.equal(exportedInterfaceB.id);
     });
 
     it("should not create links if the targeted symbol is not exported and not recursive", () => {
       expect(exportedInterfaceB.members.length).to.equal(1);
-      expect(exportedInterfaceB.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
-      expect((exportedInterfaceB.members[0]!.type as TypeReference).target).to.not.equal(undefined);
-      expect((exportedInterfaceB.members[0]!.type as TypeReference).target!.kind).to.equal(TypeKind.Interface);
+      expect(exportedInterfaceB.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
+      expect((exportedInterfaceB.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
+      expect((exportedInterfaceB.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Interface);
     });
 
   }
@@ -69,23 +69,23 @@ scope("Compiler", TypeKind.Link, () => {
     it("should create links if the targeted symbol is not exported but is recursive", () => {
 
       expect(exportedInterfaceA.members.length).to.equal(1);
-      expect(exportedInterfaceA.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
-      expect((exportedInterfaceA.members[0]!.type as TypeReference).target).to.not.equal(undefined);
-      expect((exportedInterfaceA.members[0]!.type as TypeReference).target!.kind).to.equal(TypeKind.Interface);
+      expect(exportedInterfaceA.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
+      expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
+      expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Interface);
 
-      const interfaceB = (exportedInterfaceA.members[0]!.type as TypeReference).target! as Interface;
+      const interfaceB = (exportedInterfaceA.members[0]!.valueType as TypeReference).target! as Interface;
 
       expect(interfaceB.members.length).to.equal(1);
-      expect(interfaceB.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
-      expect((interfaceB.members[0]!.type as TypeReference).target).to.not.equal(undefined);
-      expect((interfaceB.members[0]!.type as TypeReference).target!.kind).to.equal(TypeKind.Interface);
+      expect(interfaceB.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
+      expect((interfaceB.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
+      expect((interfaceB.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Interface);
 
-      const interfaceC = (interfaceB.members[0]!.type as TypeReference).target! as Interface;
+      const interfaceC = (interfaceB.members[0]!.valueType as TypeReference).target! as Interface;
 
       expect(interfaceC.members.length).to.equal(1);
-      expect(interfaceC.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
-      expect((interfaceC.members[0]!.type as TypeReference).target).to.not.equal(undefined);
-      expect((interfaceC.members[0]!.type as TypeReference).target!.kind).to.equal(TypeKind.Link);
+      expect(interfaceC.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
+      expect((interfaceC.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
+      expect((interfaceC.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Link);
 
     });
 
