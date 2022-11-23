@@ -88,8 +88,10 @@ scope("Compiler", TypeKind.TypeAlias, () => {
 
       it("should be able to parse generic types", () => {
         expect(exportedTypeAlias.type.kind).toBe(TypeKind.TypeReference);
+        expect(exportedTypeAlias.typeParameters).toHaveLength(1);
         expect((exportedTypeAlias.type as TypeReference).target).to.not.equal(undefined);
-        expect((exportedTypeAlias.type as TypeReference).target!.kind).to.equal(TypeKind.TypeParameter);
+        expect((exportedTypeAlias.type as TypeReference).target!.kind).to.equal(TypeKind.Circular);
+        expect((exportedTypeAlias.type as TypeReference).target!.id).to.equal(exportedTypeAlias.typeParameters![0]!.id);
       });
 
     }
@@ -121,7 +123,7 @@ scope("Compiler", TypeKind.TypeAlias, () => {
 
       const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
-      const symbol = exportedSymbols.find(s => s.name === "Generic")!;
+      const symbol = exportedSymbols.find(s => s.name === "Hello")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should have a matching type argument", () => {

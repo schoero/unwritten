@@ -5,7 +5,7 @@ import { createClassBySymbol } from "../compiler/entities/class.js";
 import { createEnumBySymbol } from "../compiler/entities/enum.js";
 import { createFunctionBySymbol } from "../compiler/entities/function.js";
 import { createInterfaceBySymbol } from "../compiler/entities/interface.js";
-import { createLinkBySymbol } from "../compiler/entities/link.js";
+import { createLinkToSymbol } from "../compiler/entities/circular.js";
 import { createModuleBySymbol } from "../compiler/entities/module.js";
 import { createNamespaceBySymbol } from "../compiler/entities/namespace.js";
 import { createObjectLiteralBySymbol } from "../compiler/entities/object-literal.js";
@@ -56,7 +56,7 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
   }
 
   if(isSymbolLocked(ctx, resolvedSymbol)){
-    return createLinkBySymbol(ctx, resolvedSymbol);
+    return createLinkToSymbol(ctx, resolvedSymbol);
   }
 
   if(isVariableSymbol(resolvedSymbol)){

@@ -9,13 +9,11 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createTypeByDeclaration } from "./type.js";
 
 
-export function createPropertyBySymbol(ctx: CompilerContext, symbol: Symbol): Property {
-
-  lockSymbol(ctx, symbol);
+export const createPropertyBySymbol = (ctx: CompilerContext, symbol: Symbol): Property => lockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -32,7 +30,8 @@ export function createPropertyBySymbol(ctx: CompilerContext, symbol: Symbol): Pr
 
   };
 
-}
+});
+
 
 function _parsePropertyDeclaration(ctx: CompilerContext, declaration: PropertyAssignment | PropertyDeclaration | PropertySignature) {
 

@@ -9,7 +9,9 @@ export enum TypeKind {
   BigIntLiteral = "BigIntLiteral",
   Boolean = "Boolean",
   BooleanLiteral = "BooleanLiteral",
+  Circular = "Circular",
   Class = "Class",
+  ConditionalType = "ConditionalType",
   Constructor = "Constructor",
   Enum = "Enum",
   Function = "Function",
@@ -17,7 +19,6 @@ export enum TypeKind {
   Instance = "Instance",
   Interface = "Interface",
   IntersectionType = "Intersection",
-  Link = "Link",
   MappedType = "MappedType",
   MappedTypeMember = "MappedTypeMember",
   Member = "Member",
@@ -99,14 +100,16 @@ export type ExportableTypes =
 
 export type Types =
   | ArrayType
+  | Circular
+  | ConditionalType
   | Constructor
   | ExportableTypes
   | Getter
   | Instance
   | IntersectionType
-  | Link
   | LiteralTypes
   | MappedType
+  | MappedTypeMember
   | Member
   | Method
   | ObjectLiteral
@@ -265,10 +268,10 @@ export interface ThisType extends Type<TypeKind.ThisType> {
 }
 
 
-//-- Link
+//-- Circular
 
-/** The link type will be used for recursive types */
-export interface Link extends Type<TypeKind.Link> {
+/** Circular types are used as links to previous symbols for circular references. */
+export interface Circular extends Type<TypeKind.Circular> {
   id: ID;
   name?: Name;
   position?: Position;
@@ -413,6 +416,17 @@ export interface MappedTypeMember extends Type<TypeKind.MappedTypeMember> {
 }
 
 
+//-- Conditional type
+
+export interface ConditionalType extends Type<TypeKind.ConditionalType> {
+  checkType: Types;
+  extendsType: Types;
+  falseType: Types;
+  trueType: Types;
+  resolvedType?: Types;
+}
+
+
 //-- Interface
 
 export interface Interface extends Type<TypeKind.Interface> {
@@ -498,6 +512,7 @@ export interface TypeParameter extends Type<TypeKind.TypeParameter> {
   name: Name;
   position: Position;
   constraint?: Types;
+  default?: Types;
 }
 
 

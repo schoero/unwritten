@@ -6,13 +6,11 @@ import { ObjectLiteral, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createPropertyBySymbol } from "./property.js";
 
 
-export function createObjectLiteralBySymbol(ctx: CompilerContext, symbol: Symbol): ObjectLiteral {
-
-  lockSymbol(ctx, symbol);
+export const createObjectLiteralBySymbol = (ctx: CompilerContext, symbol: Symbol): ObjectLiteral => lockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -26,7 +24,7 @@ export function createObjectLiteralBySymbol(ctx: CompilerContext, symbol: Symbol
     id
   };
 
-}
+});
 
 
 function _parseObjectLiteralDeclaration(ctx: CompilerContext, declaration: ObjectLiteralExpression) {

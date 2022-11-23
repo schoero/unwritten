@@ -7,7 +7,7 @@ import { Interface, TypeKind, TypeReference } from "../../types/types.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
 
-scope("Compiler", TypeKind.Link, () => {
+scope("Compiler", TypeKind.Circular, () => {
 
   {
 
@@ -30,15 +30,15 @@ scope("Compiler", TypeKind.Link, () => {
     const exportedInterfaceA = createInterfaceBySymbol(ctx, exportedInterfaceASymbol);
     const exportedInterfaceB = createInterfaceBySymbol(ctx, exportedInterfaceBSymbol);
 
-    it("should create links if the targeted symbol is exported", () => {
+    it("should not create a circular type if the targeted symbol is exported", () => {
       expect(exportedInterfaceA.members.length).to.equal(1);
       expect(exportedInterfaceA.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
       expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
-      expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Link);
+      expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Interface);
       expect((exportedInterfaceA.members[0]!.valueType as TypeReference).target!.id).to.equal(exportedInterfaceB.id);
     });
 
-    it("should not create links if the targeted symbol is not exported and not recursive", () => {
+    it("should not create a circular type if the targeted symbol is not exported and not circular", () => {
       expect(exportedInterfaceB.members.length).to.equal(1);
       expect(exportedInterfaceB.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
       expect((exportedInterfaceB.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
@@ -58,7 +58,7 @@ scope("Compiler", TypeKind.Link, () => {
       }
       interface InterfaceC {
         b: InterfaceB
-      }
+      }i
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
@@ -66,7 +66,7 @@ scope("Compiler", TypeKind.Link, () => {
     const exportedInterfaceASymbol = exportedSymbols.find(s => s.name === "InterfaceA")!;
     const exportedInterfaceA = createInterfaceBySymbol(ctx, exportedInterfaceASymbol);
 
-    it("should create links if the targeted symbol is not exported but is recursive", () => {
+    it("should create a circular type if the targeted symbol circular, even if it is not exported", () => {
 
       expect(exportedInterfaceA.members.length).to.equal(1);
       expect(exportedInterfaceA.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
@@ -85,7 +85,7 @@ scope("Compiler", TypeKind.Link, () => {
       expect(interfaceC.members.length).to.equal(1);
       expect(interfaceC.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
       expect((interfaceC.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
-      expect((interfaceC.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Link);
+      expect((interfaceC.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.Circular);
 
     });
 

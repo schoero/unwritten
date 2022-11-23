@@ -8,14 +8,12 @@ import { getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createTypeByTypeNode } from "./type.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export function createTypeAliasBySymbol(ctx: CompilerContext, symbol: Symbol): TypeAlias {
-
-  lockSymbol(ctx, symbol);
+export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeAlias => lockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -35,7 +33,7 @@ export function createTypeAliasBySymbol(ctx: CompilerContext, symbol: Symbol): T
     name
   };
 
-}
+});
 
 
 function _parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAliasDeclaration) {

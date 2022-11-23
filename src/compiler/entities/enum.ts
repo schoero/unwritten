@@ -12,13 +12,11 @@ import {
 } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration } from "./member.js";
 
 
-export function createEnumBySymbol(ctx: CompilerContext, symbol: Symbol): Enum {
-
-  lockSymbol(ctx, symbol);
+export const createEnumBySymbol = (ctx: CompilerContext, symbol: Symbol): Enum | MergedEnum => lockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.getDeclarations()?.filter(isEnumDeclaration);
 
@@ -51,7 +49,7 @@ export function createEnumBySymbol(ctx: CompilerContext, symbol: Symbol): Enum {
     };
   }
 
-}
+});
 
 
 function _mergeMembers(enums: ReturnType<typeof _parseEnumDeclaration>[]): Enum["members"] {

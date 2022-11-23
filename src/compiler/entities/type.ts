@@ -1,9 +1,9 @@
-import { Declaration, Symbol, Type, TypeNode } from "typescript";
+import { Declaration, Type, TypeNode } from "typescript";
 
-import { parseSymbol } from "../../parser/index.js";
 import {
   isArrayTypeNode,
   isArrayTypeReferenceTypeNode,
+  isConditionalType,
   isInstanceType,
   isInterfaceType,
   isIntersectionType,
@@ -20,6 +20,7 @@ import {
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
 import { createArrayByArrayTypeNode } from "./array.js";
+import { createConditionalType } from "./conditional-type.js";
 import { createInstanceByType } from "./instance.js";
 import { createInterfaceByType } from "./interface.js";
 import { createIntersectionTypeByType } from "./intersection-type.js";
@@ -33,11 +34,6 @@ import { createTypeParameterByType } from "./type-parameter.js";
 import { createTypeReferenceByTypeNode } from "./type-reference.js";
 import { createUnionTypeByType } from "./union-type.js";
 import { createUnresolvedByType } from "./unresolved.js";
-
-
-export function createTypeBySymbol(ctx: CompilerContext, symbol: Symbol): Types {
-  return parseSymbol(ctx, symbol);
-}
 
 
 export function createTypeByDeclaration(ctx: CompilerContext, declaration: Declaration): Types {
@@ -80,6 +76,8 @@ export function createTypeByType(ctx: CompilerContext, type: Type): Types {
     return createThisByType(ctx, type);
   } else if(isInstanceType(type)){
     return createInstanceByType(ctx, type);
+  } else if(isConditionalType(type)){
+    return createConditionalType(ctx, type);
   } else if(isLiteralType(type)){
     return createLiteralType(ctx, type);
   } else if(isPrimitiveType(type)){

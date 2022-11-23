@@ -8,14 +8,12 @@ import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration } from "./member.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export function createInterfaceBySymbol(ctx: CompilerContext, symbol: Symbol): Interface | MergedInterface {
-
-  lockSymbol(ctx, symbol);
+export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): Interface | MergedInterface => lockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
 
@@ -48,7 +46,7 @@ export function createInterfaceBySymbol(ctx: CompilerContext, symbol: Symbol): I
     };
   }
 
-}
+});
 
 
 export function createInterfaceByType(ctx: CompilerContext, type: Type): Interface {

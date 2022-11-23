@@ -2,6 +2,7 @@ import { Symbol } from "typescript";
 
 import { isAliasedSymbol } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
+import { Types } from "../../types/types.js";
 
 
 /**
@@ -34,4 +35,8 @@ export function isSymbolLocked(ctx: CompilerContext, symbol: Symbol) {
 
 export function lockSymbol(ctx: CompilerContext, symbol: Symbol) {
   ctx.lockedSymbols.lockSymbol(ctx, symbol);
+}
+
+export function lockedSymbol<T extends Types>(ctx: CompilerContext, symbol: Symbol, callback: (ctx: CompilerContext, symbol: Symbol) => T): T {
+  return ctx.lockedSymbols.lockedSymbol(ctx, symbol, callback);
 }

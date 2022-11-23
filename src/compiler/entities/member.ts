@@ -10,13 +10,11 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createTypeByDeclaration, createTypeByTypeNode } from "./type.js";
 
 
-export function createMemberBySymbol(ctx: CompilerContext, memberSymbol: Symbol): Member {
-
-  lockSymbol(ctx, memberSymbol);
+export const createMemberBySymbol = (ctx: CompilerContext, memberSymbol: Symbol): Member => lockedSymbol(ctx, memberSymbol, () => {
 
   const declaration = memberSymbol.valueDeclaration ?? memberSymbol.getDeclarations()?.[0];
 
@@ -32,7 +30,7 @@ export function createMemberBySymbol(ctx: CompilerContext, memberSymbol: Symbol)
     name
   };
 
-}
+});
 
 
 export function createMemberByDeclaration(ctx: CompilerContext, declaration: EnumMember | PropertySignature | TypeElement): Member {

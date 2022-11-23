@@ -6,13 +6,11 @@ import { Constructor, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { functionOverloadDeclarationFilter } from "../utils/filter.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createConstructorBySymbol(ctx: CompilerContext, symbol: Symbol): Constructor {
-
-  lockSymbol(ctx, symbol);
+export const createConstructorBySymbol = (ctx: CompilerContext, symbol: Symbol): Constructor => lockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.declarations?.filter(isConstructorDeclaration)
     .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];
@@ -30,7 +28,7 @@ export function createConstructorBySymbol(ctx: CompilerContext, symbol: Symbol):
     signatures
   };
 
-}
+});
 
 
 export function createConstructorByType(ctx: CompilerContext, type: Type): Constructor {

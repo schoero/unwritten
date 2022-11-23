@@ -9,13 +9,11 @@ import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createTypeByType } from "./type.js";
 
 
-export function createVariableBySymbol(ctx: CompilerContext, symbol: Symbol): Variable {
-
-  lockSymbol(ctx, symbol);
+export const createVariableBySymbol = (ctx: CompilerContext, symbol: Symbol): Variable => lockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -35,7 +33,7 @@ export function createVariableBySymbol(ctx: CompilerContext, symbol: Symbol): Va
     name
   };
 
-}
+});
 
 
 function _parseVariableDeclaration(ctx: CompilerContext, declaration: VariableDeclaration) {

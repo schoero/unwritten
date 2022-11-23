@@ -6,13 +6,11 @@ import { Method, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { functionOverloadDeclarationFilter } from "../utils/filter.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createMethodBySymbol(ctx: CompilerContext, symbol: Symbol): Method {
-
-  lockSymbol(ctx, symbol);
+export const createMethodBySymbol = (ctx: CompilerContext, symbol: Symbol): Method => lockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.declarations?.filter(isMethodDeclaration)
     .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];
@@ -30,7 +28,7 @@ export function createMethodBySymbol(ctx: CompilerContext, symbol: Symbol): Meth
     signatures
   };
 
-}
+});
 
 
 export function createMethodByType(ctx: CompilerContext, type: Type): Method {

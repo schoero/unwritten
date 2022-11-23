@@ -6,13 +6,11 @@ import { Getter, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { functionOverloadDeclarationFilter } from "../utils/filter.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createGetterBySymbol(ctx: CompilerContext, symbol: Symbol): Getter {
-
-  lockSymbol(ctx, symbol);
+export const createGetterBySymbol = (ctx: CompilerContext, symbol: Symbol): Getter => lockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.declarations?.filter(isGetterDeclaration)
     .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];
@@ -30,7 +28,7 @@ export function createGetterBySymbol(ctx: CompilerContext, symbol: Symbol): Gett
     signatures
   };
 
-}
+});
 
 
 export function createGetterByType(ctx: CompilerContext, type: Type): Getter {

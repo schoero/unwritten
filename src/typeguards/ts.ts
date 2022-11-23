@@ -346,6 +346,10 @@ export function isClassType(type: Type): type is InterfaceType {
   return type.isClass();
 }
 
+export function isConditionalType(type: Type): boolean {
+  return (type.flags & ts.TypeFlags.Conditional) !== 0;
+}
+
 export function isMappedType(type: Type): boolean {
   return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Mapped) !== 0;
 }

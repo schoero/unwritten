@@ -16,7 +16,7 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createConstructorBySymbol } from "./constructor.js";
 import { createGetterBySymbol } from "./getter.js";
 import { createMethodBySymbol } from "./method.js";
@@ -25,9 +25,7 @@ import { createSetterBySymbol } from "./setter.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export function createClassBySymbol(ctx: CompilerContext, symbol: Symbol): Class {
-
-  lockSymbol(ctx, symbol);
+export const createClassBySymbol = (ctx: CompilerContext, symbol: Symbol): Class => lockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -43,7 +41,7 @@ export function createClassBySymbol(ctx: CompilerContext, symbol: Symbol): Class
     name
   };
 
-}
+});
 
 
 function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDeclaration): Omit<Class, "name"> {

@@ -6,13 +6,11 @@ import { Function, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { functionOverloadDeclarationFilter } from "../utils/filter.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createFunctionBySymbol(ctx: CompilerContext, symbol: Symbol): Function {
-
-  lockSymbol(ctx, symbol);
+export const createFunctionBySymbol = (ctx: CompilerContext, symbol: Symbol): Function => lockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.declarations?.filter(isFunctionLikeDeclaration)
     .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];
@@ -30,7 +28,7 @@ export function createFunctionBySymbol(ctx: CompilerContext, symbol: Symbol): Fu
     signatures
   };
 
-}
+});
 
 
 export function createFunctionByType(ctx: CompilerContext, type: Type): Function {

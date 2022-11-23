@@ -7,12 +7,10 @@ import { CompilerContext } from "../../types/context.js";
 import { ExportableTypes, SourceFile, TypeKind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
-import { getExportedSymbols, lockSymbol } from "../utils/ts.js";
+import { getExportedSymbols, lockedSymbol } from "../utils/ts.js";
 
 
-export function createSourceFileBySymbol(ctx: CompilerContext, symbol: Symbol): SourceFile {
-
-  lockSymbol(ctx, symbol);
+export const createSourceFileBySymbol = (ctx: CompilerContext, symbol: Symbol): SourceFile => lockedSymbol(ctx, symbol, () => {
 
   const exports = getExportedSymbols(ctx, symbol)
     .reduce<ExportableTypes[]>((parsedSymbols, exportedSymbol) => {
@@ -36,4 +34,4 @@ export function createSourceFileBySymbol(ctx: CompilerContext, symbol: Symbol): 
     name
   };
 
-}
+});

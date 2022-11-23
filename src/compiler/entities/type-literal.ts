@@ -8,13 +8,11 @@ import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration, createMemberBySymbol } from "./member.js";
 
 
-export function createTypeLiteralBySymbol(ctx: CompilerContext, symbol: Symbol): TypeLiteral {
-
-  lockSymbol(ctx, symbol);
+export const createTypeLiteralBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeLiteral => lockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -34,7 +32,7 @@ export function createTypeLiteralBySymbol(ctx: CompilerContext, symbol: Symbol):
     description
   };
 
-}
+});
 
 
 function _parseTypeLiteralDeclaration(ctx: CompilerContext, declaration: TypeLiteralNode) {

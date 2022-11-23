@@ -5,12 +5,10 @@ import { TypeKind, Unresolved } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionBySymbol } from "../compositions/position.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 
 
-export function createUnresolvedBySymbol(ctx: CompilerContext, symbol: Symbol): Unresolved {
-
-  lockSymbol(ctx, symbol);
+export const createUnresolvedBySymbol = (ctx: CompilerContext, symbol: Symbol): Unresolved => lockedSymbol(ctx, symbol, () => {
 
   const id = getIdBySymbol(ctx, symbol);
   const position = getPositionBySymbol(ctx, symbol);
@@ -24,7 +22,7 @@ export function createUnresolvedBySymbol(ctx: CompilerContext, symbol: Symbol): 
     position
   };
 
-}
+});
 
 
 export function createUnresolvedByType(ctx: CompilerContext, type: Type): Unresolved {

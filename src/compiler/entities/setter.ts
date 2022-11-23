@@ -6,13 +6,11 @@ import { Setter, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { functionOverloadDeclarationFilter } from "../utils/filter.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockedSymbol } from "../utils/ts.js";
 import { createSignatureByDeclaration } from "./signature.js";
 
 
-export function createSetterBySymbol(ctx: CompilerContext, symbol: Symbol): Setter {
-
-  lockSymbol(ctx, symbol);
+export const createSetterBySymbol = (ctx: CompilerContext, symbol: Symbol): Setter => lockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.declarations?.filter(isSetterDeclaration)
     .filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol)) ?? [];
@@ -30,7 +28,7 @@ export function createSetterBySymbol(ctx: CompilerContext, symbol: Symbol): Sett
     signatures
   };
 
-}
+});
 
 
 export function createSetterByType(ctx: CompilerContext, type: Type): Setter {
