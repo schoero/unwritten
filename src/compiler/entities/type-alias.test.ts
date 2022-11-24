@@ -89,9 +89,9 @@ scope("Compiler", TypeKind.TypeAlias, () => {
       it("should be able to parse generic types", () => {
         expect(exportedTypeAlias.type.kind).toBe(TypeKind.TypeReference);
         expect(exportedTypeAlias.typeParameters).toHaveLength(1);
-        expect((exportedTypeAlias.type as TypeReference).target).to.not.equal(undefined);
-        expect((exportedTypeAlias.type as TypeReference).target!.kind).to.equal(TypeKind.Circular);
-        expect((exportedTypeAlias.type as TypeReference).target!.id).to.equal(exportedTypeAlias.typeParameters![0]!.id);
+        expect((exportedTypeAlias.type as TypeReference).type).to.not.equal(undefined);
+        expect((exportedTypeAlias.type as TypeReference).type!.kind).to.equal(TypeKind.Circular);
+        expect((exportedTypeAlias.type as TypeReference).type!.id).to.equal(exportedTypeAlias.typeParameters![0]!.id);
       });
 
     }
@@ -108,8 +108,8 @@ scope("Compiler", TypeKind.TypeAlias, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should have a `string` constraint", () => {
-        expect((((exportedTypeAlias.type as TypeReference).target as TypeReference).target as TypeParameter).constraint).to.not.equal(undefined);
-        expect((((exportedTypeAlias.type as TypeReference).target as TypeReference).target as TypeParameter).constraint!.kind).to.equal(TypeKind.String);
+        expect((((exportedTypeAlias.type as TypeReference).type as TypeReference).type as TypeParameter).constraint).to.not.equal(undefined);
+        expect((((exportedTypeAlias.type as TypeReference).type as TypeReference).type as TypeParameter).constraint!.kind).to.equal(TypeKind.String);
       });
 
     }
@@ -127,8 +127,8 @@ scope("Compiler", TypeKind.TypeAlias, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should have a matching type argument", () => {
-        expect(((exportedTypeAlias.type as TypeReference).target as TypeReference).typeArguments).to.have.lengthOf(1);
-        expect(((exportedTypeAlias.type as TypeReference).target as TypeReference).typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
+        expect(((exportedTypeAlias.type as TypeReference).type as TypeReference).typeArguments).to.have.lengthOf(1);
+        expect(((exportedTypeAlias.type as TypeReference).type as TypeReference).typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
       });
 
     }

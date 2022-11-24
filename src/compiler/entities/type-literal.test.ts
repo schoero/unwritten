@@ -49,26 +49,6 @@ scope("Compiler", TypeKind.TypeLiteral, () => {
   {
 
     const testFileContent = ts`
-      type Keys = "A" | "B";
-      export type TypeLiteral = {
-        [K in Keys]: string;
-      };
-    `;
-
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
-
-    const symbol = exportedSymbols.find(s => s.name === "TypeLiteral")!;
-    const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
-
-    it("should support string literal union keys ", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).members).to.have.lengthOf(2);
-    });
-
-  }
-
-  {
-
-    const testFileContent = ts`
       enum TestEnum {
         A = "a",
         B = "b"

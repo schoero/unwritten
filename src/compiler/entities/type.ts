@@ -1,4 +1,4 @@
-import { Declaration, NodeArray, Type, TypeNode } from "typescript";
+import { Declaration, Type, TypeNode } from "typescript";
 
 import {
   isArrayTypeNode,
@@ -45,7 +45,7 @@ export function createTypeByDeclaration(ctx: CompilerContext, declaration: Decla
 /**
  * Type references must be handled by type node because the type would be the referenced type.
  */
-export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode, typeArguments?: NodeArray<TypeNode>): Types {
+export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
 
   if(isArrayTypeNode(typeNode)){
     return createArrayByArrayTypeNode(ctx, typeNode);
@@ -54,7 +54,7 @@ export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode, t
   } else if(isTupleTypeNode(typeNode)){
     return createTupleByTupleTypeNode(ctx, typeNode);
   } else if(isTypeReferenceNode(typeNode)){
-    return createTypeReferenceByTypeNode(ctx, typeNode, typeArguments);
+    return createTypeReferenceByTypeNode(ctx, typeNode);
   }
 
   const type = ctx.checker.getTypeFromTypeNode(typeNode);

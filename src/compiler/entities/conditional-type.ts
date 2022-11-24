@@ -1,4 +1,4 @@
-import { ConditionalType as TSConditionalType, NodeArray, TypeNode } from "typescript";
+import { ConditionalType as TSConditionalType } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
 import { ConditionalType, TypeKind } from "../../types/types.js";
@@ -7,7 +7,7 @@ import { normalizeTSMap } from "../utils/ts.js";
 import { createTypeByType, createTypeByTypeNode } from "./type.js";
 
 
-export function createConditionalType(ctx: CompilerContext, type: TSConditionalType, typeArguments?: NodeArray<TypeNode>): ConditionalType {
+export function createConditionalType(ctx: CompilerContext, type: TSConditionalType): ConditionalType {
 
   const root = type.root;
   const id = getIdByType(ctx, type);

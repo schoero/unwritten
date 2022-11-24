@@ -171,8 +171,8 @@ scope("Compiler", TypeKind.Interface, () => {
       expect(exportedInterface.typeParameters).to.have.lengthOf(1);
       expect(exportedInterface.members).to.have.lengthOf(1);
       expect(exportedInterface.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
-      expect((exportedInterface.members[0]!.valueType as TypeReference).target).to.not.equal(undefined);
-      expect((exportedInterface.members[0]!.valueType as TypeReference).target!.kind).to.equal(TypeKind.TypeParameter);
+      expect((exportedInterface.members[0]!.valueType as TypeReference).type).to.not.equal(undefined);
+      expect((exportedInterface.members[0]!.valueType as TypeReference).type!.kind).to.equal(TypeKind.TypeParameter);
     });
 
   }

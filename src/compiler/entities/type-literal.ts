@@ -18,6 +18,8 @@ export const createTypeLiteralBySymbol = (ctx: CompilerContext, symbol: Symbol):
 
   assert(declaration && isTypeLiteralDeclaration(declaration), "TypeLiteral declaration is not found");
 
+  const declaredType = ctx.checker.getDeclaredTypeOfSymbol(symbol);
+
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = _parseTypeLiteralDeclaration(ctx, declaration);
   const id = getIdBySymbol(ctx, symbol);

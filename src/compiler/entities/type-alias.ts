@@ -1,4 +1,4 @@
-import { NodeArray, Symbol, TypeAliasDeclaration, TypeNode } from "typescript";
+import { Symbol, TypeAliasDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { isTypeAliasDeclaration } from "../../typeguards/ts.js";
@@ -13,7 +13,7 @@ import { createTypeByTypeNode } from "./type.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol, typeArguments?: NodeArray<TypeNode>): TypeAlias => lockedSymbol(ctx, symbol, () => {
+export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeAlias => lockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -36,7 +36,7 @@ export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol, ty
 });
 
 
-function _parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAliasDeclaration, typeArguments?: NodeArray<TypeNode>) {
+function _parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAliasDeclaration) {
 
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
@@ -44,7 +44,7 @@ function _parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAlias
 
   // We have to use typeNode here for type references
   const typeNode = declaration.type;
-  const type = createTypeByTypeNode(ctx, typeNode, typeArguments);
+  const type = createTypeByTypeNode(ctx, typeNode);
 
   return {
     example,
