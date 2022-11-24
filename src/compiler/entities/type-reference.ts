@@ -11,7 +11,7 @@ export function createTypeReferenceByTypeNode(ctx: CompilerContext, typeNode: Ty
 
   const typeArguments = typeNode.typeArguments?.map(typeArgument => createTypeArgumentByTypeNode(ctx, typeArgument));
   const targetSymbol = ctx.checker.getSymbolAtLocation(typeNode.typeName);
-  const target = targetSymbol && parseSymbol(ctx, targetSymbol);
+  const target = targetSymbol && parseSymbol(ctx, targetSymbol, typeNode.typeArguments);
   const id = getIdByTypeNode(ctx, typeNode);
   const kind = TypeKind.TypeReference;
 

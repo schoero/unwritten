@@ -1,6 +1,7 @@
 import ts, {
   ArrayTypeNode,
   BigIntLiteralType,
+  ConditionalType,
   Declaration,
   FunctionLikeDeclaration,
   GenericType,
@@ -346,7 +347,7 @@ export function isClassType(type: Type): type is InterfaceType {
   return type.isClass();
 }
 
-export function isConditionalType(type: Type): boolean {
+export function isConditionalType(type: Type): type is ConditionalType {
   return (type.flags & ts.TypeFlags.Conditional) !== 0;
 }
 

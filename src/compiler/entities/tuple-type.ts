@@ -3,7 +3,7 @@ import { assert } from "vitest";
 
 import { isTupleTypeReferenceType } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
-import { TupleType, TupleMember, TypeKind } from "../../types/types.js";
+import { TupleMember, TupleType, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByNode } from "../compositions/position.js";

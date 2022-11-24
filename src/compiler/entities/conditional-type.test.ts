@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { ConditionalType, TypeKind } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
@@ -12,7 +12,7 @@ scope("Compiler", TypeKind.ConditionalType, () => {
   {
 
     const testFileContent = ts`
-      export type ConditionalTypeAlias<T extends "number" | "string" = "number"> = T extends "string" ? string : number;
+      export type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? "WAS STRING" : "WAS NUMBER";
       export type ConditionalTypeImplementation = ConditionalTypeAlias<"string">;
     `;
 
@@ -26,6 +26,7 @@ scope("Compiler", TypeKind.ConditionalType, () => {
 
     it("should be able to parse conditional types", () => {
       expect(conditionalTypeAlias.type.kind).to.equal(TypeKind.ConditionalType);
+      expect((conditionalTypeAlias.type as ConditionalType).kind).to.equal(TypeKind.ConditionalType);
     });
 
     it("should be able to resolve conditional types", () => {
