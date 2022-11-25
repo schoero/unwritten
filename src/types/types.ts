@@ -46,6 +46,7 @@ export enum TypeKind {
   TypeArgument = "TypeArgument",
   TypeLiteral = "TypeLiteral",
   TypeParameter = "TypeParameter",
+  TypeQuery = "TypeQuery",
   TypeReference = "Reference",
   Undefined = "Undefined",
   UnionType = "Union",
@@ -123,6 +124,7 @@ export type Types =
   | TypeArgument
   | TypeLiteral
   | TypeParameter
+  | TypeQuery
   | TypeReference
   | UnionType
   | Unresolved;
@@ -424,7 +426,15 @@ export interface ConditionalType extends Type<TypeKind.ConditionalType> {
   extendsType: Types;
   falseType: Types;
   trueType: Types;
-  resolvedType?: Types;
+}
+
+
+//-- Type query
+
+export interface TypeQuery extends Type<TypeKind.TypeQuery> {
+  type: Types;
+  name?: Name;
+  position?: Position;
 }
 
 

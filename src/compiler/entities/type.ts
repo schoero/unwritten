@@ -14,6 +14,7 @@ import {
   isThisType,
   isTupleTypeNode,
   isTypeParameterType,
+  isTypeQueryNode,
   isTypeReferenceNode,
   isUnionType
 } from "../../typeguards/ts.js";
@@ -31,6 +32,7 @@ import { createPrimitiveType } from "./primitive.js";
 import { createThisByType } from "./this-type.js";
 import { createTupleByTupleTypeNode } from "./tuple-type.js";
 import { createTypeParameterByType } from "./type-parameter.js";
+import { createTypeQueryByTypeNode } from "./type-query.js";
 import { createTypeReferenceByTypeNode } from "./type-reference.js";
 import { createUnionTypeByType } from "./union-type.js";
 import { createUnresolvedByType } from "./unresolved.js";
@@ -55,6 +57,8 @@ export function createTypeByTypeNode(ctx: CompilerContext, typeNode: TypeNode): 
     return createTupleByTupleTypeNode(ctx, typeNode);
   } else if(isTypeReferenceNode(typeNode)){
     return createTypeReferenceByTypeNode(ctx, typeNode);
+  } else if(isTypeQueryNode(typeNode)){
+    return createTypeQueryByTypeNode(ctx, typeNode);
   }
 
   const type = ctx.checker.getTypeFromTypeNode(typeNode);
