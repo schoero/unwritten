@@ -1,4 +1,4 @@
-import ts, { Declaration, Symbol, Type, TypeNode } from "typescript";
+import ts, { Declaration, Node, Symbol, Type } from "typescript";
 
 import { isConstructorDeclaration } from "../../typeguards/ts.js";
 import { Name } from "../../types/compositions.js";
@@ -27,7 +27,7 @@ export function getNameByType(ctx: CompilerContext, type: Type): Name | undefine
 }
 
 
-export function getNameByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Name | undefined {
+export function getNameByTypeNode(ctx: CompilerContext, typeNode: Node): Name | undefined {
   // @ts-expect-error - Internal API
   return typeNode.intrinsicName;
 }

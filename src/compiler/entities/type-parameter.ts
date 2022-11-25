@@ -5,6 +5,7 @@ import { isTypeParameterDeclaration } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TypeKind, TypeParameter } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
+import { getTypeParameterDescription } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { lockedSymbol } from "../utils/ts.js";
@@ -20,14 +21,16 @@ export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
-  const defaultType = declaration.default && createTypeByTypeNode(ctx, declaration.default);
+  const description = getTypeParameterDescription(ctx, declaration);
+  const initializer = declaration.default && createTypeByTypeNode(ctx, declaration.default);
   const constraint = declaration.constraint && createTypeByTypeNode(ctx, declaration.constraint);
   const kind = TypeKind.TypeParameter;
 
   return {
     constraint,
-    default: defaultType,
+    description,
     id,
+    initializer,
     kind,
     name,
     position

@@ -14,6 +14,7 @@ export enum TypeKind {
   ConditionalType = "ConditionalType",
   Constructor = "Constructor",
   Enum = "Enum",
+  EnumMember = "EnumMember",
   Function = "Function",
   Getter = "Getter",
   Instance = "Instance",
@@ -244,7 +245,6 @@ export interface TupleMember extends Type<TypeKind.Member> {
 //-- Type reference
 
 export interface TypeReference extends Type<TypeKind.TypeReference> {
-  id: ID;
   name?: Name;
   position?: Position;
   type?: Types;
@@ -255,7 +255,6 @@ export interface TypeReference extends Type<TypeKind.TypeReference> {
 //-- Instance
 
 export interface Instance extends Type<TypeKind.Instance> {
-  id: ID;
   name?: Name;
   position?: Position;
   resolvedType?: Types;
@@ -266,7 +265,6 @@ export interface Instance extends Type<TypeKind.Instance> {
 //-- This
 
 export interface ThisType extends Type<TypeKind.ThisType> {
-  id: ID;
   type?: Types;
 }
 
@@ -275,7 +273,6 @@ export interface ThisType extends Type<TypeKind.ThisType> {
 
 /** Circular types are used as links to previous symbols for circular references. */
 export interface Circular extends Type<TypeKind.Circular> {
-  id: ID;
   name?: Name;
   position?: Position;
 }
@@ -285,7 +282,6 @@ export interface Circular extends Type<TypeKind.Circular> {
 
 /** The unresolved type will be used if a type cannot be parsed, or it is excluded from parsing */
 export interface Unresolved extends Type<TypeKind.Unresolved> {
-  id: ID;
   name?: Name;
   position?: Position;
 }
@@ -411,7 +407,7 @@ export interface MappedType extends Type<TypeKind.MappedType> {
 }
 
 
-//-- Mapped Type mMember
+//-- Mapped Type member
 
 export interface MappedTypeMember extends Type<TypeKind.MappedTypeMember> {
   keyType: LiteralTypes;
@@ -469,7 +465,7 @@ export interface MergedEnum extends Enum {
   declarations: Omit<Enum, "id" | "name">[];
 }
 
-export interface EnumMember extends Type<TypeKind.Member> {
+export interface EnumMember extends Type<TypeKind.EnumMember> {
   name: Name;
   position: Position;
   type: Types;
@@ -482,11 +478,10 @@ export interface EnumMember extends Type<TypeKind.Member> {
 //-- Member
 
 export interface Member extends Type<TypeKind.Member> {
-  keyType: LiteralTypes;
   modifiers: Modifiers[];
   optional: boolean;
   position: Position;
-  valueType: Types;
+  type: Types;
   description?: Description;
   example?: Example;
   parent?: Types;
@@ -523,7 +518,8 @@ export interface TypeParameter extends Type<TypeKind.TypeParameter> {
   name: Name;
   position: Position;
   constraint?: Types;
-  default?: Types;
+  description?: Description;
+  initializer?: Types;
 }
 
 

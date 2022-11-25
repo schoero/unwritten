@@ -1,4 +1,4 @@
-import ts, { Declaration, ParameterDeclaration, Symbol } from "typescript";
+import ts, { Declaration, ParameterDeclaration, Symbol, TypeParameterDeclaration } from "typescript";
 
 import { Description, Example } from "../../types/compositions.js";
 import { CompilerContext } from "../../types/context.js";
@@ -29,6 +29,12 @@ export function getDescriptionByType(ctx: CompilerContext, type: ts.Type): Descr
 export function getParameterDescription(ctx: CompilerContext, declaration: ParameterDeclaration): Description | undefined {
   const parameterTags = ts.getJSDocParameterTags(declaration);
   return parameterTags.map(tag => tag.comment?.toString())[0];
+}
+
+
+export function getTypeParameterDescription(ctx: CompilerContext, declaration: TypeParameterDeclaration): Description | undefined {
+  const typeParameterTags = ts.getJSDocTypeParameterTags(declaration);
+  return typeParameterTags.map(tag => tag.comment?.toString())[0];
 }
 
 

@@ -343,6 +343,10 @@ export function isFunctionLikeType(type: Type): boolean {
     type.getProperties().length === 0;
 }
 
+export function isTypeQueryNode(node: ts.Node): node is ts.TypeQueryNode {
+  return ts.isTypeQueryNode(node);
+}
+
 export function isClassType(type: Type): type is InterfaceType {
   return type.isClass();
 }

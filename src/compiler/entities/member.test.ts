@@ -84,8 +84,8 @@ scope("Compiler", TypeKind.Member, () => {
     });
 
     it("should have matching types", () => {
-      expect(member1.valueType.kind).to.equal(TypeKind.String);
-      expect(member2.valueType.kind).to.equal(TypeKind.Number);
+      expect(member1.type.kind).to.equal(TypeKind.String);
+      expect(member2.type.kind).to.equal(TypeKind.Number);
     });
 
     it("should have matching descriptions", () => {

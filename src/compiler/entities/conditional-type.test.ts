@@ -22,7 +22,6 @@ scope("Compiler", TypeKind.ConditionalType, () => {
 
     it("should be able to parse conditional types", () => {
       expect(conditionalTypeAlias.type.kind).to.equal(TypeKind.ConditionalType);
-      expect((conditionalTypeAlias.type as ConditionalType).kind).to.equal(TypeKind.ConditionalType);
     });
 
     it("should have a matching checkType", () => {
