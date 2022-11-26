@@ -1,4 +1,4 @@
-import { HeritageClause, InterfaceDeclaration, Symbol, Type } from "typescript";
+import { HeritageClause, InterfaceDeclaration, NodeArray, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
@@ -81,11 +81,12 @@ export function createInterfaceByType(ctx: CompilerContext, type: Type): Interfa
 
 function _mergeMembers<Key extends keyof {
   [Key in keyof Interface as Interface[Key] extends any[] ? Key : never]: Interface[Key]
-}>(interfaces: ReturnType<typeof _parseInterfaceDeclaration>[], key: Key): Interface[Key] {
+}>(interfaces: (Interface | ReturnType<typeof _parseInterfaceDeclaration>)[], key: Key): Interface[Key] {
   // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
   return interfaces.reduce<Interface[Key]>((acc, declaration) => [
     ...acc,
-    ...declaration.heritage?.[key] ?? [],
+    // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
+    ...declaration.heritage?.flatMap(heritage => heritage[key]) ?? [],
     ...declaration[key]
   ], []);
 }
@@ -107,7 +108,7 @@ function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: Interface
   const getterSignatures = tsGetters.map(signature => createSignatureByDeclaration(ctx, signature));
   const setterSignatures = tsSetters.map(signature => createSignatureByDeclaration(ctx, signature));
 
-  const heritage = declaration.heritageClauses?.map(heritageClause => _createInterfaceByHeritageClause(ctx, heritageClause))[0];
+  const heritage = declaration.heritageClauses && _parseHeritageClauses(ctx, declaration.heritageClauses);
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
@@ -132,8 +133,12 @@ function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: Interface
 }
 
 
-function _createInterfaceByHeritageClause(ctx: CompilerContext, heritageClause: HeritageClause): Interface {
-  const typeNode = heritageClause.types[0]!;
-  const type = ctx.checker.getTypeFromTypeNode(typeNode);
-  return createInterfaceByType(ctx, type);
+function _parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): Interface[] {
+  return heritageClauses.flatMap(heritageClause => _createInterfacesByHeritageClause(ctx, heritageClause));
+}
+
+function _createInterfacesByHeritageClause(ctx: CompilerContext, heritageClause: HeritageClause): Interface[] {
+  const typeNodes = heritageClause.types;
+  const types = typeNodes.map(ctx.checker.getTypeFromTypeNode);
+  return types.map(type => createInterfaceByType(ctx, type));
 }

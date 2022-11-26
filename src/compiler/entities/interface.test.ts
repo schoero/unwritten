@@ -187,6 +187,31 @@ scope("Compiler", Kind.Interface, () => {
   {
 
     const testFileContent = ts`
+      interface InterfaceA {
+        a: string;
+      }
+      interface InterfaceB {
+        b: string;
+      }
+      export interface InterfaceC extends InterfaceA, InterfaceB {
+        c: string;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+    const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
+    const exportedInterfaceC = createInterfaceBySymbol(ctx, exportedInterfaceCSymbol);
+
+    it("should be able to handle extended interfaces", () => {
+      expect(exportedInterfaceC.properties).to.have.lengthOf(3);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
       export interface GenericInterface<T> {
         b: T;
       }
