@@ -1,8 +1,8 @@
-import { createConfig } from "../../../../config/index.js";
-import { CompleteConfig } from "../../../../types/config.js";
-import { RenderContext } from "../../../../types/context.js";
-import { markdownRenderer } from "../../markdown/index.js";
-import { MarkupRenderer } from "../../types/renderer.js";
+import { createConfig } from "../../src/config/index.js";
+import { markdownRenderer } from "../../src/renderer/markup/markdown/index.js";
+import { MarkupRenderer } from "../../src/renderer/markup/types/renderer.js";
+import { CompleteConfig } from "../../src/types/config.js";
+import { RenderContext } from "../../src/types/context.js";
 
 
 const defaultConfig = createConfig({

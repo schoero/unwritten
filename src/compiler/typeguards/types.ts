@@ -3,6 +3,7 @@ import ts, {
   ConditionalType,
   Declaration,
   GenericType,
+  IndexedAccessType,
   InterfaceType,
   IntersectionType,
   LiteralType,
@@ -80,6 +81,10 @@ export function isGenericType(type: Type): type is GenericType {
   return isObjectType(type) &&
     (type.objectFlags & ts.ObjectFlags.ClassOrInterface) !== 0 &&
     (type.objectFlags & ts.ObjectFlags.Reference) !== 0;
+}
+
+export function isIndexedAccessType(type: Type): type is IndexedAccessType {
+  return (type.flags & ts.TypeFlags.IndexedAccess) !== 0;
 }
 
 export function isInstanceType(type: Type): type is TypeReference {

@@ -79,18 +79,19 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
 
 export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types {
 
-  const symbol = type.symbol;
-  const name = getNameBySymbol(ctx, symbol);
-
-  if(isArrayTypeReferenceType(type)){
-    return createArrayByTypeReference(ctx, type);
-  } else if(isTupleTypeReferenceType(type)){
+  if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
+  } else if(isArrayTypeReferenceType(type)){
+    return createArrayByTypeReference(ctx, type);
   }
+
+  const symbol = type.symbol;
 
   if(isSymbolExcluded(ctx, symbol)){
     return createUnresolvedBySymbol(ctx, symbol);
   }
+
+  const name = getNameBySymbol(ctx, symbol);
 
   if(!name.startsWith("__")){
     return parseSymbol(ctx, symbol);

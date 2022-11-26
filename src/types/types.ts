@@ -445,7 +445,7 @@ export interface Interface extends Type<Kind.Interface> {
   setterSignatures: Signature[];
   description?: Description;
   example?: Example;
-  heritage?: Interface;
+  heritage?: Interface[];
   position?: Position;
   typeParameters?: TypeParameter[];
 }

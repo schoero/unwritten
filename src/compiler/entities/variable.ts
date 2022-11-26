@@ -8,7 +8,7 @@ import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { parseType } from "../entry-points/type.js";
+import { createTypeByDeclaration } from "../entry-points/type.js";
 import { isVariableDeclaration } from "../typeguards/declarations.js";
 import { lockSymbol } from "../utils/ts.js";
 
@@ -38,12 +38,10 @@ export const createVariableBySymbol = (ctx: CompilerContext, symbol: Symbol): Va
 
 function _parseVariableDeclaration(ctx: CompilerContext, declaration: VariableDeclaration) {
 
-  const tsType = ctx.checker.getTypeAtLocation(declaration);
-
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
-  const type = parseType(ctx, tsType);
+  const type = createTypeByDeclaration(ctx, declaration);
 
   return {
     example,

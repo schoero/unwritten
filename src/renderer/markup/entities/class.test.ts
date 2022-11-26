@@ -1,10 +1,10 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
+import { createRenderContext } from "../../../../tests/utils/context.js";
 import { Class, Kind } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
-import { renderClassForDocumentation, renderClassForTableOfContents } from "../entities/class.js";
-import { createRenderContext } from "./utils/context.js";
+import { renderClassForDocumentation, renderClassForTableOfContents } from "./class.js";
 
 
 describe("Renderer: Class", () => {

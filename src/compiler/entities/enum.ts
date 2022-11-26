@@ -12,7 +12,7 @@ import {
 import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { parseSymbol } from "../entry-points/symbol.js";
-import { parseType } from "../entry-points/type.js";
+import { createTypeByDeclaration } from "../entry-points/type.js";
 import { isEnumDeclaration, isEnumMemberDeclaration } from "../typeguards/declarations.js";
 import { lockSymbol } from "../utils/ts.js";
 
@@ -89,8 +89,7 @@ function _createEnumMemberByDeclaration(ctx: CompilerContext, declaration: TSEnu
   const parentSymbol = isEnumMemberDeclaration(declaration) && ctx.checker.getSymbolAtLocation(declaration.parent.name);
   const parent = parentSymbol ? parseSymbol(ctx, parentSymbol) : undefined;
   const description = getDescriptionByDeclaration(ctx, declaration);
-  const tsType = ctx.checker.getTypeAtLocation(declaration);
-  const type = parseType(ctx, tsType);
+  const type = createTypeByDeclaration(ctx, declaration);
   const kind = Kind.EnumMember;
 
   assert(name, "Member name not found");

@@ -1,10 +1,9 @@
-import { expect } from "chai";
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
+import { createRenderContext } from "../../../../tests/utils/context.js";
 import { Function, Kind } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
 import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "../entities/function.js";
-import { createRenderContext } from "./utils/context.js";
 
 
 describe("Renderer: Function", () => {

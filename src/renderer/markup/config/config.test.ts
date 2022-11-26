@@ -1,11 +1,10 @@
-import { expect } from "chai";
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
+import { createRenderContext } from "../../../../tests/utils/context.js";
 import { createConfig } from "../../../config/index.js";
 import { Kind, Variable } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
 import { renderVariableForDocumentation } from "../entities/variable.js";
-import { createRenderContext } from "./utils/context.js";
 
 
 describe("Config", () => {

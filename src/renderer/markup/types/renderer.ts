@@ -158,12 +158,6 @@ export type RenderedPropertyForTableOfContents = string;
 export type RenderedPropertyForDocumentation = string;
 
 
-//-- Member
-
-export type RenderedMemberForTableOfContents = string;
-export type RenderedMemberForDocumentation = string;
-
-
 //-- Parameter
 
 export type RenderedParameterForTableOfContents = string;
