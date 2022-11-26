@@ -31,7 +31,6 @@ jobs:
         run: npm run spellcheck:ci
 
   test:
-    needs: lint
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
