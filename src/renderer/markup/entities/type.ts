@@ -6,7 +6,7 @@ import {
   isUnionType
 } from "../../../typeguards/types.js";
 import { RenderContext } from "../../../types/context.js";
-import { Type, Kind } from "../../../types/types.js";
+import { Kind, Type } from "../../../types/types.js";
 import { MarkupRenderer } from "../types/renderer.js";
 import { getRenderConfig } from "../utils/config.js";
 import { encapsulate } from "../utils/renderer.js";

@@ -2,7 +2,7 @@ import { isObjectLiteralExpression, ObjectLiteralExpression, Symbol, Type } from
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { ObjectLiteral, Kind } from "../../types/types.js";
+import { Kind, ObjectLiteral } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getPositionByDeclaration } from "../compositions/position.js";

@@ -1,7 +1,7 @@
 import { Type } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { PrimitiveTypeKinds, PrimitiveTypes, Kind } from "../../types/types.js";
+import { Kind, PrimitiveTypeKinds, PrimitiveTypes } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import {
   isAnyType,

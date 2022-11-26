@@ -1,7 +1,7 @@
 import { Symbol } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { Module, Kind } from "../../types/types.js";
+import { Kind, Module } from "../../types/types.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createSourceFileBySymbol } from "./source-file.js";
 

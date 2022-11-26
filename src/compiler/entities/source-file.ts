@@ -4,7 +4,7 @@ import { assert } from "vitest";
 import { parseSymbol } from "../../parser/index.js";
 import { isExportableType } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
-import { ExportableTypes, SourceFile, Kind } from "../../types/types.js";
+import { ExportableTypes, Kind, SourceFile } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getExportedSymbols, lockedSymbol } from "../utils/ts.js";

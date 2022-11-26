@@ -2,7 +2,7 @@ import { Symbol, TypeAliasDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { TypeAlias, Kind } from "../../types/types.js";
+import { Kind, TypeAlias } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";

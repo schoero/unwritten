@@ -2,7 +2,7 @@ import { ParameterDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { Parameter, Kind } from "../../types/types.js";
+import { Kind, Parameter } from "../../types/types.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getInitializerByDeclaration } from "../compositions/initializer.js";
 import { getParameterDescription } from "../compositions/jsdoc.js";

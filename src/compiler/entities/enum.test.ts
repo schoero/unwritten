@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { NumberLiteralType, Kind } from "../../types/types.js";
+import { Kind, NumberLiteralType } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createEnumBySymbol } from "./enum.js";
 

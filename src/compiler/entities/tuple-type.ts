@@ -2,7 +2,7 @@ import { ElementFlags, TupleTypeNode, TupleTypeReference, Type } from "typescrip
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { TupleMember, TupleType, Kind } from "../../types/types.js";
+import { Kind, TupleMember, TupleType } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByNode } from "../compositions/position.js";

@@ -1,4 +1,3 @@
-import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "./typeguards/renderer.js";
 import {
   isClassType,
   isEnumType,
@@ -17,6 +16,7 @@ import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } fr
 import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "./entities/namespace.js";
 import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./entities/type-alias.js";
 import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./entities/variable.js";
+import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "./typeguards/renderer.js";
 import {
   MarkupRenderer,
   RenderedCategoryForDocumentation,

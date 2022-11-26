@@ -15,7 +15,6 @@ import { createTypeAliasBySymbol } from "../compiler/entities/type-alias.js";
 import { createTypeParameterBySymbol } from "../compiler/entities/type-parameter.js";
 import { createUnresolvedBySymbol } from "../compiler/entities/unresolved.js";
 import { createVariableBySymbol } from "../compiler/entities/variable.js";
-import { isSymbolLocked, resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
 import {
   isClassSymbol,
   isEnumSymbol,
@@ -30,6 +29,7 @@ import {
   isTypeParameterSymbol,
   isVariableSymbol
 } from "../compiler/typeguards/isFunctionSymbol";
+import { isSymbolLocked, resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
 import { CompilerContext } from "../types/context.js";
 import { ExportableTypes, Types } from "../types/types.js";
 import { isSymbolExcluded } from "../utils/general.js";

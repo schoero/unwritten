@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
-import { NumberLiteralType, Kind, Variable } from "../../../types/types.js";
+import { Kind, NumberLiteralType, Variable } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
 import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../entities/variable.js";
 import { createRenderContext } from "./utils/context.js";

@@ -2,7 +2,7 @@ import { PropertyAssignment, PropertyDeclaration, PropertySignature, Symbol } fr
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { Property, Kind } from "../../types/types.js";
+import { Kind, Property } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";

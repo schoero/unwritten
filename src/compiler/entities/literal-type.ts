@@ -9,10 +9,10 @@ import { CompilerContext } from "../../types/context.js";
 import {
   BigIntLiteralType,
   BooleanLiteralType,
+  Kind,
   LiteralTypes,
   NumberLiteralType,
-  StringLiteralType,
-  Kind
+  StringLiteralType
 } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import {

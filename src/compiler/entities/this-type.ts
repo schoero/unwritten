@@ -3,7 +3,7 @@ import { assert } from "vitest";
 
 import { parseSymbol } from "../../parser/index.js";
 import { CompilerContext } from "../../types/context.js";
-import { ThisType, Kind } from "../../types/types.js";
+import { Kind, ThisType } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 
 
