@@ -3,6 +3,7 @@
     "@schoero/cspell-config"
   ],
   "words": [
+    "quickdoks",
     "Mergeable",
     "tsdoc",
     "typeguards"
