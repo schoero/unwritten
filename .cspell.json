@@ -3,7 +3,8 @@
     "@schoero/cspell-config"
   ],
   "words": [
-    "typeguards",
-    "tsdoc"
+    "Mergeable",
+    "tsdoc",
+    "typeguards"
   ]
 }

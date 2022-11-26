@@ -1,4 +1,5 @@
-import { Symbol, Type } from "typescript";
+import { FunctionLikeDeclaration, Symbol, Type } from "typescript";
+import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
@@ -26,6 +27,11 @@ export function createFunctionLikeBySymbol(ctx: CompilerContext, symbol: Symbol)
 
 }
 
+export function createFunctionLikeByDeclaration(ctx: CompilerContext, declaration: FunctionLikeDeclaration) {
+  const symbol = ctx.checker.getSymbolAtLocation(declaration.name!);
+  assert(symbol, "FunctionLikeDeclaration symbol not found");
+  return createFunctionLikeBySymbol(ctx, symbol);
+}
 
 export function createFunctionLikeByType(ctx: CompilerContext, type: Type) {
 

@@ -7,8 +7,16 @@ export function isArrowFunctionDeclaration(declaration: Declaration): declaratio
   return ts.isArrowFunction(declaration);
 }
 
+export function isCallSignatureDeclaration(declaration: Declaration): declaration is ts.CallSignatureDeclaration {
+  return ts.isCallSignatureDeclaration(declaration);
+}
+
 export function isClassDeclaration(declaration: Declaration): declaration is ts.ClassDeclaration {
   return ts.isClassDeclaration(declaration);
+}
+
+export function isConstructSignatureDeclaration(declaration: Declaration): declaration is ts.ConstructSignatureDeclaration {
+  return ts.isConstructSignatureDeclaration(declaration);
 }
 
 export function isConstructorDeclaration(declaration: Declaration): declaration is ts.ConstructorDeclaration {
@@ -45,12 +53,20 @@ export function isGetterDeclaration(declaration: Declaration): declaration is ts
   return ts.isGetAccessorDeclaration(declaration);
 }
 
+export function isGetterSignatureDeclaration(declaration: Declaration): declaration is ts.GetAccessorDeclaration {
+  return ts.isGetAccessorDeclaration(declaration);
+}
+
 export function isInterfaceDeclaration(declaration: Declaration): declaration is ts.InterfaceDeclaration {
   return ts.isInterfaceDeclaration(declaration);
 }
 
 export function isMethodDeclaration(declaration: Declaration): declaration is ts.MethodDeclaration {
   return ts.isMethodDeclaration(declaration);
+}
+
+export function isMethodSignatureDeclaration(declaration: Declaration): declaration is ts.MethodSignature {
+  return ts.isMethodSignature(declaration);
 }
 
 export function isModuleDeclaration(declaration: ts.Declaration): declaration is ts.ModuleDeclaration {
@@ -83,11 +99,15 @@ export function isPropertyDeclaration(declaration: Declaration): declaration is 
   return ts.isPropertyDeclaration(declaration);
 }
 
-export function isPropertySignature(declaration: Declaration): declaration is ts.PropertySignature {
+export function isPropertySignatureDeclaration(declaration: Declaration): declaration is ts.PropertySignature {
   return ts.isPropertySignature(declaration);
 }
 
 export function isSetterDeclaration(declaration: Declaration): declaration is ts.SetAccessorDeclaration {
+  return ts.isSetAccessorDeclaration(declaration);
+}
+
+export function isSetterSignatureDeclaration(declaration: Declaration): declaration is ts.SetAccessorDeclaration {
   return ts.isSetAccessorDeclaration(declaration);
 }
 

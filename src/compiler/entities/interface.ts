@@ -7,9 +7,18 @@ import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { isInterfaceDeclaration } from "../typeguards/declarations.js";
+import {
+  isCallSignatureDeclaration,
+  isConstructSignatureDeclaration,
+  isGetterSignatureDeclaration,
+  isInterfaceDeclaration,
+  isMethodSignatureDeclaration,
+  isPropertySignatureDeclaration,
+  isSetterSignatureDeclaration
+} from "../typeguards/declarations.js";
 import { lockSymbol } from "../utils/ts.js";
-import { createMemberByDeclaration } from "./member.js";
+import { createPropertyByDeclaration } from "./property.js";
+import { createSignatureByDeclaration } from "./signature.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
@@ -24,25 +33,42 @@ export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): I
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclarations = declarations.map(declaration => _parseInterfaceDeclaration(ctx, declaration));
   const kind = Kind.Interface;
-  const members = _mergeMembers(fromDeclarations);
+
+  const properties = _mergeMembers(fromDeclarations, "properties");
+  const callSignatures = _mergeMembers(fromDeclarations, "callSignatures");
+  const constructSignatures = _mergeMembers(fromDeclarations, "constructSignatures");
+  const methodSignatures = _mergeMembers(fromDeclarations, "methodSignatures");
+  const getterSignatures = _mergeMembers(fromDeclarations, "getterSignatures");
+  const setterSignatures = _mergeMembers(fromDeclarations, "setterSignatures");
+
 
   if(fromDeclarations.length === 1){
     return <Interface>{
       ...fromDeclarations[0],
+      callSignatures,
+      constructSignatures,
       description,
+      getterSignatures,
       id,
       kind,
-      members,
-      name
+      methodSignatures,
+      name,
+      properties,
+      setterSignatures
     };
   } else {
     return <MergedInterface>{
+      callSignatures,
+      constructSignatures,
       declarations: fromDeclarations,
       description,
+      getterSignatures,
       id,
       kind,
-      members,
-      name
+      methodSignatures,
+      name,
+      properties,
+      setterSignatures
     };
   }
 
@@ -53,19 +79,34 @@ export function createInterfaceByType(ctx: CompilerContext, type: Type): Interfa
   return createInterfaceBySymbol(ctx, type.symbol);
 }
 
-
-function _mergeMembers(interfaces: ReturnType<typeof _parseInterfaceDeclaration>[]): Interface["members"] {
-  return interfaces.reduce<Interface["members"]>((acc, declaration) => [
+function _mergeMembers<Key extends keyof {
+  [Key in keyof Interface as Interface[Key] extends any[] ? Key : never]: Interface[Key]
+}>(interfaces: ReturnType<typeof _parseInterfaceDeclaration>[], key: Key): Interface[Key] {
+  // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
+  return interfaces.reduce<Interface[Key]>((acc, declaration) => [
     ...acc,
-    ...declaration.heritage?.members ?? [],
-    ...declaration.members
+    ...declaration.heritage?.[key] ?? [],
+    ...declaration[key]
   ], []);
 }
 
 
 function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceDeclaration) {
 
-  const members = declaration.members.map(declaration => createMemberByDeclaration(ctx, declaration));
+  const tsConstructSignatures = declaration.members.filter(isConstructSignatureDeclaration);
+  const tsCallSignatures = declaration.members.filter(isCallSignatureDeclaration);
+  const tsMethods = declaration.members.filter(isMethodSignatureDeclaration);
+  const tsProperties = declaration.members.filter(isPropertySignatureDeclaration);
+  const tsGetters = declaration.members.filter(isGetterSignatureDeclaration);
+  const tsSetters = declaration.members.filter(isSetterSignatureDeclaration);
+
+  const constructSignatures = tsConstructSignatures.map(signature => createSignatureByDeclaration(ctx, signature));
+  const callSignatures = tsCallSignatures.map(signature => createSignatureByDeclaration(ctx, signature));
+  const methodSignatures = tsMethods.map(signature => createSignatureByDeclaration(ctx, signature));
+  const properties = tsProperties.map(declaration => createPropertyByDeclaration(ctx, declaration));
+  const getterSignatures = tsGetters.map(signature => createSignatureByDeclaration(ctx, signature));
+  const setterSignatures = tsSetters.map(signature => createSignatureByDeclaration(ctx, signature));
+
   const heritage = declaration.heritageClauses?.map(heritageClause => _createInterfaceByHeritageClause(ctx, heritageClause))[0];
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
@@ -74,12 +115,17 @@ function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: Interface
   const kind = Kind.Interface;
 
   return {
+    callSignatures,
+    constructSignatures,
     example,
+    getterSignatures,
     heritage,
     id,
     kind,
-    members,
+    methodSignatures,
     position,
+    properties,
+    setterSignatures,
     typeParameters
   };
 

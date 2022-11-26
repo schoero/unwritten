@@ -11,7 +11,7 @@ import { getPositionByDeclaration } from "../compositions/position.js";
 import { parseSymbol } from "../entry-points/symbol.js";
 import { createTypeByDeclaration } from "../entry-points/type.js";
 import { parseTypeNode } from "../entry-points/type-node.js";
-import { isEnumMemberDeclaration, isPropertySignature, isTypeElement } from "../typeguards/declarations.js";
+import { isEnumMemberDeclaration, isPropertySignatureDeclaration, isTypeElement } from "../typeguards/declarations.js";
 import { lockSymbol } from "../utils/ts.js";
 
 
@@ -19,7 +19,7 @@ export const createMemberBySymbol = (ctx: CompilerContext, memberSymbol: Symbol)
 
   const declaration = memberSymbol.valueDeclaration ?? memberSymbol.getDeclarations()?.[0];
 
-  assert(declaration && (isPropertySignature(declaration) || isEnumMemberDeclaration(declaration) || isTypeElement(declaration)), "Member declaration not found");
+  assert(declaration && (isPropertySignatureDeclaration(declaration) || isEnumMemberDeclaration(declaration) || isTypeElement(declaration)), "Member declaration not found");
 
   const id = getIdBySymbol(ctx, memberSymbol);
   const name = getNameBySymbol(ctx, memberSymbol);

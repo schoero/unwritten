@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Kind, TypeReference } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
@@ -33,8 +33,9 @@ scope("Compiler", Kind.Interface, () => {
       export interface Interface {
         (): void;
         new (): void;
-        method(): void;
+        method(a: string): void;
         prop: string;
+        funcProp: () => void;
         get getter(): string;
         set setter(value: string): void;
       }
@@ -45,11 +46,37 @@ scope("Compiler", Kind.Interface, () => {
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
-    it("should be able to parse an interface", () => {
-      expect(exportedInterface.kind).to.equal(Kind.Interface);
+    it("should be able to handle construct signatures", () => {
+      expect(exportedInterface.constructSignatures.length).to.equal(1);
+    });
+
+    it("should be able to handle call signatures", () => {
+      expect(exportedInterface.callSignatures.length).to.equal(1);
+    });
+
+    it("should be able to handle properties", () => {
+      expect(exportedInterface.properties.length).to.equal(2);
+    });
+
+    it("should be able to handle methods", () => {
+      expect(exportedInterface.methodSignatures.length).to.equal(1);
+    });
+
+    it("should differentiate between methods and function properties", () => {
+      expect(exportedInterface.methodSignatures.find(m => m.name === "method")).to.not.equal(undefined);
+      expect(exportedInterface.properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
+    });
+
+    it("should be able to handle getters", () => {
+      expect(exportedInterface.getterSignatures.length).to.equal(1);
+    });
+
+    it("should be able to handle setters", () => {
+      expect(exportedInterface.setterSignatures.length).to.equal(1);
     });
 
   }
+
 
   {
 
@@ -86,7 +113,7 @@ scope("Compiler", Kind.Interface, () => {
     });
 
     it("should have the correct amount of members", () => {
-      expect(exportedInterface.members.length).to.equal(2);
+      expect(exportedInterface.properties.length).to.equal(2);
     });
 
     it("should have a matching description", () => {
@@ -124,7 +151,7 @@ scope("Compiler", Kind.Interface, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should merge multiple interfaces with the same name", () => {
-      expect(exportedInterface.members.length).to.equal(2);
+      expect(exportedInterface.properties.length).to.equal(2);
     });
 
   }
@@ -151,8 +178,8 @@ scope("Compiler", Kind.Interface, () => {
     const exportedInterfaceC = createInterfaceBySymbol(ctx, exportedInterfaceCSymbol);
 
     it("should be able to handle extended interfaces", () => {
-      expect(exportedInterfaceB.members).to.have.lengthOf(2);
-      expect(exportedInterfaceC.members).to.have.lengthOf(3);
+      expect(exportedInterfaceB.properties).to.have.lengthOf(2);
+      expect(exportedInterfaceC.properties).to.have.lengthOf(3);
     });
 
   }
@@ -173,10 +200,8 @@ scope("Compiler", Kind.Interface, () => {
     it("should support generics in interfaces", () => {
       expect(exportedInterface.typeParameters).to.not.equal(undefined);
       expect(exportedInterface.typeParameters).to.have.lengthOf(1);
-      expect(exportedInterface.members).to.have.lengthOf(1);
-      expect(exportedInterface.members[0]!.type.kind).to.equal(Kind.TypeReference);
-      expect((exportedInterface.members[0]!.type as TypeReference).type).to.not.equal(undefined);
-      expect((exportedInterface.members[0]!.type as TypeReference).type!.kind).to.equal(Kind.TypeParameter);
+      expect(exportedInterface.properties).to.have.lengthOf(1);
+      expect(exportedInterface.properties[0]!.type.kind).to.equal(Kind.TypeParameter);
     });
 
   }

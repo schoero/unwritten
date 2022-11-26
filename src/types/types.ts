@@ -299,6 +299,7 @@ export interface Signature extends Type<Kind.Signature> {
   returnType: Types & { description?: Description; } ;
   description?: Description;
   example?: Example;
+  name?: Name;
 }
 
 export interface Parameter extends Type<Kind.Parameter> {
@@ -435,8 +436,13 @@ export interface TypeQuery extends Type<Kind.TypeQuery> {
 //-- Interface
 
 export interface Interface extends Type<Kind.Interface> {
-  members: Member[];
+  callSignatures: Signature[];
+  constructSignatures: Signature[];
+  getterSignatures: Signature[];
+  methodSignatures: Signature[];
   name: Name;
+  properties: Property[];
+  setterSignatures: Signature[];
   description?: Description;
   example?: Example;
   heritage?: Interface;

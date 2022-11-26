@@ -6,6 +6,7 @@ import { Kind, Signature } from "../../types/types.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
+import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { getReturnTypeByCallSignature } from "../compositions/return-type.js";
 import { createParameterByDeclaration } from "./parameter.js";
@@ -25,6 +26,7 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
   const returnType = getReturnTypeByCallSignature(ctx, signature);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
+  const name = getNameByDeclaration(ctx, declaration);
   const kind = Kind.Signature;
 
   return {
@@ -33,6 +35,7 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
     id,
     kind,
     modifiers,
+    name,
     parameters,
     position,
     returnType
