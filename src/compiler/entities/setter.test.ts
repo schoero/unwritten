@@ -13,7 +13,7 @@ scope("Compiler", Kind.Setter, () => {
 
     const testFileContent = ts`
       export class Class { 
-        set setter() {}
+        set setter(value: string) {}
       }
     `;
 
