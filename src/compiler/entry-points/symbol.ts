@@ -44,10 +44,6 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 
-  if(resolvedSymbol.escapedName === "ErrorConstructor"){
-    debugger;
-  }
-
   if(isSymbolExcluded(ctx, resolvedSymbol)){
     return createUnresolvedBySymbol(ctx, resolvedSymbol);
   }
