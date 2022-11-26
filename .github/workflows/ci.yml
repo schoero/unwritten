@@ -44,7 +44,6 @@ jobs:
         run: npm test
 
     strategy:
-      fail-fast: true
       matrix:
         node:
           - 14
@@ -54,4 +53,3 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-      max-parallel: 1
