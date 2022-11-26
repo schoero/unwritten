@@ -26,7 +26,7 @@ scope("Compiler", Kind.Function, () => {
       const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
       const exportedFunction = createFunctionBySymbol(ctx, symbol);
 
-      it("should be able to parse a function type", () => {
+      it("should be able to parse a function", () => {
         expect(exportedFunction.kind).to.equal(Kind.Function);
       });
 
@@ -141,6 +141,29 @@ scope("Compiler", Kind.Function, () => {
 
       it("should have a return type which is a boolean", () => {
         expect(functionType.signatures[0]!.returnType.kind).to.equal(Kind.Boolean);
+      });
+
+    }
+
+    {
+
+      const testFileContent = ts`
+        export async function functionSymbol(): boolean {
+          return true;
+        }
+      `;
+
+      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+
+      const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
+      const exportedFunction = createFunctionBySymbol(ctx, symbol);
+
+      it("should be able to parse an async function", () => {
+        expect(exportedFunction.kind).to.equal(Kind.Function);
+      });
+
+      it("should have the async modifier", () => {
+        expect(exportedFunction.signatures[0]!.modifiers).to.include("async");
       });
 
     }
