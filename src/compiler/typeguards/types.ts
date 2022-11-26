@@ -150,6 +150,7 @@ export function isStringLiteralType(type: Type): type is StringLiteralType {
 export function isStringType(type: Type): boolean {
   return (type.flags & ts.TypeFlags.String) !== 0;
 }
+
 export function isThisType(type: Type): boolean {
   // @ts-expect-error - internal API
   return type.isThisType === true;
@@ -166,7 +167,6 @@ export function isTupleTypeReferenceType(type: Type): type is TupleTypeReference
 export function isType(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Type {
   return !isSymbol(typeNodeOrSymbolOrDeclarationOrType) && !isDeclaration(typeNodeOrSymbolOrDeclarationOrType) && !isTypeNode(typeNodeOrSymbolOrDeclarationOrType);
 }
-
 
 export function isTypeLiteralType(type: Type): type is ObjectType {
   return isObjectType(type) && type.symbol.getName() === "__type";

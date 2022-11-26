@@ -17,6 +17,7 @@ export function isArrayTypeNode(typeNode: TypeNode): typeNode is ArrayTypeNode {
 export function isArrayTypeReferenceTypeNode(typeNode: TypeNode): typeNode is TypeReferenceNode {
   return isTypeReferenceNode(typeNode) && typeNode.typeName.getText() === "Array" && typeNode.typeArguments?.length === 1;
 }
+
 export function isMappedTypeNode(typeNode: TypeNode): typeNode is MappedTypeNode {
   return ts.isMappedTypeNode(typeNode);
 }

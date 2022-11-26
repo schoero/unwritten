@@ -6,6 +6,10 @@
       "files": ["**/typeguards/*.ts"],
       "parser": "@typescript-eslint/parser",
       "rules": {
+        "padding-line-between-statements": [
+          "warn",
+          { "blankLine": "always", "next": "export", "prev": "export" }
+        ],
         "sort-exports/sort-exports": ["warn", { "sortDir": "asc" }]
       }
     }
