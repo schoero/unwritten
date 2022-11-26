@@ -24,6 +24,8 @@ scope("Compiler", Kind.TypeArgument, () => {
     it("should have a matching type argument", () => {
       expect((exportedTypeAlias.type as TypeReference).typeArguments).to.have.lengthOf(1);
       expect((exportedTypeAlias.type as TypeReference).typeArguments![0]!.kind).to.equal(Kind.TypeArgument);
+      expect((exportedTypeAlias.type as TypeReference).typeArguments![0]!.type).to.not.equal(undefined);
+      expect((exportedTypeAlias.type as TypeReference).typeArguments![0]!.type!.kind).to.equal(Kind.StringLiteral);
     });
 
   }

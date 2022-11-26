@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Kind, TypeParameter, TypeReference } from "../../types/types.js";
+import { Kind, TypeReference } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
@@ -72,67 +72,43 @@ scope("Compiler", Kind.TypeAlias, () => {
 
   }
 
+  {
 
-  describe("Generics", () => {
+    const testFileContent = ts`
+      export type GenericTypeAlias<T> = T;
+    `;
 
-    {
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
-      const testFileContent = ts`
-        export type GenericTypeAlias<T> = T;
-      `;
+    const symbol = exportedSymbols.find(s => s.name === "GenericTypeAlias")!;
+    const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    it("should be able to parse generic types", () => {
+      expect(exportedTypeAlias.type.kind).toBe(Kind.TypeReference);
+      expect(exportedTypeAlias.typeParameters).toHaveLength(1);
+      expect((exportedTypeAlias.type as TypeReference).type).to.not.equal(undefined);
+      expect((exportedTypeAlias.type as TypeReference).type!.kind).to.equal(Kind.TypeParameter);
+      expect((exportedTypeAlias.type as TypeReference).type!.id).to.equal(exportedTypeAlias.typeParameters![0]!.id);
+    });
 
-      const symbol = exportedSymbols.find(s => s.name === "GenericTypeAlias")!;
-      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+  }
 
-      it("should be able to parse generic types", () => {
-        expect(exportedTypeAlias.type.kind).toBe(Kind.TypeReference);
-        expect(exportedTypeAlias.typeParameters).toHaveLength(1);
-        expect((exportedTypeAlias.type as TypeReference).type).to.not.equal(undefined);
-        expect((exportedTypeAlias.type as TypeReference).type!.kind).to.equal(Kind.Circular);
-        expect((exportedTypeAlias.type as TypeReference).type!.id).to.equal(exportedTypeAlias.typeParameters![0]!.id);
-      });
+  {
 
-    }
+    const testFileContent = ts`
+      export type Generic<T extends string> = T;
+    `;
 
-    {
+    const { exportedSymbols, ctx } = compile(testFileContent.trim());
 
-      const testFileContent = ts`
-        export type Generic<T extends string> = T;
-      `;
+    const symbol = exportedSymbols.find(s => s.name === "Generic")!;
+    const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    it("should have a type parameter", () => {
+      expect(exportedTypeAlias.typeParameters).to.not.equal(undefined);
+      expect(exportedTypeAlias.typeParameters).to.have.lengthOf(1);
+    });
 
-      const symbol = exportedSymbols.find(s => s.name === "Generic")!;
-      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
-
-      it("should have a `string` constraint", () => {
-        expect((((exportedTypeAlias.type as TypeReference).type as TypeReference).type as TypeParameter).constraint).to.not.equal(undefined);
-        expect((((exportedTypeAlias.type as TypeReference).type as TypeReference).type as TypeParameter).constraint!.kind).to.equal(Kind.String);
-      });
-
-    }
-
-    {
-
-      const testFileContent = ts`
-        type Generic<T extends string> = T;
-        export type Hello = Generic<"World">;
-      `;
-
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
-
-      const symbol = exportedSymbols.find(s => s.name === "Hello")!;
-      const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
-
-      it("should have a matching type argument", () => {
-        expect(((exportedTypeAlias.type as TypeReference).type as TypeReference).typeArguments).to.have.lengthOf(1);
-        expect(((exportedTypeAlias.type as TypeReference).type as TypeReference).typeArguments![0]!.kind).to.equal(Kind.StringLiteral);
-      });
-
-    }
-
-  });
+  }
 
 });

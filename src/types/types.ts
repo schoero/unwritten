@@ -243,7 +243,7 @@ export interface TypeReference extends Type<Kind.TypeReference> {
   name?: Name;
   position?: Position;
   type?: Types;
-  typeArguments?: Types[];
+  typeArguments?: TypeArgument[];
 }
 
 
@@ -253,7 +253,7 @@ export interface Instance extends Type<Kind.Instance> {
   name?: Name;
   position?: Position;
   resolvedType?: Types;
-  typeArguments?: Types[];
+  typeArguments?: TypeArgument[];
 }
 
 
