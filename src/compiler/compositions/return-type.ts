@@ -2,7 +2,7 @@ import { Signature } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { createTypeByType } from "../entities/type.js";
+import { parseType } from "../entry-points/type.js";
 import { getReturnTypeDescription } from "./jsdoc.js";
 
 
@@ -15,7 +15,7 @@ export function getReturnTypeByCallSignature(ctx: CompilerContext, callSignature
 
   return {
     description: returnTypeDescription,
-    ...createTypeByType(ctx, returnType)
+    ...parseType(ctx, returnType)
   };
 
 }

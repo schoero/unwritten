@@ -1,11 +1,11 @@
 import { ObjectType as TSObjectType } from "typescript";
 
-import { parseSymbol } from "../../parser/index.js";
 import { CompilerContext } from "../../types/context.js";
 import { Kind, Types } from "../../types/types.js";
 import { isSymbolExcluded } from "../../utils/general.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
+import { parseSymbol } from "../entry-points/symbol.js";
 import { isGetterSymbol, isMethodSymbol, isPropertySymbol, isSetterSymbol } from "../typeguards/symbols.js";
 import {
   isArrayTypeReferenceType,
@@ -28,6 +28,45 @@ import { createUnresolvedBySymbol } from "./unresolved.js";
 
 
 export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType): Types {
+
+  const tsConstructSignatures = type.getConstructSignatures();
+  const tsCallSignatures = type.getCallSignatures();
+  const allProperties = type.getProperties();
+
+
+  //-- Object type
+
+  const id = getIdByType(ctx, type);
+  const kind = Kind.Object;
+
+  const getterProperties = allProperties.filter(p => isGetterSymbol(p));
+  const setterProperties = allProperties.filter(p => isSetterSymbol(p));
+  const propertyProperties = allProperties.filter(p => isPropertySymbol(p));
+  const methodProperties = allProperties.filter(p => isMethodSymbol(p));
+
+  const constructSignatures = tsConstructSignatures.map(signature => createSignatureBySignature(ctx, signature));
+  const callSignatures = tsCallSignatures.map(signature => createSignatureBySignature(ctx, signature));
+
+  const methods = methodProperties.map(property => createMethodBySymbol(ctx, property));
+  const getters = getterProperties.map(property => createGetterBySymbol(ctx, property));
+  const setters = setterProperties.map(property => createSetterBySymbol(ctx, property));
+  const properties = propertyProperties.map(property => createPropertyBySymbol(ctx, property));
+
+  return {
+    callSignatures,
+    constructSignatures,
+    getters,
+    id,
+    kind,
+    methods,
+    properties,
+    setters
+  };
+
+}
+
+
+export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types {
 
 
   //-- Array
@@ -69,10 +108,6 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
     return createMappedTypeByType(ctx, type);
   }
 
-  const tsConstructSignatures = type.getConstructSignatures();
-  const tsCallSignatures = type.getCallSignatures();
-  const allProperties = type.getProperties();
-
 
   //-- Function
 
@@ -87,34 +122,5 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
     return createTypeLiteralByType(ctx, type);
   }
 
-
-  //-- Object type
-
-  const id = getIdByType(ctx, type);
-  const kind = Kind.Object;
-
-  const getterProperties = allProperties.filter(p => isGetterSymbol(p));
-  const setterProperties = allProperties.filter(p => isSetterSymbol(p));
-  const propertyProperties = allProperties.filter(p => isPropertySymbol(p));
-  const methodProperties = allProperties.filter(p => isMethodSymbol(p));
-
-  const constructSignatures = tsConstructSignatures.map(signature => createSignatureBySignature(ctx, signature));
-  const callSignatures = tsCallSignatures.map(signature => createSignatureBySignature(ctx, signature));
-
-  const methods = methodProperties.map(property => createMethodBySymbol(ctx, property));
-  const getters = getterProperties.map(property => createGetterBySymbol(ctx, property));
-  const setters = setterProperties.map(property => createSetterBySymbol(ctx, property));
-  const properties = propertyProperties.map(property => createPropertyBySymbol(ctx, property));
-
-  return {
-    callSignatures,
-    constructSignatures,
-    getters,
-    id,
-    kind,
-    methods,
-    properties,
-    setters
-  };
-
+  return createObjectTypeByType(ctx, type);
 }

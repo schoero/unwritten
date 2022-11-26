@@ -1,7 +1,7 @@
 import { EnumMember, PropertySignature, Symbol, TypeElement } from "typescript";
 import { assert } from "vitest";
 
-import { parseSymbol } from "../../parser/index.js";
+import { parseSymbol } from "../../parser/parseSymbol";
 import { CompilerContext } from "../../types/context.js";
 import { Kind, Member } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
@@ -9,9 +9,10 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { createTypeByDeclaration } from "../entry-points/type.js";
+import { parseTypeNode } from "../entry-points/type-node.js";
 import { isEnumMemberDeclaration, isPropertySignature, isTypeElement } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
-import { createTypeByDeclaration, createTypeByTypeNode } from "./type.js";
 
 
 export const createMemberBySymbol = (ctx: CompilerContext, memberSymbol: Symbol): Member => lockedSymbol(ctx, memberSymbol, () => {
@@ -37,7 +38,7 @@ export function createMemberByDeclaration(ctx: CompilerContext, declaration: Enu
 
   const id = getIdByDeclaration(ctx, declaration);
   // @ts-expect-error - Internal API TODO: Check why this is necessary
-  const type = declaration.type ? createTypeByTypeNode(ctx, declaration.type) : createTypeByDeclaration(ctx, declaration);
+  const type = declaration.type ? parseTypeNode(ctx, declaration.type) : createTypeByDeclaration(ctx, declaration);
   const example = getExampleByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);

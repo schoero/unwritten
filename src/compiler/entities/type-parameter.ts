@@ -7,9 +7,9 @@ import { getIdBySymbol } from "../compositions/id.js";
 import { getTypeParameterDescription } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { parseTypeNode } from "../entry-points/type-node.js";
 import { isTypeParameterDeclaration } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
-import { createTypeByTypeNode } from "./type.js";
 
 
 export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeParameter => lockedSymbol(ctx, symbol, () => {
@@ -22,8 +22,8 @@ export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getTypeParameterDescription(ctx, declaration);
-  const initializer = declaration.default && createTypeByTypeNode(ctx, declaration.default);
-  const constraint = declaration.constraint && createTypeByTypeNode(ctx, declaration.constraint);
+  const initializer = declaration.default && parseTypeNode(ctx, declaration.default);
+  const constraint = declaration.constraint && parseTypeNode(ctx, declaration.constraint);
   const kind = Kind.TypeParameter;
 
   return {

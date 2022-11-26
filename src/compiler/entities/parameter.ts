@@ -8,7 +8,7 @@ import { getInitializerByDeclaration } from "../compositions/initializer.js";
 import { getParameterDescription } from "../compositions/jsdoc.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { createTypeByDeclaration } from "./type.js";
+import { createTypeByDeclaration } from "../entry-points/type.js";
 
 
 export function createParameterByDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration): Parameter {

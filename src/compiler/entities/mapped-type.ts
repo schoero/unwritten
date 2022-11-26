@@ -6,8 +6,8 @@ import { CompilerContext } from "../../types/context.js";
 import { Kind, MappedType, MappedTypeMember } from "../../types/types.js";
 import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { parseTypeNode } from "../entry-points/type-node.js";
 import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "../typeguards/type-nodes.js";
-import { createTypeByTypeNode } from "./type.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
@@ -45,8 +45,8 @@ export function createMappedTypeByType(ctx: CompilerContext, type: ObjectType): 
 
 function _parseMember(ctx: CompilerContext, keyTypeNode: TypeNode, valueTypeNode: TypeNode): MappedTypeMember {
 
-  const keyType = createTypeByTypeNode(ctx, keyTypeNode);
-  const valueType = createTypeByTypeNode(ctx, valueTypeNode);
+  const keyType = parseTypeNode(ctx, keyTypeNode);
+  const valueType = parseTypeNode(ctx, valueTypeNode);
   const id = getIdByTypeNode(ctx, keyTypeNode);
   const kind = Kind.MappedTypeMember;
 

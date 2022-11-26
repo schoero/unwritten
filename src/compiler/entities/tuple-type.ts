@@ -6,8 +6,8 @@ import { Kind, TupleMember, TupleType } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByNode } from "../compositions/position.js";
+import { parseType } from "../entry-points/type.js";
 import { isTupleTypeReferenceType } from "../typeguards/types.js";
-import { createTypeByType } from "./type.js";
 
 
 export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): TupleType {
@@ -39,7 +39,7 @@ function _getMembers(ctx: CompilerContext, tupleTypeReference: TupleTypeReferenc
 
   const members = typeArguments?.map((typeArgument, index) => {
 
-    const type = createTypeByType(ctx, typeArgument);
+    const type = parseType(ctx, typeArgument);
 
     const id = getIdByType(ctx, typeArgument);
     const elementFlag = tupleTypeReference.target.elementFlags[index];

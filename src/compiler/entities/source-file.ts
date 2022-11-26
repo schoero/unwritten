@@ -1,7 +1,7 @@
 import { Symbol } from "typescript";
 import { assert } from "vitest";
 
-import { parseSymbol } from "../../parser/index.js";
+import { parseSymbol } from "../../parser/parseSymbol";
 import { isExportableType } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
 import { ExportableTypes, Kind, SourceFile } from "../../types/types.js";

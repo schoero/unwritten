@@ -6,8 +6,8 @@ import { CompilerContext } from "../../types/context.js";
 import { ArrayType, Kind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getPositionByNode } from "../compositions/position.js";
+import { parseType } from "../entry-points/type.js";
 import { isTypeReferenceType } from "../typeguards/types.js";
-import { createTypeByType } from "./type.js";
 
 
 export function createArrayByTypeReference(ctx: CompilerContext, typeReference: TypeReference): ArrayType {
@@ -15,7 +15,7 @@ export function createArrayByTypeReference(ctx: CompilerContext, typeReference: 
   const node = typeReference.node;
   const id = getIdByType(ctx, typeReference);
   const position = node && getPositionByNode(ctx, node);
-  const type = createTypeByType(ctx, typeReference.typeArguments![0]!);
+  const type = parseType(ctx, typeReference.typeArguments![0]!);
   const kind = Kind.Array;
 
   return {

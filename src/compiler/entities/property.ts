@@ -8,9 +8,9 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { createTypeByDeclaration } from "../entry-points/type.js";
 import { isPropertyAssignment, isPropertyDeclaration, isPropertySignature } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
-import { createTypeByDeclaration } from "./type.js";
 
 
 export const createPropertyBySymbol = (ctx: CompilerContext, symbol: Symbol): Property => lockedSymbol(ctx, symbol, () => {

@@ -7,9 +7,9 @@ import { getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { parseTypeNode } from "../entry-points/type-node.js";
 import { isTypeAliasDeclaration } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
-import { createTypeByTypeNode } from "./type.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
@@ -44,7 +44,7 @@ function _parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAlias
 
   // We have to use typeNode here for type references
   const typeNode = declaration.type;
-  const type = createTypeByTypeNode(ctx, typeNode);
+  const type = parseTypeNode(ctx, typeNode);
 
   return {
     example,

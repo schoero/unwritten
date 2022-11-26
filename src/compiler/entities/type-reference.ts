@@ -4,7 +4,7 @@ import { CompilerContext } from "../../types/context.js";
 import { Kind, TypeReference } from "../../types/types.js";
 import { getIdByTypeNode } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
-import { createTypeByType } from "./type.js";
+import { parseType } from "../entry-points/type.js";
 import { createTypeArgumentByTypeNode } from "./type-argument.js";
 
 
@@ -14,7 +14,7 @@ export function createTypeReferenceByTypeNode(ctx: CompilerContext, typeNode: Ty
   const typeArguments = typeNode.typeArguments?.map(typeArgument => createTypeArgumentByTypeNode(ctx, typeArgument));
   const targetSymbol = ctx.checker.getSymbolAtLocation(typeNode.typeName);
   const name = targetSymbol && getNameBySymbol(ctx, targetSymbol);
-  const target = createTypeByType(ctx, type);
+  const target = parseType(ctx, type);
   const id = getIdByTypeNode(ctx, typeNode);
   const kind = Kind.TypeReference;
 

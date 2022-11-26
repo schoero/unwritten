@@ -2,7 +2,7 @@ import { ParameterDeclaration } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
-import { createTypeByType } from "../entities/type.js";
+import { parseType } from "../entry-points/type.js";
 
 
 export function getInitializerByDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration): Types | undefined {
@@ -10,5 +10,5 @@ export function getInitializerByDeclaration(ctx: CompilerContext, declaration: P
     return;
   }
   const type = ctx.checker.getTypeAtLocation(declaration.initializer);
-  return createTypeByType(ctx, type);
+  return parseType(ctx, type);
 }
