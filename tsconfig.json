@@ -1,7 +1,7 @@
 {
   "extends": "@schoero/ts-config",
   "compilerOptions": {
-    "target": "ES2020"
+    "target": "ES6"
   },
   "include": [
     "src/**/*.ts",
