@@ -46,20 +46,31 @@ export const createClassBySymbol = (ctx: CompilerContext, symbol: Symbol): Class
 
 function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDeclaration): Omit<Class, "name"> {
 
-  const ctor = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isConstructorDeclaration).map(symbol => createConstructorBySymbol(ctx, symbol))[0];
-  const getters = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isGetterDeclaration).map(symbol => createGetterBySymbol(ctx, symbol));
-  const methods = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isMethodDeclaration).map(symbol => createMethodBySymbol(ctx, symbol));
-  const properties = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isPropertyDeclaration).map(symbol => createPropertyBySymbol(ctx, symbol));
-  const setters = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isSetterDeclaration).map(symbol => createSetterBySymbol(ctx, symbol));
+  const constructorDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isConstructorDeclaration);
+  const getterDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isGetterDeclaration);
+  const setterDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isSetterDeclaration);
+  const methodDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isMethodDeclaration);
+  const propertyDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isPropertyDeclaration);
+
+  const ctor = constructorDeclarations.map(symbol => createConstructorBySymbol(ctx, symbol))[0];
+  const getters = getterDeclarations.map(symbol => createGetterBySymbol(ctx, symbol));
+  const setters = setterDeclarations.map(symbol => createSetterBySymbol(ctx, symbol));
+  const methods = methodDeclarations.map(symbol => createMethodBySymbol(ctx, symbol));
+  const properties = propertyDeclarations.map(symbol => createPropertyBySymbol(ctx, symbol));
 
   const heritage = declaration.heritageClauses?.map(declaration => _createClassByHeritageClause(ctx, declaration))[0];
+
+  const mergedGetters = _mergeWithInheritedClass(getters, heritage?.getters ?? []);
+  const mergedSetters = _mergeWithInheritedClass(setters, heritage?.setters ?? []);
+  const mergedMethods = _mergeWithInheritedClass(methods, heritage?.methods ?? []);
+  const mergedProperties = _mergeWithInheritedClass(properties, heritage?.properties ?? []);
+
+  const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
 
   const position = getPositionByDeclaration(ctx, declaration);
   const example = getExampleByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
-  const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
-
   const id = getIdByDeclaration(ctx, declaration);
   const kind = Kind.Class;
 
@@ -67,15 +78,15 @@ function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecl
     ctor,
     description,
     example,
-    getters: _mergeWithInheritedClass(getters, heritage?.getters ?? []),
+    getters: mergedGetters,
     heritage,
     id,
     kind,
-    methods: _mergeWithInheritedClass(methods, heritage?.methods ?? []),
+    methods: mergedMethods,
     modifiers,
     position,
-    properties: _mergeWithInheritedClass(properties, heritage?.properties ?? []),
-    setters: _mergeWithInheritedClass(setters, heritage?.setters ?? []),
+    properties: mergedProperties,
+    setters: mergedSetters,
     typeParameters
   };
 

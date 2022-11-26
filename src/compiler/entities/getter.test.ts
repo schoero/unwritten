@@ -13,7 +13,7 @@ scope("Compiler", Kind.Getter, () => {
 
     const testFileContent = ts`
       export class Class { 
-        get getter() {}
+        get getter() { return "hello"; }
       }
     `;
 

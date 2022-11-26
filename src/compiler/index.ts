@@ -1,7 +1,7 @@
 import { EOL } from "node:os";
 import { dirname, resolve } from "node:path";
 
-import ts, { CompilerOptions } from "typescript";
+import ts from "typescript";
 
 import { log, warn } from "../log/index.js";
 import { findFile } from "../utils/finder.js";
@@ -33,12 +33,12 @@ export function compile(entryFilePath: string, tsConfigFilePath?: string) {
 }
 
 
-function getCompilerHost(compilerOptions: CompilerOptions) {
+function getCompilerHost(compilerOptions: ts.CompilerOptions) {
   return ts.createCompilerHost(compilerOptions, true);
 }
 
 
-function getCompilerOptions(entryFilePath: string, tsConfigFilePath?: string): CompilerOptions {
+function getCompilerOptions(entryFilePath: string, tsConfigFilePath?: string): ts.CompilerOptions {
 
 
   //-- Get compiler options from provided tsconfig.json
@@ -99,7 +99,7 @@ function getCompilerOptions(entryFilePath: string, tsConfigFilePath?: string): C
 
   warn("No tsconfig found, continue using default compiler options but this may fail...");
 
-  return ts.getDefaultCompilerOptions();
+  return _getDefaultCompilerOptions();
 
 }
 
@@ -125,6 +125,12 @@ function _readConfigFile(path: string): ts.CompilerOptions | undefined {
 
 }
 
+function _getDefaultCompilerOptions(): ts.CompilerOptions {
+  return {
+    ...ts.getDefaultCompilerOptions(),
+    allowJs: true
+  };
+}
 
 export function reportCompilerDiagnostics(diagnostics: readonly ts.Diagnostic[]) {
 

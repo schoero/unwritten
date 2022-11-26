@@ -36,8 +36,8 @@ scope("Compiler", Kind.TypeLiteral, () => {
         prop: string;
         funcProp: () => void;
         method(): void;  
-        get getter(): number;
-        set setter(value: number);
+        get getter(): string;
+        set setter(value: string);
       };
     `;
 

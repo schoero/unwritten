@@ -83,8 +83,12 @@ scope("Compiler", Kind.Class, () => {
   {
 
     const testFileContent = ts`
-      class Base { }
-      export class Class extends Base { }
+      class Base {
+        methodFromBase() {}
+      }
+      export class Class extends Base {
+        methodFromClass() {}
+      }
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
@@ -95,6 +99,11 @@ scope("Compiler", Kind.Class, () => {
     it("should support inheritance", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.name).to.equal("Base");
+    });
+
+    it("should merge members with super class", () => {
+      expect(exportedClass.methods).to.not.equal(undefined);
+      expect(exportedClass.methods).to.have.lengthOf(2);
     });
 
   }

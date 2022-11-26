@@ -1,19 +1,20 @@
-import { EnumDeclaration, Symbol } from "typescript";
+import { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { Enum, Kind, MergedEnum } from "../../types/types.js";
-import { getIdBySymbol } from "../compositions/id.js";
+import { Enum, EnumMember, Kind, MergedEnum } from "../../types/types.js";
+import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import {
   getDescriptionByDeclaration,
   getDescriptionBySymbol,
   getExampleByDeclaration
 } from "../compositions/jsdoc.js";
-import { getNameBySymbol } from "../compositions/name.js";
+import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { isEnumDeclaration } from "../typeguards/declarations.js";
+import { parseSymbol } from "../entry-points/symbol.js";
+import { parseType } from "../entry-points/type.js";
+import { isEnumDeclaration, isEnumMemberDeclaration } from "../typeguards/declarations.js";
 import { lockSymbol } from "../utils/ts.js";
-import { createMemberByDeclaration } from "./member.js";
 
 
 export const createEnumBySymbol = (ctx: CompilerContext, symbol: Symbol): Enum | MergedEnum => lockSymbol(ctx, symbol, () => {
@@ -65,7 +66,7 @@ function _parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaratio
   const description = getDescriptionByDeclaration(ctx, declaration);
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
-  const members = declaration.members.map(member => createMemberByDeclaration(ctx, member));
+  const members = declaration.members.map(member => _createEnumMemberByDeclaration(ctx, member));
   const kind = Kind.Enum;
 
   return {
@@ -74,6 +75,35 @@ function _parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaratio
     kind,
     members,
     position
-  } as const;
+  };
+
+}
+
+
+function _createEnumMemberByDeclaration(ctx: CompilerContext, declaration: TSEnumMember): EnumMember {
+
+  const id = getIdByDeclaration(ctx, declaration);
+  const example = getExampleByDeclaration(ctx, declaration);
+  const name = getNameByDeclaration(ctx, declaration);
+  const position = getPositionByDeclaration(ctx, declaration);
+  const parentSymbol = isEnumMemberDeclaration(declaration) && ctx.checker.getSymbolAtLocation(declaration.parent.name);
+  const parent = parentSymbol ? parseSymbol(ctx, parentSymbol) : undefined;
+  const description = getDescriptionByDeclaration(ctx, declaration);
+  const tsType = ctx.checker.getTypeAtLocation(declaration);
+  const type = parseType(ctx, tsType);
+  const kind = Kind.EnumMember;
+
+  assert(name, "Member name not found");
+
+  return {
+    description,
+    example,
+    id,
+    kind,
+    name,
+    parent,
+    position,
+    type
+  };
 
 }

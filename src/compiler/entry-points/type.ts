@@ -7,7 +7,6 @@ import { getNameBySymbol } from "../compositions/name.js";
 import { createArrayByTypeReference } from "../entities/array.js";
 import { createConditionalType } from "../entities/conditional-type.js";
 import { createFunctionByType } from "../entities/function.js";
-import { createInstanceByType } from "../entities/instance.js";
 import { createInterfaceByType } from "../entities/interface.js";
 import { createIntersectionTypeByType } from "../entities/intersection-type.js";
 import { createLiteralType } from "../entities/literal-type.js";
@@ -24,7 +23,6 @@ import {
   isArrayTypeReferenceType,
   isConditionalType,
   isFunctionLikeType,
-  isInstanceType,
   isInterfaceType,
   isIntersectionType,
   isLiteralType,
@@ -58,8 +56,6 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
 
   if(isThisType(type)){
     return createThisByType(ctx, type);
-  } else if(isInstanceType(type)){
-    return createInstanceByType(ctx, type);
   } else if(isConditionalType(type)){
     return createConditionalType(ctx, type);
   } else if(isLiteralType(type)){
@@ -90,11 +86,17 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
     return createArrayByTypeReference(ctx, type);
   } else if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
-  } else if(isSymbolExcluded(ctx, symbol)){
+  }
+
+  if(isSymbolExcluded(ctx, symbol)){
     return createUnresolvedBySymbol(ctx, symbol);
-  } else if(!name.startsWith("__")){
+  }
+
+  if(!name.startsWith("__")){
     return parseSymbol(ctx, symbol);
-  } else if(isMappedType(type)){
+  }
+
+  if(isMappedType(type)){
     return createMappedTypeByType(ctx, type);
   } else if(isFunctionLikeType(type)){
     return createFunctionByType(ctx, type);
