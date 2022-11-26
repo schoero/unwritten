@@ -34,11 +34,6 @@ export function getExportedSymbols(ctx: CompilerContext, moduleSymbol: Symbol, e
 }
 
 
-export function isSymbolExported(ctx: CompilerContext, symbol: Symbol) {
-  return ctx.exportedSymbols?.isSymbolExported(ctx, symbol) ?? false;
-}
-
-
 export function isSymbolLocked(ctx: CompilerContext, symbol: Symbol) {
   return ctx.lockedSymbols.isSymbolLocked(ctx, symbol);
 }
