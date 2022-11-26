@@ -1,7 +1,6 @@
 import { PropertyAssignment, PropertyDeclaration, PropertySignature, Symbol } from "typescript";
 import { assert } from "vitest";
 
-import { isPropertyAssignment, isPropertyDeclaration, isPropertySignature } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Property, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
@@ -9,6 +8,7 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { isPropertyAssignment, isPropertyDeclaration, isPropertySignature } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createTypeByDeclaration } from "./type.js";
 

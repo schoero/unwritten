@@ -1,13 +1,13 @@
 import { Symbol, Type, TypeLiteralNode } from "typescript";
 import { assert } from "vitest";
 
-import { isTypeLiteralDeclaration } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TypeKind, TypeLiteral } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { isTypeLiteralDeclaration } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration, createMemberBySymbol } from "./member.js";
 

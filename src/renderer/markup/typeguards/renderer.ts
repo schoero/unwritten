@@ -1,9 +1,4 @@
-import {
-  RenderedList,
-  RenderedMultilineContent,
-  RenderedTitle,
-  RenderObject
-} from "../renderer/markup/types/renderer.js";
+import { RenderedList, RenderedMultilineContent, RenderedTitle, RenderObject } from "../types/renderer.js";
 
 
 export function isRenderedList(renderObject: RenderObject): renderObject is RenderedList {

@@ -1,5 +1,7 @@
 import { Declaration, Type, TypeNode } from "typescript";
 
+import { CompilerContext } from "../../types/context.js";
+import { Types } from "../../types/types.js";
 import {
   isArrayTypeNode,
   isArrayTypeReferenceTypeNode,
@@ -17,9 +19,7 @@ import {
   isTypeQueryNode,
   isTypeReferenceNode,
   isUnionType
-} from "../../typeguards/ts.js";
-import { CompilerContext } from "../../types/context.js";
-import { Types } from "../../types/types.js";
+} from "../typeguards/types.js";
 import { createArrayByArrayTypeNode } from "./array.js";
 import { createConditionalType } from "./conditional-type.js";
 import { createInstanceByType } from "./instance.js";

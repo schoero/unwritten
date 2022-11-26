@@ -1,13 +1,13 @@
 import { HeritageClause, InterfaceDeclaration, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
-import { isInterfaceDeclaration } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Interface, MergedInterface, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { isInterfaceDeclaration } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration } from "./member.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";

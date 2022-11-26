@@ -1,10 +1,10 @@
 import { Symbol, Type } from "typescript";
 
-import { isGetterDeclaration } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Getter, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
+import { isGetterDeclaration } from "../typeguards/declarations.js";
 import { functionOverloadDeclarationFilter } from "../utils/filter.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createSignatureByDeclaration } from "./signature.js";

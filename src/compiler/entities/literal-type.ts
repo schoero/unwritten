@@ -5,12 +5,6 @@ import {
   StringLiteralType as TSStringLiteralType
 } from "typescript";
 
-import {
-  isBigIntLiteralType,
-  isBooleanLiteralType,
-  isNumberLiteralType,
-  isStringLiteralType
-} from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import {
   BigIntLiteralType,
@@ -21,6 +15,12 @@ import {
   TypeKind
 } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
+import {
+  isBigIntLiteralType,
+  isBooleanLiteralType,
+  isNumberLiteralType,
+  isStringLiteralType
+} from "../typeguards/types.js";
 
 
 export function createLiteralType(ctx: CompilerContext, type: LiteralType): LiteralTypes {

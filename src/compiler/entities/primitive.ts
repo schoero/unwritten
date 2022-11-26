@@ -1,5 +1,8 @@
 import { Type } from "typescript";
 
+import { CompilerContext } from "../../types/context.js";
+import { PrimitiveTypeKinds, PrimitiveTypes, TypeKind } from "../../types/types.js";
+import { getIdByType } from "../compositions/id.js";
 import {
   isAnyType,
   isBigIntType,
@@ -11,10 +14,7 @@ import {
   isUndefinedType,
   isUnknownType,
   isVoidType
-} from "../../typeguards/ts.js";
-import { CompilerContext } from "../../types/context.js";
-import { PrimitiveTypeKinds, PrimitiveTypes, TypeKind } from "../../types/types.js";
-import { getIdByType } from "../compositions/id.js";
+} from "../typeguards/types.js";
 
 
 export function createPrimitiveType(ctx: CompilerContext, type: Type): PrimitiveTypes {

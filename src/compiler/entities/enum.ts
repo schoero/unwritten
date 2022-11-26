@@ -1,7 +1,6 @@
 import { EnumDeclaration, Symbol } from "typescript";
 import { assert } from "vitest";
 
-import { isEnumDeclaration } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Enum, MergedEnum, TypeKind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
@@ -12,6 +11,7 @@ import {
 } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { isEnumDeclaration } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration } from "./member.js";
 

@@ -1,4 +1,4 @@
-import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "../../typeguards/renderer.js";
+import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "./typeguards/renderer.js";
 import {
   isClassType,
   isEnumType,

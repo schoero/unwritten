@@ -1,12 +1,12 @@
 import { ObjectType, TypeNode } from "typescript";
 import { assert } from "vitest";
 
-import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "../../typeguards/ts.js";
 import { isLiteralType } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
 import { MappedType, MappedTypeMember, TypeKind } from "../../types/types.js";
 import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "../typeguards/type-nodes.js";
 import { createTypeByTypeNode } from "./type.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 

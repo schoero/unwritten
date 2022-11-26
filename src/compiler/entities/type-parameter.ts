@@ -1,13 +1,13 @@
 import { Symbol, TypeNode, TypeParameter as TSTypeParameter, TypeParameterDeclaration } from "typescript";
 import { assert } from "vitest";
 
-import { isTypeParameterDeclaration } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TypeKind, TypeParameter } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getTypeParameterDescription } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { isTypeParameterDeclaration } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createTypeByTypeNode } from "./type.js";
 

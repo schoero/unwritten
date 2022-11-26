@@ -1,3 +1,13 @@
 {
-  "extends": "@schoero"
+  "extends": "@schoero",
+  "plugins": ["sort-exports"],
+  "overrides": [
+    {
+      "files": ["**/typeguards/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "sort-exports/sort-exports": ["warn", { "sortDir": "asc" }]
+      }
+    }
+  ]
 }

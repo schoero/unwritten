@@ -1,12 +1,12 @@
 import { ElementFlags, TupleTypeNode, TupleTypeReference, Type } from "typescript";
 import { assert } from "vitest";
 
-import { isTupleTypeReferenceType } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TupleMember, TupleType, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByNode } from "../compositions/position.js";
+import { isTupleTypeReferenceType } from "../typeguards/types.js";
 import { createTypeByType } from "./type.js";
 
 

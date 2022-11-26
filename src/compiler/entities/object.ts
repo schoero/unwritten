@@ -1,22 +1,19 @@
 import { ObjectType as TSObjectType } from "typescript";
 
 import { parseSymbol } from "../../parser/index.js";
-import {
-  isArrayTypeReferenceType,
-  isFunctionLikeType,
-  isGetterSymbol,
-  isMappedType,
-  isMethodSymbol,
-  isPropertySymbol,
-  isSetterSymbol,
-  isTupleTypeReferenceType,
-  isTypeLiteralType
-} from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TypeKind, Types } from "../../types/types.js";
 import { isSymbolExcluded } from "../../utils/general.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
+import { isGetterSymbol, isMethodSymbol, isPropertySymbol, isSetterSymbol } from "../typeguards/isFunctionSymbol";
+import {
+  isArrayTypeReferenceType,
+  isFunctionLikeType,
+  isMappedType,
+  isTupleTypeReferenceType,
+  isTypeLiteralType
+} from "../typeguards/types.js";
 import { createArrayByTypeReference } from "./array.js";
 import { createFunctionByType } from "./function.js";
 import { createGetterBySymbol } from "./getter.js";

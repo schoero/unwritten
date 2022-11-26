@@ -29,7 +29,7 @@ import {
   isTypeAliasSymbol,
   isTypeParameterSymbol,
   isVariableSymbol
-} from "../typeguards/ts.js";
+} from "../compiler/typeguards/isFunctionSymbol";
 import { CompilerContext } from "../types/context.js";
 import { ExportableTypes, Types } from "../types/types.js";
 import { isSymbolExcluded } from "../utils/general.js";

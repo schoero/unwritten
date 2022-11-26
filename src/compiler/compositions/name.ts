@@ -1,8 +1,8 @@
 import ts, { Declaration, Node, Symbol, Type } from "typescript";
 
-import { isConstructorDeclaration } from "../../typeguards/ts.js";
 import { Name } from "../../types/compositions.js";
 import { CompilerContext } from "../../types/context.js";
+import { isConstructorDeclaration } from "../typeguards/declarations.js";
 
 
 export function getNameBySymbol(ctx: CompilerContext, symbol: Symbol): Name {

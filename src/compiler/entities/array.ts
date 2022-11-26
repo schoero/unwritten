@@ -2,11 +2,11 @@
 import { ArrayTypeNode, TypeReference, TypeReferenceNode } from "typescript";
 import { assert } from "vitest";
 
-import { isTypeReferenceType } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { ArrayType, TypeKind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getPositionByNode } from "../compositions/position.js";
+import { isTypeReferenceType } from "../typeguards/types.js";
 import { createTypeByType } from "./type.js";
 
 

@@ -1,14 +1,6 @@
 import { ClassLikeDeclaration, HeritageClause, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
-import {
-  isClassDeclaration,
-  isConstructorDeclaration,
-  isGetterDeclaration,
-  isMethodDeclaration,
-  isPropertyDeclaration,
-  isSetterDeclaration
-} from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Class, Getter, Method, Property, Setter, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
@@ -16,6 +8,14 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import {
+  isClassDeclaration,
+  isConstructorDeclaration,
+  isGetterDeclaration,
+  isMethodDeclaration,
+  isPropertyDeclaration,
+  isSetterDeclaration
+} from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createConstructorBySymbol } from "./constructor.js";
 import { createGetterBySymbol } from "./getter.js";

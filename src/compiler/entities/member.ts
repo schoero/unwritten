@@ -2,7 +2,6 @@ import { EnumMember, PropertySignature, Symbol, TypeElement } from "typescript";
 import { assert } from "vitest";
 
 import { parseSymbol } from "../../parser/index.js";
-import { isEnumMemberDeclaration, isPropertySignature, isTypeElement } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Member, TypeKind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
@@ -10,6 +9,7 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { isEnumMemberDeclaration, isPropertySignature, isTypeElement } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createTypeByDeclaration, createTypeByTypeNode } from "./type.js";
 

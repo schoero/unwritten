@@ -1,7 +1,6 @@
 import { Symbol, Type, VariableDeclaration } from "typescript";
 import { assert } from "vitest";
 
-import { isVariableDeclaration } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { TypeKind, Variable } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
@@ -9,6 +8,7 @@ import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { isVariableDeclaration } from "../typeguards/declarations.js";
 import { lockedSymbol } from "../utils/ts.js";
 import { createTypeByType } from "./type.js";
 

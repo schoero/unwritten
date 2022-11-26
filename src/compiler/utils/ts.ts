@@ -1,8 +1,8 @@
 import { Map as TSMap, Symbol } from "typescript";
 
-import { isAliasedSymbol } from "../../typeguards/ts.js";
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
+import { isAliasedSymbol } from "../typeguards/isFunctionSymbol";
 
 
 export function normalizeTSMap<T>(tsMap: Map<string, T> | TSMap<T>): Map<string, T> {
