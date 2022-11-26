@@ -8,7 +8,7 @@ import { getDefaultConfig } from "./index.js";
 
 export function generateConfig() {
 
-  const outputName = ".doc-creator.json";
+  const outputName = ".quickdoks.json";
   const outputDir = resolve(process.cwd());
   const outputFilePath = resolve(outputDir, outputName);
 
@@ -24,7 +24,7 @@ export function generateConfig() {
   //-- Add schema to config
 
   const config: ConfigWithSchema = {
-    $schema: "https://raw.githubusercontent.com/schoero/doc-creator/release/schemas/renderer/config.json",
+    $schema: "https://raw.githubusercontent.com/schoero/quickdoks/release/schemas/renderer/config.json",
     ...getDefaultConfig()
   };
 

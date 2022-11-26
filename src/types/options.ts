@@ -17,7 +17,7 @@ export interface Options {
 }
 
 export interface APIOptions extends Options {
-  /** Path to .doc-creator.json or Config object. */
+  /** Path to .quickdoks.json or Config object. */
   config?: Config | string;
   /**
    * Whether the output should be rendered as HTML or Markdown.
@@ -28,7 +28,7 @@ export interface APIOptions extends Options {
 }
 
 export interface CLIOptions extends Options {
-  /** Path to .doc-creator.json */
+  /** Path to .quickdoks.json */
   config?: string;
   /**
    * Whether the output should be rendered as HTML or Markdown.

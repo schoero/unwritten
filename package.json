@@ -1,17 +1,17 @@
 {
   "version": "0.0.1",
   "type": "module",
-  "name": "doc-creator",
+  "name": "quickdoks",
   "description": "A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
   "license": "MIT",
   "author": "Roger Schönbächler",
-  "homepage": "https://github.com/schoero/doc-creator#readme",
+  "homepage": "https://github.com/schoero/quickdoks#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/schoero/doc-creator.git"
+    "url": "git+https://github.com/schoero/quickdoks.git"
   },
   "bugs": {
-    "url": "https://github.com/schoero/doc-creator/issues"
+    "url": "https://github.com/schoero/quickdoks/issues"
   },
   "main": "lib/api/index.js",
   "scripts": {

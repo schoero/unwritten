@@ -32,7 +32,7 @@ export function createConfig(configOrPath?: Config | string): CompleteConfig {
 
   } else if(typeof configOrPath === "undefined"){
 
-    absoluteConfigPath = findFile(".doc-creator.json", configOrPath);
+    absoluteConfigPath = findFile(".quickdoks.json", configOrPath);
 
     if(absoluteConfigPath === undefined){
       log("Using default config.");

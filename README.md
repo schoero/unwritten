@@ -1,4 +1,4 @@
-# doc-creator
+# quickdoks
 
 A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.
 
@@ -7,13 +7,13 @@ A cli tool that auto generates documentation from your JavaScript or TypeScript 
 ## Installation
 
 ```sh
-npm i doc-creator
+npm i quickdoks
 ```
 
 ## Usage
 
 ```sh
-doc-creator generate <path/to/entry-file.ts> [options]
+quickdoks generate <path/to/entry-file.ts> [options]
 ```
 
 ## Options
@@ -24,13 +24,13 @@ doc-creator generate <path/to/entry-file.ts> [options]
                                         # the current working directory.
 
 --tsconfig <path/to/tsconfig.json>      # Provide a tsconfig file used to
--t <path/to/tsconfig.json>              # compile your project. doc-creator will
+-t <path/to/tsconfig.json>              # compile your project. quickdoks will
                                         # try to find the tsconfig by itself if
                                         # no tsconfig.json is provided.
 
---config <path/to/.doc-creator.json>    # Provide a doc-creator config used to
--c <path/to/.doc-creator.json>          # render the documentation. doc-creator
-                                        # will try to find the .doc-creator.json
+--config <path/to/.quickdoks.json>      # Provide a quickdoks config used to
+-c <path/to/.quickdoks.json>            # render the documentation. quickdoks
+                                        # will try to find the .quickdoks.json
                                         # config by itself if none is provided
                                         # or uses the default config.
 
@@ -40,7 +40,7 @@ doc-creator generate <path/to/entry-file.ts> [options]
 --silent                                # Disables the output.
 -s
 
---version                               # Returns the installed doc-creator
+--version                               # Returns the installed quickdoks
 -v                                      # version.
 ```
 
@@ -49,7 +49,7 @@ doc-creator generate <path/to/entry-file.ts> [options]
 You can configure how your documentation will be rendered using a configuration file. The simplest way to create such a configuration file is by using the following command:
 
 ```sh
-doc-creator init
+quickdoks init
 ```
 
-This will create a `.doc-creator.json` file in the current working directory with the default configuration. You can change or remove any of the options in the configuration file.
+This will create a `.quickdoks.json` file in the current working directory with the default configuration. You can change or remove any of the options in the configuration file.
