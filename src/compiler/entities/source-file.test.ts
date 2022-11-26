@@ -3,12 +3,12 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createSourceFileBySymbol } from "./source-file.js";
 
 
-scope("Compiler", TypeKind.SourceFile, () => {
+scope("Compiler", Kind.SourceFile, () => {
 
   {
 
@@ -20,7 +20,7 @@ scope("Compiler", TypeKind.SourceFile, () => {
     const sourceFile = createSourceFileBySymbol(ctx, fileSymbol);
 
     it("should be able to parse a source file", () => {
-      expect(sourceFile.kind).to.equal(TypeKind.SourceFile);
+      expect(sourceFile.kind).to.equal(Kind.SourceFile);
     });
 
   }
@@ -35,7 +35,7 @@ scope("Compiler", TypeKind.SourceFile, () => {
     const sourceFile = createSourceFileBySymbol(ctx, fileSymbol);
 
     it("should have a matching kind", () => {
-      expect(sourceFile.kind).to.equal(TypeKind.SourceFile);
+      expect(sourceFile.kind).to.equal(Kind.SourceFile);
     });
 
     it("should have a matching id", () => {

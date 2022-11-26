@@ -3,12 +3,12 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Modifiers, TypeKind } from "../../types/types.js";
+import { Modifiers, Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createClassBySymbol } from "./class.js";
 
 
-scope("Compiler", TypeKind.Class, () => {
+scope("Compiler", Kind.Class, () => {
 
   {
 
@@ -22,7 +22,7 @@ scope("Compiler", TypeKind.Class, () => {
     const exportedClass = createClassBySymbol(ctx, symbol);
 
     it("should be able to parse a class", () => {
-      expect(exportedClass.kind).to.equal(TypeKind.Class);
+      expect(exportedClass.kind).to.equal(Kind.Class);
     });
 
   }

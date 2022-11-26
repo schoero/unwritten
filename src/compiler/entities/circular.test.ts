@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Interface, TypeKind, TypeReference } from "../../types/types.js";
+import { Interface, Kind, TypeReference } from "../../types/types.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
 
-scope("Compiler", TypeKind.Circular, () => {
+scope("Compiler", Kind.Circular, () => {
 
   {
 
@@ -32,17 +32,17 @@ scope("Compiler", TypeKind.Circular, () => {
 
     it("should not create a circular type if the targeted symbol is exported", () => {
       expect(exportedInterfaceA.members.length).to.equal(1);
-      expect(exportedInterfaceA.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
+      expect(exportedInterfaceA.members[0]!.type.kind).to.equal(Kind.TypeReference);
       expect((exportedInterfaceA.members[0]!.type as TypeReference).type).to.not.equal(undefined);
-      expect((exportedInterfaceA.members[0]!.type as TypeReference).type!.kind).to.equal(TypeKind.Interface);
+      expect((exportedInterfaceA.members[0]!.type as TypeReference).type!.kind).to.equal(Kind.Interface);
       expect((exportedInterfaceA.members[0]!.type as TypeReference).type!.id).to.equal(exportedInterfaceB.id);
     });
 
     it("should not create a circular type if the targeted symbol is not exported and not circular", () => {
       expect(exportedInterfaceB.members.length).to.equal(1);
-      expect(exportedInterfaceB.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
+      expect(exportedInterfaceB.members[0]!.type.kind).to.equal(Kind.TypeReference);
       expect((exportedInterfaceB.members[0]!.type as TypeReference).type).to.not.equal(undefined);
-      expect((exportedInterfaceB.members[0]!.type as TypeReference).type!.kind).to.equal(TypeKind.Interface);
+      expect((exportedInterfaceB.members[0]!.type as TypeReference).type!.kind).to.equal(Kind.Interface);
     });
 
   }
@@ -69,23 +69,23 @@ scope("Compiler", TypeKind.Circular, () => {
     it("should create a circular type if the targeted symbol circular, even if it is not exported", () => {
 
       expect(exportedInterfaceA.members.length).to.equal(1);
-      expect(exportedInterfaceA.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
+      expect(exportedInterfaceA.members[0]!.type.kind).to.equal(Kind.TypeReference);
       expect((exportedInterfaceA.members[0]!.type as TypeReference).type).to.not.equal(undefined);
-      expect((exportedInterfaceA.members[0]!.type as TypeReference).type!.kind).to.equal(TypeKind.Interface);
+      expect((exportedInterfaceA.members[0]!.type as TypeReference).type!.kind).to.equal(Kind.Interface);
 
       const interfaceB = (exportedInterfaceA.members[0]!.type as TypeReference).type! as Interface;
 
       expect(interfaceB.members.length).to.equal(1);
-      expect(interfaceB.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
+      expect(interfaceB.members[0]!.type.kind).to.equal(Kind.TypeReference);
       expect((interfaceB.members[0]!.type as TypeReference).type).to.not.equal(undefined);
-      expect((interfaceB.members[0]!.type as TypeReference).type!.kind).to.equal(TypeKind.Interface);
+      expect((interfaceB.members[0]!.type as TypeReference).type!.kind).to.equal(Kind.Interface);
 
       const interfaceC = (interfaceB.members[0]!.type as TypeReference).type! as Interface;
 
       expect(interfaceC.members.length).to.equal(1);
-      expect(interfaceC.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
+      expect(interfaceC.members[0]!.type.kind).to.equal(Kind.TypeReference);
       expect((interfaceC.members[0]!.type as TypeReference).type).to.not.equal(undefined);
-      expect((interfaceC.members[0]!.type as TypeReference).type!.kind).to.equal(TypeKind.Circular);
+      expect((interfaceC.members[0]!.type as TypeReference).type!.kind).to.equal(Kind.Circular);
 
     });
 

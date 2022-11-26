@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
-import { Interface, TypeKind } from "../../../types/types.js";
+import { Interface, Kind } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
 import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "../entities/interface.js";
 import { createRenderContext } from "./utils/context.js";
@@ -11,25 +11,25 @@ describe("Renderer: Interfaces", () => {
 
   const simpleInterface: Testable<Interface> = {
     description: "Address of a person",
-    kind: TypeKind.Interface,
+    kind: Kind.Interface,
     members: [
       {
         description: "Street name",
-        kind: TypeKind.Member,
+        kind: Kind.Member,
         name: "street",
         optional: false,
         type: {
-          kind: TypeKind.String,
+          kind: Kind.String,
           name: "string"
         }
       },
       {
         description: "Building number",
-        kind: TypeKind.Member,
+        kind: Kind.Member,
         name: "building",
         optional: true,
         type: {
-          kind: TypeKind.Number,
+          kind: Kind.Number,
           name: "number"
         }
       }

@@ -1,7 +1,7 @@
 import { ConditionalType as TSConditionalType } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { ConditionalType, TypeKind } from "../../types/types.js";
+import { ConditionalType, Kind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { createTypeByTypeNode } from "./type.js";
 
@@ -15,7 +15,7 @@ export function createConditionalType(ctx: CompilerContext, type: TSConditionalT
   const trueType = createTypeByTypeNode(ctx, root.node.trueType);
   const falseType = createTypeByTypeNode(ctx, root.node.falseType);
 
-  const kind = TypeKind.ConditionalType;
+  const kind = Kind.ConditionalType;
 
   return {
     checkType,

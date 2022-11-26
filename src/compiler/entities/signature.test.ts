@@ -3,12 +3,12 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { createClassBySymbol } from "./class.js";
 import { createFunctionBySymbol } from "./function.js";
 
 
-scope("Compiler", TypeKind.Signature, () => {
+scope("Compiler", Kind.Signature, () => {
 
   {
 
@@ -24,7 +24,7 @@ scope("Compiler", TypeKind.Signature, () => {
     const exportedFunction = createFunctionBySymbol(ctx, symbol);
 
     it("should be able to parse a signature", () => {
-      expect(exportedFunction.kind).to.equal(TypeKind.Function);
+      expect(exportedFunction.kind).to.equal(Kind.Function);
       expect(exportedFunction.signatures).to.not.equal(undefined);
       expect(exportedFunction.signatures).to.have.lengthOf(1);
     });
@@ -54,7 +54,7 @@ scope("Compiler", TypeKind.Signature, () => {
     });
 
     it("should have a matching kind", () => {
-      expect(exportedFunction.signatures[0]!.kind).to.equal(TypeKind.Signature);
+      expect(exportedFunction.signatures[0]!.kind).to.equal(Kind.Signature);
     });
 
     it("should have a matching description", () => {
@@ -74,7 +74,7 @@ scope("Compiler", TypeKind.Signature, () => {
     });
 
     it("should have a return type which is a boolean", () => {
-      expect(exportedFunction.signatures[0]!.returnType.kind).to.equal(TypeKind.Boolean);
+      expect(exportedFunction.signatures[0]!.returnType.kind).to.equal(Kind.Boolean);
     });
 
   }

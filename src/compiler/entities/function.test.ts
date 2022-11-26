@@ -3,13 +3,13 @@ import { describe, expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Function, TypeKind } from "../../types/types.js";
+import { Function, Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createFunctionBySymbol } from "./function.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.Function, () => {
+scope("Compiler", Kind.Function, () => {
 
   describe("Function symbol", () => {
 
@@ -27,7 +27,7 @@ scope("Compiler", TypeKind.Function, () => {
       const exportedFunction = createFunctionBySymbol(ctx, symbol);
 
       it("should be able to parse a function type", () => {
-        expect(exportedFunction.kind).to.equal(TypeKind.Function);
+        expect(exportedFunction.kind).to.equal(Kind.Function);
       });
 
     }
@@ -46,7 +46,7 @@ scope("Compiler", TypeKind.Function, () => {
       const exportedFunction = createFunctionBySymbol(ctx, symbol);
 
       it("should have a matching kind", () => {
-        expect(exportedFunction.kind).to.equal(TypeKind.Function);
+        expect(exportedFunction.kind).to.equal(Kind.Function);
       });
 
       it("should have a matching name", () => {
@@ -79,8 +79,8 @@ scope("Compiler", TypeKind.Function, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should be able to parse a function type", () => {
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Function);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Function);
       });
 
     }
@@ -97,8 +97,8 @@ scope("Compiler", TypeKind.Function, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should have a matching kind", () => {
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Function);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Function);
       });
 
       it("should have one signature", () => {
@@ -121,8 +121,8 @@ scope("Compiler", TypeKind.Function, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should export a type alias => type => function", () => {
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Function);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Function);
       });
 
       const functionType = exportedTypeAlias.type as Function;
@@ -140,7 +140,7 @@ scope("Compiler", TypeKind.Function, () => {
       });
 
       it("should have a return type which is a boolean", () => {
-        expect(functionType.signatures[0]!.returnType.kind).to.equal(TypeKind.Boolean);
+        expect(functionType.signatures[0]!.returnType.kind).to.equal(Kind.Boolean);
       });
 
     }

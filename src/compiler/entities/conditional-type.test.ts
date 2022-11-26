@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { ConditionalType, TypeKind, TypeParameter, TypeReference } from "../../types/types.js";
+import { ConditionalType, Kind, TypeParameter, TypeReference } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.ConditionalType, () => {
+scope("Compiler", Kind.ConditionalType, () => {
 
   {
 
@@ -21,27 +21,27 @@ scope("Compiler", TypeKind.ConditionalType, () => {
     const conditionalTypeAlias = createTypeAliasBySymbol(ctx, conditionalTypeAliasSymbol);
 
     it("should be able to parse conditional types", () => {
-      expect(conditionalTypeAlias.type.kind).to.equal(TypeKind.ConditionalType);
+      expect(conditionalTypeAlias.type.kind).to.equal(Kind.ConditionalType);
     });
 
     it("should have a matching checkType", () => {
-      expect((conditionalTypeAlias.type as ConditionalType).checkType.kind).to.equal(TypeKind.TypeReference);
+      expect((conditionalTypeAlias.type as ConditionalType).checkType.kind).to.equal(Kind.TypeReference);
       expect(((conditionalTypeAlias.type as ConditionalType).checkType as TypeReference).type).to.not.equal(undefined);
-      expect(((conditionalTypeAlias.type as ConditionalType).checkType as TypeReference).type!.kind).to.equal(TypeKind.TypeParameter);
+      expect(((conditionalTypeAlias.type as ConditionalType).checkType as TypeReference).type!.kind).to.equal(Kind.TypeParameter);
       expect((((conditionalTypeAlias.type as ConditionalType).checkType as TypeReference).type as TypeParameter).constraint).to.not.equal(undefined);
-      expect((((conditionalTypeAlias.type as ConditionalType).checkType as TypeReference).type as TypeParameter).constraint!.kind).to.equal(TypeKind.UnionType);
+      expect((((conditionalTypeAlias.type as ConditionalType).checkType as TypeReference).type as TypeParameter).constraint!.kind).to.equal(Kind.UnionType);
     });
 
     it("should have a matching extendsType", () => {
-      expect((conditionalTypeAlias.type as ConditionalType).extendsType.kind).to.equal(TypeKind.StringLiteral);
+      expect((conditionalTypeAlias.type as ConditionalType).extendsType.kind).to.equal(Kind.StringLiteral);
     });
 
     it("should have a matching trueType", () => {
-      expect((conditionalTypeAlias.type as ConditionalType).trueType.kind).to.equal(TypeKind.String);
+      expect((conditionalTypeAlias.type as ConditionalType).trueType.kind).to.equal(Kind.String);
     });
 
     it("should have a matching falseType", () => {
-      expect((conditionalTypeAlias.type as ConditionalType).falseType.kind).to.equal(TypeKind.Number);
+      expect((conditionalTypeAlias.type as ConditionalType).falseType.kind).to.equal(Kind.Number);
     });
 
   }

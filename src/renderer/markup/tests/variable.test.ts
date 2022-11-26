@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
-import { NumberLiteralType, TypeKind, Variable } from "../../../types/types.js";
+import { NumberLiteralType, Kind, Variable } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
 import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../entities/variable.js";
 import { createRenderContext } from "./utils/context.js";
@@ -11,10 +11,10 @@ describe("Renderer: Variable", () => {
 
   const testVariable: Testable<Variable> = {
     description: "Default TCP Port.",
-    kind: TypeKind.Variable,
+    kind: Kind.Variable,
     name: "TCP_PORT",
     type: <NumberLiteralType>{
-      kind: TypeKind.NumberLiteral,
+      kind: Kind.NumberLiteral,
       value: 80
     }
   };

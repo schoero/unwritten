@@ -1,10 +1,10 @@
 import { describe } from "vitest";
 
-import { TypeKind } from "../../src/types/types.js";
+import { Kind } from "../../src/types/types.js";
 
 
 type Scopes = "Compiler" | "Renderer" | "Types";
-type Units = TypeKind | string;
+type Units = Kind | string;
 
 type DescribeReturnType = ReturnType<typeof describe>;
 type DescribeParams = (typeof describe) extends (name: infer Name, factory?: infer Factory, options?: infer Options) => DescribeReturnType ? {

@@ -2,7 +2,7 @@ import { Symbol, Type, TypeLiteralNode } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { TypeKind, TypeLiteral } from "../../types/types.js";
+import { Kind, TypeLiteral } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -24,7 +24,7 @@ export const createTypeLiteralBySymbol = (ctx: CompilerContext, symbol: Symbol):
   const fromDeclaration = _parseTypeLiteralDeclaration(ctx, declaration);
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const kind = TypeKind.TypeLiteral;
+  const kind = Kind.TypeLiteral;
 
   return {
     id,
@@ -56,7 +56,7 @@ export function createTypeLiteralByType(ctx: CompilerContext, type: Type): TypeL
 
   const id = getIdByType(ctx, type);
   const members = type.getProperties().map(symbol => createMemberBySymbol(ctx, symbol));
-  const kind = TypeKind.TypeLiteral;
+  const kind = Kind.TypeLiteral;
 
   return {
     id,

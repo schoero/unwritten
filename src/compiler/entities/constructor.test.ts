@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { createClassBySymbol } from "./class.js";
 
 
-scope("Compiler", TypeKind.Class, () => {
+scope("Compiler", Kind.Class, () => {
 
   {
 
@@ -25,7 +25,7 @@ scope("Compiler", TypeKind.Class, () => {
 
     it("should be able to parse a constructor", () => {
       expect(exportedClass.ctor).not.to.equal(undefined);
-      expect(exportedClass.ctor!.kind).equal(TypeKind.Constructor);
+      expect(exportedClass.ctor!.kind).equal(Kind.Constructor);
     });
 
     it("should have one signature", () => {

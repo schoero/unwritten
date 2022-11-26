@@ -2,7 +2,7 @@ import { Symbol, TypeNode, TypeParameter as TSTypeParameter, TypeParameterDeclar
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { TypeKind, TypeParameter } from "../../types/types.js";
+import { Kind, TypeParameter } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getTypeParameterDescription } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -24,7 +24,7 @@ export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol
   const description = getTypeParameterDescription(ctx, declaration);
   const initializer = declaration.default && createTypeByTypeNode(ctx, declaration.default);
   const constraint = declaration.constraint && createTypeByTypeNode(ctx, declaration.constraint);
-  const kind = TypeKind.TypeParameter;
+  const kind = Kind.TypeParameter;
 
   return {
     constraint,

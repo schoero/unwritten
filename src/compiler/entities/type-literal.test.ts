@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind, TypeLiteral } from "../../types/types.js";
+import { Kind, TypeLiteral } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.TypeLiteral, () => {
+scope("Compiler", Kind.TypeLiteral, () => {
 
   {
 
@@ -22,7 +22,7 @@ scope("Compiler", TypeKind.TypeLiteral, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should be able to parse type literals", () => {
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.TypeLiteral);
     });
 
   }

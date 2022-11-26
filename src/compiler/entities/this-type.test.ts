@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { createClassBySymbol } from "./class.js";
 
 
-scope("Compiler", TypeKind.ThisType, () => {
+scope("Compiler", Kind.ThisType, () => {
 
   {
 
@@ -28,7 +28,7 @@ scope("Compiler", TypeKind.ThisType, () => {
       expect(exportedClass.methods).not.to.equal(undefined);
       expect(exportedClass.methods!).to.have.lengthOf(1);
       expect(exportedClass.methods![0]!.signatures).to.have.lengthOf(1);
-      expect(exportedClass.methods![0]!.signatures[0]!.returnType.kind).to.equal(TypeKind.ThisType);
+      expect(exportedClass.methods![0]!.signatures[0]!.returnType.kind).to.equal(Kind.ThisType);
     });
 
   }

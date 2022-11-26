@@ -2,7 +2,7 @@ import { ObjectType as TSObjectType } from "typescript";
 
 import { parseSymbol } from "../../parser/index.js";
 import { CompilerContext } from "../../types/context.js";
-import { TypeKind, Types } from "../../types/types.js";
+import { Kind, Types } from "../../types/types.js";
 import { isSymbolExcluded } from "../../utils/general.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -91,7 +91,7 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
   //-- Object type
 
   const id = getIdByType(ctx, type);
-  const kind = TypeKind.Object;
+  const kind = Kind.Object;
 
   const getterProperties = allProperties.filter(p => isGetterSymbol(p));
   const setterProperties = allProperties.filter(p => isSetterSymbol(p));

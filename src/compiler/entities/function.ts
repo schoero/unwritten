@@ -1,7 +1,7 @@
 import { Symbol, Type } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { Function, TypeKind } from "../../types/types.js";
+import { Function, Kind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { isFunctionLikeDeclaration } from "../typeguards/declarations.js";
@@ -19,7 +19,7 @@ export const createFunctionBySymbol = (ctx: CompilerContext, symbol: Symbol): Fu
 
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const kind = TypeKind.Function;
+  const kind = Kind.Function;
 
   return {
     id,
@@ -38,7 +38,7 @@ export function createFunctionByType(ctx: CompilerContext, type: Type): Function
   const signatures = declarations.map(declaration => createSignatureByDeclaration(ctx, declaration));
 
   const id = getIdByType(ctx, type);
-  const kind = TypeKind.Function;
+  const kind = Kind.Function;
 
   return {
     id,

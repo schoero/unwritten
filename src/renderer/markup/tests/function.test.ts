@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
-import { Function, TypeKind } from "../../../types/types.js";
+import { Function, Kind } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
 import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "../entities/function.js";
 import { createRenderContext } from "./utils/context.js";
@@ -11,15 +11,15 @@ describe("Renderer: Function", () => {
 
   {
     const testFunction: Testable<Function> = {
-      kind: TypeKind.Function,
+      kind: Kind.Function,
       name: "testFunction",
       signatures: [
         {
-          kind: TypeKind.Signature,
+          kind: Kind.Signature,
           modifiers: [],
           parameters: [],
           returnType: {
-            kind: TypeKind.Void,
+            kind: Kind.Void,
             name: "void"
           }
         }
@@ -52,23 +52,23 @@ describe("Renderer: Function", () => {
   {
 
     const testFunctionWithRest: Testable<Function> = {
-      kind: TypeKind.Function,
+      kind: Kind.Function,
       name: "testFunction",
       signatures: [
         {
-          kind: TypeKind.Signature,
+          kind: Kind.Signature,
           parameters: [
             {
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "params",
               optional: false,
               rest: true,
               type: {
-                kind: TypeKind.TypeReference,
+                kind: Kind.TypeReference,
                 name: "Array",
                 typeArguments: [
                   {
-                    kind: TypeKind.String,
+                    kind: Kind.String,
                     name: "string"
                   }
                 ]
@@ -76,7 +76,7 @@ describe("Renderer: Function", () => {
             }
           ],
           returnType: {
-            kind: TypeKind.Void,
+            kind: Kind.Void,
             name: "void"
           }
         }
@@ -102,25 +102,25 @@ describe("Renderer: Function", () => {
   {
 
     const testFunctionWithOptional: Testable<Function> = {
-      kind: TypeKind.Function,
+      kind: Kind.Function,
       name: "testFunction",
       signatures: [
         {
-          kind: TypeKind.Signature,
+          kind: Kind.Signature,
           parameters: [
             {
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "params",
               optional: true,
               rest: false,
               type: {
-                kind: TypeKind.String,
+                kind: Kind.String,
                 name: "string"
               }
             }
           ],
           returnType: {
-            kind: TypeKind.Void,
+            kind: Kind.Void,
             name: "void"
           }
         }
@@ -146,23 +146,23 @@ describe("Renderer: Function", () => {
   {
 
     const testFunctionWithOptionalRest: Testable<Function> = {
-      kind: TypeKind.Function,
+      kind: Kind.Function,
       name: "testFunction",
       signatures: [
         {
-          kind: TypeKind.Signature,
+          kind: Kind.Signature,
           parameters: [
             {
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "params",
               optional: true,
               rest: true,
               type: {
-                kind: TypeKind.TypeReference,
+                kind: Kind.TypeReference,
                 name: "Array",
                 typeArguments: [
                   {
-                    kind: TypeKind.String,
+                    kind: Kind.String,
                     name: "string"
                   }
                 ]
@@ -170,7 +170,7 @@ describe("Renderer: Function", () => {
             }
           ],
           returnType: {
-            kind: TypeKind.Void,
+            kind: Kind.Void,
             name: "void"
           }
         }
@@ -196,74 +196,74 @@ describe("Renderer: Function", () => {
   {
 
     const testFunctionWithOverloads: Testable<Function> = {
-      kind: TypeKind.Function,
+      kind: Kind.Function,
       name: "add",
       signatures: [
         {
-          kind: TypeKind.Signature,
+          kind: Kind.Signature,
           parameters: [
             {
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "a",
               optional: false,
               rest: false,
               type: {
-                kind: TypeKind.Number,
+                kind: Kind.Number,
                 name: "number"
               }
             },
             {
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "b",
               optional: false,
               rest: false,
               type: {
-                kind: TypeKind.Number,
+                kind: Kind.Number,
                 name: "number"
               }
             }
           ],
           returnType: {
-            kind: TypeKind.Any,
+            kind: Kind.Any,
             name: "any"
           }
         },
         {
-          kind: TypeKind.Signature,
+          kind: Kind.Signature,
           parameters: [
             {
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "a",
               optional: false,
               rest: false,
               type: {
-                kind: TypeKind.Number,
+                kind: Kind.Number,
                 name: "number"
               }
             },
             {
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "b",
               optional: false,
               rest: false,
               type: {
-                kind: TypeKind.Number,
+                kind: Kind.Number,
                 name: "number"
               }
             },
             {
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "c",
               optional: false,
               rest: false,
               type: {
-                kind: TypeKind.Number,
+                kind: Kind.Number,
                 name: "number"
               }
             }
           ],
           returnType: {
-            kind: TypeKind.Any,
+            kind: Kind.Any,
             name: "any"
           }
         }
@@ -294,40 +294,40 @@ describe("Renderer: Function", () => {
   {
 
     const testFunctionWithDescriptionAndExamples: Testable<Function> = {
-      kind: TypeKind.Function,
+      kind: Kind.Function,
       name: "add",
       signatures: [
         {
           description: "Adds two numbers together.",
           example: "add(1, 2);\n// => 3",
-          kind: TypeKind.Signature,
+          kind: Kind.Signature,
           parameters: [
             {
               description: "The first number.",
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "a",
               optional: false,
               rest: false,
               type: {
-                kind: TypeKind.Number,
+                kind: Kind.Number,
                 name: "number"
               }
             },
             {
               description: "The second number.",
-              kind: TypeKind.Parameter,
+              kind: Kind.Parameter,
               name: "b",
               optional: false,
               rest: false,
               type: {
-                kind: TypeKind.Number,
+                kind: Kind.Number,
                 name: "number"
               }
             }
           ],
           returnType: {
             description: "The sum of the two numbers.",
-            kind: TypeKind.Number,
+            kind: Kind.Number,
             name: "number"
           }
         }

@@ -1,7 +1,7 @@
 import { Symbol, Type } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { TypeKind, Unresolved } from "../../types/types.js";
+import { Kind, Unresolved } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionBySymbol } from "../compositions/position.js";
@@ -13,7 +13,7 @@ export const createUnresolvedBySymbol = (ctx: CompilerContext, symbol: Symbol): 
   const id = getIdBySymbol(ctx, symbol);
   const position = getPositionBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const kind = TypeKind.Unresolved;
+  const kind = Kind.Unresolved;
 
   return {
     id,

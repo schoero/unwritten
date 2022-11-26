@@ -2,7 +2,7 @@ import { ParameterDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { Parameter, TypeKind } from "../../types/types.js";
+import { Parameter, Kind } from "../../types/types.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getInitializerByDeclaration } from "../compositions/initializer.js";
 import { getParameterDescription } from "../compositions/jsdoc.js";
@@ -23,7 +23,7 @@ export function createParameterByDeclaration(ctx: CompilerContext, declaration: 
   const optional = declaration.questionToken !== undefined;
   const rest = declaration.dotDotDotToken !== undefined;
 
-  const kind = TypeKind.Parameter;
+  const kind = Kind.Parameter;
 
   assert(name, "Parameter name is missing.");
   assert(type, "Parameter type is missing.");

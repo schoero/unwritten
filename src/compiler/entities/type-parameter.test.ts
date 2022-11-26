@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.TypeParameter, () => {
+scope("Compiler", Kind.TypeParameter, () => {
 
   {
 
@@ -21,7 +21,7 @@ scope("Compiler", TypeKind.TypeParameter, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should be able to parse type parameters", () => {
-      expect(exportedTypeAlias.kind).toBe(TypeKind.TypeAlias);
+      expect(exportedTypeAlias.kind).toBe(Kind.TypeAlias);
       expect(exportedTypeAlias.typeParameters).to.not.equal(undefined);
       expect(exportedTypeAlias.typeParameters).to.have.lengthOf(1);
     });
@@ -41,7 +41,7 @@ scope("Compiler", TypeKind.TypeParameter, () => {
 
     it("should have a matching constraint", () => {
       expect(exportedTypeAlias.typeParameters![0]!.constraint).to.not.equal(undefined);
-      expect(exportedTypeAlias.typeParameters![0]!.constraint!.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.typeParameters![0]!.constraint!.kind).to.equal(Kind.String);
     });
 
   }
@@ -58,7 +58,7 @@ scope("Compiler", TypeKind.TypeParameter, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should have a matching initializer", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.initializer!.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.typeParameters![0]!.initializer!.kind).to.equal(Kind.StringLiteral);
     });
 
   }

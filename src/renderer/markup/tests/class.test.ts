@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
-import { Class, TypeKind } from "../../../types/types.js";
+import { Class, Kind } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
 import { renderClassForDocumentation, renderClassForTableOfContents } from "../entities/class.js";
 import { createRenderContext } from "./utils/context.js";
@@ -12,7 +12,7 @@ describe("Renderer: Class", () => {
 
     const testClass: Testable<Class> = {
       getters: [],
-      kind: TypeKind.Class,
+      kind: Kind.Class,
       methods: [],
       name: "Class",
       properties: [],
@@ -59,21 +59,21 @@ describe("Renderer: Class", () => {
 
     const testClass: Testable<Class> = {
       ctor: {
-        kind: TypeKind.Constructor,
+        kind: Kind.Constructor,
         name: "constructor",
         signatures: [
           {
-            kind: TypeKind.Signature,
+            kind: Kind.Signature,
             parameters: [],
             returnType: {
-              kind: TypeKind.Instance,
+              kind: Kind.Instance,
               name: "Class"
             }
           }
         ]
       },
       getters: [],
-      kind: TypeKind.Class,
+      kind: Kind.Class,
       methods: [],
       name: "Class",
       properties: [],
@@ -107,16 +107,16 @@ describe("Renderer: Class", () => {
 
     const testClass: Testable<Class> = {
       getters: [],
-      kind: TypeKind.Class,
+      kind: Kind.Class,
       methods: [],
       name: "Class",
       properties: [
         {
-          kind: TypeKind.Property,
+          kind: Kind.Property,
           name: "property",
           optional: false,
           type: {
-            kind: TypeKind.String,
+            kind: Kind.String,
             name: "string"
           }
         }
@@ -145,17 +145,17 @@ describe("Renderer: Class", () => {
 
     const testClass: Testable<Class> = {
       getters: [],
-      kind: TypeKind.Class,
+      kind: Kind.Class,
       methods: [
         {
-          kind: TypeKind.Method,
+          kind: Kind.Method,
           name: "meow",
           signatures: [
             {
-              kind: TypeKind.Signature,
+              kind: Kind.Signature,
               parameters: [],
               returnType: {
-                kind: TypeKind.Void,
+                kind: Kind.Void,
                 name: "void"
               }
             }

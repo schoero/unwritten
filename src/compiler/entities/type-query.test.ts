@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind, TypeQuery } from "../../types/types.js";
+import { Kind, TypeQuery } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.TypeQuery, () => {
+scope("Compiler", Kind.TypeQuery, () => {
 
   {
 
@@ -22,7 +22,7 @@ scope("Compiler", TypeKind.TypeQuery, () => {
     const conditionalTypeAlias = createTypeAliasBySymbol(ctx, conditionalTypeAliasSymbol);
 
     it("should be able to parse type queries", () => {
-      expect(conditionalTypeAlias.type.kind).to.equal(TypeKind.TypeQuery);
+      expect(conditionalTypeAlias.type.kind).to.equal(Kind.TypeQuery);
     });
 
     it("should have a matching name", () => {
@@ -30,7 +30,7 @@ scope("Compiler", TypeKind.TypeQuery, () => {
     });
 
     it("should have a matching type", () => {
-      expect((conditionalTypeAlias.type as TypeQuery).type.kind).to.equal(TypeKind.NumberLiteral);
+      expect((conditionalTypeAlias.type as TypeQuery).type.kind).to.equal(Kind.NumberLiteral);
     });
 
   }

@@ -2,7 +2,7 @@ import { isObjectLiteralExpression, ObjectLiteralExpression, Symbol, Type } from
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { ObjectLiteral, TypeKind } from "../../types/types.js";
+import { ObjectLiteral, Kind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
@@ -49,7 +49,7 @@ export function createObjectLiteralByType(ctx: CompilerContext, type: Type) {
 
   const id = getIdByType(ctx, type);
   const properties = type.getProperties().map(symbol => createPropertyBySymbol(ctx, symbol));
-  const kind = TypeKind.ObjectLiteral;
+  const kind = Kind.ObjectLiteral;
 
   return {
     id,

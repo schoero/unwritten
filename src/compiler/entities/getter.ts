@@ -1,7 +1,7 @@
 import { Symbol, Type } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { Getter, TypeKind } from "../../types/types.js";
+import { Getter, Kind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { isGetterDeclaration } from "../typeguards/declarations.js";
@@ -19,7 +19,7 @@ export const createGetterBySymbol = (ctx: CompilerContext, symbol: Symbol): Gett
 
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const kind = TypeKind.Getter;
+  const kind = Kind.Getter;
 
   return {
     id,
@@ -38,7 +38,7 @@ export function createGetterByType(ctx: CompilerContext, type: Type): Getter {
   const signatures = declarations.map(declaration => createSignatureByDeclaration(ctx, declaration));
 
   const id = getIdByType(ctx, type);
-  const kind = TypeKind.Getter;
+  const kind = Kind.Getter;
 
   return {
     id,

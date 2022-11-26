@@ -5,11 +5,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TupleType, TypeKind } from "../../types/types.js";
+import { TupleType, Kind } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.Tuple, () => {
+scope("Compiler", Kind.Tuple, () => {
 
   {
 
@@ -23,8 +23,8 @@ scope("Compiler", TypeKind.Tuple, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should be able to parse a tuple type", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Tuple);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.Tuple);
     });
 
   }

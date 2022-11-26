@@ -12,7 +12,7 @@ import {
   LiteralTypes,
   NumberLiteralType,
   StringLiteralType,
-  TypeKind
+  Kind
 } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import {
@@ -44,7 +44,7 @@ function _createStringLiteralType(ctx: CompilerContext, type: TSStringLiteralTyp
 
   const id = getIdByType(ctx, type);
   const value = type.value;
-  const kind = TypeKind.StringLiteral;
+  const kind = Kind.StringLiteral;
 
   return {
     id,
@@ -59,7 +59,7 @@ function _createNumberLiteralType(ctx: CompilerContext, type: TSNumberLiteralTyp
 
   const id = getIdByType(ctx, type);
   const value = type.value;
-  const kind = TypeKind.NumberLiteral;
+  const kind = Kind.NumberLiteral;
 
   return {
     id,
@@ -75,7 +75,7 @@ function _createBooleanLiteralType(ctx: CompilerContext, type: LiteralType): Boo
   const id = getIdByType(ctx, type);
   // @ts-expect-error // Alternative way would be to use the typeChecker and typeToString()
   const value = type.intrinsicName === "true";
-  const kind = TypeKind.BooleanLiteral;
+  const kind = Kind.BooleanLiteral;
 
   return {
     id,
@@ -91,7 +91,7 @@ function _createBigIntLiteralType(ctx: CompilerContext, type: TSBigIntLiteralTyp
   const id = getIdByType(ctx, type);
   const sign = type.value.negative ? "-" : "";
   const value = BigInt(sign + type.value.base10Value);
-  const kind = TypeKind.BigIntLiteral;
+  const kind = Kind.BigIntLiteral;
 
   return {
     id,

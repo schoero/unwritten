@@ -3,7 +3,7 @@ import { assert } from "vitest";
 
 import { isLiteralType } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
-import { MappedType, MappedTypeMember, TypeKind } from "../../types/types.js";
+import { Kind, MappedType, MappedTypeMember } from "../../types/types.js";
 import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "../typeguards/type-nodes.js";
@@ -23,7 +23,7 @@ export function createMappedTypeByType(ctx: CompilerContext, type: ObjectType): 
   const optional = declaration.questionToken !== undefined;
   const readonly = declaration.readonlyToken !== undefined;
   const typeParameter = createTypeParameterByDeclaration(ctx, declaration.typeParameter);
-  const kind = TypeKind.MappedType;
+  const kind = Kind.MappedType;
 
   assert(declaration.type, "Mapped type must have a type");
   assert(declaration.typeParameter.constraint && isUnionTypeNode(declaration.typeParameter.constraint), "Mapped type must have a union constraint");
@@ -48,7 +48,7 @@ function _parseMember(ctx: CompilerContext, keyTypeNode: TypeNode, valueTypeNode
   const keyType = createTypeByTypeNode(ctx, keyTypeNode);
   const valueType = createTypeByTypeNode(ctx, valueTypeNode);
   const id = getIdByTypeNode(ctx, keyTypeNode);
-  const kind = TypeKind.MappedTypeMember;
+  const kind = Kind.MappedTypeMember;
 
   assert(isLiteralType(keyType), "Mapped type key must be a literal type");
 

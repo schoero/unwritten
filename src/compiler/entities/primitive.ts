@@ -1,7 +1,7 @@
 import { Type } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { PrimitiveTypeKinds, PrimitiveTypes, TypeKind } from "../../types/types.js";
+import { PrimitiveTypeKinds, PrimitiveTypes, Kind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import {
   isAnyType,
@@ -35,25 +35,25 @@ export function createPrimitiveType(ctx: CompilerContext, type: Type): Primitive
 function _getPrimitiveTypeKind(ctx: CompilerContext, type: Type): PrimitiveTypeKinds {
 
   if(isStringType(type)){
-    return TypeKind.String;
+    return Kind.String;
   } else if(isNumberType(type)){
-    return TypeKind.Number;
+    return Kind.Number;
   } else if(isBooleanType(type)){
-    return TypeKind.Boolean;
+    return Kind.Boolean;
   } else if(isBigIntType(type)){
-    return TypeKind.BigInt;
+    return Kind.BigInt;
   } else if(isVoidType(type)){
-    return TypeKind.Void;
+    return Kind.Void;
   } else if(isUndefinedType(type)){
-    return TypeKind.Undefined;
+    return Kind.Undefined;
   } else if(isNullType(type)){
-    return TypeKind.Null;
+    return Kind.Null;
   } else if(isNeverType(type)){
-    return TypeKind.Never;
+    return Kind.Never;
   } else if(isAnyType(type)){
-    return TypeKind.Any;
+    return Kind.Any;
   } else if(isUnknownType(type)){
-    return TypeKind.Unknown;
+    return Kind.Unknown;
   }
 
   throw new Error("type is not a primitive type");

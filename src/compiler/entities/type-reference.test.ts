@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind, TypeReference } from "../../types/types.js";
+import { Kind, TypeReference } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.TypeReference, () => {
+scope("Compiler", Kind.TypeReference, () => {
 
   {
 
@@ -22,8 +22,8 @@ scope("Compiler", TypeKind.TypeReference, () => {
     const exportedReferenceTypeAlias = createTypeAliasBySymbol(ctx, exportedTypeAliasSymbol);
 
     it("should be able to parse a type reference", () => {
-      expect(exportedReferenceTypeAlias.kind).toBe(TypeKind.TypeAlias);
-      expect(exportedReferenceTypeAlias.type.kind).toBe(TypeKind.TypeReference);
+      expect(exportedReferenceTypeAlias.kind).toBe(Kind.TypeAlias);
+      expect(exportedReferenceTypeAlias.type.kind).toBe(Kind.TypeReference);
     });
 
     it("should have a matching name", () => {
@@ -32,7 +32,7 @@ scope("Compiler", TypeKind.TypeReference, () => {
 
     it("should have a matching type", () => {
       expect((exportedReferenceTypeAlias.type as TypeReference).type).to.not.equal(undefined);
-      expect((exportedReferenceTypeAlias.type as TypeReference).type!.kind).to.equal(TypeKind.String);
+      expect((exportedReferenceTypeAlias.type as TypeReference).type!.kind).to.equal(Kind.String);
     });
 
   }
@@ -53,12 +53,12 @@ scope("Compiler", TypeKind.TypeReference, () => {
     const falsyConditionalTypeReference = createTypeAliasBySymbol(ctx, falsyConditionalTypeReferenceSymbol);
 
     it("should be able to parse conditional type references", () => {
-      expect(truthyConditionalTypeReference.type.kind).to.equal(TypeKind.TypeReference);
+      expect(truthyConditionalTypeReference.type.kind).to.equal(Kind.TypeReference);
       expect((truthyConditionalTypeReference.type as TypeReference).type).to.not.equal(undefined);
-      expect((truthyConditionalTypeReference.type as TypeReference).type?.kind).to.equal(TypeKind.String);
-      expect(falsyConditionalTypeReference.type.kind).to.equal(TypeKind.TypeReference);
+      expect((truthyConditionalTypeReference.type as TypeReference).type?.kind).to.equal(Kind.String);
+      expect(falsyConditionalTypeReference.type.kind).to.equal(Kind.TypeReference);
       expect((falsyConditionalTypeReference.type as TypeReference).type).to.not.equal(undefined);
-      expect((falsyConditionalTypeReference.type as TypeReference).type?.kind).to.equal(TypeKind.Number);
+      expect((falsyConditionalTypeReference.type as TypeReference).type?.kind).to.equal(Kind.Number);
     });
 
   }

@@ -1,7 +1,7 @@
 import { Symbol, Type } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { Method, TypeKind } from "../../types/types.js";
+import { Method, Kind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { isMethodDeclaration } from "../typeguards/declarations.js";
@@ -19,7 +19,7 @@ export const createMethodBySymbol = (ctx: CompilerContext, symbol: Symbol): Meth
 
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const kind = TypeKind.Method;
+  const kind = Kind.Method;
 
   return {
     id,
@@ -38,7 +38,7 @@ export function createMethodByType(ctx: CompilerContext, type: Type): Method {
   const signatures = declarations.map(declaration => createSignatureByDeclaration(ctx, declaration));
 
   const id = getIdByType(ctx, type);
-  const kind = TypeKind.Method;
+  const kind = Kind.Method;
 
   return {
     id,

@@ -1,4 +1,4 @@
-import { TypeKind } from "../../../types/types.js";
+import { Kind } from "../../../types/types.js";
 import { Complete } from "../../../types/utils.js";
 import { MarkupRenderConfig } from "../types/config.js";
 import { RenderCategories } from "../types/renderer.js";
@@ -37,14 +37,14 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   propertyEncapsulation: ["`", "`"],
   removeHyphenAtStartOfTag: true,
   renderOrder: [
-    TypeKind.Namespace,
-    TypeKind.Module,
-    TypeKind.Function,
-    TypeKind.Class,
-    TypeKind.Variable,
-    TypeKind.Enum,
-    TypeKind.TypeAlias,
-    TypeKind.Interface
+    Kind.Namespace,
+    Kind.Module,
+    Kind.Function,
+    Kind.Class,
+    Kind.Variable,
+    Kind.Enum,
+    Kind.TypeAlias,
+    Kind.Interface
   ],
   stringLiteralTypeEncapsulation: ["`", "`"],
   tagEncapsulation: ["`", "`"],

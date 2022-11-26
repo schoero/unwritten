@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { IntersectionType, TypeKind } from "../../types/types.js";
+import { IntersectionType, Kind } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.IntersectionType, () => {
+scope("Compiler", Kind.IntersectionType, () => {
 
   {
 
@@ -21,8 +21,8 @@ scope("Compiler", TypeKind.IntersectionType, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should be able to parse an intersection type", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.IntersectionType);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.IntersectionType);
     });
 
   }
@@ -39,8 +39,8 @@ scope("Compiler", TypeKind.IntersectionType, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.IntersectionType);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.IntersectionType);
     });
 
     it("should have the right amount of types", () => {

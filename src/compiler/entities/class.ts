@@ -2,7 +2,7 @@ import { ClassLikeDeclaration, HeritageClause, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { Class, Getter, Method, Property, Setter, TypeKind } from "../../types/types.js";
+import { Class, Getter, Method, Property, Setter, Kind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
@@ -61,7 +61,7 @@ function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecl
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
 
   const id = getIdByDeclaration(ctx, declaration);
-  const kind = TypeKind.Class;
+  const kind = Kind.Class;
 
   return {
     ctor,

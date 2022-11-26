@@ -5,12 +5,12 @@ import { describe, expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { ArrayType, TypeKind } from "../../types/types.js";
+import { ArrayType, Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.Array, () => {
+scope("Compiler", Kind.Array, () => {
 
   describe("Native Syntax", () => {
 
@@ -26,8 +26,8 @@ scope("Compiler", TypeKind.Array, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should be able to parse an array type", () => {
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Array);
       });
 
     }
@@ -48,8 +48,8 @@ scope("Compiler", TypeKind.Array, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should have a matching kind", () => {
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Array);
       });
 
       it("should have a matching name", () => {
@@ -78,9 +78,9 @@ scope("Compiler", TypeKind.Array, () => {
 
       it("should generate a type alias > array with a string type as a type argument", () => {
         expect(exportedTypeAlias.name).to.equal("ArrayType");
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
-        expect((exportedTypeAlias.type as ArrayType).type.kind).to.equal(TypeKind.String);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Array);
+        expect((exportedTypeAlias.type as ArrayType).type.kind).to.equal(Kind.String);
       });
 
     }
@@ -102,8 +102,8 @@ scope("Compiler", TypeKind.Array, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should be able to parse an array type", () => {
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Array);
       });
 
     }
@@ -124,8 +124,8 @@ scope("Compiler", TypeKind.Array, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should have a matching kind", () => {
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Array);
       });
 
       it("should have a matching name", () => {
@@ -154,9 +154,9 @@ scope("Compiler", TypeKind.Array, () => {
 
       it("should generate a type alias > array with a string type as a type argument", () => {
         expect(exportedTypeAlias.name).to.equal("ArrayType");
-        expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-        expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
-        expect((exportedTypeAlias.type as ArrayType).type.kind).to.equal(TypeKind.String);
+        expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+        expect(exportedTypeAlias.type.kind).to.equal(Kind.Array);
+        expect((exportedTypeAlias.type as ArrayType).type.kind).to.equal(Kind.String);
       });
 
     }

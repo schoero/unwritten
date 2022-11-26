@@ -2,7 +2,7 @@ import { Symbol, TypeAliasDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { TypeAlias, TypeKind } from "../../types/types.js";
+import { TypeAlias, Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -23,7 +23,7 @@ export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol): T
   const id = getIdBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = _parseTypeAliasDeclaration(ctx, declaration);
-  const kind = TypeKind.TypeAlias;
+  const kind = Kind.TypeAlias;
 
   return {
     ...fromDeclaration,

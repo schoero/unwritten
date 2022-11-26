@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
@@ -20,7 +20,7 @@ scope("Compiler", "Primitive", () => {
     const symbol = exportedSymbols.find(s => s.name === "StringType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.String);
+    expect(exportedTypeAlias.type.kind).to.equal(Kind.String);
 
   });
 
@@ -35,7 +35,7 @@ scope("Compiler", "Primitive", () => {
     const symbol = exportedSymbols.find(s => s.name === "NumberType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Number);
+    expect(exportedTypeAlias.type.kind).to.equal(Kind.Number);
 
   });
 
@@ -50,7 +50,7 @@ scope("Compiler", "Primitive", () => {
     const symbol = exportedSymbols.find(s => s.name === "BooleanType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Boolean);
+    expect(exportedTypeAlias.type.kind).to.equal(Kind.Boolean);
 
   });
 
@@ -65,7 +65,7 @@ scope("Compiler", "Primitive", () => {
     const symbol = exportedSymbols.find(s => s.name === "BigIntType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.BigInt);
+    expect(exportedTypeAlias.type.kind).to.equal(Kind.BigInt);
 
   });
 
@@ -80,7 +80,7 @@ scope("Compiler", "Primitive", () => {
     const symbol = exportedSymbols.find(s => s.name === "NullType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Null);
+    expect(exportedTypeAlias.type.kind).to.equal(Kind.Null);
 
   });
 
@@ -95,7 +95,7 @@ scope("Compiler", "Primitive", () => {
     const symbol = exportedSymbols.find(s => s.name === "UndefinedType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Undefined);
+    expect(exportedTypeAlias.type.kind).to.equal(Kind.Undefined);
 
   });
 
@@ -110,7 +110,7 @@ scope("Compiler", "Primitive", () => {
     const symbol = exportedSymbols.find(s => s.name === "VoidType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Void);
+    expect(exportedTypeAlias.type.kind).to.equal(Kind.Void);
 
   });
 
@@ -125,7 +125,7 @@ scope("Compiler", "Primitive", () => {
     const symbol = exportedSymbols.find(s => s.name === "NeverType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Never);
+    expect(exportedTypeAlias.type.kind).to.equal(Kind.Never);
 
   });
 

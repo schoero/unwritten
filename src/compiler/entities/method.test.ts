@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { createClassBySymbol } from "./class.js";
 
 
-scope("Compiler", TypeKind.Method, () => {
+scope("Compiler", Kind.Method, () => {
 
   {
 
@@ -23,13 +23,13 @@ scope("Compiler", TypeKind.Method, () => {
     const exportedClass = createClassBySymbol(ctx, symbol);
 
     it("should be able to parse a method", () => {
-      expect(exportedClass.kind).to.equal(TypeKind.Class);
+      expect(exportedClass.kind).to.equal(Kind.Class);
       expect(exportedClass.methods).to.not.equal(undefined);
       expect(exportedClass.methods).to.have.lengthOf(1);
     });
 
     it("should have a matching kind", () => {
-      expect(exportedClass.methods![0]!.kind).to.equal(TypeKind.Method);
+      expect(exportedClass.methods![0]!.kind).to.equal(Kind.Method);
     });
 
     it("should have a matching name", () => {

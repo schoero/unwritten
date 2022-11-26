@@ -2,7 +2,7 @@ import { EnumDeclaration, Symbol } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { Enum, MergedEnum, TypeKind } from "../../types/types.js";
+import { Enum, MergedEnum, Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import {
   getDescriptionByDeclaration,
@@ -26,7 +26,7 @@ export const createEnumBySymbol = (ctx: CompilerContext, symbol: Symbol): Enum |
   const name = getNameBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclarations = declarations.map(declaration => _parseEnumDeclaration(ctx, declaration));
-  const kind = TypeKind.Enum;
+  const kind = Kind.Enum;
   const members = _mergeMembers(fromDeclarations);
 
   if(fromDeclarations.length === 1){
@@ -66,7 +66,7 @@ function _parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaratio
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const members = declaration.members.map(member => createMemberByDeclaration(ctx, member));
-  const kind = TypeKind.Enum;
+  const kind = Kind.Enum;
 
   return {
     description,

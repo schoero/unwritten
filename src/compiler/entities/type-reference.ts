@@ -1,7 +1,7 @@
 import { TypeReferenceNode } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { TypeKind, TypeReference } from "../../types/types.js";
+import { Kind, TypeReference } from "../../types/types.js";
 import { getIdByTypeNode } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createTypeByType } from "./type.js";
@@ -16,7 +16,7 @@ export function createTypeReferenceByTypeNode(ctx: CompilerContext, typeNode: Ty
   const name = targetSymbol && getNameBySymbol(ctx, targetSymbol);
   const target = createTypeByType(ctx, type);
   const id = getIdByTypeNode(ctx, typeNode);
-  const kind = TypeKind.TypeReference;
+  const kind = Kind.TypeReference;
 
   return {
     id,

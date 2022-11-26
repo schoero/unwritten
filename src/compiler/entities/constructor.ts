@@ -1,7 +1,7 @@
 import { Symbol, Type } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
-import { Constructor, TypeKind } from "../../types/types.js";
+import { Constructor, Kind } from "../../types/types.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { isConstructorDeclaration } from "../typeguards/declarations.js";
@@ -19,7 +19,7 @@ export const createConstructorBySymbol = (ctx: CompilerContext, symbol: Symbol):
 
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const kind = TypeKind.Constructor;
+  const kind = Kind.Constructor;
 
   return {
     id,
@@ -38,7 +38,7 @@ export function createConstructorByType(ctx: CompilerContext, type: Type): Const
   const signatures = declarations.map(declaration => createSignatureByDeclaration(ctx, declaration));
 
   const id = getIdByType(ctx, type);
-  const kind = TypeKind.Constructor;
+  const kind = Kind.Constructor;
 
   return {
     id,

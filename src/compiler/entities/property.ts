@@ -2,7 +2,7 @@ import { PropertyAssignment, PropertyDeclaration, PropertySignature, Symbol } fr
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { Property, TypeKind } from "../../types/types.js";
+import { Property, Kind } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
@@ -42,7 +42,7 @@ function _parsePropertyDeclaration(ctx: CompilerContext, declaration: PropertyAs
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const type = createTypeByDeclaration(ctx, declaration);
   const optional = declaration.questionToken !== undefined;
-  const kind = TypeKind.Property;
+  const kind = Kind.Property;
 
   return {
     description,

@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind, UnionType } from "../../types/types.js";
+import { Kind, UnionType } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.UnionType, () => {
+scope("Compiler", Kind.UnionType, () => {
 
   {
 
@@ -21,8 +21,8 @@ scope("Compiler", TypeKind.UnionType, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should be able to parse an union type", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.UnionType);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.UnionType);
     });
 
   }
@@ -43,8 +43,8 @@ scope("Compiler", TypeKind.UnionType, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.UnionType);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.UnionType);
     });
 
     it("should have the correct amount of types", () => {
@@ -52,8 +52,8 @@ scope("Compiler", TypeKind.UnionType, () => {
     });
 
     it("should have the correct types", () => {
-      expect((exportedTypeAlias.type as UnionType).types[0]!.kind).to.equal(TypeKind.String);
-      expect((exportedTypeAlias.type as UnionType).types[1]!.kind).to.equal(TypeKind.Number);
+      expect((exportedTypeAlias.type as UnionType).types[0]!.kind).to.equal(Kind.String);
+      expect((exportedTypeAlias.type as UnionType).types[1]!.kind).to.equal(Kind.Number);
     });
 
   }

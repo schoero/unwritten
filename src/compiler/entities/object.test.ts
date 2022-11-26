@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { ObjectType, TypeKind } from "../../types/types.js";
+import { ObjectType, Kind } from "../../types/types.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.Object, () => {
+scope("Compiler", Kind.Object, () => {
 
   {
 
@@ -23,8 +23,8 @@ scope("Compiler", TypeKind.Object, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should export a type alias => type => function, as long as there are only call signatures", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Function);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.Function);
     });
 
   }
@@ -44,8 +44,8 @@ scope("Compiler", TypeKind.Object, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should be able to handle construct signatures", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Object);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.Object);
       expect((exportedTypeAlias.type as ObjectType).constructSignatures.length).to.equal(1);
     });
 
@@ -70,8 +70,8 @@ scope("Compiler", TypeKind.Object, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should export a type alias => type => object, if there is something other than call signatures", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Object);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).to.equal(Kind.Object);
     });
 
     it("should be able to handle call signatures", () => {

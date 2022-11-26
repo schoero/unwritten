@@ -3,12 +3,12 @@ import { describe, expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind, TypeParameter, TypeReference } from "../../types/types.js";
+import { Kind, TypeParameter, TypeReference } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
-scope("Compiler", TypeKind.TypeAlias, () => {
+scope("Compiler", Kind.TypeAlias, () => {
 
   {
 
@@ -22,7 +22,7 @@ scope("Compiler", TypeKind.TypeAlias, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should be able to parse a type alias", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
     });
 
   }
@@ -43,7 +43,7 @@ scope("Compiler", TypeKind.TypeAlias, () => {
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedTypeAlias.kind).to.equal(TypeKind.TypeAlias);
+      expect(exportedTypeAlias.kind).to.equal(Kind.TypeAlias);
     });
 
     it("should have a matching name", () => {
@@ -87,10 +87,10 @@ scope("Compiler", TypeKind.TypeAlias, () => {
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
       it("should be able to parse generic types", () => {
-        expect(exportedTypeAlias.type.kind).toBe(TypeKind.TypeReference);
+        expect(exportedTypeAlias.type.kind).toBe(Kind.TypeReference);
         expect(exportedTypeAlias.typeParameters).toHaveLength(1);
         expect((exportedTypeAlias.type as TypeReference).type).to.not.equal(undefined);
-        expect((exportedTypeAlias.type as TypeReference).type!.kind).to.equal(TypeKind.Circular);
+        expect((exportedTypeAlias.type as TypeReference).type!.kind).to.equal(Kind.Circular);
         expect((exportedTypeAlias.type as TypeReference).type!.id).to.equal(exportedTypeAlias.typeParameters![0]!.id);
       });
 
@@ -109,7 +109,7 @@ scope("Compiler", TypeKind.TypeAlias, () => {
 
       it("should have a `string` constraint", () => {
         expect((((exportedTypeAlias.type as TypeReference).type as TypeReference).type as TypeParameter).constraint).to.not.equal(undefined);
-        expect((((exportedTypeAlias.type as TypeReference).type as TypeReference).type as TypeParameter).constraint!.kind).to.equal(TypeKind.String);
+        expect((((exportedTypeAlias.type as TypeReference).type as TypeReference).type as TypeParameter).constraint!.kind).to.equal(Kind.String);
       });
 
     }
@@ -128,7 +128,7 @@ scope("Compiler", TypeKind.TypeAlias, () => {
 
       it("should have a matching type argument", () => {
         expect(((exportedTypeAlias.type as TypeReference).type as TypeReference).typeArguments).to.have.lengthOf(1);
-        expect(((exportedTypeAlias.type as TypeReference).type as TypeReference).typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
+        expect(((exportedTypeAlias.type as TypeReference).type as TypeReference).typeArguments![0]!.kind).to.equal(Kind.StringLiteral);
       });
 
     }

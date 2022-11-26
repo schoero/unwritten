@@ -3,12 +3,12 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createVariableBySymbol } from "./variable.js";
 
 
-scope("Compiler", TypeKind.Variable, () => {
+scope("Compiler", Kind.Variable, () => {
 
   {
 
@@ -22,7 +22,7 @@ scope("Compiler", TypeKind.Variable, () => {
     const exportedVariable = createVariableBySymbol(ctx, symbol);
 
     it("should be able to parse a variable", () => {
-      expect(exportedVariable.kind).to.equal(TypeKind.Variable);
+      expect(exportedVariable.kind).to.equal(Kind.Variable);
     });
 
   }
@@ -43,7 +43,7 @@ scope("Compiler", TypeKind.Variable, () => {
     const exportedVariable = createVariableBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedVariable.kind).to.equal(TypeKind.Variable);
+      expect(exportedVariable.kind).to.equal(Kind.Variable);
     });
 
     it("should have a matching name", () => {
@@ -71,7 +71,7 @@ scope("Compiler", TypeKind.Variable, () => {
     });
 
     it("should have the correct type", () => {
-      expect(exportedVariable.type.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedVariable.type.kind).to.equal(Kind.StringLiteral);
     });
 
   }

@@ -3,12 +3,12 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind, TypeReference } from "../../types/types.js";
+import { Kind, TypeReference } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
 
-scope("Compiler", TypeKind.Interface, () => {
+scope("Compiler", Kind.Interface, () => {
 
   {
 
@@ -24,7 +24,7 @@ scope("Compiler", TypeKind.Interface, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should be able to parse an interface", () => {
-      expect(exportedInterface.kind).to.equal(TypeKind.Interface);
+      expect(exportedInterface.kind).to.equal(Kind.Interface);
     });
 
   }
@@ -41,7 +41,7 @@ scope("Compiler", TypeKind.Interface, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should be able to handle empty interfaces", () => {
-      expect(exportedInterface.kind).to.equal(TypeKind.Interface);
+      expect(exportedInterface.kind).to.equal(Kind.Interface);
       expect(exportedInterface.members.length).to.equal(0);
     });
 
@@ -70,7 +70,7 @@ scope("Compiler", TypeKind.Interface, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedInterface.kind).to.equal(TypeKind.Interface);
+      expect(exportedInterface.kind).to.equal(Kind.Interface);
     });
 
     it("should have a matching name", () => {
@@ -170,9 +170,9 @@ scope("Compiler", TypeKind.Interface, () => {
       expect(exportedInterface.typeParameters).to.not.equal(undefined);
       expect(exportedInterface.typeParameters).to.have.lengthOf(1);
       expect(exportedInterface.members).to.have.lengthOf(1);
-      expect(exportedInterface.members[0]!.type.kind).to.equal(TypeKind.TypeReference);
+      expect(exportedInterface.members[0]!.type.kind).to.equal(Kind.TypeReference);
       expect((exportedInterface.members[0]!.type as TypeReference).type).to.not.equal(undefined);
-      expect((exportedInterface.members[0]!.type as TypeReference).type!.kind).to.equal(TypeKind.TypeParameter);
+      expect((exportedInterface.members[0]!.type as TypeReference).type!.kind).to.equal(Kind.TypeParameter);
     });
 
   }

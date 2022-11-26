@@ -3,7 +3,7 @@ import { assert } from "vitest";
 
 import { parseSymbol } from "../../parser/index.js";
 import { CompilerContext } from "../../types/context.js";
-import { Member, TypeKind } from "../../types/types.js";
+import { Kind, Member } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
@@ -46,7 +46,7 @@ export function createMemberByDeclaration(ctx: CompilerContext, declaration: Enu
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const optional = "questionToken" in declaration && declaration.questionToken !== undefined;
-  const kind = TypeKind.Member;
+  const kind = Kind.Member;
 
   assert(name, "Member name not found");
 

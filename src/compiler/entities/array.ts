@@ -3,7 +3,7 @@ import { ArrayTypeNode, TypeReference, TypeReferenceNode } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { ArrayType, TypeKind } from "../../types/types.js";
+import { ArrayType, Kind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getPositionByNode } from "../compositions/position.js";
 import { isTypeReferenceType } from "../typeguards/types.js";
@@ -16,7 +16,7 @@ export function createArrayByTypeReference(ctx: CompilerContext, typeReference: 
   const id = getIdByType(ctx, typeReference);
   const position = node && getPositionByNode(ctx, node);
   const type = createTypeByType(ctx, typeReference.typeArguments![0]!);
-  const kind = TypeKind.Array;
+  const kind = Kind.Array;
 
   return {
     id,

@@ -3,11 +3,11 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { TypeKind } from "../../types/types.js";
+import { Kind } from "../../types/types.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
 
-scope("Compiler", TypeKind.Member, () => {
+scope("Compiler", Kind.Member, () => {
 
   {
 
@@ -23,7 +23,7 @@ scope("Compiler", TypeKind.Member, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should be able to parse members", () => {
-      expect(exportedInterface.kind).to.equal(TypeKind.Interface);
+      expect(exportedInterface.kind).to.equal(Kind.Interface);
       expect(exportedInterface.members).to.not.equal(undefined);
     });
 
@@ -43,7 +43,7 @@ scope("Compiler", TypeKind.Member, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should be able to have numbers as keys", () => {
-      expect(exportedInterface.kind).to.equal(TypeKind.Interface);
+      expect(exportedInterface.kind).to.equal(Kind.Interface);
       expect(exportedInterface.members).to.not.equal(undefined);
     });
 
@@ -84,8 +84,8 @@ scope("Compiler", TypeKind.Member, () => {
     });
 
     it("should have matching types", () => {
-      expect(member1.type.kind).to.equal(TypeKind.String);
-      expect(member2.type.kind).to.equal(TypeKind.Number);
+      expect(member1.type.kind).to.equal(Kind.String);
+      expect(member2.type.kind).to.equal(Kind.Number);
     });
 
     it("should have matching descriptions", () => {

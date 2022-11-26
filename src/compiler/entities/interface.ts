@@ -2,7 +2,7 @@ import { HeritageClause, InterfaceDeclaration, Symbol, Type } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { Interface, MergedInterface, TypeKind } from "../../types/types.js";
+import { Interface, Kind, MergedInterface } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
@@ -23,7 +23,7 @@ export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): I
   const id = getIdBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclarations = declarations.map(declaration => _parseInterfaceDeclaration(ctx, declaration));
-  const kind = TypeKind.Interface;
+  const kind = Kind.Interface;
   const members = _mergeMembers(fromDeclarations);
 
   if(fromDeclarations.length === 1){
@@ -71,7 +71,7 @@ function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: Interface
   const position = getPositionByDeclaration(ctx, declaration);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
   const id = getIdByDeclaration(ctx, declaration);
-  const kind = TypeKind.Interface;
+  const kind = Kind.Interface;
 
   return {
     example,

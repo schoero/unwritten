@@ -2,7 +2,7 @@ import { ElementFlags, TupleTypeNode, TupleTypeReference, Type } from "typescrip
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { TupleMember, TupleType, TypeKind } from "../../types/types.js";
+import { TupleMember, TupleType, Kind } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByNode } from "../compositions/position.js";
@@ -16,7 +16,7 @@ export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReferen
   const members = _getMembers(ctx, typeReference, typeReference.typeArguments);
   const position = node && getPositionByNode(ctx, node);
   const id = getIdByType(ctx, typeReference);
-  const kind = TypeKind.Tuple;
+  const kind = Kind.Tuple;
 
   return {
     id,
@@ -47,7 +47,7 @@ function _getMembers(ctx: CompilerContext, tupleTypeReference: TupleTypeReferenc
     const rest = (elementFlag && elementFlag & ElementFlags.Rest) !== 0;
     const labelDeclaration = tupleTypeReference.target.labeledElementDeclarations?.[index];
     const name = labelDeclaration && getNameByDeclaration(ctx, labelDeclaration);
-    const kind = TypeKind.Member;
+    const kind = Kind.Member;
 
     return <TupleMember>{
       id,

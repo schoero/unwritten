@@ -6,7 +6,7 @@ import {
   isUnionType
 } from "../../../typeguards/types.js";
 import { RenderContext } from "../../../types/context.js";
-import { Type, TypeKind } from "../../../types/types.js";
+import { Type, Kind } from "../../../types/types.js";
 import { MarkupRenderer } from "../types/renderer.js";
 import { getRenderConfig } from "../utils/config.js";
 import { encapsulate } from "../utils/renderer.js";
@@ -17,7 +17,7 @@ import { renderPrimitiveType } from "./primitive.js";
 import { renderUnionType } from "./union.js";
 
 
-export function renderType(ctx: RenderContext<MarkupRenderer>, type: Type<TypeKind>, enableEncapsulation: boolean = true): string {
+export function renderType(ctx: RenderContext<MarkupRenderer>, type: Type<Kind>, enableEncapsulation: boolean = true): string {
 
   let renderedType: string | undefined;
 

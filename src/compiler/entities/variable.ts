@@ -2,7 +2,7 @@ import { Symbol, Type, VariableDeclaration } from "typescript";
 import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
-import { TypeKind, Variable } from "../../types/types.js";
+import { Kind, Variable } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
@@ -23,7 +23,7 @@ export const createVariableBySymbol = (ctx: CompilerContext, symbol: Symbol): Va
   const name = getNameBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = _parseVariableDeclaration(ctx, declaration);
-  const kind = TypeKind.Variable;
+  const kind = Kind.Variable;
 
   return {
     ...fromDeclaration,
