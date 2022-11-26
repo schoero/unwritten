@@ -21,5 +21,12 @@ export function isSymbolExcluded(ctx: CompilerContext, symbol: Symbol): boolean 
 }
 
 export function isPathExcluded(path: string, excludePaths: string[]): boolean {
-  return excludePaths.reduce((_, excludePath) => minimatch(path, excludePath), false);
+  return excludePaths.reduce((value, excludePath) => {
+    const isInverted = (excludePath.match(/^!+/) ?? [""])[0]!.length % 2 !== 0;
+    const pathWithoutInverts = excludePath.replace(/^!+/, "");
+    const pathWithoutLeadingSlash = pathWithoutInverts.replace(/^\//, "");
+    const prefixedPath = `**/${pathWithoutLeadingSlash}`;
+    const result = minimatch(path, prefixedPath);
+    return !result ? value : !isInverted;
+  }, false);
 }

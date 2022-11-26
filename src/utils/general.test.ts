@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { describe, expect, it } from "vitest";
 
 import { scope } from "../../tests/utils/scope.js";
@@ -32,6 +33,11 @@ scope("Compiler", "Utils", () => {
     it("should not exclude inverted excludes", () => {
       expect(isPathExcluded(path, ["node_modules/**/*", "!node_modules/typescript/lib/lib.esnext.d.ts"])).to.equal(false);
       expect(isPathExcluded(path, ["node_modules/**/*", "!node_modules/typescript/lib/lib.es2016.d.ts"])).to.equal(true);
+    });
+
+    it("should handle absolute paths correctly", () => {
+      const absolutePath = resolve(path);
+      expect(isPathExcluded(absolutePath, ["node_modules/**/*"])).to.equal(true);
     });
 
   });
