@@ -69,8 +69,8 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
     return createMappedTypeByType(ctx, type);
   }
 
-  const constructSignatures = type.getConstructSignatures();
-  const callSignatures = type.getCallSignatures();
+  const tsConstructSignatures = type.getConstructSignatures();
+  const tsCallSignatures = type.getCallSignatures();
   const allProperties = type.getProperties();
 
 
@@ -98,8 +98,8 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
   const propertyProperties = allProperties.filter(p => isPropertySymbol(p));
   const methodProperties = allProperties.filter(p => isMethodSymbol(p));
 
-  const parsedConstructSignatures = constructSignatures.map(signature => createSignatureBySignature(ctx, signature));
-  const parsedCallSignatures = callSignatures.map(signature => createSignatureBySignature(ctx, signature));
+  const constructSignatures = tsConstructSignatures.map(signature => createSignatureBySignature(ctx, signature));
+  const callSignatures = tsCallSignatures.map(signature => createSignatureBySignature(ctx, signature));
 
   const methods = methodProperties.map(property => createMethodBySymbol(ctx, property));
   const getters = getterProperties.map(property => createGetterBySymbol(ctx, property));
@@ -107,8 +107,8 @@ export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType)
   const properties = propertyProperties.map(property => createPropertyBySymbol(ctx, property));
 
   return {
-    callSignatures: parsedCallSignatures,
-    constructSignatures: parsedConstructSignatures,
+    callSignatures,
+    constructSignatures,
     getters,
     id,
     kind,

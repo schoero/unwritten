@@ -9,8 +9,8 @@ import { createTypeByType } from "./type.js";
 export function createTypeQueryByTypeNode(ctx: CompilerContext, typeNode: TypeQueryNode): TypeQuery {
 
   const id = getIdByTypeNode(ctx, typeNode);
-  const tp = ctx.checker.getTypeFromTypeNode(typeNode);
-  const type = createTypeByType(ctx, tp);
+  const tsType = ctx.checker.getTypeFromTypeNode(typeNode);
+  const type = createTypeByType(ctx, tsType);
   const name = typeNode.exprName.getText();
   const kind = Kind.TypeQuery;
 
