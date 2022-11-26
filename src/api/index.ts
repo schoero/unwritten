@@ -1,11 +1,12 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import { parse } from "../compiler/entry-points/index.js";
 import { compile } from "../compiler/index.js";
 import { createContext as createCompilerContext } from "../compiler/utils/context.js";
+import { getEntryFileSymbolFromProgram } from "../compiler/utils/ts.js";
 import { createConfig } from "../config/index.js";
 import { disableLog } from "../log/index.js";
-import { getEntryFileSymbolFromProgram, parse } from "../parser/index.js";
 import { getRenderer } from "../renderer/index.js";
 import { createContext as createRenderContext } from "../renderer/utils/context.js";
 import { APIOptions } from "../types/options.js";

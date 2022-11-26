@@ -31,7 +31,13 @@ scope("Compiler", Kind.TypeLiteral, () => {
 
     const testFileContent = ts`
       export type TypeLiteral = {
-        a: string;
+        new (): {};
+        (): boolean;
+        prop: string;
+        funcProp: () => void;
+        method(): void;  
+        get getter(): number;
+        set setter(value: number);
       };
     `;
 
@@ -40,31 +46,33 @@ scope("Compiler", Kind.TypeLiteral, () => {
     const symbol = exportedSymbols.find(s => s.name === "TypeLiteral")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
 
-    it("should have matching members", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).members).to.have.lengthOf(1);
+    it("should be able to handle construct signatures", () => {
+      expect((exportedTypeAlias.type as TypeLiteral).constructSignatures.length).to.equal(1);
     });
 
-  }
+    it("should be able to handle call signatures", () => {
+      expect((exportedTypeAlias.type as TypeLiteral).callSignatures.length).to.equal(1);
+    });
 
-  {
+    it("should be able to handle properties", () => {
+      expect((exportedTypeAlias.type as TypeLiteral).properties.length).to.equal(2);
+    });
 
-    const testFileContent = ts`
-      enum TestEnum {
-        A = "a",
-        B = "b"
-      }
-      export type TypeLiteral = {
-        [K in keyof typeof TestEnum]: string;
-      };
-    `;
+    it("should be able to handle methods", () => {
+      expect((exportedTypeAlias.type as TypeLiteral).methods.length).to.equal(1);
+    });
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    it("should differentiate between methods and function properties", () => {
+      expect((exportedTypeAlias.type as TypeLiteral).methods.find(m => m.name === "method")).to.not.equal(undefined);
+      expect((exportedTypeAlias.type as TypeLiteral).properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
+    });
 
-    const symbol = exportedSymbols.find(s => s.name === "TypeLiteral")!;
-    const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+    it("should be able to handle getters", () => {
+      expect((exportedTypeAlias.type as TypeLiteral).getters.length).to.equal(1);
+    });
 
-    it("should support enum member as keys", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).members).to.have.lengthOf(2);
+    it("should be able to handle setters", () => {
+      expect((exportedTypeAlias.type as TypeLiteral).setters.length).to.equal(1);
     });
 
   }

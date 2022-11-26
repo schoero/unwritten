@@ -13,9 +13,7 @@ scope("Compiler", Kind.Interface, () => {
   {
 
     const testFileContent = ts`
-      export interface Interface {
-        a: string;
-      }
+      export interface Interface {};
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
@@ -32,7 +30,14 @@ scope("Compiler", Kind.Interface, () => {
   {
 
     const testFileContent = ts`
-      export interface Interface {};
+      export interface Interface {
+        (): void;
+        new (): void;
+        method(): void;
+        prop: string;
+        get getter(): string;
+        set setter(value: string): void;
+      }
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent.trim());
@@ -40,9 +45,8 @@ scope("Compiler", Kind.Interface, () => {
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
-    it("should be able to handle empty interfaces", () => {
+    it("should be able to parse an interface", () => {
       expect(exportedInterface.kind).to.equal(Kind.Interface);
-      expect(exportedInterface.members.length).to.equal(0);
     });
 
   }

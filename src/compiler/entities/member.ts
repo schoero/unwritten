@@ -1,7 +1,6 @@
 import { EnumMember, PropertySignature, Symbol, TypeElement } from "typescript";
 import { assert } from "vitest";
 
-import { parseSymbol } from "../../parser/parseSymbol";
 import { CompilerContext } from "../../types/context.js";
 import { Kind, Member } from "../../types/types.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
@@ -9,13 +8,14 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { parseSymbol } from "../entry-points/symbol.js";
 import { createTypeByDeclaration } from "../entry-points/type.js";
 import { parseTypeNode } from "../entry-points/type-node.js";
 import { isEnumMemberDeclaration, isPropertySignature, isTypeElement } from "../typeguards/declarations.js";
-import { lockedSymbol } from "../utils/ts.js";
+import { lockSymbol } from "../utils/ts.js";
 
 
-export const createMemberBySymbol = (ctx: CompilerContext, memberSymbol: Symbol): Member => lockedSymbol(ctx, memberSymbol, () => {
+export const createMemberBySymbol = (ctx: CompilerContext, memberSymbol: Symbol): Member => lockSymbol(ctx, memberSymbol, () => {
 
   const declaration = memberSymbol.valueDeclaration ?? memberSymbol.getDeclarations()?.[0];
 

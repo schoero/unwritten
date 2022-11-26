@@ -8,12 +8,12 @@ import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { isInterfaceDeclaration } from "../typeguards/declarations.js";
-import { lockedSymbol } from "../utils/ts.js";
+import { lockSymbol } from "../utils/ts.js";
 import { createMemberByDeclaration } from "./member.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): Interface | MergedInterface => lockedSymbol(ctx, symbol, () => {
+export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): Interface | MergedInterface => lockSymbol(ctx, symbol, () => {
 
   const declarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
 

@@ -4,7 +4,7 @@ import ts from "typescript";
 import { assert } from "vitest";
 
 import { reportCompilerDiagnostics } from "../../src/compiler/index.js";
-import { LockedSymbols } from "../../src/compiler/locked-symbols/index.js";
+import { Locker } from "../../src/compiler/locker/index.js";
 import { createConfig } from "../../src/config/index.js";
 import { disableLog } from "../../src/log/index.js";
 import { Config } from "../../src/types/config.js";
@@ -63,7 +63,7 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions, c
   const ctx: CompilerContext = {
     checker,
     config: createConfig(config),
-    lockedSymbols: new LockedSymbols()
+    locker: new Locker()
   };
 
 

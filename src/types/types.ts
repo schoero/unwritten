@@ -30,7 +30,6 @@ export enum Kind {
   Null = "Null",
   Number = "number",
   NumberLiteral = "NumberLiteral",
-  Object = "Object",
   ObjectLiteral = "ObjectLiteral",
   Parameter = "Parameter",
   Promise = "Promise",
@@ -75,7 +74,7 @@ export type FunctionLikeTypeKinds =
   | Kind.Method
   | Kind.Setter;
 
-export interface Type<Kind extends Kind>{
+export interface Type<Kind>{
   id: ID;
   kind: Kind;
 }
@@ -115,7 +114,6 @@ export type Types =
   | Member
   | Method
   | ObjectLiteral
-  | ObjectType
   | PrimitiveTypes
   | Property
   | Setter
@@ -188,7 +186,7 @@ export type LiteralTypes = BigIntLiteralType | BooleanLiteralType | NumberLitera
 
 //-- Object type
 
-export interface ObjectType extends Type<Kind.Object> {
+export interface ObjectType<Kind> extends Type<Kind> {
   callSignatures: Signature[];
   constructSignatures: Signature[];
   getters: Getter[];
@@ -201,10 +199,7 @@ export interface ObjectType extends Type<Kind.Object> {
 
 //-- Object literal
 
-export interface ObjectLiteral extends Type<Kind.ObjectLiteral> {
-  properties: Property[];
-  description?: Description;
-  example?: Example;
+export interface ObjectLiteral extends ObjectType<Kind.ObjectLiteral> {
 }
 
 export interface Property extends Type<Kind.Property> {
@@ -388,10 +383,13 @@ export interface TypeAlias extends Type<Kind.TypeAlias> {
 
 //-- Type Literal
 
-export interface TypeLiteral extends Type<Kind.TypeLiteral> {
-  members: Member[];
-  description?: Description;
-  example?: Example;
+export interface TypeLiteral extends ObjectType<Kind.TypeLiteral> {
+  callSignatures: Signature[];
+  constructSignatures: Signature[];
+  getters: Getter[];
+  methods: Method[];
+  properties: Property[];
+  setters: Setter[];
   name?: Name;
 }
 

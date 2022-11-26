@@ -1,10 +1,10 @@
 import { Type } from "typescript";
 import { assert } from "vitest";
 
-import { parseSymbol } from "../../parser/parseSymbol";
 import { CompilerContext } from "../../types/context.js";
 import { Kind, ThisType } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
+import { parseSymbol } from "../entry-points/symbol.js";
 
 
 export function createThisByType(ctx: CompilerContext, thisType: Type): ThisType {

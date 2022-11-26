@@ -1,16 +1,16 @@
 import { Symbol } from "typescript";
 import { assert } from "vitest";
 
-import { parseSymbol } from "../../parser/parseSymbol";
 import { isExportableType } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
 import { ExportableTypes, Kind, SourceFile } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
-import { getExportedSymbols, lockedSymbol } from "../utils/ts.js";
+import { parseSymbol } from "../entry-points/symbol.js";
+import { getExportedSymbols, lockSymbol } from "../utils/ts.js";
 
 
-export const createSourceFileBySymbol = (ctx: CompilerContext, symbol: Symbol): SourceFile => lockedSymbol(ctx, symbol, () => {
+export const createSourceFileBySymbol = (ctx: CompilerContext, symbol: Symbol): SourceFile => lockSymbol(ctx, symbol, () => {
 
   const exports = getExportedSymbols(ctx, symbol)
     .reduce<ExportableTypes[]>((parsedSymbols, exportedSymbol) => {

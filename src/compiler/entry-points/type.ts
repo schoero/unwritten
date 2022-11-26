@@ -13,7 +13,6 @@ import { createIntersectionTypeByType } from "../entities/intersection-type.js";
 import { createLiteralType } from "../entities/literal-type.js";
 import { createMappedTypeByType } from "../entities/mapped-type.js";
 import { createObjectLiteralByType } from "../entities/object-literal.js";
-import { createObjectTypeByType } from "../entities/object-type.js";
 import { createPrimitiveType } from "../entities/primitive.js";
 import { createThisByType } from "../entities/this-type.js";
 import { createTupleTypeByTypeReference } from "../entities/tuple-type.js";
@@ -51,7 +50,7 @@ export function createTypeByDeclaration(ctx: CompilerContext, declaration: Decla
 export function parseType(ctx: CompilerContext, type: Type): Types {
 
   if(isObjectType(type)){
-    return createObjectTypeByType(ctx, type);
+    return parseObjectType(ctx, type);
   }
 
 
@@ -67,8 +66,6 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
     return createLiteralType(ctx, type);
   } else if(isPrimitiveType(type)){
     return createPrimitiveType(ctx, type);
-  } else if(isObjectLiteralType(type)){
-    return createObjectLiteralByType(ctx, type);
   } else if(isUnionType(type)){
     return createUnionTypeByType(ctx, type);
   } else if(isIntersectionType(type)){
@@ -86,59 +83,27 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
 
 export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types {
 
-
-  //-- Array
+  const symbol = type.symbol;
+  const name = getNameBySymbol(ctx, symbol);
 
   if(isArrayTypeReferenceType(type)){
     return createArrayByTypeReference(ctx, type);
-  }
-
-
-  //-- Tuple
-
-  if(isTupleTypeReferenceType(type)){
+  } else if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
-  }
-
-
-  const symbol = type.symbol;
-
-
-  //-- Unresolved
-
-  if(isSymbolExcluded(ctx, symbol)){
+  } else if(isSymbolExcluded(ctx, symbol)){
     return createUnresolvedBySymbol(ctx, symbol);
-  }
-
-  const name = getNameBySymbol(ctx, symbol);
-
-
-  //-- Symbol
-
-  if(!name.startsWith("__")){
+  } else if(!name.startsWith("__")){
     return parseSymbol(ctx, symbol);
-  }
-
-
-  //-- Mapped type
-
-  if(isMappedType(type)){
+  } else if(isMappedType(type)){
     return createMappedTypeByType(ctx, type);
-  }
-
-
-  //-- Function
-
-  if(isFunctionLikeType(type)){
+  } else if(isFunctionLikeType(type)){
     return createFunctionByType(ctx, type);
-  }
-
-
-  //-- Type literal
-
-  if(isTypeLiteralType(type)){
+  } else if(isTypeLiteralType(type)){
     return createTypeLiteralByType(ctx, type);
+  } else if(isObjectLiteralType(type)){
+    return createObjectLiteralByType(ctx, type);
   }
 
-  return createObjectTypeByType(ctx, type);
+  throw new Error("Unknown object type");
+
 }

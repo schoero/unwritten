@@ -9,10 +9,10 @@ import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { parseTypeNode } from "../entry-points/type-node.js";
 import { isTypeParameterDeclaration } from "../typeguards/declarations.js";
-import { lockedSymbol } from "../utils/ts.js";
+import { lockSymbol } from "../utils/ts.js";
 
 
-export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeParameter => lockedSymbol(ctx, symbol, () => {
+export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeParameter => lockSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 

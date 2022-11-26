@@ -10,7 +10,6 @@ import { createFunctionBySymbol } from "../entities/function.js";
 import { createInterfaceBySymbol } from "../entities/interface.js";
 import { createModuleBySymbol } from "../entities/module.js";
 import { createNamespaceBySymbol } from "../entities/namespace.js";
-import { createObjectLiteralBySymbol } from "../entities/object-literal.js";
 import { createPropertyBySymbol } from "../entities/property.js";
 import { createSourceFileBySymbol } from "../entities/source-file.js";
 import { createTypeAliasBySymbol } from "../entities/type-alias.js";
@@ -24,7 +23,6 @@ import {
   isInterfaceSymbol,
   isModuleSymbol,
   isNamespaceSymbol,
-  isObjectLiteralSymbol,
   isPropertySymbol,
   isSourceFileSymbol,
   isTypeAliasSymbol,
@@ -76,8 +74,6 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
     return createTypeParameterBySymbol(ctx, resolvedSymbol);
   } else if(isPropertySymbol(symbol)){
     return createPropertyBySymbol(ctx, resolvedSymbol);
-  } else if(isObjectLiteralSymbol(symbol)){
-    return createObjectLiteralBySymbol(ctx, resolvedSymbol);
   } else {
     return createUnresolvedBySymbol(ctx, resolvedSymbol);
   }

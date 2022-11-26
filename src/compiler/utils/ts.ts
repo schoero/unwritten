@@ -1,4 +1,5 @@
-import { Map as TSMap, Symbol } from "typescript";
+import { Map as TSMap, Program, Symbol } from "typescript";
+import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
@@ -15,6 +16,22 @@ export function normalizeTSMap<T>(tsMap: Map<string, T> | TSMap<T>): Map<string,
 }
 
 
+//-- Locker
+
+export function isSymbolLocked(ctx: CompilerContext, symbol: Symbol) {
+  return ctx.locker.isSymbolLocked(ctx, symbol);
+}
+
+export function lockSymbol<T extends Types>(ctx: CompilerContext, symbol: Symbol, callback: (ctx: CompilerContext, symbol: Symbol) => T): T {
+  ctx.locker.lockSymbol(ctx, symbol);
+  const returnType = callback(ctx, symbol);
+  ctx.locker.unlockSymbol(ctx, symbol);
+  return returnType;
+}
+
+
+//-- Symbol helpers
+
 /**
  * Resolves symbols from imports to their actual symbols.
  */
@@ -25,23 +42,26 @@ export function resolveSymbolInCaseOfImport(ctx: CompilerContext, symbol: Symbol
   return symbol;
 }
 
-
 export function getExportedSymbols(ctx: CompilerContext, moduleSymbol: Symbol, exclude?: string[]) {
-  const name = moduleSymbol.getName();
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, moduleSymbol);
   const exportedSymbols = ctx.checker.getExportsOfModule(resolvedSymbol);
   return exportedSymbols;
 }
 
+export function getEntryFileSymbolFromProgram(ctx: CompilerContext, program: Program) {
 
-export function isSymbolLocked(ctx: CompilerContext, symbol: Symbol) {
-  return ctx.lockedSymbols.isSymbolLocked(ctx, symbol);
-}
+  const rootFileName = program.getRootFileNames()[0];
 
-export function lockSymbol(ctx: CompilerContext, symbol: Symbol) {
-  ctx.lockedSymbols.lockSymbol(ctx, symbol);
-}
+  assert(rootFileName, "Root file not found.");
 
-export function lockedSymbol<T extends Types>(ctx: CompilerContext, symbol: Symbol, callback: (ctx: CompilerContext, symbol: Symbol) => T): T {
-  return ctx.lockedSymbols.lockedSymbol(ctx, symbol, callback);
+  const entryFile = program.getSourceFile(rootFileName);
+
+  assert(entryFile, `Entry file not found. ${rootFileName}`);
+
+  const entryFileSymbol = ctx.checker.getSymbolAtLocation(entryFile);
+
+  assert(entryFileSymbol, "Entry file symbol not found.");
+
+  return entryFileSymbol;
+
 }

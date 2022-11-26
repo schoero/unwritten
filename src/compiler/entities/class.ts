@@ -16,7 +16,7 @@ import {
   isPropertyDeclaration,
   isSetterDeclaration
 } from "../typeguards/declarations.js";
-import { lockedSymbol } from "../utils/ts.js";
+import { lockSymbol } from "../utils/ts.js";
 import { createConstructorBySymbol } from "./constructor.js";
 import { createGetterBySymbol } from "./getter.js";
 import { createMethodBySymbol } from "./method.js";
@@ -25,7 +25,7 @@ import { createSetterBySymbol } from "./setter.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export const createClassBySymbol = (ctx: CompilerContext, symbol: Symbol): Class => lockedSymbol(ctx, symbol, () => {
+export const createClassBySymbol = (ctx: CompilerContext, symbol: Symbol): Class => lockSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
