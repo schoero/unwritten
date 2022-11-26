@@ -6,7 +6,7 @@ import { Kind, Types } from "../../types/types.js";
 import { isSymbolExcluded } from "../../utils/general.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
-import { isGetterSymbol, isMethodSymbol, isPropertySymbol, isSetterSymbol } from "../typeguards/isFunctionSymbol";
+import { isGetterSymbol, isMethodSymbol, isPropertySymbol, isSetterSymbol } from "../typeguards/symbols.js";
 import {
   isArrayTypeReferenceType,
   isFunctionLikeType,

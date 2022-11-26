@@ -5,6 +5,11 @@ import { Types } from "../../types/types.js";
 import {
   isArrayTypeNode,
   isArrayTypeReferenceTypeNode,
+  isTupleTypeNode,
+  isTypeQueryNode,
+  isTypeReferenceNode
+} from "../typeguards/type-nodes.js";
+import {
   isConditionalType,
   isInstanceType,
   isInterfaceType,
@@ -14,10 +19,7 @@ import {
   isObjectType,
   isPrimitiveType,
   isThisType,
-  isTupleTypeNode,
   isTypeParameterType,
-  isTypeQueryNode,
-  isTypeReferenceNode,
   isUnionType
 } from "../typeguards/types.js";
 import { createArrayByArrayTypeNode } from "./array.js";

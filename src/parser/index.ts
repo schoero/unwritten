@@ -1,4 +1,4 @@
-import { NodeArray, Program, Symbol, TypeNode } from "typescript";
+import { Program, Symbol } from "typescript";
 import { assert } from "vitest";
 
 import { createLinkToSymbol } from "../compiler/entities/circular.js";
@@ -28,7 +28,7 @@ import {
   isTypeAliasSymbol,
   isTypeParameterSymbol,
   isVariableSymbol
-} from "../compiler/typeguards/isFunctionSymbol";
+} from "../compiler/typeguards/symbols.js";
 import { isSymbolLocked, resolveSymbolInCaseOfImport } from "../compiler/utils/ts.js";
 import { CompilerContext } from "../types/context.js";
 import { ExportableTypes, Types } from "../types/types.js";
@@ -47,7 +47,7 @@ export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): Exportabl
  * @param symbol - File symbol
  * @returns Parsed symbol
  */
-export function parseSymbol(ctx: CompilerContext, symbol: Symbol, typeArguments?: NodeArray<TypeNode>): Types {
+export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 
@@ -56,7 +56,7 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol, typeArguments?
   }
 
   if(isSymbolLocked(ctx, resolvedSymbol)){
-    return createLinkToSymbol(ctx, resolvedSymbol, typeArguments);
+    return createLinkToSymbol(ctx, resolvedSymbol);
   }
 
   if(isVariableSymbol(resolvedSymbol)){
@@ -64,11 +64,11 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol, typeArguments?
   } else if(isFunctionSymbol(resolvedSymbol)){
     return createFunctionBySymbol(ctx, resolvedSymbol);
   } else if(isClassSymbol(resolvedSymbol)){
-    return createClassBySymbol(ctx, resolvedSymbol, typeArguments);
+    return createClassBySymbol(ctx, resolvedSymbol);
   } else if(isInterfaceSymbol(resolvedSymbol)){
-    return createInterfaceBySymbol(ctx, resolvedSymbol, typeArguments);
+    return createInterfaceBySymbol(ctx, resolvedSymbol);
   } else if(isTypeAliasSymbol(resolvedSymbol)){
-    return createTypeAliasBySymbol(ctx, resolvedSymbol, typeArguments);
+    return createTypeAliasBySymbol(ctx, resolvedSymbol);
   } else if(isEnumSymbol(resolvedSymbol)){
     return createEnumBySymbol(ctx, resolvedSymbol);
   } else if(isNamespaceSymbol(symbol)){
