@@ -1,4 +1,29 @@
-# quickdoks
+<h1 align="center">
+  <img alt="quickdoks" src="assets/quickdoks.svg">
+</h1>
+
+<div align="center">
+  <a href="https://github.com/schoero/quickdoks/blob/main/LICENSE">
+    <img alt="MIT License" src="https://img.shields.io/npm/l/quickdoks?color=brightgreen&style=flat-square">
+  </a>
+  <a href="https://www.npmjs.com/package/quickdoks">
+    <img alt="Version" src="https://img.shields.io/npm/v/quickdoks?color=brightgreen&style=flat-square">
+  </a>
+  <a href="https://github.com/schoero/quickdoks/issues">
+    <img alt="Issues" src="https://img.shields.io/github/issues-raw/schoero/quickdoks?style=flat-square">
+  </a>
+  <a href="https://www.npmjs.com/package/quickdoks">
+    <img alt="Downloads" src="https://img.shields.io/npm/dw/quickdoks?style=flat-square">
+  </a>
+  <a href="https://github.com/schoero/quickdoks/stargazers">
+    <img alt="Downloads" src="https://img.shields.io/github/stars/schoero/quickdoks?color=brightgreen&style=flat-square">
+  </a>
+  <a href="https://github.com/schoero/quickdoks/actions?query=workflow%3ACI">
+    <img alt="CI" src="https://img.shields.io/github/workflow/status/schoero/quickdoks/CI?style=flat-square">
+  </a>
+</div>
+
+---
 
 A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.
 
