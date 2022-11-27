@@ -1,6 +1,8 @@
-<h1 align="center">
+<div align="center">
   <img alt="quickdoks" src="assets/quickdoks.svg">
-</h1>
+</div>
+
+---
 
 <div align="center">
   <a href="https://github.com/schoero/quickdoks/blob/main/LICENSE">
