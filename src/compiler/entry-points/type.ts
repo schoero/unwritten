@@ -1,8 +1,9 @@
 import { Declaration, ObjectType as TSObjectType, Type } from "typescript";
 
+import { error } from "../../log/index.js";
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
-import { isSymbolExcluded } from "../../utils/general.js";
+import { isSymbolExcluded } from "../../utils/exclude.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createArrayByTypeReference } from "../entities/array.js";
 import { createConditionalType } from "../entities/conditional-type.js";
@@ -66,8 +67,6 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
     return createUnionTypeByType(ctx, type);
   } else if(isIntersectionType(type)){
     return createIntersectionTypeByType(ctx, type);
-  } else if(isInterfaceType(type)){
-    return createInterfaceByType(ctx, type);
   } else if(isTypeParameterType(type)){
     return createTypeParameterByType(ctx, type);
   } else {
@@ -105,8 +104,10 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
     return createTypeLiteralByType(ctx, type);
   } else if(isObjectLiteralType(type)){
     return createObjectLiteralByType(ctx, type);
+  } else if(isInterfaceType(type)){
+    return createInterfaceByType(ctx, type);
   }
 
-  throw new Error("Unknown object type");
+  throw error("Unknown object type");
 
 }

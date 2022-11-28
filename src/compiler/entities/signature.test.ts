@@ -18,7 +18,7 @@ scope("Compiler", Kind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -43,7 +43,7 @@ scope("Compiler", Kind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -89,7 +89,7 @@ scope("Compiler", Kind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "add")!;
     const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -111,7 +111,7 @@ scope("Compiler", Kind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, symbol);

@@ -16,7 +16,7 @@ scope("Compiler", Kind.TypeQuery, () => {
       export type TypeQuery = typeof test;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const conditionalTypeAliasSymbol = exportedSymbols.find(s => s.name === "TypeQuery")!;
     const conditionalTypeAlias = createTypeAliasBySymbol(ctx, conditionalTypeAliasSymbol);

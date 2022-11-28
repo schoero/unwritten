@@ -15,7 +15,7 @@ scope("Compiler", Kind.ConditionalType, () => {
       export type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const conditionalTypeAliasSymbol = exportedSymbols.find(s => s.name === "ConditionalTypeAlias")!;
     const conditionalTypeAlias = createTypeAliasBySymbol(ctx, conditionalTypeAliasSymbol);

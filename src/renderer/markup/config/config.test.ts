@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import { createRenderContext } from "../../../../tests/utils/context.js";
-import { createConfig } from "../../../config/index.js";
 import { Kind, Variable } from "../../../types/types.js";
 import { Real, Testable } from "../../../types/utils.js";
 import { renderVariableForDocumentation } from "../entities/variable.js";
@@ -9,7 +8,7 @@ import { renderVariableForDocumentation } from "../entities/variable.js";
 
 describe("Config", () => {
 
-  describe("typeEncapsulation", () => {
+  describe("typeEncapsulation", async () => {
 
     const testVariable: Testable<Variable> = {
       kind: Kind.Variable,
@@ -20,11 +19,9 @@ describe("Config", () => {
       }
     };
 
-    const config = createConfig({
-      externalTypes: {}
-    });
+    const ctx = createRenderContext();
 
-    const ctx = createRenderContext(config);
+    ctx.config.externalTypes = {};
 
     {
 

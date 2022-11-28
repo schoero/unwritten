@@ -1,8 +1,8 @@
 import { Symbol } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { ExportableTypes } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { createSourceFileBySymbol } from "../entities/source-file.js";
 import { isSourceFileSymbol } from "../typeguards/symbols.js";
 

@@ -1,8 +1,8 @@
 import { Symbol, TypeNode, TypeParameter as TSTypeParameter, TypeParameterDeclaration } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { Kind, TypeParameter } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getTypeParameterDescription } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";

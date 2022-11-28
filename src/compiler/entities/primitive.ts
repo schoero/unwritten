@@ -1,5 +1,6 @@
 import { Type } from "typescript";
 
+import { error } from "../../log/index.js";
 import { CompilerContext } from "../../types/context.js";
 import { Kind, PrimitiveTypeKinds, PrimitiveTypes } from "../../types/types.js";
 import { getIdByType } from "../compositions/id.js";
@@ -56,7 +57,7 @@ function _getPrimitiveTypeKind(ctx: CompilerContext, type: Type): PrimitiveTypeK
     return Kind.Unknown;
   }
 
-  throw new Error("type is not a primitive type");
+  throw error("type is not a primitive type");
 
 }
 

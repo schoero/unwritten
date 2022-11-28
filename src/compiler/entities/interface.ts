@@ -1,12 +1,13 @@
 import { HeritageClause, InterfaceDeclaration, NodeArray, Symbol, Type } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { Interface, Kind, MergedInterface } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { parseType } from "../entry-points/type.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
@@ -20,6 +21,7 @@ import { lockSymbol } from "../utils/ts.js";
 import { createPropertyByDeclaration } from "./property.js";
 import { createSignatureByDeclaration } from "./signature.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
+import { createTypeReferenceByTypeNode } from "./type-reference.js";
 
 
 export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): Interface | MergedInterface => lockSymbol(ctx, symbol, () => {
@@ -76,7 +78,16 @@ export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): I
 
 
 export function createInterfaceByType(ctx: CompilerContext, type: Type): Interface {
-  return createInterfaceBySymbol(ctx, type.symbol);
+
+  const fromSymbol = createInterfaceBySymbol(ctx, type.symbol);
+  // @ts-expect-error - Internal API
+  const typeArguments = type.typeArguments?.map(type => parseType(ctx, type));
+
+  return {
+    ...fromSymbol,
+    typeArguments
+  };
+
 }
 
 function _mergeMembers<Key extends keyof {
@@ -138,7 +149,7 @@ function _parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<
 }
 
 function _createInterfacesByHeritageClause(ctx: CompilerContext, heritageClause: HeritageClause): Interface[] {
-  const typeNodes = heritageClause.types;
-  const types = typeNodes.map(ctx.checker.getTypeFromTypeNode);
-  return types.map(type => createInterfaceByType(ctx, type));
+  return heritageClause.types.map(expression =>
+    // Only expression.expression has type arguments
+    createTypeReferenceByTypeNode(ctx, expression));
 }

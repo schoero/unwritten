@@ -19,7 +19,7 @@ scope("Compiler", Kind.Enum, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedTypeEnum = createEnumBySymbol(ctx, symbol);
@@ -36,7 +36,7 @@ scope("Compiler", Kind.Enum, () => {
       export enum Enum {};
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedEnum = createEnumBySymbol(ctx, symbol);
@@ -61,7 +61,7 @@ scope("Compiler", Kind.Enum, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedEnum = createEnumBySymbol(ctx, symbol);
@@ -120,7 +120,7 @@ scope("Compiler", Kind.Enum, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedEnum = createEnumBySymbol(ctx, symbol);

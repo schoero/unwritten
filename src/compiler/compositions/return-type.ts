@@ -1,7 +1,7 @@
 import { Signature } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
+import { assert } from "../../utils/general.js";
 import { parseType } from "../entry-points/type.js";
 import { getReturnTypeDescription } from "./jsdoc.js";
 

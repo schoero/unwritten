@@ -1,8 +1,8 @@
-import { ElementFlags, TupleTypeNode, TupleTypeReference, Type } from "typescript";
-import { assert } from "vitest";
+import ts, { TupleTypeNode, TupleTypeReference, Type } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
 import { Kind, TupleMember, TupleType } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdByType } from "../compositions/id.js";
 import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByNode } from "../compositions/position.js";
@@ -43,8 +43,8 @@ function _getMembers(ctx: CompilerContext, tupleTypeReference: TupleTypeReferenc
 
     const id = getIdByType(ctx, typeArgument);
     const elementFlag = tupleTypeReference.target.elementFlags[index];
-    const optional = (elementFlag && elementFlag & ElementFlags.Optional) !== 0;
-    const rest = (elementFlag && elementFlag & ElementFlags.Rest) !== 0;
+    const optional = (elementFlag && elementFlag & ts.ElementFlags.Optional) !== 0;
+    const rest = (elementFlag && elementFlag & ts.ElementFlags.Rest) !== 0;
     const labelDeclaration = tupleTypeReference.target.labeledElementDeclarations?.[index];
     const name = labelDeclaration && getNameByDeclaration(ctx, labelDeclaration);
     const kind = Kind.Member;

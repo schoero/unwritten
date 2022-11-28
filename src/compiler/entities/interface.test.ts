@@ -16,7 +16,7 @@ scope("Compiler", Kind.Interface, () => {
       export interface Interface {};
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
@@ -41,7 +41,7 @@ scope("Compiler", Kind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
@@ -95,7 +95,7 @@ scope("Compiler", Kind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
@@ -145,7 +145,7 @@ scope("Compiler", Kind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
@@ -170,7 +170,7 @@ scope("Compiler", Kind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const exportedInterfaceBSymbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
     const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
@@ -198,13 +198,44 @@ scope("Compiler", Kind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
     const exportedInterfaceC = createInterfaceBySymbol(ctx, exportedInterfaceCSymbol);
 
-    it("should be able to handle extended interfaces", () => {
+    it("should be able to handle multiple extended interfaces at the same time", () => {
       expect(exportedInterfaceC.properties).to.have.lengthOf(3);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      interface InterfaceA {
+        a2: string;
+      }
+      interface InterfaceA {
+        a: string;
+      }
+      interface InterfaceB extends InterfaceA {
+        b: string;
+      }
+      interface InterfaceC {
+        c: string;
+      }
+      export interface InterfaceD extends InterfaceB, InterfaceC {
+        d: string;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const exportedInterfaceDSymbol = exportedSymbols.find(s => s.name === "InterfaceD")!;
+    const exportedInterfaceD = createInterfaceBySymbol(ctx, exportedInterfaceDSymbol);
+
+    it("should be able to handle all extension variants at the same time", () => {
+      expect(exportedInterfaceD.properties).to.have.lengthOf(5);
     });
 
   }
@@ -217,7 +248,7 @@ scope("Compiler", Kind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "GenericInterface")!;
     const exportedInterface = createInterfaceBySymbol(ctx, exportedInterfaceSymbol);
@@ -227,6 +258,34 @@ scope("Compiler", Kind.Interface, () => {
       expect(exportedInterface.typeParameters).to.have.lengthOf(1);
       expect(exportedInterface.properties).to.have.lengthOf(1);
       expect(exportedInterface.properties[0]!.type.kind).to.equal(Kind.TypeParameter);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      interface Base<T extends string> {
+        prop: T;
+      }
+      export interface Interface extends Base<"hello"> {
+
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
+    const exportedInterface = createInterfaceBySymbol(ctx, exportedInterfaceSymbol);
+
+    it("should support type arguments", () => {
+      expect(exportedInterface.properties).to.have.lengthOf(1);
+      expect(exportedInterface.properties[0]!.type.kind).to.equal(Kind.StringLiteral);
+      expect(exportedInterface.heritage).to.not.equal(undefined);
+      expect(exportedInterface.heritage).to.have.lengthOf(1);
+      expect(exportedInterface.heritage![0]!.typeArguments).to.not.equal(undefined);
+      expect(exportedInterface.heritage![0]!.typeArguments).to.have.lengthOf(1);
+      expect(exportedInterface.heritage![0]!.typeArguments![0]!.kind).to.equal(Kind.StringLiteral);
     });
 
   }

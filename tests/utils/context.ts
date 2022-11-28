@@ -1,11 +1,11 @@
-import { createConfig } from "../../src/config/index.js";
+import { getDefaultConfig } from "../../src/config/index.js";
 import { markdownRenderer } from "../../src/renderer/markup/markdown/index.js";
 import { MarkupRenderer } from "../../src/renderer/markup/types/renderer.js";
-import { CompleteConfig } from "../../src/types/config.js";
 import { RenderContext } from "../../src/types/context.js";
+import { override } from "../../src/utils/override.js";
 
 
-const defaultConfig = createConfig({
+const testConfig = override(getDefaultConfig(), {
   externalTypes: {},
   renderConfig: {
     markdown: {
@@ -18,9 +18,9 @@ const defaultConfig = createConfig({
   }
 });
 
-export function createRenderContext(config: CompleteConfig = defaultConfig): RenderContext<MarkupRenderer> {
+export function createRenderContext(): RenderContext<MarkupRenderer> {
   return {
-    config,
+    config: testConfig,
     renderer: markdownRenderer
   };
 }

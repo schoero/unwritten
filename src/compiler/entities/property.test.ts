@@ -17,7 +17,7 @@ scope("Compiler", Kind.Property, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -42,7 +42,7 @@ scope("Compiler", Kind.Property, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

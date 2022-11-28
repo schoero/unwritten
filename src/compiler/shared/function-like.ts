@@ -1,7 +1,7 @@
 import { FunctionLikeDeclaration, Symbol, Type } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
+import { assert } from "../../utils/general.js";
 import { getIdBySymbol, getIdByType } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createSignatureByDeclaration } from "../entities/signature.js";

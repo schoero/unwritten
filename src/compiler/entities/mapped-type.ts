@@ -1,9 +1,9 @@
 import { ObjectType, TypeNode } from "typescript";
-import { assert } from "vitest";
 
 import { isLiteralType } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
 import { Kind, MappedType, MappedTypeMember } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { parseTypeNode } from "../entry-points/type-node.js";

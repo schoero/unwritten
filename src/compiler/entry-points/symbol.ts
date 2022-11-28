@@ -2,7 +2,7 @@ import { Symbol } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
-import { isSymbolExcluded } from "../../utils/general.js";
+import { isSymbolExcluded } from "../../utils/exclude.js";
 import { createLinkToSymbol } from "../entities/circular.js";
 import { createClassBySymbol } from "../entities/class.js";
 import { createEnumBySymbol } from "../entities/enum.js";

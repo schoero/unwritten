@@ -23,7 +23,7 @@ scope("Compiler", Kind.Circular, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const exportedInterfaceASymbol = exportedSymbols.find(s => s.name === "InterfaceA")!;
     const exportedInterfaceBSymbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
@@ -57,7 +57,7 @@ scope("Compiler", Kind.Circular, () => {
       }i
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const exportedInterfaceASymbol = exportedSymbols.find(s => s.name === "InterfaceA")!;
     const exportedInterfaceA = createInterfaceBySymbol(ctx, exportedInterfaceASymbol);

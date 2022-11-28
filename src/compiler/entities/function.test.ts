@@ -21,7 +21,7 @@ scope("Compiler", Kind.Function, () => {
         }
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
       const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -40,7 +40,7 @@ scope("Compiler", Kind.Function, () => {
         }
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
       const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -73,7 +73,7 @@ scope("Compiler", Kind.Function, () => {
         export type FunctionType = () => boolean;
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "FunctionType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -91,7 +91,7 @@ scope("Compiler", Kind.Function, () => {
         export type FunctionType = () => boolean;
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "FunctionType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -115,7 +115,7 @@ scope("Compiler", Kind.Function, () => {
         };
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "ObjectType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -153,7 +153,7 @@ scope("Compiler", Kind.Function, () => {
         }
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
       const exportedFunction = createFunctionBySymbol(ctx, symbol);

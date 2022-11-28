@@ -1,3 +1,4 @@
+import { error } from "../../log/index.js";
 import {
   isClassType,
   isEnumType,
@@ -120,7 +121,7 @@ export function renderTypeForTableOfContents(ctx: RenderContext<MarkupRenderer>,
     return renderNamespaceForTableOfContents(ctx, type);
   }
 
-  throw new Error(`Unexpected entity kind: ${type.kind}`);
+  throw error(`Unexpected entity kind: ${type.kind}`);
 
 }
 
@@ -143,7 +144,7 @@ export function renderTypeForDocumentation(ctx: RenderContext<MarkupRenderer>, t
     return renderNamespaceForDocumentation(ctx, type);
   }
 
-  throw new Error(`Unexpected entity kind: ${type.kind}`);
+  throw error(`Unexpected entity kind: ${type.kind}`);
 
 }
 

@@ -1,9 +1,9 @@
 import { Symbol } from "typescript";
-import { assert } from "vitest";
 
 import { isExportableType } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
 import { ExportableTypes, Kind, SourceFile } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { parseSymbol } from "../entry-points/symbol.js";

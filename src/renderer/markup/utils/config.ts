@@ -1,8 +1,7 @@
-import { assert } from "vitest";
-
 import { RenderContext } from "../../../types/context.js";
 import { BuiltInRenderers } from "../../../types/renderer.js";
 import { Complete } from "../../../types/utils.js";
+import { assert } from "../../../utils/general.js";
 import { MarkupRenderConfig } from "../types/config.js";
 
 

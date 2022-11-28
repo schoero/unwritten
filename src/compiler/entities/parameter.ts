@@ -1,8 +1,8 @@
 import { ParameterDeclaration } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { Kind, Parameter } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getInitializerByDeclaration } from "../compositions/initializer.js";
 import { getParameterDescription } from "../compositions/jsdoc.js";

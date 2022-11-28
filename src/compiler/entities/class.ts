@@ -1,8 +1,8 @@
 import { ClassLikeDeclaration, HeritageClause, Symbol, Type } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { Class, Getter, Kind, Method, Property, Setter } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";

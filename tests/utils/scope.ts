@@ -3,7 +3,7 @@ import { describe } from "vitest";
 import { Kind } from "../../src/types/types.js";
 
 
-type Scopes = "Compiler" | "Renderer" | "Types";
+type Scopes = "Compiler" | "E2E" | "Integration" | "Renderer" | "Types";
 type Units = Kind | string;
 
 type DescribeReturnType = ReturnType<typeof describe>;

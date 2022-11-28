@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "type": "module",
   "name": "quickdoks",
-  "description": "A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
+  "description": "quickdoks is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
   "license": "MIT",
   "author": "Roger Schönbächler",
   "homepage": "https://github.com/schoero/quickdoks#readme",
@@ -26,11 +26,11 @@
     "markdownlint": "node_modules/.bin/markdownlint-cli2 '**/*.md' '#node_modules'",
     "markdownlint:ci": "npm run markdownlint",
     "markdownlint:fix": "node_modules/.bin/markdownlint-cli2-fix '**/*.md' '#node_modules'",
-    "schema": "npx node_modules/.bin/ts-json-schema-generator --path './src/types/config.ts' --type ConfigWithSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
+    "schema": "node_modules/.bin/ts-json-schema-generator --path './src/types/config.ts' --type ConfigWithSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
     "spellcheck": "node_modules/.bin/cspell lint",
     "spellcheck:ci": "npm run spellcheck -- --no-progress",
-    "test": "vitest -c ./vite.config.ts",
-    "typecheck": "vitest typecheck --run -c ./vite.config.ts test-d.ts"
+    "test": "node_modules/.bin/vitest -c ./vite.config.ts",
+    "typecheck": "node_modules/.bin/vitest typecheck --run -c ./vite.config.ts test-d.ts"
   },
   "files": [
     "lib"
@@ -41,7 +41,7 @@
     "typescript": "^4.9.3"
   },
   "devDependencies": {
-    "@schoero/cspell-config": "^1.4.0",
+    "@schoero/cspell-config": "^1.4.1",
     "@schoero/eslint-config": "^1.27.0",
     "@schoero/markdownlint-config": "^1.1.2",
     "@schoero/ts-config": "^0.3.0",

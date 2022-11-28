@@ -15,7 +15,7 @@ scope("Compiler", Kind.Module, () => {
     }
   `;
 
-  const { exportedSymbols, ctx } = compile(testFileContent.trim());
+  const { exportedSymbols, ctx } = compile(testFileContent);
 
   const symbol = exportedSymbols.find(s => s.name === "TestModule")!;
   const exportedModule = createModuleBySymbol(ctx, symbol);

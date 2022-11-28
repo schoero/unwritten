@@ -16,7 +16,7 @@ scope("Compiler", Kind.Variable, () => {
       export const variableSymbol = "Hello World";
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "variableSymbol")!;
     const exportedVariable = createVariableBySymbol(ctx, symbol);
@@ -37,7 +37,7 @@ scope("Compiler", Kind.Variable, () => {
       export const variableSymbol = "Hello World";
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "variableSymbol")!;
     const exportedVariable = createVariableBySymbol(ctx, symbol);

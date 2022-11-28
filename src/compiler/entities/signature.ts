@@ -1,8 +1,8 @@
 import { FunctionLikeDeclaration, Signature as TSSignature, SignatureDeclaration } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { Kind, Signature } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdByDeclaration } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";

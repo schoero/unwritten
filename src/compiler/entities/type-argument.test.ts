@@ -16,7 +16,7 @@ scope("Compiler", Kind.TypeArgument, () => {
       export type StringLiteralTypeAlias = StringLiteral<"Test">;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "StringLiteralTypeAlias")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

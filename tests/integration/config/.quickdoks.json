@@ -1,0 +1,7 @@
+{
+  "renderConfig": {
+    "test": {
+      ".quickdoks.json": true
+    }
+  }
+}

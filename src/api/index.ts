@@ -12,7 +12,7 @@ import { createContext as createRenderContext } from "../renderer/utils/context.
 import { APIOptions } from "../types/options.js";
 
 
-export async function docCreator(entryFilePath: string, options?: APIOptions) {
+export async function quickdoks(entryFilePath: string, options?: APIOptions) {
 
   const absoluteEntryFilePath = resolve(entryFilePath);
 
@@ -31,7 +31,7 @@ export async function docCreator(entryFilePath: string, options?: APIOptions) {
 
   //-- Parse
 
-  const config = createConfig(options?.config);
+  const config = await createConfig(options?.config);
   const compilerContext = createCompilerContext(checker, config);
   const entryFileSymbol = getEntryFileSymbolFromProgram(compilerContext, program);
   const parsedSymbols = parse(compilerContext, entryFileSymbol);

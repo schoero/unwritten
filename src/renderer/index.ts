@@ -1,6 +1,5 @@
-import { assert } from "vitest";
-
 import { Renderer } from "../types/renderer.js";
+import { assert } from "../utils/general.js";
 
 
 export async function getRenderer(renderer?: Renderer | string) {

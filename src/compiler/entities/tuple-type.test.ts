@@ -17,7 +17,7 @@ scope("Compiler", Kind.Tuple, () => {
     export type TupleType = [string, number];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TupleType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -35,7 +35,7 @@ scope("Compiler", Kind.Tuple, () => {
       export type TupleType = [string, number];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TupleType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -52,7 +52,7 @@ scope("Compiler", Kind.Tuple, () => {
       export type TupleTypeWithRest = [string, ...number[]];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TupleTypeWithRest")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -71,7 +71,7 @@ scope("Compiler", Kind.Tuple, () => {
       export type TupleTypeWithOptional = [string, number?];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TupleTypeWithOptional")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -90,7 +90,7 @@ scope("Compiler", Kind.Tuple, () => {
       export type NamedTupleType = [prefix: string, suffix: string];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "NamedTupleType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

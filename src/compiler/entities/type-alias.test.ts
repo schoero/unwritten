@@ -16,7 +16,7 @@ scope("Compiler", Kind.TypeAlias, () => {
       export type TypeAlias = string;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -37,7 +37,7 @@ scope("Compiler", Kind.TypeAlias, () => {
       export type TypeAlias = string;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -78,7 +78,7 @@ scope("Compiler", Kind.TypeAlias, () => {
       export type GenericTypeAlias<T> = T;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "GenericTypeAlias")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -99,7 +99,7 @@ scope("Compiler", Kind.TypeAlias, () => {
       export type Generic<T extends string> = T;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Generic")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

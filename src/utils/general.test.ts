@@ -1,43 +1,32 @@
-import { resolve } from "path";
+/* eslint-disable sort-keys, sort-keys-fix/sort-keys-fix */
 import { describe, expect, it } from "vitest";
 
 import { scope } from "../../tests/utils/scope.js";
-import { isPathExcluded } from "./general.js";
+import { sortKeys } from "./general.js";
 
 
 scope("Compiler", "Utils", () => {
 
-  describe("isPathExcluded", () => {
+  describe("sortKeys", () => {
 
-    const path = "node_modules/typescript/lib/lib.esnext.d.ts";
+    const unsortedObject = {
+      b: "b",
+      c: {
+        e: "e",
+        d: "d"
+      },
+      a: "a"
+    };
 
-    it("should exclude matching glob star directory excludes", () => {
-      expect(isPathExcluded(path, ["node_modules/**/*"])).to.equal(true);
-      expect(isPathExcluded(path, ["node_modules/**"])).to.equal(true);
-      expect(isPathExcluded(path, ["node_modules/**/*.d.ts"])).to.equal(true);
-      expect(isPathExcluded(path, ["node_modules/**/*.test.ts"])).to.equal(false);
-    });
-
-    it("should exclude exactly matching paths", () => {
-      expect(isPathExcluded(path, [path])).to.equal(true);
-      expect(isPathExcluded("node_modules/typescript/lib/lib.es2015.d.ts", [path])).to.equal(false);
-    });
-
-    it("should exclude wildcard matching paths", () => {
-      expect(isPathExcluded(path, ["node_modules/*"])).to.equal(false);
-      expect(isPathExcluded(path, ["node_modules/typescript/lib/*"])).to.equal(true);
-      expect(isPathExcluded(path, ["node_modules/typescript/lib/*.d.ts"])).to.equal(true);
-      expect(isPathExcluded(path, ["node_modules/typescript/lib/*.test.d.ts"])).to.equal(false);
-    });
-
-    it("should not exclude inverted excludes", () => {
-      expect(isPathExcluded(path, ["node_modules/**/*", "!node_modules/typescript/lib/lib.esnext.d.ts"])).to.equal(false);
-      expect(isPathExcluded(path, ["node_modules/**/*", "!node_modules/typescript/lib/lib.es2016.d.ts"])).to.equal(true);
-    });
-
-    it("should handle absolute paths correctly", () => {
-      const absolutePath = resolve(path);
-      expect(isPathExcluded(absolutePath, ["node_modules/**/*"])).to.equal(true);
+    it("should sort keys", () => {
+      expect(JSON.stringify(unsortedObject, sortKeys)).to.equal(JSON.stringify({
+        a: "a",
+        b: "b",
+        c: {
+          d: "d",
+          e: "e"
+        }
+      }));
     });
 
   });

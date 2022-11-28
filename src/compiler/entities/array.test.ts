@@ -20,7 +20,7 @@ scope("Compiler", Kind.Array, () => {
         export type ArrayType = string[];
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -42,7 +42,7 @@ scope("Compiler", Kind.Array, () => {
         export type ArrayType = string[];
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -96,7 +96,7 @@ scope("Compiler", Kind.Array, () => {
         export type ArrayType = Array<string>;
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -118,7 +118,7 @@ scope("Compiler", Kind.Array, () => {
         export type ArrayType = Array<string>;
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

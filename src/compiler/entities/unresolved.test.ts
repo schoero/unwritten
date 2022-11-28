@@ -15,7 +15,7 @@ scope("Compiler", Kind.Unresolved, () => {
       export type Unresolved = Symbol;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim(), undefined, {
+    const { exportedSymbols, ctx } = compile(testFileContent, undefined, {
       compilerConfig: {
         exclude: ["node_modules/**/*"]
       }

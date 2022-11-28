@@ -16,7 +16,7 @@ scope("Compiler", Kind.ObjectLiteral, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "objectLiteral")!;
     const exportedVariable = createVariableBySymbol(ctx, symbol);
@@ -39,7 +39,7 @@ scope("Compiler", Kind.ObjectLiteral, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "objectLiteral")!;
     const exportedVariable = createVariableBySymbol(ctx, symbol);

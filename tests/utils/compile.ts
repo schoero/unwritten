@@ -1,20 +1,20 @@
 import { readFileSync } from "node:fs";
 
 import ts from "typescript";
-import { assert } from "vitest";
 
 import { reportCompilerDiagnostics } from "../../src/compiler/index.js";
 import { Locker } from "../../src/compiler/locker/index.js";
-import { createConfig } from "../../src/config/index.js";
+import { getDefaultConfig } from "../../src/config/index.js";
 import { disableLog } from "../../src/log/index.js";
-import { Config } from "../../src/types/config.js";
+import { CompleteConfig } from "../../src/types/config.js";
 import { CompilerContext } from "../../src/types/context.js";
+import { assert } from "../../src/utils/general.js";
 
 
-export function compile(content: string, compilerOptions?: ts.CompilerOptions, config?: Config) {
+export function compile(code: string, compilerOptions?: ts.CompilerOptions, config?: CompleteConfig) {
 
   const dummyFilePath = "/file.ts";
-  const sourceFile = ts.createSourceFile(dummyFilePath, content, ts.ScriptTarget.Latest);
+  const sourceFile = ts.createSourceFile(dummyFilePath, code.trim(), ts.ScriptTarget.Latest);
 
   const compilerHost: ts.CompilerHost = {
     directoryExists: dirPath => dirPath === "/",
@@ -25,7 +25,7 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions, c
     getDirectories: () => [],
     getNewLine: () => "\n",
     getSourceFile: filePath => filePath === dummyFilePath ? sourceFile : ts.createSourceFile(filePath, readFileSync(filePath, { encoding: "utf-8" }), ts.ScriptTarget.Latest),
-    readFile: filePath => filePath === dummyFilePath ? content : undefined,
+    readFile: filePath => filePath === dummyFilePath ? code : undefined,
     useCaseSensitiveFileNames: () => true,
     writeFile: () => { }
   };
@@ -62,7 +62,7 @@ export function compile(content: string, compilerOptions?: ts.CompilerOptions, c
 
   const ctx: CompilerContext = {
     checker,
-    config: createConfig(config),
+    config: config ?? getDefaultConfig(),
     locker: new Locker()
   };
 

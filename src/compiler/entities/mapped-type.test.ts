@@ -17,7 +17,7 @@ scope("Compiler", Kind.MappedType, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "MappedTypeLiteral")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

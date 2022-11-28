@@ -6,6 +6,8 @@ import { Complete } from "./utils.js";
 export interface Config {
   /** Compiler configuration. */
   compilerConfig?: CompilerConfig;
+  /** Extend another config */
+  extends?: string;
   /** Links to external documentation of native types. */
   externalTypes?: ExternalTypes;
   /** Render configuration. */

@@ -1,8 +1,8 @@
 import { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { Enum, EnumMember, Kind, MergedEnum } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import {
   getDescriptionByDeclaration,

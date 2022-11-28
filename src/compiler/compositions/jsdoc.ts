@@ -15,6 +15,7 @@ export function getDescriptionByDeclaration(ctx: CompilerContext, declaration: D
 
 
 export function getDescriptionBySymbol(ctx: CompilerContext, symbol: Symbol): Description | undefined {
+  // @ts-expect-error - Internal API
   const comment = symbol.getDocumentationComment(ctx.checker);
   return comment.length === 0 ? undefined : ts.displayPartsToString(comment);
 }

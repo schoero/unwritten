@@ -5,6 +5,7 @@ import {
   StringLiteralType as TSStringLiteralType
 } from "typescript";
 
+import { error } from "../../log/index.js";
 import { CompilerContext } from "../../types/context.js";
 import {
   BigIntLiteralType,
@@ -35,7 +36,7 @@ export function createLiteralType(ctx: CompilerContext, type: LiteralType): Lite
     return _createBigIntLiteralType(ctx, type);
   }
 
-  throw new Error("type is not a literal type");
+  throw error("type is not a literal type");
 
 }
 

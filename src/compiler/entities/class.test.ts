@@ -16,7 +16,7 @@ scope("Compiler", Kind.Class, () => {
       export class Class { }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, symbol);
@@ -40,7 +40,7 @@ scope("Compiler", Kind.Class, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, symbol);
@@ -69,7 +69,7 @@ scope("Compiler", Kind.Class, () => {
       export abstract class Class { }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, symbol);
@@ -91,7 +91,7 @@ scope("Compiler", Kind.Class, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, symbol);
@@ -111,17 +111,39 @@ scope("Compiler", Kind.Class, () => {
   {
 
     const testFileContent = ts`
-      export abstract class Class<T>  { }
+      export class Class<T>  { }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, symbol);
 
-    it("should support generics", () => {
+    it("should support type parameters", () => {
       expect(exportedClass.typeParameters).to.not.equal(undefined);
       expect(exportedClass.typeParameters!.length).to.equal(1);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export class Base<T> { 
+        prop: T;
+      }
+      export class Class extends Base<"Hello"> { }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const exportedClass = createClassBySymbol(ctx, symbol);
+
+    it("should support type arguments", () => {
+      expect(exportedClass.heritage).to.not.equal(undefined);
+      expect(exportedClass.heritage!.properties).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.properties![0]!.type).to.equal(Kind.StringLiteral);
     });
 
   }

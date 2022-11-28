@@ -15,6 +15,7 @@ export enum Kind {
   Constructor = "Constructor",
   Enum = "Enum",
   EnumMember = "EnumMember",
+  Expression = "Expression",
   Function = "Function",
   Getter = "Getter",
   Instance = "Instance",
@@ -105,6 +106,7 @@ export type Types =
   | ConditionalType
   | Constructor
   | ExportableTypes
+  | Expression
   | Getter
   | Instance
   | IntersectionType
@@ -240,6 +242,16 @@ export interface TupleMember extends Type<Kind.Member> {
 //-- Type reference
 
 export interface TypeReference extends Type<Kind.TypeReference> {
+  name?: Name;
+  position?: Position;
+  type?: Types;
+  typeArguments?: TypeArgument[];
+}
+
+
+//-- Expression
+
+export interface Expression extends Type<Kind.Expression> {
   name?: Name;
   position?: Position;
   type?: Types;
@@ -447,6 +459,7 @@ export interface Interface extends Type<Kind.Interface> {
   example?: Example;
   heritage?: Interface[];
   position?: Position;
+  typeArguments?: TypeArgument[];
   typeParameters?: TypeParameter[];
 }
 

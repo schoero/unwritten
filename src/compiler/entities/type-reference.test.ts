@@ -16,7 +16,7 @@ scope("Compiler", Kind.TypeReference, () => {
       export type Reference = A;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "Reference")!;
     const exportedReferenceTypeAlias = createTypeAliasBySymbol(ctx, exportedTypeAliasSymbol);
@@ -45,7 +45,7 @@ scope("Compiler", Kind.TypeReference, () => {
       export type FalsyConditionalTypeReference = ConditionalTypeAlias<"number">;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const truthyConditionalTypeReferenceSymbol = exportedSymbols.find(s => s.name === "TruthyConditionalTypeReference")!;
     const truthyConditionalTypeReference = createTypeAliasBySymbol(ctx, truthyConditionalTypeReferenceSymbol);

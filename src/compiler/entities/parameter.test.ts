@@ -15,7 +15,7 @@ scope("Compiler", Kind.Parameter, () => {
       export function functionSymbol(param: string): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -37,7 +37,7 @@ scope("Compiler", Kind.Parameter, () => {
       export function functionSymbol(param: string): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -75,7 +75,7 @@ scope("Compiler", Kind.Parameter, () => {
       export function functionSymbol(param?: string): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -94,7 +94,7 @@ scope("Compiler", Kind.Parameter, () => {
       export function functionSymbol(param: string = "test"): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionBySymbol(ctx, symbol);
@@ -114,7 +114,7 @@ scope("Compiler", Kind.Parameter, () => {
       export function functionSymbol(...param: string[]): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionBySymbol(ctx, symbol);

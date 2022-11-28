@@ -17,7 +17,7 @@ scope("Compiler", "Literal", () => {
         export type StringLiteralType = "Hello world";
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "StringLiteralType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -37,7 +37,7 @@ scope("Compiler", "Literal", () => {
         export type NumberLiteralType = 7;
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "NumberLiteralType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -58,7 +58,7 @@ scope("Compiler", "Literal", () => {
         export type BigIntLiteralTypeNegative = -7n;
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol1 = exportedSymbols.find(s => s.name === "BigIntLiteralType")!;
       const exportedTypeAlias1 = createTypeAliasBySymbol(ctx, symbol1);
@@ -84,7 +84,7 @@ scope("Compiler", "Literal", () => {
         export type BooleanLiteralType = true;
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent.trim());
+      const { exportedSymbols, ctx } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "BooleanLiteralType")!;
       const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

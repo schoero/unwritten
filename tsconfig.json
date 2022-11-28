@@ -1,6 +1,7 @@
 {
   "extends": "@schoero/ts-config",
   "compilerOptions": {
+    "skipLibCheck": true,
     "target": "ES2020"
   },
   "include": [

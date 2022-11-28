@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { error, log } from "../log/index.js";
@@ -10,7 +10,7 @@ import { override } from "../utils/override.js";
 import { defaultCompilerConfig, defaultExternalTypes } from "./default.js";
 
 
-export function createConfig(configOrPath?: Config | string): CompleteConfig {
+export async function createConfig(configOrPath?: Config | string): Promise<CompleteConfig> {
 
   const defaultConfig = getDefaultConfig();
 
@@ -32,7 +32,12 @@ export function createConfig(configOrPath?: Config | string): CompleteConfig {
 
   } else if(typeof configOrPath === "undefined"){
 
-    absoluteConfigPath = findFile(".quickdoks.json", configOrPath);
+    absoluteConfigPath = findFile([
+      ".quickdoks.json",
+      ".quickdoks.js",
+      ".quickdoks.mjs",
+      ".quickdoks.cjs"
+    ], configOrPath);
 
     if(absoluteConfigPath === undefined){
       log("Using default config.");
@@ -43,24 +48,41 @@ export function createConfig(configOrPath?: Config | string): CompleteConfig {
   }
 
   if(typeof absoluteConfigPath === "string"){
-
-    const stringifiedConfig = readFileSync(absoluteConfigPath, "utf8");
-
-    try {
-      userConfig = JSON.parse(stringifiedConfig);
-    } catch (err){
-      if(err instanceof Error){
-        throw error(`Could not parse config file at ${absoluteConfigPath}. ${err.message}`);
-      }
-    }
-
+    userConfig = (await import(absoluteConfigPath)).default;
   }
 
   if(userConfig === undefined){
     return defaultConfig;
   }
 
-  return override(defaultConfig, userConfig);
+  const extendedUserConfig = await getExtendConfig(userConfig);
+
+  return override(defaultConfig, extendedUserConfig);
+
+}
+
+
+async function getExtendConfig(config: Config): Promise<Config> {
+
+  if(config.extends === undefined){
+    return config;
+  }
+
+  if(typeof config.extends !== "string"){
+    throw error(`Config extends property must be a string if it exists.`);
+  }
+
+  let loadedConfig = (await import(config.extends)).default;
+
+  if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
+    throw error(`The extended config is not an object.`);
+  }
+
+  if(typeof loadedConfig.extends === "string"){
+    loadedConfig = getExtendConfig(loadedConfig);
+  }
+
+  return override(loadedConfig, config);
 
 }
 

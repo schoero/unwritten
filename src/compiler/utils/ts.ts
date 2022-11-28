@@ -1,8 +1,8 @@
 import { Map as TSMap, Program, Symbol } from "typescript";
-import { assert } from "vitest";
 
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
+import { assert } from "../../utils/general.js";
 import { isAliasedSymbol } from "../typeguards/symbols.js";
 
 

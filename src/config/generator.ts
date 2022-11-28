@@ -24,7 +24,7 @@ export function generateConfig() {
   //-- Add schema to config
 
   const config: ConfigWithSchema = {
-    $schema: "https://raw.githubusercontent.com/schoero/quickdoks/release/schemas/renderer/config.json",
+    $schema: "https://raw.githubusercontent.com/schoero/quickdoks/main/schemas/renderer/config.json",
     ...getDefaultConfig()
   };
 

@@ -15,7 +15,7 @@ scope("Compiler", Kind.IntersectionType, () => {
       export type IntersectionType = { a: string } & { b: number };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "IntersectionType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -33,7 +33,7 @@ scope("Compiler", Kind.IntersectionType, () => {
       export type IntersectionType = { a: string } & { b: number };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "IntersectionType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

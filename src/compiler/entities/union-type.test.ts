@@ -15,7 +15,7 @@ scope("Compiler", Kind.UnionType, () => {
       export type UnionType = string | number;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "UnionType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
@@ -37,7 +37,7 @@ scope("Compiler", Kind.UnionType, () => {
       export type UnionType = string | number;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent.trim());
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "UnionType")!;
     const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);

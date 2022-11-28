@@ -16,7 +16,7 @@ scope("Compiler", Kind.SourceFile, () => {
       export type SomeTypeAlias = string;
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent.trim());
+    const { fileSymbol, ctx } = compile(testFileContent);
     const sourceFile = createSourceFileBySymbol(ctx, fileSymbol);
 
     it("should be able to parse a source file", () => {
@@ -31,7 +31,7 @@ scope("Compiler", Kind.SourceFile, () => {
       export type SomeTypeAlias = string;
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent.trim());
+    const { fileSymbol, ctx } = compile(testFileContent);
     const sourceFile = createSourceFileBySymbol(ctx, fileSymbol);
 
     it("should have a matching kind", () => {

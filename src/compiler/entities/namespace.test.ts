@@ -15,7 +15,7 @@ scope("Compiler", Kind.Namespace, () => {
     }
   `;
 
-  const { exportedSymbols, ctx } = compile(testFileContent.trim());
+  const { exportedSymbols, ctx } = compile(testFileContent);
 
   const symbol = exportedSymbols.find(s => s.name === "TestNamespace")!;
   const exportedNamespace = createNamespaceBySymbol(ctx, symbol);
