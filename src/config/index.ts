@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { error, log } from "../log/index.js";
+import { error, log } from "../logger/index.js";
 import { defaultRenderConfig } from "../renderer/markup/config/default.js";
 import { CompleteConfig, Config } from "../types/config.js";
 import { BuiltInRenderers } from "../types/renderer.js";

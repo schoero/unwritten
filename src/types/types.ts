@@ -54,7 +54,8 @@ export enum Kind {
   Unknown = "Unknown",
   Unresolved = "Unresolved",
   Variable = "Variable",
-  Void = "Void"
+  Void = "Void",
+  type = "type"
 }
 
 export enum Modifiers {
@@ -68,37 +69,32 @@ export enum Modifiers {
   Static = "static"
 }
 
-export type FunctionLikeTypeKinds =
-  | Kind.Constructor
-  | Kind.Function
-  | Kind.Getter
-  | Kind.Method
-  | Kind.Setter;
-
-export interface Type<Kind>{
+type Type<Kind> = {
   id: ID;
   kind: Kind;
-}
+};
+
 
 export type ExportableTypeKinds =
   | Kind.Class
   | Kind.Enum
   | Kind.Function
-  | Kind.Interface
   | Kind.Module
   | Kind.Namespace
+  | Kind.type
   | Kind.TypeAlias
   | Kind.Variable;
+
 
 export type ExportableTypes =
   | Class
   | Enum
   | Function
-  | Interface
   | Module
   | Namespace
   | TypeAlias
   | Variable;
+
 
 export type Types =
   | ArrayType
@@ -109,6 +105,7 @@ export type Types =
   | Expression
   | Getter
   | Instance
+  | Interface
   | IntersectionType
   | LiteralTypes
   | MappedType
@@ -131,8 +128,6 @@ export type Types =
   | Unresolved;
 
 
-//-- Primitive types
-
 export type PrimitiveTypeKinds =
   | Kind.Any
   | Kind.BigInt
@@ -150,45 +145,97 @@ export type PrimitiveTypeKinds =
   | Kind.Unknown
   | Kind.Void;
 
+export type PrimitiveTypes =
+  | AnyType
+  | BigIntLiteralType
+  | BigIntType
+  | BooleanLiteralType
+  | BooleanType
+  | NeverType
+  | NullType
+  | NumberLiteralType
+  | NumberType
+  | StringLiteralType
+  | StringType
+  | SymbolType
+  | UndefinedType
+  | UnknownType
+  | VoidType;
 
-export interface PrimitiveType<Kind extends PrimitiveTypeKinds> extends Type<Kind> {
+
+export type LiteralTypeKinds =
+  | Kind.BigIntLiteral
+  | Kind.BooleanLiteral
+  | Kind.NumberLiteral
+  | Kind.StringLiteral;
+
+export type LiteralTypes =
+  | BigIntLiteralType
+  | BooleanLiteralType
+  | NumberLiteralType
+  | StringLiteralType;
+
+
+export type FunctionLikeTypeKinds =
+  | Kind.Constructor
+  | Kind.Function
+  | Kind.Getter
+  | Kind.Method
+  | Kind.Setter;
+
+export type FunctionLikeTypes =
+  | Constructor
+  | Function
+  | Getter
+  | Method
+  | Setter;
+
+
+//-- Primitive types
+
+export type PrimitiveType<Kind extends PrimitiveTypeKinds> = Type<Kind> & {
   name?: Name;
-}
+};
 
-export type PrimitiveTypes = PrimitiveType<PrimitiveTypeKinds>;
+export type NumberType = PrimitiveType<Kind.Number>;
+export type StringType = PrimitiveType<Kind.String>;
+export type BooleanType = PrimitiveType<Kind.Boolean>;
+export type BigIntType = PrimitiveType<Kind.BigInt>;
+export type SymbolType = PrimitiveType<Kind.Symbol>;
+export type VoidType = PrimitiveType<Kind.Void>;
+export type UndefinedType = PrimitiveType<Kind.Undefined>;
+export type NullType = PrimitiveType<Kind.Null>;
+export type NeverType = PrimitiveType<Kind.Never>;
+export type UnknownType = PrimitiveType<Kind.Unknown>;
+export type AnyType = PrimitiveType<Kind.Any>;
 
 
 //-- Literal types
 
-export type LiteralTypeKinds =
-  Kind.BigIntLiteral | Kind.BooleanLiteral | Kind.NumberLiteral | Kind.StringLiteral;
-
-export interface LiteralType<Kind extends LiteralTypeKinds> extends PrimitiveType<Kind> {
+export type LiteralType<Kind extends LiteralTypeKinds> = PrimitiveType<Kind> & {
   value: BigInt | boolean | number | string;
-}
+};
 
-export interface StringLiteralType extends LiteralType<Kind.StringLiteral> {
+export type StringLiteralType = LiteralType<Kind.StringLiteral> & {
   value: string;
-}
+};
 
-export interface NumberLiteralType extends LiteralType<Kind.NumberLiteral> {
+export type NumberLiteralType = LiteralType<Kind.NumberLiteral> & {
   value: number;
-}
+};
 
-export interface BooleanLiteralType extends LiteralType<Kind.BooleanLiteral> {
+export type BooleanLiteralType = LiteralType<Kind.BooleanLiteral> & {
   value: boolean;
-}
+};
 
-export interface BigIntLiteralType extends LiteralType<Kind.BigIntLiteral> {
+export type BigIntLiteralType = LiteralType<Kind.BigIntLiteral> & {
   value: BigInt;
-}
-
-export type LiteralTypes = BigIntLiteralType | BooleanLiteralType | NumberLiteralType | StringLiteralType;
+};
 
 
 //-- Object type
 
-export interface ObjectType<Kind> extends Type<Kind> {
+export type ObjectType<Kind> = Type<Kind> & {
   callSignatures: Signature[];
   constructSignatures: Signature[];
   getters: Getter[];
@@ -196,15 +243,15 @@ export interface ObjectType<Kind> extends Type<Kind> {
   properties: Property[];
   setters: Setter[];
   name?: Name;
-}
+};
 
 
 //-- Object literal
 
-export interface ObjectLiteral extends ObjectType<Kind.ObjectLiteral> {
-}
+export type ObjectLiteral = ObjectType<Kind.ObjectLiteral> & {
+};
 
-export interface Property extends Type<Kind.Property> {
+export type Property = Type<Kind.Property> & {
   modifiers: Modifiers[];
   name: Name;
   optional: boolean;
@@ -212,99 +259,99 @@ export interface Property extends Type<Kind.Property> {
   type: Types;
   description?: Description;
   example?: Example;
-}
+};
 
 
 //-- Array
 
-export interface ArrayType extends Type<Kind.Array> {
+export type ArrayType = Type<Kind.Array> & {
   type: Types;
   position?: Position;
-}
+};
 
 
 //-- Tuple
 
-export interface TupleType extends Type<Kind.Tuple> {
+export type TupleType = Type<Kind.Tuple> & {
   members: TupleMember[];
   position?: Position;
-}
+};
 
-export interface TupleMember extends Type<Kind.Member> {
+export type TupleMember = Type<Kind.Member> & {
   optional: boolean;
   position: Position;
   rest: boolean;
   type: Types;
   name?: Name;
-}
+};
 
 
 //-- Type reference
 
-export interface TypeReference extends Type<Kind.TypeReference> {
+export type TypeReference = Type<Kind.TypeReference> & {
   name?: Name;
   position?: Position;
   type?: Types;
   typeArguments?: TypeArgument[];
-}
+};
 
 
 //-- Expression
 
-export interface Expression extends Type<Kind.Expression> {
+export type Expression = Type<Kind.Expression> & {
+  type: Types;
   name?: Name;
   position?: Position;
-  type?: Types;
   typeArguments?: TypeArgument[];
-}
+};
 
 
 //-- Instance
 
-export interface Instance extends Type<Kind.Instance> {
+export type Instance = Type<Kind.Instance> & {
   name?: Name;
   position?: Position;
   resolvedType?: Types;
   typeArguments?: TypeArgument[];
-}
+};
 
 
 //-- This
 
-export interface ThisType extends Type<Kind.ThisType> {
+export type ThisType = Type<Kind.ThisType> & {
   type?: Types;
-}
+};
 
 
 //-- Circular
 
 /** Circular types are used as links to previous symbols for circular references. */
-export interface Circular extends Type<Kind.Circular> {
+export type Circular = Type<Kind.Circular> & {
   name?: Name;
   position?: Position;
-}
+};
 
 
 //-- Unresolved
 
 /** The unresolved type will be used if a type cannot be parsed, or it is excluded from parsing */
-export interface Unresolved extends Type<Kind.Unresolved> {
+export type Unresolved = Type<Kind.Unresolved> & {
   name?: Name;
   position?: Position;
-}
+};
 
 
 //-- Function
 
-export interface FunctionLike<Kind extends Kind.Constructor | Kind.Function | Kind.Getter | Kind.Method | Kind.Setter> extends Type<Kind> {
+export type FunctionLike<Kind extends FunctionLikeTypeKinds> = Type<Kind> & {
   signatures: Signature[];
   name?: Name;
-}
+};
 
-export interface Function extends FunctionLike<Kind.Function> {
-}
+export type Function = FunctionLike<Kind.Function> & {
+};
 
-export interface Signature extends Type<Kind.Signature> {
+export type Signature = Type<Kind.Signature> & {
   modifiers: Modifiers[];
   parameters: Parameter[];
   position: Position;
@@ -312,9 +359,10 @@ export interface Signature extends Type<Kind.Signature> {
   description?: Description;
   example?: Example;
   name?: Name;
-}
+  typeParameters?: TypeParameter[];
+};
 
-export interface Parameter extends Type<Kind.Parameter> {
+export type Parameter = Type<Kind.Parameter> & {
   name: Name;
   optional: boolean;
   position: Position;
@@ -323,12 +371,12 @@ export interface Parameter extends Type<Kind.Parameter> {
   description?: Description;
   example?: Example;
   initializer?: Types;
-}
+};
 
 
 //-- Class
 
-export interface Class extends Type<Kind.Class> {
+export type Class = Type<Kind.Class> & {
   modifiers: Modifiers[];
   name: Name;
   position: Position;
@@ -336,113 +384,106 @@ export interface Class extends Type<Kind.Class> {
   description?: Description;
   example?: Example;
   getters?: Getter[];
-  heritage?: Class;
+  heritage?: Expression[];
   methods?: Method[];
   properties?: Property[];
   setters?: Setter[];
   typeParameters?: TypeParameter[];
-}
+};
 
-export interface Constructor extends FunctionLike<Kind.Constructor> {
-}
+export type Constructor = FunctionLike<Kind.Constructor> & {
+};
 
-export interface Method extends FunctionLike<Kind.Method> {
-}
+export type Method = FunctionLike<Kind.Method> & {
+};
 
-export interface Setter extends FunctionLike<Kind.Setter> {
-}
+export type Setter = FunctionLike<Kind.Setter> & {
+};
 
-export interface Getter extends FunctionLike<Kind.Getter> {
-}
+export type Getter = FunctionLike<Kind.Getter> & {
+};
 
 
 //-- Variable
 
-export interface Variable extends Type<Kind.Variable> {
+export type Variable = Type<Kind.Variable> & {
   modifiers: Modifiers[];
   name: Name;
   position: Position;
   type: Types;
   description?: Description;
   example?: Example;
-}
+};
 
 
 //-- Union type
 
-export interface UnionType extends Type<Kind.UnionType> {
+export type UnionType = Type<Kind.UnionType> & {
   types: Types[];
-}
+};
 
 
 //-- Intersection type
 
-export interface IntersectionType extends Type<Kind.IntersectionType> {
+export type IntersectionType = Type<Kind.IntersectionType> & {
   types: Types[];
-}
+};
 
 
 //-- Type alias
 
-export interface TypeAlias extends Type<Kind.TypeAlias> {
+export type TypeAlias = Type<Kind.TypeAlias> & {
   name: Name;
   position: Position;
   type: Types;
   description?: Description;
   example?: Example;
   typeParameters?: TypeParameter[];
-}
+};
 
 
 //-- Type Literal
 
-export interface TypeLiteral extends ObjectType<Kind.TypeLiteral> {
-  callSignatures: Signature[];
-  constructSignatures: Signature[];
-  getters: Getter[];
-  methods: Method[];
-  properties: Property[];
-  setters: Setter[];
-  name?: Name;
-}
+export type TypeLiteral = ObjectType<Kind.TypeLiteral> & {
+};
 
 
 //-- Mapped type
 
-export interface MappedType extends Type<Kind.MappedType> {
+export type MappedType = Type<Kind.MappedType> & {
   members: MappedTypeMember[];
   optional: boolean;
   readonly: boolean;
   typeParameter: TypeParameter;
   position?: Position;
-}
+};
 
 
 //-- Mapped Type member
 
-export interface MappedTypeMember extends Type<Kind.MappedTypeMember> {
+export type MappedTypeMember = Type<Kind.MappedTypeMember> & {
   keyType: LiteralTypes;
   valueType: Types;
-}
+};
 
 
 //-- Conditional type
 
-export interface ConditionalType extends Type<Kind.ConditionalType> {
+export type ConditionalType = Type<Kind.ConditionalType> & {
   checkType: Types;
   extendsType: Types;
   falseType: Types;
   trueType: Types;
-}
+};
 
 
 //-- Type query
 
-export interface TypeQuery extends Type<Kind.TypeQuery> {
+export type TypeQuery = Type<Kind.TypeQuery> & {
   type: Types;
   name?: Name;
   position?: Position;
-}
+};
 
 
 //-- Interface
@@ -470,31 +511,31 @@ export interface MergedInterface extends Interface {
 
 //-- Enum
 
-export interface Enum extends Type<Kind.Enum> {
+export type Enum = Type<Kind.Enum> & {
   members: EnumMember[];
   name: Name;
   description?: Description;
   example?: Example;
   position?: Position;
-}
+};
 
-export interface MergedEnum extends Enum {
+export type MergedEnum = Enum & {
   declarations: Omit<Enum, "id" | "name">[];
-}
+};
 
-export interface EnumMember extends Type<Kind.EnumMember> {
+export type EnumMember = Type<Kind.EnumMember> & {
   name: Name;
   position: Position;
   type: Types;
   description?: Description;
   example?: Example;
   parent?: Types;
-}
+};
 
 
 //-- Member
 
-export interface Member extends Type<Kind.Member> {
+export type Member = Type<Kind.Member> & {
   modifiers: Modifiers[];
   optional: boolean;
   position: Position;
@@ -502,56 +543,47 @@ export interface Member extends Type<Kind.Member> {
   description?: Description;
   example?: Example;
   parent?: Types;
-}
+};
 
 
 //-- Module
 
-export interface Module extends Type<Kind.Module> {
+export type Module = Type<Kind.Module> & {
   exports: ExportableTypes[];
   name: Name;
-}
+};
 
 
 //-- Source file (module)
 
-export interface SourceFile extends Type<Kind.SourceFile> {
+export type SourceFile = Type<Kind.SourceFile> & {
   exports: ExportableTypes[];
   name: Name;
-}
+};
 
 
 //-- Namespace
 
-export interface Namespace extends Type<Kind.Namespace> {
+export type Namespace = Type<Kind.Namespace> & {
   exports: ExportableTypes[];
   name: Name;
-}
+};
 
 
 //-- TypeParameter
 
-export interface TypeParameter extends Type<Kind.TypeParameter> {
+export type TypeParameter = Type<Kind.TypeParameter> & {
   name: Name;
   position: Position;
   constraint?: Types;
   description?: Description;
   initializer?: Types;
-}
+};
 
 
 //-- TypeArgument
 
-export interface TypeArgument extends Type<Kind.TypeArgument> {
+export type TypeArgument = Type<Kind.TypeArgument> & {
   position: Position;
-  type?: Types;
-}
-
-export type FunctionLikeTypeMap = {
-  [Kind.Class]: Class;
-  [Kind.Constructor]: Constructor;
-  [Kind.Function]: Function;
-  [Kind.Getter]: Getter;
-  [Kind.Method]: Method;
-  [Kind.Setter]: Setter;
+  type: Types;
 };

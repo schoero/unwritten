@@ -1,13 +1,15 @@
-import { ClassLikeDeclaration, HeritageClause, Symbol, Type } from "typescript";
+import { ClassLikeDeclaration, HeritageClause, NodeArray, Symbol, Type } from "typescript";
 
+import { isExpression } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
-import { Class, Getter, Kind, Method, Property, Setter } from "../../types/types.js";
+import { Class, Expression, Kind } from "../../types/types.js";
 import { assert } from "../../utils/general.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
+import { parseTypeNode } from "../entry-points/type-node.js";
 import {
   isClassDeclaration,
   isConstructorDeclaration,
@@ -58,15 +60,8 @@ function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecl
   const methods = methodDeclarations.map(symbol => createMethodBySymbol(ctx, symbol));
   const properties = propertyDeclarations.map(symbol => createPropertyBySymbol(ctx, symbol));
 
-  const heritage = declaration.heritageClauses?.map(declaration => _createClassByHeritageClause(ctx, declaration))[0];
-
-  const mergedGetters = _mergeWithInheritedClass(getters, heritage?.getters ?? []);
-  const mergedSetters = _mergeWithInheritedClass(setters, heritage?.setters ?? []);
-  const mergedMethods = _mergeWithInheritedClass(methods, heritage?.methods ?? []);
-  const mergedProperties = _mergeWithInheritedClass(properties, heritage?.properties ?? []);
-
+  const heritage = declaration.heritageClauses && _parseHeritageClauses(ctx, declaration.heritageClauses);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
-
   const position = getPositionByDeclaration(ctx, declaration);
   const example = getExampleByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
@@ -78,15 +73,15 @@ function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecl
     ctor,
     description,
     example,
-    getters: mergedGetters,
+    getters,
     heritage,
     id,
     kind,
-    methods: mergedMethods,
+    methods,
     modifiers,
     position,
-    properties: mergedProperties,
-    setters: mergedSetters,
+    properties,
+    setters,
     typeParameters
   };
 
@@ -141,25 +136,8 @@ function _getSymbolsByTypeFromClassLikeDeclaration(ctx: CompilerContext, classLi
 }
 
 
-function _createClassByHeritageClause(ctx: CompilerContext, heritageClause: HeritageClause): Class {
-  const typeNode = heritageClause.types[0]!;
-  const type = ctx.checker.getTypeFromTypeNode(typeNode);
-  return createClassByType(ctx, type);
-}
-
-
-function _mergeWithInheritedClass<T extends Getter | Method | Property | Setter>(fromClass: T[], fromInheritedClass: T[]): T[] {
-
-  const merged = [...fromInheritedClass, ...fromClass];
-
-  return merged.filter((item, index) => {
-    const indices = merged.reduce<number[]>((acc, i, idx) => {
-      if(item.name === i.name){
-        acc.push(idx);
-      }
-      return acc;
-    }, []);
-    return indices.length < 2 || index === indices[0];
-  });
-
+function _parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): Expression[] {
+  return heritageClauses
+    .flatMap(heritageClause => heritageClause.types.map(typeNode => parseTypeNode(ctx, typeNode)))
+    .filter(isExpression);
 }

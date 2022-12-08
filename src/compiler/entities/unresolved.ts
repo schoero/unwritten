@@ -1,4 +1,4 @@
-import { Symbol, Type } from "typescript";
+import { Symbol, Type, TypeNode } from "typescript";
 
 import { CompilerContext } from "../../types/context.js";
 import { Kind, Unresolved } from "../../types/types.js";
@@ -27,4 +27,10 @@ export const createUnresolvedBySymbol = (ctx: CompilerContext, symbol: Symbol): 
 
 export function createUnresolvedByType(ctx: CompilerContext, type: Type): Unresolved {
   return createUnresolvedBySymbol(ctx, type.symbol);
+}
+
+
+export function createUnresolvedByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Unresolved {
+  const type = ctx.checker.getTypeFromTypeNode(typeNode);
+  return createUnresolvedByType(ctx, type);
 }

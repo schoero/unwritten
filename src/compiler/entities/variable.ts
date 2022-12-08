@@ -8,7 +8,7 @@ import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { createTypeByDeclaration } from "../entry-points/type.js";
+import { createTypeByDeclaration, createTypeBySymbol } from "../entry-points/type.js";
 import { isVariableDeclaration } from "../typeguards/declarations.js";
 import { lockSymbol } from "../utils/ts.js";
 
@@ -23,6 +23,7 @@ export const createVariableBySymbol = (ctx: CompilerContext, symbol: Symbol): Va
   const name = getNameBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = _parseVariableDeclaration(ctx, declaration);
+  const type = createTypeBySymbol(ctx, symbol);
   const kind = Kind.Variable;
 
   return {
@@ -30,7 +31,8 @@ export const createVariableBySymbol = (ctx: CompilerContext, symbol: Symbol): Va
     description,
     id,
     kind,
-    name
+    name,
+    type
   };
 
 });

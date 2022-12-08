@@ -16,7 +16,8 @@ export function getNameByDeclaration(ctx: CompilerContext, declaration: Declarat
     return "constructor";
   }
 
-  return ts.getNameOfDeclaration(declaration)?.getText();
+  const symbol = ctx.checker.getSymbolAtLocation(declaration);
+  return ts.getNameOfDeclaration(declaration)?.getText() ?? (symbol && getNameBySymbol(ctx, symbol));
 
 }
 
@@ -28,6 +29,5 @@ export function getNameByType(ctx: CompilerContext, type: Type): Name | undefine
 
 
 export function getNameByTypeNode(ctx: CompilerContext, typeNode: Node): Name | undefined {
-  // @ts-expect-error - Internal API
-  return typeNode.intrinsicName;
+  return typeNode.getText();
 }

@@ -10,6 +10,7 @@ import { getNameByDeclaration } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { getReturnTypeByCallSignature } from "../compositions/return-type.js";
 import { createParameterByDeclaration } from "./parameter.js";
+import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
 export function createSignatureByDeclaration(ctx: CompilerContext, declaration: FunctionLikeDeclaration | SignatureDeclaration): Signature {
@@ -23,6 +24,7 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
   const example = getExampleByDeclaration(ctx, declaration);
 
   const parameters = declaration.parameters.map(declaration => createParameterByDeclaration(ctx, declaration));
+  const typeParameters = declaration.typeParameters?.map(declaration => createTypeParameterByDeclaration(ctx, declaration));
   const returnType = getReturnTypeByCallSignature(ctx, signature);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
@@ -38,7 +40,8 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
     name,
     parameters,
     position,
-    returnType
+    returnType,
+    typeParameters
   };
 
 }

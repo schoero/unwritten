@@ -1,11 +1,13 @@
-import { Declaration, ObjectType as TSObjectType, Type } from "typescript";
+import { Declaration, ObjectFlags, ObjectType as TSObjectType, Symbol, Type } from "typescript";
 
-import { error } from "../../log/index.js";
+import { error } from "../../logger/index.js";
 import { CompilerContext } from "../../types/context.js";
 import { Types } from "../../types/types.js";
 import { isSymbolExcluded } from "../../utils/exclude.js";
+import { assert } from "../../utils/general.js";
 import { getNameBySymbol } from "../compositions/name.js";
 import { createArrayByTypeReference } from "../entities/array.js";
+import { createClassByType } from "../entities/class.js";
 import { createConditionalType } from "../entities/conditional-type.js";
 import { createFunctionByType } from "../entities/function.js";
 import { createInterfaceByType } from "../entities/interface.js";
@@ -22,6 +24,7 @@ import { createUnionTypeByType } from "../entities/union-type.js";
 import { createUnresolvedBySymbol, createUnresolvedByType } from "../entities/unresolved.js";
 import {
   isArrayTypeReferenceType,
+  isClassType,
   isConditionalType,
   isFunctionLikeType,
   isInterfaceType,
@@ -35,10 +38,21 @@ import {
   isTupleTypeReferenceType,
   isTypeLiteralType,
   isTypeParameterType,
+  isTypeReferenceType,
   isUnionType
 } from "../typeguards/types.js";
-import { parseSymbol } from "./symbol.js";
 
+/** Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */
+export function createTypeBySymbol(ctx: CompilerContext, symbol: Symbol): Types {
+
+  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
+
+  assert(declaration, `Symbol ${getNameBySymbol(ctx, symbol)} has no declaration`);
+
+  const type = ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration);
+  return parseType(ctx, type);
+
+}
 
 export function createTypeByDeclaration(ctx: CompilerContext, declaration: Declaration): Types {
   const type = ctx.checker.getTypeAtLocation(declaration);
@@ -47,6 +61,7 @@ export function createTypeByDeclaration(ctx: CompilerContext, declaration: Decla
 
 
 export function parseType(ctx: CompilerContext, type: Type): Types {
+
 
   if(isObjectType(type)){
     return parseObjectType(ctx, type);
@@ -90,12 +105,6 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
     return createUnresolvedBySymbol(ctx, symbol);
   }
 
-  const name = getNameBySymbol(ctx, symbol);
-
-  if(!name.startsWith("__")){
-    return parseSymbol(ctx, symbol);
-  }
-
   if(isMappedType(type)){
     return createMappedTypeByType(ctx, type);
   } else if(isFunctionLikeType(type)){
@@ -106,8 +115,40 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
     return createObjectLiteralByType(ctx, type);
   } else if(isInterfaceType(type)){
     return createInterfaceByType(ctx, type);
+  } else if(isClassType(type)){
+    return createClassByType(ctx, type);
+  } else if(isTypeReferenceType(type)){
+    // return createTypeReferenceByType(ctx, type);
+  }
+
+  const objectFlags = getEnumFlagNames(ObjectFlags, type.objectFlags);
+
+  console.log(objectFlags);
+
+  const name = getNameBySymbol(ctx, symbol);
+
+  if(!name.startsWith("__")){
+    // return parseSymbol(ctx, symbol);
   }
 
   throw error("Unknown object type");
 
+}
+
+
+function getEnumFlagNames(enumObj: any, flags: number) {
+  const allFlags = Object.keys(enumObj)
+    .map(k => enumObj[k])
+    .filter(v => typeof v === "number") as number[];
+  const matchedFlags = allFlags.filter(f => (f & flags) !== 0);
+
+  return matchedFlags
+    .filter((f, i) => matchedFlags.indexOf(f) === i)
+    .map(f => {
+      const power = Math.log2(f);
+      if(Number.isInteger(power)){
+        return `${enumObj[f]} (2 ^ ${power})`;
+      }
+      return enumObj[f];
+    });
 }

@@ -3,7 +3,7 @@ import { dirname, resolve } from "node:path";
 
 import ts from "typescript";
 
-import { log, warn } from "../log/index.js";
+import { log, warn } from "../logger/index.js";
 import { findFile } from "../utils/finder.js";
 
 

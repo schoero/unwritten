@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { error, success } from "../log/index.js";
+import { error, success } from "../logger/index.js";
 import { ConfigWithSchema } from "../types/config.js";
 import { getDefaultConfig } from "./index.js";
 

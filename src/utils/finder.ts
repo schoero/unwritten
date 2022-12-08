@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { dirname, parse, resolve } from "node:path";
 
-import { error } from "../log/index.js";
+import { error } from "../logger/index.js";
 import { assert } from "./general.js";
 
 

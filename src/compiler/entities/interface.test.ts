@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { compile } from "../../../tests/utils/compile.js";
 import { scope } from "../../../tests/utils/scope.js";
 import { ts } from "../../../tests/utils/template.js";
-import { Kind } from "../../types/types.js";
+import { Interface, Kind } from "../../types/types.js";
 import { getIdBySymbol } from "../compositions/id.js";
 import { createInterfaceBySymbol } from "./interface.js";
 
@@ -76,7 +76,6 @@ scope("Compiler", Kind.Interface, () => {
     });
 
   }
-
 
   {
 
@@ -177,9 +176,33 @@ scope("Compiler", Kind.Interface, () => {
     const exportedInterfaceB = createInterfaceBySymbol(ctx, exportedInterfaceBSymbol);
     const exportedInterfaceC = createInterfaceBySymbol(ctx, exportedInterfaceCSymbol);
 
-    it("should be able to handle extended interfaces", () => {
-      expect(exportedInterfaceB.properties).to.have.lengthOf(2);
-      expect(exportedInterfaceC.properties).to.have.lengthOf(3);
+    it("should be able to parse inheritance", () => {
+
+      expect(exportedInterfaceB.properties).to.have.lengthOf(1);
+      expect(exportedInterfaceB.properties[0]!.name).to.equal("b");
+      expect(exportedInterfaceB.heritage).to.not.equal(undefined);
+      expect(exportedInterfaceB.heritage).to.have.lengthOf(1);
+      expect(exportedInterfaceB.heritage![0]!.kind).to.equal(Kind.Expression);
+      expect(exportedInterfaceB.heritage![0]!.type.kind).to.equal(Kind.Interface);
+      expect((exportedInterfaceB.heritage![0]!.type as Interface).properties).to.have.lengthOf(1);
+      expect((exportedInterfaceB.heritage![0]!.type as Interface).properties[0]!.name).to.equal("a");
+
+      expect(exportedInterfaceC.properties).to.have.lengthOf(1);
+      expect(exportedInterfaceC.properties[0]!.name).to.equal("c");
+      expect(exportedInterfaceC.heritage).to.not.equal(undefined);
+      expect(exportedInterfaceC.heritage).to.have.lengthOf(1);
+      expect(exportedInterfaceC.heritage![0]!.kind).to.equal(Kind.Expression);
+      expect(exportedInterfaceC.heritage![0]!.type.kind).to.equal(Kind.Interface);
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).properties).to.have.lengthOf(1);
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).properties[0]!.name).to.equal("b");
+
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).heritage).to.not.equal(undefined);
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).heritage).to.have.lengthOf(1);
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).heritage![0]!.kind).to.equal(Kind.Expression);
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).heritage![0]!.type.kind).to.equal(Kind.Interface);
+      expect(((exportedInterfaceC.heritage![0]!.type as Interface).heritage![0]!.type as Interface).properties).to.have.lengthOf(1);
+      expect(((exportedInterfaceC.heritage![0]!.type as Interface).heritage![0]!.type as Interface).properties[0]!.name).to.equal("a");
+
     });
 
   }
@@ -204,38 +227,23 @@ scope("Compiler", Kind.Interface, () => {
     const exportedInterfaceC = createInterfaceBySymbol(ctx, exportedInterfaceCSymbol);
 
     it("should be able to handle multiple extended interfaces at the same time", () => {
-      expect(exportedInterfaceC.properties).to.have.lengthOf(3);
-    });
 
-  }
+      expect(exportedInterfaceC.properties).to.have.lengthOf(1);
+      expect(exportedInterfaceC.properties[0]!.name).to.equal("c");
 
-  {
+      expect(exportedInterfaceC.heritage).to.not.equal(undefined);
+      expect(exportedInterfaceC.heritage).to.have.lengthOf(2);
 
-    const testFileContent = ts`
-      interface InterfaceA {
-        a2: string;
-      }
-      interface InterfaceA {
-        a: string;
-      }
-      interface InterfaceB extends InterfaceA {
-        b: string;
-      }
-      interface InterfaceC {
-        c: string;
-      }
-      export interface InterfaceD extends InterfaceB, InterfaceC {
-        d: string;
-      }
-    `;
+      expect(exportedInterfaceC.heritage![0]!.kind).to.equal(Kind.Expression);
+      expect(exportedInterfaceC.heritage![0]!.type.kind).to.equal(Kind.Interface);
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).properties).to.have.lengthOf(1);
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).properties[0]!.name).to.equal("a");
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+      expect(exportedInterfaceC.heritage![1]!.kind).to.equal(Kind.Expression);
+      expect(exportedInterfaceC.heritage![1]!.type.kind).to.equal(Kind.Interface);
+      expect((exportedInterfaceC.heritage![1]!.type as Interface).properties).to.have.lengthOf(1);
+      expect((exportedInterfaceC.heritage![1]!.type as Interface).properties[0]!.name).to.equal("b");
 
-    const exportedInterfaceDSymbol = exportedSymbols.find(s => s.name === "InterfaceD")!;
-    const exportedInterfaceD = createInterfaceBySymbol(ctx, exportedInterfaceDSymbol);
-
-    it("should be able to handle all extension variants at the same time", () => {
-      expect(exportedInterfaceD.properties).to.have.lengthOf(5);
     });
 
   }
@@ -279,13 +287,17 @@ scope("Compiler", Kind.Interface, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, exportedInterfaceSymbol);
 
     it("should support type arguments", () => {
-      expect(exportedInterface.properties).to.have.lengthOf(1);
-      expect(exportedInterface.properties[0]!.type.kind).to.equal(Kind.StringLiteral);
+
       expect(exportedInterface.heritage).to.not.equal(undefined);
       expect(exportedInterface.heritage).to.have.lengthOf(1);
+
       expect(exportedInterface.heritage![0]!.typeArguments).to.not.equal(undefined);
       expect(exportedInterface.heritage![0]!.typeArguments).to.have.lengthOf(1);
-      expect(exportedInterface.heritage![0]!.typeArguments![0]!.kind).to.equal(Kind.StringLiteral);
+      expect(exportedInterface.heritage![0]!.typeArguments![0]!.type.kind).to.equal(Kind.StringLiteral);
+
+      expect((exportedInterface.heritage![0]!.type as Interface).properties).to.have.lengthOf(1);
+      expect((exportedInterface.heritage![0]!.type as Interface).properties[0]!.type.kind).to.equal(Kind.StringLiteral);
+
     });
 
   }

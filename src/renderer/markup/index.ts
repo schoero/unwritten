@@ -1,4 +1,4 @@
-import { error } from "../../log/index.js";
+import { error } from "../../logger/index.js";
 import {
   isClassType,
   isEnumType,

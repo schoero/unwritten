@@ -82,6 +82,29 @@ scope("Compiler", Kind.Signature, () => {
   {
 
     const testFileContent = ts`
+      export function functionSymbol<T>(value: T): T {
+        return value;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
+    const exportedFunction = createFunctionBySymbol(ctx, symbol);
+
+    it("should be able to parse generic functions", () => {
+      expect(exportedFunction.kind).to.equal(Kind.Function);
+    });
+
+    it("should have a type parameter", () => {
+      expect(exportedFunction.signatures[0]!.typeParameters).to.have.lengthOf(1);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
       export function add(a: number, b: number): number;
       export function add(a: number, b: number, c: number): number;
       export function add(a: number, b: number, c?: number): number {

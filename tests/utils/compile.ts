@@ -5,7 +5,7 @@ import ts from "typescript";
 import { reportCompilerDiagnostics } from "../../src/compiler/index.js";
 import { Locker } from "../../src/compiler/locker/index.js";
 import { getDefaultConfig } from "../../src/config/index.js";
-import { disableLog } from "../../src/log/index.js";
+import { disableLog } from "../../src/logger/index.js";
 import { CompleteConfig } from "../../src/types/config.js";
 import { CompilerContext } from "../../src/types/context.js";
 import { assert } from "../../src/utils/general.js";

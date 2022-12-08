@@ -13,12 +13,12 @@ export function isSymbolExcluded(ctx: CompilerContext, symbol: Symbol): boolean 
     return false;
   }
 
-  return isDeclarationExcluded(ctx, declaration);
+  return _isDeclarationExcluded(ctx, declaration);
 
 }
 
 
-export function isDeclarationExcluded(ctx: CompilerContext, declaration: Declaration): boolean {
+function _isDeclarationExcluded(ctx: CompilerContext, declaration: Declaration): boolean {
 
   const position = getPositionByDeclaration(ctx, declaration);
   const excludePaths = ctx.config.compilerConfig.exclude;

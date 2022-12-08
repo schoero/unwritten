@@ -5,7 +5,7 @@ import {
   StringLiteralType as TSStringLiteralType
 } from "typescript";
 
-import { error } from "../../log/index.js";
+import { error } from "../../logger/index.js";
 import { CompilerContext } from "../../types/context.js";
 import {
   BigIntLiteralType,

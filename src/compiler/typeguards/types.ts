@@ -59,7 +59,7 @@ export function isClassOrInterfaceType(type: Type): type is InterfaceType {
 }
 
 export function isClassType(type: Type): type is InterfaceType {
-  return type.isClass();
+  return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Class) !== 0;
 }
 
 export function isConditionalType(type: Type): type is ConditionalType {

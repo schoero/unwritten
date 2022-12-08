@@ -23,6 +23,7 @@ export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol): T
   const id = getIdBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = _parseTypeAliasDeclaration(ctx, declaration);
+  const resolvedType = ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration.type);
   const kind = Kind.TypeAlias;
 
   return {

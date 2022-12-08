@@ -8,7 +8,7 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "../composi
 import { getModifiersByDeclaration } from "../compositions/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
-import { createTypeByDeclaration } from "../entry-points/type.js";
+import { createTypeByDeclaration, createTypeBySymbol } from "../entry-points/type.js";
 import {
   isPropertyAssignment,
   isPropertyDeclaration,
@@ -26,12 +26,13 @@ export const createPropertyBySymbol = (ctx: CompilerContext, symbol: Symbol): Pr
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const fromDeclaration = createPropertyByDeclaration(ctx, declaration);
+  const type = createTypeBySymbol(ctx, symbol);
 
   return {
     ...fromDeclaration,
     id,
-    name
-
+    name,
+    type
   };
 
 });

@@ -1,28 +1,69 @@
-import { ExpressionWithTypeArguments } from "typescript";
+import { expect, it } from "vitest";
 
-import { CompilerContext } from "../../types/context.js";
-import { Expression, Kind } from "../../types/types.js";
-import { getIdByTypeNode } from "../compositions/id.js";
-import { getNameByTypeNode } from "../compositions/name.js";
-import { parseType } from "../entry-points/type.js";
-import { createTypeArgumentByTypeNode } from "./type-argument.js";
+import { compile } from "../../../tests/utils/compile.js";
+import { scope } from "../../../tests/utils/scope.js";
+import { ts } from "../../../tests/utils/template.js";
+import { Kind } from "../../types/types.js";
+import { createClassBySymbol } from "./class.js";
 
 
-export function createExpression(ctx: CompilerContext, expression: ExpressionWithTypeArguments): Expression {
+scope("Compiler", Kind.Expression, () => {
 
-  const id = getIdByTypeNode(ctx, expression);
-  const name = getNameByTypeNode(ctx, expression);
-  const typeArguments = expression.typeArguments?.map(typeNode => createTypeArgumentByTypeNode(ctx, typeNode));
-  const tsType = ctx.checker.getTypeAtLocation(expression);
-  const expressionType = ctx.checker.getTypeAtLocation(expression.expression);
-  const type = parseType(ctx, tsType);
-  const kind = Kind.Expression;
+  // {
 
-  return {
-    id,
-    kind,
-    name,
-    type,
-    typeArguments
-  };
-}
+  //   const testFileContent = ts`
+  //     class Base {
+  //       fromBase = true
+  //     }
+
+  //     function getBase() {
+  //         return Base
+  //     }
+
+  //     export class Class extends getBase() {
+  //       fromClass = true
+  //     }
+  //   `;
+
+  //   const { exportedSymbols, ctx } = compile(testFileContent);
+
+  //   const symbol = exportedSymbols.find(s => s.name === "Class")!;
+  //   const exportedClass = createClassBySymbol(ctx, symbol);
+
+  //   it("should be able to parse expressions", () => {
+  //     expect(exportedClass.heritage).to.not.equal(undefined);
+  //     expect(exportedClass.heritage).to.have.lengthOf(1);
+  //     expect(exportedClass.heritage![0]!.kind).to.equal(Kind.Expression);
+  //   });
+
+  // }
+
+  {
+
+    const testFileContent = ts`
+      class Base<T> {
+        public fromBase: T | undefined;
+      }
+      
+      function getBase() {
+        return Base;
+      }
+      
+      export class Class extends getBase()<boolean> {
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const exportedClass = createClassBySymbol(ctx, symbol);
+
+    it("should be able to parse expressions", () => {
+      expect(exportedClass.heritage).to.not.equal(undefined);
+      expect(exportedClass.heritage).to.have.lengthOf(1);
+      expect(exportedClass.heritage![0]!.kind).to.equal(Kind.Expression);
+    });
+
+  }
+
+});

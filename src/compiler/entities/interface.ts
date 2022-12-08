@@ -1,13 +1,15 @@
 import { HeritageClause, InterfaceDeclaration, NodeArray, Symbol, Type } from "typescript";
 
+import { isExpression } from "../../typeguards/types.js";
 import { CompilerContext } from "../../types/context.js";
-import { Interface, Kind, MergedInterface } from "../../types/types.js";
+import { Expression, Interface, Kind, MergedInterface } from "../../types/types.js";
 import { assert } from "../../utils/general.js";
 import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
 import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
-import { getNameBySymbol } from "../compositions/name.js";
+import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
 import { getPositionByDeclaration } from "../compositions/position.js";
 import { parseType } from "../entry-points/type.js";
+import { parseTypeNode } from "../entry-points/type-node.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
@@ -21,48 +23,41 @@ import { lockSymbol } from "../utils/ts.js";
 import { createPropertyByDeclaration } from "./property.js";
 import { createSignatureByDeclaration } from "./signature.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
-import { createTypeReferenceByTypeNode } from "./type-reference.js";
 
 
 export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): Interface | MergedInterface => lockSymbol(ctx, symbol, () => {
 
-  const declarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
+  const tsDeclarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
 
-  assert(declarations && declarations.length > 0, "Interface declarations not found");
+  assert(tsDeclarations && tsDeclarations.length > 0, "Interface declarations not found");
 
   const name = getNameBySymbol(ctx, symbol);
   const id = getIdBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
-  const fromDeclarations = declarations.map(declaration => _parseInterfaceDeclaration(ctx, declaration));
+  const declarations = tsDeclarations.map(declaration => _parseInterfaceDeclaration(ctx, declaration));
   const kind = Kind.Interface;
 
-  const properties = _mergeMembers(fromDeclarations, "properties");
-  const callSignatures = _mergeMembers(fromDeclarations, "callSignatures");
-  const constructSignatures = _mergeMembers(fromDeclarations, "constructSignatures");
-  const methodSignatures = _mergeMembers(fromDeclarations, "methodSignatures");
-  const getterSignatures = _mergeMembers(fromDeclarations, "getterSignatures");
-  const setterSignatures = _mergeMembers(fromDeclarations, "setterSignatures");
-
-
-  if(fromDeclarations.length === 1){
+  if(declarations.length === 1){
     return <Interface>{
-      ...fromDeclarations[0],
-      callSignatures,
-      constructSignatures,
+      ...declarations[0],
       description,
-      getterSignatures,
       id,
       kind,
-      methodSignatures,
-      name,
-      properties,
-      setterSignatures
+      name
     };
   } else {
+
+    const properties = _mergeMembers(declarations, "properties");
+    const callSignatures = _mergeMembers(declarations, "callSignatures");
+    const constructSignatures = _mergeMembers(declarations, "constructSignatures");
+    const methodSignatures = _mergeMembers(declarations, "methodSignatures");
+    const getterSignatures = _mergeMembers(declarations, "getterSignatures");
+    const setterSignatures = _mergeMembers(declarations, "setterSignatures");
+
     return <MergedInterface>{
       callSignatures,
       constructSignatures,
-      declarations: fromDeclarations,
+      declarations,
       description,
       getterSignatures,
       id,
@@ -72,6 +67,7 @@ export const createInterfaceBySymbol = (ctx: CompilerContext, symbol: Symbol): I
       properties,
       setterSignatures
     };
+
   }
 
 });
@@ -90,20 +86,18 @@ export function createInterfaceByType(ctx: CompilerContext, type: Type): Interfa
 
 }
 
+
 function _mergeMembers<Key extends keyof {
   [Key in keyof Interface as Interface[Key] extends any[] ? Key : never]: Interface[Key]
-}>(interfaces: (Interface | ReturnType<typeof _parseInterfaceDeclaration>)[], key: Key): Interface[Key] {
+}>(interfaces: Interface[], key: Key): Interface[Key] {
   // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
   return interfaces.reduce<Interface[Key]>((acc, declaration) => [
     ...acc,
-    // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
-    ...declaration.heritage?.flatMap(heritage => heritage[key]) ?? [],
     ...declaration[key]
   ], []);
 }
 
-
-function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceDeclaration) {
+function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceDeclaration): Interface {
 
   const tsConstructSignatures = declaration.members.filter(isConstructSignatureDeclaration);
   const tsCallSignatures = declaration.members.filter(isCallSignatureDeclaration);
@@ -123,8 +117,11 @@ function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: Interface
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
+  const name = getNameByDeclaration(ctx, declaration);
   const id = getIdByDeclaration(ctx, declaration);
   const kind = Kind.Interface;
+
+  assert(name, "Interface name not found");
 
   return {
     callSignatures,
@@ -135,6 +132,7 @@ function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: Interface
     id,
     kind,
     methodSignatures,
+    name,
     position,
     properties,
     setterSignatures,
@@ -144,12 +142,8 @@ function _parseInterfaceDeclaration(ctx: CompilerContext, declaration: Interface
 }
 
 
-function _parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): Interface[] {
-  return heritageClauses.flatMap(heritageClause => _createInterfacesByHeritageClause(ctx, heritageClause));
-}
-
-function _createInterfacesByHeritageClause(ctx: CompilerContext, heritageClause: HeritageClause): Interface[] {
-  return heritageClause.types.map(expression =>
-    // Only expression.expression has type arguments
-    createTypeReferenceByTypeNode(ctx, expression));
+function _parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): Expression[] {
+  return heritageClauses
+    .flatMap(heritageClause => heritageClause.types.map(typeNode => parseTypeNode(ctx, typeNode)))
+    .filter(isExpression);
 }

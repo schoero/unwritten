@@ -8,7 +8,6 @@ import { lockSymbol } from "../utils/ts.js";
 
 export const createConstructorBySymbol = (ctx: CompilerContext, symbol: Symbol): Constructor => lockSymbol(ctx, symbol, () => {
 
-
   const functionLike = createFunctionLikeBySymbol(ctx, symbol);
   const kind = Kind.Constructor;
 

@@ -1,6 +1,7 @@
 import ts, {
   ArrayTypeNode,
   Declaration,
+  ExpressionWithTypeArguments,
   IndexedAccessTypeNode,
   MappedTypeNode,
   Symbol,
@@ -17,6 +18,10 @@ export function isArrayTypeNode(typeNode: TypeNode): typeNode is ArrayTypeNode {
 
 export function isArrayTypeReferenceTypeNode(typeNode: TypeNode): typeNode is TypeReferenceNode {
   return isTypeReferenceNode(typeNode) && typeNode.typeName.getText() === "Array" && typeNode.typeArguments?.length === 1;
+}
+
+export function isExpressionWithTypeArguments(node: TypeNode): node is ExpressionWithTypeArguments {
+  return ts.isExpressionWithTypeArguments(node);
 }
 
 export function isIndexedAccessTypeNode(node: TypeNode): node is IndexedAccessTypeNode {

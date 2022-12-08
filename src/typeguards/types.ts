@@ -5,6 +5,7 @@ import {
   Constructor,
   Enum,
   ExportableTypes,
+  Expression,
   Function,
   Getter,
   Instance,
@@ -20,35 +21,35 @@ import {
   Property,
   Setter,
   StringLiteralType,
-  Type,
   TypeAlias,
+  Types,
   UnionType,
   Unresolved,
   Variable
 } from "../types/types.js";
 
 
-export function isBigIntLiteralType(type: Type<Kind>): type is BigIntLiteralType {
+export function isBigIntLiteralType(type: Types): type is BigIntLiteralType {
   return type.kind === Kind.BigIntLiteral;
 }
 
-export function isBooleanLiteralType(type: Type<Kind>): type is BooleanLiteralType {
+export function isBooleanLiteralType(type: Types): type is BooleanLiteralType {
   return type.kind === Kind.BooleanLiteral;
 }
 
-export function isClassType(type: Type<Kind>): type is Class {
+export function isClassType(type: Types): type is Class {
   return type.kind === Kind.Class;
 }
 
-export function isConstructorType(type: Type<Kind>): type is Constructor {
+export function isConstructorType(type: Types): type is Constructor {
   return type.kind === Kind.Constructor;
 }
 
-export function isEnumType(type: Type<Kind>): type is Enum {
+export function isEnumType(type: Types): type is Enum {
   return type.kind === Kind.Enum;
 }
 
-export function isExportableType(type: Type<Kind>): type is ExportableTypes {
+export function isExportableType(type: Types): type is ExportableTypes {
   return isClassType(type) ||
     isEnumType(type) ||
     isFunctionType(type) ||
@@ -59,50 +60,54 @@ export function isExportableType(type: Type<Kind>): type is ExportableTypes {
     isUnresolvedType(type);
 }
 
-export function isFunctionType(type: Type<Kind>): type is Function {
+export function isExpression(type: Types): type is Expression {
+  return type.kind === Kind.Expression;
+}
+
+export function isFunctionType(type: Types): type is Function {
   return type.kind === Kind.Function;
 }
 
-export function isGetterType(type: Type<Kind>): type is Getter {
+export function isGetterType(type: Types): type is Getter {
   return type.kind === Kind.Getter;
 }
 
-export function isInstanceType(type: Type<Kind>): type is Instance {
+export function isInstanceType(type: Types): type is Instance {
   return type.kind === Kind.Instance;
 }
 
-export function isInterfaceType(type: Type<Kind>): type is Interface {
+export function isInterfaceType(type: Types): type is Interface {
   return type.kind === Kind.Interface;
 }
 
-export function isIntersectionType(type: Type<Kind>): type is IntersectionType {
+export function isIntersectionType(type: Types): type is IntersectionType {
   return type.kind === Kind.IntersectionType;
 }
 
-export function isLiteralType(type: Type<Kind>): type is LiteralTypes {
+export function isLiteralType(type: Types): type is LiteralTypes {
   return type.kind === Kind.StringLiteral ||
     type.kind === Kind.NumberLiteral ||
     type.kind === Kind.BooleanLiteral ||
     type.kind === Kind.BigIntLiteral;
 }
 
-export function isMethodType(type: Type<Kind>): type is Method {
+export function isMethodType(type: Types): type is Method {
   return type.kind === Kind.Method;
 }
 
-export function isNamespaceType(type: Type<Kind>): type is Namespace {
+export function isNamespaceType(type: Types): type is Namespace {
   return type.kind === Kind.Namespace;
 }
 
-export function isNumberLiteralType(type: Type<Kind>): type is NumberLiteralType {
+export function isNumberLiteralType(type: Types): type is NumberLiteralType {
   return type.kind === Kind.NumberLiteral;
 }
 
-export function isObjectLiteralType(type: Type<Kind>): type is ObjectLiteral {
+export function isObjectLiteralType(type: Types): type is ObjectLiteral {
   return type.kind === Kind.ObjectLiteral;
 }
 
-export function isPrimitiveType(type: Type<Kind>): type is PrimitiveTypes {
+export function isPrimitiveType(type: Types): type is PrimitiveTypes {
   return type.kind === Kind.Any ||
     type.kind === Kind.BigInt ||
     type.kind === Kind.BigIntLiteral ||
@@ -119,30 +124,30 @@ export function isPrimitiveType(type: Type<Kind>): type is PrimitiveTypes {
     type.kind === Kind.Void;
 }
 
-export function isPropertyType(type: Type<Kind>): type is Property {
+export function isPropertyType(type: Types): type is Property {
   return type.kind === Kind.Property;
 }
 
-export function isSetterType(type: Type<Kind>): type is Setter {
+export function isSetterType(type: Types): type is Setter {
   return type.kind === Kind.Setter;
 }
 
-export function isStringLiteralType(type: Type<Kind>): type is StringLiteralType {
+export function isStringLiteralType(type: Types): type is StringLiteralType {
   return type.kind === Kind.StringLiteral;
 }
 
-export function isTypeAliasType(type: Type<Kind>): type is TypeAlias {
+export function isTypeAliasType(type: Types): type is TypeAlias {
   return type.kind === Kind.TypeAlias;
 }
 
-export function isUnionType(type: Type<Kind>): type is UnionType {
+export function isUnionType(type: Types): type is UnionType {
   return type.kind === Kind.UnionType;
 }
 
-export function isUnresolvedType(type: Type<Kind>): type is Unresolved {
+export function isUnresolvedType(type: Types): type is Unresolved {
   return type.kind === Kind.Unresolved;
 }
 
-export function isVariableType(type: Type<Kind>): type is Variable {
+export function isVariableType(type: Types): type is Variable {
   return type.kind === Kind.Variable;
 }
