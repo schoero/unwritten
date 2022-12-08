@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { createRenderContext } from "../../../../tests/utils/context.js";
-import { scope } from "../../../../tests/utils/scope.js";
-import { Kind, Variable } from "../../../types/types.js";
-import { Real, Testable } from "../../../types/utils.js";
-import { renderVariableForDocumentation } from "../entities/variable.js";
+import { renderVariableForDocumentation } from "quickdoks:renderer:markup/entities/variable.js";
+import { createRenderContext } from "quickdoks:tests:utils/context.js";
+import { scope } from "quickdoks:tests:utils/scope.js";
+import { Variable } from "quickdoks:types:types.js";
+import { Real, Testable } from "quickdoks:types:utils.js";
 
 
 scope("Renderer", "Config", () => {

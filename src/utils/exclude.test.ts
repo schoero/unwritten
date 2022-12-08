@@ -1,7 +1,9 @@
 import { resolve } from "path";
+
 import { describe, expect, it } from "vitest";
 
-import { scope } from "../../tests/utils/scope.js";
+import { scope } from "quickdoks:tests:utils/scope.js";
+
 import { isPathExcluded } from "./exclude.js";
 
 

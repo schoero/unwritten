@@ -1,7 +1,7 @@
 import { Declaration, Node, Symbol } from "typescript";
 
-import { Position } from "../../types/compositions.js";
-import { CompilerContext } from "../../types/context.js";
+import { Position } from "quickdoks:types:compositions.js";
+import { CompilerContext } from "quickdoks:types:context.js";
 
 
 export function getPositionByNode(ctx: CompilerContext, node: Node): Position {

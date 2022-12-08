@@ -1,8 +1,9 @@
 import { Signature } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { assert } from "../../utils/general.js";
-import { parseType } from "../entry-points/type.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { assert } from "quickdoks:utils:general.js";
+
 import { getReturnTypeDescription } from "./jsdoc.js";
 
 

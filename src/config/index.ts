@@ -1,12 +1,13 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { error, log } from "../logger/index.js";
-import { defaultRenderConfig } from "../renderer/markup/config/default.js";
-import { CompleteConfig, Config } from "../types/config.js";
-import { BuiltInRenderers } from "../types/renderer.js";
-import { findFile } from "../utils/finder.js";
-import { override } from "../utils/override.js";
+import { error, log } from "quickdoks:logger:index.js";
+import { defaultRenderConfig } from "quickdoks:renderer:markup/config/default.js";
+import { CompleteConfig, Config } from "quickdoks:types:config.js";
+import { BuiltInRenderers } from "quickdoks:types:renderer.js";
+import { findFile } from "quickdoks:utils:finder.js";
+import { override } from "quickdoks:utils:override.js";
+
 import { defaultCompilerConfig, defaultExternalTypes } from "./default.js";
 
 

@@ -1,8 +1,8 @@
 import minimatch from "minimatch";
 import { Declaration, Symbol } from "typescript";
 
-import { getPositionByDeclaration } from "../compiler/compositions/position.js";
-import { CompilerContext } from "../types/context.js";
+import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
+import { CompilerContext } from "quickdoks:types:context.js";
 
 
 export function isSymbolExcluded(ctx: CompilerContext, symbol: Symbol): boolean {

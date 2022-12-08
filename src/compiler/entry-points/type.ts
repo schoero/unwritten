@@ -1,27 +1,22 @@
-import { Declaration, ObjectFlags, ObjectType as TSObjectType, Symbol, Type } from "typescript";
+import { Declaration, ObjectType as TSObjectType, Symbol, Type } from "typescript";
 
-import { error } from "../../logger/index.js";
-import { CompilerContext } from "../../types/context.js";
-import { Types } from "../../types/types.js";
-import { isSymbolExcluded } from "../../utils/exclude.js";
-import { assert } from "../../utils/general.js";
-import { getNameBySymbol } from "../compositions/name.js";
-import { createArrayByTypeReference } from "../entities/array.js";
-import { createClassByType } from "../entities/class.js";
-import { createConditionalType } from "../entities/conditional-type.js";
-import { createFunctionByType } from "../entities/function.js";
-import { createInterfaceByType } from "../entities/interface.js";
-import { createIntersectionTypeByType } from "../entities/intersection-type.js";
-import { createLiteralType } from "../entities/literal-type.js";
-import { createMappedTypeByType } from "../entities/mapped-type.js";
-import { createObjectLiteralByType } from "../entities/object-literal.js";
-import { createPrimitiveType } from "../entities/primitive.js";
-import { createThisByType } from "../entities/this-type.js";
-import { createTupleTypeByTypeReference } from "../entities/tuple-type.js";
-import { createTypeLiteralByType } from "../entities/type-literal.js";
-import { createTypeParameterByType } from "../entities/type-parameter.js";
-import { createUnionTypeByType } from "../entities/union-type.js";
-import { createUnresolvedBySymbol, createUnresolvedByType } from "../entities/unresolved.js";
+import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { createArrayByTypeReference } from "quickdoks:compiler:entities/array.js";
+import { createClassByType } from "quickdoks:compiler:entities/class.js";
+import { createConditionalType } from "quickdoks:compiler:entities/conditional-type.js";
+import { createFunctionByType } from "quickdoks:compiler:entities/function.js";
+import { createInterfaceByType } from "quickdoks:compiler:entities/interface.js";
+import { createIntersectionTypeByType } from "quickdoks:compiler:entities/intersection-type.js";
+import { createLiteralType } from "quickdoks:compiler:entities/literal-type.js";
+import { createMappedTypeByType } from "quickdoks:compiler:entities/mapped-type.js";
+import { createObjectLiteralByType } from "quickdoks:compiler:entities/object-literal.js";
+import { createPrimitiveType } from "quickdoks:compiler:entities/primitive.js";
+import { createThisByType } from "quickdoks:compiler:entities/this-type.js";
+import { createTupleTypeByTypeReference } from "quickdoks:compiler:entities/tuple-type.js";
+import { createTypeLiteralByType } from "quickdoks:compiler:entities/type-literal.js";
+import { createTypeParameterByType } from "quickdoks:compiler:entities/type-parameter.js";
+import { createUnionTypeByType } from "quickdoks:compiler:entities/union-type.js";
+import { createUnresolvedBySymbol, createUnresolvedByType } from "quickdoks:compiler:entities/unresolved.js";
 import {
   isArrayTypeReferenceType,
   isClassType,
@@ -40,7 +35,13 @@ import {
   isTypeParameterType,
   isTypeReferenceType,
   isUnionType
-} from "../typeguards/types.js";
+} from "quickdoks:compiler:typeguards/types.js";
+import { error } from "quickdoks:logger:index.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Types } from "quickdoks:types:types.js";
+import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
+import { assert } from "quickdoks:utils:general.js";
+
 
 /** Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */
 export function createTypeBySymbol(ctx: CompilerContext, symbol: Symbol): Types {
@@ -121,10 +122,6 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
     // return createTypeReferenceByType(ctx, type);
   }
 
-  const objectFlags = getEnumFlagNames(ObjectFlags, type.objectFlags);
-
-  console.log(objectFlags);
-
   const name = getNameBySymbol(ctx, symbol);
 
   if(!name.startsWith("__")){
@@ -133,22 +130,4 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
 
   throw error("Unknown object type");
 
-}
-
-
-function getEnumFlagNames(enumObj: any, flags: number) {
-  const allFlags = Object.keys(enumObj)
-    .map(k => enumObj[k])
-    .filter(v => typeof v === "number") as number[];
-  const matchedFlags = allFlags.filter(f => (f & flags) !== 0);
-
-  return matchedFlags
-    .filter((f, i) => matchedFlags.indexOf(f) === i)
-    .map(f => {
-      const power = Math.log2(f);
-      if(Number.isInteger(power)){
-        return `${enumObj[f]} (2 ^ ${power})`;
-      }
-      return enumObj[f];
-    });
 }

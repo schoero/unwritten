@@ -1,4 +1,4 @@
-import { generateConfig } from "../config/generator.js";
+import { generateConfig } from "quickdoks:config/generator.js";
 
 
 export function init() {

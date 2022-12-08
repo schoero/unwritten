@@ -26,7 +26,7 @@ import {
   UnionType,
   Unresolved,
   Variable
-} from "../types/types.js";
+} from "quickdoks:types:types.js";
 
 
 export function isBigIntLiteralType(type: Types): type is BigIntLiteralType {

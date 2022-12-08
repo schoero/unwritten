@@ -3,8 +3,8 @@ import { dirname, resolve } from "node:path";
 
 import ts from "typescript";
 
-import { log, warn } from "../logger/index.js";
-import { findFile } from "../utils/finder.js";
+import { log, warn } from "quickdoks:logger:index.js";
+import { findFile } from "quickdoks:utils:finder.js";
 
 
 export function compile(entryFilePath: string, tsConfigFilePath?: string) {

@@ -1,11 +1,12 @@
 import { TypeReferenceNode, TypeReferenceType } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Expression, Kind, TypeReference } from "../../types/types.js";
-import { getIdByTypeNode } from "../compositions/id.js";
-import { getNameByTypeNode } from "../compositions/name.js";
-import { parseType } from "../entry-points/type.js";
-import { isTypeReferenceNode } from "../typeguards/type-nodes.js";
+import { getIdByTypeNode } from "quickdoks:compiler:compositions/id.js";
+import { getNameByTypeNode } from "quickdoks:compiler:compositions/name.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
+import { isTypeReferenceNode } from "quickdoks:compiler:typeguards/type-nodes.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Expression, Kind, TypeReference } from "quickdoks:types:types.js";
+
 import { createExpressionByExpressionWithTypeArguments } from "./expression.js";
 import { createTypeArgumentByTypeNode } from "./type-argument.js";
 

@@ -1,6 +1,6 @@
 import ts, { Declaration, FunctionLikeDeclaration, Type, TypeNode } from "typescript";
 
-import { isTypeNode } from "./type-nodes.js";
+import { isTypeNode } from "quickdoks:compiler:typeguards/type-nodes.js";
 
 
 export function isArrowFunctionDeclaration(declaration: Declaration): declaration is ts.ArrowFunction {

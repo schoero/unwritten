@@ -1,6 +1,7 @@
 import { expectTypeOf, it } from "vitest";
 
-import { scope } from "../../tests/utils/scope.js";
+import { scope } from "quickdoks:tests:utils/scope.js";
+
 import { DeepPartialByKey, DeepRequiredByKey } from "./utils.js";
 
 

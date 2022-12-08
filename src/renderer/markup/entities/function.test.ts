@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { createRenderContext } from "../../../../tests/utils/context.js";
-import { Function, Kind } from "../../../types/types.js";
-import { Real, Testable } from "../../../types/utils.js";
-import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "../entities/function.js";
+import {
+  renderFunctionForDocumentation,
+  renderFunctionForTableOfContents
+} from "quickdoks:renderer:markup/entities/function.js";
+import { createRenderContext } from "quickdoks:tests:utils/context.js";
+import { Function, Kind } from "quickdoks:types:types.js";
+import { Real, Testable } from "quickdoks:types:utils.js";
 
 
 describe("Renderer: Function", () => {

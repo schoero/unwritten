@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
-import { compile } from "../../tests/utils/compile.js";
-import { parse } from "../compiler/entry-points/index.js";
-import { sortKeys } from "../utils/general.js";
+import { parse } from "quickdoks:compiler:entry-points/index.js";
+import { compile } from "quickdoks:tests:utils/compile.js";
+import { sortKeys } from "quickdoks:utils:general.js";
 
 
 export function debug(inputPath: string) {

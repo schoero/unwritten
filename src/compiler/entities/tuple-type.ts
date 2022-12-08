@@ -1,13 +1,13 @@
 import ts, { TupleTypeNode, TupleTypeReference, Type } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, TupleMember, TupleType } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdByType } from "../compositions/id.js";
-import { getNameByDeclaration } from "../compositions/name.js";
-import { getPositionByNode } from "../compositions/position.js";
-import { parseType } from "../entry-points/type.js";
-import { isTupleTypeReferenceType } from "../typeguards/types.js";
+import { getIdByType } from "quickdoks:compiler:compositions/id.js";
+import { getNameByDeclaration } from "quickdoks:compiler:compositions/name.js";
+import { getPositionByNode } from "quickdoks:compiler:compositions/position.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
+import { isTupleTypeReferenceType } from "quickdoks:compiler:typeguards/types.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, TupleMember, TupleType } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): TupleType {

@@ -1,6 +1,6 @@
 import { FunctionLikeDeclaration, Symbol } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
+import { CompilerContext } from "quickdoks:types:context.js";
 
 
 export function functionOverloadDeclarationFilter(ctx: CompilerContext, declaration: FunctionLikeDeclaration, symbol: Symbol): boolean {

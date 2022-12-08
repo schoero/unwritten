@@ -1,7 +1,11 @@
-import { RenderContext } from "../../../types/context.js";
-import { Enum } from "../../../types/types.js";
-import { MarkupRenderer, RenderedEnumForDocumentation, RenderedEnumForTableOfContents } from "../types/renderer.js";
-import { renderLink } from "../utils/renderer.js";
+import {
+  MarkupRenderer,
+  RenderedEnumForDocumentation,
+  RenderedEnumForTableOfContents
+} from "quickdoks:renderer:markup/types/renderer.js";
+import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
+import { RenderContext } from "quickdoks:types:context.js";
+import { Enum } from "quickdoks:types:types.js";
 
 
 export function renderEnumForTableOfContents(ctx: RenderContext<MarkupRenderer>, enumType: Enum): RenderedEnumForTableOfContents {

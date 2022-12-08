@@ -1,6 +1,7 @@
 import ts from "typescript";
 
-import { Locker } from "../compiler/locker/index.js";
+import { Locker } from "quickdoks:compiler:locker/index.js";
+
 import { CompleteConfig } from "./config.js";
 import { Renderer } from "./renderer.js";
 

@@ -1,21 +1,18 @@
 import { Symbol } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Types } from "../../types/types.js";
-import { isSymbolExcluded } from "../../utils/exclude.js";
-import { createLinkToSymbol } from "../entities/circular.js";
-import { createClassBySymbol } from "../entities/class.js";
-import { createEnumBySymbol } from "../entities/enum.js";
-import { createFunctionBySymbol } from "../entities/function.js";
-import { createInterfaceBySymbol } from "../entities/interface.js";
-import { createModuleBySymbol } from "../entities/module.js";
-import { createNamespaceBySymbol } from "../entities/namespace.js";
-import { createPropertyBySymbol } from "../entities/property.js";
-import { createSourceFileBySymbol } from "../entities/source-file.js";
-import { createTypeAliasBySymbol } from "../entities/type-alias.js";
-import { createTypeParameterBySymbol } from "../entities/type-parameter.js";
-import { createUnresolvedBySymbol } from "../entities/unresolved.js";
-import { createVariableBySymbol } from "../entities/variable.js";
+import { createLinkToSymbol } from "quickdoks:compiler:entities/circular.js";
+import { createClassBySymbol } from "quickdoks:compiler:entities/class.js";
+import { createEnumBySymbol } from "quickdoks:compiler:entities/enum.js";
+import { createFunctionBySymbol } from "quickdoks:compiler:entities/function.js";
+import { createInterfaceBySymbol } from "quickdoks:compiler:entities/interface.js";
+import { createModuleBySymbol } from "quickdoks:compiler:entities/module.js";
+import { createNamespaceBySymbol } from "quickdoks:compiler:entities/namespace.js";
+import { createPropertyBySymbol } from "quickdoks:compiler:entities/property.js";
+import { createSourceFileBySymbol } from "quickdoks:compiler:entities/source-file.js";
+import { createTypeAliasBySymbol } from "quickdoks:compiler:entities/type-alias.js";
+import { createTypeParameterBySymbol } from "quickdoks:compiler:entities/type-parameter.js";
+import { createUnresolvedBySymbol } from "quickdoks:compiler:entities/unresolved.js";
+import { createVariableBySymbol } from "quickdoks:compiler:entities/variable.js";
 import {
   isClassSymbol,
   isEnumSymbol,
@@ -28,8 +25,12 @@ import {
   isTypeAliasSymbol,
   isTypeParameterSymbol,
   isVariableSymbol
-} from "../typeguards/symbols.js";
-import { isSymbolLocked, resolveSymbolInCaseOfImport } from "../utils/ts.js";
+} from "quickdoks:compiler:typeguards/symbols.js";
+import { isSymbolLocked, resolveSymbolInCaseOfImport } from "quickdoks:compiler:utils/ts.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Types } from "quickdoks:types:types.js";
+import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
+
 
 /**
  * Parses a TypeScript symbol.

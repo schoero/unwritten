@@ -1,6 +1,6 @@
-import { CompleteConfig } from "../../types/config.js";
-import { RenderContext } from "../../types/context.js";
-import { Renderer } from "../../types/renderer.js";
+import { CompleteConfig } from "quickdoks:types:config.js";
+import { RenderContext } from "quickdoks:types:context.js";
+import { Renderer } from "quickdoks:types:renderer.js";
 
 
 export function createContext(renderer: Renderer, config: CompleteConfig): RenderContext {

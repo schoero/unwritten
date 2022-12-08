@@ -1,13 +1,14 @@
 import { ObjectType, TypeNode } from "typescript";
 
-import { isLiteralType } from "../../typeguards/types.js";
-import { CompilerContext } from "../../types/context.js";
-import { Kind, MappedType, MappedTypeMember } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdBySymbol, getIdByTypeNode } from "../compositions/id.js";
-import { getPositionByDeclaration } from "../compositions/position.js";
-import { parseTypeNode } from "../entry-points/type-node.js";
-import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "../typeguards/type-nodes.js";
+import { getIdBySymbol, getIdByTypeNode } from "quickdoks:compiler:compositions/id.js";
+import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
+import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
+import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "quickdoks:compiler:typeguards/type-nodes.js";
+import { isLiteralType } from "quickdoks:compiler:typeguards/types.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, MappedType, MappedTypeMember } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
+
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 

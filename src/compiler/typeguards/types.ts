@@ -20,9 +20,9 @@ import ts, {
   UnionType
 } from "typescript";
 
-import { isDeclaration } from "./declarations.js";
-import { isSymbol } from "./symbols.js";
-import { isTypeNode } from "./type-nodes.js";
+import { isDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { isSymbol } from "quickdoks:compiler:typeguards/symbols.js";
+import { isTypeNode } from "quickdoks:compiler:typeguards/type-nodes.js";
 
 
 export function isAnonymousType(type: Type) {

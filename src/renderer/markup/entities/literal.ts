@@ -1,9 +1,9 @@
-import { isStringLiteralType } from "../../../typeguards/types.js";
-import { RenderContext } from "../../../types/context.js";
-import { BigIntLiteralType, BooleanLiteralType, NumberLiteralType, StringLiteralType } from "../../../types/types.js";
-import { MarkupRenderer, RenderedLiteralType } from "../types/renderer.js";
-import { getRenderConfig } from "../utils/config.js";
-import { encapsulate } from "../utils/renderer.js";
+import { MarkupRenderer, RenderedLiteralType } from "quickdoks:renderer:markup/types/renderer.js";
+import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
+import { encapsulate } from "quickdoks:renderer:markup/utils/renderer.js";
+import { isStringLiteralType } from "quickdoks:typeguards/types.js";
+import { RenderContext } from "quickdoks:types:context.js";
+import { BigIntLiteralType, BooleanLiteralType, NumberLiteralType, StringLiteralType } from "quickdoks:types:types.js";
 
 
 export function renderLiteralType(ctx: RenderContext<MarkupRenderer>, type: BigIntLiteralType | BooleanLiteralType | NumberLiteralType | StringLiteralType): RenderedLiteralType {

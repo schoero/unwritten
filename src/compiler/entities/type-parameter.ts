@@ -1,15 +1,15 @@
 import { Symbol, TypeNode, TypeParameter as TSTypeParameter, TypeParameterDeclaration } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, TypeParameter } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdBySymbol } from "../compositions/id.js";
-import { getTypeParameterDescription } from "../compositions/jsdoc.js";
-import { getNameBySymbol } from "../compositions/name.js";
-import { getPositionByDeclaration } from "../compositions/position.js";
-import { parseTypeNode } from "../entry-points/type-node.js";
-import { isTypeParameterDeclaration } from "../typeguards/declarations.js";
-import { lockSymbol } from "../utils/ts.js";
+import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { getTypeParameterDescription } from "quickdoks:compiler:compositions/jsdoc.js";
+import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
+import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
+import { isTypeParameterDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, TypeParameter } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeParameter => lockSymbol(ctx, symbol, () => {

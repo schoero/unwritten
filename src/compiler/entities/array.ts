@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/array-type */
+
+
 import { ArrayTypeNode, TypeReference, TypeReferenceNode } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { ArrayType, Kind } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdByType } from "../compositions/id.js";
-import { getPositionByNode } from "../compositions/position.js";
-import { parseType } from "../entry-points/type.js";
-import { isTypeReferenceType } from "../typeguards/types.js";
+import { getIdByType } from "quickdoks:compiler:compositions/id.js";
+import { getPositionByNode } from "quickdoks:compiler:compositions/position.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
+import { isTypeReferenceType } from "quickdoks:compiler:typeguards/types.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { ArrayType, Kind } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export function createArrayByTypeReference(ctx: CompilerContext, typeReference: TypeReference): ArrayType {

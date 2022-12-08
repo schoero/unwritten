@@ -1,5 +1,7 @@
+import { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
+
 import { render } from "../index.js";
-import { MarkupRenderer } from "../types/renderer.js";
+
 import { htmlRenderer as _htmlRenderer } from "./renderer.js";
 
 

@@ -1,15 +1,15 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-import { parse } from "../compiler/entry-points/index.js";
-import { compile } from "../compiler/index.js";
-import { createContext as createCompilerContext } from "../compiler/utils/context.js";
-import { getEntryFileSymbolFromProgram } from "../compiler/utils/ts.js";
-import { createConfig } from "../config/index.js";
-import { disableLog } from "../logger/index.js";
-import { getRenderer } from "../renderer/index.js";
-import { createContext as createRenderContext } from "../renderer/utils/context.js";
-import { APIOptions } from "../types/options.js";
+import { parse } from "quickdoks:compiler:entry-points/index.js";
+import { compile } from "quickdoks:compiler:index.js";
+import { createContext as createCompilerContext } from "quickdoks:compiler:utils/context.js";
+import { getEntryFileSymbolFromProgram } from "quickdoks:compiler:utils/ts.js";
+import { createConfig } from "quickdoks:config/index.js";
+import { disableLog } from "quickdoks:logger:index.js";
+import { getRenderer } from "quickdoks:renderer:index.js";
+import { createContext as createRenderContext } from "quickdoks:renderer:utils/context.js";
+import { APIOptions } from "quickdoks:types:options.js";
 
 
 export async function quickdoks(entryFilePath: string, options?: APIOptions) {

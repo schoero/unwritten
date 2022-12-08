@@ -1,4 +1,5 @@
-import { ExportableTypeKinds } from "../../../types/types.js";
+import { ExportableTypeKinds } from "quickdoks:types:types.js";
+
 import { CategoryNames } from "./renderer.js";
 
 

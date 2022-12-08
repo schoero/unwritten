@@ -1,6 +1,7 @@
-import { RenderContext } from "../../../types/context.js";
-import { ExportableTypes } from "../../../types/types.js";
-import { MarkupRenderConfig } from "../types/config.js";
+import { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
+import { RenderContext } from "quickdoks:types:context.js";
+import { ExportableTypes } from "quickdoks:types:types.js";
+
 import { getCategoryName } from "./renderer.js";
 
 

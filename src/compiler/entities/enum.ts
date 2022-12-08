@@ -1,20 +1,20 @@
 import { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Enum, EnumMember, Kind, MergedEnum } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
+import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
 import {
   getDescriptionByDeclaration,
   getDescriptionBySymbol,
   getExampleByDeclaration
-} from "../compositions/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
-import { getPositionByDeclaration } from "../compositions/position.js";
-import { parseSymbol } from "../entry-points/symbol.js";
-import { createTypeByDeclaration } from "../entry-points/type.js";
-import { isEnumDeclaration, isEnumMemberDeclaration } from "../typeguards/declarations.js";
-import { lockSymbol } from "../utils/ts.js";
+} from "quickdoks:compiler:compositions/jsdoc.js";
+import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
+import { parseSymbol } from "quickdoks:compiler:entry-points/symbol.js";
+import { createTypeByDeclaration } from "quickdoks:compiler:entry-points/type.js";
+import { isEnumDeclaration, isEnumMemberDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Enum, EnumMember, Kind, MergedEnum } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export const createEnumBySymbol = (ctx: CompilerContext, symbol: Symbol): Enum | MergedEnum => lockSymbol(ctx, symbol, () => {

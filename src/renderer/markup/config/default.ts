@@ -1,7 +1,7 @@
-import { Kind } from "../../../types/types.js";
-import { Complete } from "../../../types/utils.js";
-import { MarkupRenderConfig } from "../types/config.js";
-import { RenderCategories } from "../types/renderer.js";
+import { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
+import { RenderCategories } from "quickdoks:renderer:markup/types/renderer.js";
+import { Kind } from "quickdoks:types:types.js";
+import { Complete } from "quickdoks:types:utils.js";
 
 
 export const defaultRenderConfig: Complete<MarkupRenderConfig> = {

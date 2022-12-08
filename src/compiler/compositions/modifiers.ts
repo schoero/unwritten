@@ -1,7 +1,7 @@
 import ts, { Declaration } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Modifiers } from "../../types/types.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Modifiers } from "quickdoks:types:types.js";
 
 
 export function getModifiersByDeclaration(ctx: CompilerContext, declaration: Declaration): Modifiers[] {

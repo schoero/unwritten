@@ -5,8 +5,15 @@ import {
   StringLiteralType as TSStringLiteralType
 } from "typescript";
 
-import { error } from "../../logger/index.js";
-import { CompilerContext } from "../../types/context.js";
+import { getIdByType } from "quickdoks:compiler:compositions/id.js";
+import {
+  isBigIntLiteralType,
+  isBooleanLiteralType,
+  isNumberLiteralType,
+  isStringLiteralType
+} from "quickdoks:compiler:typeguards/types.js";
+import { error } from "quickdoks:logger:index.js";
+import { CompilerContext } from "quickdoks:types:context.js";
 import {
   BigIntLiteralType,
   BooleanLiteralType,
@@ -14,14 +21,7 @@ import {
   LiteralTypes,
   NumberLiteralType,
   StringLiteralType
-} from "../../types/types.js";
-import { getIdByType } from "../compositions/id.js";
-import {
-  isBigIntLiteralType,
-  isBooleanLiteralType,
-  isNumberLiteralType,
-  isStringLiteralType
-} from "../typeguards/types.js";
+} from "quickdoks:types:types.js";
 
 
 export function createLiteralType(ctx: CompilerContext, type: LiteralType): LiteralTypes {

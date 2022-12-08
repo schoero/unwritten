@@ -1,10 +1,13 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
-import { Kind, NumberLiteralType, Variable } from "../../../types/types.js";
-import { Real, Testable } from "../../../types/utils.js";
-import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../entities/variable.js";
-import { createRenderContext } from "./utils/context.js";
+import {
+  renderVariableForDocumentation,
+  renderVariableForTableOfContents
+} from "quickdoks:renderer:markup/entities/variable.js";
+import { createRenderContext } from "quickdoks:tests:utils/context.js";
+import { Kind, NumberLiteralType, Variable } from "quickdoks:types:types.js";
+import { Real, Testable } from "quickdoks:types:utils.js";
 
 
 describe("Renderer: Variable", () => {

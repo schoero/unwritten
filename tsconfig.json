@@ -1,6 +1,18 @@
 {
   "extends": "@schoero/ts-config",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "quickdoks:*": ["src/*"],
+      "quickdoks:api:*": ["src/api/*"],
+      "quickdoks:bin:*": ["src/bin/*"],
+      "quickdoks:compiler:*": ["src/compiler/*"],
+      "quickdoks:logger:*": ["src/logger/*"],
+      "quickdoks:renderer:*": ["src/renderer/*"],
+      "quickdoks:tests:*": ["tests/*"],
+      "quickdoks:types:*": ["src/types/*"],
+      "quickdoks:utils:*": ["src/utils/*"]
+    },
     "skipLibCheck": true,
     "target": "ES2020"
   },

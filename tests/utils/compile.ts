@@ -2,13 +2,13 @@ import { readFileSync } from "node:fs";
 
 import ts from "typescript";
 
-import { reportCompilerDiagnostics } from "../../src/compiler/index.js";
-import { Locker } from "../../src/compiler/locker/index.js";
-import { getDefaultConfig } from "../../src/config/index.js";
-import { disableLog } from "../../src/logger/index.js";
-import { CompleteConfig } from "../../src/types/config.js";
-import { CompilerContext } from "../../src/types/context.js";
-import { assert } from "../../src/utils/general.js";
+import { reportCompilerDiagnostics } from "quickdoks:compiler:index.js";
+import { Locker } from "quickdoks:compiler:locker/index.js";
+import { getDefaultConfig } from "quickdoks:config/index.js";
+import { disableLog } from "quickdoks:logger:index.js";
+import { CompleteConfig } from "quickdoks:types:config.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export function compile(code: string, compilerOptions?: ts.CompilerOptions, config?: CompleteConfig) {

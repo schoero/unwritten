@@ -1,10 +1,10 @@
 import { Symbol } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Circular, Kind } from "../../types/types.js";
-import { getIdBySymbol } from "../compositions/id.js";
-import { getNameBySymbol } from "../compositions/name.js";
-import { getPositionBySymbol } from "../compositions/position.js";
+import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { getPositionBySymbol } from "quickdoks:compiler:compositions/position.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Circular, Kind } from "quickdoks:types:types.js";
 
 
 export function createLinkToSymbol(ctx: CompilerContext, symbol: Symbol): Circular {

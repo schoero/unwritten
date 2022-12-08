@@ -1,8 +1,8 @@
 import { ParameterDeclaration } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Types } from "../../types/types.js";
-import { parseType } from "../entry-points/type.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Types } from "quickdoks:types:types.js";
 
 
 export function getInitializerByDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration): Types | undefined {

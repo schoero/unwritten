@@ -1,13 +1,13 @@
-import { Renderer } from "../types/renderer.js";
-import { assert } from "../utils/general.js";
+import { Renderer } from "quickdoks:types:renderer.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export async function getRenderer(renderer?: Renderer | string) {
 
   if(renderer === undefined || renderer === "markdown"){
-    renderer = (await import("../renderer/markup/markdown/index.js")).default;
+    renderer = (await import("quickdoks:renderer:markup/markdown/index.js")).default;
   } else if(renderer === "html"){
-    renderer = (await import("../renderer/markup/html/index.js")).default;
+    renderer = (await import("quickdoks:renderer:markup/html/index.js")).default;
   } else if(typeof renderer === "string"){
     renderer = (await import(renderer)).default;
   }

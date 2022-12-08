@@ -1,5 +1,5 @@
-import { Description, Example } from "../../../types/compositions.js";
-import { BuiltInRenderers, Renderer } from "../../../types/renderer.js";
+import { Description, Example } from "quickdoks:types:compositions.js";
+import { BuiltInRenderers, Renderer } from "quickdoks:types:renderer.js";
 
 
 export interface MarkupRenderImplementation {

@@ -1,7 +1,7 @@
 import { Symbol } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { ensureSymbolHasId, getIdBySymbol } from "../compositions/id.js";
+import { ensureSymbolHasId, getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { CompilerContext } from "quickdoks:types:context.js";
 
 
 export class Locker {

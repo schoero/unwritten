@@ -1,10 +1,10 @@
 import { TypeNode } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, TypeArgument } from "../../types/types.js";
-import { getIdByTypeNode } from "../compositions/id.js";
-import { getPositionByNode } from "../compositions/position.js";
-import { parseTypeNode } from "../entry-points/type-node.js";
+import { getIdByTypeNode } from "quickdoks:compiler:compositions/id.js";
+import { getPositionByNode } from "quickdoks:compiler:compositions/position.js";
+import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, TypeArgument } from "quickdoks:types:types.js";
 
 
 export function createTypeArgumentByTypeNode(ctx: CompilerContext, typeNode: TypeNode): TypeArgument {

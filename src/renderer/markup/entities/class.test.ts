@@ -1,9 +1,10 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
-import { createRenderContext } from "../../../../tests/utils/context.js";
-import { Class, Kind } from "../../../types/types.js";
-import { Real, Testable } from "../../../types/utils.js";
+import { createRenderContext } from "quickdoks:tests:utils/context.js";
+import { Class, Kind } from "quickdoks:types:types.js";
+import { Real, Testable } from "quickdoks:types:utils.js";
+
 import { renderClassForDocumentation, renderClassForTableOfContents } from "./class.js";
 
 

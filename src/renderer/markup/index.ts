@@ -1,4 +1,4 @@
-import { error } from "../../logger/index.js";
+import { error } from "quickdoks:logger:index.js";
 import {
   isClassType,
   isEnumType,
@@ -7,9 +7,10 @@ import {
   isNamespaceType,
   isTypeAliasType,
   isVariableType
-} from "../../typeguards/types.js";
-import { RenderContext } from "../../types/context.js";
-import { ExportableTypes } from "../../types/types.js";
+} from "quickdoks:typeguards/types.js";
+import { RenderContext } from "quickdoks:types:context.js";
+import { ExportableTypes } from "quickdoks:types:types.js";
+
 import { renderClassForDocumentation, renderClassForTableOfContents } from "./entities/class.js";
 import { renderEnumForDocumentation, renderEnumForTableOfContents } from "./entities/enum.js";
 import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./entities/function.js";

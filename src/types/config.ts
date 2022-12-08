@@ -1,4 +1,5 @@
-import { MarkupRenderConfig } from "../renderer/markup/types/config.js";
+import { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
+
 import { BuiltInRenderers } from "./renderer.js";
 import { Complete } from "./utils.js";
 

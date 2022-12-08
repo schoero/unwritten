@@ -2,7 +2,8 @@
 
 import { Command } from "commander";
 
-import { description, name, version } from "../utils/package-json.js";
+import { description, name, version } from "quickdoks:utils:package-json.js";
+
 import { debug } from "./debug.js";
 import { generate } from "./generate.js";
 import { init } from "./init.js";

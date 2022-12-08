@@ -1,8 +1,8 @@
 import { TypeChecker } from "typescript";
 
-import { CompleteConfig } from "../../types/config.js";
-import { CompilerContext } from "../../types/context.js";
-import { Locker } from "../locker/index.js";
+import { Locker } from "quickdoks:compiler:locker/index.js";
+import { CompleteConfig } from "quickdoks:types/config.js";
+import { CompilerContext } from "quickdoks:types/context.js";
 
 
 export function createContext(checker: TypeChecker, config: CompleteConfig): CompilerContext {

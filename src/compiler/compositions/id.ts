@@ -1,6 +1,6 @@
 import { Declaration, Symbol, Type, TypeNode } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
+import { CompilerContext } from "quickdoks:types:context.js";
 
 
 export function getIdBySymbol(ctx: CompilerContext, symbol: Symbol): number {

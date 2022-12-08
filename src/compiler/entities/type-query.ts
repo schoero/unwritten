@@ -1,9 +1,9 @@
 import { TypeQueryNode } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, TypeQuery } from "../../types/types.js";
-import { getIdByTypeNode } from "../compositions/id.js";
-import { parseType } from "../entry-points/type.js";
+import { getIdByTypeNode } from "quickdoks:compiler:compositions/id.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, TypeQuery } from "quickdoks:types:types.js";
 
 
 export function createTypeQueryByTypeNode(ctx: CompilerContext, typeNode: TypeQueryNode): TypeQuery {

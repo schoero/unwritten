@@ -1,12 +1,12 @@
 import { FunctionLikeDeclaration, Symbol, Type } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { assert } from "../../utils/general.js";
-import { getIdBySymbol, getIdByType } from "../compositions/id.js";
-import { getNameBySymbol } from "../compositions/name.js";
-import { createSignatureByDeclaration } from "../entities/signature.js";
-import { isFunctionLikeDeclaration } from "../typeguards/declarations.js";
-import { functionOverloadDeclarationFilter } from "../utils/filter.js";
+import { getIdBySymbol, getIdByType } from "quickdoks:compiler:compositions/id.js";
+import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { createSignatureByDeclaration } from "quickdoks:compiler:entities/signature.js";
+import { isFunctionLikeDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { functionOverloadDeclarationFilter } from "quickdoks:compiler:utils/filter.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export function createFunctionLikeBySymbol(ctx: CompilerContext, symbol: Symbol) {

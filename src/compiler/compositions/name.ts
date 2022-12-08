@@ -1,8 +1,8 @@
 import ts, { Declaration, Node, Symbol, Type } from "typescript";
 
-import { Name } from "../../types/compositions.js";
-import { CompilerContext } from "../../types/context.js";
-import { isConstructorDeclaration } from "../typeguards/declarations.js";
+import { isConstructorDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { Name } from "quickdoks:types:compositions.js";
+import { CompilerContext } from "quickdoks:types:context.js";
 
 
 export function getNameBySymbol(ctx: CompilerContext, symbol: Symbol): Name {

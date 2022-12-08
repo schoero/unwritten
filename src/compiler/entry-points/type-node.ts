@@ -1,12 +1,10 @@
 import { TypeNode } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Types } from "../../types/types.js";
-import { createArrayByArrayTypeNode } from "../entities/array.js";
-import { createExpressionByExpressionWithTypeArguments } from "../entities/expression.js";
-import { createTupleByTupleTypeNode } from "../entities/tuple-type.js";
-import { createTypeQueryByTypeNode } from "../entities/type-query.js";
-import { createTypeReferenceByTypeNode } from "../entities/type-reference.js";
+import { createArrayByArrayTypeNode } from "quickdoks:compiler:entities/array.js";
+import { createExpressionByExpressionWithTypeArguments } from "quickdoks:compiler:entities/expression.js";
+import { createTupleByTupleTypeNode } from "quickdoks:compiler:entities/tuple-type.js";
+import { createTypeQueryByTypeNode } from "quickdoks:compiler:entities/type-query.js";
+import { createTypeReferenceByTypeNode } from "quickdoks:compiler:entities/type-reference.js";
 import {
   isArrayTypeNode,
   isArrayTypeReferenceTypeNode,
@@ -14,7 +12,10 @@ import {
   isTupleTypeNode,
   isTypeQueryNode,
   isTypeReferenceNode
-} from "../typeguards/type-nodes.js";
+} from "quickdoks:compiler:typeguards/type-nodes.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Types } from "quickdoks:types:types.js";
+
 import { parseType } from "./type.js";
 
 

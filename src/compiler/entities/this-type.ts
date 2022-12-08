@@ -1,10 +1,10 @@
 import { Type } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, ThisType } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdByType } from "../compositions/id.js";
-import { parseSymbol } from "../entry-points/symbol.js";
+import { getIdByType } from "quickdoks:compiler:compositions/id.js";
+import { parseSymbol } from "quickdoks:compiler:entry-points/symbol.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, ThisType } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export function createThisByType(ctx: CompilerContext, thisType: Type): ThisType {

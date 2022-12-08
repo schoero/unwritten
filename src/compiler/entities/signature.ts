@@ -1,14 +1,15 @@
 import { FunctionLikeDeclaration, Signature as TSSignature, SignatureDeclaration } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, Signature } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdByDeclaration } from "../compositions/id.js";
-import { getDescriptionByDeclaration, getExampleByDeclaration } from "../compositions/jsdoc.js";
-import { getModifiersByDeclaration } from "../compositions/modifiers.js";
-import { getNameByDeclaration } from "../compositions/name.js";
-import { getPositionByDeclaration } from "../compositions/position.js";
-import { getReturnTypeByCallSignature } from "../compositions/return-type.js";
+import { getIdByDeclaration } from "quickdoks:compiler:compositions/id.js";
+import { getDescriptionByDeclaration, getExampleByDeclaration } from "quickdoks:compiler:compositions/jsdoc.js";
+import { getModifiersByDeclaration } from "quickdoks:compiler:compositions/modifiers.js";
+import { getNameByDeclaration } from "quickdoks:compiler:compositions/name.js";
+import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
+import { getReturnTypeByCallSignature } from "quickdoks:compiler:compositions/return-type.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, Signature } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
+
 import { createParameterByDeclaration } from "./parameter.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 

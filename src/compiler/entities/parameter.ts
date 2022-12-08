@@ -1,14 +1,14 @@
 import { ParameterDeclaration } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, Parameter } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdByDeclaration } from "../compositions/id.js";
-import { getInitializerByDeclaration } from "../compositions/initializer.js";
-import { getParameterDescription } from "../compositions/jsdoc.js";
-import { getNameByDeclaration } from "../compositions/name.js";
-import { getPositionByDeclaration } from "../compositions/position.js";
-import { createTypeByDeclaration } from "../entry-points/type.js";
+import { getIdByDeclaration } from "quickdoks:compiler:compositions/id.js";
+import { getInitializerByDeclaration } from "quickdoks:compiler:compositions/initializer.js";
+import { getParameterDescription } from "quickdoks:compiler:compositions/jsdoc.js";
+import { getNameByDeclaration } from "quickdoks:compiler:compositions/name.js";
+import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
+import { createTypeByDeclaration } from "quickdoks:compiler:entry-points/type.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, Parameter } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export function createParameterByDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration): Parameter {

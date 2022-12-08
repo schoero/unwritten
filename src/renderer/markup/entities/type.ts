@@ -1,15 +1,16 @@
+import { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
+import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
+import { encapsulate } from "quickdoks:renderer:markup/utils/renderer.js";
 import {
   isInstanceType,
   isIntersectionType,
   isLiteralType,
   isPrimitiveType,
   isUnionType
-} from "../../../typeguards/types.js";
-import { RenderContext } from "../../../types/context.js";
-import { Kind, Type } from "../../../types/types.js";
-import { MarkupRenderer } from "../types/renderer.js";
-import { getRenderConfig } from "../utils/config.js";
-import { encapsulate } from "../utils/renderer.js";
+} from "quickdoks:typeguards/types.js";
+import { RenderContext } from "quickdoks:types:context.js";
+import { Kind, Type } from "quickdoks:types:types.js";
+
 import { renderInstanceType } from "./instance.js";
 import { renderIntersectionType } from "./intersection.js";
 import { renderLiteralType } from "./literal.js";

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { expect, it } from "vitest";
 
-import { createConfig } from "../../../src/config/index.js";
-import { scope } from "../../utils/scope.js";
+import { createConfig } from "quickdoks:config/index.js";
+import { scope } from "quickdoks:tests:utils/scope.js";
 
 
 scope("Integration", "Config", async () => {

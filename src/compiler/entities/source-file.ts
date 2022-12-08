@@ -1,13 +1,13 @@
 import { Symbol } from "typescript";
 
-import { isExportableType } from "../../typeguards/types.js";
-import { CompilerContext } from "../../types/context.js";
-import { ExportableTypes, Kind, SourceFile } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdBySymbol } from "../compositions/id.js";
-import { getNameBySymbol } from "../compositions/name.js";
-import { parseSymbol } from "../entry-points/symbol.js";
-import { getExportedSymbols, lockSymbol } from "../utils/ts.js";
+import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { parseSymbol } from "quickdoks:compiler:entry-points/symbol.js";
+import { getExportedSymbols, lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { isExportableType } from "quickdoks:typeguards/types.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { ExportableTypes, Kind, SourceFile } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
 
 
 export const createSourceFileBySymbol = (ctx: CompilerContext, symbol: Symbol): SourceFile => lockSymbol(ctx, symbol, () => {

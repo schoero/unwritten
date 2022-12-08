@@ -1,13 +1,18 @@
 import { ObjectType as TSObjectType } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { getIdByType } from "../compositions/id.js";
-import { createGetterBySymbol } from "../entities/getter.js";
-import { createMethodBySymbol } from "../entities/method.js";
-import { createPropertyBySymbol } from "../entities/property.js";
-import { createSetterBySymbol } from "../entities/setter.js";
-import { createSignatureBySignature } from "../entities/signature.js";
-import { isGetterSymbol, isMethodSymbol, isPropertySymbol, isSetterSymbol } from "../typeguards/symbols.js";
+import { getIdByType } from "quickdoks:compiler:compositions/id.js";
+import { createGetterBySymbol } from "quickdoks:compiler:entities/getter.js";
+import { createMethodBySymbol } from "quickdoks:compiler:entities/method.js";
+import { createPropertyBySymbol } from "quickdoks:compiler:entities/property.js";
+import { createSetterBySymbol } from "quickdoks:compiler:entities/setter.js";
+import { createSignatureBySignature } from "quickdoks:compiler:entities/signature.js";
+import {
+  isGetterSymbol,
+  isMethodSymbol,
+  isPropertySymbol,
+  isSetterSymbol
+} from "quickdoks:compiler:typeguards/symbols.js";
+import { CompilerContext } from "quickdoks:types:context.js";
 
 
 export function createObjectTypeByType(ctx: CompilerContext, type: TSObjectType) {

@@ -34,7 +34,9 @@
 
   //-- ES module import
 
+  "typescript.preferences.importModuleSpecifier": "shortest",
   "typescript.preferences.importModuleSpecifierEnding": "js",
+  "typescript.preferences.useAliasesForRenames": true,
 
 
   //-- Markdown

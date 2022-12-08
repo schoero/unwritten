@@ -1,9 +1,6 @@
 import { Type } from "typescript";
 
-import { error } from "../../logger/index.js";
-import { CompilerContext } from "../../types/context.js";
-import { Kind, PrimitiveTypeKinds, PrimitiveTypes } from "../../types/types.js";
-import { getIdByType } from "../compositions/id.js";
+import { getIdByType } from "quickdoks:compiler:compositions/id.js";
 import {
   isAnyType,
   isBigIntType,
@@ -15,7 +12,10 @@ import {
   isUndefinedType,
   isUnknownType,
   isVoidType
-} from "../typeguards/types.js";
+} from "quickdoks:compiler:typeguards/types.js";
+import { error } from "quickdoks:logger:index.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, PrimitiveTypeKinds, PrimitiveTypes } from "quickdoks:types:types.js";
 
 
 export function createPrimitiveType(ctx: CompilerContext, type: Type): PrimitiveTypes {

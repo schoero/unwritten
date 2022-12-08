@@ -1,15 +1,11 @@
 import { HeritageClause, InterfaceDeclaration, NodeArray, Symbol, Type } from "typescript";
 
-import { isExpression } from "../../typeguards/types.js";
-import { CompilerContext } from "../../types/context.js";
-import { Expression, Interface, Kind, MergedInterface } from "../../types/types.js";
-import { assert } from "../../utils/general.js";
-import { getIdByDeclaration, getIdBySymbol } from "../compositions/id.js";
-import { getDescriptionBySymbol, getExampleByDeclaration } from "../compositions/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "../compositions/name.js";
-import { getPositionByDeclaration } from "../compositions/position.js";
-import { parseType } from "../entry-points/type.js";
-import { parseTypeNode } from "../entry-points/type-node.js";
+import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { getDescriptionBySymbol, getExampleByDeclaration } from "quickdoks:compiler:compositions/jsdoc.js";
+import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
+import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
@@ -18,8 +14,13 @@ import {
   isMethodSignatureDeclaration,
   isPropertySignatureDeclaration,
   isSetterSignatureDeclaration
-} from "../typeguards/declarations.js";
-import { lockSymbol } from "../utils/ts.js";
+} from "quickdoks:compiler:typeguards/declarations.js";
+import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { isExpression } from "quickdoks:typeguards/types.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Expression, Interface, Kind, MergedInterface } from "quickdoks:types:types.js";
+import { assert } from "quickdoks:utils:general.js";
+
 import { createPropertyByDeclaration } from "./property.js";
 import { createSignatureByDeclaration } from "./signature.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";

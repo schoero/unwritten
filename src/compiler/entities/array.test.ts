@@ -2,11 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { compile } from "../../../tests/utils/compile.js";
-import { scope } from "../../../tests/utils/scope.js";
-import { ts } from "../../../tests/utils/template.js";
-import { ArrayType, Kind } from "../../types/types.js";
-import { getIdBySymbol } from "../compositions/id.js";
+import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { compile } from "quickdoks:tests:/utils/compile.js";
+import { scope } from "quickdoks:tests:/utils/scope.js";
+import { ts } from "quickdoks:tests:/utils/template.js";
+import { ArrayType, Kind } from "quickdoks:types:types.js";
+
 import { createTypeAliasBySymbol } from "./type-alias.js";
 
 

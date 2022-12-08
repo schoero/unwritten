@@ -1,9 +1,9 @@
 import { Symbol, Type } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Getter, Kind } from "../../types/types.js";
-import { createFunctionLikeBySymbol, createFunctionLikeByType } from "../shared/function-like.js";
-import { lockSymbol } from "../utils/ts.js";
+import { createFunctionLikeBySymbol, createFunctionLikeByType } from "quickdoks:compiler:shared/function-like.js";
+import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Getter, Kind } from "quickdoks:types:types.js";
 
 
 export const createGetterBySymbol = (ctx: CompilerContext, symbol: Symbol): Getter => lockSymbol(ctx, symbol, () => {

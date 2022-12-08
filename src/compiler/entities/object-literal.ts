@@ -1,8 +1,8 @@
 import { ObjectType } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, ObjectLiteral } from "../../types/types.js";
-import { createObjectTypeByType } from "../shared/object-type.js";
+import { createObjectTypeByType } from "quickdoks:compiler:shared/object-type.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, ObjectLiteral } from "quickdoks:types:types.js";
 
 
 export function createObjectLiteralByType(ctx: CompilerContext, type: ObjectType): ObjectLiteral {

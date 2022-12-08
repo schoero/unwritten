@@ -1,8 +1,9 @@
 import { Symbol } from "typescript";
 
-import { CompilerContext } from "../../types/context.js";
-import { Kind, Module } from "../../types/types.js";
-import { lockSymbol } from "../utils/ts.js";
+import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { CompilerContext } from "quickdoks:types:context.js";
+import { Kind, Module } from "quickdoks:types:types.js";
+
 import { createSourceFileBySymbol } from "./source-file.js";
 
 

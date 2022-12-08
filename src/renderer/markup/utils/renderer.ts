@@ -1,9 +1,11 @@
-import { contentFilter } from "../../../compiler/utils/filter.js";
-import { RenderContext } from "../../../types/context.js";
-import { DeepOmit } from "../../../types/utils.js";
+import { contentFilter } from "quickdoks:compiler:utils/filter.js";
+import { Encapsulation } from "quickdoks:renderer:markup/types/config.js";
+import { MarkupRenderer, RenderCategories } from "quickdoks:renderer:markup/types/renderer.js";
+import { RenderContext } from "quickdoks:types:context.js";
+import { DeepOmit } from "quickdoks:types:utils.js";
+
 import { createAnchor } from "../linker/index.js";
-import { Encapsulation } from "../types/config.js";
-import { MarkupRenderer, RenderCategories } from "../types/renderer.js";
+
 import { getRenderConfig } from "./config.js";
 
 

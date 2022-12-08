@@ -1,4 +1,9 @@
-import { RenderedList, RenderedMultilineContent, RenderedTitle, RenderObject } from "../types/renderer.js";
+import {
+  RenderedList,
+  RenderedMultilineContent,
+  RenderedTitle,
+  RenderObject
+} from "quickdoks:renderer:markup/types/renderer.js";
 
 
 export function isRenderedList(renderObject: RenderObject): renderObject is RenderedList {

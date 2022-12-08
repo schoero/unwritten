@@ -1,5 +1,5 @@
-import { EOL } from "os";
-import { stdout } from "process";
+import { EOL } from "node:os";
+import { stdout } from "node:process";
 
 
 const green = "\x1b[32m";
