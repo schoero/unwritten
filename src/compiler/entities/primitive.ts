@@ -20,11 +20,11 @@ import { Kind, PrimitiveTypeKinds, PrimitiveTypes } from "quickdoks:types:types.
 
 export function createPrimitiveType(ctx: CompilerContext, type: Type): PrimitiveTypes {
 
-  const kind = _getPrimitiveTypeKind(ctx, type);
-  const name = _getIntrinsicName(ctx, type);
+  const kind = _getPrimitiveTypeKind(type);
+  const name = _getIntrinsicName(type);
   const id = getIdByType(ctx, type);
 
-  return {
+  return <PrimitiveTypes>{
     id,
     kind,
     name
@@ -33,7 +33,7 @@ export function createPrimitiveType(ctx: CompilerContext, type: Type): Primitive
 }
 
 
-function _getPrimitiveTypeKind(ctx: CompilerContext, type: Type): PrimitiveTypeKinds {
+function _getPrimitiveTypeKind(type: Type): PrimitiveTypeKinds {
 
   if(isStringType(type)){
     return Kind.String;
@@ -62,7 +62,7 @@ function _getPrimitiveTypeKind(ctx: CompilerContext, type: Type): PrimitiveTypeK
 }
 
 
-function _getIntrinsicName(ctx: CompilerContext, type: Type): string | undefined {
+function _getIntrinsicName(type: Type): string {
 
   if(isStringType(type)){
     return "string";
@@ -82,6 +82,10 @@ function _getIntrinsicName(ctx: CompilerContext, type: Type): string | undefined
     return "never";
   } else if(isAnyType(type)){
     return "any";
+  } else if(isUnknownType(type)){
+    return "unknown";
   }
+
+  throw error("type is not a primitive type");
 
 }

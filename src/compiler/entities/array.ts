@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/array-type */
-
-
 import { ArrayTypeNode, TypeReference, TypeReferenceNode } from "typescript";
 
 import { getIdByType } from "quickdoks:compiler:compositions/id.js";

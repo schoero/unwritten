@@ -4,7 +4,7 @@ import { getIdBySymbol, getIdByTypeNode } from "quickdoks:compiler:compositions/
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "quickdoks:compiler:typeguards/type-nodes.js";
-import { isLiteralType } from "quickdoks:compiler:typeguards/types.js";
+import { isLiteralType } from "quickdoks:typeguards/types.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Kind, MappedType, MappedTypeMember } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";

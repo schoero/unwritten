@@ -1,27 +1,28 @@
 import { Declaration, Symbol, Type, TypeNode } from "typescript";
 
+import { ID } from "quickdoks:types:compositions.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 
 
-export function getIdBySymbol(ctx: CompilerContext, symbol: Symbol): number {
+export function getIdBySymbol(ctx: CompilerContext, symbol: Symbol): ID {
   ensureSymbolHasId(ctx, symbol);
   // @ts-expect-error - Internal API
   return symbol.id;
 }
 
-export function getIdByDeclaration(ctx: CompilerContext, declaration: Declaration): number {
+export function getIdByDeclaration(ctx: CompilerContext, declaration: Declaration): ID {
   ensureDeclarationHasId(ctx, declaration);
   // @ts-expect-error - Internal API
   return declaration.id;
 }
 
-export function getIdByType(ctx: CompilerContext, type: Type): number {
+export function getIdByType(ctx: CompilerContext, type: Type): ID {
   ensureTypeHasId(ctx, type);
   // @ts-expect-error - Internal API
   return type.id;
 }
 
-export function getIdByTypeNode(ctx: CompilerContext, typeNode: TypeNode): number {
+export function getIdByTypeNode(ctx: CompilerContext, typeNode: TypeNode): ID {
   ensureTypeNodeHasId(ctx, typeNode);
   // @ts-expect-error - Internal API
   return typeNode.id;
