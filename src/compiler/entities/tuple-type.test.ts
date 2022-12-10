@@ -16,7 +16,7 @@ scope("Compiler", Kind.Tuple, () => {
   {
 
     const testFileContent = ts`
-    export type TupleType = [string, number];
+      export type TupleType = [string, number];
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);
@@ -51,18 +51,37 @@ scope("Compiler", Kind.Tuple, () => {
   {
 
     const testFileContent = ts`
-      export type TupleTypeWithRest = [string, ...number[]];
+      export type TupleTypeWithRestAtTheEnd = [string, ...number[]];
+      export type TupleTypeWithRestAtTheBeginning = [ ...number[], string];
+      export type TupleTypeWithRestInTheMiddle = [ string, ...number[], string];
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);
 
-    const symbol = exportedSymbols.find(s => s.name === "TupleTypeWithRest")!;
-    const exportedTypeAlias = createTypeAliasBySymbol(ctx, symbol);
+    const tupleTypeAliasWithRestAtTheEndSymbol = exportedSymbols.find(s => s.name === "TupleTypeWithRestAtTheEnd")!;
+    const tupleTypeAliasWithRestAtTheBeginningSymbol = exportedSymbols.find(s => s.name === "TupleTypeWithRestAtTheBeginning")!;
+    const tupleTypeAliasWithRestInTheMiddleSymbol = exportedSymbols.find(s => s.name === "TupleTypeWithRestInTheMiddle")!;
+    const exportedTupleTypeAliasWithRestAtTheEnd = createTypeAliasBySymbol(ctx, tupleTypeAliasWithRestAtTheEndSymbol);
+    const exportedTupleTypeAliasWithRestAtTheBeginning = createTypeAliasBySymbol(ctx, tupleTypeAliasWithRestAtTheBeginningSymbol);
+    const exportedTupleTypeAliasWithRestInTheMiddle = createTypeAliasBySymbol(ctx, tupleTypeAliasWithRestInTheMiddleSymbol);
 
-    it("should support rest elements", () => {
-      expect((exportedTypeAlias.type as TupleType).members).to.have.lengthOf(2);
-      expect((exportedTypeAlias.type as TupleType).members[0]!.rest).to.equal(false);
-      expect((exportedTypeAlias.type as TupleType).members[1]!.rest).to.equal(true);
+    it("should support rest elements at the end", () => {
+      expect((exportedTupleTypeAliasWithRestAtTheEnd.type as TupleType).members).to.have.lengthOf(2);
+      expect((exportedTupleTypeAliasWithRestAtTheEnd.type as TupleType).members[0]!.rest).to.equal(false);
+      expect((exportedTupleTypeAliasWithRestAtTheEnd.type as TupleType).members[1]!.rest).to.equal(true);
+    });
+
+    it("should support rest elements at the beginning", () => {
+      expect((exportedTupleTypeAliasWithRestAtTheBeginning.type as TupleType).members).to.have.lengthOf(2);
+      expect((exportedTupleTypeAliasWithRestAtTheBeginning.type as TupleType).members[0]!.rest).to.equal(true);
+      expect((exportedTupleTypeAliasWithRestAtTheBeginning.type as TupleType).members[1]!.rest).to.equal(false);
+    });
+
+    it("should support rest elements at the beginning", () => {
+      expect((exportedTupleTypeAliasWithRestInTheMiddle.type as TupleType).members).to.have.lengthOf(3);
+      expect((exportedTupleTypeAliasWithRestInTheMiddle.type as TupleType).members[0]!.rest).to.equal(false);
+      expect((exportedTupleTypeAliasWithRestInTheMiddle.type as TupleType).members[1]!.rest).to.equal(true);
+      expect((exportedTupleTypeAliasWithRestInTheMiddle.type as TupleType).members[2]!.rest).to.equal(false);
     });
 
   }
