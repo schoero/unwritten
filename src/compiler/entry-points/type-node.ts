@@ -1,5 +1,6 @@
 import { TypeNode } from "typescript";
 
+import { createTemplateLiteralTypeByTypeNode } from "quickdoks:compiler/entities/template-literal-type.js";
 import { createArrayByArrayTypeNode } from "quickdoks:compiler:entities/array.js";
 import { createExpressionByExpressionWithTypeArguments } from "quickdoks:compiler:entities/expression.js";
 import { createTupleByTupleTypeNode } from "quickdoks:compiler:entities/tuple-type.js";
@@ -9,6 +10,7 @@ import {
   isArrayTypeNode,
   isArrayTypeReferenceTypeNode,
   isExpressionWithTypeArguments,
+  isTemplateLiteralTypeNode,
   isTupleTypeNode,
   isTypeQueryNode,
   isTypeReferenceNode
@@ -36,6 +38,8 @@ export function parseTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
     return createTypeQueryByTypeNode(ctx, typeNode);
   } else if(isExpressionWithTypeArguments(typeNode)){
     return createExpressionByExpressionWithTypeArguments(ctx, typeNode);
+  } else if(isTemplateLiteralTypeNode(typeNode)){
+    return createTemplateLiteralTypeByTypeNode(ctx, typeNode);
   }
 
   const type = ctx.checker.getTypeFromTypeNode(typeNode);

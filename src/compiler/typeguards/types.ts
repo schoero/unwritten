@@ -45,7 +45,7 @@ export function isBigIntType(type: Type): boolean {
   return (type.flags & ts.TypeFlags.BigInt) !== 0;
 }
 
-export function isBooleanLiteralType(type: Type): boolean {
+export function isBooleanLiteralType(type: Type): type is LiteralType {
   return (type.flags & ts.TypeFlags.BooleanLiteral) !== 0;
 }
 
@@ -154,6 +154,10 @@ export function isStringLiteralType(type: Type): type is StringLiteralType {
 
 export function isStringType(type: Type): boolean {
   return (type.flags & ts.TypeFlags.String) !== 0;
+}
+
+export function isSymbolType(type: Type) {
+  return (type.flags & ts.TypeFlags.ESSymbol) !== 0;
 }
 
 export function isThisType(type: Type): boolean {

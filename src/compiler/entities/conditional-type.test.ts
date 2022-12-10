@@ -1,8 +1,8 @@
 import { expect, it } from "vitest";
 
-import { compile } from "quickdoks:tests:/utils/compile.js";
-import { scope } from "quickdoks:tests:/utils/scope.js";
-import { ts } from "quickdoks:tests:/utils/template.js";
+import { compile } from "quickdoks:tests:utils/compile.js";
+import { scope } from "quickdoks:tests:utils/scope.js";
+import { ts } from "quickdoks:tests:utils/template.js";
 import { ConditionalType, Kind, TypeParameter, TypeReference } from "quickdoks:types:types.js";
 
 import { createTypeAliasBySymbol } from "./type-alias.js";

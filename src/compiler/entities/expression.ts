@@ -13,7 +13,9 @@ export function createExpressionByExpressionWithTypeArguments(ctx: CompilerConte
   const kind = Kind.Expression;
   const id = getIdByTypeNode(ctx, expressionWithTypeArguments);
   const tsType = ctx.checker.getTypeAtLocation(expressionWithTypeArguments);
-  const type = parseType(ctx, tsType);
+  const tsTypeSymbol = tsType.getSymbol();
+  const declType = ctx.checker.getTypeOfSymbolAtLocation(tsTypeSymbol!, expressionWithTypeArguments.expression);
+  const type = parseType(ctx, declType);
   const typeArguments = expressionWithTypeArguments.typeArguments?.map(typeNode => createTypeArgumentByTypeNode(ctx, typeNode));
 
   return {

@@ -41,6 +41,7 @@ export enum Kind {
   String = "String",
   StringLiteral = "StringLiteral",
   Symbol = "Symbol",
+  TemplateLiteral = "TemplateLiteral",
   ThisType = "This",
   Tuple = "Tuple",
   TypeAlias = "TypeAlias",
@@ -117,6 +118,7 @@ export type Types =
   | Property
   | Setter
   | SourceFile
+  | TemplateLiteralType
   | ThisType
   | TupleType
   | TypeArgument
@@ -442,7 +444,16 @@ export type TypeAlias = Type<Kind.TypeAlias> & {
 };
 
 
-//-- Type Literal
+//-- Template literal
+
+export type TemplateLiteralType = Type<Kind.TemplateLiteral> & {
+  spans: string[];
+  types: Types[];
+  head?: string;
+};
+
+
+//-- Type literal
 
 export type TypeLiteral = ObjectType<Kind.TypeLiteral> & {
 };

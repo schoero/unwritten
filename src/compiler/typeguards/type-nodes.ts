@@ -5,6 +5,7 @@ import ts, {
   IndexedAccessTypeNode,
   MappedTypeNode,
   Symbol,
+  TemplateLiteralTypeNode,
   TupleTypeNode,
   Type,
   TypeNode,
@@ -30,6 +31,10 @@ export function isIndexedAccessTypeNode(node: TypeNode): node is IndexedAccessTy
 
 export function isMappedTypeNode(typeNode: TypeNode): typeNode is MappedTypeNode {
   return ts.isMappedTypeNode(typeNode);
+}
+
+export function isTemplateLiteralTypeNode(typeNode: TypeNode): typeNode is TemplateLiteralTypeNode {
+  return ts.isTemplateLiteralTypeNode(typeNode);
 }
 
 export function isThisTypeNode(typeNode: TypeNode): boolean {

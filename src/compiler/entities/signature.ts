@@ -1,11 +1,15 @@
 import { FunctionLikeDeclaration, Signature as TSSignature, SignatureDeclaration } from "typescript";
 
 import { getIdByDeclaration } from "quickdoks:compiler:compositions/id.js";
-import { getDescriptionByDeclaration, getExampleByDeclaration } from "quickdoks:compiler:compositions/jsdoc.js";
+import {
+  getDescriptionByDeclaration,
+  getExampleByDeclaration,
+  getReturnTypeDescription
+} from "quickdoks:compiler:compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "quickdoks:compiler:compositions/modifiers.js";
 import { getNameByDeclaration } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
-import { getReturnTypeByCallSignature } from "quickdoks:compiler:compositions/return-type.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Kind, Signature } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
@@ -26,7 +30,7 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
 
   const parameters = declaration.parameters.map(declaration => createParameterByDeclaration(ctx, declaration));
   const typeParameters = declaration.typeParameters?.map(declaration => createTypeParameterByDeclaration(ctx, declaration));
-  const returnType = getReturnTypeByCallSignature(ctx, signature);
+  const returnType = _getReturnTypeByCallSignature(ctx, signature);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
@@ -63,4 +67,19 @@ export function createSignatureBySignature(ctx: CompilerContext, signature: TSSi
 
   const signatureDeclaration = signature.getDeclaration();
   return createSignatureByDeclaration(ctx, signatureDeclaration);
+}
+
+
+function _getReturnTypeByCallSignature(ctx: CompilerContext, callSignature: TSSignature) {
+
+  const returnType = callSignature.getReturnType();
+  const returnTypeDescription = getReturnTypeDescription(ctx, callSignature.getDeclaration());
+
+  assert(returnType, "Function return type is missing.");
+
+  return {
+    description: returnTypeDescription,
+    ...parseType(ctx, returnType)
+  };
+
 }

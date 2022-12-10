@@ -1,40 +1,66 @@
 import { Declaration, ObjectType as TSObjectType, Symbol, Type } from "typescript";
 
 import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { createAnyType } from "quickdoks:compiler:entities/any-type.js";
 import { createArrayByTypeReference } from "quickdoks:compiler:entities/array.js";
+import { createBigIntLiteralType } from "quickdoks:compiler:entities/bigint-literal-type.js";
+import { createBigIntType } from "quickdoks:compiler:entities/bigint-type.js";
+import { createBooleanLiteralType } from "quickdoks:compiler:entities/boolean-literal-type.js";
+import { createBooleanType } from "quickdoks:compiler:entities/boolean-type.js";
 import { createClassByType } from "quickdoks:compiler:entities/class.js";
 import { createConditionalType } from "quickdoks:compiler:entities/conditional-type.js";
 import { createFunctionByType } from "quickdoks:compiler:entities/function.js";
 import { createInterfaceByType } from "quickdoks:compiler:entities/interface.js";
 import { createIntersectionTypeByType } from "quickdoks:compiler:entities/intersection-type.js";
-import { createLiteralType } from "quickdoks:compiler:entities/literal-type.js";
 import { createMappedTypeByType } from "quickdoks:compiler:entities/mapped-type.js";
+import { createNeverType } from "quickdoks:compiler:entities/never-type.js";
+import { createNullType } from "quickdoks:compiler:entities/null-type.js";
+import { createNumberLiteralType } from "quickdoks:compiler:entities/number-literal-type.js";
+import { createNumberType } from "quickdoks:compiler:entities/number-type.js";
 import { createObjectLiteralByType } from "quickdoks:compiler:entities/object-literal.js";
-import { createPrimitiveType } from "quickdoks:compiler:entities/primitive.js";
+import { createStringLiteralType } from "quickdoks:compiler:entities/string-literal-type.js";
+import { createStringType } from "quickdoks:compiler:entities/string-type.js";
+import { createSymbolType } from "quickdoks:compiler:entities/symbol-type.js";
 import { createThisByType } from "quickdoks:compiler:entities/this-type.js";
 import { createTupleTypeByTypeReference } from "quickdoks:compiler:entities/tuple-type.js";
 import { createTypeLiteralByType } from "quickdoks:compiler:entities/type-literal.js";
 import { createTypeParameterByType } from "quickdoks:compiler:entities/type-parameter.js";
+import { createUndefinedType } from "quickdoks:compiler:entities/undefined-type.js";
 import { createUnionTypeByType } from "quickdoks:compiler:entities/union-type.js";
+import { createUnknownType } from "quickdoks:compiler:entities/unknown-type.js";
 import { createUnresolvedBySymbol, createUnresolvedByType } from "quickdoks:compiler:entities/unresolved.js";
+import { createVoidType } from "quickdoks:compiler:entities/void-type.js";
 import {
+  isAnyType,
   isArrayTypeReferenceType,
+  isBigIntLiteralType,
+  isBigIntType,
+  isBooleanLiteralType,
+  isBooleanType,
   isClassType,
   isConditionalType,
   isFunctionLikeType,
   isInterfaceType,
   isIntersectionType,
-  isLiteralType,
   isMappedType,
+  isNeverType,
+  isNullType,
+  isNumberLiteralType,
+  isNumberType,
   isObjectLiteralType,
   isObjectType,
-  isPrimitiveType,
+  isStringLiteralType,
+  isStringType,
+  isSymbolType,
   isThisType,
   isTupleTypeReferenceType,
   isTypeLiteralType,
   isTypeParameterType,
   isTypeReferenceType,
-  isUnionType
+  isUndefinedType,
+  isUnionType,
+  isUnknownType,
+  isVoidType
 } from "quickdoks:compiler:typeguards/types.js";
 import { error } from "quickdoks:logger:index.js";
 import { CompilerContext } from "quickdoks:types:context.js";
@@ -75,10 +101,36 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
     return createThisByType(ctx, type);
   } else if(isConditionalType(type)){
     return createConditionalType(ctx, type);
-  } else if(isLiteralType(type)){
-    return createLiteralType(ctx, type);
-  } else if(isPrimitiveType(type)){
-    return createPrimitiveType(ctx, type);
+  } else if(isStringLiteralType(type)){
+    return createStringLiteralType(ctx, type);
+  } else if(isNumberLiteralType(type)){
+    return createNumberLiteralType(ctx, type);
+  } else if(isBigIntLiteralType(type)){
+    return createBigIntLiteralType(ctx, type);
+  } else if(isBooleanLiteralType(type)){
+    return createBooleanLiteralType(ctx, type);
+  } else if(isStringType(type)){
+    return createStringType(ctx, type);
+  } else if(isNumberType(type)){
+    return createNumberType(ctx, type);
+  } else if(isBooleanType(type)){
+    return createBooleanType(ctx, type);
+  } else if(isBigIntType(type)){
+    return createBigIntType(ctx, type);
+  } else if(isVoidType(type)){
+    return createVoidType(ctx, type);
+  } else if(isUndefinedType(type)){
+    return createUndefinedType(ctx, type);
+  } else if(isNullType(type)){
+    return createNullType(ctx, type);
+  } else if(isAnyType(type)){
+    return createAnyType(ctx, type);
+  } else if(isUnknownType(type)){
+    return createUnknownType(ctx, type);
+  } else if(isNeverType(type)){
+    return createNeverType(ctx, type);
+  } else if(isSymbolType(type)){
+    return createSymbolType(ctx, type);
   } else if(isUnionType(type)){
     return createUnionTypeByType(ctx, type);
   } else if(isIntersectionType(type)){
