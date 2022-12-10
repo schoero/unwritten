@@ -62,7 +62,6 @@ import {
   isUnknownType,
   isVoidType
 } from "quickdoks:compiler:typeguards/types.js";
-import { error } from "quickdoks:logger:index.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Types } from "quickdoks:types:types.js";
 import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
@@ -95,7 +94,7 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
   }
 
 
-  //-- Order is important! Sort by most specific to least specific
+  //-- Order is important! Parse most specific types first
 
   if(isThisType(type)){
     return createThisByType(ctx, type);
@@ -180,6 +179,6 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
     // return parseSymbol(ctx, symbol);
   }
 
-  throw error("Unknown object type");
+  throw new Error("Unknown object type");
 
 }

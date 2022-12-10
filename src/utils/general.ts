@@ -1,4 +1,4 @@
-import { error } from "quickdoks:logger:index.js";
+import { error } from "quickdoks:logger/index.js";
 
 
 export function sortKeys(_: string, value: any) {

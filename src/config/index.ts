@@ -1,8 +1,8 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { error, log } from "quickdoks:logger:index.js";
 import { defaultRenderConfig } from "quickdoks:renderer:markup/config/default.js";
+import { DefaultContext } from "quickdoks:types/context.js";
 import { CompleteConfig, Config } from "quickdoks:types:config.js";
 import { BuiltInRenderers } from "quickdoks:types:renderer.js";
 import { findFile } from "quickdoks:utils:finder.js";
@@ -11,7 +11,7 @@ import { override } from "quickdoks:utils:override.js";
 import { defaultCompilerConfig, defaultExternalTypes } from "./default.js";
 
 
-export async function createConfig(configOrPath?: Config | string): Promise<CompleteConfig> {
+export async function createConfig(ctx: DefaultContext, configOrPath?: Config | string): Promise<CompleteConfig> {
 
   const defaultConfig = getDefaultConfig();
 
@@ -21,14 +21,14 @@ export async function createConfig(configOrPath?: Config | string): Promise<Comp
   if(typeof configOrPath === "object"){
 
     userConfig = configOrPath;
-    log("Using provided config.");
+    ctx.logger?.log("Using provided config.");
 
   } else if(typeof configOrPath === "string"){
 
     absoluteConfigPath = resolve(configOrPath);
 
     if(existsSync(absoluteConfigPath) === false){
-      throw error(`Config file does not exist at ${absoluteConfigPath}`);
+      throw Error(`Config file does not exist at ${absoluteConfigPath}`);
     }
 
   } else if(typeof configOrPath === "undefined"){
@@ -41,9 +41,9 @@ export async function createConfig(configOrPath?: Config | string): Promise<Comp
     ], configOrPath);
 
     if(absoluteConfigPath === undefined){
-      log("Using default config.");
+      ctx.logger?.log("Using default config.");
     } else {
-      log(`Using config found at ${absoluteConfigPath}`);
+      ctx.logger?.log(`Using config found at ${absoluteConfigPath}`);
     }
 
   }
@@ -70,13 +70,13 @@ async function getExtendConfig(config: Config): Promise<Config> {
   }
 
   if(typeof config.extends !== "string"){
-    throw error(`Config extends property must be a string if it exists.`);
+    throw new Error(`Config extends property must be a string if it exists.`);
   }
 
   let loadedConfig = (await import(config.extends)).default;
 
   if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
-    throw error(`The extended config is not an object.`);
+    throw new Error(`The extended config is not an object.`);
   }
 
   if(typeof loadedConfig.extends === "string"){

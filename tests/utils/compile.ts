@@ -5,7 +5,6 @@ import ts from "typescript";
 import { reportCompilerDiagnostics } from "quickdoks:compiler:index.js";
 import { Locker } from "quickdoks:compiler:locker/index.js";
 import { getDefaultConfig } from "quickdoks:config/index.js";
-import { disableLog } from "quickdoks:logger:index.js";
 import { CompleteConfig } from "quickdoks:types:config.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { assert } from "quickdoks:utils:general.js";
@@ -39,14 +38,9 @@ export function compile(code: string, compilerOptions?: ts.CompilerOptions, conf
 
   //-- Report any compiler messages
 
-  reportCompilerDiagnostics(program.getSemanticDiagnostics());
+  reportCompilerDiagnostics({}, program.getSemanticDiagnostics());
 
   const checker = program.getTypeChecker();
-
-
-  //-- Disable log
-
-  disableLog();
 
 
   //-- Get file
