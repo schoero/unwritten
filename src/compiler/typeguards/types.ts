@@ -88,7 +88,9 @@ export function isIndexedAccessType(type: Type): type is IndexedAccessType {
 }
 
 export function isInstanceType(type: Type): type is TypeReference {
-  return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Reference) !== 0 && (type.objectFlags & ts.ObjectFlags.Class) !== 0;
+  return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Reference) !== 0 &&
+    ((type.objectFlags & ts.ObjectFlags.Instantiated) !== 0 ||
+    (type.objectFlags & ts.ObjectFlags.InstantiationExpressionType) !== 0);
 }
 
 export function isInterfaceType(type: Type): type is InterfaceType {

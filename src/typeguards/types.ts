@@ -2,7 +2,6 @@ import {
   BigIntLiteralType,
   BooleanLiteralType,
   Class,
-  Constructor,
   Enum,
   ExportableTypes,
   Expression,
@@ -39,10 +38,6 @@ export function isBooleanLiteralType(type: Types): type is BooleanLiteralType {
 
 export function isClassType(type: Types): type is Class {
   return type.kind === Kind.Class;
-}
-
-export function isConstructorType(type: Types): type is Constructor {
-  return type.kind === Kind.Constructor;
 }
 
 export function isEnumType(type: Types): type is Enum {

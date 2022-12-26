@@ -1,35 +1,41 @@
 import { Declaration, ObjectType as TSObjectType, Symbol, Type } from "typescript";
 
+import { createObjectTypeByType } from "quickdoks:compiler/shared/object-type.js";
+import { isTypeLocked } from "quickdoks:compiler/utils/ts.js";
 import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
-import { createAnyType } from "quickdoks:compiler:entities/any-type.js";
-import { createArrayByTypeReference } from "quickdoks:compiler:entities/array.js";
-import { createBigIntLiteralType } from "quickdoks:compiler:entities/bigint-literal-type.js";
-import { createBigIntType } from "quickdoks:compiler:entities/bigint-type.js";
-import { createBooleanLiteralType } from "quickdoks:compiler:entities/boolean-literal-type.js";
-import { createBooleanType } from "quickdoks:compiler:entities/boolean-type.js";
-import { createClassByType } from "quickdoks:compiler:entities/class.js";
-import { createConditionalType } from "quickdoks:compiler:entities/conditional-type.js";
-import { createFunctionByType } from "quickdoks:compiler:entities/function.js";
-import { createInterfaceByType } from "quickdoks:compiler:entities/interface.js";
-import { createIntersectionTypeByType } from "quickdoks:compiler:entities/intersection-type.js";
-import { createMappedTypeByType } from "quickdoks:compiler:entities/mapped-type.js";
-import { createNeverType } from "quickdoks:compiler:entities/never-type.js";
-import { createNullType } from "quickdoks:compiler:entities/null-type.js";
-import { createNumberLiteralType } from "quickdoks:compiler:entities/number-literal-type.js";
-import { createNumberType } from "quickdoks:compiler:entities/number-type.js";
-import { createObjectLiteralByType } from "quickdoks:compiler:entities/object-literal.js";
-import { createStringLiteralType } from "quickdoks:compiler:entities/string-literal-type.js";
-import { createStringType } from "quickdoks:compiler:entities/string-type.js";
-import { createSymbolType } from "quickdoks:compiler:entities/symbol-type.js";
-import { createThisByType } from "quickdoks:compiler:entities/this-type.js";
-import { createTupleTypeByTypeReference } from "quickdoks:compiler:entities/tuple-type.js";
-import { createTypeLiteralByType } from "quickdoks:compiler:entities/type-literal.js";
-import { createTypeParameterByType } from "quickdoks:compiler:entities/type-parameter.js";
-import { createUndefinedType } from "quickdoks:compiler:entities/undefined-type.js";
-import { createUnionTypeByType } from "quickdoks:compiler:entities/union-type.js";
-import { createUnknownType } from "quickdoks:compiler:entities/unknown-type.js";
-import { createUnresolvedBySymbol, createUnresolvedByType } from "quickdoks:compiler:entities/unresolved.js";
-import { createVoidType } from "quickdoks:compiler:entities/void-type.js";
+import {
+  createAnyType,
+  createArrayByTypeReference,
+  createBigIntLiteralType,
+  createBigIntType,
+  createBooleanLiteralType,
+  createBooleanType,
+  createClassByType,
+  createConditionalType,
+  createFunctionByType,
+  createInterfaceByType,
+  createIntersectionTypeByType,
+  createLinkToType,
+  createMappedTypeByType,
+  createNeverType,
+  createNullType,
+  createNumberLiteralType,
+  createNumberType,
+  createObjectLiteralByType,
+  createStringLiteralType,
+  createStringType,
+  createSymbolType,
+  createThisTypeByType,
+  createTupleTypeByTypeReference,
+  createTypeLiteralByType,
+  createTypeParameterByType,
+  createUndefinedType,
+  createUnionTypeByType,
+  createUnknownType,
+  createUnresolvedBySymbol,
+  createUnresolvedByType,
+  createVoidType
+} from "quickdoks:compiler:entities";
 import {
   isAnyType,
   isArrayTypeReferenceType,
@@ -56,7 +62,6 @@ import {
   isTupleTypeReferenceType,
   isTypeLiteralType,
   isTypeParameterType,
-  isTypeReferenceType,
   isUndefinedType,
   isUnionType,
   isUnknownType,
@@ -88,6 +93,9 @@ export function createTypeByDeclaration(ctx: CompilerContext, declaration: Decla
 
 export function parseType(ctx: CompilerContext, type: Type): Types {
 
+  if(isTypeLocked(ctx, type)){
+    return createLinkToType(ctx, type);
+  }
 
   if(isObjectType(type)){
     return parseObjectType(ctx, type);
@@ -97,8 +105,8 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
   //-- Order is important! Parse most specific types first
 
   if(isThisType(type)){
-    return createThisByType(ctx, type);
-  } else if(isConditionalType(type)){
+    return createThisTypeByType(ctx, type);
+  }if(isConditionalType(type)){
     return createConditionalType(ctx, type);
   } else if(isStringLiteralType(type)){
     return createStringLiteralType(ctx, type);
@@ -151,10 +159,8 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
     return createArrayByTypeReference(ctx, type);
   }
 
-  const symbol = type.symbol;
-
-  if(isSymbolExcluded(ctx, symbol)){
-    return createUnresolvedBySymbol(ctx, symbol);
+  if(isSymbolExcluded(ctx, type.symbol)){
+    return createUnresolvedBySymbol(ctx, type.symbol);
   }
 
   if(isMappedType(type)){
@@ -169,16 +175,8 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
     return createInterfaceByType(ctx, type);
   } else if(isClassType(type)){
     return createClassByType(ctx, type);
-  } else if(isTypeReferenceType(type)){
-    // return createTypeReferenceByType(ctx, type);
   }
 
-  const name = getNameBySymbol(ctx, symbol);
-
-  if(!name.startsWith("__")){
-    // return parseSymbol(ctx, symbol);
-  }
-
-  throw new Error("Unknown object type");
+  return createObjectTypeByType(ctx, type);
 
 }

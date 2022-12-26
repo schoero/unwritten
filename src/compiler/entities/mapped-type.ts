@@ -1,5 +1,6 @@
 import { ObjectType, TypeNode } from "typescript";
 
+import { lockType } from "quickdoks:compiler/utils/ts.js";
 import { getIdBySymbol, getIdByTypeNode } from "quickdoks:compiler:compositions/id.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
@@ -12,7 +13,7 @@ import { assert } from "quickdoks:utils:general.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export function createMappedTypeByType(ctx: CompilerContext, type: ObjectType): MappedType {
+export const createMappedTypeByType = (ctx: CompilerContext, type: ObjectType): MappedType => lockType(ctx, type, () => {
 
   const symbol = type.symbol;
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
@@ -41,7 +42,7 @@ export function createMappedTypeByType(ctx: CompilerContext, type: ObjectType): 
     typeParameter
   };
 
-}
+});
 
 
 function _parseMember(ctx: CompilerContext, keyTypeNode: TypeNode, valueTypeNode: TypeNode): MappedTypeMember {

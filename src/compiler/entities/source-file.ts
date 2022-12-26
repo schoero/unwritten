@@ -3,14 +3,14 @@ import { Symbol } from "typescript";
 import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
 import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { parseSymbol } from "quickdoks:compiler:entry-points/symbol.js";
-import { getExportedSymbols, lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { getExportedSymbols } from "quickdoks:compiler:utils/ts.js";
 import { isExportableType } from "quickdoks:typeguards/types.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { ExportableTypes, Kind, SourceFile } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 
-export const createSourceFileBySymbol = (ctx: CompilerContext, symbol: Symbol): SourceFile => lockSymbol(ctx, symbol, () => {
+export function createSourceFileBySymbol(ctx: CompilerContext, symbol: Symbol): SourceFile {
 
   const exports = getExportedSymbols(ctx, symbol)
     .reduce<ExportableTypes[]>((parsedSymbols, exportedSymbol) => {
@@ -34,4 +34,4 @@ export const createSourceFileBySymbol = (ctx: CompilerContext, symbol: Symbol): 
     name
   };
 
-});
+}

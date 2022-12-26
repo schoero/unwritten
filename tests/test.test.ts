@@ -2,9 +2,9 @@ import { existsSync, writeFileSync } from "fs";
 
 import { describe, expect, it } from "vitest";
 
-import { parse } from "../src/compiler/entry-points/index.js";
+import { compile } from "quickdoks:compiler:entities";
 
-import { compile } from "./utils/compile.js";
+import { parse } from "../src/compiler/entry-points/index.js";
 
 
 describe("Compiler: Namespace", () => {

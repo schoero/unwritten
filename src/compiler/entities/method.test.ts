@@ -1,11 +1,10 @@
 import { expect, it } from "vitest";
 
+import { createClassBySymbol } from "quickdoks:compiler:entities";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 import { Kind } from "quickdoks:types:types.js";
-
-import { createClassBySymbol } from "./class.js";
 
 
 scope("Compiler", Kind.Method, () => {
@@ -14,6 +13,9 @@ scope("Compiler", Kind.Method, () => {
 
     const testFileContent = ts`
       export class Class { 
+        /** Method description 
+         * @example Method example
+         */
         method() {}
       }
     `;
@@ -30,15 +32,23 @@ scope("Compiler", Kind.Method, () => {
     });
 
     it("should have a matching kind", () => {
-      expect(exportedClass.methods![0]!.kind).to.equal(Kind.Method);
+      expect(exportedClass.methods[0]!.kind).to.equal(Kind.Method);
     });
 
     it("should have a matching name", () => {
-      expect(exportedClass.methods![0]!.name).to.equal("method");
+      expect(exportedClass.methods[0]!.name).to.equal("method");
     });
 
     it("should have one signature", () => {
-      expect(exportedClass.methods![0]!.signatures).to.have.lengthOf(1);
+      expect(exportedClass.methods[0]!.signatures).to.have.lengthOf(1);
+    });
+
+    it("should have a matching description", () => {
+      expect(exportedClass.methods[0]!.signatures[0].description).to.equal("Method description");
+    });
+
+    it("should have a matching example", () => {
+      expect(exportedClass.methods[0]!.signatures[0].example).to.equal("Method example");
     });
 
   }

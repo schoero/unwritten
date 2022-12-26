@@ -1,12 +1,11 @@
 import { expect, it } from "vitest";
 
 import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { createEnumBySymbol } from "quickdoks:compiler:entities";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 import { Kind, NumberLiteralType } from "quickdoks:types:types.js";
-
-import { createEnumBySymbol } from "./enum.js";
 
 
 scope("Compiler", Kind.Enum, () => {

@@ -6,13 +6,12 @@ import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { isTypeParameterDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Kind, TypeParameter } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 
-export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeParameter => lockSymbol(ctx, symbol, () => {
+export function createTypeParameterBySymbol(ctx: CompilerContext, symbol: Symbol): TypeParameter {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -36,7 +35,7 @@ export const createTypeParameterBySymbol = (ctx: CompilerContext, symbol: Symbol
     position
   };
 
-});
+}
 
 
 export function createTypeParameterByDeclaration(ctx: CompilerContext, declaration: TypeParameterDeclaration): TypeParameter {

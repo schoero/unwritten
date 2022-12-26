@@ -1,13 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { createFunctionBySymbol, createTypeAliasBySymbol } from "quickdoks:compiler:entities";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 import { Function, Kind } from "quickdoks:types:types.js";
-
-import { createFunctionBySymbol } from "./function.js";
-import { createTypeAliasBySymbol } from "./type-alias.js";
 
 
 scope("Compiler", Kind.Function, () => {

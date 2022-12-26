@@ -1,31 +1,27 @@
-import { PropertyAssignment, PropertyDeclaration, PropertySignature, Symbol } from "typescript";
+import { PropertyDeclaration, PropertySignature, Symbol } from "typescript";
 
+import { parseTypeNode } from "quickdoks:compiler/entry-points/type-node.js";
 import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "quickdoks:compiler:compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "quickdoks:compiler:compositions/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { createTypeByDeclaration, createTypeBySymbol } from "quickdoks:compiler:entry-points/type.js";
-import {
-  isPropertyAssignment,
-  isPropertyDeclaration,
-  isPropertySignatureDeclaration
-} from "quickdoks:compiler:typeguards/declarations.js";
-import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { isPropertyDeclaration, isPropertySignatureDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Kind, Property } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 
-export const createPropertyBySymbol = (ctx: CompilerContext, symbol: Symbol): Property => lockSymbol(ctx, symbol, () => {
+export function createPropertyBySymbol(ctx: CompilerContext, symbol: Symbol): Property {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration && (isPropertySignatureDeclaration(declaration) || isPropertyAssignment(declaration) || isPropertyDeclaration(declaration)), `Property signature not found ${declaration?.kind}`);
+  assert(declaration && (isPropertySignatureDeclaration(declaration) || isPropertyDeclaration(declaration)), `Property signature not found ${declaration?.kind}`);
 
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const fromDeclaration = createPropertyByDeclaration(ctx, declaration);
+  const fromDeclaration = _parsePropertyDeclaration(ctx, declaration);
   const type = createTypeBySymbol(ctx, symbol);
 
   return {
@@ -35,10 +31,10 @@ export const createPropertyBySymbol = (ctx: CompilerContext, symbol: Symbol): Pr
     type
   };
 
-});
+}
 
 
-export function createPropertyByDeclaration(ctx: CompilerContext, declaration: PropertyAssignment | PropertyDeclaration | PropertySignature): Property {
+function _parsePropertyDeclaration(ctx: CompilerContext, declaration: PropertyDeclaration | PropertySignature): Property {
 
   const id = getIdByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
@@ -46,7 +42,7 @@ export function createPropertyByDeclaration(ctx: CompilerContext, declaration: P
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
-  const type = createTypeByDeclaration(ctx, declaration);
+  const type = (declaration.type && parseTypeNode(ctx, declaration.type)) ?? createTypeByDeclaration(ctx, declaration);
   const optional = declaration.questionToken !== undefined;
   const kind = Kind.Property;
 

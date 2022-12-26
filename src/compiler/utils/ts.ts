@@ -1,4 +1,4 @@
-import { Map as TSMap, Program, Symbol } from "typescript";
+import { Map as TSMap, Program, Symbol, Type } from "typescript";
 
 import { isAliasedSymbol } from "quickdoks:compiler:typeguards/symbols.js";
 import { CompilerContext } from "quickdoks:types:context.js";
@@ -18,14 +18,14 @@ export function normalizeTSMap<T>(tsMap: Map<string, T> | TSMap<T>): Map<string,
 
 //-- Locker
 
-export function isSymbolLocked(ctx: CompilerContext, symbol: Symbol) {
-  return ctx.locker.isSymbolLocked(ctx, symbol);
+export function isTypeLocked(ctx: CompilerContext, type: Type) {
+  return ctx.locker.isTypeLocked(ctx, type);
 }
 
-export function lockSymbol<T extends Types>(ctx: CompilerContext, symbol: Symbol, callback: (ctx: CompilerContext, symbol: Symbol) => T): T {
-  ctx.locker.lockSymbol(ctx, symbol);
-  const returnType = callback(ctx, symbol);
-  ctx.locker.unlockSymbol(ctx, symbol);
+export function lockType<T extends Types>(ctx: CompilerContext, type: Type, callback: (ctx: CompilerContext, type: Type) => T): T {
+  ctx.locker.lockType(ctx, type);
+  const returnType = callback(ctx, type);
+  ctx.locker.unlockType(ctx, type);
   return returnType;
 }
 

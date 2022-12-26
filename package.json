@@ -17,7 +17,7 @@
   "scripts": {
     "build": "node_modules/.bin/tsc --project tsconfig.production.json && npm run schema",
     "build:ci": "npm run build -- --noEmit",
-    "eslint": "node_modules/.bin/eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml ./",
+    "eslint": "node_modules/.bin/eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml,.md ./",
     "eslint:ci": "npm run eslint -- --max-warnings 0",
     "eslint:fix": "npm run eslint -- --fix",
     "lint": "npm run eslint && npm run markdownlint",
@@ -36,21 +36,22 @@
     "lib"
   ],
   "dependencies": {
+    "@schoero/vite-config": "^0.0.8",
     "commander": "^9.4.1",
-    "minimatch": "^5.1.1",
+    "minimatch": "^5.1.2",
     "typescript": "^4.9.4"
   },
   "devDependencies": {
-    "@schoero/cspell-config": "^1.5.0",
-    "@schoero/eslint-config": "^1.28.6",
+    "@schoero/cspell-config": "^1.6.3",
+    "@schoero/eslint-config": "^1.30.0",
     "@schoero/markdownlint-config": "^1.1.2",
-    "@schoero/ts-config": "^0.3.0",
+    "@schoero/ts-config": "^0.3.2",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^18.11.12",
+    "@types/node": "^18.11.17",
     "eslint-plugin-sort-exports": "^0.8.0",
-    "ts-json-schema-generator": "^1.1.2",
-    "vite-tsconfig-paths": "^4.0.2",
-    "vitest": "^0.25.6",
+    "ts-json-schema-generator": "^1.2.0",
+    "vite-tsconfig-paths": "^4.0.3",
+    "vitest": "^0.26.2",
     "vitest-github-actions-reporter": "^0.9.0"
   },
   "keywords": [

@@ -7,6 +7,7 @@
       "quickdoks:api:*": ["src/api/*"],
       "quickdoks:bin:*": ["src/bin/*"],
       "quickdoks:compiler:*": ["src/compiler/*"],
+      "quickdoks:compiler:entities": ["src/compiler/entities/index.js"],
       "quickdoks:logger:*": ["src/logger/*"],
       "quickdoks:renderer:*": ["src/renderer/*"],
       "quickdoks:tests:*": ["tests/*"],

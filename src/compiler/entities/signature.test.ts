@@ -1,12 +1,10 @@
 import { expect, it } from "vitest";
 
+import { createClassBySymbol, createFunctionBySymbol } from "quickdoks:compiler:entities";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 import { Kind } from "quickdoks:types:types.js";
-
-import { createClassBySymbol } from "./class.js";
-import { createFunctionBySymbol } from "./function.js";
 
 
 scope("Compiler", Kind.Signature, () => {
@@ -140,12 +138,17 @@ scope("Compiler", Kind.Signature, () => {
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassBySymbol(ctx, symbol);
 
+    const publicMethod = exportedClass.methods.find(m => m.name === "publicMethod")!;
+    const privateMethod = exportedClass.methods.find(m => m.name === "privateMethod")!;
+    const staticMethod = exportedClass.methods.find(m => m.name === "staticMethod")!;
+    const privateStaticMethod = exportedClass.methods.find(m => m.name === "privateStaticMethod")!;
+
     it("should have matching modifiers", () => {
-      expect(exportedClass.methods![0]!.signatures[0]!.modifiers).to.contain("public");
-      expect(exportedClass.methods![1]!.signatures[0]!.modifiers).to.contain("private");
-      expect(exportedClass.methods![2]!.signatures[0]!.modifiers).to.contain("static");
-      expect(exportedClass.methods![3]!.signatures[0]!.modifiers).to.contain("private");
-      expect(exportedClass.methods![3]!.signatures[0]!.modifiers).to.contain("static");
+      expect(publicMethod.signatures[0]!.modifiers).to.contain("public");
+      expect(privateMethod.signatures[0]!.modifiers).to.contain("private");
+      expect(staticMethod.signatures[0]!.modifiers).to.contain("static");
+      expect(privateStaticMethod.signatures[0]!.modifiers).to.contain("private");
+      expect(privateStaticMethod.signatures[0]!.modifiers).to.contain("static");
     });
 
   }

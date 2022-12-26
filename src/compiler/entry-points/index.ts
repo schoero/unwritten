@@ -1,6 +1,6 @@
 import { Symbol } from "typescript";
 
-import { createSourceFileBySymbol } from "quickdoks:compiler:entities/source-file.js";
+import { createSourceFileBySymbol } from "quickdoks:compiler/entities/index.js";
 import { isSourceFileSymbol } from "quickdoks:compiler:typeguards/symbols.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { ExportableTypes } from "quickdoks:types:types.js";

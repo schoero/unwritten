@@ -7,13 +7,12 @@ import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { createTypeByDeclaration, createTypeBySymbol } from "quickdoks:compiler:entry-points/type.js";
 import { isVariableDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Kind, Variable } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 
-export const createVariableBySymbol = (ctx: CompilerContext, symbol: Symbol): Variable => lockSymbol(ctx, symbol, () => {
+export function createVariableBySymbol(ctx: CompilerContext, symbol: Symbol): Variable {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -35,7 +34,7 @@ export const createVariableBySymbol = (ctx: CompilerContext, symbol: Symbol): Va
     type
   };
 
-});
+}
 
 
 function _parseVariableDeclaration(ctx: CompilerContext, declaration: VariableDeclaration) {

@@ -12,13 +12,11 @@ export enum Kind {
   Circular = "Circular",
   Class = "Class",
   ConditionalType = "ConditionalType",
-  Constructor = "Constructor",
   Enum = "Enum",
   EnumMember = "EnumMember",
   Expression = "Expression",
   Function = "Function",
   Getter = "Getter",
-  Instance = "Instance",
   Interface = "Interface",
   IntersectionType = "Intersection",
   MappedType = "MappedType",
@@ -32,6 +30,7 @@ export enum Kind {
   Number = "number",
   NumberLiteral = "NumberLiteral",
   ObjectLiteral = "ObjectLiteral",
+  ObjectType = "ObjectType",
   Parameter = "Parameter",
   Promise = "Promise",
   Property = "Property",
@@ -62,6 +61,7 @@ export enum Kind {
 export enum Modifiers {
   Abstract = "abstract",
   Async = "async",
+  NativePrivate = "nativePrivate",
   Override = "override",
   Private = "private",
   Protected = "protected",
@@ -101,11 +101,9 @@ export type Types =
   | ArrayType
   | Circular
   | ConditionalType
-  | Constructor
   | ExportableTypes
   | Expression
   | Getter
-  | Instance
   | Interface
   | IntersectionType
   | LiteralTypes
@@ -113,7 +111,7 @@ export type Types =
   | MappedTypeMember
   | Member
   | Method
-  | ObjectLiteral
+  | ObjectTypes
   | PrimitiveTypes
   | Property
   | Setter
@@ -122,7 +120,6 @@ export type Types =
   | ThisType
   | TupleType
   | TypeArgument
-  | TypeLiteral
   | TypeParameter
   | TypeQuery
   | TypeReference
@@ -179,18 +176,43 @@ export type LiteralTypes =
 
 
 export type FunctionLikeTypeKinds =
-  | Kind.Constructor
   | Kind.Function
   | Kind.Getter
   | Kind.Method
   | Kind.Setter;
 
 export type FunctionLikeTypes =
-  | Constructor
   | Function
   | Getter
   | Method
   | Setter;
+
+export type ObjectTypeKinds =
+  | Kind.Class
+  | Kind.Interface
+  | Kind.ObjectLiteral
+  | Kind.ObjectType
+  | Kind.TypeLiteral;
+
+export type ObjectTypes =
+  | Class
+  | Interface
+  | ObjectLiteral
+  | ObjectType
+  | TypeLiteral;
+
+export type InferObjectType<Kind extends ObjectTypeKinds> =
+  Kind extends Kind.Class
+    ? Class
+    : Kind extends Kind.Interface
+      ? Interface
+      : Kind extends Kind.ObjectLiteral
+        ? ObjectLiteral
+        : Kind extends Kind.ObjectType
+          ? ObjectType
+          : Kind extends Kind.TypeLiteral
+            ? TypeLiteral
+            : never;
 
 
 //-- Primitive types
@@ -237,7 +259,7 @@ export type BigIntLiteralType = LiteralType<Kind.BigIntLiteral> & {
 
 //-- Object type
 
-export type ObjectType<Kind> = Type<Kind> & {
+export type ObjectType<Kind extends ObjectTypeKinds = Kind.ObjectType> = Type<Kind> & {
   callSignatures: Signature[];
   constructSignatures: Signature[];
   getters: Getter[];
@@ -308,16 +330,6 @@ export type Expression = Type<Kind.Expression> & {
 };
 
 
-//-- Instance
-
-export type Instance = Type<Kind.Instance> & {
-  name?: Name;
-  position?: Position;
-  resolvedType?: Types;
-  typeArguments?: TypeArgument[];
-};
-
-
 //-- This
 
 export type ThisType = Type<Kind.ThisType> & {
@@ -354,13 +366,13 @@ export type Function = FunctionLike<Kind.Function> & {
 };
 
 export type Signature = Type<Kind.Signature> & {
-  modifiers: Modifiers[];
-  parameters: Parameter[];
-  position: Position;
   returnType: Types & { description?: Description; } ;
   description?: Description;
   example?: Example;
+  modifiers?: Modifiers[];
   name?: Name;
+  parameters?: Parameter[];
+  position?: Position;
   typeParameters?: TypeParameter[];
 };
 
@@ -378,22 +390,14 @@ export type Parameter = Type<Kind.Parameter> & {
 
 //-- Class
 
-export type Class = Type<Kind.Class> & {
+export type Class = ObjectType<Kind.Class> & {
   modifiers: Modifiers[];
   name: Name;
   position: Position;
-  ctor?: Constructor;
   description?: Description;
   example?: Example;
-  getters?: Getter[];
-  heritage?: Expression[];
-  methods?: Method[];
-  properties?: Property[];
-  setters?: Setter[];
+  heritage?: Expression;
   typeParameters?: TypeParameter[];
-};
-
-export type Constructor = FunctionLike<Kind.Constructor> & {
 };
 
 export type Method = FunctionLike<Kind.Method> & {
@@ -499,24 +503,15 @@ export type TypeQuery = Type<Kind.TypeQuery> & {
 
 //-- Interface
 
-export interface Interface extends Type<Kind.Interface> {
-  callSignatures: Signature[];
-  constructSignatures: Signature[];
-  getterSignatures: Signature[];
-  methodSignatures: Signature[];
+export interface Interface extends ObjectType<Kind.Interface> {
   name: Name;
   properties: Property[];
-  setterSignatures: Signature[];
   description?: Description;
   example?: Example;
-  heritage?: Interface[];
+  heritage?: Expression[];
   position?: Position;
   typeArguments?: TypeArgument[];
   typeParameters?: TypeParameter[];
-}
-
-export interface MergedInterface extends Interface {
-  declarations: Omit<Interface, "id" | "name">[];
 }
 
 

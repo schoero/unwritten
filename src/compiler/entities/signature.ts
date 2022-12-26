@@ -1,4 +1,4 @@
-import { FunctionLikeDeclaration, Signature as TSSignature, SignatureDeclaration } from "typescript";
+import { Signature as TSSignature, SignatureDeclaration } from "typescript";
 
 import { getIdByDeclaration } from "quickdoks:compiler:compositions/id.js";
 import {
@@ -18,11 +18,25 @@ import { createParameterByDeclaration } from "./parameter.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export function createSignatureByDeclaration(ctx: CompilerContext, declaration: FunctionLikeDeclaration | SignatureDeclaration): Signature {
+export function createSignatureBySignature(ctx: CompilerContext, signature: TSSignature): Signature {
 
-  const signature = ctx.checker.getSignatureFromDeclaration(declaration);
+  const declaration = signature.getDeclaration() as SignatureDeclaration | undefined;
 
-  assert(signature, "FunctionLike signature is not found");
+  const fromDeclaration = declaration && _parseSignatureDeclaration(ctx, declaration);
+
+  const returnType = _getReturnTypeBySignature(ctx, signature);
+  const kind = Kind.Signature;
+
+  return <Signature>{
+    ...fromDeclaration,
+    kind,
+    returnType
+  };
+
+}
+
+
+function _parseSignatureDeclaration(ctx: CompilerContext, declaration: SignatureDeclaration) {
 
   const id = getIdByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
@@ -30,50 +44,30 @@ export function createSignatureByDeclaration(ctx: CompilerContext, declaration: 
 
   const parameters = declaration.parameters.map(declaration => createParameterByDeclaration(ctx, declaration));
   const typeParameters = declaration.typeParameters?.map(declaration => createTypeParameterByDeclaration(ctx, declaration));
-  const returnType = _getReturnTypeByCallSignature(ctx, signature);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
-  const kind = Kind.Signature;
 
   return {
     description,
     example,
     id,
-    kind,
     modifiers,
     name,
     parameters,
     position,
-    returnType,
     typeParameters
   };
 
 }
 
 
-export function createSignatureBySignature(ctx: CompilerContext, signature: TSSignature): Signature {
+function _getReturnTypeBySignature(ctx: CompilerContext, signature: TSSignature) {
 
-  /*
-   * If we would try and create the signature directly, signatures.parameters would be a symbol array instead of a declaration array.
-   * The reason for that is that parameters are actually symbols. We would need the figure out the index of the signature if
-   * it was overloaded, and then get the parameter declaration with the same index. If we just go with the signature declaration,
-   * we can just use the parameters array directly as TypeScript already did the work for us.
-   * ```ts
-   * function test(sameParameterSymbol: string): string;
-   * function test(sameParameterSymbol: string, somethingElse: string): string;
-   * ```
-   */
+  const declaration = signature.getDeclaration() as SignatureDeclaration | undefined;
 
-  const signatureDeclaration = signature.getDeclaration();
-  return createSignatureByDeclaration(ctx, signatureDeclaration);
-}
-
-
-function _getReturnTypeByCallSignature(ctx: CompilerContext, callSignature: TSSignature) {
-
-  const returnType = callSignature.getReturnType();
-  const returnTypeDescription = getReturnTypeDescription(ctx, callSignature.getDeclaration());
+  const returnType = signature.getReturnType();
+  const returnTypeDescription = declaration && getReturnTypeDescription(ctx, declaration);
 
   assert(returnType, "Function return type is missing.");
 

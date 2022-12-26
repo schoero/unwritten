@@ -6,7 +6,6 @@ import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { isTypeAliasDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Kind, TypeAlias } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
@@ -14,7 +13,7 @@ import { assert } from "quickdoks:utils:general.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol): TypeAlias => lockSymbol(ctx, symbol, () => {
+export function createTypeAliasBySymbol(ctx: CompilerContext, symbol: Symbol): TypeAlias {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -24,7 +23,6 @@ export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol): T
   const id = getIdBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = _parseTypeAliasDeclaration(ctx, declaration);
-  const resolvedType = ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration.type);
   const kind = Kind.TypeAlias;
 
   return {
@@ -35,7 +33,7 @@ export const createTypeAliasBySymbol = (ctx: CompilerContext, symbol: Symbol): T
     name
   };
 
-});
+}
 
 
 function _parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAliasDeclaration) {

@@ -24,76 +24,76 @@ export class Logger {
   private static _reset = "\x1b[0m";
 
 
-  public log(message: string) {
+  public log(message: string): void {
     this._println(`${Logger._reset}${message}${Logger._reset}`);
   }
 
 
-  public warn(message: string) {
+  public warn(message: string): void {
     this._println(`${Logger._bgYellow}${Logger._bold} WARN ${Logger._reset} ${this.yellow(message)}`);
   }
 
 
-  public info(message: string) {
+  public info(message: string): void {
     this._println(`${Logger._bgCyan}${Logger._bold} INFO ${Logger._reset} ${this.cyan(message)}`);
   }
 
 
-  public success(message: string) {
+  public success(message: string): void {
     this._println(`${Logger._fgGreen}${message}${Logger._reset}`);
   }
 
 
   //-- Colors
 
-  public red(message: string) {
+  public red(message: string): string {
     return `${Logger._fgRed}${message}${Logger._reset}`;
   }
 
-  public gray(message: string) {
+  public gray(message: string): string {
     return `${Logger._fgGray}${message}${Logger._reset}`;
   }
 
-  public green(message: string) {
+  public green(message: string): string {
     return `${Logger._fgGreen}${message}${Logger._reset}`;
   }
 
-  public yellow(message: string) {
+  public yellow(message: string): string {
     return `${Logger._fgYellow}${message}${Logger._reset}`;
   }
 
-  public white(message: string) {
+  public white(message: string): string {
     return `${Logger._fgWhite}${message}${Logger._reset}`;
   }
 
-  public cyan(message: string) {
+  public cyan(message: string): string {
     return `${Logger._fgCyan}${message}${Logger._reset}`;
   }
 
-  public bold(message: string) {
+  public bold(message: string): string {
     return `${Logger._bold}${message}${Logger._reset}`;
   }
 
-  public underline(message: string) {
+  public underline(message: string): string {
     return `${Logger._underline}${message}${Logger._reset}`;
   }
 
-  public italic(message: string) {
+  public italic(message: string): string {
     return `${Logger._italic}${message}${Logger._reset}`;
   }
 
-  public strikethrough(message: string) {
+  public strikethrough(message: string): string {
     return `${Logger._strikethrough}${message}${Logger._reset}`;
   }
 
 
   //-- Private
 
-  private _print(message: string) {
+  private _print(message: string): void {
     stdout.write(message);
   }
 
-  private _println(message: string) {
+  private _println(message: string): void {
     this._print(message);
     this._print(EOL);
   }

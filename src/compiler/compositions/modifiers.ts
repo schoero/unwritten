@@ -1,5 +1,6 @@
 import ts, { Declaration } from "typescript";
 
+import { isPropertyDeclaration } from "quickdoks:compiler/typeguards/declarations.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Modifiers } from "quickdoks:types:types.js";
 
@@ -7,13 +8,23 @@ import { Modifiers } from "quickdoks:types:types.js";
 export function getModifiersByDeclaration(ctx: CompilerContext, declaration: Declaration): Modifiers[] {
 
   if(ts.canHaveModifiers(declaration)){
-    return ts.getModifiers(declaration)?.reduce((modifiers, modifier) => {
+
+    const tsModifiers = ts.getModifiers(declaration)?.reduce((modifiers, modifier) => {
       const modifierText = modifier.getText();
       if(_isSupportedModifier(modifierText)){
         modifiers.push(modifierText);
       }
       return modifiers;
     }, <Modifiers[]>[]) ?? [];
+
+    const nativeModifiers = [];
+
+    if(isPropertyDeclaration(declaration) && ts.isPrivateIdentifier(declaration.name)){
+      nativeModifiers.push(Modifiers.NativePrivate);
+    }
+
+    return [...tsModifiers, ...nativeModifiers];
+
   }
 
   return [];

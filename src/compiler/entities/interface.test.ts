@@ -1,12 +1,10 @@
 import { expect, it } from "vitest";
 
-import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { createInterfaceBySymbol } from "quickdoks:compiler:entities";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-import { Interface, Kind } from "quickdoks:types:types.js";
-
-import { createInterfaceBySymbol } from "./interface.js";
+import { Interface, Kind, Modifiers } from "quickdoks:types:types.js";
 
 
 scope("Compiler", Kind.Interface, () => {
@@ -33,7 +31,10 @@ scope("Compiler", Kind.Interface, () => {
     const testFileContent = ts`
       export interface Interface {
         (): void;
+        static staticProp: string;
+        protected protectedProp: string; 
         new (): void;
+        method(a: number): void;
         method(a: string): void;
         prop: string;
         funcProp: () => void;
@@ -48,32 +49,43 @@ scope("Compiler", Kind.Interface, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should be able to handle construct signatures", () => {
-      expect(exportedInterface.constructSignatures.length).to.equal(1);
+      expect(exportedInterface.constructSignatures).to.have.lengthOf(1);
     });
 
     it("should be able to handle call signatures", () => {
-      expect(exportedInterface.callSignatures.length).to.equal(1);
+      expect(exportedInterface.callSignatures).to.have.lengthOf(1);
     });
 
     it("should be able to handle properties", () => {
-      expect(exportedInterface.properties.length).to.equal(2);
+      expect(exportedInterface.properties).to.have.lengthOf(4);
     });
 
-    it("should be able to handle methods", () => {
-      expect(exportedInterface.methodSignatures.length).to.equal(1);
+    it("should be able to handle static properties", () => {
+      expect(exportedInterface.properties.filter(prop =>
+        prop.modifiers.includes(Modifiers.Static))).to.have.lengthOf(1);
+    });
+
+    it("should be able to handle instance properties", () => {
+      expect(exportedInterface.properties.filter(prop =>
+        prop.modifiers.includes(Modifiers.Protected))).to.have.lengthOf(1);
+    });
+
+    it("should be able to handle overloaded methods", () => {
+      expect(exportedInterface.methods).to.have.lengthOf(1);
+      expect(exportedInterface.methods[0].signatures).to.have.lengthOf(2);
     });
 
     it("should differentiate between methods and function properties", () => {
-      expect(exportedInterface.methodSignatures.find(m => m.name === "method")).to.not.equal(undefined);
+      expect(exportedInterface.methods.find(m => m.name === "method")).to.not.equal(undefined);
       expect(exportedInterface.properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
     });
 
     it("should be able to handle getters", () => {
-      expect(exportedInterface.getterSignatures.length).to.equal(1);
+      expect(exportedInterface.getters).to.have.lengthOf(1);
     });
 
     it("should be able to handle setters", () => {
-      expect(exportedInterface.setterSignatures.length).to.equal(1);
+      expect(exportedInterface.setters).to.have.lengthOf(1);
     });
 
   }
@@ -108,12 +120,8 @@ scope("Compiler", Kind.Interface, () => {
       expect(exportedInterface.name).to.equal("Interface");
     });
 
-    it("should have a matching id", () => {
-      expect(exportedInterface.id).to.equal(getIdBySymbol(ctx, symbol));
-    });
-
     it("should have the correct amount of members", () => {
-      expect(exportedInterface.properties.length).to.equal(2);
+      expect(exportedInterface.properties).to.have.lengthOf(2);
     });
 
     it("should have a matching description", () => {
@@ -151,7 +159,7 @@ scope("Compiler", Kind.Interface, () => {
     const exportedInterface = createInterfaceBySymbol(ctx, symbol);
 
     it("should merge multiple interfaces with the same name", () => {
-      expect(exportedInterface.properties.length).to.equal(2);
+      expect(exportedInterface.properties).to.have.lengthOf(2);
     });
 
   }
@@ -179,7 +187,7 @@ scope("Compiler", Kind.Interface, () => {
 
     it("should be able to parse inheritance", () => {
 
-      expect(exportedInterfaceB.properties).to.have.lengthOf(1);
+      expect(exportedInterfaceB.properties).to.have.lengthOf(2);
       expect(exportedInterfaceB.properties[0]!.name).to.equal("b");
       expect(exportedInterfaceB.heritage).to.not.equal(undefined);
       expect(exportedInterfaceB.heritage).to.have.lengthOf(1);
@@ -188,14 +196,15 @@ scope("Compiler", Kind.Interface, () => {
       expect((exportedInterfaceB.heritage![0]!.type as Interface).properties).to.have.lengthOf(1);
       expect((exportedInterfaceB.heritage![0]!.type as Interface).properties[0]!.name).to.equal("a");
 
-      expect(exportedInterfaceC.properties).to.have.lengthOf(1);
+      expect(exportedInterfaceC.properties).to.have.lengthOf(3);
       expect(exportedInterfaceC.properties[0]!.name).to.equal("c");
       expect(exportedInterfaceC.heritage).to.not.equal(undefined);
       expect(exportedInterfaceC.heritage).to.have.lengthOf(1);
       expect(exportedInterfaceC.heritage![0]!.kind).to.equal(Kind.Expression);
       expect(exportedInterfaceC.heritage![0]!.type.kind).to.equal(Kind.Interface);
-      expect((exportedInterfaceC.heritage![0]!.type as Interface).properties).to.have.lengthOf(1);
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).properties).to.have.lengthOf(2);
       expect((exportedInterfaceC.heritage![0]!.type as Interface).properties[0]!.name).to.equal("b");
+      expect((exportedInterfaceC.heritage![0]!.type as Interface).properties[1]!.name).to.equal("a");
 
       expect((exportedInterfaceC.heritage![0]!.type as Interface).heritage).to.not.equal(undefined);
       expect((exportedInterfaceC.heritage![0]!.type as Interface).heritage).to.have.lengthOf(1);
@@ -229,8 +238,7 @@ scope("Compiler", Kind.Interface, () => {
 
     it("should be able to handle multiple extended interfaces at the same time", () => {
 
-      expect(exportedInterfaceC.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceC.properties[0]!.name).to.equal("c");
+      expect(exportedInterfaceC.properties).to.have.lengthOf(3);
 
       expect(exportedInterfaceC.heritage).to.not.equal(undefined);
       expect(exportedInterfaceC.heritage).to.have.lengthOf(2);

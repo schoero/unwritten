@@ -1,40 +1,103 @@
-import { ClassLikeDeclaration, HeritageClause, NodeArray, Symbol, Type } from "typescript";
+import { ClassDeclaration, HeritageClause, NodeArray, ObjectType, Symbol } from "typescript";
 
-import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
+import { createObjectTypeByType } from "quickdoks:compiler/shared/object-type.js";
+import { lockType } from "quickdoks:compiler/utils/ts.js";
+import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
 import { getDescriptionByDeclaration, getExampleByDeclaration } from "quickdoks:compiler:compositions/jsdoc.js";
 import { getModifiersByDeclaration } from "quickdoks:compiler:compositions/modifiers.js";
 import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
-import {
-  isClassDeclaration,
-  isConstructorDeclaration,
-  isGetterDeclaration,
-  isMethodDeclaration,
-  isPropertyDeclaration,
-  isSetterDeclaration
-} from "quickdoks:compiler:typeguards/declarations.js";
-import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
+import { isClassDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
 import { isExpression } from "quickdoks:typeguards/types.js";
+import { ID } from "quickdoks:types/compositions.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Class, Expression, Kind } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
 
-import { createConstructorBySymbol } from "./constructor.js";
-import { createGetterBySymbol } from "./getter.js";
-import { createMethodBySymbol } from "./method.js";
-import { createPropertyBySymbol } from "./property.js";
-import { createSetterBySymbol } from "./setter.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 
 
-export const createClassBySymbol = (ctx: CompilerContext, symbol: Symbol): Class => lockSymbol(ctx, symbol, () => {
+export function createClassBySymbol(ctx: CompilerContext, symbol: Symbol): Class {
+
+  const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
+
+  assert(declaration && isClassDeclaration(declaration), "Class declaration is not found");
+
+  const tsInstanceType = ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration) as ObjectType;
+  const tsStaticType = ctx.checker.getDeclaredTypeOfSymbol(symbol) as ObjectType;
+
+  const fromInstanceType = createClassByType(ctx, tsInstanceType);
+  const fromStaticType = createClassByType(ctx, tsStaticType);
+
+  const callSignatures = _mergeMembers([fromInstanceType, fromStaticType], "callSignatures");
+  const constructSignatures = _mergeMembers([fromInstanceType, fromStaticType], "constructSignatures");
+  const properties = _mergeMembers([fromInstanceType, fromStaticType], "properties");
+  const methods = _mergeMembers([fromInstanceType, fromStaticType], "methods");
+  const getters = _mergeMembers([fromInstanceType, fromStaticType], "getters");
+  const setters = _mergeMembers([fromInstanceType, fromStaticType], "setters");
+
+  const fromSymbol = _parseClassSymbol(ctx, symbol);
+  const kind = Kind.Class;
+
+  return {
+    ...fromSymbol,
+    callSignatures,
+    constructSignatures,
+    getters,
+    kind,
+    methods,
+    properties,
+    setters
+  };
+
+}
+
+
+export const createClassByType = (ctx: CompilerContext, type: ObjectType): Class => lockType(ctx, type, () => {
+
+  const fromInstanceType = createObjectTypeByType(ctx, type, Kind.Class);
+
+  const symbol = type.getSymbol();
+
+  if(symbol === undefined){
+    return fromInstanceType;
+  }
+
+  const fromSymbol = _parseClassSymbol(ctx, symbol);
+
+  const tsStaticType = ctx.checker.getDeclaredTypeOfSymbol(symbol) as ObjectType;
+  const fromStaticType = createObjectTypeByType(ctx, tsStaticType, Kind.Class);
+
+  const callSignatures = _mergeMembers([fromInstanceType, fromStaticType], "callSignatures");
+  const constructSignatures = _mergeMembers([fromInstanceType, fromStaticType], "constructSignatures");
+  const properties = _mergeMembers([fromInstanceType, fromStaticType], "properties");
+  const methods = _mergeMembers([fromInstanceType, fromStaticType], "methods");
+  const getters = _mergeMembers([fromInstanceType, fromStaticType], "getters");
+  const setters = _mergeMembers([fromInstanceType, fromStaticType], "setters");
+
+
+  return {
+    ...fromSymbol,
+    ...fromInstanceType,
+    callSignatures,
+    constructSignatures,
+    getters,
+    methods,
+    properties,
+    setters
+  };
+});
+
+
+function _parseClassSymbol(ctx: CompilerContext, symbol: Symbol) {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
   assert(declaration && isClassDeclaration(declaration), "Class declaration is not found");
 
   const fromDeclaration = _parseClassDeclaration(ctx, declaration);
+
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
 
@@ -44,22 +107,9 @@ export const createClassBySymbol = (ctx: CompilerContext, symbol: Symbol): Class
     name
   };
 
-});
+}
 
-
-function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDeclaration): Omit<Class, "name"> {
-
-  const constructorDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isConstructorDeclaration);
-  const getterDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isGetterDeclaration);
-  const setterDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isSetterDeclaration);
-  const methodDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isMethodDeclaration);
-  const propertyDeclarations = _getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isPropertyDeclaration);
-
-  const ctor = constructorDeclarations.map(symbol => createConstructorBySymbol(ctx, symbol))[0];
-  const getters = getterDeclarations.map(symbol => createGetterBySymbol(ctx, symbol));
-  const setters = setterDeclarations.map(symbol => createSetterBySymbol(ctx, symbol));
-  const methods = methodDeclarations.map(symbol => createMethodBySymbol(ctx, symbol));
-  const properties = propertyDeclarations.map(symbol => createPropertyBySymbol(ctx, symbol));
+function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassDeclaration) {
 
   const heritage = declaration.heritageClauses && _parseHeritageClauses(ctx, declaration.heritageClauses);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterByDeclaration(ctx, typeParameter));
@@ -67,78 +117,37 @@ function _parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecl
   const example = getExampleByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
-  const id = getIdByDeclaration(ctx, declaration);
-  const kind = Kind.Class;
 
   return {
-    ctor,
     description,
     example,
-    getters,
     heritage,
-    id,
-    kind,
-    methods,
     modifiers,
     position,
-    properties,
-    setters,
     typeParameters
   };
 
 }
 
-
-export function createClassByType(ctx: CompilerContext, type: Type): Class {
-
-  return createClassBySymbol(ctx, type.symbol);
-
-  // const methods = type.getProperties().filter(p => p.valueDeclaration && isMethodDeclaration(p.valueDeclaration)).map(createMethodBySymbol);
-  // const properties = type.getProperties().filter(p => p.valueDeclaration && isPropertyDeclaration(p.valueDeclaration)).map(createPropertyBySymbol);
-  // const setters = type.getProperties().filter(p => p.valueDeclaration && isSetterDeclaration(p.valueDeclaration)).map(createSetterBySymbol);
-  // const getters = type.getProperties().filter(p => p.valueDeclaration && isGetterDeclaration(p.valueDeclaration)).map(createGetterBySymbol);
-
-  // const id = getIdByType(ctx, type);
-  // const kind = EntityKind.Class;
-
-  // return {
-  //   getters,
-  //   id,
-  //   kind,
-  //   methods,
-  //   properties,
-  //   setters
-  // };
-
+function _parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): Expression {
+  return heritageClauses
+    .flatMap(heritageClause => heritageClause.types.map(typeNode => parseTypeNode(ctx, typeNode)))
+    .filter(isExpression)[0];
 }
 
 
-function _getSymbolsByTypeFromClassLikeDeclaration(ctx: CompilerContext, classLikeDeclaration: ClassLikeDeclaration,
-  filter:
-  | typeof isConstructorDeclaration
-  | typeof isGetterDeclaration
-  | typeof isMethodDeclaration
-  | typeof isPropertyDeclaration
-  | typeof isSetterDeclaration) {
-
-  const declarations = classLikeDeclaration.members.filter(filter);
-
-  const symbols = declarations.reduce<Symbol[]>((acc, declaration) => {
-    // @ts-expect-error - Internal API
-    const symbol = ctx.checker.getSymbolAtLocation(classLikeDeclaration) ?? declaration.symbol;
-    if(symbol !== undefined && acc.includes(symbol) === false){
-      acc.push(symbol);
+function _mergeMembers<Key extends keyof {
+  [Key in keyof Class as Class[Key] extends { id: ID; }[] ? Key : never]: Class[Key]
+}>(classes: Class[], key: Key): Class[Key] {
+  return classes.reduce<Class[Key]>((acc, declaration) => {
+    for(const member of declaration[key]){
+      // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
+      if(acc.find(m => m.id === member.id)){
+        continue;
+      }
+      // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
+      acc.push(member);
     }
     return acc;
   }, []);
-
-  return symbols;
-
-}
-
-
-function _parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): Expression[] {
-  return heritageClauses
-    .flatMap(heritageClause => heritageClause.types.map(typeNode => parseTypeNode(ctx, typeNode)))
-    .filter(isExpression);
 }

@@ -3,7 +3,7 @@ import { Type } from "typescript";
 import { getIdByType } from "quickdoks:compiler:compositions/id.js";
 import { isBooleanType } from "quickdoks:compiler:typeguards/types.js";
 import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, BooleanType } from "quickdoks:types:types.js";
+import { BooleanType, Kind } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 

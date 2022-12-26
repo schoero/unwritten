@@ -11,13 +11,12 @@ import { getPositionByDeclaration } from "quickdoks:compiler:compositions/positi
 import { parseSymbol } from "quickdoks:compiler:entry-points/symbol.js";
 import { createTypeByDeclaration } from "quickdoks:compiler:entry-points/type.js";
 import { isEnumDeclaration, isEnumMemberDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { lockSymbol } from "quickdoks:compiler:utils/ts.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Enum, EnumMember, Kind, MergedEnum } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 
-export const createEnumBySymbol = (ctx: CompilerContext, symbol: Symbol): Enum | MergedEnum => lockSymbol(ctx, symbol, () => {
+export function createEnumBySymbol(ctx: CompilerContext, symbol: Symbol): Enum | MergedEnum {
 
   const declarations = symbol.getDeclarations()?.filter(isEnumDeclaration);
 
@@ -50,7 +49,7 @@ export const createEnumBySymbol = (ctx: CompilerContext, symbol: Symbol): Enum |
     };
   }
 
-});
+}
 
 
 function _mergeMembers(enums: ReturnType<typeof _parseEnumDeclaration>[]): Enum["members"] {

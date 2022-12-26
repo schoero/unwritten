@@ -1,20 +1,16 @@
 import { Type } from "typescript";
 
+import { parseType } from "quickdoks:compiler/entry-points/type.js";
 import { getIdByType } from "quickdoks:compiler:compositions/id.js";
-import { parseSymbol } from "quickdoks:compiler:entry-points/symbol.js";
 import { CompilerContext } from "quickdoks:types:context.js";
 import { Kind, ThisType } from "quickdoks:types:types.js";
-import { assert } from "quickdoks:utils:general.js";
 
 
-export function createThisByType(ctx: CompilerContext, thisType: Type): ThisType {
-
-  const symbol = thisType.getSymbol() ?? thisType.aliasSymbol;
-
-  assert(symbol, "Symbol is not found");
+export function createThisTypeByType(ctx: CompilerContext, thisType: Type): ThisType {
 
   const id = getIdByType(ctx, thisType);
-  const type = parseSymbol(ctx, symbol);
+  const tsType = thisType.getConstraint();
+  const type = tsType && parseType(ctx, tsType);
   const kind = Kind.ThisType;
 
   return {
