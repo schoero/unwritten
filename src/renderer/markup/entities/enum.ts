@@ -4,8 +4,9 @@ import {
   RenderedEnumForTableOfContents
 } from "quickdoks:renderer:markup/types/renderer.js";
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { Enum } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { Enum } from "quickdoks:type-definitions/types.d.js";
 
 
 export function renderEnumForTableOfContents(ctx: RenderContext<MarkupRenderer>, enumType: Enum): RenderedEnumForTableOfContents {

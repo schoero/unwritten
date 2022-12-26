@@ -67,10 +67,11 @@ import {
   isUnknownType,
   isVoidType
 } from "quickdoks:compiler:typeguards/types.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Types } from "quickdoks:types:types.js";
 import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Types } from "quickdoks:type-definitions/types.d.js";
 
 
 /** Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */

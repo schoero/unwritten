@@ -2,8 +2,9 @@ import { ConditionalType as TSConditionalType } from "typescript";
 
 import { getIdByType } from "quickdoks:compiler:compositions/id.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { ConditionalType, Kind } from "quickdoks:types:types.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { ConditionalType, Kind } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createConditionalType(ctx: CompilerContext, type: TSConditionalType): ConditionalType {

@@ -1,7 +1,7 @@
 import { Symbol } from "typescript";
 
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, Namespace } from "quickdoks:types:types.js";
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, Namespace } from "quickdoks:type-definitions/types.d.js";
 
 import { createSourceFileBySymbol } from "./source-file.js";
 

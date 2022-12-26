@@ -6,9 +6,10 @@ import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { isTypeParameterDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, TypeParameter } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, TypeParameter } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createTypeParameterBySymbol(ctx: CompilerContext, symbol: Symbol): TypeParameter {

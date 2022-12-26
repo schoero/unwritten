@@ -5,9 +5,10 @@ import ts from "typescript";
 import { reportCompilerDiagnostics } from "quickdoks:compiler:index.js";
 import { Locker } from "quickdoks:compiler:locker/index.js";
 import { getDefaultConfig } from "quickdoks:config/index.js";
-import { CompleteConfig } from "quickdoks:types:config.js";
-import { CompilerContext } from "quickdoks:types:context.js";
+import { CompleteConfig } from "quickdoks:type-definitions/config.d..js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function compile(code: string, compilerOptions?: ts.CompilerOptions, config?: CompleteConfig) {

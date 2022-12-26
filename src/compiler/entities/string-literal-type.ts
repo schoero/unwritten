@@ -1,8 +1,9 @@
 import { StringLiteralType as TSStringLiteralType } from "typescript";
 
 import { getIdByType } from "quickdoks:compiler:compositions/id.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, StringLiteralType } from "quickdoks:types:types.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, StringLiteralType } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createStringLiteralType(ctx: CompilerContext, type: TSStringLiteralType): StringLiteralType {

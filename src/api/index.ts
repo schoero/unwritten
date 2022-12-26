@@ -9,8 +9,9 @@ import { createConfig } from "quickdoks:config/index.js";
 import { Logger } from "quickdoks:logger:index.js";
 import { getRenderer } from "quickdoks:renderer:index.js";
 import { createContext as createRenderContext } from "quickdoks:renderer:utils/context.js";
-import { APIOptions } from "quickdoks:types:options.js";
 import { createContext as createDefaultContext } from "quickdoks:utils:context.js";
+
+import { APIOptions } from "quickdoks:type-definitions/options.d.js";
 
 
 export async function quickdoks(entryFilePath: string, options?: APIOptions) {

@@ -5,8 +5,9 @@ import {
   renderFunctionForTableOfContents
 } from "quickdoks:renderer:markup/entities/function.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
-import { Function, Kind } from "quickdoks:types:types.js";
-import { Real, Testable } from "quickdoks:types:utils.js";
+
+import { Function, Kind } from "quickdoks:type-definitions/types.d.js";
+import { Real, Testable } from "quickdoks:type-definitions/utils.d.js";
 
 
 describe("Renderer: Function", () => {

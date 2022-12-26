@@ -5,9 +5,10 @@ import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { parseSymbol } from "quickdoks:compiler:entry-points/symbol.js";
 import { getExportedSymbols } from "quickdoks:compiler:utils/ts.js";
 import { isExportableType } from "quickdoks:typeguards/types.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { ExportableTypes, Kind, SourceFile } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { ExportableTypes, Kind, SourceFile } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createSourceFileBySymbol(ctx: CompilerContext, symbol: Symbol): SourceFile {

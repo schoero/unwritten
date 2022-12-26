@@ -3,8 +3,9 @@ import { ExpressionWithTypeArguments } from "typescript";
 import { getNameByTypeNode } from "quickdoks:compiler/compositions/name.js";
 import { getIdByTypeNode } from "quickdoks:compiler:compositions/id.js";
 import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Expression, Kind } from "quickdoks:types:types.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Expression, Kind } from "quickdoks:type-definitions/types.d.js";
 
 import { createTypeArgumentByTypeNode } from "./type-argument.js";
 

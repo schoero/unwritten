@@ -4,7 +4,8 @@ import { createInterfaceBySymbol } from "quickdoks:compiler:entities";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-import { Interface, Kind } from "quickdoks:types:types.js";
+
+import { Interface, Kind } from "quickdoks:type-definitions/types.d.js";
 
 
 scope("Compiler", Kind.Circular, () => {

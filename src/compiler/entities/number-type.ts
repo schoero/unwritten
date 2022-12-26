@@ -2,9 +2,10 @@ import { Type } from "typescript";
 
 import { getIdByType } from "quickdoks:compiler:compositions/id.js";
 import { isNumberType } from "quickdoks:compiler:typeguards/types.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, NumberType } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, NumberType } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createNumberType(ctx: CompilerContext, type: Type): NumberType {

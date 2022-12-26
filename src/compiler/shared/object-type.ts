@@ -15,8 +15,9 @@ import {
   isPropertySymbol,
   isSetterSymbol
 } from "quickdoks:compiler:typeguards/symbols.js";
-import { InferObjectType, Kind, ObjectTypeKinds } from "quickdoks:types/types.js";
-import { CompilerContext } from "quickdoks:types:context.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { InferObjectType, Kind, ObjectTypeKinds } from "quickdoks:type-definitions/types.d.js";
 
 
 export const createObjectTypeByType = <ObjectKind extends ObjectTypeKinds>(ctx: CompilerContext, type: TSObjectType, kind: ObjectKind = Kind.ObjectType as ObjectKind): InferObjectType<ObjectKind> => lockType(ctx, type, () => {

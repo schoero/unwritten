@@ -8,9 +8,10 @@ import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:compos
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { createTypeByDeclaration, createTypeBySymbol } from "quickdoks:compiler:entry-points/type.js";
 import { isPropertyDeclaration, isPropertySignatureDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, Property } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, Property } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createPropertyBySymbol(ctx: CompilerContext, symbol: Symbol): Property {

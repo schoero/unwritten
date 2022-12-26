@@ -1,8 +1,9 @@
 import ts, { Declaration } from "typescript";
 
 import { isPropertyDeclaration } from "quickdoks:compiler/typeguards/declarations.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Modifiers } from "quickdoks:types:types.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Modifiers } from "quickdoks:type-definitions/types.d.js";
 
 
 export function getModifiersByDeclaration(ctx: CompilerContext, declaration: Declaration): Modifiers[] {

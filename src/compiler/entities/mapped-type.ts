@@ -6,9 +6,10 @@ import { getPositionByDeclaration } from "quickdoks:compiler:compositions/positi
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "quickdoks:compiler:typeguards/type-nodes.js";
 import { isLiteralType } from "quickdoks:typeguards/types.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, MappedType, MappedTypeMember } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, MappedType, MappedTypeMember } from "quickdoks:type-definitions/types.d.js";
 
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 

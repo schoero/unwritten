@@ -3,8 +3,9 @@ import { dirname, resolve } from "node:path";
 
 import ts from "typescript";
 
-import { DefaultContext } from "quickdoks:types:context.js";
 import { findFile } from "quickdoks:utils:finder.js";
+
+import { DefaultContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function compile(ctx: DefaultContext, entryFilePath: string, tsConfigFilePath?: string) {

@@ -8,8 +8,9 @@ import {
   isPrimitiveType,
   isUnionType
 } from "quickdoks:typeguards/types.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { Kind, Type } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, Type } from "quickdoks:type-definitions/types.d.js";
 
 import { renderInstanceType } from "./instance.js";
 import { renderIntersectionType } from "./intersection.js";

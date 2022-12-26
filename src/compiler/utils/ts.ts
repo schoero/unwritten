@@ -1,9 +1,10 @@
 import { Map as TSMap, Program, Symbol, Type } from "typescript";
 
 import { isAliasedSymbol } from "quickdoks:compiler:typeguards/symbols.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Types } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Types } from "quickdoks:type-definitions/types.d.js";
 
 
 export function normalizeTSMap<T>(tsMap: Map<string, T> | TSMap<T>): Map<string, T> {

@@ -1,5 +1,6 @@
-import { Renderer } from "quickdoks:types:renderer.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { Renderer } from "quickdoks:type-definitions/renderer.d.js";
 
 
 export async function getRenderer(renderer?: Renderer | string) {

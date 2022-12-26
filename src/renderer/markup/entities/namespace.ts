@@ -4,8 +4,9 @@ import {
   RenderedNamespaceForTableOfContents
 } from "quickdoks:renderer:markup/types/renderer.js";
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { Namespace } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { Namespace } from "quickdoks:type-definitions/types.d.js";
 
 import { renderForDocumentation, renderForTableOfContents } from "../index.js";
 

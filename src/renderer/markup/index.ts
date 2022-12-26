@@ -8,8 +8,9 @@ import {
   isTypeAliasType,
   isVariableType
 } from "quickdoks:typeguards/types.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { ExportableTypes } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { ExportableTypes } from "quickdoks:type-definitions/types.d.js";
 
 import { renderClassForDocumentation, renderClassForTableOfContents } from "./entities/class.js";
 import { renderEnumForDocumentation, renderEnumForTableOfContents } from "./entities/enum.js";

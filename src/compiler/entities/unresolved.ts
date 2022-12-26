@@ -3,8 +3,9 @@ import { Symbol, Type, TypeNode } from "typescript";
 import { getIdBySymbol } from "quickdoks:compiler:compositions/id.js";
 import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { getPositionBySymbol } from "quickdoks:compiler:compositions/position.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, Unresolved } from "quickdoks:types:types.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, Unresolved } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createUnresolvedBySymbol(ctx: CompilerContext, symbol: Symbol): Unresolved {

@@ -28,9 +28,10 @@ import {
   isVariableSymbol
 } from "quickdoks:compiler:typeguards/symbols.js";
 import { resolveSymbolInCaseOfImport } from "quickdoks:compiler:utils/ts.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Types } from "quickdoks:types:types.js";
 import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Types } from "quickdoks:type-definitions/types.d.js";
 
 
 export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {

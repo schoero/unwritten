@@ -11,7 +11,7 @@
       "quickdoks:logger:*": ["src/logger/*"],
       "quickdoks:renderer:*": ["src/renderer/*"],
       "quickdoks:tests:*": ["tests/*"],
-      "quickdoks:types:*": ["src/types/*"],
+      "quickdoks:types:*": ["src/type-definitions/*"],
       "quickdoks:utils:*": ["src/utils/*"]
     },
     "skipLibCheck": true,

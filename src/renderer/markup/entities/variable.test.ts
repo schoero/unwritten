@@ -6,8 +6,9 @@ import {
   renderVariableForTableOfContents
 } from "quickdoks:renderer:markup/entities/variable.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
-import { Kind, NumberLiteralType, Variable } from "quickdoks:types:types.js";
-import { Real, Testable } from "quickdoks:types:utils.js";
+
+import { Kind, NumberLiteralType, Variable } from "quickdoks:type-definitions/types.d.js";
+import { Real, Testable } from "quickdoks:type-definitions/utils.d.js";
 
 
 describe("Renderer: Variable", () => {

@@ -5,9 +5,10 @@ import { getNameByDeclaration } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByNode } from "quickdoks:compiler:compositions/position.js";
 import { parseType } from "quickdoks:compiler:entry-points/type.js";
 import { isTupleTypeReferenceType } from "quickdoks:compiler:typeguards/types.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, TupleMember, TupleType } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, TupleMember, TupleType } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): TupleType {

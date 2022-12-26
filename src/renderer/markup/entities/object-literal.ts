@@ -1,6 +1,7 @@
 import { MarkupRenderer, RenderedObjectLiteralType } from "quickdoks:renderer:markup/types/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { ObjectLiteral } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { ObjectLiteral } from "quickdoks:type-definitions/types.d.js";
 
 import { renderPropertyForDocumentation } from "./property.js";
 

@@ -1,8 +1,9 @@
 import { MarkupRenderer, RenderedParameterForDocumentation } from "quickdoks:renderer:markup/types/renderer.js";
 import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { Parameter } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { Parameter } from "quickdoks:type-definitions/types.d.js";
 
 import { renderType } from "./type.js";
 

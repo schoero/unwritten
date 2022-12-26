@@ -2,7 +2,8 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { error, success } from "quickdoks:logger/index.js";
-import { ConfigWithSchema } from "quickdoks:types:config.js";
+
+import { ConfigWithSchema } from "quickdoks:type-definitions/config.d.js";
 
 import { getDefaultConfig } from "./index.js";
 

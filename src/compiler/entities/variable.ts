@@ -7,9 +7,10 @@ import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { createTypeByDeclaration, createTypeBySymbol } from "quickdoks:compiler:entry-points/type.js";
 import { isVariableDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, Variable } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, Variable } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createVariableBySymbol(ctx: CompilerContext, symbol: Symbol): Variable {

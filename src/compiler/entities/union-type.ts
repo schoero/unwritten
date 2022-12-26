@@ -2,8 +2,9 @@ import { UnionType as TSUnionType } from "typescript";
 
 import { getIdByType } from "quickdoks:compiler:compositions/id.js";
 import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, UnionType } from "quickdoks:types:types.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, UnionType } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createUnionTypeByType(ctx: CompilerContext, type: TSUnionType): UnionType {

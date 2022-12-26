@@ -10,9 +10,10 @@ import { getModifiersByDeclaration } from "quickdoks:compiler:compositions/modif
 import { getNameByDeclaration } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, Signature } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, Signature } from "quickdoks:type-definitions/types.d.js";
 
 import { createParameterByDeclaration } from "./parameter.js";
 import { createTypeParameterByDeclaration } from "./type-parameter.js";

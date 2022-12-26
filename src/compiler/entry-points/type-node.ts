@@ -17,8 +17,9 @@ import {
   isTypeQueryNode,
   isTypeReferenceNode
 } from "quickdoks:compiler:typeguards/type-nodes.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Types } from "quickdoks:types:types.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Types } from "quickdoks:type-definitions/types.d.js";
 
 import { parseType } from "./type.js";
 

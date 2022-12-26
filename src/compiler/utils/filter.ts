@@ -1,7 +1,8 @@
 import { FunctionLikeDeclaration, MethodSignature, Symbol } from "typescript";
 
 import { isMethodSignatureDeclaration } from "quickdoks:compiler/typeguards/declarations.js";
-import { CompilerContext } from "quickdoks:types:context.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function functionOverloadDeclarationFilter(ctx: CompilerContext, declaration: FunctionLikeDeclaration | MethodSignature, symbol: Symbol): boolean {

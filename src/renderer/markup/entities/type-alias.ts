@@ -4,8 +4,9 @@ import {
   RenderedTypeAliasForTableOfContents
 } from "quickdoks:renderer:markup/types/renderer.js";
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { TypeAlias } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { TypeAlias } from "quickdoks:type-definitions/types.d.js";
 
 import { renderType } from "./type.js";
 

@@ -5,8 +5,9 @@ import {
 } from "quickdoks:renderer:markup/types/renderer.js";
 import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { Class } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { Class } from "quickdoks:type-definitions/types.d.js";
 
 import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./function.js";
 import { renderPropertyForDocumentation, renderPropertyForTableOfContents } from "./property.js";

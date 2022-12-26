@@ -1,8 +1,9 @@
 import { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { BuiltInRenderers } from "quickdoks:types:renderer.js";
-import { Complete } from "quickdoks:types:utils.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { BuiltInRenderers } from "quickdoks:type-definitions/renderer.d.js";
+import { Complete } from "quickdoks:type-definitions/utils.d.js";
 
 
 export function getRenderConfig(ctx: RenderContext): Complete<MarkupRenderConfig> {

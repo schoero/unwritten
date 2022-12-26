@@ -1,6 +1,6 @@
 import { describe } from "vitest";
 
-import { Kind } from "quickdoks:types:types.js";
+import { Kind } from "quickdoks:type-definitions/types.d.js";
 
 
 type Scopes = "Compiler" | "E2E" | "Integration" | "Renderer" | "Types";

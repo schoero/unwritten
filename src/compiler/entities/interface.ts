@@ -9,9 +9,10 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "quickdoks:
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { isExpression } from "quickdoks:typeguards/types.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Expression, Interface, Kind } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Expression, Interface, Kind } from "quickdoks:type-definitions/types.d.js";
 
 import { createTypeParameterByDeclaration } from "./type-parameter.js";
 

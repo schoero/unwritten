@@ -1,4 +1,4 @@
-import { Types } from "./types.js";
+import { Types } from "./types.d.js";
 
 
 export type Complete<Object> = {

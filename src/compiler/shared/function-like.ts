@@ -8,7 +8,8 @@ import {
   isMethodSignatureDeclaration
 } from "quickdoks:compiler:typeguards/declarations.js";
 import { functionOverloadDeclarationFilter } from "quickdoks:compiler:utils/filter.js";
-import { CompilerContext } from "quickdoks:types:context.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function createFunctionLikeBySymbol(ctx: CompilerContext, symbol: Symbol) {

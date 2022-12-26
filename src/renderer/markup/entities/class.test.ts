@@ -3,8 +3,9 @@ import { describe, it } from "vitest";
 
 import { renderClassForDocumentation, renderClassForTableOfContents } from "quickdoks:compiler:entities";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
-import { Class, Kind } from "quickdoks:types:types.js";
-import { Real, Testable } from "quickdoks:types:utils.js";
+
+import { Class, Kind } from "quickdoks:type-definitions/types.d.js";
+import { Real, Testable } from "quickdoks:type-definitions/utils.d.js";
 
 
 describe("Renderer: Class", () => {

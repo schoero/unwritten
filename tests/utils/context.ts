@@ -1,8 +1,9 @@
 import { getDefaultConfig } from "quickdoks:config/index.js";
 import { markdownRenderer } from "quickdoks:renderer:markup/markdown/index.js";
 import { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
 import { override } from "quickdoks:utils:override.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 const testConfig = override(getDefaultConfig(), {

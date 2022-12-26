@@ -4,7 +4,8 @@ import { createClassBySymbol } from "quickdoks:compiler:entities";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-import { Kind } from "quickdoks:types:types.js";
+
+import { Kind } from "quickdoks:type-definitions/types.d.js";
 
 
 scope("Compiler", Kind.Getter, () => {
@@ -29,15 +30,15 @@ scope("Compiler", Kind.Getter, () => {
     });
 
     it("should have a matching kind", () => {
-      expect(exportedClass.getters![0]!.kind).to.equal(Kind.Getter);
+      expect(exportedClass.getters[0]!.kind).to.equal(Kind.Getter);
     });
 
     it("should have a matching name", () => {
-      expect(exportedClass.getters![0]!.name).to.equal("getter");
+      expect(exportedClass.getters[0]!.name).to.equal("getter");
     });
 
     it("should have one signature", () => {
-      expect(exportedClass.getters![0]!.signatures).to.have.lengthOf(1);
+      expect(exportedClass.getters[0]!.signatures).to.have.lengthOf(1);
     });
 
   }

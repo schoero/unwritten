@@ -5,8 +5,9 @@ import {
 } from "quickdoks:renderer:markup/types/renderer.js";
 import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
 import { encapsulate, renderLink, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { EnumMember, Member } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { EnumMember, Member } from "quickdoks:type-definitions/types.d.js";
 
 import { renderType } from "./type.js";
 

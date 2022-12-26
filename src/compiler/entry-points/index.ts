@@ -2,9 +2,10 @@ import { Symbol } from "typescript";
 
 import { createSourceFileBySymbol } from "quickdoks:compiler/entities/index.js";
 import { isSourceFileSymbol } from "quickdoks:compiler:typeguards/symbols.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { ExportableTypes } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { ExportableTypes } from "quickdoks:type-definitions/types.d.js";
 
 
 export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): ExportableTypes[] {

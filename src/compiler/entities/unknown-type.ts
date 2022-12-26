@@ -2,9 +2,10 @@ import { Type } from "typescript";
 
 import { getIdByType } from "quickdoks:compiler:compositions/id.js";
 import { isUnknownType } from "quickdoks:compiler:typeguards/types.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, UnknownType } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, UnknownType } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createUnknownType(ctx: CompilerContext, type: Type): UnknownType {

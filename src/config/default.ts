@@ -1,6 +1,6 @@
-import { CompilerConfig, ExternalTypes } from "quickdoks:types:config.js";
-import { Kind } from "quickdoks:types:types.js";
-import { Complete } from "quickdoks:types:utils.js";
+import { CompilerConfig, ExternalTypes } from "quickdoks:type-definitions/config.d.js";
+import { Kind } from "quickdoks:type-definitions/types.d.js";
+import { Complete } from "quickdoks:type-definitions/utils.d.js";
 
 
 export const defaultCompilerConfig: Complete<CompilerConfig> = {

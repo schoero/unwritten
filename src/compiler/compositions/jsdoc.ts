@@ -1,7 +1,7 @@
 import ts, { Declaration, ParameterDeclaration, Symbol, TypeParameterDeclaration } from "typescript";
 
-import { Description, Example } from "quickdoks:types:compositions.js";
-import { CompilerContext } from "quickdoks:types:context.js";
+import { Description, Example } from "quickdoks:type-definitions/compositions.d.js";
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 //-- Description

@@ -2,8 +2,9 @@ import { Symbol, Type } from "typescript";
 
 import { lockType } from "quickdoks:compiler/utils/ts.js";
 import { createFunctionLikeBySymbol, createFunctionLikeByType } from "quickdoks:compiler:shared/function-like.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Function, Kind } from "quickdoks:types:types.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Function, Kind } from "quickdoks:type-definitions/types.d.js";
 
 
 export const test = () => "Test successful";

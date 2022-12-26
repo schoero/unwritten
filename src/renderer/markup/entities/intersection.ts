@@ -1,6 +1,7 @@
 import { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
-import { RenderContext } from "quickdoks:types:context.js";
-import { IntersectionType } from "quickdoks:types:types.js";
+
+import { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import { IntersectionType } from "quickdoks:type-definitions/types.d.js";
 
 import { renderType } from "./type.js";
 

@@ -6,9 +6,10 @@ import { getParameterDescription } from "quickdoks:compiler:compositions/jsdoc.j
 import { getNameByDeclaration } from "quickdoks:compiler:compositions/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
 import { createTypeByDeclaration } from "quickdoks:compiler:entry-points/type.js";
-import { CompilerContext } from "quickdoks:types:context.js";
-import { Kind, Parameter } from "quickdoks:types:types.js";
 import { assert } from "quickdoks:utils:general.js";
+
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import { Kind, Parameter } from "quickdoks:type-definitions/types.d.js";
 
 
 export function createParameterByDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration): Parameter {

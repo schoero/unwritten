@@ -2,8 +2,9 @@ import { expect, it } from "vitest";
 
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
-import { Interface, Kind } from "quickdoks:types:types.js";
-import { Real, Testable } from "quickdoks:types:utils.js";
+
+import { Interface, Kind } from "quickdoks:type-definitions/types.d.js";
+import { Real, Testable } from "quickdoks:type-definitions/utils.d.js";
 
 import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./interface.js";
 

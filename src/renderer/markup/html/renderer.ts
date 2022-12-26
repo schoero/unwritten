@@ -1,5 +1,6 @@
 import { MarkupRenderImplementation } from "quickdoks:renderer:markup/types/renderer.js";
-import { BuiltInRenderers } from "quickdoks:types:renderer.js";
+
+import { BuiltInRenderers } from "quickdoks:type-definitions/renderer.d.js";
 
 
 class HTMLRenderer implements MarkupRenderImplementation {

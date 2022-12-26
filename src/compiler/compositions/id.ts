@@ -1,7 +1,7 @@
 import { Declaration, Symbol, Type, TypeNode } from "typescript";
 
-import { ID } from "quickdoks:types:compositions.js";
-import { CompilerContext } from "quickdoks:types:context.js";
+import { ID } from "quickdoks:type-definitions/compositions.d.js";
+import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function getIdBySymbol(ctx: CompilerContext, symbol: Symbol): ID {
