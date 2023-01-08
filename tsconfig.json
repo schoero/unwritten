@@ -7,14 +7,15 @@
       "quickdoks:api:*": ["src/api/*"],
       "quickdoks:bin:*": ["src/bin/*"],
       "quickdoks:compiler:*": ["src/compiler/*"],
-      "quickdoks:compiler:entities": ["src/compiler/entities/index.js"],
+      "quickdoks:compiler:entities": ["src/compiler/ast/entities/index.js"],
+      "quickdoks:compiler:references": ["src/compiler/ast/references/index.js"],
+      "quickdoks:compiler:types": ["src/compiler/ast/types/index.js"],
       "quickdoks:logger:*": ["src/logger/*"],
       "quickdoks:renderer:*": ["src/renderer/*"],
       "quickdoks:tests:*": ["tests/*"],
       "quickdoks:types:*": ["src/type-definitions/*"],
       "quickdoks:utils:*": ["src/utils/*"]
     },
-    "skipLibCheck": true,
     "target": "ES2020"
   },
   "include": [

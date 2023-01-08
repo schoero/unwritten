@@ -1,4 +1,10 @@
-import ts, {
+import ts from "typescript";
+
+import { isDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { isSymbol } from "quickdoks:compiler:typeguards/symbols.js";
+import { isTypeNode } from "quickdoks:compiler:typeguards/type-nodes.js";
+
+import type {
   BigIntLiteralType,
   ConditionalType,
   Declaration,
@@ -19,10 +25,6 @@ import ts, {
   TypeReference,
   UnionType
 } from "typescript";
-
-import { isDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { isSymbol } from "quickdoks:compiler:typeguards/symbols.js";
-import { isTypeNode } from "quickdoks:compiler:typeguards/type-nodes.js";
 
 
 export function isAnonymousType(type: Type) {

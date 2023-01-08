@@ -1,8 +1,8 @@
-import { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
+import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { RenderCategories } from "quickdoks:renderer:markup/types/renderer.js";
 
-import { Kind } from "quickdoks:type-definitions/types.d.js";
-import { Complete } from "quickdoks:type-definitions/utils.d.js";
+import type { Complete } from "quickdoks:compiler:type-definitions/utils.d.js";
+import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
 
 
 export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
@@ -38,14 +38,14 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   propertyEncapsulation: ["`", "`"],
   removeHyphenAtStartOfTag: true,
   renderOrder: [
-    Kind.Namespace,
-    Kind.Module,
-    Kind.Function,
-    Kind.Class,
-    Kind.Variable,
-    Kind.Enum,
-    Kind.TypeAlias,
-    Kind.Interface
+    EntityKind.Namespace,
+    EntityKind.Module,
+    EntityKind.Function,
+    EntityKind.Class,
+    EntityKind.Variable,
+    EntityKind.Enum,
+    EntityKind.TypeAlias,
+    EntityKind.Interface
   ],
   stringLiteralTypeEncapsulation: ["`", "`"],
   tagEncapsulation: ["`", "`"],

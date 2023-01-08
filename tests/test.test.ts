@@ -1,8 +1,8 @@
-import { existsSync, writeFileSync } from "fs";
+import { existsSync, writeFileSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import { compile } from "quickdoks:compiler:entities";
+import { compile } from "quickdoks:tests:utils/compile.js";
 
 import { parse } from "../src/compiler/entry-points/index.js";
 
@@ -19,14 +19,13 @@ describe("Compiler: Namespace", () => {
     if(key === "kind"){
       return `Kind.${value as number}`;
     } else if(key === "id"){
-      return undefined;
+      return;
     } else if(key === "modifiers"){
-      return undefined;
+      return;
     } else if(key === "position"){
-      return undefined;
-    } else {
-      return value;
+      return;
     }
+    return value;
   }, 2).replace(/"(Kind\..*)"/g, "$1"));
 
   it("should export a thing", () => {

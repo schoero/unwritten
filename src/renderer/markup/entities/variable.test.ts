@@ -1,24 +1,25 @@
 import { expect } from "chai";
 import { describe, it } from "vitest";
 
+import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import {
   renderVariableForDocumentation,
   renderVariableForTableOfContents
 } from "quickdoks:renderer:markup/entities/variable.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 
-import { Kind, NumberLiteralType, Variable } from "quickdoks:type-definitions/types.d.js";
-import { Real, Testable } from "quickdoks:type-definitions/utils.d.js";
+import type { NumberLiteralType, Variable } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { Real, Testable } from "quickdoks:compiler:type-definitions/utils.d.js";
 
 
 describe("Renderer: Variable", () => {
 
   const testVariable: Testable<Variable> = {
     description: "Default TCP Port.",
-    kind: Kind.Variable,
+    kind: TypeKind.Variable,
     name: "TCP_PORT",
     type: <NumberLiteralType>{
-      kind: Kind.NumberLiteral,
+      kind: TypeKind.NumberLiteral,
       value: 80
     }
   };

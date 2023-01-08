@@ -1,9 +1,10 @@
 import minimatch from "minimatch";
-import { Declaration, Symbol } from "typescript";
 
-import { getPositionByDeclaration } from "quickdoks:compiler:compositions/position.js";
+import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
 
-import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { Declaration, Symbol } from "typescript";
+
+import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function isSymbolExcluded(ctx: CompilerContext, symbol: Symbol): boolean {
@@ -14,12 +15,12 @@ export function isSymbolExcluded(ctx: CompilerContext, symbol: Symbol): boolean 
     return false;
   }
 
-  return _isDeclarationExcluded(ctx, declaration);
+  return isDeclarationExcluded(ctx, declaration);
 
 }
 
 
-function _isDeclarationExcluded(ctx: CompilerContext, declaration: Declaration): boolean {
+function isDeclarationExcluded(ctx: CompilerContext, declaration: Declaration): boolean {
 
   const position = getPositionByDeclaration(ctx, declaration);
   const excludePaths = ctx.config.compilerConfig.exclude;

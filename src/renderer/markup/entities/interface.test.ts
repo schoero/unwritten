@@ -1,15 +1,16 @@
 import { expect, it } from "vitest";
 
+import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 
-import { Interface, Kind } from "quickdoks:type-definitions/types.d.js";
-import { Real, Testable } from "quickdoks:type-definitions/utils.d.js";
-
 import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./interface.js";
 
+import type { Interface } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { Real, Testable } from "quickdoks:compiler:type-definitions/utils.d.js";
 
-scope("Renderer", Kind.Interface, () => {
+
+scope("Renderer", TypeKind.Interface, () => {
 
   {
 
@@ -17,7 +18,7 @@ scope("Renderer", Kind.Interface, () => {
       callSignatures: [],
       constructSignatures: [],
       getterSignatures: [],
-      kind: Kind.Interface,
+      kind: TypeKind.Interface,
       methodSignatures: [],
       name: "Interface",
       properties: [],
@@ -59,7 +60,7 @@ scope("Renderer", Kind.Interface, () => {
       callSignatures: [],
       constructSignatures: [],
       getterSignatures: [],
-      kind: Kind.Interface,
+      kind: TypeKind.Interface,
       methodSignatures: [],
       name: "Interface",
       properties: [],

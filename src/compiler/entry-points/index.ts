@@ -1,14 +1,14 @@
-import { Symbol } from "typescript";
-
-import { createSourceFileBySymbol } from "quickdoks:compiler/entities/index.js";
+import { createSourceFileEntity } from "quickdoks:compiler:entities";
 import { isSourceFileSymbol } from "quickdoks:compiler:typeguards/symbols.js";
 import { assert } from "quickdoks:utils:general.js";
 
-import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
-import { ExportableTypes } from "quickdoks:type-definitions/types.d.js";
+import type { Symbol } from "typescript";
+
+import type { ExportableEntities } from "quickdoks:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): ExportableTypes[] {
+export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): ExportableEntities[] {
   assert(isSourceFileSymbol(sourceFileSymbol), "Source file symbol is not a source file symbol");
-  return createSourceFileBySymbol(ctx, sourceFileSymbol).exports;
+  return createSourceFileEntity(ctx, sourceFileSymbol).exports;
 }

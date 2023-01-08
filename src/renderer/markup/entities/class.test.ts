@@ -2,10 +2,11 @@ import { expect } from "chai";
 import { describe, it } from "vitest";
 
 import { renderClassForDocumentation, renderClassForTableOfContents } from "quickdoks:compiler:entities";
+import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 
-import { Class, Kind } from "quickdoks:type-definitions/types.d.js";
-import { Real, Testable } from "quickdoks:type-definitions/utils.d.js";
+import type { Class } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { Real, Testable } from "quickdoks:compiler:type-definitions/utils.d.js";
 
 
 describe("Renderer: Class", () => {
@@ -13,7 +14,7 @@ describe("Renderer: Class", () => {
 
     const testClass: Testable<Class> = {
       getters: [],
-      kind: Kind.Class,
+      kind: TypeKind.Class,
       methods: [],
       name: "Class",
       properties: [],
@@ -60,21 +61,21 @@ describe("Renderer: Class", () => {
 
     const testClass: Testable<Class> = {
       ctor: {
-        kind: Kind.Constructor,
+        kind: TypeKind.Constructor,
         name: "constructor",
         signatures: [
           {
-            kind: Kind.Signature,
+            kind: TypeKind.Signature,
             parameters: [],
             returnType: {
-              kind: Kind.Instance,
+              kind: TypeKind.Instance,
               name: "Class"
             }
           }
         ]
       },
       getters: [],
-      kind: Kind.Class,
+      kind: TypeKind.Class,
       methods: [],
       name: "Class",
       properties: [],
@@ -108,16 +109,16 @@ describe("Renderer: Class", () => {
 
     const testClass: Testable<Class> = {
       getters: [],
-      kind: Kind.Class,
+      kind: TypeKind.Class,
       methods: [],
       name: "Class",
       properties: [
         {
-          kind: Kind.Property,
+          kind: TypeKind.Property,
           name: "property",
           optional: false,
           type: {
-            kind: Kind.String,
+            kind: TypeKind.String,
             name: "string"
           }
         }
@@ -146,17 +147,17 @@ describe("Renderer: Class", () => {
 
     const testClass: Testable<Class> = {
       getters: [],
-      kind: Kind.Class,
+      kind: TypeKind.Class,
       methods: [
         {
-          kind: Kind.Method,
+          kind: TypeKind.Method,
           name: "meow",
           signatures: [
             {
-              kind: Kind.Signature,
+              kind: TypeKind.Signature,
               parameters: [],
               returnType: {
-                kind: Kind.Void,
+                kind: TypeKind.Void,
                 name: "void"
               }
             }

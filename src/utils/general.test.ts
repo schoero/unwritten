@@ -1,4 +1,4 @@
-/* eslint-disable sort-keys, sort-keys-fix/sort-keys-fix */
+/* eslint-disable sort-keys/sort-keys-fix */
 import { describe, expect, it } from "vitest";
 
 import { scope } from "quickdoks:tests:utils/scope.js";

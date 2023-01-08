@@ -1,10 +1,10 @@
 import { describe } from "vitest";
 
-import { Kind } from "quickdoks:type-definitions/types.d.js";
+import type { TypeKind } from "quickdoks:compiler:enums/types.js";
 
 
 type Scopes = "Compiler" | "E2E" | "Integration" | "Renderer" | "Types";
-type Units = Kind | string;
+type Units = TypeKind | string;
 
 type DescribeReturnType = ReturnType<typeof describe>;
 type DescribeParams = (typeof describe) extends (name: infer Name, factory?: infer Factory, options?: infer Options) => DescribeReturnType ? {

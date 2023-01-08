@@ -1,16 +1,16 @@
-import {
+import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
+import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
+
+import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./function.js";
+import { renderPropertyForDocumentation, renderPropertyForTableOfContents } from "./property.js";
+
+import type { Class } from "quickdoks:compiler:type-definitions/types.d.js";
+import type {
   MarkupRenderer,
   RenderedClassForDocumentation,
   RenderedClassForTableOfContents
 } from "quickdoks:renderer:markup/types/renderer.js";
-import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
-import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
-
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { Class } from "quickdoks:type-definitions/types.d.js";
-
-import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./function.js";
-import { renderPropertyForDocumentation, renderPropertyForTableOfContents } from "./property.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function renderClassForTableOfContents(ctx: RenderContext<MarkupRenderer>, classType: Class): RenderedClassForTableOfContents {

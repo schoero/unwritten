@@ -1,148 +1,72 @@
-import {
+import { TypeKind } from "quickdoks:compiler:enums/types.js";
+
+import type {
   BigIntLiteralType,
   BooleanLiteralType,
-  Class,
-  Enum,
-  ExportableTypes,
-  Expression,
-  Function,
-  Getter,
-  Instance,
-  Interface,
   IntersectionType,
-  Kind,
   LiteralTypes,
-  Method,
-  Namespace,
   NumberLiteralType,
-  ObjectLiteral,
+  ObjectLiteralType,
   PrimitiveTypes,
-  Property,
-  Setter,
   StringLiteralType,
-  TypeAlias,
   Types,
   UnionType,
-  Unresolved,
-  Variable
-} from "quickdoks:type-definitions/types.d.js";
+  UnresolvedType
+} from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 export function isBigIntLiteralType(type: Types): type is BigIntLiteralType {
-  return type.kind === Kind.BigIntLiteral;
+  return type.kind === TypeKind.BigIntLiteral;
 }
 
 export function isBooleanLiteralType(type: Types): type is BooleanLiteralType {
-  return type.kind === Kind.BooleanLiteral;
-}
-
-export function isClassType(type: Types): type is Class {
-  return type.kind === Kind.Class;
-}
-
-export function isEnumType(type: Types): type is Enum {
-  return type.kind === Kind.Enum;
-}
-
-export function isExportableType(type: Types): type is ExportableTypes {
-  return isClassType(type) ||
-    isEnumType(type) ||
-    isFunctionType(type) ||
-    isInterfaceType(type) ||
-    isNamespaceType(type) ||
-    isTypeAliasType(type) ||
-    isVariableType(type) ||
-    isUnresolvedType(type);
-}
-
-export function isExpression(type: Types): type is Expression {
-  return type.kind === Kind.Expression;
-}
-
-export function isFunctionType(type: Types): type is Function {
-  return type.kind === Kind.Function;
-}
-
-export function isGetterType(type: Types): type is Getter {
-  return type.kind === Kind.Getter;
-}
-
-export function isInstanceType(type: Types): type is Instance {
-  return type.kind === Kind.Instance;
-}
-
-export function isInterfaceType(type: Types): type is Interface {
-  return type.kind === Kind.Interface;
+  return type.kind === TypeKind.BooleanLiteral;
 }
 
 export function isIntersectionType(type: Types): type is IntersectionType {
-  return type.kind === Kind.IntersectionType;
+  return type.kind === TypeKind.IntersectionType;
 }
 
 export function isLiteralType(type: Types): type is LiteralTypes {
-  return type.kind === Kind.StringLiteral ||
-    type.kind === Kind.NumberLiteral ||
-    type.kind === Kind.BooleanLiteral ||
-    type.kind === Kind.BigIntLiteral;
-}
-
-export function isMethodType(type: Types): type is Method {
-  return type.kind === Kind.Method;
-}
-
-export function isNamespaceType(type: Types): type is Namespace {
-  return type.kind === Kind.Namespace;
+  return type.kind === TypeKind.StringLiteral ||
+    type.kind === TypeKind.NumberLiteral ||
+    type.kind === TypeKind.BooleanLiteral ||
+    type.kind === TypeKind.BigIntLiteral;
 }
 
 export function isNumberLiteralType(type: Types): type is NumberLiteralType {
-  return type.kind === Kind.NumberLiteral;
+  return type.kind === TypeKind.NumberLiteral;
 }
 
-export function isObjectLiteralType(type: Types): type is ObjectLiteral {
-  return type.kind === Kind.ObjectLiteral;
+export function isObjectLiteralType(type: Types): type is ObjectLiteralType {
+  return type.kind === TypeKind.ObjectLiteral;
 }
 
 export function isPrimitiveType(type: Types): type is PrimitiveTypes {
-  return type.kind === Kind.Any ||
-    type.kind === Kind.BigInt ||
-    type.kind === Kind.BigIntLiteral ||
-    type.kind === Kind.Boolean ||
-    type.kind === Kind.BooleanLiteral ||
-    type.kind === Kind.Never ||
-    type.kind === Kind.Null ||
-    type.kind === Kind.Number ||
-    type.kind === Kind.NumberLiteral ||
-    type.kind === Kind.String ||
-    type.kind === Kind.StringLiteral ||
-    type.kind === Kind.Symbol ||
-    type.kind === Kind.Undefined ||
-    type.kind === Kind.Void;
-}
-
-export function isPropertyType(type: Types): type is Property {
-  return type.kind === Kind.Property;
-}
-
-export function isSetterType(type: Types): type is Setter {
-  return type.kind === Kind.Setter;
+  return type.kind === TypeKind.Any ||
+    type.kind === TypeKind.BigInt ||
+    type.kind === TypeKind.BigIntLiteral ||
+    type.kind === TypeKind.Boolean ||
+    type.kind === TypeKind.BooleanLiteral ||
+    type.kind === TypeKind.Never ||
+    type.kind === TypeKind.Null ||
+    type.kind === TypeKind.Number ||
+    type.kind === TypeKind.NumberLiteral ||
+    type.kind === TypeKind.String ||
+    type.kind === TypeKind.StringLiteral ||
+    type.kind === TypeKind.Symbol ||
+    type.kind === TypeKind.Undefined ||
+    type.kind === TypeKind.Void;
 }
 
 export function isStringLiteralType(type: Types): type is StringLiteralType {
-  return type.kind === Kind.StringLiteral;
-}
-
-export function isTypeAliasType(type: Types): type is TypeAlias {
-  return type.kind === Kind.TypeAlias;
+  return type.kind === TypeKind.StringLiteral;
 }
 
 export function isUnionType(type: Types): type is UnionType {
-  return type.kind === Kind.UnionType;
+  return type.kind === TypeKind.UnionType;
 }
 
-export function isUnresolvedType(type: Types): type is Unresolved {
-  return type.kind === Kind.Unresolved;
-}
-
-export function isVariableType(type: Types): type is Variable {
-  return type.kind === Kind.Variable;
+export function isUnresolvedType(type: Types): type is UnresolvedType {
+  return type.kind === TypeKind.Unresolved;
 }

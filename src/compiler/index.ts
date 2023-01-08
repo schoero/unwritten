@@ -5,7 +5,7 @@ import ts from "typescript";
 
 import { findFile } from "quickdoks:utils:finder.js";
 
-import { DefaultContext } from "quickdoks:type-definitions/context.d.js";
+import type { DefaultContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function compile(ctx: DefaultContext, entryFilePath: string, tsConfigFilePath?: string) {
@@ -46,7 +46,7 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
 
   {
     if(tsConfigFilePath !== undefined){
-      const compilerOptions = _readConfigFile(ctx, tsConfigFilePath);
+      const compilerOptions = readConfigFile(ctx, tsConfigFilePath);
       if(compilerOptions !== undefined){
         return compilerOptions;
       }
@@ -59,7 +59,7 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
   {
     const foundTSConfigFilePath = ts.findConfigFile(entryFilePath, ts.sys.fileExists);
     if(foundTSConfigFilePath !== undefined){
-      const compilerOptions = _readConfigFile(ctx, foundTSConfigFilePath);
+      const compilerOptions = readConfigFile(ctx, foundTSConfigFilePath);
       if(compilerOptions !== undefined){
         return compilerOptions;
       }
@@ -72,7 +72,7 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
   {
     const foundTSConfigFilePath = findFile("tsconfig.json", entryFilePath);
     if(foundTSConfigFilePath !== undefined){
-      const compilerOptions = _readConfigFile(ctx, foundTSConfigFilePath);
+      const compilerOptions = readConfigFile(ctx, foundTSConfigFilePath);
       if(compilerOptions !== undefined){
         return compilerOptions;
       }
@@ -87,7 +87,7 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
     if(foundPackageJsonFilePath !== undefined){
       const foundTSConfigFilePath = ts.findConfigFile(foundPackageJsonFilePath, ts.sys.fileExists);
       if(foundTSConfigFilePath !== undefined){
-        const compilerOptions = _readConfigFile(ctx, foundTSConfigFilePath);
+        const compilerOptions = readConfigFile(ctx, foundTSConfigFilePath);
         if(compilerOptions !== undefined){
           return compilerOptions;
         }
@@ -100,12 +100,12 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
 
   ctx.logger?.warn("No tsconfig found, continue using default compiler options but this may fail...");
 
-  return _getDefaultCompilerOptions();
+  return getDefaultCompilerOptions();
 
 }
 
 
-function _readConfigFile(ctx: DefaultContext, path: string): ts.CompilerOptions | undefined {
+function readConfigFile(ctx: DefaultContext, path: string): ts.CompilerOptions | undefined {
 
   const configFileBasePath = dirname(path);
   const configFile = ts.readConfigFile(path, ts.sys.readFile);
@@ -126,7 +126,7 @@ function _readConfigFile(ctx: DefaultContext, path: string): ts.CompilerOptions 
 
 }
 
-function _getDefaultCompilerOptions(): ts.CompilerOptions {
+function getDefaultCompilerOptions(): ts.CompilerOptions {
   return {
     ...ts.getDefaultCompilerOptions(),
     allowJs: true

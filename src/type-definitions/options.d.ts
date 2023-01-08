@@ -1,5 +1,5 @@
-import { Config } from "./config.js";
-import { BuiltInRenderers } from "./renderer.js";
+import type { Config } from "./config.js";
+import type { BuiltInRenderers } from "./renderer.js";
 
 
 export interface Options {

@@ -34,7 +34,7 @@ describe("override", () => {
     });
   }
   {
-    const result = override({ a: { b: "original" } }, { a: { } });
+    const result = override({ a: { b: "original" } }, { a: {} });
     it("should be possible to override the whole object with an empty object", () => {
       expect(Object.keys(result.a)).to.have.lengthOf(0);
     });

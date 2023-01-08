@@ -36,22 +36,22 @@
     "lib"
   ],
   "dependencies": {
-    "@schoero/vite-config": "^0.0.8",
-    "commander": "^9.4.1",
+    "@schoero/vite-config": "^0.0.10",
+    "cac": "^6.7.14",
     "minimatch": "^5.1.2",
     "typescript": "^4.9.4"
   },
   "devDependencies": {
-    "@schoero/cspell-config": "^1.6.3",
-    "@schoero/eslint-config": "^1.31.0",
+    "@schoero/cspell-config": "^1.6.5",
+    "@schoero/eslint-config": "^1.34.0",
     "@schoero/markdownlint-config": "^1.1.2",
     "@schoero/ts-config": "^0.3.2",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^18.11.17",
+    "@types/node": "^18.11.18",
     "eslint-plugin-sort-exports": "^0.8.0",
     "ts-json-schema-generator": "^1.2.0",
     "vite-tsconfig-paths": "^4.0.3",
-    "vitest": "^0.26.2",
+    "vitest": "^0.26.3",
     "vitest-github-actions-reporter": "^0.9.0"
   },
   "keywords": [

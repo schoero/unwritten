@@ -1,4 +1,6 @@
-import ts, {
+import ts from "typescript";
+
+import type {
   ArrayTypeNode,
   Declaration,
   ExpressionWithTypeArguments,

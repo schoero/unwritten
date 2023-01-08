@@ -1,15 +1,13 @@
-import { Symbol } from "typescript";
-
 import {
-  createClassBySymbol,
-  createEnumBySymbol,
+  createClassEntity,
+  createEnumEntity,
   createFunctionBySymbol,
   createInterfaceBySymbol,
-  createModuleBySymbol,
+  createModuleEntity,
   createNamespaceBySymbol,
   createPropertyBySymbol,
-  createSourceFileBySymbol,
-  createTypeAliasBySymbol,
+  createSourceFileEntity,
+  createTypeAliasEntity,
   createTypeParameterBySymbol,
   createUnresolvedBySymbol,
   createVariableBySymbol
@@ -30,8 +28,10 @@ import {
 import { resolveSymbolInCaseOfImport } from "quickdoks:compiler:utils/ts.js";
 import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
 
-import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
-import { Types } from "quickdoks:type-definitions/types.d.js";
+import type { Symbol } from "typescript";
+
+import type { Types } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
@@ -47,19 +47,19 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Types {
   } else if(isFunctionSymbol(resolvedSymbol)){
     return createFunctionBySymbol(ctx, resolvedSymbol);
   } else if(isClassSymbol(resolvedSymbol)){
-    return createClassBySymbol(ctx, resolvedSymbol);
+    return createClassEntity(ctx, resolvedSymbol);
   } else if(isInterfaceSymbol(resolvedSymbol)){
     return createInterfaceBySymbol(ctx, resolvedSymbol);
   } else if(isTypeAliasSymbol(resolvedSymbol)){
-    return createTypeAliasBySymbol(ctx, resolvedSymbol);
+    return createTypeAliasEntity(ctx, resolvedSymbol);
   } else if(isEnumSymbol(resolvedSymbol)){
-    return createEnumBySymbol(ctx, resolvedSymbol);
+    return createEnumEntity(ctx, resolvedSymbol);
   } else if(isNamespaceSymbol(symbol)){
     return createNamespaceBySymbol(ctx, resolvedSymbol);
   } else if(isModuleSymbol(symbol)){
-    return createModuleBySymbol(ctx, resolvedSymbol);
+    return createModuleEntity(ctx, resolvedSymbol);
   } else if(isSourceFileSymbol(symbol)){
-    return createSourceFileBySymbol(ctx, resolvedSymbol);
+    return createSourceFileEntity(ctx, resolvedSymbol);
   } else if(isTypeParameterSymbol(symbol)){
     return createTypeParameterBySymbol(ctx, resolvedSymbol);
   } else if(isPropertySymbol(symbol)){

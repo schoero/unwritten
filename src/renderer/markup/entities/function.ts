@@ -1,16 +1,16 @@
 import { contentFilter } from "quickdoks:compiler:utils/filter.js";
-import {
+import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
+
+import { renderParameterForDocumentation, renderParametersForSignature } from "./parameter.js";
+import { renderType } from "./type.js";
+
+import type { FunctionLike, FunctionLikeTypeKinds } from "quickdoks:compiler:type-definitions/types.d.js";
+import type {
   MarkupRenderer,
   RenderedFunctionForDocumentation,
   RenderedFunctionForTableOfContents
 } from "quickdoks:renderer:markup/types/renderer.js";
-import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
-
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { FunctionLike, FunctionLikeTypeKinds } from "quickdoks:type-definitions/types.d.js";
-
-import { renderParameterForDocumentation, renderParametersForSignature } from "./parameter.js";
-import { renderType } from "./type.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function renderFunctionForTableOfContents(ctx: RenderContext<MarkupRenderer>, func: FunctionLike<FunctionLikeTypeKinds>): RenderedFunctionForTableOfContents {

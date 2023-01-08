@@ -1,8 +1,8 @@
-import { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
-
 import { render } from "../index.js";
 
 import { markdownRenderer as _markdownRenderer } from "./renderer.js";
+
+import type { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
 
 
 export const markdownRenderer: MarkupRenderer = {

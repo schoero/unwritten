@@ -1,4 +1,7 @@
-import { Types } from "./types.d.js";
+import type { Entities } from "quickdoks:compiler:type-definitions/entities.js";
+
+
+export type ObjectValues<O> = O[keyof O];
 
 
 export type Complete<Object> = {
@@ -84,5 +87,5 @@ type DeepRequiredByKeyObject<T, K extends keyof any> =
 
 //-- Test
 
-export type Testable<Entity extends Types> = DeepPartialByKey<Entity, "id" | "modifiers" | "position">;
-export type Real<Entity extends Types> = DeepRequiredByKey<Entity, "id" | "modifiers" | "position">;
+export type Testable<Entity extends Entities> = DeepPartialByKey<Entity, "id" | "modifiers" | "position">;
+export type Real<Entity extends Entities> = DeepRequiredByKey<Entity, "id" | "modifiers" | "position">;

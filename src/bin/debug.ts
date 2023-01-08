@@ -7,30 +7,30 @@ import { sortKeys } from "quickdoks:utils:general.js";
 
 export function debug(inputPath: string) {
 
-  const code = _catchErrors("Reading input file", () => readFileSync(inputPath, { encoding: "utf-8" }));
-  const { fileSymbol, ctx } = _catchErrors("Compiling input file", () => compile(code));
-  const parserOutput = _catchErrors("Parsing file symbol", () => parse(ctx, fileSymbol));
+  const code = catchErrors("Reading input file", () => readFileSync(inputPath, { encoding: "utf-8" }));
+  const { fileSymbol, ctx } = catchErrors("Compiling input file", () => compile(code));
+  const parserOutput = catchErrors("Parsing file symbol", () => parse(ctx, fileSymbol));
 
-  _writeOutput("parser-output.json", JSON.stringify(parserOutput, sortKeys, 2));
+  writeOutput("parser-output.json", JSON.stringify(parserOutput, sortKeys, 2));
 
 }
 
 
-function _writeError(name: string, err: Error) {
-  _writeOutput("error.json", JSON.stringify({ error: { message: err.message, stack: err.stack }, stage: name }, null, 2));
+function writeError(name: string, err: Error) {
+  writeOutput("error.json", JSON.stringify({ error: { message: err.message, stack: err.stack }, stage: name }, null, 2));
 }
 
-function _writeOutput(name: string, output: string) {
+function writeOutput(name: string, output: string) {
   writeFileSync(`${process.cwd()}/${name}`, `${output}\n`);
 }
 
 
-function _catchErrors<F extends(...args: any) => any>(name: string, callback: F): ReturnType<F> {
+function catchErrors<F extends(...args: any) => any>(name: string, callback: F): ReturnType<F> {
   try {
     return callback();
   } catch (err){
     if(err instanceof Error){
-      _writeError(name, err);
+      writeError(name, err);
     }
     throw err;
   }

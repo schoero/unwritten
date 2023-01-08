@@ -1,8 +1,8 @@
-import { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
 
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { Instance } from "quickdoks:type-definitions/types.d.js";
+import type { Instance } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function renderInstanceType(ctx: RenderContext<MarkupRenderer>, type: Instance) {

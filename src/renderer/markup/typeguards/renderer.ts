@@ -1,4 +1,4 @@
-import {
+import type {
   RenderedList,
   RenderedMultilineContent,
   RenderedTitle,

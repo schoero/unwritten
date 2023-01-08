@@ -11,7 +11,7 @@ import { getRenderer } from "quickdoks:renderer:index.js";
 import { createContext as createRenderContext } from "quickdoks:renderer:utils/context.js";
 import { createContext as createDefaultContext } from "quickdoks:utils:context.js";
 
-import { APIOptions } from "quickdoks:type-definitions/options.d.js";
+import type { APIOptions } from "quickdoks:type-definitions/options.d.js";
 
 
 export async function quickdoks(entryFilePath: string, options?: APIOptions) {

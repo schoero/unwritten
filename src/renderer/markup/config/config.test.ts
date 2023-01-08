@@ -4,8 +4,8 @@ import { renderVariableForDocumentation } from "quickdoks:renderer:markup/entiti
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 
-import { Variable } from "quickdoks:type-definitions/types.d.js";
-import { Real, Testable } from "quickdoks:type-definitions/utils.d.js";
+import type { Variable } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { Real, Testable } from "quickdoks:compiler:type-definitions/utils.d.js";
 
 
 scope("Renderer", "Config", () => {

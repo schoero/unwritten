@@ -5,10 +5,10 @@ import ts from "typescript";
 import { reportCompilerDiagnostics } from "quickdoks:compiler:index.js";
 import { Locker } from "quickdoks:compiler:locker/index.js";
 import { getDefaultConfig } from "quickdoks:config/index.js";
-import { CompleteConfig } from "quickdoks:type-definitions/config.d..js";
 import { assert } from "quickdoks:utils:general.js";
 
-import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { CompleteConfig } from "quickdoks:type-definitions/config.d.js";
+import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function compile(code: string, compilerOptions?: ts.CompilerOptions, config?: CompleteConfig) {
@@ -27,7 +27,7 @@ export function compile(code: string, compilerOptions?: ts.CompilerOptions, conf
     getSourceFile: filePath => filePath === dummyFilePath ? sourceFile : ts.createSourceFile(filePath, readFileSync(filePath, { encoding: "utf-8" }), ts.ScriptTarget.Latest),
     readFile: filePath => filePath === dummyFilePath ? code : undefined,
     useCaseSensitiveFileNames: () => true,
-    writeFile: () => { }
+    writeFile: () => {}
   };
 
   const program = ts.createProgram({

@@ -1,10 +1,10 @@
-import ts from "typescript";
+import type { CompleteConfig } from "./config.js";
+import type { Renderer } from "./renderer.js";
 
-import { Locker } from "quickdoks:compiler:locker/index.js";
-import { Logger } from "quickdoks:logger/index.js";
+import type ts from "typescript";
 
-import { CompleteConfig } from "./config.js";
-import { Renderer } from "./renderer.js";
+import type { Locker } from "quickdoks:compiler:locker/index.js";
+import type { Logger } from "quickdoks:logger/index.js";
 
 
 export type DefaultContext = {

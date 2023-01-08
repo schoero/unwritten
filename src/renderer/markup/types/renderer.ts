@@ -1,5 +1,5 @@
-import { Description, Example } from "quickdoks:type-definitions/compositions.d.js";
-import { BuiltInRenderers, Renderer } from "quickdoks:type-definitions/renderer.d.js";
+import type { Description, Example } from "quickdoks:compiler:type-definitions/mixins.d.js";
+import type { BuiltInRenderers, Renderer } from "quickdoks:compiler:type-definitions/renderer.d.js";
 
 
 export interface MarkupRenderImplementation {

@@ -2,14 +2,14 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { defaultRenderConfig } from "quickdoks:renderer:markup/config/default.js";
-import { CompleteConfig, Config } from "quickdoks:type-definitions/config.d..js";
+import { BuiltInRenderers } from "quickdoks:type-definitions/renderer.d.js";
 import { findFile } from "quickdoks:utils:finder.js";
 import { override } from "quickdoks:utils:override.js";
 
-import { DefaultContext } from "quickdoks:type-definitions/context.d.js";
-import { BuiltInRenderers } from "quickdoks:type-definitions/renderer.d.js";
-
 import { defaultCompilerConfig, defaultExternalTypes } from "./default.js";
+
+import type { CompleteConfig, Config } from "quickdoks:type-definitions/config.d.js";
+import type { DefaultContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export async function createConfig(ctx: DefaultContext, configOrPath?: Config | string): Promise<CompleteConfig> {
@@ -29,7 +29,7 @@ export async function createConfig(ctx: DefaultContext, configOrPath?: Config | 
     absoluteConfigPath = resolve(configOrPath);
 
     if(existsSync(absoluteConfigPath) === false){
-      throw Error(`Config file does not exist at ${absoluteConfigPath}`);
+      throw new Error(`Config file does not exist at ${absoluteConfigPath}`);
     }
 
   } else if(typeof configOrPath === "undefined"){
@@ -50,7 +50,8 @@ export async function createConfig(ctx: DefaultContext, configOrPath?: Config | 
   }
 
   if(typeof absoluteConfigPath === "string"){
-    userConfig = (await import(absoluteConfigPath)).default;
+    const { default: importedConfig } = await import(absoluteConfigPath);
+    userConfig = importedConfig;
   }
 
   if(userConfig === undefined){
@@ -74,7 +75,7 @@ async function getExtendConfig(config: Config): Promise<Config> {
     throw new Error(`Config extends property must be a string if it exists.`);
   }
 
-  let loadedConfig = (await import(config.extends)).default;
+  let { default: loadedConfig } = await import(config.extends);
 
   if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
     throw new Error(`The extended config is not an object.`);

@@ -2,7 +2,7 @@ import { expectTypeOf, it } from "vitest";
 
 import { scope } from "quickdoks:tests:utils/scope.js";
 
-import { DeepPartialByKey, DeepRequiredByKey } from "./utils.js";
+import type { DeepPartialByKey, DeepRequiredByKey } from "./utils.js";
 
 
 scope("Types", "Utils", () => {

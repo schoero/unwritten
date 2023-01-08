@@ -9,9 +9,6 @@ import {
   isVariableType
 } from "quickdoks:typeguards/types.js";
 
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { ExportableTypes } from "quickdoks:type-definitions/types.d.js";
-
 import { renderClassForDocumentation, renderClassForTableOfContents } from "./entities/class.js";
 import { renderEnumForDocumentation, renderEnumForTableOfContents } from "./entities/enum.js";
 import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./entities/function.js";
@@ -20,7 +17,7 @@ import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } fr
 import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./entities/type-alias.js";
 import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./entities/variable.js";
 import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "./typeguards/renderer.js";
-import {
+import type {
   MarkupRenderer,
   RenderedCategoryForDocumentation,
   RenderedCategoryForTableOfContents,
@@ -30,6 +27,9 @@ import {
 } from "./types/renderer.js";
 import { getCategoryName } from "./utils/renderer.js";
 import { sortExportableTypes } from "./utils/sort.js";
+
+import type { ExportableTypes } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function render(ctx: RenderContext<MarkupRenderer>, types: ExportableTypes[]): string {

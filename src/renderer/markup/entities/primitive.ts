@@ -1,7 +1,6 @@
-import { MarkupRenderer, RenderedPrimitiveType } from "quickdoks:renderer:markup/types/renderer.js";
-
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { PrimitiveType, PrimitiveTypeKinds } from "quickdoks:type-definitions/types.d.js";
+import type { PrimitiveType, PrimitiveTypeKinds } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { MarkupRenderer, RenderedPrimitiveType } from "quickdoks:renderer:markup/types/renderer.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function renderPrimitiveType(ctx: RenderContext<MarkupRenderer>, type: PrimitiveType<PrimitiveTypeKinds>): RenderedPrimitiveType {

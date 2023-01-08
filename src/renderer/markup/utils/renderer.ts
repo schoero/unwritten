@@ -1,13 +1,14 @@
 import { contentFilter } from "quickdoks:compiler:utils/filter.js";
-import { Encapsulation } from "quickdoks:renderer:markup/types/config.js";
-import { MarkupRenderer, RenderCategories } from "quickdoks:renderer:markup/types/renderer.js";
-
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { DeepOmit } from "quickdoks:type-definitions/utils.d.js";
+import { RenderCategories } from "quickdoks:renderer:markup/types/renderer.js";
 
 import { createAnchor } from "../linker/index.js";
 
 import { getRenderConfig } from "./config.js";
+
+import type { DeepOmit } from "quickdoks:compiler:type-definitions/utils.d.js";
+import type { Encapsulation } from "quickdoks:renderer:markup/types/config.js";
+import type { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function spaceBetween(...strings: string[]) {

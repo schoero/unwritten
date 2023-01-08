@@ -1,6 +1,6 @@
-import { ExportableTypeKinds } from "quickdoks:type-definitions/types.d.js";
+import type { CategoryNames } from "./renderer.js";
 
-import { CategoryNames } from "./renderer.js";
+import type { ExportableTypeKinds } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 export interface MarkupRenderConfig {

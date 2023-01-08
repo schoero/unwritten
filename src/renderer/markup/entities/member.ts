@@ -1,15 +1,15 @@
-import {
+import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
+import { encapsulate, renderLink, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
+
+import { renderType } from "./type.js";
+
+import type { EnumMember, Member } from "quickdoks:compiler:type-definitions/types.d.js";
+import type {
   MarkupRenderer,
   RenderedMemberForDocumentation,
   RenderedMemberForTableOfContents
 } from "quickdoks:renderer:markup/types/renderer.js";
-import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
-import { encapsulate, renderLink, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
-
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { EnumMember, Member } from "quickdoks:type-definitions/types.d.js";
-
-import { renderType } from "./type.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function renderMemberForTableOfContents(ctx: RenderContext<MarkupRenderer>, member: EnumMember | Member): RenderedMemberForTableOfContents {

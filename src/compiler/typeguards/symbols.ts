@@ -1,4 +1,6 @@
-import ts, { Declaration, Type, TypeNode } from "typescript";
+import ts from "typescript";
+
+import type { Declaration, Type, TypeNode } from "typescript";
 
 
 export function isAliasExcludesSymbol(symbol: ts.Symbol): boolean {

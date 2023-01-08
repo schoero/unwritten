@@ -1,6 +1,6 @@
-import { MarkupRenderImplementation } from "quickdoks:renderer:markup/types/renderer.js";
-
 import { BuiltInRenderers } from "quickdoks:type-definitions/renderer.d.js";
+
+import type { MarkupRenderImplementation } from "quickdoks:renderer:markup/types/renderer.js";
 
 
 class MarkdownRenderer implements MarkupRenderImplementation {
@@ -132,7 +132,7 @@ class MarkdownRenderer implements MarkupRenderImplementation {
   private _textToAnchorLink(text: string): string {
     let link = text.toLowerCase();
 
-    link = link.replace(/[^a-z0-9\s-]/gi, "");
+    link = link.replace(/[^\d\sa-z-]/gi, "");
     link = link.replace(/\s/g, "-");
     return link;
   }

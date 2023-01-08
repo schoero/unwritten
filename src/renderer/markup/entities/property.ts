@@ -1,15 +1,15 @@
-import {
+import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
+import { encapsulate, renderLink, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
+
+import { renderType } from "./type.js";
+
+import type { Property } from "quickdoks:compiler:type-definitions/types.d.js";
+import type {
   MarkupRenderer,
   RenderedPropertyForDocumentation,
   RenderedPropertyForTableOfContents
 } from "quickdoks:renderer:markup/types/renderer.js";
-import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
-import { encapsulate, renderLink, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
-
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { Property } from "quickdoks:type-definitions/types.d.js";
-
-import { renderType } from "./type.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function renderPropertyForTableOfContents(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForTableOfContents {

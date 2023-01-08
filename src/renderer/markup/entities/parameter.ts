@@ -1,19 +1,19 @@
-import { MarkupRenderer, RenderedParameterForDocumentation } from "quickdoks:renderer:markup/types/renderer.js";
 import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
 
-import { RenderContext } from "quickdoks:type-definitions/context.d.js";
-import { Parameter } from "quickdoks:type-definitions/types.d.js";
-
 import { renderType } from "./type.js";
 
+import type { ParameterEntity } from "quickdoks:compiler:type-definitions/entities.js";
+import type { MarkupRenderer, RenderedParameterForDocumentation } from "quickdoks:renderer:markup/types/renderer.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
-export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>, parameter: Parameter[]): string {
+
+export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>, parameter: ParameterEntity[]): string {
 
   let joinedParameters: string = "";
 
   for(let p = 0; p < parameter.length; p++){
-    const renderedParameter = _renderParameterForSignature(ctx, parameter[p]!);
+    const renderedParameter = renderParameterForSignature(ctx, parameter[p]!);
     if(p === 0){
       if(parameter[p]!.optional === true){
         joinedParameters += `[${renderedParameter}]`;
@@ -34,7 +34,7 @@ export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>,
 }
 
 
-export function renderParameterForDocumentation(ctx: RenderContext<MarkupRenderer>, parameterEntity: Parameter): RenderedParameterForDocumentation {
+export function renderParameterForDocumentation(ctx: RenderContext<MarkupRenderer>, parameterEntity: ParameterEntity): RenderedParameterForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -50,7 +50,7 @@ export function renderParameterForDocumentation(ctx: RenderContext<MarkupRendere
 }
 
 
-function _renderParameterForSignature(ctx: RenderContext<MarkupRenderer>, parameterEntity: Parameter): string {
+function renderParameterForSignature(ctx: RenderContext<MarkupRenderer>, parameterEntity: ParameterEntity): string {
   const rest = parameterEntity.rest === true ? "..." : "";
   return `${rest}${parameterEntity.name}`;
 }

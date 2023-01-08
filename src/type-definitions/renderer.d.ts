@@ -1,5 +1,6 @@
-import { RenderContext } from "./context.js";
-import { ExportableTypes } from "./types.js";
+import type { RenderContext } from "./context.js";
+
+import type { ExportableEntities } from "quickdoks:compiler:type-definitions/entities.d.js";
 
 
 export enum BuiltInRenderers {
@@ -13,5 +14,5 @@ export interface Renderer {
   /** The name of the render extension */
   name: BuiltInRenderers | string;
   /** The render function */
-  render: (context: RenderContext, types: ExportableTypes[]) => string;
+  render: (context: RenderContext, types: ExportableEntities[]) => string;
 }

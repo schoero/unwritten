@@ -3,9 +3,9 @@ import { resolve } from "node:path";
 
 import { error, success } from "quickdoks:logger/index.js";
 
-import { ConfigWithSchema } from "quickdoks:type-definitions/config.d.js";
-
 import { getDefaultConfig } from "./index.js";
+
+import type { ConfigWithSchema } from "quickdoks:compiler:type-definitions/config.d.js";
 
 
 export function generateConfig() {

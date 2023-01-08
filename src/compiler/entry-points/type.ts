@@ -1,18 +1,13 @@
-import { Declaration, ObjectType as TSObjectType, Symbol, Type } from "typescript";
-
-import { createObjectTypeByType } from "quickdoks:compiler/shared/object-type.js";
-import { isTypeLocked } from "quickdoks:compiler/utils/ts.js";
-import { getNameBySymbol } from "quickdoks:compiler:compositions/name.js";
+import { createFunctionType } from "quickdoks:compiler:ast/types/function-type.js";
 import {
   createAnyType,
-  createArrayByTypeReference,
+  createArrayType,
   createBigIntLiteralType,
   createBigIntType,
   createBooleanLiteralType,
   createBooleanType,
-  createClassByType,
+  createClassType,
   createConditionalType,
-  createFunctionByType,
   createInterfaceByType,
   createIntersectionTypeByType,
   createLinkToType,
@@ -25,17 +20,18 @@ import {
   createStringLiteralType,
   createStringType,
   createSymbolType,
-  createThisTypeByType,
   createTupleTypeByTypeReference,
-  createTypeLiteralByType,
-  createTypeParameterByType,
+  createTypeLiteralType,
+  createTypeParameterType,
   createUndefinedType,
   createUnionTypeByType,
   createUnknownType,
   createUnresolvedBySymbol,
   createUnresolvedByType,
   createVoidType
-} from "quickdoks:compiler:entities";
+} from "quickdoks:compiler:ast/types/index.js";
+import { createObjectLikeType } from "quickdoks:compiler:ast/types/object-type.js";
+import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import {
   isAnyType,
   isArrayTypeReferenceType,
@@ -58,7 +54,6 @@ import {
   isStringLiteralType,
   isStringType,
   isSymbolType,
-  isThisType,
   isTupleTypeReferenceType,
   isTypeLiteralType,
   isTypeParameterType,
@@ -67,11 +62,14 @@ import {
   isUnknownType,
   isVoidType
 } from "quickdoks:compiler:typeguards/types.js";
+import { isTypeLocked } from "quickdoks:compiler:utils/ts.js";
 import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
 import { assert } from "quickdoks:utils:general.js";
 
-import { CompilerContext } from "quickdoks:type-definitions/context.d.js";
-import { Types } from "quickdoks:type-definitions/types.d.js";
+import type { Declaration, ObjectType as TSObjectType, Symbol, Type } from "typescript";
+
+import type { Types } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "quickdoks:compiler:type-definitions:context.d.js";
 
 
 /** Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */
@@ -105,9 +103,7 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
 
   //-- Order is important! Parse most specific types first
 
-  if(isThisType(type)){
-    return createThisTypeByType(ctx, type);
-  }if(isConditionalType(type)){
+  if(isConditionalType(type)){
     return createConditionalType(ctx, type);
   } else if(isStringLiteralType(type)){
     return createStringLiteralType(ctx, type);
@@ -144,7 +140,7 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
   } else if(isIntersectionType(type)){
     return createIntersectionTypeByType(ctx, type);
   } else if(isTypeParameterType(type)){
-    return createTypeParameterByType(ctx, type);
+    return createTypeParameterType(ctx, type);
   } else {
     return createUnresolvedByType(ctx, type);
   }
@@ -157,7 +153,7 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
   } else if(isArrayTypeReferenceType(type)){
-    return createArrayByTypeReference(ctx, type);
+    return createArrayType(ctx, type);
   }
 
   if(isSymbolExcluded(ctx, type.symbol)){
@@ -167,17 +163,17 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
   if(isMappedType(type)){
     return createMappedTypeByType(ctx, type);
   } else if(isFunctionLikeType(type)){
-    return createFunctionByType(ctx, type);
+    return createFunctionType(ctx, type);
   } else if(isTypeLiteralType(type)){
-    return createTypeLiteralByType(ctx, type);
+    return createTypeLiteralType(ctx, type);
   } else if(isObjectLiteralType(type)){
     return createObjectLiteralByType(ctx, type);
   } else if(isInterfaceType(type)){
     return createInterfaceByType(ctx, type);
   } else if(isClassType(type)){
-    return createClassByType(ctx, type);
+    return createClassType(ctx, type);
   }
 
-  return createObjectTypeByType(ctx, type);
+  return createObjectLikeType(ctx, type);
 
 }
