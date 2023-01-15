@@ -1,4 +1,4 @@
-import minimatch from "minimatch";
+import { minimatch } from "minimatch";
 
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
 

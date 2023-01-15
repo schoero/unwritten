@@ -1,8 +1,10 @@
-import { createGetterEntity } from "quickdoks:compiler:entities";
-import { createPropertyEntity } from "quickdoks:compiler:entities";
-import { createMethodEntity } from "quickdoks:compiler:entities";
-import { createSetterEntity } from "quickdoks:compiler:entities";
-import { createSignatureEntity } from "quickdoks:compiler:entities";
+import {
+  createGetterEntity,
+  createMethodEntity,
+  createPropertyEntity,
+  createSetterEntity,
+  createSignatureEntity
+} from "quickdoks:compiler:entities";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { getIdByType } from "quickdoks:compiler:mixins/id.js";
 import {
@@ -17,7 +19,7 @@ import { lockType } from "quickdoks:compiler:utils/ts.js";
 import type { ObjectType as TSObjectType } from "typescript";
 
 import type { InferObjectLikeType, ObjectLikeTypeKinds } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:compiler:type-definitions:context.d.js";
+import type { CompilerContext } from "quickdoks:type-definitions/context.js";
 
 
 export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKinds>(ctx: CompilerContext, type: TSObjectType, kind: ObjectLikeTypeKind = TypeKind.ObjectType as ObjectLikeTypeKind): InferObjectLikeType<ObjectLikeTypeKind> => lockType(ctx, type, () => {

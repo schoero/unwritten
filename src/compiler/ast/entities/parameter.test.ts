@@ -65,7 +65,7 @@ scope("Compiler", EntityKind.Parameter, () => {
     });
 
     it("should have a matching type", () => {
-      expect(parameter.type.kind).to.equal(TypeKind.String);
+      expect(parameter.type!.kind).to.equal(TypeKind.String);
     });
 
   }
@@ -83,7 +83,7 @@ scope("Compiler", EntityKind.Parameter, () => {
     const parameter = exportedFunction.signatures[0]!.parameters[0]!;
 
     it("should be able to handle optional types", () => {
-      expect(parameter.type.kind).to.equal(TypeKind.String);
+      expect(parameter.type!.kind).to.equal(TypeKind.String);
       expect(parameter.optional).to.equal(true);
     });
 
@@ -102,7 +102,7 @@ scope("Compiler", EntityKind.Parameter, () => {
     const parameter = exportedFunction.signatures[0]!.parameters[0]!;
 
     it("should be able to handle initialized types", () => {
-      expect(parameter.type.kind).to.equal(TypeKind.String);
+      expect(parameter.type!.kind).to.equal(TypeKind.String);
       expect(parameter.initializer).to.not.equal(undefined);
       expect(parameter.initializer!.kind).to.equal(TypeKind.StringLiteral);
     });
@@ -123,7 +123,7 @@ scope("Compiler", EntityKind.Parameter, () => {
 
     it("should be able to handle rest types", () => {
       expect(parameter.rest).to.equal(true);
-      expect(parameter.type.kind).to.equal(TypeKind.Array);
+      expect(parameter.type!.kind).to.equal(TypeKind.Array);
     });
 
   }

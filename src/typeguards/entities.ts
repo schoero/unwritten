@@ -5,7 +5,6 @@ import type {
   Entities,
   EnumEntity,
   ExportableEntities,
-  ExpressionEntity,
   FunctionEntity,
   GetterEntity,
   InterfaceEntity,
@@ -33,9 +32,6 @@ export function isExportableEntity(entity: Entities): entity is ExportableEntiti
     isVariableEntity(entity);
 }
 
-export function isExpressionEntity(entity: Entities): entity is ExpressionEntity {
-  return entity.kind === EntityKind.Expression;
-}
 
 export function isFunctionEntity(entity: Entities): entity is FunctionEntity {
   return entity.kind === EntityKind.Function;

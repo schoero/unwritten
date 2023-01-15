@@ -5,13 +5,14 @@ import ts from "typescript";
 import { reportCompilerDiagnostics } from "quickdoks:compiler:index.js";
 import { Locker } from "quickdoks:compiler:locker/index.js";
 import { getDefaultConfig } from "quickdoks:config/index.js";
+import { override } from "quickdoks:utils/override.js";
 import { assert } from "quickdoks:utils:general.js";
 
-import type { CompleteConfig } from "quickdoks:type-definitions/config.d.js";
+import type { Config } from "quickdoks:type-definitions/config.d.js";
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function compile(code: string, compilerOptions?: ts.CompilerOptions, config?: CompleteConfig) {
+export function compile(code: string, compilerOptions?: ts.CompilerOptions, config?: Config) {
 
   const dummyFilePath = "/file.ts";
   const sourceFile = ts.createSourceFile(dummyFilePath, code.trim(), ts.ScriptTarget.Latest);
@@ -57,7 +58,7 @@ export function compile(code: string, compilerOptions?: ts.CompilerOptions, conf
 
   const ctx: CompilerContext = {
     checker,
-    config: config ?? getDefaultConfig(),
+    config: override(config ?? {}, getDefaultConfig()),
     locker: new Locker()
   };
 

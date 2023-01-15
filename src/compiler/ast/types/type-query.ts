@@ -8,7 +8,7 @@ import type { TypeQueryEntity } from "quickdoks:compiler:type-definitions/entiti
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function createTypeQueryReference(ctx: CompilerContext, typeNode: TypeQueryNode): TypeQueryEntity {
+export function createTypeQueryType(ctx: CompilerContext, typeNode: TypeQueryNode): TypeQueryEntity {
 
   const id = getIdByTypeNode(ctx, typeNode);
   const tsType = ctx.checker.getTypeFromTypeNode(typeNode);

@@ -6,7 +6,7 @@ import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 
-import type { TemplateLiteralType } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { TemplateLiteralType, TypeReferenceType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 scope("Compiler", TypeKind.TemplateLiteral, () => {
@@ -100,7 +100,6 @@ scope("Compiler", TypeKind.TemplateLiteral, () => {
 
   }
 
-
   {
 
     const testFileContent = "" +
@@ -112,8 +111,8 @@ scope("Compiler", TypeKind.TemplateLiteral, () => {
     const symbol = exportedSymbols.find(s => s.name === "Test")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    it("should result in a type literal", () => {
-      expect((exportedTypeAlias.type as TemplateLiteralType).types).to.equal("border-");
+    it("should result in a string literal", () => {
+      expect((exportedTypeAlias.type as TypeReferenceType).type?.kind).to.equal(TypeKind.StringLiteral);
     });
 
   }

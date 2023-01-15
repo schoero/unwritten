@@ -7,10 +7,10 @@ import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 
-import type { TypeReferenceEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
+import type { TypeReferenceType } from "quickdoks:compiler/type-definitions/types.js";
 
 
-scope("Compiler", EntityKind.TypeReference, () => {
+scope("Compiler", TypeKind.TypeReference, () => {
 
   {
 
@@ -26,16 +26,16 @@ scope("Compiler", EntityKind.TypeReference, () => {
 
     it("should be able to parse a type reference", () => {
       expect(exportedReferenceTypeAlias.kind).toBe(EntityKind.TypeAlias);
-      expect(exportedReferenceTypeAlias.type.kind).toBe(EntityKind.TypeReference);
+      expect(exportedReferenceTypeAlias.type.kind).toBe(TypeKind.TypeReference);
     });
 
     it("should have a matching name", () => {
-      expect((exportedReferenceTypeAlias.type as TypeReferenceEntity).name).to.equal("A");
+      expect((exportedReferenceTypeAlias.type as TypeReferenceType).name).to.equal("A");
     });
 
     it("should have a matching type", () => {
-      expect((exportedReferenceTypeAlias.type as TypeReferenceEntity).type).to.not.equal(undefined);
-      expect((exportedReferenceTypeAlias.type as TypeReferenceEntity).type.kind).to.equal(TypeKind.String);
+      expect((exportedReferenceTypeAlias.type as TypeReferenceType).type).to.not.equal(undefined);
+      expect((exportedReferenceTypeAlias.type as TypeReferenceType).type!.kind).to.equal(TypeKind.String);
     });
 
   }
@@ -56,12 +56,12 @@ scope("Compiler", EntityKind.TypeReference, () => {
     const falsyConditionalTypeReference = createTypeAliasEntity(ctx, falsyConditionalTypeReferenceSymbol);
 
     it("should be able to parse conditional type references", () => {
-      expect(truthyConditionalTypeReference.type.kind).to.equal(EntityKind.TypeReference);
-      expect((truthyConditionalTypeReference.type as TypeReferenceEntity).type).to.not.equal(undefined);
-      expect((truthyConditionalTypeReference.type as TypeReferenceEntity).type?.kind).to.equal(TypeKind.String);
-      expect(falsyConditionalTypeReference.type.kind).to.equal(EntityKind.TypeReference);
-      expect((falsyConditionalTypeReference.type as TypeReferenceEntity).type).to.not.equal(undefined);
-      expect((falsyConditionalTypeReference.type as TypeReferenceEntity).type?.kind).to.equal(TypeKind.Number);
+      expect(truthyConditionalTypeReference.type.kind).to.equal(TypeKind.TypeReference);
+      expect((truthyConditionalTypeReference.type as TypeReferenceType).type).to.not.equal(undefined);
+      expect((truthyConditionalTypeReference.type as TypeReferenceType).type?.kind).to.equal(TypeKind.String);
+      expect(falsyConditionalTypeReference.type.kind).to.equal(TypeKind.TypeReference);
+      expect((falsyConditionalTypeReference.type as TypeReferenceType).type).to.not.equal(undefined);
+      expect((falsyConditionalTypeReference.type as TypeReferenceType).type?.kind).to.equal(TypeKind.Number);
     });
 
   }

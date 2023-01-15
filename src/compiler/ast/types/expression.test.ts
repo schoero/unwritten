@@ -51,7 +51,7 @@ scope("Compiler", EntityKind.Expression, () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.typeArguments).to.not.equal(undefined);
       expect(exportedClass.heritage!.typeArguments).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.typeArguments![0].type.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedClass.heritage!.typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
     });
 
     it("should resolve type parameters with the supplied type arguments", () => {
@@ -68,11 +68,9 @@ scope("Compiler", EntityKind.Expression, () => {
     const testFileContent = ts`
       class Base {
       }
-
       function getBase() {
           return Base
       }
-
       export class Class extends getBase() {
       }
     `;
@@ -100,11 +98,9 @@ scope("Compiler", EntityKind.Expression, () => {
       class Base<T> {
         prop: T;
       }
-
       function getBase() {
         return Base;
       }
-
       export class Class extends getBase()<"Hello"> {
       }
     `;

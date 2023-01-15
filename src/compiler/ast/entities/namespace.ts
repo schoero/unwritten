@@ -7,7 +7,7 @@ import type { NamespaceEntity } from "quickdoks:compiler:type-definitions/entiti
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function createNamespaceBySymbol(ctx: CompilerContext, symbol: Symbol): NamespaceEntity {
+export function createNamespaceEntity(ctx: CompilerContext, symbol: Symbol): NamespaceEntity {
 
   const fromSourceFile = createSourceFileEntity(ctx, symbol);
   const kind = EntityKind.Namespace;

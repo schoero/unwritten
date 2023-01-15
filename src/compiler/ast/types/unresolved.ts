@@ -5,11 +5,11 @@ import { getPositionBySymbol } from "quickdoks:compiler:mixins/position.js";
 
 import type { Symbol, Type, TypeNode } from "typescript";
 
-import type { Unresolved } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { UnresolvedType } from "quickdoks:compiler:type-definitions/types.d.js";
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function createUnresolvedBySymbol(ctx: CompilerContext, symbol: Symbol): Unresolved {
+export function createUnresolvedType(ctx: CompilerContext, symbol: Symbol): UnresolvedType {
 
   const id = getIdBySymbol(ctx, symbol);
   const position = getPositionBySymbol(ctx, symbol);
@@ -26,12 +26,12 @@ export function createUnresolvedBySymbol(ctx: CompilerContext, symbol: Symbol): 
 }
 
 
-export function createUnresolvedByType(ctx: CompilerContext, type: Type): Unresolved {
-  return createUnresolvedBySymbol(ctx, type.symbol);
+export function createUnresolvedByType(ctx: CompilerContext, type: Type): UnresolvedType {
+  return createUnresolvedType(ctx, type.symbol);
 }
 
 
-export function createUnresolvedByTypeNode(ctx: CompilerContext, typeNode: TypeNode): Unresolved {
+export function createUnresolvedByTypeNode(ctx: CompilerContext, typeNode: TypeNode): UnresolvedType {
   const type = ctx.checker.getTypeFromTypeNode(typeNode);
   return createUnresolvedByType(ctx, type);
 }

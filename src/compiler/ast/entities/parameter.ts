@@ -1,8 +1,8 @@
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
+import { parseTypeNode } from "quickdoks:compiler/entry-points/type-node.js";
+import { getParameterDescription } from "quickdoks:compiler/mixins/jsdoc.js";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
 import { getInitializerByDeclaration } from "quickdoks:compiler:mixins/initializer.js";
-import { getParameterDescription } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
 import { assert } from "quickdoks:utils:general.js";
@@ -16,7 +16,7 @@ import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 export function createParameterEntity(ctx: CompilerContext, declaration: ParameterDeclaration): ParameterEntity {
 
   const symbol = ctx.checker.getSymbolAtLocation(declaration.name);
-  const tsType = ctx.checker.getTypeAtLocation(declaration.name);
+  const typeNode = declaration.type;
 
   assert(symbol, "Symbol is not found");
 
@@ -25,7 +25,7 @@ export function createParameterEntity(ctx: CompilerContext, declaration: Paramet
   const initializer = getInitializerByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getParameterDescription(ctx, declaration);
-  const type = parseType(ctx, tsType);
+  const type = typeNode && parseTypeNode(ctx, typeNode);
 
   const optional = declaration.questionToken !== undefined;
   const rest = declaration.dotDotDotToken !== undefined;

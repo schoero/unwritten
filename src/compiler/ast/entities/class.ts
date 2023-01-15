@@ -12,7 +12,6 @@ import { getDescriptionByDeclaration, getExampleByDeclaration } from "quickdoks:
 import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.js";
 import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
-import { createExpressionReference } from "quickdoks:compiler:references";
 import {
   isClassDeclaration,
   isConstructorDeclaration,
@@ -21,12 +20,14 @@ import {
   isPropertyDeclaration,
   isSetterDeclaration
 } from "quickdoks:compiler:typeguards/declarations.js";
-import { isExpressionEntity } from "quickdoks:typeguards/entities.js";
+import { createExpressionType } from "quickdoks:compiler:types";
+import { isExpressionType } from "quickdoks:typeguards/types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 import type { ClassLikeDeclaration, HeritageClause, NodeArray, Symbol } from "typescript";
 
-import type { ClassEntity, ExpressionEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
+import type { ExpressionType } from "quickdoks:compiler/type-definitions/types.js";
+import type { ClassEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
 import type { CompilerContext } from "quickdoks:types:context.d.js";
 
 
@@ -115,8 +116,8 @@ function getSymbolsByTypeFromClassLikeDeclaration(ctx: CompilerContext, classLik
 }
 
 
-function parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): ExpressionEntity {
+function parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType {
   return heritageClauses
-    .flatMap(heritageClause => heritageClause.types.map(expression => createExpressionReference(ctx, expression)))
-    .filter(isExpressionEntity)[0];
+    .flatMap(heritageClause => heritageClause.types.map(expression => createExpressionType(ctx, expression)))
+    .filter(isExpressionType)[0];
 }

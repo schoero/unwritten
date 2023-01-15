@@ -14,6 +14,5 @@ export * from "./setter.js";
 export * from "./signature.js";
 export * from "./source-file.js";
 export * from "./type-alias.js";
-export * from "./type-argument.js";
 export * from "./type-parameter.js";
 export * from "./variable.js";

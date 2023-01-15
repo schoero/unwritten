@@ -12,7 +12,11 @@ scope("Compiler", EntityKind.Setter, () => {
   {
 
     const testFileContent = ts`
-      export class Class { 
+      export class Class {
+        /**
+         * Setter description
+         * @example setter example
+         */
         set setter(value: string) {}
       }
     `;
@@ -38,6 +42,14 @@ scope("Compiler", EntityKind.Setter, () => {
 
     it("should have one signature", () => {
       expect(exportedClass.setters[0]!.signatures).to.have.lengthOf(1);
+    });
+
+    it("should have a matching description", () => {
+      expect(exportedClass.setters[0]!.signatures[0]!.description).to.equal("Setter description");
+    });
+
+    it("should have a matching example", () => {
+      expect(exportedClass.setters[0]!.signatures[0]!.example).to.equal("setter example");
     });
 
   }

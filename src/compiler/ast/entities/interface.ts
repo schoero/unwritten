@@ -4,7 +4,6 @@ import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.
 import { getDescriptionBySymbol, getExampleByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
-import { createExpressionReference } from "quickdoks:compiler:references";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
@@ -14,16 +13,14 @@ import {
   isPropertySignatureDeclaration,
   isSetterSignatureDeclaration
 } from "quickdoks:compiler:typeguards/declarations.js";
-import { isExpressionEntity } from "quickdoks:typeguards/entities.js";
+import { createExpressionType } from "quickdoks:compiler:types";
+import { isExpressionType } from "quickdoks:typeguards/types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "typescript";
 
-import type {
-  ExpressionEntity,
-  InterfaceEntity,
-  MergedInterfaceEntity
-} from "quickdoks:compiler:type-definitions/entities.d.js";
+import type { ExpressionType } from "quickdoks:compiler/type-definitions/types.js";
+import type { InterfaceEntity, MergedInterfaceEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
 import type { CompilerContext } from "quickdoks:types:context.d.js";
 
 
@@ -154,8 +151,8 @@ function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceD
 }
 
 
-function parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): ExpressionEntity[] {
+function parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType[] {
   return heritageClauses
-    .flatMap(heritageClause => heritageClause.types.map(expression => createExpressionReference(ctx, expression)))
-    .filter(isExpressionEntity);
+    .flatMap(heritageClause => heritageClause.types.map(expression => createExpressionType(ctx, expression)))
+    .filter(isExpressionType);
 }

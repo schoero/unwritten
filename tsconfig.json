@@ -8,7 +8,6 @@
       "quickdoks:bin:*": ["src/bin/*"],
       "quickdoks:compiler:*": ["src/compiler/*"],
       "quickdoks:compiler:entities": ["src/compiler/ast/entities/index.js"],
-      "quickdoks:compiler:references": ["src/compiler/ast/references/index.js"],
       "quickdoks:compiler:types": ["src/compiler/ast/types/index.js"],
       "quickdoks:logger:*": ["src/logger/*"],
       "quickdoks:renderer:*": ["src/renderer/*"],

@@ -90,12 +90,12 @@ scope("Compiler", EntityKind.Function, () => {
     });
 
     it("should have matching signatures", () => {
-      expect(exportedTypeAlias1.type.signatures).to.have.lengthOf(1);
-      expect(exportedTypeAlias2.type.signatures).to.have.lengthOf(2);
+      expect((exportedTypeAlias1.type as FunctionType).signatures).to.have.lengthOf(1);
+      expect((exportedTypeAlias2.type as FunctionType).signatures).to.have.lengthOf(2);
     });
 
     it("should have a matching return type", () => {
-      expect(exportedTypeAlias1.type.signatures[0]!.returnType.kind).to.equal(TypeKind.Boolean);
+      expect((exportedTypeAlias1.type as FunctionType).signatures[0]!.returnType.kind).to.equal(TypeKind.Boolean);
     });
 
   }

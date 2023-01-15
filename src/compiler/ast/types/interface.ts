@@ -1,5 +1,5 @@
+import { createObjectLikeType } from "quickdoks:compiler/ast/types/object.js";
 import { createTypeParameterEntity } from "quickdoks:compiler:entities";
-import { createObjectLikeType } from "quickdoks:compiler:ast/types/object-type.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";

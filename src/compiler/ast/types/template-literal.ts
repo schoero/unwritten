@@ -8,7 +8,7 @@ import type { TemplateLiteralEntity } from "quickdoks:compiler:type-definitions/
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function createTemplateLiteralEntity(ctx: CompilerContext, typeNode: TemplateLiteralTypeNode): TemplateLiteralEntity {
+export function createTemplateLiteralType(ctx: CompilerContext, typeNode: TemplateLiteralTypeNode): TemplateLiteralEntity {
 
   const kind = EntityKind.TemplateLiteral;
   const id = getIdByTypeNode(ctx, typeNode);

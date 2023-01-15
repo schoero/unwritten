@@ -1,6 +1,5 @@
 import type { TypeKind } from "quickdoks:compiler:enums/types.js";
 import type {
-  ExpressionEntity,
   GetterEntity,
   MappedTypeMemberEntity,
   MethodEntity,
@@ -8,7 +7,6 @@ import type {
   SetterEntity,
   SignatureEntity,
   TupleMemberEntity,
-  TypeArgumentEntity,
   TypeParameterEntity
 } from "quickdoks:compiler:type-definitions/entities.d.js";
 import type {
@@ -30,6 +28,8 @@ export type Types =
   | ArrayType
   | CircularType
   | ConditionalType
+  | ExpressionType
+  | FunctionType
   | InterfaceType
   | IntersectionType
   | LiteralTypes
@@ -39,6 +39,8 @@ export type Types =
   | TemplateLiteralType
   | TupleType
   | TypeParameterType
+  | TypeQueryType
+  | TypeReferenceType
   | UnionType
   | UnresolvedType;
 
@@ -183,6 +185,44 @@ export type ObjectLiteralType = ObjectLikeType<TypeKind.ObjectLiteral> & {
 };
 
 
+//-- Type reference
+
+export type TypeReferenceType = Type<TypeKind.TypeReference> & {
+  name?: Name;
+  position?: Position;
+  type?: Types;
+  typeArguments?: Types[];
+};
+
+
+//-- Expression
+
+export type ExpressionType = Type<TypeKind.Expression> & {
+  type: Types;
+  name?: Name;
+  position?: Position;
+  typeArguments?: Types[];
+};
+
+
+//-- Type query
+
+export type TypeQueryType = Type<TypeKind.TypeQuery> & {
+  type: Types;
+  name?: Name;
+  position?: Position;
+};
+
+
+//-- Template literal
+
+export type TemplateLiteralEntity = Type<TypeKind.TemplateLiteral> & {
+  spans: string[];
+  types: Types[];
+  head?: string;
+};
+
+
 //-- Array
 
 export type ArrayType = Type<TypeKind.Array> & {
@@ -299,8 +339,8 @@ export interface InterfaceType extends ObjectLikeType<TypeKind.InterfaceType> {
   properties: PropertyEntity[];
   description?: Description;
   example?: Example;
-  heritage?: ExpressionEntity[];
+  heritage?: ExpressionType[];
   position?: Position;
-  typeArguments?: TypeArgumentEntity[];
+  typeArguments?: Types[];
   typeParameters?: TypeParameterEntity[];
 }

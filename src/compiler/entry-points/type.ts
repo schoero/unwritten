@@ -1,40 +1,8 @@
-import { createFunctionType } from "quickdoks:compiler:ast/types/function-type.js";
-import {
-  createAnyType,
-  createArrayType,
-  createBigIntLiteralType,
-  createBigIntType,
-  createBooleanLiteralType,
-  createBooleanType,
-  createClassType,
-  createConditionalType,
-  createInterfaceByType,
-  createIntersectionTypeByType,
-  createLinkToType,
-  createMappedTypeByType,
-  createNeverType,
-  createNullType,
-  createNumberLiteralType,
-  createNumberType,
-  createObjectLiteralByType,
-  createStringLiteralType,
-  createStringType,
-  createSymbolType,
-  createTupleTypeByTypeReference,
-  createTypeLiteralType,
-  createTypeParameterType,
-  createUndefinedType,
-  createUnionTypeByType,
-  createUnknownType,
-  createUnresolvedBySymbol,
-  createUnresolvedByType,
-  createVoidType
-} from "quickdoks:compiler:ast/types/index.js";
-import { createObjectLikeType } from "quickdoks:compiler:ast/types/object-type.js";
+import { createFunctionType } from "quickdoks:compiler/ast/types/function.js";
+import { createObjectLikeType } from "quickdoks:compiler/ast/types/object.js";
 import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import {
   isAnyType,
-  isArrayTypeReferenceType,
   isBigIntLiteralType,
   isBigIntType,
   isBooleanLiteralType,
@@ -62,6 +30,36 @@ import {
   isUnknownType,
   isVoidType
 } from "quickdoks:compiler:typeguards/types.js";
+import {
+  createAnyType,
+  createBigIntLiteralType,
+  createBigIntType,
+  createBooleanLiteralType,
+  createBooleanType,
+  createClassType,
+  createConditionalType,
+  createInterfaceByType,
+  createIntersectionTypeByType,
+  createLinkToType,
+  createMappedTypeByType,
+  createNeverType,
+  createNullType,
+  createNumberLiteralType,
+  createNumberType,
+  createObjectLiteralByType,
+  createStringLiteralType,
+  createStringType,
+  createSymbolType,
+  createTupleTypeByTypeReference,
+  createTypeLiteralType,
+  createTypeParameterType,
+  createUndefinedType,
+  createUnionTypeByType,
+  createUnknownType,
+  createUnresolvedByType,
+  createUnresolvedType,
+  createVoidType
+} from "quickdoks:compiler:types";
 import { isTypeLocked } from "quickdoks:compiler:utils/ts.js";
 import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
 import { assert } from "quickdoks:utils:general.js";
@@ -69,10 +67,10 @@ import { assert } from "quickdoks:utils:general.js";
 import type { Declaration, ObjectType as TSObjectType, Symbol, Type } from "typescript";
 
 import type { Types } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:compiler:type-definitions:context.d.js";
+import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
-/** Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */
+/* Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */
 export function createTypeBySymbol(ctx: CompilerContext, symbol: Symbol): Types {
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
@@ -152,12 +150,10 @@ export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
-  } else if(isArrayTypeReferenceType(type)){
-    return createArrayType(ctx, type);
   }
 
   if(isSymbolExcluded(ctx, type.symbol)){
-    return createUnresolvedBySymbol(ctx, type.symbol);
+    return createUnresolvedType(ctx, type.symbol);
   }
 
   if(isMappedType(type)){

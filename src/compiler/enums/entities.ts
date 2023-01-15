@@ -23,8 +23,6 @@ export enum EntityKind {
   TypeAlias = "TypeAlias",
   TypeArgument = "TypeArgument",
   TypeParameter = "TypeParameter",
-  TypeQuery = "TypeQuery",
-  TypeReference = "Reference",
   Unresolved = "Unresolved",
   Variable = "Variable"
 }

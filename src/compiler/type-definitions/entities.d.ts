@@ -7,7 +7,12 @@ import type {
   Position
 } from "quickdoks:compiler/type-definitions/mixins.d.js";
 import type { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import type { FunctionType, LiteralTypes, Types } from "quickdoks:compiler:type-definitions/types.d.js";
+import type {
+  ExpressionType,
+  FunctionType,
+  LiteralTypes,
+  Types
+} from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 type Entity<Kind> = {
@@ -62,32 +67,7 @@ export type InferFunctionLikeEntityKind<Kind extends FunctionLikeEntityKinds> =
             : never;
 
 export type Entities =
-  | ClassEntity
-  | ConstructorEntity
-  | EnumEntity
-  | EnumMemberEntity
-  | ExpressionEntity
-  | FunctionEntity
-  | GetterEntity
-  | InterfaceEntity
-  | MappedTypeMemberEntity
-  | MemberEntity
-  | MethodEntity
-  | ModuleEntity
-  | NamespaceEntity
-  | ParameterEntity
-  | PropertyEntity
-  | SetterEntity
-  | SignatureEntity
-  | SourceFileEntity
-  | TemplateLiteralEntity
-  | ThisEntity
-  | TypeAliasEntity
-  | TypeArgumentEntity
-  | TypeParameterEntity
-  | TypeQueryEntity
-  | TypeReferenceEntity
-  | VariableEntity;
+  ClassEntity | ConstructorEntity | EnumEntity | EnumMemberEntity | FunctionEntity | GetterEntity | InterfaceEntity | MappedTypeMemberEntity | MemberEntity | MethodEntity | ModuleEntity | NamespaceEntity | ParameterEntity | PropertyEntity | SetterEntity | SignatureEntity | SourceFileEntity | ThisEntity | TypeAliasEntity | TypeParameterEntity | Types | VariableEntity;
 
 export type PropertyEntity = Entity<EntityKind.Property> & {
   modifiers: Modifiers[];
@@ -106,26 +86,6 @@ export type TupleMemberEntity = Entity<EntityKind.TupleMember> & {
   rest: boolean;
   type: Types;
   name?: Name;
-};
-
-
-//-- Type reference
-
-export type TypeReferenceEntity = Entity<EntityKind.TypeReference> & {
-  name?: Name;
-  position?: Position;
-  type?: Types;
-  typeArguments?: TypeArgumentEntity[];
-};
-
-
-//-- Expression
-
-export type ExpressionEntity = Entity<EntityKind.Expression> & {
-  type: Types;
-  name?: Name;
-  position?: Position;
-  typeArguments?: TypeArgumentEntity[];
 };
 
 
@@ -166,19 +126,10 @@ export type ParameterEntity = Entity<EntityKind.Parameter> & {
   optional: boolean;
   position: Position;
   rest: boolean;
-  type: Types;
   description?: Description;
   example?: Example;
   initializer?: Types;
-};
-
-
-//-- Template literal
-
-export type TemplateLiteralEntity = Entity<EntityKind.TemplateLiteral> & {
-  spans: string[];
-  types: Types[];
-  head?: string;
+  type?: Types;
 };
 
 
@@ -194,9 +145,9 @@ export interface InterfaceEntity extends Entity<EntityKind.Interface> {
   setterSignatures: SignatureEntity[];
   description?: Description;
   example?: Example;
-  heritage?: ExpressionEntity[];
+  heritage?: ExpressionType[];
   position?: Position;
-  typeArguments?: TypeArgumentEntity[];
+  typeArguments?: Types[];
   typeParameters?: TypeParameterEntity[];
 }
 
@@ -218,7 +169,7 @@ export type ClassEntity = Entity<EntityKind.Class> & {
   ctor?: ConstructorEntity;
   description?: Description;
   example?: Example;
-  heritage?: ExpressionEntity;
+  heritage?: ExpressionType;
   typeParameters?: TypeParameterEntity[];
 };
 
@@ -267,15 +218,6 @@ export type MappedTypeMemberEntity = Entity<EntityKind.MappedTypeMember> & {
 };
 
 
-//-- Type query
-
-export type TypeQueryEntity = Entity<EntityKind.TypeQuery> & {
-  type: Types;
-  name?: Name;
-  position?: Position;
-};
-
-
 //-- Interface
 
 export interface InterfaceEntity extends Entity<EntityKind.Interface> {
@@ -283,9 +225,9 @@ export interface InterfaceEntity extends Entity<EntityKind.Interface> {
   properties: PropertyEntity[];
   description?: Description;
   example?: Example;
-  heritage?: ExpressionEntity[];
+  heritage?: ExpressionType[];
   position?: Position;
-  typeArguments?: TypeArgumentEntity[];
+  typeArguments?: Types[];
   typeParameters?: TypeParameterEntity[];
 }
 
@@ -310,7 +252,6 @@ export type EnumMemberEntity = Entity<EntityKind.EnumMember> & {
   type: Types;
   description?: Description;
   example?: Example;
-  parent?: Types;
 };
 
 
@@ -359,12 +300,4 @@ export type TypeParameterEntity = Entity<EntityKind.TypeParameter> & {
   constraint?: Types;
   description?: Description;
   initializer?: Types;
-};
-
-
-//-- TypeArgument
-
-export type TypeArgumentEntity = Entity<EntityKind.TypeArgument> & {
-  position: Position;
-  type: Types;
 };

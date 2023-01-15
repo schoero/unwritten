@@ -1,4 +1,3 @@
-import { parseSymbol } from "quickdoks:compiler:entry-points/symbol.js";
 import { createTypeByDeclaration } from "quickdoks:compiler:entry-points/type.js";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
@@ -9,7 +8,7 @@ import {
 } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
-import { isEnumDeclaration, isEnumMemberDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { isEnumDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
 import { assert } from "quickdoks:utils:general.js";
 
 import type { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
@@ -72,12 +71,10 @@ function parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaration
   const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const members = declaration.members.map(member => createEnumMemberByDeclaration(ctx, member));
-  const kind = EntityKind.Enum;
 
   return {
     description,
     example,
-    kind,
     members,
     position
   };
@@ -91,8 +88,6 @@ function createEnumMemberByDeclaration(ctx: CompilerContext, declaration: TSEnum
   const example = getExampleByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
-  const parentSymbol = isEnumMemberDeclaration(declaration) && ctx.checker.getSymbolAtLocation(declaration.parent.name);
-  const parent = parentSymbol ? parseSymbol(ctx, parentSymbol) : undefined;
   const description = getDescriptionByDeclaration(ctx, declaration);
   const type = createTypeByDeclaration(ctx, declaration);
   const kind = EntityKind.EnumMember;
@@ -105,7 +100,6 @@ function createEnumMemberByDeclaration(ctx: CompilerContext, declaration: TSEnum
     id,
     kind,
     name,
-    parent,
     position,
     type
   };

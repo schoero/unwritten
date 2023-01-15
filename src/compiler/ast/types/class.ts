@@ -1,5 +1,5 @@
+import { createObjectLikeType } from "quickdoks:compiler/ast/types/object.js";
 import { createTypeParameterEntity } from "quickdoks:compiler:entities";
-import { createObjectLikeType } from "quickdoks:compiler:ast/types/object-type.js";
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
@@ -9,14 +9,13 @@ import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
 import { isClassDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
 import { lockType } from "quickdoks:compiler:utils/ts.js";
-import { isExpressionEntity } from "quickdoks:typeguards/entities.js";
+import { isExpressionType } from "quickdoks:typeguards/types.js";
 import { assert } from "quickdoks:utils:general.js";
 
 import type { ClassDeclaration, HeritageClause, NodeArray, ObjectType, Symbol } from "typescript";
 
-import type { ExpressionEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
 import type { ID } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { ClassType } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { ClassType, ExpressionType } from "quickdoks:compiler:type-definitions/types.d.js";
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
@@ -95,10 +94,10 @@ function parseClassDeclaration(ctx: CompilerContext, declaration: ClassDeclarati
 
 }
 
-function parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): ExpressionEntity {
+function parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType {
   return heritageClauses
     .flatMap(heritageClause => heritageClause.types.map(typeNode => parseTypeNode(ctx, typeNode)))
-    .filter(isExpressionEntity)[0];
+    .filter(isExpressionType)[0];
 }
 
 

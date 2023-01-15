@@ -1,19 +1,19 @@
 import {
-  createExpressionReference,
-  createTemplateLiteralEntity,
-  createTypeQueryReference,
-  createTypeReferenceEntity
-} from "quickdoks:compiler:ast/references/index.js";
-import { createArrayTypeByArrayTypeNode, createTupleByTupleTypeNode } from "quickdoks:compiler:ast/types/index.js";
-import {
   isArrayTypeNode,
-  isArrayTypeReferenceTypeNode,
   isExpressionWithTypeArguments,
   isTemplateLiteralTypeNode,
   isTupleTypeNode,
   isTypeQueryNode,
   isTypeReferenceNode
 } from "quickdoks:compiler:typeguards/type-nodes.js";
+import {
+  createArrayTypeByArrayTypeNode,
+  createExpressionType,
+  createTemplateLiteralType,
+  createTupleByTupleTypeNode,
+  createTypeQueryType,
+  createTypeReferenceType
+} from "quickdoks:compiler:types";
 
 import { parseType } from "./type.js";
 
@@ -27,20 +27,18 @@ export function parseTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
 
   if(isArrayTypeNode(typeNode)){
     return createArrayTypeByArrayTypeNode(ctx, typeNode);
-  } else if(isArrayTypeReferenceTypeNode(typeNode)){
-    return createArrayTypeByArrayTypeNode(ctx, typeNode);
   } else if(isTupleTypeNode(typeNode)){
     return createTupleByTupleTypeNode(ctx, typeNode);
   } else if(isTypeQueryNode(typeNode)){
-    return createTypeQueryReference(ctx, typeNode);
+    return createTypeQueryType(ctx, typeNode);
   } else if(isTemplateLiteralTypeNode(typeNode)){
-    return createTemplateLiteralEntity(ctx, typeNode);
+    return createTemplateLiteralType(ctx, typeNode);
   }
 
   if(isTypeReferenceNode(typeNode)){
-    return createTypeReferenceEntity(ctx, typeNode);
+    return createTypeReferenceType(ctx, typeNode);
   } else if(isExpressionWithTypeArguments(typeNode)){
-    return createExpressionReference(ctx, typeNode);
+    return createExpressionType(ctx, typeNode);
   }
 
   const type = ctx.checker.getTypeFromTypeNode(typeNode);
