@@ -1,7 +1,8 @@
+import type { TypeKind } from "quickdoks:compiler/enums/types.js";
+import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
+
 import type { BuiltInRenderers } from "./renderer.js";
 import type { Complete } from "./utils.js";
-
-import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
 
 
 export interface Config {
@@ -46,7 +47,6 @@ export interface CompilerConfig {
 
 }
 
-
 export interface ExternalTypes {
-  [key: string]: string;
+  [key: TypeKind | string]: string;
 }

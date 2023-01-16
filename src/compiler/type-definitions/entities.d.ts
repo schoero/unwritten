@@ -67,7 +67,28 @@ export type InferFunctionLikeEntityKind<Kind extends FunctionLikeEntityKinds> =
             : never;
 
 export type Entities =
-  ClassEntity | ConstructorEntity | EnumEntity | EnumMemberEntity | FunctionEntity | GetterEntity | InterfaceEntity | MappedTypeMemberEntity | MemberEntity | MethodEntity | ModuleEntity | NamespaceEntity | ParameterEntity | PropertyEntity | SetterEntity | SignatureEntity | SourceFileEntity | ThisEntity | TypeAliasEntity | TypeParameterEntity | Types | VariableEntity;
+  | ClassEntity
+  | ConstructorEntity
+  | EnumEntity
+  | EnumMemberEntity
+  | FunctionEntity
+  | GetterEntity
+  | InterfaceEntity
+  | MappedTypeMemberEntity
+  | MemberEntity
+  | MethodEntity
+  | ModuleEntity
+  | NamespaceEntity
+  | ParameterEntity
+  | PropertyEntity
+  | SetterEntity
+  | SignatureEntity
+  | SourceFileEntity
+  | ThisEntity
+  | TypeAliasEntity
+  | TypeParameterEntity
+  | Types
+  | VariableEntity;
 
 export type PropertyEntity = Entity<EntityKind.Property> & {
   modifiers: Modifiers[];
@@ -173,17 +194,13 @@ export type ClassEntity = Entity<EntityKind.Class> & {
   typeParameters?: TypeParameterEntity[];
 };
 
-export type ConstructorEntity = FunctionLikeEntity<EntityKind.Constructor> & {
-};
+export type ConstructorEntity = FunctionLikeEntity<EntityKind.Constructor> & {};
 
-export type MethodEntity = FunctionLikeEntity<EntityKind.Method> & {
-};
+export type MethodEntity = FunctionLikeEntity<EntityKind.Method> & {};
 
-export type SetterEntity = FunctionLikeEntity<EntityKind.Setter> & {
-};
+export type SetterEntity = FunctionLikeEntity<EntityKind.Setter> & {};
 
-export type GetterEntity = FunctionLikeEntity<EntityKind.Getter> & {
-};
+export type GetterEntity = FunctionLikeEntity<EntityKind.Getter> & {};
 
 
 //-- Variable

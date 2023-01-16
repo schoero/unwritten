@@ -198,7 +198,8 @@ export type TypeReferenceType = Type<TypeKind.TypeReference> & {
 //-- Expression
 
 export type ExpressionType = Type<TypeKind.Expression> & {
-  type: Types;
+  instanceType: Types;
+  staticType: Types;
   name?: Name;
   position?: Position;
   typeArguments?: Types[];

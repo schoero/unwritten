@@ -56,9 +56,9 @@ scope("Compiler", EntityKind.Expression, () => {
 
     it("should resolve type parameters with the supplied type arguments", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
-      expect((exportedClass.heritage!.type as ObjectType).properties).to.not.equal(undefined);
-      expect((exportedClass.heritage!.type as ObjectType).properties).to.have.lengthOf(1);
-      expect((exportedClass.heritage!.type as ObjectType).properties[0].type.kind).to.equal(TypeKind.StringLiteral);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties).to.not.equal(undefined);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties).to.have.lengthOf(1);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties[0].type.kind).to.equal(TypeKind.StringLiteral);
     });
 
   }
@@ -80,14 +80,12 @@ scope("Compiler", EntityKind.Expression, () => {
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
 
-    it("should be able to parse expressions", () => {
+    it("should be able to parse call expressions", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.kind).to.equal(EntityKind.Expression);
-    });
-
-    it("should be able to parse expressions", () => {
-      expect(exportedClass.heritage).to.not.equal(undefined);
-      expect(exportedClass.heritage!.type.kind).to.equal(TypeKind.ObjectType);
+      expect(exportedClass.heritage!.instanceType.kind).to.equal(TypeKind.ObjectType);
+      expect(exportedClass.heritage!.staticType.kind).to.equal(TypeKind.ObjectType);
+      expect(exportedClass.heritage!.name).to.equal("Base");
     });
 
   }
@@ -101,7 +99,7 @@ scope("Compiler", EntityKind.Expression, () => {
       function getBase() {
         return Base;
       }
-      export class Class extends getBase()<"Hello"> {
+      export class Class extends getBase()<"test"> {
       }
     `;
 
@@ -112,9 +110,68 @@ scope("Compiler", EntityKind.Expression, () => {
 
     it("should be able to resolve type parameters with the supplied type arguments via an expression", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
-      expect((exportedClass.heritage!.type as ObjectType).properties).to.not.equal(undefined);
-      expect((exportedClass.heritage!.type as ObjectType).properties).to.have.lengthOf(1);
-      expect((exportedClass.heritage!.type as ObjectType).properties[0].type.kind).to.equal(TypeKind.StringLiteral);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties).to.not.equal(undefined);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties).to.have.lengthOf(1);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties[0].type.kind).to.equal(TypeKind.StringLiteral);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      class Base {
+        static staticProp: string;
+        public memberProp: string = "test";
+      }
+      function getBase() {
+        return Base;
+      }
+      export class Class extends getBase() {
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const exportedClass = createClassEntity(ctx, symbol);
+
+    it("should resolve static and member properties when extended via call expression", () => {
+      expect(exportedClass.heritage).to.not.equal(undefined);
+      expect((exportedClass.heritage!.staticType as ObjectType).properties).to.not.equal(undefined);
+      expect((exportedClass.heritage!.staticType as ObjectType).properties).to.have.lengthOf(1);
+      expect((exportedClass.heritage!.staticType as ObjectType).properties[0].type.kind).to.equal(TypeKind.String);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties).to.not.equal(undefined);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties).to.have.lengthOf(1);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties[0].type.kind).to.equal(TypeKind.String);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      class Base {
+        static staticProp: string;
+        public memberProp: string = "Test";
+      }
+      export class Class extends Base {
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const exportedClass = createClassEntity(ctx, symbol);
+
+    it("should resolve static and member properties when extended directly", () => {
+      expect(exportedClass.heritage).to.not.equal(undefined);
+      expect((exportedClass.heritage!.staticType as ObjectType).properties).to.not.equal(undefined);
+      expect((exportedClass.heritage!.staticType as ObjectType).properties).to.have.lengthOf(1);
+      expect((exportedClass.heritage!.staticType as ObjectType).properties[0].type.kind).to.equal(TypeKind.String);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties).to.not.equal(undefined);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties).to.have.lengthOf(1);
+      expect((exportedClass.heritage!.instanceType as ObjectType).properties[0].type.kind).to.equal(TypeKind.String);
     });
 
   }

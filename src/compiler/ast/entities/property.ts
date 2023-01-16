@@ -6,13 +6,20 @@ import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.j
 import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
 import {
+  isParameterDeclaration,
   isPropertyAssignment,
   isPropertyDeclaration,
   isPropertySignatureDeclaration
 } from "quickdoks:compiler:typeguards/declarations.js";
 import { assert } from "quickdoks:utils:general.js";
 
-import type { PropertyAssignment, PropertyDeclaration, PropertySignature, Symbol } from "typescript";
+import type {
+  ParameterDeclaration,
+  PropertyAssignment,
+  PropertyDeclaration,
+  PropertySignature,
+  Symbol
+} from "typescript";
 
 import type { PropertyEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
@@ -26,7 +33,8 @@ export function createPropertyEntity(ctx: CompilerContext, symbol: Symbol): Prop
     (
       isPropertySignatureDeclaration(declaration) ||
       isPropertyDeclaration(declaration) ||
-      isPropertyAssignment(declaration)
+      isPropertyAssignment(declaration) ||
+      isParameterDeclaration(declaration)
     ),
   `Property signature not found ${declaration?.kind}`);
 
@@ -50,7 +58,7 @@ export function createPropertyEntity(ctx: CompilerContext, symbol: Symbol): Prop
 }
 
 
-function parsePropertyDeclaration(ctx: CompilerContext, declaration: PropertyAssignment | PropertyDeclaration | PropertySignature) {
+function parsePropertyDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature) { // ParameterDeclaration can also be a property when defined in a constructor
 
   const id = getIdByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
