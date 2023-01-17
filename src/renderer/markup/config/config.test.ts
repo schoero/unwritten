@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { EntityKind } from "quickdoks:compiler/enums/entities.js";
-import { TypeKind } from "quickdoks:compiler/enums/types.js";
+import { EntityKind } from "quickdoks:compiler:enums/entities.js";
+import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { renderVariableForDocumentation } from "quickdoks:renderer:markup/entities/variable.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 
-import type { VariableEntity } from "quickdoks:compiler/type-definitions/entities.js";
+import type { VariableEntity } from "quickdoks:compiler:type-definitions/entities.js";
 import type { Real, Testable } from "quickdoks:type-definitions/utils.js";
 
 

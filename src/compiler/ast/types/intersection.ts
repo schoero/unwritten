@@ -12,7 +12,7 @@ export function createIntersectionTypeByType(ctx: CompilerContext, type: TSInter
 
   const id = getIdByType(ctx, type);
   const types = type.types.map(type => parseType(ctx, type));
-  const kind = TypeKind.IntersectionType;
+  const kind = TypeKind.Intersection;
 
   return {
     id,

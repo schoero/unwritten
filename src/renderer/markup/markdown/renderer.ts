@@ -1,4 +1,4 @@
-import { BuiltInRenderers } from "quickdoks:type-definitions/renderer.d.js";
+import { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
 
 import type { MarkupRenderImplementation } from "quickdoks:renderer:markup/types/renderer.js";
 

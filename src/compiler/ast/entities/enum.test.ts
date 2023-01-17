@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createEnumEntity } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
@@ -7,8 +7,6 @@ import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-
-import type { NumberLiteralType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 scope("Compiler", EntityKind.Enum, () => {
@@ -103,11 +101,11 @@ scope("Compiler", EntityKind.Enum, () => {
 
     it("should have a matching member types with values", () => {
       expect(exportedEnum.members[0]!.name).to.equal("A");
-      expect(exportedEnum.members[0]!.type.kind).to.equal(TypeKind.NumberLiteral);
-      expect((exportedEnum.members[0]!.type as NumberLiteralType).value).to.equal(0);
+      assert(exportedEnum.members[0]!.type.kind === TypeKind.NumberLiteral);
+      expect(exportedEnum.members[0]!.type.value).to.equal(0);
       expect(exportedEnum.members[1]!.name).to.equal("B");
-      expect(exportedEnum.members[1]!.type.kind).to.equal(TypeKind.NumberLiteral);
-      expect((exportedEnum.members[1]!.type as NumberLiteralType).value).to.equal(1);
+      assert(exportedEnum.members[1]!.type.kind === TypeKind.NumberLiteral);
+      expect(exportedEnum.members[1]!.type.value).to.equal(1);
     });
 
   }
@@ -131,11 +129,11 @@ scope("Compiler", EntityKind.Enum, () => {
     it("should be able to merge multiple enums with the same name", () => {
       expect(exportedEnum.members.length).to.equal(2);
       expect(exportedEnum.members[0]!.name).to.equal("A");
-      expect(exportedEnum.members[0]!.type.kind).to.equal(TypeKind.NumberLiteral);
-      expect((exportedEnum.members[0]!.type as NumberLiteralType).value).to.equal(0);
+      assert(exportedEnum.members[0]!.type.kind === TypeKind.NumberLiteral);
+      expect(exportedEnum.members[0]!.type.value).to.equal(0);
       expect(exportedEnum.members[1]!.name).to.equal("B");
-      expect(exportedEnum.members[1]!.type.kind).to.equal(TypeKind.NumberLiteral);
-      expect((exportedEnum.members[1]!.type as NumberLiteralType).value).to.equal(1);
+      assert(exportedEnum.members[1]!.type.kind === TypeKind.NumberLiteral);
+      expect(exportedEnum.members[1]!.type.value).to.equal(1);
     });
 
   }

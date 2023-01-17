@@ -1,12 +1,10 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createVariableEntity } from "quickdoks:compiler:entities";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-
-import type { ObjectLiteralType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 scope("Compiler", TypeKind.ObjectLiteral, () => {
@@ -47,24 +45,29 @@ scope("Compiler", TypeKind.ObjectLiteral, () => {
     const exportedVariable = createVariableEntity(ctx, symbol);
 
     it("should be able to handle properties", () => {
-      expect((exportedVariable.type as ObjectLiteralType).properties.length).to.equal(2);
+      assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedVariable.type.properties.length).to.equal(2);
     });
 
     it("should be able to handle methods", () => {
-      expect((exportedVariable.type as ObjectLiteralType).methods.length).to.equal(1);
+      assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedVariable.type.methods.length).to.equal(1);
     });
 
     it("should differentiate between methods and function properties", () => {
-      expect((exportedVariable.type as ObjectLiteralType).methods.find(m => m.name === "method")).to.not.equal(undefined);
-      expect((exportedVariable.type as ObjectLiteralType).properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
+      assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedVariable.type.methods.find(m => m.name === "method")).to.not.equal(undefined);
+      expect(exportedVariable.type.properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
     });
 
     it("should be able to handle getters", () => {
-      expect((exportedVariable.type as ObjectLiteralType).getters.length).to.equal(1);
+      assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedVariable.type.getters.length).to.equal(1);
     });
 
     it("should be able to handle setters", () => {
-      expect((exportedVariable.type as ObjectLiteralType).setters.length).to.equal(1);
+      assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedVariable.type.setters.length).to.equal(1);
     });
 
   }

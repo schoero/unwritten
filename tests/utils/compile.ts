@@ -25,7 +25,10 @@ export function compile(code: string, compilerOptions?: ts.CompilerOptions, conf
     getDefaultLibFileName: () => "node_modules/typescript/lib/lib.esnext.d.ts",
     getDirectories: () => [],
     getNewLine: () => "\n",
-    getSourceFile: filePath => filePath === dummyFilePath ? sourceFile : ts.createSourceFile(filePath, readFileSync(filePath, { encoding: "utf-8" }), ts.ScriptTarget.Latest),
+    getSourceFile: filePath =>
+      filePath === dummyFilePath
+        ? sourceFile
+        : ts.createSourceFile(filePath, readFileSync(filePath, { encoding: "utf-8" }), ts.ScriptTarget.Latest),
     readFile: filePath => filePath === dummyFilePath ? code : undefined,
     useCaseSensitiveFileNames: () => true,
     writeFile: () => {}

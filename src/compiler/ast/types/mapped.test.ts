@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
@@ -7,7 +7,7 @@ import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 
-import type { MappedType, UnionType } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { UnionType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 scope("Compiler", TypeKind.MappedType, () => {
@@ -30,33 +30,39 @@ scope("Compiler", TypeKind.MappedType, () => {
     });
 
     it("should be have matching modifiers", () => {
-      expect((exportedTypeAlias.type as MappedType).readonly).to.equal(true);
-      expect((exportedTypeAlias.type as MappedType).optional).to.equal(true);
+      assert(exportedTypeAlias.type.kind === TypeKind.MappedType);
+      expect(exportedTypeAlias.type.readonly).to.equal(true);
+      expect(exportedTypeAlias.type.optional).to.equal(true);
     });
 
     it("should the correct amount of members", () => {
-      expect((exportedTypeAlias.type as MappedType).members.length).to.equal(2);
+      assert(exportedTypeAlias.type.kind === TypeKind.MappedType);
+      expect(exportedTypeAlias.type.members.length).to.equal(2);
     });
 
     it("should have matching members", () => {
-      expect((exportedTypeAlias.type as MappedType).members[0]!.kind).to.equal(EntityKind.MappedTypeMember);
-      expect((exportedTypeAlias.type as MappedType).members[1]!.kind).to.equal(EntityKind.MappedTypeMember);
+      assert(exportedTypeAlias.type.kind === TypeKind.MappedType);
 
-      expect((exportedTypeAlias.type as MappedType).members[0]!.keyType.kind).to.equal(TypeKind.StringLiteral);
-      expect((exportedTypeAlias.type as MappedType).members[1]!.keyType.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.members[0]!.kind).to.equal(EntityKind.MappedTypeMember);
+      expect(exportedTypeAlias.type.members[1]!.kind).to.equal(EntityKind.MappedTypeMember);
 
-      expect((exportedTypeAlias.type as MappedType).members[0]!.keyType.value).to.equal("A");
-      expect((exportedTypeAlias.type as MappedType).members[1]!.keyType.value).to.equal("B");
+      expect(exportedTypeAlias.type.members[0]!.keyType.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.members[1]!.keyType.kind).to.equal(TypeKind.StringLiteral);
 
-      expect((exportedTypeAlias.type as MappedType).members[0]!.valueType.kind).to.equal(TypeKind.Array);
-      expect((exportedTypeAlias.type as MappedType).members[1]!.valueType.kind).to.equal(TypeKind.Array);
+      expect(exportedTypeAlias.type.members[0]!.keyType.value).to.equal("A");
+      expect(exportedTypeAlias.type.members[1]!.keyType.value).to.equal("B");
+
+      expect(exportedTypeAlias.type.members[0]!.valueType.kind).to.equal(TypeKind.Array);
+      expect(exportedTypeAlias.type.members[1]!.valueType.kind).to.equal(TypeKind.Array);
     });
 
     it("should have a correct type parameter", () => {
-      expect((exportedTypeAlias.type as MappedType).typeParameter.name).to.equal("K");
-      expect((exportedTypeAlias.type as MappedType).typeParameter.constraint).to.not.equal(undefined);
-      expect((exportedTypeAlias.type as MappedType).typeParameter.constraint!.kind).to.equal(TypeKind.UnionType);
-      expect(((exportedTypeAlias.type as MappedType).typeParameter.constraint! as UnionType).types).to.have.lengthOf(2);
+      assert(exportedTypeAlias.type.kind === TypeKind.MappedType);
+
+      expect(exportedTypeAlias.type.typeParameter.name).to.equal("K");
+      expect(exportedTypeAlias.type.typeParameter.constraint).to.not.equal(undefined);
+      assert(exportedTypeAlias.type.typeParameter.constraint!.kind === TypeKind.Union);
+      expect((exportedTypeAlias.type.typeParameter.constraint! as UnionType).types).to.have.lengthOf(2);
     });
 
   }

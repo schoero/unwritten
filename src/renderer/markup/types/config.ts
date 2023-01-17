@@ -1,6 +1,6 @@
-import type { CategoryNames } from "./renderer.js";
+import type { ExportableEntityKinds } from "quickdoks:compiler/type-definitions/entities.js";
 
-import type { ExportableTypeKinds } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { CategoryNames } from "./renderer.js";
 
 
 export interface MarkupRenderConfig {
@@ -29,7 +29,7 @@ export interface MarkupRenderConfig {
   /**
     * Defines the order in which entities should be rendered.
     */
-  renderOrder?: ExportableTypeKinds[];
+  renderOrder?: ExportableEntityKinds[];
 
   /**
    * Defines how string literal type annotations should be encapsulated in the rendered output.

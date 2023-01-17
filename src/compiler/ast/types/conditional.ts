@@ -17,7 +17,7 @@ export function createConditionalType(ctx: CompilerContext, type: TSConditionalT
   const trueType = parseTypeNode(ctx, root.node.trueType);
   const falseType = parseTypeNode(ctx, root.node.falseType);
 
-  const kind = TypeKind.ConditionalType;
+  const kind = TypeKind.Conditional;
 
   return {
     checkType,

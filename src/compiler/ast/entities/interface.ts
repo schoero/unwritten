@@ -19,8 +19,8 @@ import { assert } from "quickdoks:utils:general.js";
 
 import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "typescript";
 
-import type { ExpressionType } from "quickdoks:compiler/type-definitions/types.js";
 import type { InterfaceEntity, MergedInterfaceEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
+import type { ExpressionType } from "quickdoks:compiler:type-definitions/types.js";
 import type { CompilerContext } from "quickdoks:types:context.d.js";
 
 

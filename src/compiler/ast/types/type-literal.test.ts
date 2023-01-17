@@ -1,3 +1,5 @@
+import { assert } from "node:console";
+
 import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "quickdoks:compiler:entities";
@@ -6,7 +8,7 @@ import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 
-import type { TypeLiteral } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { TypeLiteralType } from "quickdoks:compiler/type-definitions/types.js";
 
 
 scope("Compiler", TypeKind.TypeLiteral, () => {
@@ -49,32 +51,39 @@ scope("Compiler", TypeKind.TypeLiteral, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to handle construct signatures", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).constructSignatures.length).to.equal(1);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect((exportedTypeAlias.type as TypeLiteralType).constructSignatures.length).to.equal(1);
     });
 
     it("should be able to handle call signatures", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).callSignatures.length).to.equal(1);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect((exportedTypeAlias.type as TypeLiteralType).callSignatures.length).to.equal(1);
     });
 
     it("should be able to handle properties", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).properties.length).to.equal(2);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect((exportedTypeAlias.type as TypeLiteralType).properties.length).to.equal(2);
     });
 
     it("should be able to handle methods", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).methods.length).to.equal(1);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect((exportedTypeAlias.type as TypeLiteralType).methods.length).to.equal(1);
     });
 
     it("should differentiate between methods and function properties", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).methods.find(m => m.name === "method")).to.not.equal(undefined);
-      expect((exportedTypeAlias.type as TypeLiteral).properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect((exportedTypeAlias.type as TypeLiteralType).methods.find(m => m.name === "method")).to.not.equal(undefined);
+      expect((exportedTypeAlias.type as TypeLiteralType).properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
     });
 
     it("should be able to handle getters", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).getters.length).to.equal(1);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect((exportedTypeAlias.type as TypeLiteralType).getters.length).to.equal(1);
     });
 
     it("should be able to handle setters", () => {
-      expect((exportedTypeAlias.type as TypeLiteral).setters.length).to.equal(1);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect((exportedTypeAlias.type as TypeLiteralType).setters.length).to.equal(1);
     });
 
   }

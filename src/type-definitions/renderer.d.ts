@@ -1,12 +1,8 @@
+import type { ExportableEntities } from "quickdoks:compiler:type-definitions/entities.d.js";
+import type { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
+
 import type { RenderContext } from "./context.js";
 
-import type { ExportableEntities } from "quickdoks:compiler:type-definitions/entities.d.js";
-
-
-export enum BuiltInRenderers {
-  HTML = "html",
-  Markdown = "markdown"
-}
 
 export interface Renderer {
   /** The file extension the renderer generates */

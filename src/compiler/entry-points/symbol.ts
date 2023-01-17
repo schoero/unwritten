@@ -1,4 +1,4 @@
-import { createUnresolvedType } from "quickdoks:compiler/ast/types/unresolved.js";
+import { createUnresolvedType } from "quickdoks:compiler:ast/types/unresolved.js";
 import {
   createClassEntity,
   createEnumEntity,
@@ -27,7 +27,7 @@ import { resolveSymbolInCaseOfImport } from "quickdoks:compiler:utils/ts.js";
 
 import type { Symbol } from "typescript";
 
-import type { Entities } from "quickdoks:compiler/type-definitions/entities.js";
+import type { Entities } from "quickdoks:compiler:type-definitions/entities.js";
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 

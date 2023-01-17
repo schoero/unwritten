@@ -12,7 +12,7 @@ export function createUnionTypeByType(ctx: CompilerContext, type: TSUnionType): 
 
   const id = getIdByType(ctx, type);
   const types = type.types.map(type => parseType(ctx, type));
-  const kind = TypeKind.UnionType;
+  const kind = TypeKind.Union;
 
   return {
     id,

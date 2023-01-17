@@ -1,12 +1,10 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createInterfaceEntity } from "quickdoks:compiler:entities";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-
-import type { InterfaceType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 scope("Compiler", TypeKind.Circular, () => {
@@ -29,7 +27,7 @@ scope("Compiler", TypeKind.Circular, () => {
 
     it("should not create a circular type if the targeted symbol is not exported and not circular", () => {
       expect(exportedInterfaceA.properties.length).to.equal(1);
-      expect(exportedInterfaceA.properties[0]!.type.kind).to.equal(TypeKind.InterfaceType);
+      expect(exportedInterfaceA.properties[0]!.type.kind).to.equal(TypeKind.Interface);
     });
 
   }
@@ -56,15 +54,15 @@ scope("Compiler", TypeKind.Circular, () => {
     it("should create a circular type if the targeted symbol circular, even if it is not exported", () => {
 
       expect(exportedInterfaceA.properties.length).to.equal(1);
-      expect(exportedInterfaceA.properties[0]!.type.kind).to.equal(TypeKind.InterfaceType);
+      assert(exportedInterfaceA.properties[0]!.type.kind === TypeKind.Interface);
 
-      const interfaceB = exportedInterfaceA.properties[0]!.type as InterfaceType;
+      const interfaceB = exportedInterfaceA.properties[0]!.type;
 
       expect(interfaceB.properties.length).to.equal(1);
-      expect(exportedInterfaceA.properties[0]!.type.kind).to.equal(TypeKind.InterfaceType);
-      expect(interfaceB.properties[0]!.type.kind).to.equal(TypeKind.InterfaceType);
+      expect(exportedInterfaceA.properties[0]!.type.kind).to.equal(TypeKind.Interface);
+      assert(interfaceB.properties[0]!.type.kind === TypeKind.Interface);
 
-      const interfaceC = interfaceB.properties[0]!.type as InterfaceType;
+      const interfaceC = interfaceB.properties[0]!.type;
 
       expect(interfaceC.properties.length).to.equal(1);
       expect(interfaceC.properties[0]!.type.kind).to.equal(TypeKind.Circular);

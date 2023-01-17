@@ -1,12 +1,12 @@
-import { parseTypeNode } from "quickdoks:compiler/entry-points/type-node.js";
-import { TypeKind } from "quickdoks:compiler/enums/types.js";
 import { parseType } from "quickdoks:compiler:entry-points/type.js";
+import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
+import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { getIdByTypeNode } from "quickdoks:compiler:mixins/id.js";
 import { getNameByType } from "quickdoks:compiler:mixins/name.js";
 
 import type { ExpressionWithTypeArguments } from "typescript";
 
-import type { ExpressionType } from "quickdoks:compiler/type-definitions/types.js";
+import type { ExpressionType } from "quickdoks:compiler:type-definitions/types.js";
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 

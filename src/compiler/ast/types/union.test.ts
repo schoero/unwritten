@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
@@ -7,10 +7,8 @@ import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 
-import type { UnionType } from "quickdoks:compiler:type-definitions/types.d.js";
 
-
-scope("Compiler", TypeKind.UnionType, () => {
+scope("Compiler", TypeKind.Union, () => {
 
   {
 
@@ -25,7 +23,7 @@ scope("Compiler", TypeKind.UnionType, () => {
 
     it("should be able to parse an union type", () => {
       expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.UnionType);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Union);
     });
 
   }
@@ -47,16 +45,18 @@ scope("Compiler", TypeKind.UnionType, () => {
 
     it("should have a matching kind", () => {
       expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.UnionType);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Union);
     });
 
     it("should have the correct amount of types", () => {
-      expect((exportedTypeAlias.type as UnionType).types).to.have.lengthOf(2);
+      assert(exportedTypeAlias.type.kind === TypeKind.Union);
+      expect(exportedTypeAlias.type.types).to.have.lengthOf(2);
     });
 
     it("should have the correct types", () => {
-      expect((exportedTypeAlias.type as UnionType).types[0]!.kind).to.equal(TypeKind.String);
-      expect((exportedTypeAlias.type as UnionType).types[1]!.kind).to.equal(TypeKind.Number);
+      assert(exportedTypeAlias.type.kind === TypeKind.Union);
+      expect(exportedTypeAlias.type.types[0]!.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.type.types[1]!.kind).to.equal(TypeKind.Number);
     });
 
   }

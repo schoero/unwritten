@@ -29,7 +29,7 @@ export function isExpressionType(type: Types): type is ExpressionType {
 }
 
 export function isIntersectionType(type: Types): type is IntersectionType {
-  return type.kind === TypeKind.IntersectionType;
+  return type.kind === TypeKind.Intersection;
 }
 
 export function isLiteralType(type: Types): type is LiteralTypes {
@@ -69,7 +69,7 @@ export function isStringLiteralType(type: Types): type is StringLiteralType {
 }
 
 export function isUnionType(type: Types): type is UnionType {
-  return type.kind === TypeKind.UnionType;
+  return type.kind === TypeKind.Union;
 }
 
 export function isUnresolvedType(type: Types): type is UnresolvedType {

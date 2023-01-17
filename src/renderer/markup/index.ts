@@ -17,6 +17,12 @@ import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } fr
 import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./entities/type-alias.js";
 import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./entities/variable.js";
 import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "./typeguards/renderer.js";
+import { getCategoryName } from "./utils/renderer.js";
+import { sortExportableTypes } from "./utils/sort.js";
+
+import type { ExportableTypes } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+
 import type {
   MarkupRenderer,
   RenderedCategoryForDocumentation,
@@ -25,11 +31,6 @@ import type {
   RenderedEntitiesForTableOfContents,
   RenderObject
 } from "./types/renderer.js";
-import { getCategoryName } from "./utils/renderer.js";
-import { sortExportableTypes } from "./utils/sort.js";
-
-import type { ExportableTypes } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function render(ctx: RenderContext<MarkupRenderer>, types: ExportableTypes[]): string {

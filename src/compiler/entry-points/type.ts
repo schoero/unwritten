@@ -1,5 +1,5 @@
-import { createFunctionType } from "quickdoks:compiler/ast/types/function.js";
-import { createObjectLikeType } from "quickdoks:compiler/ast/types/object.js";
+import { createFunctionType } from "quickdoks:compiler:ast/types/function.js";
+import { createObjectLikeType } from "quickdoks:compiler:ast/types/object.js";
 import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import {
   isAnyType,

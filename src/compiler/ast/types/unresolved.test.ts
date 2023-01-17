@@ -1,13 +1,10 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "quickdoks:compiler:entities";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-
-import type { TypeReferenceType } from "quickdoks:compiler/type-definitions/types.js";
 
 
 scope("Compiler", TypeKind.Unresolved, () => {
@@ -28,10 +25,9 @@ scope("Compiler", TypeKind.Unresolved, () => {
     const exportedReferenceTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
 
     it("should export a type alias, which is a type reference to another type alias", () => {
-      expect(exportedReferenceTypeAlias.kind).toBe(EntityKind.TypeAlias);
-      expect(exportedReferenceTypeAlias.type.kind).toBe(TypeKind.TypeReference);
-      expect((exportedReferenceTypeAlias.type as TypeReferenceType).type).to.not.equal(undefined);
-      expect((exportedReferenceTypeAlias.type as TypeReferenceType).type!.kind).to.equal(TypeKind.Unresolved);
+      assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
+      expect(exportedReferenceTypeAlias.type.type).to.not.equal(undefined);
+      expect(exportedReferenceTypeAlias.type.type!.kind).to.equal(TypeKind.Unresolved);
     });
 
   }

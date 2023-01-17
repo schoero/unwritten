@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/array-type */
-
-
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
@@ -9,8 +6,6 @@ import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-
-import type { TupleType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 scope("Compiler", TypeKind.Tuple, () => {
@@ -45,7 +40,8 @@ scope("Compiler", TypeKind.Tuple, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have the correct amount of members", () => {
-      expect((exportedTypeAlias.type as TupleType).members).to.have.lengthOf(2);
+      assert(exportedTypeAlias.type.kind === TypeKind.Tuple);
+      expect(exportedTypeAlias.type.members).to.have.lengthOf(2);
     });
 
   }
@@ -68,22 +64,25 @@ scope("Compiler", TypeKind.Tuple, () => {
     const exportedTupleTypeAliasWithRestInTheMiddle = createTypeAliasEntity(ctx, tupleTypeAliasWithRestInTheMiddleSymbol);
 
     it("should support rest elements at the end", () => {
-      expect((exportedTupleTypeAliasWithRestAtTheEnd.type as TupleType).members).to.have.lengthOf(2);
-      expect((exportedTupleTypeAliasWithRestAtTheEnd.type as TupleType).members[0]!.rest).to.equal(false);
-      expect((exportedTupleTypeAliasWithRestAtTheEnd.type as TupleType).members[1]!.rest).to.equal(true);
+      assert(exportedTupleTypeAliasWithRestAtTheEnd.type.kind === TypeKind.Tuple);
+      expect(exportedTupleTypeAliasWithRestAtTheEnd.type.members).to.have.lengthOf(2);
+      expect(exportedTupleTypeAliasWithRestAtTheEnd.type.members[0]!.rest).to.equal(false);
+      expect(exportedTupleTypeAliasWithRestAtTheEnd.type.members[1]!.rest).to.equal(true);
     });
 
     it("should support rest elements at the beginning", () => {
-      expect((exportedTupleTypeAliasWithRestAtTheBeginning.type as TupleType).members).to.have.lengthOf(2);
-      expect((exportedTupleTypeAliasWithRestAtTheBeginning.type as TupleType).members[0]!.rest).to.equal(true);
-      expect((exportedTupleTypeAliasWithRestAtTheBeginning.type as TupleType).members[1]!.rest).to.equal(false);
+      assert(exportedTupleTypeAliasWithRestAtTheBeginning.type.kind === TypeKind.Tuple);
+      expect(exportedTupleTypeAliasWithRestAtTheBeginning.type.members).to.have.lengthOf(2);
+      expect(exportedTupleTypeAliasWithRestAtTheBeginning.type.members[0]!.rest).to.equal(true);
+      expect(exportedTupleTypeAliasWithRestAtTheBeginning.type.members[1]!.rest).to.equal(false);
     });
 
     it("should support rest elements at the beginning", () => {
-      expect((exportedTupleTypeAliasWithRestInTheMiddle.type as TupleType).members).to.have.lengthOf(3);
-      expect((exportedTupleTypeAliasWithRestInTheMiddle.type as TupleType).members[0]!.rest).to.equal(false);
-      expect((exportedTupleTypeAliasWithRestInTheMiddle.type as TupleType).members[1]!.rest).to.equal(true);
-      expect((exportedTupleTypeAliasWithRestInTheMiddle.type as TupleType).members[2]!.rest).to.equal(false);
+      assert(exportedTupleTypeAliasWithRestInTheMiddle.type.kind === TypeKind.Tuple);
+      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members).to.have.lengthOf(3);
+      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[0]!.rest).to.equal(false);
+      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[1]!.rest).to.equal(true);
+      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[2]!.rest).to.equal(false);
     });
 
   }
@@ -100,9 +99,10 @@ scope("Compiler", TypeKind.Tuple, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should support optional elements", () => {
-      expect((exportedTypeAlias.type as TupleType).members).to.have.lengthOf(2);
-      expect((exportedTypeAlias.type as TupleType).members[0]!.optional).to.equal(false);
-      expect((exportedTypeAlias.type as TupleType).members[1]!.optional).to.equal(true);
+      assert(exportedTypeAlias.type.kind === TypeKind.Tuple);
+      expect(exportedTypeAlias.type.members).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.members[0]!.optional).to.equal(false);
+      expect(exportedTypeAlias.type.members[1]!.optional).to.equal(true);
     });
 
   }
@@ -119,9 +119,10 @@ scope("Compiler", TypeKind.Tuple, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should support optional elements", () => {
-      expect((exportedTypeAlias.type as TupleType).members).to.have.lengthOf(2);
-      expect((exportedTypeAlias.type as TupleType).members[0]!.name).to.equal("prefix");
-      expect((exportedTypeAlias.type as TupleType).members[1]!.name).to.equal("suffix");
+      assert(exportedTypeAlias.type.kind === TypeKind.Tuple);
+      expect(exportedTypeAlias.type.members).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.members[0]!.name).to.equal("prefix");
+      expect(exportedTypeAlias.type.members[1]!.name).to.equal("suffix");
     });
 
   }

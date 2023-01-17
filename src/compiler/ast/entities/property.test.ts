@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createClassEntity, createTypeAliasEntity, createVariableEntity } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
@@ -6,8 +6,6 @@ import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-
-import type { TypeLiteralType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 scope("Compiler", EntityKind.Property, () => {
@@ -37,15 +35,13 @@ scope("Compiler", EntityKind.Property, () => {
     const exportedClass = createClassEntity(ctx, classSymbol);
 
     it("should be able to parse a property from a TypeLiteral", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.TypeLiteral);
-      expect((exportedTypeAlias.type as TypeLiteralType).properties).to.have.lengthOf(1);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.properties).to.have.lengthOf(1);
     });
 
     it("should be able to parse a property from an ObjectLiteral", () => {
-      expect(exportedObjectLiteral.kind).to.equal(EntityKind.Variable);
-      expect(exportedObjectLiteral.type.kind).to.equal(TypeKind.ObjectLiteral);
-      expect((exportedObjectLiteral.type as TypeLiteralType).properties).to.have.lengthOf(1);
+      assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedObjectLiteral.type.properties).to.have.lengthOf(1);
     });
 
     it("should be able to parse a property from a Class", () => {
@@ -92,26 +88,42 @@ scope("Compiler", EntityKind.Property, () => {
     const exportedClass = createClassEntity(ctx, classSymbol);
 
     it("should have a matching name", () => {
-      expect((exportedTypeAlias.type as TypeLiteralType).properties[0]!.name).to.equal("property");
-      expect((exportedObjectLiteral.type as TypeLiteralType).properties[0]!.name).to.equal("property");
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.properties[0]!.name).to.equal("property");
+
+      assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedObjectLiteral.type.properties[0]!.name).to.equal("property");
+
       expect(exportedClass.properties[0].name).to.equal("property");
     });
 
     it("should have a matching description", () => {
-      expect((exportedTypeAlias.type as TypeLiteralType).properties[0]!.description).to.equal("Property description");
-      expect((exportedObjectLiteral.type as TypeLiteralType).properties[0]!.description).to.equal("Property description");
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.properties[0]!.description).to.equal("Property description");
+
+      assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedObjectLiteral.type.properties[0]!.description).to.equal("Property description");
+
       expect(exportedClass.properties[0].description).to.equal("Property description");
     });
 
     it("should have a matching example", () => {
-      expect((exportedTypeAlias.type as TypeLiteralType).properties[0]!.example).to.equal("Property example");
-      expect((exportedObjectLiteral.type as TypeLiteralType).properties[0]!.example).to.equal("Property example");
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.properties[0]!.example).to.equal("Property example");
+
+      assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedObjectLiteral.type.properties[0]!.example).to.equal("Property example");
+
       expect(exportedClass.properties[0].example).to.equal("Property example");
     });
 
     it("should have a matching type", () => {
-      expect((exportedTypeAlias.type as TypeLiteralType).properties[0]!.type.kind).to.equal(TypeKind.String);
-      expect((exportedObjectLiteral.type as TypeLiteralType).properties[0]!.type.kind).to.equal(TypeKind.String);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.properties[0]!.type.kind).to.equal(TypeKind.String);
+
+      assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
+      expect(exportedObjectLiteral.type.properties[0]!.type.kind).to.equal(TypeKind.String);
+
       expect(exportedClass.properties[0].type.kind).to.equal(TypeKind.String);
     });
 
@@ -139,8 +151,9 @@ scope("Compiler", EntityKind.Property, () => {
     const exportedClass = createClassEntity(ctx, classSymbol);
 
     it("should correctly flag optional properties", () => {
-      expect((exportedTypeAlias.type as TypeLiteralType).properties[0].optional).to.equal(true);
-      expect((exportedTypeAlias.type as TypeLiteralType).properties[1].optional).to.equal(false);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.properties[0].optional).to.equal(true);
+      expect(exportedTypeAlias.type.properties[1].optional).to.equal(false);
       expect(exportedClass.properties[0].optional).to.equal(true);
       expect(exportedClass.properties[1].optional).to.equal(false);
     });
@@ -186,7 +199,9 @@ scope("Compiler", EntityKind.Property, () => {
 
     it("should support all relevant modifiers", () => {
 
-      expect((exportedTypeAlias.type as TypeLiteralType).properties[0]!.modifiers).to.include("readonly");
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
+
+      expect(exportedTypeAlias.type.properties[0]!.modifiers).to.include("readonly");
 
       expect(exportedClass.properties.find(property => property.name === "publicProperty")!.modifiers).to.include("public");
       expect(exportedClass.properties.find(property => property.name === "privateProperty")!.modifiers).to.include("private");

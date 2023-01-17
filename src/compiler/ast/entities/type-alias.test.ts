@@ -1,14 +1,12 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
-import { TypeKind } from "quickdoks:compiler/enums/types.js";
 import { createTypeAliasEntity } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
+import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
-
-import type { TypeReferenceType } from "quickdoks:compiler/type-definitions/types.js";
 
 
 scope("Compiler", EntityKind.TypeAlias, () => {
@@ -87,10 +85,10 @@ scope("Compiler", EntityKind.TypeAlias, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse generic types", () => {
-      expect(exportedTypeAlias.type.kind).toBe(TypeKind.TypeReference);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedTypeAlias.typeParameters).toHaveLength(1);
-      expect((exportedTypeAlias.type as TypeReferenceType).type).to.not.equal(undefined);
-      expect((exportedTypeAlias.type as TypeReferenceType).type!.kind).to.equal(EntityKind.TypeParameter);
+      expect(exportedTypeAlias.type.type).to.not.equal(undefined);
+      expect(exportedTypeAlias.type.type!.kind).to.equal(TypeKind.TypeParameter);
     });
 
   }

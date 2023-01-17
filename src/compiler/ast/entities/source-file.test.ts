@@ -1,14 +1,14 @@
 import { expect, it } from "vitest";
 
+import { EntityKind } from "quickdoks:compiler/enums/entities.js";
 import { createSourceFileEntity } from "quickdoks:compiler:entities";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 
 
-scope("Compiler", TypeKind.SourceFile, () => {
+scope("Compiler", EntityKind.SourceFile, () => {
 
   {
 
@@ -20,7 +20,7 @@ scope("Compiler", TypeKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should be able to parse a source file", () => {
-      expect(sourceFile.kind).to.equal(TypeKind.SourceFile);
+      expect(sourceFile.kind).to.equal(EntityKind.SourceFile);
     });
 
   }
@@ -35,7 +35,7 @@ scope("Compiler", TypeKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should have a matching kind", () => {
-      expect(sourceFile.kind).to.equal(TypeKind.SourceFile);
+      expect(sourceFile.kind).to.equal(EntityKind.SourceFile);
     });
 
     it("should have a matching id", () => {

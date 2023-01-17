@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "quickdoks:compiler:entities";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
@@ -6,14 +6,10 @@ import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 import { ts } from "quickdoks:tests:utils/template.js";
 
-import type {
-  ConditionalType,
-  TypeParameterType,
-  TypeReferenceType
-} from "quickdoks:compiler:type-definitions/types.d.js";
+import type { TypeParameterType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
-scope("Compiler", TypeKind.ConditionalType, () => {
+scope("Compiler", TypeKind.Conditional, () => {
 
   {
 
@@ -27,29 +23,31 @@ scope("Compiler", TypeKind.ConditionalType, () => {
     const conditionalTypeAlias = createTypeAliasEntity(ctx, conditionalTypeAliasSymbol);
 
     it("should be able to parse conditional types", () => {
-      expect(conditionalTypeAlias.type.kind).to.equal(TypeKind.ConditionalType);
+      expect(conditionalTypeAlias.type.kind).to.equal(TypeKind.Conditional);
     });
 
-    const conditionalType = conditionalTypeAlias.type as ConditionalType;
-
     it("should have a matching checkType", () => {
-      expect(conditionalType.checkType.kind).to.equal(TypeKind.TypeReference);
-      expect((conditionalType.checkType as TypeReferenceType).type).to.not.equal(undefined);
-      expect((conditionalType.checkType as TypeReferenceType).type!.kind).to.equal(TypeKind.TypeParameter);
-      expect(((conditionalType.checkType as TypeReferenceType).type! as TypeParameterType).constraint).to.not.equal(undefined);
-      expect(((conditionalType.checkType as TypeReferenceType).type! as TypeParameterType).constraint!.kind).to.equal(TypeKind.UnionType);
+      assert(conditionalTypeAlias.type.kind === TypeKind.Conditional);
+      assert(conditionalTypeAlias.type.checkType.kind === TypeKind.TypeReference);
+      expect(conditionalTypeAlias.type.checkType.type).to.not.equal(undefined);
+      assert(conditionalTypeAlias.type.checkType.type!.kind === TypeKind.TypeParameter);
+      expect((conditionalTypeAlias.type.checkType.type! as TypeParameterType).constraint).to.not.equal(undefined);
+      expect((conditionalTypeAlias.type.checkType.type! as TypeParameterType).constraint!.kind).to.equal(TypeKind.Union);
     });
 
     it("should have a matching extendsType", () => {
-      expect(conditionalType.extendsType.kind).to.equal(TypeKind.StringLiteral);
+      assert(conditionalTypeAlias.type.kind === TypeKind.Conditional);
+      expect(conditionalTypeAlias.type.extendsType.kind).to.equal(TypeKind.StringLiteral);
     });
 
     it("should have a matching trueType", () => {
-      expect(conditionalType.trueType.kind).to.equal(TypeKind.String);
+      assert(conditionalTypeAlias.type.kind === TypeKind.Conditional);
+      expect(conditionalTypeAlias.type.trueType.kind).to.equal(TypeKind.String);
     });
 
     it("should have a matching falseType", () => {
-      expect(conditionalType.falseType.kind).to.equal(TypeKind.Number);
+      assert(conditionalTypeAlias.type.kind === TypeKind.Conditional);
+      expect(conditionalTypeAlias.type.falseType.kind).to.equal(TypeKind.Number);
     });
 
   }

@@ -15,7 +15,7 @@ export function createFunctionType(ctx: CompilerContext, type: ObjectType): Func
 
   const id = getIdByType(ctx, type);
 
-  const kind = TypeKind.FunctionType;
+  const kind = TypeKind.Function;
 
   return {
     id,

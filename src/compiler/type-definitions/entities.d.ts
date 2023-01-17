@@ -1,3 +1,4 @@
+import type { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import type {
   Description,
   Example,
@@ -5,8 +6,7 @@ import type {
   Modifiers,
   Name,
   Position
-} from "quickdoks:compiler/type-definitions/mixins.d.js";
-import type { EntityKind } from "quickdoks:compiler:enums/entities.js";
+} from "quickdoks:compiler:type-definitions/mixins.d.js";
 import type {
   ExpressionType,
   FunctionType,

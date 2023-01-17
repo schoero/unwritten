@@ -1,4 +1,4 @@
-import { createObjectLikeType } from "quickdoks:compiler/ast/types/object.js";
+import { createObjectLikeType } from "quickdoks:compiler:ast/types/object.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { lockType } from "quickdoks:compiler:utils/ts.js";
 

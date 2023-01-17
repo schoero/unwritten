@@ -95,18 +95,22 @@ export type LiteralTypes =
 
 export type ObjectLikeTypeKinds =
   | TypeKind.ClassType
-  | TypeKind.InterfaceType
+  | TypeKind.Interface
   | TypeKind.ObjectLiteral
   | TypeKind.ObjectType
   | TypeKind.TypeLiteral;
 
 export type ObjectLikeTypes =
-  ClassType | InterfaceType | ObjectLiteralType | ObjectType | TypeLiteralType;
+  | ClassType
+  | InterfaceType
+  | ObjectLiteralType
+  | ObjectType
+  | TypeLiteralType;
 
 export type InferObjectLikeType<Kind extends ObjectLikeTypeKinds> =
   Kind extends TypeKind.ClassType
     ? ClassType
-    : Kind extends TypeKind.InterfaceType
+    : Kind extends TypeKind.Interface
       ? InterfaceType
       : Kind extends TypeKind.ObjectLiteral
         ? ObjectLiteralType
@@ -260,7 +264,7 @@ export type UnresolvedType = Type<TypeKind.Unresolved> & {
 
 //-- Function
 
-export type FunctionType = Type<TypeKind.FunctionType> & {
+export type FunctionType = Type<TypeKind.Function> & {
   signatures: SignatureEntity[];
 };
 
@@ -278,14 +282,14 @@ export type ClassType = ObjectLikeType<TypeKind.ClassType> & {
 
 //-- Union type
 
-export type UnionType = Type<TypeKind.UnionType> & {
+export type UnionType = Type<TypeKind.Union> & {
   types: Types[];
 };
 
 
 //-- Intersection type
 
-export type IntersectionType = Type<TypeKind.IntersectionType> & {
+export type IntersectionType = Type<TypeKind.Intersection> & {
   types: Types[];
 };
 
@@ -325,7 +329,7 @@ export type MappedType = Type<TypeKind.MappedType> & {
 
 //-- Conditional type
 
-export type ConditionalType = Type<TypeKind.ConditionalType> & {
+export type ConditionalType = Type<TypeKind.Conditional> & {
   checkType: Types;
   extendsType: Types;
   falseType: Types;
@@ -335,7 +339,7 @@ export type ConditionalType = Type<TypeKind.ConditionalType> & {
 
 //-- Interface
 
-export interface InterfaceType extends ObjectLikeType<TypeKind.InterfaceType> {
+export interface InterfaceType extends ObjectLikeType<TypeKind.Interface> {
   name: Name;
   properties: PropertyEntity[];
   description?: Description;

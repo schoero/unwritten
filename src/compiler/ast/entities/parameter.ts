@@ -1,8 +1,8 @@
-import { parseTypeNode } from "quickdoks:compiler/entry-points/type-node.js";
-import { getParameterDescription } from "quickdoks:compiler/mixins/jsdoc.js";
+import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
 import { getInitializerByDeclaration } from "quickdoks:compiler:mixins/initializer.js";
+import { getParameterDescription } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
 import { assert } from "quickdoks:utils:general.js";
