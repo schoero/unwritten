@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="quickdoks" src="assets/quickdoks.svg">
+  <img alt="quickdoks" width="128" height="128" src="assets/quickdoks.svg">
 </div>
 
 ---
