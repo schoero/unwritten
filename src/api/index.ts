@@ -6,7 +6,7 @@ import { compile } from "quickdoks:compiler:index.js";
 import { createContext as createCompilerContext } from "quickdoks:compiler:utils/context.js";
 import { getEntryFileSymbolFromProgram } from "quickdoks:compiler:utils/ts.js";
 import { createConfig } from "quickdoks:config/index.js";
-import { Logger } from "quickdoks:logger:index.js";
+import { Logger } from "quickdoks:logger/index.js";
 import { getRenderer } from "quickdoks:renderer:index.js";
 import { createContext as createRenderContext } from "quickdoks:renderer:utils/context.js";
 import { createContext as createDefaultContext } from "quickdoks:utils:context.js";
@@ -21,7 +21,7 @@ export async function quickdoks(entryFilePath: string, options?: APIOptions) {
 
   //-- Logger
 
-  const logger = options?.silent ? undefined : new Logger();
+  const logger = options?.silent ? undefined : Logger;
   const defaultContext = createDefaultContext(logger);
 
 

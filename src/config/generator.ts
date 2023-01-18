@@ -1,11 +1,11 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { error, success } from "quickdoks:logger/index.js";
+import { Logger } from "quickdoks:logger/index.js";
 
 import { getDefaultConfig } from "./index.js";
 
-import type { ConfigWithSchema } from "quickdoks:compiler:type-definitions/config.d.js";
+import type { ConfigWithSchema } from "quickdoks:type-definitions/config.js";
 
 
 export function generateConfig() {
@@ -15,7 +15,7 @@ export function generateConfig() {
   const outputFilePath = resolve(outputDir, outputName);
 
   if(existsSync(outputFilePath) === true){
-    throw error(`Configuration file already exists at ${outputFilePath}.`);
+    throw new Error(`Configuration file already exists at ${outputFilePath}.`);
   }
 
   if(existsSync(outputDir) === false){
@@ -32,6 +32,6 @@ export function generateConfig() {
 
   writeFileSync(outputFilePath, JSON.stringify(config, null, 2));
 
-  success(`Configuration file created at ${outputFilePath}.`);
+  Logger.log(`Configuration file created at ${outputFilePath}.`);
 
 }

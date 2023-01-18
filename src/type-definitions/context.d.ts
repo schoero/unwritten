@@ -8,7 +8,7 @@ import type { Renderer } from "./renderer.js";
 
 
 export type DefaultContext = {
-  logger?: Logger;
+  logger?: typeof Logger;
 };
 
 export type CompilerContext = DefaultContext & {

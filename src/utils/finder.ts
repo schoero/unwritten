@@ -1,8 +1,6 @@
 import { existsSync } from "node:fs";
 import { dirname, parse, resolve } from "node:path";
 
-import { error } from "quickdoks:logger/index.js";
-
 import { assert } from "./general.js";
 
 
@@ -32,7 +30,7 @@ export function findFile(fileName: string[] | string, entryPath?: string): strin
 
   const absoluteEntryDir = parse(resolve(entryPath)).dir;
   if(existsSync(absoluteEntryDir) === false){
-    throw error(`Entry path does not exist: ${absoluteEntryDir}`);
+    throw new Error(`Entry path does not exist: ${absoluteEntryDir}`);
   }
 
   const absoluteFilePath = resolve(absoluteEntryDir, fileName);
