@@ -45,6 +45,11 @@
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.formatOnSave": true,
+    "editor.rulers": [
+      40,
+      80,
+      119
+    ],
     "editor.wordWrapColumn": 119
   },
 
