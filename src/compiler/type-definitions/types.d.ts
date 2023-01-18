@@ -9,14 +9,7 @@ import type {
   TupleMemberEntity,
   TypeParameterEntity
 } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type {
-  Description,
-  ID,
-  JSDocTags,
-  Modifiers,
-  Name,
-  Position
-} from "quickdoks:compiler:type-definitions/mixins.d.js";
+import type { ID, Modifiers, Name, Position } from "quickdoks:compiler:type-definitions/mixins.d.js";
 
 
 type Type<Kind extends TypeKind> = {
@@ -271,11 +264,10 @@ export type FunctionType = Type<TypeKind.Function> & {
 
 //-- Class
 
-export type ClassType = JSDocTags & ObjectLikeType<TypeKind.ClassType> & {
+export type ClassType = ObjectLikeType<TypeKind.ClassType> & {
   modifiers: Modifiers[];
   name: Name;
   position: Position;
-  description?: Description;
 };
 
 
@@ -339,10 +331,9 @@ export type ConditionalType = Type<TypeKind.Conditional> & {
 
 //-- Interface
 
-export type InterfaceType = JSDocTags & ObjectLikeType<TypeKind.Interface> & {
+export type InterfaceType = ObjectLikeType<TypeKind.Interface> & {
   name: Name;
   properties: PropertyEntity[];
-  description?: Description;
   position?: Position;
   typeParameters?: TypeParameterEntity[];
 };

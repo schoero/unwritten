@@ -50,15 +50,6 @@ export function getJSDocTagsBySymbol(ctx: CompilerContext,
 }
 
 
-export function getJSDocTagsByType(ctx: CompilerContext,
-  type: Type,
-  tags: JSDocTags | JSDocTags[] = Object.values(JSDocTags)): { [tag: string]: string | undefined; } | undefined {
-
-  const symbol = type.getSymbol();
-  return symbol && getJSDocTagsBySymbol(ctx, symbol, tags);
-}
-
-
 export function getParameterDescription(ctx: CompilerContext, declaration: ParameterDeclaration): Description | undefined {
   const parameterTags = ts.getJSDocParameterTags(declaration);
   return parameterTags.map(tag => tag.comment?.toString())[0];

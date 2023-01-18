@@ -33,10 +33,6 @@ scope("Compiler", EntityKind.Interface, () => {
   {
 
     const testFileContent = ts`
-      /** 
-       * Interface description 
-       * @example Interface example
-       */
       interface Interface {
         a: string;
       }
@@ -65,19 +61,11 @@ scope("Compiler", EntityKind.Interface, () => {
       expect(interfaceType.properties).to.have.lengthOf(1);
     });
 
-    it("should have a matching description", () => {
-      expect(interfaceType.description).to.equal("Interface description");
-    });
-
-    it("should have a matching example", () => {
-      expect(interfaceType.example).to.equal("Interface example");
-    });
-
     it("should have a matching position", () => {
       expect(interfaceType.position).to.deep.equal({
-        column: 6,
+        column: 0,
         file: "/file.ts",
-        line: 5
+        line: 1
       });
     });
 
