@@ -7,11 +7,11 @@ import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js"
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
-  isGetterSignatureDeclaration,
+  isGetterDeclaration,
   isInterfaceDeclaration,
   isMethodSignatureDeclaration,
   isPropertySignatureDeclaration,
-  isSetterSignatureDeclaration
+  isSetterDeclaration
 } from "quickdoks:compiler:typeguards/declarations.js";
 import { createExpressionType } from "quickdoks:compiler:types";
 import { isExpressionType } from "quickdoks:typeguards/types.js";
@@ -87,8 +87,8 @@ function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceD
   const tsConstructSignatures = declaration.members.filter(isConstructSignatureDeclaration);
   const tsCallSignatures = declaration.members.filter(isCallSignatureDeclaration);
   const tsMethods = declaration.members.filter(isMethodSignatureDeclaration);
-  const tsGetters = declaration.members.filter(isGetterSignatureDeclaration);
-  const tsSetters = declaration.members.filter(isSetterSignatureDeclaration);
+  const tsGetters = declaration.members.filter(isGetterDeclaration);
+  const tsSetters = declaration.members.filter(isSetterDeclaration);
   const tsProperties = declaration.members.filter(isPropertySignatureDeclaration);
 
   const constructSignatures = tsConstructSignatures.map(signatureDeclaration => {

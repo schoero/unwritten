@@ -1,6 +1,6 @@
 import { assert, expect, it } from "vitest";
 
-import { createInterfaceEntity, createTypeAliasEntity } from "quickdoks:compiler:entities";
+import { createTypeAliasEntity } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
@@ -53,45 +53,49 @@ scope("Compiler", EntityKind.Interface, () => {
     const symbol = exportedSymbols.find(s => s.name === "InterfaceType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
+    assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+    assert(exportedTypeAlias.type.type?.kind === TypeKind.Interface);
+
+    const interfaceType = exportedTypeAlias.type.type;
+
     it("should be able to handle construct signatures", () => {
-      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-      assert(exportedTypeAlias.type.type?.kind === TypeKind.Interface);
-      expect(exportedTypeAlias.type.type.constructSignatures).to.have.lengthOf(1);
+      expect(interfaceType.constructSignatures).to.have.lengthOf(1);
     });
 
     it("should be able to handle call signatures", () => {
-      expect(exportedTypeAlias.callSignatures).to.have.lengthOf(1);
+      expect(interfaceType.callSignatures).to.have.lengthOf(1);
     });
 
     it("should be able to handle properties", () => {
-      expect(exportedTypeAlias.properties).to.have.lengthOf(4);
+      expect(interfaceType.properties).to.have.lengthOf(4);
     });
 
     it("should be able to handle static properties", () => {
-      expect(exportedTypeAlias.properties.filter(prop =>
+      expect(interfaceType.properties.filter(prop =>
         prop.modifiers.includes("static"))).to.have.lengthOf(1);
     });
 
     it("should be able to handle instance properties", () => {
-      expect(exportedTypeAlias.properties.filter(prop =>
+      expect(interfaceType.properties.filter(prop =>
         prop.modifiers.includes("protected"))).to.have.lengthOf(1);
     });
 
     it("should be able to handle overloaded methods", () => {
-      expect(exportedTypeAlias.methodSignatures).to.have.lengthOf(2);
+      expect(interfaceType.methods).to.have.lengthOf(1);
+      expect(interfaceType.methods[0].signatures).to.have.lengthOf(2);
     });
 
     it("should differentiate between methods and function properties", () => {
-      expect(exportedTypeAlias.methodSignatures.find(m => m.name === "method")).to.not.equal(undefined);
-      expect(exportedTypeAlias.properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
+      expect(interfaceType.methods.find(m => m.name === "method")).to.not.equal(undefined);
+      expect(interfaceType.properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
     });
 
     it("should be able to handle getters", () => {
-      expect(exportedTypeAlias.getterSignatures).to.have.lengthOf(1);
+      expect(interfaceType.getters).to.have.lengthOf(1);
     });
 
     it("should be able to handle setters", () => {
-      expect(exportedTypeAlias.setterSignatures).to.have.lengthOf(1);
+      expect(interfaceType.setters).to.have.lengthOf(1);
     });
 
   }
@@ -99,73 +103,27 @@ scope("Compiler", EntityKind.Interface, () => {
   {
 
     const testFileContent = ts`
-      /** 
-       * Interface description 
-       * @example Interface example
-       */
-      export interface Interface {
-        /**
-         * Member description
-         * @example Member example
-         */
+      interface Interface {
         a: string;
+      }
+      interface Interface {
         b: number;
       }
+      export type InterfaceType = Interface;
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);
 
-    const symbol = exportedSymbols.find(s => s.name === "Interface")!;
-    const exportedInterface = createInterfaceEntity(ctx, symbol);
+    const symbol = exportedSymbols.find(s => s.name === "InterfaceType")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    it("should have a matching kind", () => {
-      expect(exportedInterface.kind).to.equal(EntityKind.Interface);
-    });
+    assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+    assert(exportedTypeAlias.type.type?.kind === TypeKind.Interface);
 
-    it("should have a matching name", () => {
-      expect(exportedInterface.name).to.equal("Interface");
-    });
-
-    it("should have the correct amount of members", () => {
-      expect(exportedInterface.properties).to.have.lengthOf(2);
-    });
-
-    it("should have a matching description", () => {
-      expect(exportedInterface.description).to.equal("Interface description");
-    });
-
-    it("should have a matching example", () => {
-      expect(exportedInterface.example).to.equal("Interface example");
-    });
-
-    it("should have a matching position", () => {
-      expect(exportedInterface.position).to.deep.equal({
-        column: 6,
-        file: "/file.ts",
-        line: 5
-      });
-    });
-
-  }
-
-  {
-
-    const testFileContent = ts`
-      export interface Interface {
-        a: string;
-      }
-      export interface Interface {
-        b: number;
-      }
-    `;
-
-    const { exportedSymbols, ctx } = compile(testFileContent);
-
-    const symbol = exportedSymbols.find(s => s.name === "Interface")!;
-    const exportedInterface = createInterfaceEntity(ctx, symbol);
+    const interfaceType = exportedTypeAlias.type.type;
 
     it("should merge multiple interfaces with the same name", () => {
-      expect(exportedInterface.properties).to.have.lengthOf(2);
+      expect(interfaceType.properties).to.have.lengthOf(2);
     });
 
   }
@@ -176,39 +134,41 @@ scope("Compiler", EntityKind.Interface, () => {
       interface InterfaceA {
         a: string;
       }
-      export interface InterfaceB extends InterfaceA {
+      interface InterfaceB extends InterfaceA {
         b: string;
       }
-      export interface InterfaceC extends InterfaceB {
+      interface InterfaceC extends InterfaceB {
         c: string;
       }
+      export type InterfaceTypeB = InterfaceB;
+      export type InterfaceTypeC = InterfaceC;
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);
 
-    const exportedInterfaceBSymbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
-    const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
-    const exportedInterfaceB = createInterfaceEntity(ctx, exportedInterfaceBSymbol);
-    const exportedInterfaceC = createInterfaceEntity(ctx, exportedInterfaceCSymbol);
+    const exportedTypeAliasBSymbol = exportedSymbols.find(s => s.name === "InterfaceTypeB")!;
+    const exportedTypeAliasCSymbol = exportedSymbols.find(s => s.name === "InterfaceTypeC")!;
+    const exportedTypeAliasB = createTypeAliasEntity(ctx, exportedTypeAliasBSymbol);
+    const exportedTypeAliasC = createTypeAliasEntity(ctx, exportedTypeAliasCSymbol);
+
+    assert(exportedTypeAliasB.type.kind === TypeKind.TypeReference);
+    assert(exportedTypeAliasB.type.type?.kind === TypeKind.Interface);
+    assert(exportedTypeAliasC.type.kind === TypeKind.TypeReference);
+    assert(exportedTypeAliasC.type.type?.kind === TypeKind.Interface);
+
+    const interfaceTypeB = exportedTypeAliasB.type.type;
+    const interfaceTypeC = exportedTypeAliasC.type.type;
 
     it("should be able to parse inheritance", () => {
 
-      expect(exportedInterfaceB.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceB.properties[0]!.name).to.equal("b");
-      expect(exportedInterfaceB.heritage).to.not.equal(undefined);
-      expect(exportedInterfaceB.heritage).to.have.lengthOf(1);
-      assert(exportedInterfaceB.heritage![0]!.instanceType.kind === TypeKind.Interface);
-      expect(exportedInterfaceB.heritage![0]!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceB.heritage![0]!.instanceType.properties[0]!.name).to.equal("a");
+      expect(interfaceTypeB.properties).to.have.lengthOf(2);
+      expect(interfaceTypeB.properties[0]!.name).to.equal("b");
+      expect(interfaceTypeB.properties[1]!.name).to.equal("a");
 
-      expect(exportedInterfaceC.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceC.properties[0]!.name).to.equal("c");
-      expect(exportedInterfaceC.heritage).to.not.equal(undefined);
-      expect(exportedInterfaceC.heritage).to.have.lengthOf(1);
-      assert(exportedInterfaceC.heritage![0]!.instanceType.kind === TypeKind.Interface);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties).to.have.lengthOf(2);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[1]!.name).to.equal("a");
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[0]!.name).to.equal("b");
+      expect(interfaceTypeC.properties).to.have.lengthOf(3);
+      expect(interfaceTypeC.properties[0]!.name).to.equal("c");
+      expect(interfaceTypeC.properties[1]!.name).to.equal("b");
+      expect(interfaceTypeC.properties[2]!.name).to.equal("a");
 
     });
 
@@ -223,31 +183,27 @@ scope("Compiler", EntityKind.Interface, () => {
       interface InterfaceB {
         b: string;
       }
-      export interface InterfaceC extends InterfaceA, InterfaceB {
+      interface InterfaceC extends InterfaceA, InterfaceB {
         c: string;
       }
+      export type InterfaceTypeC = InterfaceC;
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);
 
-    const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
-    const exportedInterfaceC = createInterfaceEntity(ctx, exportedInterfaceCSymbol);
+    const exportedTypeAliasCSymbol = exportedSymbols.find(s => s.name === "InterfaceTypeC")!;
+    const exportedTypeAliasC = createTypeAliasEntity(ctx, exportedTypeAliasCSymbol);
+
+    assert(exportedTypeAliasC.type.kind === TypeKind.TypeReference);
+    assert(exportedTypeAliasC.type.type?.kind === TypeKind.Interface);
+
+    const interfaceTypeC = exportedTypeAliasC.type.type;
 
     it("should be able to handle multiple extended interfaces at the same time", () => {
-
-      expect(exportedInterfaceC.properties).to.have.lengthOf(1);
-
-      expect(exportedInterfaceC.heritage).to.not.equal(undefined);
-      expect(exportedInterfaceC.heritage).to.have.lengthOf(2);
-
-      assert(exportedInterfaceC.heritage![0]!.instanceType.kind === TypeKind.Interface);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[0]!.name).to.equal("a");
-
-      assert(exportedInterfaceC.heritage![1]!.instanceType.kind === TypeKind.Interface);
-      expect(exportedInterfaceC.heritage![1]!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceC.heritage![1]!.instanceType.properties[0]!.name).to.equal("b");
-
+      expect(interfaceTypeC.properties).to.have.lengthOf(3);
+      expect(interfaceTypeC.properties[0]!.name).to.equal("c");
+      expect(interfaceTypeC.properties[1]!.name).to.equal("a");
+      expect(interfaceTypeC.properties[2]!.name).to.equal("b");
     });
 
   }
@@ -255,21 +211,26 @@ scope("Compiler", EntityKind.Interface, () => {
   {
 
     const testFileContent = ts`
-      export interface GenericInterface<T> {
+      interface GenericInterface<T> {
         b: T;
       }
+      export type GenericInterfaceType<T> = GenericInterface<T>;
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);
 
-    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "GenericInterface")!;
-    const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
+    const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "GenericInterfaceType")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
+
+    assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+    assert(exportedTypeAlias.type.type?.kind === TypeKind.ObjectType);
+
+    const interfaceType = exportedTypeAlias.type.type;
 
     it("should support generics in interfaces", () => {
-      expect(exportedInterface.typeParameters).to.not.equal(undefined);
-      expect(exportedInterface.typeParameters).to.have.lengthOf(1);
-      expect(exportedInterface.properties).to.have.lengthOf(1);
-      expect(exportedInterface.properties[0]!.type.kind).to.equal(TypeKind.TypeParameter);
+      expect(interfaceType.properties).to.have.lengthOf(1);
+      expect(interfaceType.properties[0]!.type.kind).to.equal(TypeKind.TypeParameter);
+
     });
 
   }
@@ -277,32 +238,25 @@ scope("Compiler", EntityKind.Interface, () => {
   {
 
     const testFileContent = ts`
-      interface Base<T extends string> {
+      interface Interface<T extends string> {
         prop: T;
       }
-      export interface Interface extends Base<"hello"> {
-
-      }
+      export type InterfaceType = Interface<"hello">;
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);
 
-    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
-    const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
+    const symbol = exportedSymbols.find(s => s.name === "InterfaceType")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
+
+    assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+    assert(exportedTypeAlias.type.type?.kind === TypeKind.ObjectType);
+
+    const objectType = exportedTypeAlias.type.type;
 
     it("should support type arguments", () => {
-
-      expect(exportedInterface.heritage).to.not.equal(undefined);
-      expect(exportedInterface.heritage).to.have.lengthOf(1);
-
-      expect(exportedInterface.heritage![0]!.typeArguments).to.not.equal(undefined);
-      expect(exportedInterface.heritage![0]!.typeArguments).to.have.lengthOf(1);
-      expect(exportedInterface.heritage![0]!.typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
-
-      assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.ObjectType);
-      expect(exportedInterface.heritage![0]!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedInterface.heritage![0]!.instanceType.properties[0]!.type.kind).to.equal(TypeKind.StringLiteral);
-
+      expect(objectType.properties).to.have.lengthOf(1);
+      expect(objectType.properties[0]!.type.kind).to.equal(TypeKind.StringLiteral);
     });
 
   }

@@ -312,6 +312,7 @@ export type TypeLiteralType = ObjectLikeType<TypeKind.TypeLiteral> & {
 //-- Type parameter
 
 export type TypeParameterType = Type<TypeKind.TypeParameter> & {
+  name: Name;
   constraint?: Types;
 };
 
@@ -344,8 +345,6 @@ export interface InterfaceType extends ObjectLikeType<TypeKind.Interface> {
   properties: PropertyEntity[];
   description?: Description;
   example?: Example;
-  heritage?: ExpressionType[];
   position?: Position;
-  typeArguments?: Types[];
   typeParameters?: TypeParameterEntity[];
 }

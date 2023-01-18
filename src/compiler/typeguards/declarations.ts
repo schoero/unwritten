@@ -55,10 +55,6 @@ export function isGetterDeclaration(declaration: Declaration): declaration is ts
   return ts.isGetAccessorDeclaration(declaration);
 }
 
-export function isGetterSignatureDeclaration(declaration: Declaration): declaration is ts.GetAccessorDeclaration {
-  return ts.isGetAccessorDeclaration(declaration);
-}
-
 export function isInterfaceDeclaration(declaration: Declaration): declaration is ts.InterfaceDeclaration {
   return ts.isInterfaceDeclaration(declaration);
 }
@@ -106,10 +102,6 @@ export function isPropertySignatureDeclaration(declaration: Declaration): declar
 }
 
 export function isSetterDeclaration(declaration: Declaration): declaration is ts.SetAccessorDeclaration {
-  return ts.isSetAccessorDeclaration(declaration);
-}
-
-export function isSetterSignatureDeclaration(declaration: Declaration): declaration is ts.SetAccessorDeclaration {
   return ts.isSetAccessorDeclaration(declaration);
 }
 

@@ -1,13 +1,23 @@
-import { isMethodSignatureDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import {
+  isCallSignatureDeclaration,
+  isConstructSignatureDeclaration,
+  isMethodSignatureDeclaration
+} from "quickdoks:compiler:typeguards/declarations.js";
 
-import type { FunctionLikeDeclaration, MethodSignature, Symbol } from "typescript";
+import type {
+  CallSignatureDeclaration,
+  ConstructSignatureDeclaration,
+  FunctionLikeDeclaration,
+  MethodSignature,
+  Symbol
+} from "typescript";
 
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function functionOverloadDeclarationFilter(ctx: CompilerContext, declaration: FunctionLikeDeclaration | MethodSignature, symbol: Symbol): boolean {
+export function functionOverloadDeclarationFilter(ctx: CompilerContext, declaration: CallSignatureDeclaration | ConstructSignatureDeclaration | FunctionLikeDeclaration | MethodSignature, symbol: Symbol): boolean {
 
-  if(isMethodSignatureDeclaration(declaration)){
+  if(isMethodSignatureDeclaration(declaration) || isCallSignatureDeclaration(declaration) || isConstructSignatureDeclaration(declaration)){
     return true;
   }
 
