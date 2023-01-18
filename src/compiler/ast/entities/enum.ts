@@ -4,7 +4,7 @@ import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.
 import {
   getDescriptionByDeclaration,
   getDescriptionBySymbol,
-  getExampleByDeclaration
+  getJSDocTagsByDeclaration
 } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
@@ -68,15 +68,15 @@ function mergeMembers(enums: ReturnType<typeof parseEnumDeclaration>[]): EnumEnt
 function parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaration) {
 
   const description = getDescriptionByDeclaration(ctx, declaration);
-  const example = getExampleByDeclaration(ctx, declaration);
+  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const members = declaration.members.map(member => createEnumMemberByDeclaration(ctx, member));
 
   return {
     description,
-    example,
     members,
-    position
+    position,
+    ...jsdocTags
   };
 
 }
@@ -85,23 +85,23 @@ function parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaration
 function createEnumMemberByDeclaration(ctx: CompilerContext, declaration: TSEnumMember): EnumMemberEntity {
 
   const id = getIdByDeclaration(ctx, declaration);
-  const example = getExampleByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const type = createTypeByDeclaration(ctx, declaration);
+  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const kind = EntityKind.EnumMember;
 
   assert(name, "Member name not found");
 
   return {
     description,
-    example,
     id,
     kind,
     name,
     position,
-    type
+    type,
+    ...jsdocTags
   };
 
 }

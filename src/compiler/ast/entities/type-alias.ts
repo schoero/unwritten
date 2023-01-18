@@ -1,7 +1,7 @@
 import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getDescriptionBySymbol, getExampleByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
 import { isTypeAliasDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
@@ -40,19 +40,17 @@ export function createTypeAliasEntity(ctx: CompilerContext, symbol: Symbol): Typ
 
 function parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAliasDeclaration) {
 
-  const example = getExampleByDeclaration(ctx, declaration);
-  const position = getPositionByDeclaration(ctx, declaration);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
-
-  // We have to use typeNode here for type references, otherwise Array<string> will have type string for example
+  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
+  const position = getPositionByDeclaration(ctx, declaration);
   const typeNode = declaration.type;
   const type = parseTypeNode(ctx, typeNode);
 
   return {
-    example,
     position,
     type,
-    typeParameters
+    typeParameters,
+    ...jsdocTags
   };
 
 }

@@ -1,7 +1,7 @@
 import { parseType } from "quickdoks:compiler:entry-points/type.js";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getDescriptionBySymbol, getExampleByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.js";
 import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
@@ -43,14 +43,14 @@ export function createVariableEntity(ctx: CompilerContext, symbol: Symbol): Vari
 
 function parseVariableDeclaration(ctx: CompilerContext, declaration: VariableDeclaration) {
 
-  const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
+  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
 
   return {
-    example,
     modifiers,
-    position
+    position,
+    ...jsdocTags
   };
 
 }

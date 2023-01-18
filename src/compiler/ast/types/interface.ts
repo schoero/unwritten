@@ -1,5 +1,5 @@
 import { parseType } from "quickdoks:compiler/entry-points/type.js";
-import { getDescriptionByType } from "quickdoks:compiler/mixins/jsdoc.js";
+import { getDescriptionByType, getJSDocTagsByType } from "quickdoks:compiler/mixins/jsdoc.js";
 import { getNameByType } from "quickdoks:compiler/mixins/name.js";
 import { createObjectLikeType } from "quickdoks:compiler:ast/types/object.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
@@ -17,11 +17,13 @@ export const createInterfaceByType = (ctx: CompilerContext, type: TSInterfaceTyp
   const typeParameters = type.typeParameters?.map(type => parseType(ctx, type));
   const name = getNameByType(ctx, type);
   const description = getDescriptionByType(ctx, type);
+  const jsdocTags = getJSDocTagsByType(ctx, type);
 
   return <InterfaceType>{
     ...objectType,
     description,
     name,
-    typeParameters
+    typeParameters,
+    ...jsdocTags
   };
 });

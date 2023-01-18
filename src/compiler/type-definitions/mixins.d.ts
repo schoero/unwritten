@@ -1,7 +1,14 @@
+import type { JSDocTags as JSDocTagNames } from "quickdoks:compiler/enums/jsdoc.js";
+
+
 export type Name = string;
 export type ID = number;
 export type Description = string;
-export type Example = string;
+
+
+export type JSDocTags = {
+  -readonly [key in keyof typeof JSDocTagNames as typeof JSDocTagNames[key]]?: string | undefined;
+};
 
 export type Modifiers =
   | NativeModifiers

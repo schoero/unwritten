@@ -8,8 +8,6 @@ import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
 
 
 export function createFunctionEntity(ctx: CompilerContext, symbol: Symbol): FunctionEntity {
-
   const functionLike = createFunctionLikeEntity(ctx, symbol, EntityKind.Function);
   return functionLike;
-
 }

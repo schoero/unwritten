@@ -11,8 +11,8 @@ import type {
 } from "quickdoks:compiler:type-definitions/entities.d.js";
 import type {
   Description,
-  Example,
   ID,
+  JSDocTags,
   Modifiers,
   Name,
   Position
@@ -271,12 +271,11 @@ export type FunctionType = Type<TypeKind.Function> & {
 
 //-- Class
 
-export type ClassType = ObjectLikeType<TypeKind.ClassType> & {
+export type ClassType = JSDocTags & ObjectLikeType<TypeKind.ClassType> & {
   modifiers: Modifiers[];
   name: Name;
   position: Position;
   description?: Description;
-  example?: Example;
 };
 
 
@@ -340,11 +339,10 @@ export type ConditionalType = Type<TypeKind.Conditional> & {
 
 //-- Interface
 
-export interface InterfaceType extends ObjectLikeType<TypeKind.Interface> {
+export type InterfaceType = JSDocTags & ObjectLikeType<TypeKind.Interface> & {
   name: Name;
   properties: PropertyEntity[];
   description?: Description;
-  example?: Example;
   position?: Position;
   typeParameters?: TypeParameterEntity[];
-}
+};

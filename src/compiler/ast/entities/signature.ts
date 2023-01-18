@@ -4,7 +4,7 @@ import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdByDeclaration } from "quickdoks:compiler:mixins/id.js";
 import {
   getDescriptionByDeclaration,
-  getExampleByDeclaration,
+  getJSDocTagsByDeclaration,
   getReturnTypeDescription
 } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.js";
@@ -40,23 +40,22 @@ function parseSignatureDeclaration(ctx: CompilerContext, declaration: SignatureD
 
   const id = getIdByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
-  const example = getExampleByDeclaration(ctx, declaration);
-
   const parameters = declaration.parameters.map(declaration => createParameterEntity(ctx, declaration));
   const typeParameters = declaration.typeParameters?.map(declaration => createTypeParameterEntity(ctx, declaration));
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
+  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
 
   return {
     description,
-    example,
     id,
     modifiers,
     name,
     parameters,
     position,
-    typeParameters
+    typeParameters,
+    ...jsdocTags
   };
 
 }

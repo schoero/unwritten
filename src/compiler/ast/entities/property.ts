@@ -1,7 +1,7 @@
 import { parseType } from "quickdoks:compiler:entry-points/type.js";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getDescriptionByDeclaration, getExampleByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
@@ -62,10 +62,10 @@ function parsePropertyDeclaration(ctx: CompilerContext, declaration: ParameterDe
 
   const id = getIdByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
-  const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
+  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const optional = declaration.questionToken !== undefined;
   const kind = EntityKind.Property;
 
@@ -73,13 +73,13 @@ function parsePropertyDeclaration(ctx: CompilerContext, declaration: ParameterDe
 
   return {
     description,
-    example,
     id,
     kind,
     modifiers,
     name,
     optional,
-    position
+    position,
+    ...jsdocTags
   };
 
 }

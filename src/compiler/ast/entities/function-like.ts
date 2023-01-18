@@ -33,9 +33,9 @@ export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(c
       isConstructSignatureDeclaration(declaration) ||
       isMethodSignatureDeclaration(declaration)) as (CallSignatureDeclaration | ConstructSignatureDeclaration | FunctionLikeDeclaration | MethodSignature)[];
 
-  const bodyDeclarations = declarations.filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol));
+  const signatureDeclarations = declarations.filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol));
 
-  const signatures = bodyDeclarations.map(declaration => {
+  const signatures = signatureDeclarations.map(declaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(declaration);
     assert(signature, "FunctionLike signature is not found");
     return createSignatureEntity(ctx, signature);

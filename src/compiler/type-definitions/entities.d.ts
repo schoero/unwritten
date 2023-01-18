@@ -1,8 +1,8 @@
 import type { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import type {
   Description,
-  Example,
   ID,
+  JSDocTags,
   Modifiers,
   Name,
   Position
@@ -90,18 +90,17 @@ export type Entities =
   | Types
   | VariableEntity;
 
-export type PropertyEntity = Entity<EntityKind.Property> & {
+export type PropertyEntity = Entity<EntityKind.Property> & JSDocTags & {
   modifiers: Modifiers[];
   name: Name;
   optional: boolean;
   position: Position;
   type: Types;
   description?: Description;
-  example?: Example;
 };
 
 
-export type TupleMemberEntity = Entity<EntityKind.TupleMember> & {
+export type TupleMemberEntity = Entity<EntityKind.TupleMember> & JSDocTags & {
   optional: boolean;
   position: Position;
   rest: boolean;
@@ -127,12 +126,11 @@ export type FunctionLikeEntity<Kind extends FunctionLikeEntityKinds> = Entity<Ki
 export type FunctionEntity = FunctionLikeEntity<EntityKind.Function> & {
 };
 
-export type SignatureEntity = Entity<EntityKind.Signature> & {
+export type SignatureEntity = Entity<EntityKind.Signature> & JSDocTags & {
   parameters: ParameterEntity[];
   returnType: Types & { description?: Description; } ;
   type: FunctionType;
   description?: Description;
-  example?: Example;
   modifiers?: Modifiers[];
   name?: Name;
   position?: Position;
@@ -142,13 +140,12 @@ export type SignatureEntity = Entity<EntityKind.Signature> & {
 
 //-- Parameter
 
-export type ParameterEntity = Entity<EntityKind.Parameter> & {
+export type ParameterEntity = Entity<EntityKind.Parameter> & JSDocTags & {
   name: Name;
   optional: boolean;
   position: Position;
   rest: boolean;
   description?: Description;
-  example?: Example;
   initializer?: Types;
   type?: Types;
 };
@@ -156,7 +153,7 @@ export type ParameterEntity = Entity<EntityKind.Parameter> & {
 
 //-- Interface
 
-export interface InterfaceEntity extends Entity<EntityKind.Interface> {
+export type InterfaceEntity = Entity<EntityKind.Interface> & JSDocTags & {
   callSignatures: SignatureEntity[];
   constructSignatures: SignatureEntity[];
   getterSignatures: SignatureEntity[];
@@ -165,21 +162,20 @@ export interface InterfaceEntity extends Entity<EntityKind.Interface> {
   properties: PropertyEntity[];
   setterSignatures: SignatureEntity[];
   description?: Description;
-  example?: Example;
   heritage?: ExpressionType[];
   position?: Position;
   typeArguments?: Types[];
   typeParameters?: TypeParameterEntity[];
-}
+};
 
-export interface MergedInterfaceEntity extends InterfaceEntity {
+export type MergedInterfaceEntity = InterfaceEntity & {
   declarations: Omit<InterfaceEntity, "id" | "name">[];
-}
+};
 
 
 //-- Class
 
-export type ClassEntity = Entity<EntityKind.Class> & {
+export type ClassEntity = Entity<EntityKind.Class> & JSDocTags & {
   getters: GetterEntity[];
   methods: MethodEntity[];
   modifiers: Modifiers[];
@@ -189,7 +185,6 @@ export type ClassEntity = Entity<EntityKind.Class> & {
   setters: SetterEntity[];
   ctor?: ConstructorEntity;
   description?: Description;
-  example?: Example;
   heritage?: ExpressionType;
   typeParameters?: TypeParameterEntity[];
 };
@@ -205,24 +200,22 @@ export type GetterEntity = FunctionLikeEntity<EntityKind.Getter> & {};
 
 //-- Variable
 
-export type VariableEntity = Entity<EntityKind.Variable> & {
+export type VariableEntity = Entity<EntityKind.Variable> & JSDocTags & {
   modifiers: Modifiers[];
   name: Name;
   position: Position;
   type: Types;
   description?: Description;
-  example?: Example;
 };
 
 
 //-- Type alias
 
-export type TypeAliasEntity = Entity<EntityKind.TypeAlias> & {
+export type TypeAliasEntity = Entity<EntityKind.TypeAlias> & JSDocTags & {
   name: Name;
   position: Position;
   type: Types;
   description?: Description;
-  example?: Example;
   typeParameters?: TypeParameterEntity[];
 };
 
@@ -235,27 +228,12 @@ export type MappedTypeMemberEntity = Entity<EntityKind.MappedTypeMember> & {
 };
 
 
-//-- Interface
-
-export interface InterfaceEntity extends Entity<EntityKind.Interface> {
-  name: Name;
-  properties: PropertyEntity[];
-  description?: Description;
-  example?: Example;
-  heritage?: ExpressionType[];
-  position?: Position;
-  typeArguments?: Types[];
-  typeParameters?: TypeParameterEntity[];
-}
-
-
 //-- Enum
 
-export type EnumEntity = Entity<EntityKind.Enum> & {
+export type EnumEntity = Entity<EntityKind.Enum> & JSDocTags & {
   members: EnumMemberEntity[];
   name: Name;
   description?: Description;
-  example?: Example;
   position?: Position;
 };
 
@@ -263,24 +241,22 @@ export type MergedEnumEntity = EnumEntity & {
   declarations: Omit<EnumEntity, "id" | "name">[];
 };
 
-export type EnumMemberEntity = Entity<EntityKind.EnumMember> & {
+export type EnumMemberEntity = Entity<EntityKind.EnumMember> & JSDocTags & {
   name: Name;
   position: Position;
   type: Types;
   description?: Description;
-  example?: Example;
 };
 
 
 //-- Member
 
-export type MemberEntity = Entity<EntityKind.Member> & {
+export type MemberEntity = Entity<EntityKind.Member> & JSDocTags & {
   modifiers: Modifiers[];
   optional: boolean;
   position: Position;
   type: Types;
   description?: Description;
-  example?: Example;
   parent?: Types;
 };
 

@@ -8,7 +8,7 @@ import {
 } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getDescriptionByDeclaration, getExampleByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.js";
 import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
@@ -67,7 +67,7 @@ function parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecla
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
   const position = getPositionByDeclaration(ctx, declaration);
-  const example = getExampleByDeclaration(ctx, declaration);
+  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const id = getIdByDeclaration(ctx, declaration);
@@ -76,7 +76,6 @@ function parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecla
   return {
     ctor,
     description,
-    example,
     getters,
     heritage,
     id,
@@ -86,7 +85,8 @@ function parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecla
     position,
     properties,
     setters,
-    typeParameters
+    typeParameters,
+    ...jsdocTags
   };
 
 }

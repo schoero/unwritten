@@ -1,7 +1,7 @@
 import { createPropertyEntity, createSignatureEntity, createTypeParameterEntity } from "quickdoks:compiler:entities";
 import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getDescriptionBySymbol, getExampleByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
 import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
 import {
@@ -123,11 +123,11 @@ function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceD
   });
 
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
-  const example = getExampleByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
   const name = getNameByDeclaration(ctx, declaration);
   const id = getIdByDeclaration(ctx, declaration);
+  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const kind = EntityKind.Interface;
 
   assert(name, "Interface name not found");
@@ -135,7 +135,6 @@ function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceD
   return {
     callSignatures,
     constructSignatures,
-    example,
     getterSignatures,
     heritage,
     id,
@@ -145,7 +144,8 @@ function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceD
     position,
     properties,
     setterSignatures,
-    typeParameters
+    typeParameters,
+    ...jsdocTags
   };
 
 }
