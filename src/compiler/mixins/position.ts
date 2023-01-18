@@ -1,4 +1,4 @@
-import type { Declaration, Node, Symbol } from "typescript";
+import type { Declaration, Node, Symbol, Type } from "typescript";
 
 import type { Position } from "quickdoks:compiler:type-definitions/mixins.d.js";
 import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
@@ -31,4 +31,10 @@ export function getPositionBySymbol(ctx: CompilerContext, symbol: Symbol): Posit
 
 export function getPositionByDeclaration(ctx: CompilerContext, declaration: Declaration): Position {
   return getPositionByNode(ctx, declaration);
+}
+
+
+export function getPositionByType(ctx: CompilerContext, type: Type): Position | undefined {
+  const symbol = type.getSymbol();
+  return symbol && getPositionBySymbol(ctx, symbol);
 }

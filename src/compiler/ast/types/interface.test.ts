@@ -20,12 +20,65 @@ scope("Compiler", EntityKind.Interface, () => {
     const { exportedSymbols, ctx } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "InterfaceType")!;
-    const exportedInterface = createTypeAliasEntity(ctx, symbol);
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse an interface type", () => {
-      expect(exportedInterface.kind).to.equal(EntityKind.TypeAlias);
-      assert(exportedInterface.type.kind === TypeKind.TypeReference);
-      expect(exportedInterface.type.type?.kind).to.equal(TypeKind.Interface);
+      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+      expect(exportedTypeAlias.type.type?.kind).to.equal(TypeKind.Interface);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      /** 
+       * Interface description 
+       * @example Interface example
+       */
+      interface Interface {
+        a: string;
+      }
+      export type InterfaceType = Interface;
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "InterfaceType")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
+
+    assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+    assert(exportedTypeAlias.type.type?.kind === TypeKind.Interface);
+
+    const interfaceType = exportedTypeAlias.type.type;
+
+    it("should have a matching kind", () => {
+      expect(interfaceType.kind).to.equal(TypeKind.Interface);
+    });
+
+    it("should have a matching name", () => {
+      expect(interfaceType.name).to.equal("Interface");
+    });
+
+    it("should have the correct amount of members", () => {
+      expect(interfaceType.properties).to.have.lengthOf(1);
+    });
+
+    it("should have a matching description", () => {
+      expect(interfaceType.description).to.equal("Interface description");
+    });
+
+    it("should have a matching example", () => {
+      expect(interfaceType.example).to.equal("Interface example");
+    });
+
+    it("should have a matching position", () => {
+      expect(interfaceType.position).to.deep.equal({
+        column: 6,
+        file: "/file.ts",
+        line: 5
+      });
     });
 
   }

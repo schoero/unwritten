@@ -1,3 +1,4 @@
+import { getPositionByType } from "quickdoks:compiler/mixins/position.js";
 import {
   createGetterEntity,
   createMethodEntity,
@@ -45,6 +46,7 @@ export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKi
   const properties = propertyProperties.map(property => createPropertyEntity(ctx, property));
 
   const id = getIdByType(ctx, type);
+  const position = getPositionByType(ctx, type);
   const isThis = isThisType(type);
 
   return <InferObjectLikeType<typeof kind>>{
@@ -55,6 +57,7 @@ export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKi
     isThis,
     kind,
     methods,
+    position,
     properties,
     setters
   };

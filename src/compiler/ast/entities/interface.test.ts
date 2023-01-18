@@ -98,12 +98,7 @@ scope("Compiler", EntityKind.Interface, () => {
        * @example Interface example
        */
       export interface Interface {
-        /**
-         * Member description
-         * @example Member example
-         */
         a: string;
-        b: number;
       }
     `;
 
@@ -121,7 +116,7 @@ scope("Compiler", EntityKind.Interface, () => {
     });
 
     it("should have the correct amount of members", () => {
-      expect(exportedInterface.properties).to.have.lengthOf(2);
+      expect(exportedInterface.properties).to.have.lengthOf(1);
     });
 
     it("should have a matching description", () => {
