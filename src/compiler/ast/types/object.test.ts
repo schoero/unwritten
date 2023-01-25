@@ -32,7 +32,7 @@ scope("Compiler", EntityKind.Function, () => {
       it("should be able to create object types", () => {
         expect(createObjectLikeType(ctx, tsType, TypeKind.TypeLiteral).kind).to.equal(TypeKind.TypeLiteral);
         expect(createObjectLikeType(ctx, tsType, TypeKind.ObjectLiteral).kind).to.equal(TypeKind.ObjectLiteral);
-        expect(createObjectLikeType(ctx, tsType, TypeKind.ObjectType).kind).to.equal(TypeKind.ObjectType);
+        expect(createObjectLikeType(ctx, tsType, TypeKind.Object).kind).to.equal(TypeKind.Object);
         expect(createObjectLikeType(ctx, tsType, TypeKind.Interface).kind).to.equal(TypeKind.Interface);
         expect(createObjectLikeType(ctx, tsType, TypeKind.ClassType).kind).to.equal(TypeKind.ClassType);
       });

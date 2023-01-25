@@ -90,7 +90,7 @@ export type ObjectLikeTypeKinds =
   | TypeKind.ClassType
   | TypeKind.Interface
   | TypeKind.ObjectLiteral
-  | TypeKind.ObjectType
+  | TypeKind.Object
   | TypeKind.TypeLiteral;
 
 export type ObjectLikeTypes =
@@ -107,7 +107,7 @@ export type InferObjectLikeType<Kind extends ObjectLikeTypeKinds> =
       ? InterfaceType
       : Kind extends TypeKind.ObjectLiteral
         ? ObjectLiteralType
-        : Kind extends TypeKind.ObjectType
+        : Kind extends TypeKind.Object
           ? ObjectType
           : Kind extends TypeKind.TypeLiteral
             ? TypeLiteralType
@@ -172,7 +172,7 @@ export type ObjectLikeType<Kind extends ObjectLikeTypeKinds> = Type<Kind> & {
 
 //-- Object type
 
-export type ObjectType = ObjectLikeType<TypeKind.ObjectType> & {
+export type ObjectType = ObjectLikeType<TypeKind.Object> & {
 };
 
 
@@ -310,7 +310,7 @@ export type TypeParameterType = Type<TypeKind.TypeParameter> & {
 
 //-- Mapped type
 
-export type MappedType = Type<TypeKind.MappedType> & {
+export type MappedType = Type<TypeKind.Mapped> & {
   members: MappedTypeMemberEntity[];
   optional: boolean;
   readonly: boolean;

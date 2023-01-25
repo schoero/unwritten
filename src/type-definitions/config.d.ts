@@ -1,5 +1,5 @@
 import type { TypeKind } from "quickdoks:compiler:enums/types.js";
-import type { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
+import type { BuiltInRenderers } from "quickdoks:renderer:enums/renderer.js";
 import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
 
 import type { Complete } from "./utils.js";

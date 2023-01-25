@@ -1,30 +1,37 @@
-import { expect } from "chai";
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
-import { renderClassForDocumentation, renderClassForTableOfContents } from "quickdoks:compiler:entities";
+import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
+import { scope } from "quickdoks:tests:utils/scope.js";
 
-import type { Class } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { Real, Testable } from "quickdoks:compiler:type-definitions/utils.d.js";
+import { renderClassForDocumentation, renderClassForTableOfContents } from "./class.js";
+
+import type { ClassEntity } from "quickdoks:compiler:type-definitions/entities.js";
+import type { Real, Testable } from "quickdoks:type-definitions/utils.js";
 
 
-describe("Renderer: Class", () => {
+scope("Renderer", EntityKind.Class, () => {
+
   {
 
-    const testClass: Testable<Class> = {
+    // #region Entity
+
+    const testClass: Testable<ClassEntity> = {
       getters: [],
-      kind: TypeKind.Class,
+      kind: EntityKind.Class,
       methods: [],
       name: "Class",
       properties: [],
       setters: []
     };
 
+    // #endregion
+
     const ctx = createRenderContext();
 
-    const renderedClassForTableOfContents = renderClassForTableOfContents(ctx, <Real<Class>>testClass);
-    const renderedClassForDocumentation = renderClassForDocumentation(ctx, <Real<Class>>testClass);
+    const renderedClassForTableOfContents = renderClassForTableOfContents(ctx, <Real<ClassEntity>>testClass);
+    const renderedClassForDocumentation = renderClassForDocumentation(ctx, <Real<ClassEntity>>testClass);
 
     it("should render a class with the correct name", () => {
       expect(renderedClassForTableOfContents[0]).to.equal("Class");
@@ -59,7 +66,7 @@ describe("Renderer: Class", () => {
 
   describe("Constructor", () => {
 
-    const testClass: Testable<Class> = {
+    const testClass: Testable<ClassEntity> = {
       ctor: {
         kind: TypeKind.Constructor,
         name: "constructor",
@@ -84,8 +91,8 @@ describe("Renderer: Class", () => {
 
     const ctx = createRenderContext();
 
-    const renderedClassForTableOfContents = renderClassForTableOfContents(ctx, <Real<Class>>testClass);
-    const renderedClassForDocumentation = renderClassForDocumentation(ctx, <Real<Class>>testClass);
+    const renderedClassForTableOfContents = renderClassForTableOfContents(ctx, testClass);
+    const renderedClassForDocumentation = renderClassForDocumentation(ctx, testClass);
 
     it("should have a constructor", () => {
       expect(renderedClassForTableOfContents[1][0]).to.not.equal(undefined);
@@ -128,8 +135,8 @@ describe("Renderer: Class", () => {
 
     const ctx = createRenderContext();
 
-    const renderedClassForTableOfContents = renderClassForTableOfContents(ctx, <Real<Class>>testClass);
-    const renderedClassForDocumentation = renderClassForDocumentation(ctx, <Real<Class>>testClass);
+    const renderedClassForTableOfContents = renderClassForTableOfContents(ctx, testClass);
+    const renderedClassForDocumentation = renderClassForDocumentation(ctx, testClass);
 
     it("should render properties correctly", () => {
       expect(renderedClassForTableOfContents[1][1]).to.not.equal(undefined);
@@ -171,8 +178,8 @@ describe("Renderer: Class", () => {
 
     const ctx = createRenderContext();
 
-    const renderedClassForTableOfContents = renderClassForTableOfContents(ctx, <Real<Class>>testClass);
-    const renderedClassForDocumentation = renderClassForDocumentation(ctx, <Real<Class>>testClass);
+    const renderedClassForTableOfContents = renderClassForTableOfContents(ctx, testClass);
+    const renderedClassForDocumentation = renderClassForDocumentation(ctx, testClass);
 
     it("should render methods correctly", () => {
       expect(renderedClassForTableOfContents[1][2]).to.not.equal(undefined);

@@ -1,7 +1,7 @@
-import { getNameByType } from "quickdoks:compiler/mixins/name.js";
 import { parseType } from "quickdoks:compiler:entry-points/type.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { getIdByType } from "quickdoks:compiler:mixins/id.js";
+import { getNameByType } from "quickdoks:compiler:mixins/name.js";
 import { lockType } from "quickdoks:compiler:utils/ts.js";
 
 import type { TypeParameter } from "typescript";

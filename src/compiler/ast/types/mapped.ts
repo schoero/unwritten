@@ -28,7 +28,7 @@ export const createMappedTypeByType = (ctx: CompilerContext, type: ObjectType): 
   const optional = declaration.questionToken !== undefined;
   const readonly = declaration.readonlyToken !== undefined;
   const typeParameter = createTypeParameterEntity(ctx, declaration.typeParameter);
-  const kind = TypeKind.MappedType;
+  const kind = TypeKind.Mapped;
 
   assert(declaration.type, "Mapped type must have a type");
   assert(declaration.typeParameter.constraint && isUnionTypeNode(declaration.typeParameter.constraint), "Mapped type must have a union constraint");

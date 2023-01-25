@@ -1,6 +1,6 @@
-import { expect } from "chai";
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
+import { EntityKind } from "quickdoks:compiler/enums/entities.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import {
   renderVariableForDocumentation,
@@ -8,15 +8,16 @@ import {
 } from "quickdoks:renderer:markup/entities/variable.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 
-import type { NumberLiteralType, Variable } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { Real, Testable } from "quickdoks:compiler:type-definitions/utils.d.js";
+import type { VariableEntity } from "quickdoks:compiler/type-definitions/entities.js";
+import type { NumberLiteralType } from "quickdoks:compiler/type-definitions/types.js";
+import type { Real, Testable } from "quickdoks:type-definitions/utils.js";
 
 
 describe("Renderer: Variable", () => {
 
-  const testVariable: Testable<Variable> = {
+  const testVariable: Testable<VariableEntity> = {
     description: "Default TCP Port.",
-    kind: TypeKind.Variable,
+    kind: EntityKind.Variable,
     name: "TCP_PORT",
     type: <NumberLiteralType>{
       kind: TypeKind.NumberLiteral,
@@ -26,8 +27,8 @@ describe("Renderer: Variable", () => {
 
   const ctx = createRenderContext();
 
-  const renderedVariableForTableOfContents = renderVariableForTableOfContents(ctx, <Real<Variable>>testVariable);
-  const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, <Real<Variable>>testVariable);
+  const renderedVariableForTableOfContents = renderVariableForTableOfContents(ctx, <Real<VariableEntity>>testVariable);
+  const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, <Real<VariableEntity>>testVariable);
 
   const variableName = Object.keys(renderedVariableForDocumentation)[0]!;
   const variableContent = renderedVariableForDocumentation[variableName]!;

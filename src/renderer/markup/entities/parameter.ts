@@ -4,33 +4,24 @@ import { encapsulate, spaceBetween } from "quickdoks:renderer:markup/utils/rende
 import { renderType } from "./type.js";
 
 import type { ParameterEntity } from "quickdoks:compiler:type-definitions/entities.js";
-import type { MarkupRenderer, RenderedParameterForDocumentation } from "quickdoks:renderer:markup/types/renderer.js";
+import type {
+  MarkupRenderer,
+  RenderedParameterForDocumentation,
+  RenderedParameterForSignature,
+  RenderedParametersForSignature
+} from "quickdoks:renderer:markup/types/renderer.js";
 import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>, parameter: ParameterEntity[]): string {
-
-  let joinedParameters: string = "";
-
-  for(let p = 0; p < parameter.length; p++){
-    const renderedParameter = renderParameterForSignature(ctx, parameter[p]!);
-    if(p === 0){
-      if(parameter[p]!.optional === true){
-        joinedParameters += `[${renderedParameter}]`;
-      } else {
-        joinedParameters += renderedParameter;
-      }
+export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>, parameters: ParameterEntity[]): RenderedParametersForSignature {
+  return parameters.map((parameter, index) => {
+    const renderedParameter = renderParameterForSignature(ctx, parameter);
+    if(index === 0){
+      return parameter.optional === true ? `[${renderedParameter}]` : renderedParameter;
     } else {
-      if(parameter[p]!.optional === true){
-        joinedParameters += `[, ${renderedParameter}]`;
-      } else {
-        joinedParameters += `, ${renderedParameter}`;
-      }
+      return parameter.optional === true ? `[, ${renderedParameter}]` : `, ${renderedParameter}`;
     }
-  }
-
-  return joinedParameters;
-
+  }).join("");
 }
 
 
@@ -40,7 +31,7 @@ export function renderParameterForDocumentation(ctx: RenderContext<MarkupRendere
 
   const description = parameterEntity.description ? parameterEntity.description : "";
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
-  const type = `${renderType(ctx, parameterEntity.type)}`;
+  const type = parameterEntity.type ? `${renderType(ctx, parameterEntity.type)}` : "";
   const rest = parameterEntity.rest === true ? encapsulate("rest", renderConfig.tagEncapsulation) : "";
   const optional = parameterEntity.optional === true ? encapsulate("optional", renderConfig.tagEncapsulation) : "";
   const initializer = parameterEntity.initializer !== undefined ? `Default: ${renderType(ctx, parameterEntity.initializer)}` : "";
@@ -50,7 +41,7 @@ export function renderParameterForDocumentation(ctx: RenderContext<MarkupRendere
 }
 
 
-function renderParameterForSignature(ctx: RenderContext<MarkupRenderer>, parameterEntity: ParameterEntity): string {
+function renderParameterForSignature(ctx: RenderContext<MarkupRenderer>, parameterEntity: ParameterEntity): RenderedParameterForSignature {
   const rest = parameterEntity.rest === true ? "..." : "";
   return `${rest}${parameterEntity.name}`;
 }

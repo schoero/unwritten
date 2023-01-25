@@ -264,7 +264,7 @@ scope("Compiler", EntityKind.Interface, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
 
     assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-    assert(exportedTypeAlias.type.type?.kind === TypeKind.ObjectType);
+    assert(exportedTypeAlias.type.type?.kind === TypeKind.Object);
 
     const interfaceType = exportedTypeAlias.type.type;
 
@@ -291,7 +291,7 @@ scope("Compiler", EntityKind.Interface, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-    assert(exportedTypeAlias.type.type?.kind === TypeKind.ObjectType);
+    assert(exportedTypeAlias.type.type?.kind === TypeKind.Object);
 
     const objectType = exportedTypeAlias.type.type;
 

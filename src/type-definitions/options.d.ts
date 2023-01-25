@@ -1,5 +1,6 @@
+import type { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
+
 import type { Config } from "./config.js";
-import type { BuiltInRenderers } from "./renderer.js";
 
 
 export interface Options {

@@ -1,4 +1,3 @@
-import { getPositionByType } from "quickdoks:compiler/mixins/position.js";
 import {
   createGetterEntity,
   createMethodEntity,
@@ -8,6 +7,7 @@ import {
 } from "quickdoks:compiler:entities";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import { getIdByType } from "quickdoks:compiler:mixins/id.js";
+import { getPositionByType } from "quickdoks:compiler:mixins/position.js";
 import {
   isGetterSymbol,
   isMethodSymbol,
@@ -23,7 +23,7 @@ import type { InferObjectLikeType, ObjectLikeTypeKinds } from "quickdoks:compile
 import type { CompilerContext } from "quickdoks:type-definitions/context.js";
 
 
-export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKinds>(ctx: CompilerContext, type: TSObjectType, kind: ObjectLikeTypeKind = TypeKind.ObjectType as ObjectLikeTypeKind): InferObjectLikeType<ObjectLikeTypeKind> => lockType(ctx, type, () => {
+export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKinds>(ctx: CompilerContext, type: TSObjectType, kind: ObjectLikeTypeKind = TypeKind.Object as ObjectLikeTypeKind): InferObjectLikeType<ObjectLikeTypeKind> => lockType(ctx, type, () => {
 
   const tsConstructSignatures = type.getConstructSignatures();
   const tsCallSignatures = type.getCallSignatures();

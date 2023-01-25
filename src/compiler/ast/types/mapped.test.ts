@@ -10,7 +10,7 @@ import { ts } from "quickdoks:tests:utils/template.js";
 import type { UnionType } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
-scope("Compiler", TypeKind.MappedType, () => {
+scope("Compiler", TypeKind.Mapped, () => {
 
   {
 
@@ -26,22 +26,22 @@ scope("Compiler", TypeKind.MappedType, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse mapped types", () => {
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.MappedType);
+      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Mapped);
     });
 
     it("should be have matching modifiers", () => {
-      assert(exportedTypeAlias.type.kind === TypeKind.MappedType);
+      assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
       expect(exportedTypeAlias.type.readonly).to.equal(true);
       expect(exportedTypeAlias.type.optional).to.equal(true);
     });
 
     it("should the correct amount of members", () => {
-      assert(exportedTypeAlias.type.kind === TypeKind.MappedType);
+      assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
       expect(exportedTypeAlias.type.members.length).to.equal(2);
     });
 
     it("should have matching members", () => {
-      assert(exportedTypeAlias.type.kind === TypeKind.MappedType);
+      assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
 
       expect(exportedTypeAlias.type.members[0]!.kind).to.equal(EntityKind.MappedTypeMember);
       expect(exportedTypeAlias.type.members[1]!.kind).to.equal(EntityKind.MappedTypeMember);
@@ -57,7 +57,7 @@ scope("Compiler", TypeKind.MappedType, () => {
     });
 
     it("should have a correct type parameter", () => {
-      assert(exportedTypeAlias.type.kind === TypeKind.MappedType);
+      assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
 
       expect(exportedTypeAlias.type.typeParameter.name).to.equal("K");
       expect(exportedTypeAlias.type.typeParameter.constraint).to.not.equal(undefined);

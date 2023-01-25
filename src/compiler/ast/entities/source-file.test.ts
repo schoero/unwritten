@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "quickdoks:compiler/enums/entities.js";
 import { createSourceFileEntity } from "quickdoks:compiler:entities";
+import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
 import { compile } from "quickdoks:tests:utils/compile.js";
 import { scope } from "quickdoks:tests:utils/scope.js";

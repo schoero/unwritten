@@ -2,7 +2,8 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "streetsidesoftware.code-spell-checker",
-    "DavidAnson.vscode-markdownlint",
-    "ncpa0cpl.ts-template-literal"
+    "davidanson.vscode-markdownlint",
+    "ncpa0cpl.ts-template-literal",
+    "dnek.auto-region-folder"
   ]
 }

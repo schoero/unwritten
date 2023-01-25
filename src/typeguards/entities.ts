@@ -14,24 +14,23 @@ import type {
 } from "quickdoks:compiler:type-definitions/entities.d.js";
 
 
-export function isClassType(entity: Entities): entity is ClassEntity {
+export function isClassEntity(entity: Entities): entity is ClassEntity {
   return entity.kind === EntityKind.Class;
 }
 
-export function isEnumType(entity: Entities): entity is EnumEntity {
+export function isEnumEntity(entity: Entities): entity is EnumEntity {
   return entity.kind === EntityKind.Enum;
 }
 
 export function isExportableEntity(entity: Entities): entity is ExportableEntities {
-  return isClassType(entity) ||
-    isEnumType(entity) ||
+  return isClassEntity(entity) ||
+    isEnumEntity(entity) ||
     isFunctionEntity(entity) ||
     isInterfaceEntity(entity) ||
     isNamespaceEntity(entity) ||
     isTypeAliasEntity(entity) ||
     isVariableEntity(entity);
 }
-
 
 export function isFunctionEntity(entity: Entities): entity is FunctionEntity {
   return entity.kind === EntityKind.Function;

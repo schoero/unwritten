@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
+import { BuiltInRenderers } from "quickdoks:renderer:enums/renderer.js";
 import { defaultRenderConfig } from "quickdoks:renderer:markup/config/default.js";
 import { findFile } from "quickdoks:utils:finder.js";
 import { override } from "quickdoks:utils:override.js";

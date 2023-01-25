@@ -1,6 +1,6 @@
 import ts from "typescript";
 
-import { JSDocTags } from "quickdoks:compiler/enums/jsdoc.js";
+import { JSDocTags } from "quickdoks:compiler:enums/jsdoc.js";
 
 import type { Declaration, ParameterDeclaration, Symbol, Type, TypeParameterDeclaration } from "typescript";
 

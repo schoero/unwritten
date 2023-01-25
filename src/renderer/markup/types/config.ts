@@ -1,4 +1,4 @@
-import type { ExportableEntityKinds } from "quickdoks:compiler/type-definitions/entities.js";
+import type { ExportableEntityKinds } from "quickdoks:compiler:type-definitions/entities.js";
 
 import type { CategoryNames } from "./renderer.js";
 

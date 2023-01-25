@@ -3,7 +3,9 @@ import { TypeKind } from "quickdoks:compiler:enums/types.js";
 import type {
   BigIntLiteralType,
   BooleanLiteralType,
+  ClassType,
   ExpressionType,
+  FunctionType,
   IntersectionType,
   LiteralTypes,
   NumberLiteralType,
@@ -24,8 +26,16 @@ export function isBooleanLiteralType(type: Types): type is BooleanLiteralType {
   return type.kind === TypeKind.BooleanLiteral;
 }
 
+export function isClassType(type: Types): type is ClassType {
+  return type.kind === TypeKind.ClassType;
+}
+
 export function isExpressionType(type: Types): type is ExpressionType {
   return type.kind === TypeKind.Expression;
+}
+
+export function isFunctionType(type: Types): type is FunctionType {
+  return type.kind === TypeKind.Function;
 }
 
 export function isIntersectionType(type: Types): type is IntersectionType {

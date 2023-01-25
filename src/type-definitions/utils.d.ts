@@ -1,8 +1,7 @@
 import type { Entities } from "quickdoks:compiler:type-definitions/entities.js";
 
 
-export type ObjectValues<O> = O[keyof O];
-
+export type ObjectValues<O extends Object> = O[keyof O];
 
 export type Complete<Object> = {
   [key in keyof Object]-?: Object[key];
@@ -26,7 +25,7 @@ type DeepPartialObject<T> = {
 
 //-- DeepOmit
 
-export type DeepOmit<T, K extends keyof any> =
+export type DeepOmit<T, K extends PropertyKey> =
   T extends Function
     ? T
     : T extends (infer InferredArrayMember)[]
@@ -36,16 +35,16 @@ export type DeepOmit<T, K extends keyof any> =
         : T | undefined;
 
 
-interface DeepOmitArray <T, K extends keyof any> extends Array<DeepOmit<T, K>> {}
+interface DeepOmitArray <T, K extends PropertyKey> extends Array<DeepOmit<T, K>> {}
 
-type DeepOmitObject<T, K extends keyof any> = {
+type DeepOmitObject<T, K extends PropertyKey> = {
   [key in keyof T]?: key extends K ? never : DeepOmit<T[key], K>;
 };
 
 
 //-- DeepPartialByKey
 
-export type DeepPartialByKey<T, K extends keyof any> =
+export type DeepPartialByKey<T, K extends PropertyKey> =
   T extends Function
     ? T
     : T extends (infer InferredArrayMember)[]
@@ -55,9 +54,9 @@ export type DeepPartialByKey<T, K extends keyof any> =
         : T;
 
 
-interface DeepPartialByKeyArray <T, K extends keyof any> extends Array<DeepPartialByKey<T, K>> {}
+interface DeepPartialByKeyArray <T, K extends PropertyKey> extends Array<DeepPartialByKey<T, K>> {}
 
-type DeepPartialByKeyObject<T, K extends keyof any> =
+type DeepPartialByKeyObject<T, K extends PropertyKey> =
   { [key in keyof T as key extends K ? key : never]?: DeepPartialByKey<T[key], K> } &
   { [key in keyof T as key extends K ? never : key]: DeepPartialByKey<T[key], K> } extends infer O ? (
       { [key in keyof O]: O[key] }
@@ -66,7 +65,7 @@ type DeepPartialByKeyObject<T, K extends keyof any> =
 
 //-- DeepRequiredByKey
 
-export type DeepRequiredByKey<T, K extends keyof any> =
+export type DeepRequiredByKey<T, K extends PropertyKey> =
   T extends Function
     ? T
     : T extends (infer InferredArrayMember)[]
@@ -76,9 +75,9 @@ export type DeepRequiredByKey<T, K extends keyof any> =
         : T;
 
 
-interface DeepRequiredByKeyArray <T, K extends keyof any> extends Array<DeepRequiredByKey<T, K>> {}
+interface DeepRequiredByKeyArray <T, K extends PropertyKey> extends Array<DeepRequiredByKey<T, K>> {}
 
-type DeepRequiredByKeyObject<T, K extends keyof any> =
+type DeepRequiredByKeyObject<T, K extends PropertyKey> =
   { [key in keyof T as key extends K ? key : never]-?: DeepRequiredByKey<T[key], K> } &
   { [key in keyof T as key extends K ? never : key]: DeepRequiredByKey<T[key], K> } extends infer O ? (
       { [key in keyof O]: O[key] }
@@ -87,5 +86,5 @@ type DeepRequiredByKeyObject<T, K extends keyof any> =
 
 //-- Test
 
-export type Testable<Entity extends Entities> = DeepPartialByKey<Entity, "id" | "modifiers" | "position">;
-export type Real<Entity extends Entities> = DeepRequiredByKey<Entity, "id" | "modifiers" | "position">;
+export type Testable<Entity extends Entities> = DeepPartialByKey<Entity, "id">;
+export type Real<Entity extends Entities> = DeepRequiredByKey<Entity, "id">;

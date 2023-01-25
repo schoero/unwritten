@@ -1,9 +1,11 @@
-import type { Description, Example } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { BuiltInRenderers, Renderer } from "quickdoks:compiler:type-definitions/renderer.d.js";
+import type { ExportableEntities } from "quickdoks:compiler/type-definitions/entities.js";
+import type { Description, Example, Remarks } from "quickdoks:compiler:type-definitions/mixins.d.js";
+import type { BuiltInRenderers } from "quickdoks:renderer:enums/renderer.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.js";
+import type { Renderer } from "quickdoks:type-definitions/renderer.js";
 
 
-export interface MarkupRenderImplementation {
-  fileExtension: string;
+export type MarkupRenderer = Renderer & {
   name: BuiltInRenderers;
   renderAnchorLink: (text: string, anchor: string) => string;
   renderBoldText: (text: string) => string;
@@ -24,9 +26,20 @@ export interface MarkupRenderImplementation {
   renderTitle: (title: string, size: number, anchor?: string) => string;
   renderUnderlineText: (text: string) => string;
   renderWarning: (text: string) => string;
-}
+};
 
-export type MarkupRenderer = MarkupRenderImplementation & Renderer;
+export type MarkdownRenderer = MarkupRenderer & {
+  fileExtension: "md";
+  name: BuiltInRenderers.Markdown;
+  render: (context: RenderContext<MarkdownRenderer>, entities: ExportableEntities[]) => string;
+};
+
+export type HTMLRenderer = MarkupRenderer & {
+  fileExtension: "html";
+  name: BuiltInRenderers.HTML;
+  render: (context: RenderContext<HTMLRenderer>, entities: ExportableEntities[]) => string;
+};
+
 
 export enum RenderCategories {
   Class = "class",
@@ -64,13 +77,14 @@ export type CategoryNames = {
 
 //-- Renderer Object
 
-export type RenderObject = RenderedList | RenderedMultilineContent | RenderedTitle | string;
+export type RenderObject = RenderedList | RenderedMultilineContent | RenderedTitle | SingleLineContent;
 
 export type RenderedTitle = {
-  [title: string]: RenderObject;
+  [title: SingleLineContent]: RenderObject;
 };
 
-export type RenderedMultilineContent = (RenderedList | RenderedTitle | RenderObject | string | undefined)[];
+export type SingleLineContent = string;
+export type RenderedMultilineContent = (RenderedList | RenderedTitle | RenderObject | SingleLineContent | undefined)[];
 
 export type RenderedList = [RenderedMultilineContent | RenderObject[]];
 
@@ -103,8 +117,8 @@ export type RenderedPrimitiveType = string;
 export type RenderedLiteralType = string;
 
 export type RenderedObjectLiteralType = [
-  description: string | undefined,
-  example: string | undefined,
+  description: Description,
+  example: Example,
   properties: [RenderedPropertyForDocumentation[]]
 ];
 
@@ -119,9 +133,12 @@ export type RenderedFunctionForDocumentation = {
 
 export type RenderedFunctionSignatureForDocumentation = {
   [signature: string]: [
-    parametersAndReturnType: [string[]],
-    description: string | undefined,
-    example: string | undefined
+    parametersAndReturnType: [
+      RenderedParametersForDocumentation
+    ],
+    description: Description,
+    remarks: Remarks,
+    example: Example
   ];
 };
 
@@ -141,8 +158,8 @@ export type RenderedClassForTableOfContents = [
 
 export type RenderedClassForDocumentation = {
   [className: string]: [
-    description: Description | undefined,
-    example: Example | undefined,
+    description: Description,
+    example: Example,
     constructor: { [constructorTitle: string]: RenderedFunctionForDocumentation; } | undefined,
     properties: { [propertiesTitle: string]: RenderedPropertyForDocumentation[]; } | undefined,
     methods: { [methodsTitle: string]: RenderedFunctionSignatureForDocumentation[]; } | undefined,
@@ -160,7 +177,12 @@ export type RenderedPropertyForDocumentation = string;
 
 //-- Parameter
 
+export type RenderedParametersForTableOfContents = string;
+export type RenderedParametersForDocumentation = RenderedMultilineContent;
+export type RenderedParametersForSignature = string;
+
 export type RenderedParameterForTableOfContents = string;
+export type RenderedParameterForSignature = string;
 export type RenderedParameterForDocumentation = string;
 
 
@@ -169,7 +191,7 @@ export type RenderedParameterForDocumentation = string;
 export type RenderedEnumForTableOfContents = string;
 export type RenderedEnumForDocumentation = {
   [enumName: string]: [
-    description: string | undefined,
+    description: Description,
     members: [RenderedPropertyForDocumentation[]]
   ];
 };
@@ -180,8 +202,8 @@ export type RenderedEnumForDocumentation = {
 export type RenderedInterfaceForTableOfContents = string;
 export type RenderedInterfaceForDocumentation = {
   [interfaceName: string]: [
-    description: string | undefined,
-    example: string | undefined,
+    description: Description,
+    example: Example,
     members: [RenderedPropertyForDocumentation[]]
   ];
 };
@@ -204,9 +226,9 @@ export type RenderedNamespaceForDocumentation = {
 export type RenderedVariableForTableOfContents = string;
 export type RenderedVariableForDocumentation = {
   [variableName: string]: [
-    description: string | undefined,
+    description: Description,
     type: string | undefined,
-    example: string | undefined
+    example: Example
   ];
 };
 
@@ -216,7 +238,7 @@ export type RenderedVariableForDocumentation = {
 export type RenderedTypeAliasForTableOfContents = string;
 export type RenderedTypeAliasForDocumentation = {
   [typeAliasName: string]: [
-    description: string | undefined,
+    description: Description,
     type: string | undefined
   ];
 };

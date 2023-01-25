@@ -8,7 +8,7 @@ import { renderLiteralType } from "./literal.js";
 import { renderPrimitiveType } from "./primitive.js";
 import { renderUnionType } from "./union.js";
 
-import type { TypeKind } from "quickdoks:compiler/enums/types.js";
+import type { TypeKind } from "quickdoks:compiler:enums/types.js";
 import type { Type } from "quickdoks:compiler:type-definitions/types.d.js";
 import type { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
 import type { RenderContext } from "quickdoks:type-definitions/context.d.js";

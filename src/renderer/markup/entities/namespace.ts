@@ -1,6 +1,6 @@
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
 
-import { renderForDocumentation, renderForTableOfContents } from "../index.js";
+import { renderForDocumentation, renderForTableOfContents } from "../shared/index.js";
 
 import type { Namespace } from "quickdoks:compiler:type-definitions/types.d.js";
 import type {

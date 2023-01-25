@@ -1,33 +1,30 @@
-import { render } from "../index.js";
+import { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
+import { render } from "quickdoks:renderer:markup/shared/index.js";
 
-import { htmlRenderer as _htmlRenderer } from "./renderer.js";
+import * as helpers from "./helpers.js";
 
-import type { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
+import type { ExportableEntities } from "quickdoks:compiler/type-definitions/entities.js";
+import type { HTMLRenderer } from "quickdoks:renderer:markup/types/renderer.js";
+import type { RenderContext } from "quickdoks:type-definitions/context.js";
+import type { Renderer } from "quickdoks:type-definitions/renderer.js";
 
 
-export const htmlRenderer: MarkupRenderer = {
-  fileExtension: _htmlRenderer.fileExtension,
-  name: _htmlRenderer.name,
-  render,
-  renderAnchorLink: _htmlRenderer.renderAnchorLink,
-  renderBoldText: _htmlRenderer.renderBoldText,
-  renderCode: _htmlRenderer.renderCode,
-  renderHorizontalRule: _htmlRenderer.renderHorizontalRule,
-  renderHyperLink: _htmlRenderer.renderHyperLink,
-  renderItalicText: _htmlRenderer.renderItalicText,
-  renderLineBreak: _htmlRenderer.renderLineBreak,
-  renderList: _htmlRenderer.renderList,
-  renderListEnd: _htmlRenderer.renderListEnd,
-  renderListItem: _htmlRenderer.renderListItem,
-  renderListStart: _htmlRenderer.renderListStart,
-  renderNewLine: _htmlRenderer.renderNewLine,
-  renderParagraph: _htmlRenderer.renderParagraph,
-  renderSmallText: _htmlRenderer.renderSmallText,
-  renderSourceCodeLink: _htmlRenderer.renderSourceCodeLink,
-  renderStrikeThroughText: _htmlRenderer.renderStrikeThroughText,
-  renderTitle: _htmlRenderer.renderTitle,
-  renderUnderlineText: _htmlRenderer.renderUnderlineText,
-  renderWarning: _htmlRenderer.renderWarning
+function verifyRenderer(renderer: Renderer): asserts renderer is HTMLRenderer {
+  if(renderer.name !== BuiltInRenderers.Markdown){
+    throw new Error(`Renderer '${renderer.name}' is not a Markdown renderer.`);
+  }
+}
+
+function verifyContext(ctx: RenderContext): asserts ctx is RenderContext<HTMLRenderer> {
+  verifyRenderer(ctx.renderer);
+}
+
+export const htmlRenderer: HTMLRenderer = {
+  ...helpers,
+  fileExtension: "html",
+  name: BuiltInRenderers.HTML,
+  render<CustomRenderer extends Renderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]) {
+    verifyContext(ctx);
+    return render(ctx, entities);
+  }
 };
-
-export default htmlRenderer;

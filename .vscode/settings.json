@@ -64,6 +64,11 @@
 
   "editor.rulers": [
     119
-  ]
+  ],
+
+  "search.exclude": {
+    "lib": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 
 }

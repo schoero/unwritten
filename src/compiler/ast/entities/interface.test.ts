@@ -290,7 +290,7 @@ scope("Compiler", EntityKind.Interface, () => {
       expect(exportedInterface.heritage![0]!.typeArguments).to.have.lengthOf(1);
       expect(exportedInterface.heritage![0]!.typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
 
-      assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.ObjectType);
+      assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.Object);
       expect(exportedInterface.heritage![0]!.instanceType.properties).to.have.lengthOf(1);
       expect(exportedInterface.heritage![0]!.instanceType.properties[0]!.type.kind).to.equal(TypeKind.StringLiteral);
 

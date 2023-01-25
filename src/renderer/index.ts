@@ -3,14 +3,14 @@ import { assert } from "quickdoks:utils:general.js";
 import type { Renderer } from "quickdoks:type-definitions/renderer.d.js";
 
 
-export async function getRenderer(renderer?: Renderer | string) {
+export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {
 
   if(renderer === undefined || renderer === "markdown"){
-    const { default: importedRenderer } = await import("quickdoks:renderer:markup/markdown/index.js");
-    renderer = importedRenderer;
+    const { markdownRenderer } = await import("quickdoks:renderer/markup/markdown/index.js");
+    renderer = markdownRenderer;
   } else if(renderer === "html"){
-    const { default: importedRenderer } = await import("quickdoks:renderer:markup/html/index.js");
-    renderer = importedRenderer;
+    const { htmlRenderer } = await import("quickdoks:renderer:markup/html/index.js");
+    renderer = htmlRenderer;
   } else if(typeof renderer === "string"){
     const { default: importedRenderer } = await import(renderer);
     renderer = importedRenderer;

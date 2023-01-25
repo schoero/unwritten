@@ -1,4 +1,4 @@
-import { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
+import { BuiltInRenderers } from "quickdoks:renderer:enums/renderer.js";
 import { assert } from "quickdoks:utils:general.js";
 
 import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";

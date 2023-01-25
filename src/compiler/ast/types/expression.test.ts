@@ -53,7 +53,7 @@ scope("Compiler", TypeKind.Expression, () => {
 
     it("should resolve type parameters with the supplied type arguments", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
-      assert(exportedClass.heritage!.instanceType.kind === TypeKind.ObjectType);
+      assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.StringLiteral);
@@ -81,8 +81,8 @@ scope("Compiler", TypeKind.Expression, () => {
     it("should be able to parse call expressions", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.kind).to.equal(TypeKind.Expression);
-      expect(exportedClass.heritage!.instanceType.kind).to.equal(TypeKind.ObjectType);
-      expect(exportedClass.heritage!.staticType.kind).to.equal(TypeKind.ObjectType);
+      expect(exportedClass.heritage!.instanceType.kind).to.equal(TypeKind.Object);
+      expect(exportedClass.heritage!.staticType.kind).to.equal(TypeKind.Object);
       expect(exportedClass.heritage!.name).to.equal("Base");
     });
 
@@ -108,7 +108,7 @@ scope("Compiler", TypeKind.Expression, () => {
 
     it("should be able to resolve type parameters with the supplied type arguments via an expression", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
-      assert(exportedClass.heritage!.instanceType.kind === TypeKind.ObjectType);
+      assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.StringLiteral);
@@ -138,13 +138,13 @@ scope("Compiler", TypeKind.Expression, () => {
     it("should resolve static and member properties when extended via call expression", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.staticType).to.not.equal(undefined);
-      assert(exportedClass.heritage!.staticType.kind === TypeKind.ObjectType);
+      assert(exportedClass.heritage!.staticType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.staticType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(1);
       expect(exportedClass.heritage!.staticType.properties[0].type.kind).to.equal(TypeKind.String);
 
       expect(exportedClass.heritage!.instanceType).to.not.equal(undefined);
-      assert(exportedClass.heritage!.instanceType.kind === TypeKind.ObjectType);
+      assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.String);
@@ -171,13 +171,13 @@ scope("Compiler", TypeKind.Expression, () => {
     it("should resolve static and member properties when extended directly", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.staticType).to.not.equal(undefined);
-      assert(exportedClass.heritage!.staticType.kind === TypeKind.ObjectType);
+      assert(exportedClass.heritage!.staticType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.staticType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(1);
       expect(exportedClass.heritage!.staticType.properties[0].type.kind).to.equal(TypeKind.String);
 
       expect(exportedClass.heritage!.instanceType).to.not.equal(undefined);
-      assert(exportedClass.heritage!.instanceType.kind === TypeKind.ObjectType);
+      assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.String);

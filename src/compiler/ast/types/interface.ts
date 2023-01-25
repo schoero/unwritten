@@ -1,7 +1,7 @@
-import { parseType } from "quickdoks:compiler/entry-points/type.js";
-import { getNameByType } from "quickdoks:compiler/mixins/name.js";
 import { createObjectLikeType } from "quickdoks:compiler:ast/types/object.js";
+import { parseType } from "quickdoks:compiler:entry-points/type.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
+import { getNameByType } from "quickdoks:compiler:mixins/name.js";
 import { lockType } from "quickdoks:compiler:utils/ts.js";
 
 import type { InterfaceType as TSInterfaceType } from "typescript";

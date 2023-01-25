@@ -7,12 +7,7 @@ import type {
   Name,
   Position
 } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type {
-  ExpressionType,
-  FunctionType,
-  LiteralTypes,
-  Types
-} from "quickdoks:compiler:type-definitions/types.d.js";
+import type { ExpressionType, LiteralTypes, Types } from "quickdoks:compiler:type-definitions/types.d.js";
 
 
 type Entity<Kind> = {
@@ -25,6 +20,7 @@ export type ExportableEntityKinds =
   | EntityKind.Class
   | EntityKind.Enum
   | EntityKind.Function
+  | EntityKind.Interface
   | EntityKind.Module
   | EntityKind.Namespace
   | EntityKind.TypeAlias
@@ -129,7 +125,6 @@ export type FunctionEntity = FunctionLikeEntity<EntityKind.Function> & {
 export type SignatureEntity = Entity<EntityKind.Signature> & JSDocTags & {
   parameters: ParameterEntity[];
   returnType: Types & { description?: Description; } ;
-  type: FunctionType;
   description?: Description;
   modifiers?: Modifiers[];
   name?: Name;
