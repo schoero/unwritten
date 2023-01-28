@@ -1,4 +1,5 @@
 import { contentFilter } from "quickdoks:compiler:utils/filter.js";
+import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
 import { renderJSDocTags } from "quickdoks:renderer/markup/mixins/jsdoc-tags.js";
 import { renderName } from "quickdoks:renderer/markup/mixins/name.js";
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
@@ -9,7 +10,6 @@ import { renderPosition } from "../../mixins/position.js";
 import { renderRemarks } from "../../mixins/remarks.js";
 
 import { renderParameterForDocumentation, renderParametersForSignature } from "./parameter.js";
-import { renderType } from "./type.js";
 
 import type { SignatureEntity } from "quickdoks:compiler/type-definitions/entities.js";
 import type {

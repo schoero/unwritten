@@ -1,3 +1,4 @@
+import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
 import { renderDescription } from "quickdoks:renderer/markup/mixins/description.js";
 import { renderExample } from "quickdoks:renderer/markup/mixins/example.js";
 import { renderJSDocTags } from "quickdoks:renderer/markup/mixins/jsdoc-tags.js";
@@ -7,7 +8,6 @@ import { renderRemarks } from "quickdoks:renderer/markup/mixins/remarks.js";
 import { getRenderConfig } from "quickdoks:renderer/markup/utils/config.js";
 import { encapsulate, renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
 
-import { renderType } from "./type.js";
 import { renderTypeParameterForDocumentation, renderTypeParametersForSignature } from "./type-parameter.js";
 
 import type { TypeAliasEntity } from "quickdoks:compiler/type-definitions/entities.js";

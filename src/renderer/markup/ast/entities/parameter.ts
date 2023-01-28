@@ -1,8 +1,7 @@
+import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
 import { renderDescription } from "quickdoks:renderer/markup/mixins/description.js";
 import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
-
-import { renderType } from "./type.js";
 
 import type { ParameterEntity } from "quickdoks:compiler:type-definitions/entities.js";
 import type {

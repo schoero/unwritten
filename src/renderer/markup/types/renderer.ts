@@ -118,6 +118,27 @@ export type RenderedCategoryForDocumentation = {
 };
 
 
+//-- Types
+
+export type RenderedTypes =
+  | RenderedAnyType
+  | RenderedBigIntLiteralType
+  | RenderedBigIntType
+  | RenderedBooleanLiteralType
+  | RenderedBooleanType
+  | RenderedNeverType
+  | RenderedNullType
+  | RenderedNumberLiteralType
+  | RenderedNumberType
+  | RenderedStringLiteralType
+  | RenderedStringType
+  | RenderedSymbolType
+  | RenderedUndefinedType
+  | RenderedUnionType
+  | RenderedUnknownType
+  | RenderedVoidType;
+
+
 //-- Primitive types
 
 export type RenderedStringType = string;
@@ -142,6 +163,16 @@ export type RenderedStringLiteralType = string;
 export type RenderedNumberLiteralType = string;
 export type RenderedBooleanLiteralType = string;
 export type RenderedBigIntLiteralType = string;
+
+
+//-- Union type
+
+export type RenderedUnionType = string;
+
+
+//-- Intersection type
+
+export type RenderedIntersectionType = string;
 
 
 /** @deprecated Use actual types instead */

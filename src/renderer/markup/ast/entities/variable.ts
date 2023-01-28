@@ -1,3 +1,4 @@
+import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
 import { renderName } from "quickdoks:renderer/markup/mixins/name.js";
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
 
@@ -6,8 +7,6 @@ import { renderExample } from "../../mixins/example.js";
 import { renderJSDocTags } from "../../mixins/jsdoc-tags.js";
 import { renderPosition } from "../../mixins/position.js";
 import { renderRemarks } from "../../mixins/remarks.js";
-
-import { renderType } from "./type.js";
 
 import type { VariableEntity } from "quickdoks:compiler/type-definitions/entities.js";
 import type {

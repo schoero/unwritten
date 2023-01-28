@@ -1,7 +1,6 @@
+import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
 import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
 import { encapsulate, renderLink, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
-
-import { renderType } from "./type.js";
 
 import type { Property } from "quickdoks:compiler:type-definitions/types.d.js";
 import type {

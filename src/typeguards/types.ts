@@ -1,29 +1,51 @@
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
 
 import type {
+  AnyType,
   BigIntLiteralType,
+  BigIntType,
   BooleanLiteralType,
+  BooleanType,
   ClassType,
   ExpressionType,
   FunctionType,
   IntersectionType,
-  LiteralTypes,
+  NeverType,
+  NullType,
   NumberLiteralType,
+  NumberType,
   ObjectLiteralType,
-  PrimitiveTypes,
+  ObjectType,
   StringLiteralType,
+  StringType,
+  SymbolType,
   Types,
+  UndefinedType,
   UnionType,
-  UnresolvedType
+  UnknownType,
+  UnresolvedType,
+  VoidType
 } from "quickdoks:compiler:type-definitions/types.d.js";
 
+
+export function isAnyType(type: Types): type is AnyType {
+  return type.kind === TypeKind.Any;
+}
 
 export function isBigIntLiteralType(type: Types): type is BigIntLiteralType {
   return type.kind === TypeKind.BigIntLiteral;
 }
 
+export function isBigIntType(type: Types): type is BigIntType {
+  return type.kind === TypeKind.BigInt;
+}
+
 export function isBooleanLiteralType(type: Types): type is BooleanLiteralType {
   return type.kind === TypeKind.BooleanLiteral;
+}
+
+export function isBooleanType(type: Types): type is BooleanType {
+  return type.kind === TypeKind.Boolean;
 }
 
 export function isClassType(type: Types): type is ClassType {
@@ -42,46 +64,59 @@ export function isIntersectionType(type: Types): type is IntersectionType {
   return type.kind === TypeKind.Intersection;
 }
 
-export function isLiteralType(type: Types): type is LiteralTypes {
-  return type.kind === TypeKind.StringLiteral ||
-    type.kind === TypeKind.NumberLiteral ||
-    type.kind === TypeKind.BooleanLiteral ||
-    type.kind === TypeKind.BigIntLiteral;
+export function isNeverType(type: Types): type is NeverType {
+  return type.kind === TypeKind.Never;
 }
+
+export function isNullType(type: Types): type is NullType {
+  return type.kind === TypeKind.Null;
+}
+
 
 export function isNumberLiteralType(type: Types): type is NumberLiteralType {
   return type.kind === TypeKind.NumberLiteral;
+}
+
+export function isNumberType(type: Types): type is NumberType {
+  return type.kind === TypeKind.Number;
 }
 
 export function isObjectLiteralType(type: Types): type is ObjectLiteralType {
   return type.kind === TypeKind.ObjectLiteral;
 }
 
-export function isPrimitiveType(type: Types): type is PrimitiveTypes {
-  return type.kind === TypeKind.Any ||
-    type.kind === TypeKind.BigInt ||
-    type.kind === TypeKind.BigIntLiteral ||
-    type.kind === TypeKind.Boolean ||
-    type.kind === TypeKind.BooleanLiteral ||
-    type.kind === TypeKind.Never ||
-    type.kind === TypeKind.Null ||
-    type.kind === TypeKind.Number ||
-    type.kind === TypeKind.NumberLiteral ||
-    type.kind === TypeKind.String ||
-    type.kind === TypeKind.StringLiteral ||
-    type.kind === TypeKind.Symbol ||
-    type.kind === TypeKind.Undefined ||
-    type.kind === TypeKind.Void;
+export function isObjectType(type: Types): type is ObjectType {
+  return type.kind === TypeKind.Object;
 }
 
 export function isStringLiteralType(type: Types): type is StringLiteralType {
   return type.kind === TypeKind.StringLiteral;
 }
 
+export function isStringType(type: Types): type is StringType {
+  return type.kind === TypeKind.String;
+}
+
+export function isSymbolType(type: Types): type is SymbolType {
+  return type.kind === TypeKind.Symbol;
+}
+
+export function isUndefinedType(type: Types): type is UndefinedType {
+  return type.kind === TypeKind.Undefined;
+}
+
 export function isUnionType(type: Types): type is UnionType {
   return type.kind === TypeKind.Union;
 }
 
+export function isUnknownType(type: Types): type is UnknownType {
+  return type.kind === TypeKind.Unknown;
+}
+
 export function isUnresolvedType(type: Types): type is UnresolvedType {
   return type.kind === TypeKind.Unresolved;
+}
+
+export function isVoidType(type: Types): type is VoidType {
+  return type.kind === TypeKind.Void;
 }
