@@ -134,6 +134,7 @@ export type RenderedTypes =
   | RenderedStringLiteralType
   | RenderedStringType
   | RenderedSymbolType
+  | RenderedTupleType
   | RenderedUndefinedType
   | RenderedUnionType
   | RenderedUnknownType
@@ -169,6 +170,11 @@ export type RenderedBigIntLiteralType = string;
 //-- Array type
 
 export type RenderedArrayType = string;
+
+
+//-- Tuple type
+
+export type RenderedTupleType = string;
 
 
 //-- Union type
