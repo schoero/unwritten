@@ -25,7 +25,7 @@ export function encapsulate(text: string, encapsulation: Encapsulation | false |
 
 export function renderLink(ctx: RenderContext<MarkupRenderer>, text: string, id?: number): string {
   if(id !== undefined){
-    const anchor = createAnchor(text, id);
+    const anchor = createAnchor(ctx, text, id);
     return ctx.renderer.renderAnchorLink(text, anchor);
   } else {
     return text;

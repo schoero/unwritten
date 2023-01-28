@@ -247,7 +247,7 @@ scope("Compiler", EntityKind.Interface, () => {
 
     const testFileContent = ts`
       export interface GenericInterface<T> {
-        b: T;
+        a: T;
       }
     `;
 
@@ -261,6 +261,29 @@ scope("Compiler", EntityKind.Interface, () => {
       expect(exportedInterface.typeParameters).to.have.lengthOf(1);
       expect(exportedInterface.properties).to.have.lengthOf(1);
       expect(exportedInterface.properties[0]!.type.kind).to.equal(TypeKind.TypeParameter);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export interface GenericInterface<T extends string> {
+        a: T;
+      }
+      export interface GenericInterface<T extends string> {
+        b: T;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "GenericInterface")!;
+    const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
+
+    it("should not have duplicate typeParameters on merged interfaces", () => {
+      expect(exportedInterface.typeParameters).to.not.equal(undefined);
+      expect(exportedInterface.typeParameters).to.have.lengthOf(1);
     });
 
   }

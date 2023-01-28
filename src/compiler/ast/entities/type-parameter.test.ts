@@ -42,7 +42,7 @@ scope("Compiler", EntityKind.TypeParameter, () => {
 
     it("should have a matching constraint", () => {
       expect(exportedTypeAlias.typeParameters![0]!.constraint).to.not.equal(undefined);
-      expect(exportedTypeAlias.typeParameters![0]!.constraint.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.typeParameters![0]!.constraint!.kind).to.equal(TypeKind.String);
     });
 
   }
@@ -59,7 +59,7 @@ scope("Compiler", EntityKind.TypeParameter, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a matching initializer", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.initializer.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.typeParameters![0]!.initializer!.kind).to.equal(TypeKind.StringLiteral);
     });
 
   }
@@ -68,9 +68,7 @@ scope("Compiler", EntityKind.TypeParameter, () => {
 
     const testFileContent = ts`
       /**
-       * Generic type description
-       * @template T - Generic type parameter description
-       * @example Generic type example
+       * @template T Generic type parameter description
        */
       export type Generic<T extends string> = T;
     `;
@@ -80,17 +78,9 @@ scope("Compiler", EntityKind.TypeParameter, () => {
     const symbol = exportedSymbols.find(s => s.name === "Generic")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    it("should have a description", () => {
-      expect(exportedTypeAlias.description).to.equal("Generic type description");
-    });
-
-    it("should have a example", () => {
-      expect(exportedTypeAlias.example).to.equal("Generic type example");
-    });
-
     it("should have a type parameter description", () => {
       expect(exportedTypeAlias.typeParameters![0]!.description).to.not.equal(undefined);
-      expect(exportedTypeAlias.typeParameters![0]!.description).to.equal("- Generic type parameter description");
+      expect(exportedTypeAlias.typeParameters![0]!.description).to.equal("Generic type parameter description");
     });
 
   }

@@ -31,7 +31,7 @@ scope("Compiler", EntityKind.Class, () => {
 
     const testFileContent = ts`
       /**
-       * Class description 
+       * Class description
        * @example Class example
        */
       export class Class {}

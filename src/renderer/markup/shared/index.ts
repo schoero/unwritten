@@ -8,13 +8,13 @@ import {
   isVariableEntity
 } from "quickdoks:typeguards/entities.js";
 
-import { renderClassForDocumentation, renderClassForTableOfContents } from "../entities/class.js";
-import { renderEnumForDocumentation, renderEnumForTableOfContents } from "../entities/enum.js";
-import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "../entities/function.js";
-import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "../entities/interface.js";
-import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "../entities/namespace.js";
-import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "../entities/type-alias.js";
-import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../entities/variable.js";
+import { renderClassForDocumentation, renderClassForTableOfContents } from "../ast/entities/class.js";
+import { renderEnumForDocumentation, renderEnumForTableOfContents } from "../ast/entities/enum.js";
+import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "../ast/entities/function.js";
+import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "../ast/entities/interface.js";
+import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "../ast/entities/namespace.js";
+import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "../ast/entities/type-alias.js";
+import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../ast/entities/variable.js";
 import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "../typeguards/renderer.js";
 import { getCategoryName } from "../utils/renderer.js";
 import { sortExportableTypes } from "../utils/sort.js";

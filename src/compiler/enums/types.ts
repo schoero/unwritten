@@ -15,7 +15,7 @@ export enum TypeKind {
   Mapped = "MappedType",
   Never = "NeverType",
   Null = "NullType",
-  Number = "numberType",
+  Number = "NumberType",
   NumberLiteral = "NumberLiteralType",
   Object = "ObjectType",
   ObjectLiteral = "ObjectLiteralType",

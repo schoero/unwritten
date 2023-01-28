@@ -1,16 +1,33 @@
-const _registry = new Map<string, (number | string)[]>();
+import type { MarkupRenderer } from "../types/renderer.js";
 
-export function createAnchor(name: string, id: number | string): string {
+import type { RenderContext } from "quickdoks:type-definitions/context.js";
 
-  if(_registry.has(name)){
-    const idArray = _registry.get(name)!;
+
+function attachRegistry(ctx: RenderContext<MarkupRenderer>) {
+  if(ctx.renderer._linkRegistry !== undefined){
+    return;
+  }
+  ctx.renderer._linkRegistry = new Map<string, (number | string)[]>();
+}
+
+function getRegistry(ctx: RenderContext<MarkupRenderer>) {
+  attachRegistry(ctx);
+  return ctx.renderer._linkRegistry!;
+}
+
+export function createAnchor(ctx: RenderContext<MarkupRenderer>, name: string, id: number | string): string {
+
+  const registry = getRegistry(ctx);
+
+  if(registry.has(name)){
+    const idArray = registry.get(name)!;
     const idIndex = idArray.indexOf(id);
     if(idIndex === -1){
       idArray.push(id);
-      _registry.set(name, idArray);
+      registry.set(name, idArray);
     }
   } else {
-    _registry.set(name, [id]);
+    registry.set(name, [id]);
   }
 
   return getAnchor(name, id);
@@ -18,13 +35,15 @@ export function createAnchor(name: string, id: number | string): string {
 }
 
 
-function getAnchor(name: string, id: number | string): string {
+function getAnchor(ctx: RenderContext<MarkupRenderer>, name: string, id: number | string): string {
 
-  if(!_registry.has(name)){
+  const registry = getRegistry(ctx);
+
+  if(!registry.has(name)){
     return name;
   }
 
-  const idArray = _registry.get(name)!;
+  const idArray = registry.get(name)!;
   const idIndex = idArray.indexOf(id);
 
   if(idIndex === -1){

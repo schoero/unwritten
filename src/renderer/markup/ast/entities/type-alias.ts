@@ -1,3 +1,8 @@
+import { renderDescription } from "quickdoks:renderer/markup/mixins/description.js";
+import { renderExample } from "quickdoks:renderer/markup/mixins/example.js";
+import { renderJSDocTags } from "quickdoks:renderer/markup/mixins/jsdoc-tags.js";
+import { renderPosition } from "quickdoks:renderer/markup/mixins/position.js";
+import { renderRemarks } from "quickdoks:renderer/markup/mixins/remarks.js";
 import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
 
 import { renderType } from "./type.js";
@@ -21,12 +26,20 @@ export function renderTypeAliasForDocumentation(ctx: RenderContext<MarkupRendere
 
   const typeAliasName = typeAlias.name;
   const type = renderType(ctx, typeAlias.type);
-  const description = typeAlias.description;
+  const jsdocTags = renderJSDocTags(ctx, typeAlias);
+  const position = renderPosition(ctx, typeAlias.position);
+  const description = renderDescription(ctx, typeAlias.description);
+  const example = renderExample(ctx, typeAlias.example);
+  const remarks = renderRemarks(ctx, typeAlias.remarks);
 
   return {
     [typeAliasName]: [
+      jsdocTags,
+      position,
+      type,
       description,
-      type
+      remarks,
+      example
     ]
   };
 

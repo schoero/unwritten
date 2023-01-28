@@ -86,5 +86,4 @@ type DeepRequiredByKeyObject<T, K extends PropertyKey> =
 
 //-- Test
 
-export type Testable<Entity extends Entities> = DeepPartialByKey<Entity, "id">;
-export type Real<Entity extends Entities> = DeepRequiredByKey<Entity, "id">;
+export type Testable<Entity extends Entities> = DeepPartialByKey<Entity, "id" | "modifiers">;

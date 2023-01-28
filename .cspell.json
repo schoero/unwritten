@@ -6,6 +6,8 @@
     "quickdoks",
     "Mergeable",
     "tsdoc",
-    "typeguards"
+    "typeguards",
+    "Renderable",
+    "renderable"
   ]
 }

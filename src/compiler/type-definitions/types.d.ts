@@ -87,11 +87,7 @@ export type LiteralTypes =
 
 
 export type ObjectLikeTypeKinds =
-  | TypeKind.ClassType
-  | TypeKind.Interface
-  | TypeKind.ObjectLiteral
-  | TypeKind.Object
-  | TypeKind.TypeLiteral;
+  TypeKind.ClassType | TypeKind.Interface | TypeKind.Object | TypeKind.ObjectLiteral | TypeKind.TypeLiteral;
 
 export type ObjectLikeTypes =
   | ClassType

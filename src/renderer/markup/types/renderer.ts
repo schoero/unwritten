@@ -1,5 +1,6 @@
 import type { ExportableEntities } from "quickdoks:compiler/type-definitions/entities.js";
-import type { Description, Example, Remarks } from "quickdoks:compiler:type-definitions/mixins.d.js";
+import type { JSDocTags as JSDocTagNames } from "quickdoks:compiler:enums/jsdoc.js";
+import type { Description, Example, JSDocTags, Remarks } from "quickdoks:compiler:type-definitions/mixins.d.js";
 import type { BuiltInRenderers } from "quickdoks:renderer:enums/renderer.js";
 import type { RenderContext } from "quickdoks:type-definitions/context.js";
 import type { Renderer } from "quickdoks:type-definitions/renderer.js";
@@ -21,11 +22,12 @@ export type MarkupRenderer = Renderer & {
   renderNewLine: () => string;
   renderParagraph: (text: string) => string;
   renderSmallText: (text: string) => string;
-  renderSourceCodeLink: (text: string, file: string, line: number, column: number) => string;
+  renderSourceCodeLink: (file: string, line: number, column: number) => string;
   renderStrikeThroughText: (text: string) => string;
   renderTitle: (title: string, size: number, anchor?: string) => string;
   renderUnderlineText: (text: string) => string;
   renderWarning: (text: string) => string;
+  _linkRegistry?: Map<string, (number | string)[]>;
 };
 
 export type MarkdownRenderer = MarkupRenderer & {
@@ -73,6 +75,15 @@ export enum RenderCategories {
 export type CategoryNames = {
   [key in RenderCategories]: string;
 };
+
+export type RenderableJSDocTags = Pick<JSDocTags, JSDocTagNames.Alpha | JSDocTagNames.Beta | JSDocTagNames.Deprecated | JSDocTagNames.Internal>;
+
+export type RenderedName = string;
+export type RenderedDescription = string | undefined;
+export type RenderedExample = string | undefined;
+export type RenderedRemarks = string | undefined;
+export type RenderedJSDocTags = string | undefined;
+export type RenderedPosition = string | undefined;
 
 
 //-- Renderer Object
@@ -125,14 +136,19 @@ export type RenderedObjectLiteralType = [
 
 //-- Function
 
-export type RenderedFunctionForTableOfContents = string[];
-
+export type RenderedFunctionForTableOfContents = RenderedSignatureForTableOfContents[];
 export type RenderedFunctionForDocumentation = {
-  [key in keyof RenderedFunctionSignatureForDocumentation]: RenderedFunctionSignatureForDocumentation[key]
+  [key in keyof RenderedSignatureForDocumentation]: RenderedSignatureForDocumentation[key]
 };
 
-export type RenderedFunctionSignatureForDocumentation = {
-  [signature: string]: [
+
+//-- Signature
+
+export type RenderedSignatureForTableOfContents = RenderedName;
+export type RenderedSignatureForDocumentation = {
+  [signature: RenderedName]: [
+    jsdocTags: RenderedJSDocTags,
+    position: RenderedPosition,
     parametersAndReturnType: [
       RenderedParametersForDocumentation
     ],
@@ -162,9 +178,9 @@ export type RenderedClassForDocumentation = {
     example: Example,
     constructor: { [constructorTitle: string]: RenderedFunctionForDocumentation; } | undefined,
     properties: { [propertiesTitle: string]: RenderedPropertyForDocumentation[]; } | undefined,
-    methods: { [methodsTitle: string]: RenderedFunctionSignatureForDocumentation[]; } | undefined,
-    setters: { [settersTitle: string]: RenderedFunctionSignatureForDocumentation[]; } | undefined,
-    getters: { [gettersTitle: string]: RenderedFunctionSignatureForDocumentation[]; } | undefined
+    methods: { [methodsTitle: string]: RenderedSignatureForDocumentation[]; } | undefined,
+    setters: { [settersTitle: string]: RenderedSignatureForDocumentation[]; } | undefined,
+    getters: { [gettersTitle: string]: RenderedSignatureForDocumentation[]; } | undefined
   ];
 };
 
@@ -188,9 +204,9 @@ export type RenderedParameterForDocumentation = string;
 
 //-- Enum
 
-export type RenderedEnumForTableOfContents = string;
+export type RenderedEnumForTableOfContents = RenderedName;
 export type RenderedEnumForDocumentation = {
-  [enumName: string]: [
+  [enumName: RenderedName]: [
     description: Description,
     members: [RenderedPropertyForDocumentation[]]
   ];
@@ -199,9 +215,9 @@ export type RenderedEnumForDocumentation = {
 
 //-- Interface
 
-export type RenderedInterfaceForTableOfContents = string;
+export type RenderedInterfaceForTableOfContents = RenderedName;
 export type RenderedInterfaceForDocumentation = {
-  [interfaceName: string]: [
+  [interfaceName: RenderedName]: [
     description: Description,
     example: Example,
     members: [RenderedPropertyForDocumentation[]]
@@ -223,11 +239,14 @@ export type RenderedNamespaceForDocumentation = {
 
 //-- Variable
 
-export type RenderedVariableForTableOfContents = string;
+export type RenderedVariableForTableOfContents = RenderedName;
 export type RenderedVariableForDocumentation = {
-  [variableName: string]: [
-    description: Description,
+  [variableName: RenderedName]: [
+    jsdocTags: RenderedJSDocTags,
+    position: RenderedPosition,
     type: string | undefined,
+    description: Description,
+    remarks: Remarks,
     example: Example
   ];
 };
@@ -235,10 +254,14 @@ export type RenderedVariableForDocumentation = {
 
 //-- Type alias
 
-export type RenderedTypeAliasForTableOfContents = string;
+export type RenderedTypeAliasForTableOfContents = RenderedName;
 export type RenderedTypeAliasForDocumentation = {
-  [typeAliasName: string]: [
+  [typeAliasName: RenderedName]: [
+    jsdocTags: RenderedJSDocTags,
+    position: RenderedPosition,
+    type: string | undefined,
     description: Description,
-    type: string | undefined
+    Remarks: Remarks,
+    Example: Example
   ];
 };

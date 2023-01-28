@@ -2,19 +2,17 @@ import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
 import { encapsulate } from "quickdoks:renderer:markup/utils/renderer.js";
 import { isIntersectionType, isLiteralType, isPrimitiveType, isUnionType } from "quickdoks:typeguards/types.js";
 
-import { renderInstanceType } from "./instance.js";
 import { renderIntersectionType } from "./intersection.js";
 import { renderLiteralType } from "./literal.js";
 import { renderPrimitiveType } from "./primitive.js";
 import { renderUnionType } from "./union.js";
 
-import type { TypeKind } from "quickdoks:compiler:enums/types.js";
-import type { Type } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { Types } from "quickdoks:compiler:type-definitions/types.d.js";
 import type { MarkupRenderer } from "quickdoks:renderer:markup/types/renderer.js";
 import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function renderType(ctx: RenderContext<MarkupRenderer>, type: Type<TypeKind>, enableEncapsulation: boolean = true): string {
+export function renderType(ctx: RenderContext<MarkupRenderer>, type: Types, enableEncapsulation: boolean = true): string {
 
   let renderedType: string | undefined;
 
@@ -26,8 +24,6 @@ export function renderType(ctx: RenderContext<MarkupRenderer>, type: Type<TypeKi
     renderedType = renderUnionType(ctx, type);
   } else if(isIntersectionType(type)){
     renderedType = renderIntersectionType(ctx, type);
-  } else if(isInstanceType(type)){
-    renderedType = renderInstanceType(ctx, type);
   // } else if(isObjectLiteralType(type)){
   //   renderedType = renderObjectLiteralType(ctx, type);
   //  else if(isTypeReferenceType(type)){

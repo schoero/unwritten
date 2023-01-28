@@ -90,18 +90,18 @@ export type PropertyEntity = Entity<EntityKind.Property> & JSDocTags & {
   modifiers: Modifiers[];
   name: Name;
   optional: boolean;
-  position: Position;
   type: Types;
   description?: Description;
+  position?: Position;
 };
 
 
 export type TupleMemberEntity = Entity<EntityKind.TupleMember> & JSDocTags & {
   optional: boolean;
-  position: Position;
   rest: boolean;
   type: Types;
   name?: Name;
+  position?: Position;
 };
 
 
@@ -138,10 +138,10 @@ export type SignatureEntity = Entity<EntityKind.Signature> & JSDocTags & {
 export type ParameterEntity = Entity<EntityKind.Parameter> & JSDocTags & {
   name: Name;
   optional: boolean;
-  position: Position;
   rest: boolean;
   description?: Description;
   initializer?: Types;
+  position?: Position;
   type?: Types;
 };
 
@@ -175,12 +175,12 @@ export type ClassEntity = Entity<EntityKind.Class> & JSDocTags & {
   methods: MethodEntity[];
   modifiers: Modifiers[];
   name: Name;
-  position: Position;
   properties: PropertyEntity[];
   setters: SetterEntity[];
   ctor?: ConstructorEntity;
   description?: Description;
   heritage?: ExpressionType;
+  position?: Position;
   typeParameters?: TypeParameterEntity[];
 };
 
@@ -198,9 +198,9 @@ export type GetterEntity = FunctionLikeEntity<EntityKind.Getter> & {};
 export type VariableEntity = Entity<EntityKind.Variable> & JSDocTags & {
   modifiers: Modifiers[];
   name: Name;
-  position: Position;
   type: Types;
   description?: Description;
+  position?: Position;
 };
 
 
@@ -208,9 +208,9 @@ export type VariableEntity = Entity<EntityKind.Variable> & JSDocTags & {
 
 export type TypeAliasEntity = Entity<EntityKind.TypeAlias> & JSDocTags & {
   name: Name;
-  position: Position;
   type: Types;
   description?: Description;
+  position?: Position;
   typeParameters?: TypeParameterEntity[];
 };
 
@@ -238,9 +238,9 @@ export type MergedEnumEntity = EnumEntity & {
 
 export type EnumMemberEntity = Entity<EntityKind.EnumMember> & JSDocTags & {
   name: Name;
-  position: Position;
   type: Types;
   description?: Description;
+  position?: Position;
 };
 
 
@@ -249,10 +249,10 @@ export type EnumMemberEntity = Entity<EntityKind.EnumMember> & JSDocTags & {
 export type MemberEntity = Entity<EntityKind.Member> & JSDocTags & {
   modifiers: Modifiers[];
   optional: boolean;
-  position: Position;
   type: Types;
   description?: Description;
   parent?: Types;
+  position?: Position;
 };
 
 
@@ -284,8 +284,8 @@ export type NamespaceEntity = Entity<EntityKind.Namespace> & {
 
 export type TypeParameterEntity = Entity<EntityKind.TypeParameter> & {
   name: Name;
-  position: Position;
   constraint?: Types;
   description?: Description;
   initializer?: Types;
+  position?: Position;
 };

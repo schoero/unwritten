@@ -52,6 +52,7 @@ export function createInterfaceEntity(ctx: CompilerContext, symbol: Symbol): Int
     const methodSignatures = mergeMembers(declarations, "methodSignatures");
     const getterSignatures = mergeMembers(declarations, "getterSignatures");
     const setterSignatures = mergeMembers(declarations, "setterSignatures");
+    const typeParameters = declarations[0].typeParameters; // All declarations must have the same type parameters
 
     return <MergedInterfaceEntity>{
       callSignatures,
@@ -64,7 +65,8 @@ export function createInterfaceEntity(ctx: CompilerContext, symbol: Symbol): Int
       methodSignatures,
       name,
       properties,
-      setterSignatures
+      setterSignatures,
+      typeParameters
     };
 
   }
