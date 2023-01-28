@@ -45,6 +45,11 @@ export interface MarkupRenderConfig {
    * Defines how type annotations should be encapsulated in the rendered output.
    */
   typeEncapsulation?: Encapsulation | false;
+
+  /**
+   * Defines how type parameters should be encapsulated in the rendered output.
+   */
+  typeParameterEncapsulation?: Encapsulation | false;
 }
 
 export type Encapsulation = [prefix: string, suffix: string];

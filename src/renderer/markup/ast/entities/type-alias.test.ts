@@ -49,6 +49,7 @@ scope("Renderer", EntityKind.TypeAlias, () => {
     const [
       tags,
       position,
+      typeParameters,
       type,
       description,
       remarks,
@@ -69,6 +70,10 @@ scope("Renderer", EntityKind.TypeAlias, () => {
 
     it("should have a jsdoc tag", () => {
       expect(tags).to.not.equal(undefined);
+    });
+
+    it("should not have a type parameter", () => {
+      expect(typeParameters).to.equal(undefined);
     });
 
     it("should have a matching type", () => {
@@ -94,22 +99,44 @@ scope("Renderer", EntityKind.TypeAlias, () => {
     // #region Type alias with type parameters
 
     const typeAliasEntity: Testable<TypeAliasEntity> = {
-      beta: undefined,
-      description: "TypeAlias description",
-      example: "TypeAlias example",
+      description: undefined,
       kind: EntityKind.TypeAlias,
       name: "TypeAlias",
       position: {
         column: 4,
         file: "/file.ts",
-        line: 9
+        line: 4
       },
-      remarks: "TypeAlias remarks",
       type: {
-        kind: TypeKind.Number,
-        name: "number"
+        kind: TypeKind.TypeReference,
+        name: "T",
+        type: {
+          constraint: {
+            kind: TypeKind.String,
+            name: "string"
+          },
+          kind: TypeKind.TypeParameter,
+          name: "T"
+        },
+        typeArguments: undefined
       },
-      typeParameters: undefined
+      typeParameters: [
+        {
+          constraint: {
+            kind: TypeKind.String,
+            name: "string"
+          },
+          description: "Type parameter description",
+          initializer: undefined,
+          kind: EntityKind.TypeParameter,
+          name: "T",
+          position: {
+            column: 26,
+            file: "/file.ts",
+            line: 4
+          }
+        }
+      ]
     };
 
     // #endregion
@@ -125,6 +152,7 @@ scope("Renderer", EntityKind.TypeAlias, () => {
     const [
       tags,
       position,
+      typeParameters,
       type,
       description,
       remarks,
@@ -132,35 +160,17 @@ scope("Renderer", EntityKind.TypeAlias, () => {
     ] = renderedTypeAliasContent;
 
     it("should have matching table of contents entry", () => {
-      expect(renderedTypeAliasForTableOfContents).to.equal("TypeAlias");
+      expect(renderedTypeAliasForTableOfContents).to.equal("TypeAlias&lt;T&gt;");
     });
 
     it("should have a matching documentation title", () => {
-      expect(renderedTypeAliasTitle).to.equal("TypeAlias");
+      expect(renderedTypeAliasTitle).to.equal("TypeAlias&lt;T&gt;");
     });
 
-    it("should have a position", () => {
-      expect(position).to.not.equal(undefined);
-    });
-
-    it("should have a jsdoc tag", () => {
-      expect(tags).to.not.equal(undefined);
-    });
-
-    it("should have a matching type", () => {
-      expect(type).to.match(/number$/);
-    });
-
-    it("should have a matching description", () => {
-      expect(description).to.equal("TypeAlias description");
-    });
-
-    it("should have matching remarks", () => {
-      expect(remarks).to.equal("TypeAlias remarks");
-    });
-
-    it("should have a matching example", () => {
-      expect(example).to.equal("TypeAlias example");
+    it("should have matching type parameters", () => {
+      expect(typeParameters).to.not.equal(undefined);
+      expect(typeParameters).to.have.lengthOf(1);
+      expect(typeParameters![0]).to.equal("&lt;T&gt;: string Type parameter description");
     });
 
   }

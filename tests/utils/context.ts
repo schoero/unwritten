@@ -21,7 +21,7 @@ const testConfig = override(getDefaultConfig(), {
 
 export function createRenderContext(): RenderContext<MarkupRenderer> {
   return {
-    config: testConfig,
+    config: JSON.parse(JSON.stringify(testConfig)),
     renderer: markdownRenderer
   };
 }

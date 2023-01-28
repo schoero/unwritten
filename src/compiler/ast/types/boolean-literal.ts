@@ -12,11 +12,13 @@ export function createBooleanLiteralType(ctx: CompilerContext, type: LiteralType
   const id = getIdByType(ctx, type);
   // @ts-expect-error // Alternative way would be to use the typeChecker and typeToString()
   const value = type.intrinsicName === "true";
+  const name = "boolean";
   const kind = TypeKind.BooleanLiteral;
 
   return {
     id,
     kind,
+    name,
     value
   };
 

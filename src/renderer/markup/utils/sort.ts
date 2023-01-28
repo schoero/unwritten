@@ -1,11 +1,13 @@
 import { getCategoryName } from "./renderer.js";
 
+import type { MarkupRenderer } from "../types/renderer.js";
+
 import type { ExportableEntities } from "quickdoks:compiler:type-definitions/entities.d.js";
 import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
 import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function sortExportableTypes(ctx: RenderContext, types: ExportableEntities[]): ExportableEntities[] {
+export function sortExportableTypes(ctx: RenderContext<MarkupRenderer>, types: ExportableEntities[]): ExportableEntities[] {
 
   const order = (ctx.config.renderConfig[ctx.renderer.name] as MarkupRenderConfig).renderOrder?.reduce((acc, category) => {
     const name = getCategoryName(ctx, category);

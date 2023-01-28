@@ -11,11 +11,13 @@ export function createNumberLiteralType(ctx: CompilerContext, type: TSNumberLite
 
   const id = getIdByType(ctx, type);
   const value = type.value;
+  const name = "number";
   const kind = TypeKind.NumberLiteral;
 
   return {
     id,
     kind,
+    name,
     value
   };
 

@@ -5,7 +5,7 @@ import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.
 import type { Complete } from "./utils.js";
 
 
-export interface Config {
+export type Config = {
   /** Compiler configuration. */
   compilerConfig?: CompilerConfig;
   /** Extend another config */
@@ -14,39 +14,39 @@ export interface Config {
   externalTypes?: ExternalTypes;
   /** Render configuration. */
   renderConfig?: RenderConfig;
-}
+};
 
-export interface CompleteConfig extends Config {
+export type CompleteConfig = Config & {
   compilerConfig: Complete<CompilerConfig>;
   externalTypes: ExternalTypes;
   renderConfig: CompleteRenderConfig;
-}
+};
 
-export interface CompleteRenderConfig {
+export type CompleteRenderConfig = {
   [BuiltInRenderers.Markdown]: Complete<MarkupRenderConfig>;
   [BuiltInRenderers.HTML]: Complete<MarkupRenderConfig>;
   [key: string]: {
     [key: string]: any;
   };
-}
+};
 
-export interface RenderConfig {
+export type RenderConfig = {
   [key: string]: {
     [key: string]: any;
   };
-}
+};
 
-export interface ConfigWithSchema extends Config {
+export type ConfigWithSchema = Config & {
   $schema: string;
-}
+};
 
-export interface CompilerConfig {
+export type CompilerConfig = {
 
   /** An array of excluded directories. */
   exclude?: string[];
 
-}
+};
 
-export interface ExternalTypes {
-  [key: TypeKind | string]: string;
-}
+export type ExternalTypes = {
+  [key in TypeKind | string]?: string;
+};

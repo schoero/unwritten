@@ -11,12 +11,14 @@ export function createBigIntLiteralType(ctx: CompilerContext, type: TSBigIntLite
 
   const id = getIdByType(ctx, type);
   const sign = type.value.negative ? "-" : "";
+  const name = "bigint";
   const value = BigInt(sign + type.value.base10Value);
   const kind = TypeKind.BigIntLiteral;
 
   return {
     id,
     kind,
+    name,
     value
   };
 

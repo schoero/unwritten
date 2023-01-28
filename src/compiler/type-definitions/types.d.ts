@@ -113,7 +113,7 @@ export type InferObjectLikeType<Kind extends ObjectLikeTypeKinds> =
 //-- Primitive types
 
 export type PrimitiveType<Kind extends PrimitiveTypeKinds> = Type<Kind> & {
-  name?: Name;
+  name: Name;
 };
 
 export type NumberType = PrimitiveType<TypeKind.Number>;

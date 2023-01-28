@@ -20,30 +20,30 @@ import type {
 import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function renderSignatureForTableOfContents(ctx: RenderContext<MarkupRenderer>, signature: SignatureEntity): RenderedSignatureForTableOfContents {
-  const name = renderName(ctx, signature.name);
-  const renderedParameters = renderParametersForSignature(ctx, signature.parameters);
+export function renderSignatureForTableOfContents(ctx: RenderContext<MarkupRenderer>, signatureEntity: SignatureEntity): RenderedSignatureForTableOfContents {
+  const name = renderName(ctx, signatureEntity.name);
+  const renderedParameters = renderParametersForSignature(ctx, signatureEntity.parameters);
   const renderedSignature = `${name}(${renderedParameters})`;
-  return renderLink(ctx, renderedSignature, signature.id);
+  return renderLink(ctx, renderedSignature, signatureEntity.id);
 }
 
 
-export function renderSignatureForDocumentation(ctx: RenderContext<MarkupRenderer>, signature: SignatureEntity): RenderedSignatureForDocumentation {
+export function renderSignatureForDocumentation(ctx: RenderContext<MarkupRenderer>, signatureEntity: SignatureEntity): RenderedSignatureForDocumentation {
 
-  const name = renderName(ctx, signature.name);
-  const renderedParameters = renderParametersForSignature(ctx, signature.parameters);
+  const name = renderName(ctx, signatureEntity.name);
+  const renderedParameters = renderParametersForSignature(ctx, signatureEntity.parameters);
   const renderedSignature = `${name}(${renderedParameters})`;
 
-  const jsdocTags = renderJSDocTags(ctx, signature);
-  const position = renderPosition(ctx, signature.position);
+  const jsdocTags = renderJSDocTags(ctx, signatureEntity);
+  const position = renderPosition(ctx, signatureEntity.position);
 
-  const parameters = signature.parameters.map(parameter => renderParameterForDocumentation(ctx, parameter));
-  const returnDescription = signature.returnType.description;
+  const parameters = signatureEntity.parameters.map(parameter => renderParameterForDocumentation(ctx, parameter));
+  const returnDescription = signatureEntity.returnType.description;
 
-  const description = renderDescription(ctx, signature.description);
-  const returnType = renderType(ctx, signature.returnType);
-  const example = renderExample(ctx, signature.example);
-  const remarks = renderRemarks(ctx, signature.remarks);
+  const description = renderDescription(ctx, signatureEntity.description);
+  const returnType = renderType(ctx, signatureEntity.returnType);
+  const example = renderExample(ctx, signatureEntity.example);
+  const remarks = renderRemarks(ctx, signatureEntity.remarks);
 
   const returnTypeWithDescription = returnDescription ? `Returns: ${returnType} ${returnDescription}` : `Returns: ${returnType}`;
   const parameterAndReturnValueList = [...parameters, returnTypeWithDescription].filter(contentFilter);

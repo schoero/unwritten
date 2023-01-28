@@ -49,5 +49,6 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   ],
   stringLiteralTypeEncapsulation: ["`", "`"],
   tagEncapsulation: ["`", "`"],
-  typeEncapsulation: ["&lt;", "&gt;"]
+  typeEncapsulation: ["&lt;", "&gt;"],
+  typeParameterEncapsulation: ["&lt;", "&gt;"]
 };

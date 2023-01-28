@@ -120,11 +120,31 @@ export type RenderedCategoryForDocumentation = {
 
 //-- Primitive types
 
+export type RenderedStringType = string;
+export type RenderedNumberType = string;
+export type RenderedBooleanType = string;
+export type RenderedBigIntType = string;
+export type RenderedSymbolType = string;
+export type RenderedVoidType = string;
+export type RenderedUndefinedType = string;
+export type RenderedNullType = string;
+export type RenderedNeverType = string;
+export type RenderedUnknownType = string;
+export type RenderedAnyType = string;
+
+/** @deprecated Use actual types instead */
 export type RenderedPrimitiveType = string;
 
 
 //-- Literal types
 
+export type RenderedStringLiteralType = string;
+export type RenderedNumberLiteralType = string;
+export type RenderedBooleanLiteralType = string;
+export type RenderedBigIntLiteralType = string;
+
+
+/** @deprecated Use actual types instead */
 export type RenderedLiteralType = string;
 
 export type RenderedObjectLiteralType = [
@@ -259,9 +279,21 @@ export type RenderedTypeAliasForDocumentation = {
   [typeAliasName: RenderedName]: [
     jsdocTags: RenderedJSDocTags,
     position: RenderedPosition,
+    typeParameters: RenderedTypeParametersForDocumentation,
     type: string | undefined,
     description: Description,
     Remarks: Remarks,
     Example: Example
   ];
 };
+
+
+//-- Parameter
+
+export type RenderedTypeParametersForTableOfContents = string;
+export type RenderedTypeParametersForDocumentation = RenderedMultilineContent | undefined;
+export type RenderedTypeParametersForSignature = string;
+
+export type RenderedTypeParameterForTableOfContents = string;
+export type RenderedTypeParameterForSignature = string;
+export type RenderedTypeParameterForDocumentation = string;

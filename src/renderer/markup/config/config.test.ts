@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { renderVariableForDocumentation } from "quickdoks:renderer/markup/ast/entities/variable.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 
-import type { VariableEntity } from "quickdoks:compiler:type-definitions/entities.js";
+import { renderStringType } from "../ast/types/string.js";
+import { renderStringLiteralType } from "../ast/types/string-literal.js";
+
+import type { StringLiteralType, StringType } from "quickdoks:compiler/type-definitions/types.js";
 import type { Testable } from "quickdoks:type-definitions/utils.js";
 
 
@@ -14,37 +15,19 @@ scope("Renderer", "Config", () => {
 
   describe("typeEncapsulation", async () => {
 
-    const variableEntity: Testable<VariableEntity> = {
-      kind: EntityKind.Variable,
-      name: "stringType",
-      type: {
-        kind: TypeKind.String,
-        name: "string"
-      }
+    const stringType: Testable<StringType> = {
+      kind: TypeKind.String,
+      name: "string"
     };
 
     const ctx = createRenderContext();
 
-    ctx.config.externalTypes = {};
-
     {
 
-      const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, variableEntity as VariableEntity);
-
-      const renderedVariableTitle = Object.keys(renderedVariableForDocumentation)[0]!;
-      const renderedVariableContent = renderedVariableForDocumentation[renderedVariableTitle]!;
-
-      const [
-        tags,
-        position,
-        type,
-        description,
-        remarks,
-        example
-      ] = renderedVariableContent;
+      const renderedStringType = renderStringType(ctx, stringType as StringType);
 
       it("should use the default encapsulation", () => {
-        expect(type).to.equal("Type: string");
+        expect(renderedStringType).to.equal("string");
       });
 
     }
@@ -53,22 +36,71 @@ scope("Renderer", "Config", () => {
 
       ctx.config.renderConfig.markdown.typeEncapsulation = ["`", "`"];
 
-      const renderedVariableForDocumentation = renderVariableForDocumentation(ctx, variableEntity as VariableEntity);
-
-      const renderedVariableTitle = Object.keys(renderedVariableForDocumentation)[0]!;
-      const renderedVariableContent = renderedVariableForDocumentation[renderedVariableTitle]!;
-
-      const [
-        tags,
-        position,
-        type,
-        description,
-        remarks,
-        example
-      ] = renderedVariableContent;
+      const renderedStringType = renderStringType(ctx, stringType as StringType);
 
       it("should be possible to change the encapsulation", () => {
-        expect(type).to.equal("Type: `string`");
+        expect(renderedStringType).to.equal("`string`");
+      });
+
+    }
+
+  });
+
+
+  describe("stringLiteralTypeEncapsulation", async () => {
+
+    const stringLiteralType: Testable<StringLiteralType> = {
+      kind: TypeKind.StringLiteral,
+      name: "string",
+      value: "test"
+    };
+
+    const ctx = createRenderContext();
+
+    {
+
+      const renderedStringType = renderStringLiteralType(ctx, stringLiteralType as StringLiteralType);
+
+      it("should use the default encapsulation", () => {
+        expect(renderedStringType).to.equal("test");
+      });
+
+    }
+
+    {
+
+      ctx.config.renderConfig.markdown.typeEncapsulation = ["`", "`"];
+      ctx.config.renderConfig.markdown.stringLiteralTypeEncapsulation = ["\"", "\""];
+
+      const renderedStringType = renderStringLiteralType(ctx, stringLiteralType as StringLiteralType);
+
+      it("should be possible to change the encapsulation", () => {
+        expect(renderedStringType).to.equal("`\"test\"`");
+      });
+
+    }
+
+  });
+
+  describe("externalTypes", async () => {
+
+    const stringType: Testable<StringType> = {
+      kind: TypeKind.String,
+      name: "string"
+    };
+
+    const ctx = createRenderContext();
+
+    ctx.config.externalTypes = {
+      [TypeKind.String]: "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean"
+    };
+
+    {
+
+      const renderedStringType = renderStringType(ctx, stringType as StringType);
+
+      it("should use the default encapsulation", () => {
+        expect(renderedStringType).to.equal(`[string](${ctx.config.externalTypes[TypeKind.String]})`);
       });
 
     }

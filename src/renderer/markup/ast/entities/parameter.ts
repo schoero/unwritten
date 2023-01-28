@@ -1,3 +1,4 @@
+import { renderDescription } from "quickdoks:renderer/markup/mixins/description.js";
 import { getRenderConfig } from "quickdoks:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "quickdoks:renderer:markup/utils/renderer.js";
 
@@ -13,8 +14,8 @@ import type {
 import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
 
 
-export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>, parameters: ParameterEntity[]): RenderedParametersForSignature {
-  return parameters.map((parameter, index) => {
+export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>, parameterEntities: ParameterEntity[]): RenderedParametersForSignature {
+  return parameterEntities.map((parameter, index) => {
     const renderedParameter = renderParameterForSignature(ctx, parameter);
     if(index === 0){
       return parameter.optional === true ? `[${renderedParameter}]` : renderedParameter;
@@ -29,7 +30,7 @@ export function renderParameterForDocumentation(ctx: RenderContext<MarkupRendere
 
   const renderConfig = getRenderConfig(ctx);
 
-  const description = parameterEntity.description ? parameterEntity.description : "";
+  const description = renderDescription(ctx, parameterEntity.description) ?? "";
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
   const type = parameterEntity.type ? `${renderType(ctx, parameterEntity.type)}` : "";
   const rest = parameterEntity.rest === true ? encapsulate("rest", renderConfig.tagEncapsulation) : "";

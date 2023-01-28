@@ -11,11 +11,13 @@ export function createStringLiteralType(ctx: CompilerContext, type: TSStringLite
 
   const id = getIdByType(ctx, type);
   const value = type.value;
+  const name = "string";
   const kind = TypeKind.StringLiteral;
 
   return {
     id,
     kind,
+    name,
     value
   };
 }
