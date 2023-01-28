@@ -122,6 +122,7 @@ export type RenderedCategoryForDocumentation = {
 
 export type RenderedTypes =
   | RenderedAnyType
+  | RenderedArrayType
   | RenderedBigIntLiteralType
   | RenderedBigIntType
   | RenderedBooleanLiteralType
@@ -163,6 +164,11 @@ export type RenderedStringLiteralType = string;
 export type RenderedNumberLiteralType = string;
 export type RenderedBooleanLiteralType = string;
 export type RenderedBigIntLiteralType = string;
+
+
+//-- Array type
+
+export type RenderedArrayType = string;
 
 
 //-- Union type

@@ -1,4 +1,5 @@
 export * from "./any.js";
+export * from "./array.js";
 export * from "./bigint.js";
 export * from "./bigint-literal.js";
 export * from "./boolean.js";
