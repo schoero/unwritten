@@ -17,3 +17,13 @@ export function renderJSDocTags(ctx: RenderContext<MarkupRenderer>, jsdocTags: J
     .join(" ") || undefined;
 
 }
+
+
+export function hasRenderableJSDocTags(jsdocTags: JSDocTags): boolean {
+
+  const jsdocTagNames = Object.values(RenderableJSDocTags);
+
+  return Object.keys(jsdocTags)
+    .some(key => jsdocTagNames.includes(key as RenderableJSDocTags));
+
+}

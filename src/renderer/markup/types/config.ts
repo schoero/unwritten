@@ -10,6 +10,9 @@ export interface MarkupRenderConfig {
     */
   categoryNames?: CategoryNames;
 
+  /** Indentation characters */
+  indentation?: string;
+
   /**
    * Defines how parameters should be encapsulated in the rendered output.
    */
@@ -34,7 +37,7 @@ export interface MarkupRenderConfig {
   /**
    * Defines how string literal type annotations should be encapsulated in the rendered output.
    */
-  stringLiteralTypeEncapsulation?: Encapsulation | false;
+  stringLiteralEncapsulation?: Encapsulation | false;
 
   /**
    * Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output.

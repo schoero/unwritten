@@ -1,4 +1,4 @@
-import { renderSignatureForDocumentation, renderSignatureForTableOfContents } from "./signature.js";
+import { renderSignatureForTableOfContents, renderSignaturesForDocumentation } from "./signature.js";
 
 import type { FunctionLikeEntities } from "quickdoks:compiler/type-definitions/entities.js";
 import type {
@@ -15,8 +15,5 @@ export function renderFunctionForTableOfContents(ctx: RenderContext<MarkupRender
 
 
 export function renderFunctionForDocumentation(ctx: RenderContext<MarkupRenderer>, func: FunctionLikeEntities): RenderedFunctionForDocumentation {
-  return func.signatures.reduce<RenderedFunctionForDocumentation>((signatures, signature) => {
-    const renderedSignature = renderSignatureForDocumentation(ctx, signature);
-    return { ...signatures, ...renderedSignature };
-  }, {});
+  return renderSignaturesForDocumentation(ctx, func.signatures);
 }

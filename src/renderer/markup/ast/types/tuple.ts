@@ -25,11 +25,8 @@ function renderTupleMember(ctx: RenderContext<MarkupRenderer>, tupleMember: Tupl
   const renderedOptional = tupleMember.optional ? "?" : "";
   const renderedRest = tupleMember.rest ? "..." : "";
   const renderedRestBrackets = tupleMember.rest ? "[]" : "";
-  const renderedTypeWithParentheses = tupleMember.rest &&
-    (
-      tupleMember.type.kind === TypeKind.Union ||
-      tupleMember.type.kind === TypeKind.Intersection
-    )
+  const restNeedsParentheses = tupleMember.type.kind === TypeKind.Union || tupleMember.type.kind === TypeKind.Intersection;
+  const renderedTypeWithParentheses = tupleMember.rest && restNeedsParentheses
     ? `(${renderedType})`
     : renderedType;
 

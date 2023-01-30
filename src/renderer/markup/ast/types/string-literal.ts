@@ -13,7 +13,7 @@ export function renderStringLiteralType(ctx: RenderContext<MarkupRenderer>, stri
 
   const name = stringType.name;
   const value = stringType.value;
-  const encapsulatedValue = encapsulate(encapsulate(value, renderConfig.stringLiteralTypeEncapsulation), renderConfig.typeEncapsulation);
+  const encapsulatedValue = encapsulate(encapsulate(value, renderConfig.stringLiteralEncapsulation), renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.StringLiteral] && ctx.renderer.renderHyperLink(encapsulatedValue, ctx.config.externalTypes[TypeKind.StringLiteral]);
 
   return link ?? encapsulatedValue;

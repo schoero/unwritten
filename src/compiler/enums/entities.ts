@@ -16,8 +16,6 @@ export enum EntityKind {
   Setter = "SetterEntity",
   Signature = "SignatureEntity",
   SourceFile = "SourceFileEntity",
-  TemplateLiteral = "TemplateLiteralEntity",
-  ThisType = "ThisEntity",
   TupleMember = "TupleMemberEntity",
   TypeAlias = "TypeAliasEntity",
   TypeArgument = "TypeArgumentEntity",

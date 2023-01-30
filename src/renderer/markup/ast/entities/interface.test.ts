@@ -1,37 +1,298 @@
+import { writeFileSync } from "node:fs";
+
 import { expect, it } from "vitest";
 
+import { EntityKind } from "quickdoks:compiler/enums/entities.js";
 import { TypeKind } from "quickdoks:compiler:enums/types.js";
+import { renderRenderObject } from "quickdoks:renderer/markup/shared/index.js";
 import { createRenderContext } from "quickdoks:tests:utils/context.js";
 import { scope } from "quickdoks:tests:utils/scope.js";
 
 import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./interface.js";
 
-import type { Interface } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { Real, Testable } from "quickdoks:compiler:type-definitions/utils.d.js";
+import type { InterfaceEntity } from "quickdoks:compiler/type-definitions/entities.js";
+import type { Testable } from "quickdoks:type-definitions/utils.js";
 
 
 scope("Renderer", TypeKind.Interface, () => {
 
   {
 
-    const simpleInterface: Testable<Interface> = {
-      callSignatures: [],
-      constructSignatures: [],
-      getterSignatures: [],
-      kind: TypeKind.Interface,
+    const simpleInterface: Testable<InterfaceEntity> = {
+      callSignatures: [
+        {
+          description: undefined,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: undefined,
+          parameters: [],
+          position: {
+            column: 6,
+            file: "/file.ts",
+            line: 2
+          },
+          returnType: {
+            description: undefined,
+            kind: TypeKind.Void,
+            name: "void"
+          },
+          typeParameters: undefined
+        }
+      ],
+      constructSignatures: [
+        {
+          description: undefined,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: undefined,
+          parameters: [],
+          position: {
+            column: 6,
+            file: "/file.ts",
+            line: 3
+          },
+          returnType: {
+            description: undefined,
+            kind: TypeKind.Void,
+            name: "void"
+          },
+          typeParameters: undefined
+        }
+      ],
+      description: undefined,
+      getterSignatures: [
+        {
+          description: undefined,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: "getter",
+          parameters: [],
+          position: {
+            column: 6,
+            file: "/file.ts",
+            line: 5
+          },
+          returnType: {
+            description: undefined,
+            kind: TypeKind.String,
+            name: "string"
+          },
+          typeParameters: undefined
+        }
+      ],
+      heritage: undefined,
+      kind: EntityKind.Interface,
       methodSignatures: [],
       name: "Interface",
-      properties: [],
-      setterSignatures: []
+      position: {
+        column: 0,
+        file: "/file.ts",
+        line: 1
+      },
+      properties: [
+        {
+          description: undefined,
+          kind: EntityKind.Property,
+          modifiers: [],
+          name: "funcProp",
+          optional: false,
+          position: {
+            column: 6,
+            file: "/file.ts",
+            line: 4
+          },
+          type: {
+            kind: TypeKind.Function,
+            signatures: [
+              {
+                description: undefined,
+                kind: EntityKind.Signature,
+                modifiers: [],
+                name: undefined,
+                parameters: [],
+                position: {
+                  column: 16,
+                  file: "/file.ts",
+                  line: 4
+                },
+                returnType: {
+                  description: undefined,
+                  kind: TypeKind.Void,
+                  name: "void"
+                },
+                typeParameters: undefined
+              }
+            ]
+          }
+        },
+        {
+          description: undefined,
+          kind: EntityKind.Property,
+          modifiers: [],
+          name: "method",
+          optional: false,
+          position: {
+            column: 6,
+            file: "/file.ts",
+            line: 6
+          },
+          type: {
+            kind: TypeKind.Intersection,
+            types: [
+              {
+                kind: TypeKind.Function,
+                signatures: [
+                  {
+                    description: undefined,
+                    kind: EntityKind.Signature,
+                    modifiers: [],
+                    name: undefined,
+                    parameters: [
+                      {
+                        description: undefined,
+                        initializer: undefined,
+                        kind: EntityKind.Parameter,
+                        name: "a",
+                        optional: false,
+                        position: {
+                          column: 16,
+                          file: "/file.ts",
+                          line: 6
+                        },
+                        rest: false,
+                        type: {
+                          kind: TypeKind.Number,
+                          name: "number"
+                        }
+                      }
+                    ],
+                    position: {
+                      column: 15,
+                      file: "/file.ts",
+                      line: 6
+                    },
+                    returnType: {
+                      description: undefined,
+                      kind: TypeKind.Void,
+                      name: "void"
+                    },
+                    typeParameters: undefined
+                  }
+                ]
+              },
+              {
+                kind: TypeKind.Function,
+                signatures: [
+                  {
+                    description: undefined,
+                    kind: EntityKind.Signature,
+                    modifiers: [],
+                    name: undefined,
+                    parameters: [
+                      {
+                        description: undefined,
+                        initializer: undefined,
+                        kind: EntityKind.Parameter,
+                        name: "a",
+                        optional: false,
+                        position: {
+                          column: 40,
+                          file: "/file.ts",
+                          line: 6
+                        },
+                        rest: false,
+                        type: {
+                          kind: TypeKind.String,
+                          name: "string"
+                        }
+                      }
+                    ],
+                    position: {
+                      column: 39,
+                      file: "/file.ts",
+                      line: 6
+                    },
+                    returnType: {
+                      description: undefined,
+                      kind: TypeKind.Void,
+                      name: "void"
+                    },
+                    typeParameters: undefined
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          description: undefined,
+          kind: EntityKind.Property,
+          modifiers: [],
+          name: "prop",
+          optional: false,
+          position: {
+            column: 6,
+            file: "/file.ts",
+            line: 7
+          },
+          type: {
+            kind: TypeKind.String,
+            name: "string"
+          }
+        }
+      ],
+      setterSignatures: [
+        {
+          description: undefined,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: "setter",
+          parameters: [
+            {
+              description: undefined,
+              initializer: undefined,
+              kind: EntityKind.Parameter,
+              name: "value",
+              optional: false,
+              position: {
+                column: 17,
+                file: "/file.ts",
+                line: 8
+              },
+              rest: false,
+              type: {
+                kind: TypeKind.String,
+                name: "string"
+              }
+            }
+          ],
+          position: {
+            column: 6,
+            file: "/file.ts",
+            line: 8
+          },
+          returnType: {
+            description: undefined,
+            kind: TypeKind.Any,
+            name: "any"
+          },
+          typeParameters: undefined
+        }
+      ],
+      typeParameters: undefined
     };
 
     const ctx = createRenderContext();
 
-    const renderedInterfaceForTableOfContents = renderInterfaceForTableOfContents(ctx, <Real<Interface>>simpleInterface);
-    const renderedInterfaceForDocumentation = renderInterfaceForDocumentation(ctx, <Real<Interface>>simpleInterface);
+    const renderedInterfaceForTableOfContents = renderInterfaceForTableOfContents(ctx, simpleInterface as InterfaceEntity);
+    const renderedInterfaceForDocumentation = renderInterfaceForDocumentation(ctx, simpleInterface as InterfaceEntity);
 
     const interfaceName = Object.keys(renderedInterfaceForDocumentation)[0]!;
     const interfaceContent = renderedInterfaceForDocumentation[interfaceName]!;
+
+    const documentation = renderRenderObject(ctx, renderedInterfaceForDocumentation);
+
+    writeFileSync("test.md", documentation);
 
     it("should have matching interface name", () => {
       expect(renderedInterfaceForTableOfContents).to.equal("Address");
@@ -44,54 +305,6 @@ scope("Renderer", TypeKind.Interface, () => {
 
     it("should have no example", () => {
       expect(interfaceContent[1]).to.equal(undefined);
-    });
-
-    it("should have matching members", () => {
-      expect(interfaceContent.length).to.equal(3);
-      expect(interfaceContent[2][0][0]).to.equal("street: string Street name");
-      expect(interfaceContent[2][0][1]).to.equal("building: number Building number optional");
-    });
-
-  }
-
-  {
-
-    const simpleInterface: Testable<Interface> = {
-      callSignatures: [],
-      constructSignatures: [],
-      getterSignatures: [],
-      kind: TypeKind.Interface,
-      methodSignatures: [],
-      name: "Interface",
-      properties: [],
-      setterSignatures: []
-    };
-
-    const ctx = createRenderContext();
-
-    const renderedInterfaceForTableOfContents = renderInterfaceForTableOfContents(ctx, <Real<Interface>>simpleInterface);
-    const renderedInterfaceForDocumentation = renderInterfaceForDocumentation(ctx, <Real<Interface>>simpleInterface);
-
-    const interfaceName = Object.keys(renderedInterfaceForDocumentation)[0]!;
-    const interfaceContent = renderedInterfaceForDocumentation[interfaceName]!;
-
-    it("should have matching interface name", () => {
-      expect(renderedInterfaceForTableOfContents).to.equal("Address");
-      expect(interfaceName).to.equal("Address");
-    });
-
-    it("should have a matching description", () => {
-      expect(interfaceContent[0]).to.equal("Address of a person");
-    });
-
-    it("should have no example", () => {
-      expect(interfaceContent[1]).to.equal(undefined);
-    });
-
-    it("should have matching members", () => {
-      expect(interfaceContent.length).to.equal(3);
-      expect(interfaceContent[2][0][0]).to.equal("street: string Street name");
-      expect(interfaceContent[2][0][1]).to.equal("building: number Building number optional");
     });
 
   }

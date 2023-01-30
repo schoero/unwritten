@@ -57,6 +57,8 @@ scope("Renderer", "Config", () => {
 
     const ctx = createRenderContext();
 
+    ctx.config.renderConfig.markdown.stringLiteralEncapsulation = false;
+
     {
 
       const renderedStringType = renderStringLiteralType(ctx, stringLiteralType as StringLiteralType);
@@ -70,7 +72,7 @@ scope("Renderer", "Config", () => {
     {
 
       ctx.config.renderConfig.markdown.typeEncapsulation = ["`", "`"];
-      ctx.config.renderConfig.markdown.stringLiteralTypeEncapsulation = ["\"", "\""];
+      ctx.config.renderConfig.markdown.stringLiteralEncapsulation = ["\"", "\""];
 
       const renderedStringType = renderStringLiteralType(ctx, stringLiteralType as StringLiteralType);
 

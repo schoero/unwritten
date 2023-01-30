@@ -12,7 +12,6 @@ const testConfig = override(getDefaultConfig(), {
     markdown: {
       parameterEncapsulation: false,
       propertyEncapsulation: false,
-      stringLiteralTypeEncapsulation: false,
       tagEncapsulation: false,
       typeEncapsulation: false
     }

@@ -29,7 +29,7 @@ scope("Renderer", TypeKind.StringLiteral, () => {
     const renderedType = renderStringLiteralType(ctx, type as StringLiteralType);
 
     it("should render the literal value", () => {
-      expect(renderedType).to.equal("test");
+      expect(renderedType).to.equal("\"test\"");
     });
 
   }

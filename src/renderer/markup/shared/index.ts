@@ -16,6 +16,7 @@ import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } fr
 import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "../ast/entities/type-alias.js";
 import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../ast/entities/variable.js";
 import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "../typeguards/renderer.js";
+import { getRenderConfig } from "../utils/config.js";
 import { getCategoryName } from "../utils/renderer.js";
 import { sortExportableTypes } from "../utils/sort.js";
 
@@ -153,19 +154,39 @@ export function renderTypeForDocumentation(ctx: RenderContext<MarkupRenderer>, e
 
 export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObject: RenderObject): string {
 
+  const renderConfig = getRenderConfig(ctx);
+
 
   //-- State
 
   let size = 1;
-  const indentation = 0;
+  let indentation = 0;
+
+  const indentElement = (element: string): string => {
+    const indentedElement = `${renderConfig.indentation.repeat(indentation)}${element}`;
+    return indentedElement;
+  };
+
 
   const renderNestedElement = (element: RenderObject): string => {
 
-    const currentOutput: string[] = [];
+    const renderElement = (element: string[] | string): void => {
+      const indentedElements = (
+        Array.isArray(element)
+          ? element
+          : [element]
+      ).map(indentElement);
+      currentOutput.push(...indentedElements);
+    };
+
+
+    //-- Inline element
 
     if(typeof element === "string"){
-      return element;
+      return indentElement(element);
     }
+
+    const currentOutput: string[] = [];
 
 
     //-- List
@@ -174,7 +195,8 @@ export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObj
 
       const listStart = ctx.renderer.renderListStart();
       if(listStart !== undefined){
-        currentOutput.push(listStart);
+        renderElement(listStart);
+        indentation++;
       }
 
       for(let i = 0; i < element[0].length; i++){
@@ -183,18 +205,19 @@ export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObj
         if(element[0][i + 1] !== undefined && isRenderedList(element[0][i + 1]!)){
           const renderedNestedElement = element[0][i + 1] !== undefined ? ctx.renderer.renderNewLine() + renderNestedElement(element[0][i + 1]!) : "";
 
-          currentOutput.push(ctx.renderer.renderListItem(renderNestedElement(element[0][i]!) + renderedNestedElement));
+          renderElement(ctx.renderer.renderListItem(renderNestedElement(element[0][i]!) + renderedNestedElement));
           i++; // Skip next element
           continue;
         }
 
-        currentOutput.push(ctx.renderer.renderListItem(renderNestedElement(element[0][i]!)));
+        renderElement(ctx.renderer.renderListItem(renderNestedElement(element[0][i]!)));
 
       }
 
       const listEnd = ctx.renderer.renderListEnd();
       if(listEnd !== undefined){
-        currentOutput.push(listEnd);
+        renderElement(listEnd);
+        indentation--;
       }
 
     }
@@ -203,9 +226,10 @@ export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObj
     //-- Multiline output
 
     if(isRenderedMultilineContent(element)){
-      const renderedElements = element.filter(el => el !== undefined).map(el => renderNestedElement(el!));
-
-      currentOutput.push(...renderedElements);
+      const renderedElements = element
+        .filter(el => el !== undefined)
+        .map(el => renderNestedElement(el!));
+      renderElement(renderedElements);
     }
 
 
@@ -217,12 +241,12 @@ export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObj
 
         const title = ctx.renderer.renderTitle(key, size);
 
-        currentOutput.push(title);
+        renderElement(title);
         size++;
 
         const content = renderNestedElement(element[key]!);
 
-        currentOutput.push(content);
+        renderElement(content);
         size--;
 
       }

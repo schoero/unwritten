@@ -98,26 +98,31 @@ function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceD
     assert(signature, "Construct signature not found");
     return createSignatureEntity(ctx, signature);
   });
+
   const callSignatures = tsCallSignatures.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
     assert(signature, "Call signature not found");
     return createSignatureEntity(ctx, signature);
   });
+
   const methodSignatures = tsMethods.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
     assert(signature, "Method signature not found");
     return createSignatureEntity(ctx, signature);
   });
+
   const getterSignatures = tsGetters.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
     assert(signature, "Getter signature not found");
     return createSignatureEntity(ctx, signature);
   });
+
   const setterSignatures = tsSetters.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
     assert(signature, "Setter signature not found");
     return createSignatureEntity(ctx, signature);
   });
+
   const properties = tsProperties.map(signature => {
     const symbol = ctx.checker.getSymbolAtLocation(signature.name);
     assert(symbol, "Property symbol not found");
@@ -125,8 +130,8 @@ function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceD
   });
 
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
-  const position = getPositionByDeclaration(ctx, declaration);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
+  const position = getPositionByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const id = getIdByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);

@@ -14,7 +14,7 @@ scope("Renderer", TypeKind.BooleanLiteral, () => {
 
   {
 
-    // #region Type
+    // #region True boolean literal
 
     const type: Testable<BooleanLiteralType> = {
       kind: TypeKind.BooleanLiteral,
@@ -30,6 +30,28 @@ scope("Renderer", TypeKind.BooleanLiteral, () => {
 
     it("should render the literal value", () => {
       expect(renderedType).to.equal("true");
+    });
+
+  }
+
+  {
+
+    // #region False boolean literal
+
+    const type: Testable<BooleanLiteralType> = {
+      kind: TypeKind.BooleanLiteral,
+      name: "boolean",
+      value: false
+    };
+
+    // #endregion
+
+    const ctx = createRenderContext();
+
+    const renderedType = renderBooleanLiteralType(ctx, type as BooleanLiteralType);
+
+    it("should render the literal value", () => {
+      expect(renderedType).to.equal("false");
     });
 
   }

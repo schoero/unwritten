@@ -1,5 +1,6 @@
 import {
   renderAnyType,
+  renderArrayType,
   renderBigIntLiteralType,
   renderBigIntType,
   renderBooleanLiteralType,
@@ -11,6 +12,8 @@ import {
   renderStringLiteralType,
   renderStringType,
   renderSymbolType,
+  renderTemplateLiteralType,
+  renderTupleType,
   renderUndefinedType,
   renderUnionType,
   renderUnknownType,
@@ -18,6 +21,7 @@ import {
 } from "quickdoks:renderer:markup/ast/types/index.js";
 import {
   isAnyType,
+  isArrayType,
   isBigIntLiteralType,
   isBigIntType,
   isBooleanLiteralType,
@@ -29,6 +33,8 @@ import {
   isStringLiteralType,
   isStringType,
   isSymbolType,
+  isTemplateLiteralType,
+  isTupleType,
   isUndefinedType,
   isUnionType,
   isUnknownType,
@@ -44,6 +50,8 @@ export function renderType(ctx: RenderContext<MarkupRenderer>, type: Types): Ren
 
   if(isAnyType(type)){
     return renderAnyType(ctx, type);
+  } else if(isArrayType(type)){
+    return renderArrayType(ctx, type);
   } else if(isBigIntLiteralType(type)){
     return renderBigIntLiteralType(ctx, type);
   } else if(isBigIntType(type)){
@@ -66,6 +74,10 @@ export function renderType(ctx: RenderContext<MarkupRenderer>, type: Types): Ren
     return renderStringType(ctx, type);
   } else if(isSymbolType(type)){
     return renderSymbolType(ctx, type);
+  } else if(isTemplateLiteralType(type)){
+    return renderTemplateLiteralType(ctx, type);
+  } else if(isTupleType(type)){
+    return renderTupleType(ctx, type);
   } else if(isUndefinedType(type)){
     return renderUndefinedType(ctx, type);
   } else if(isUnionType(type)){

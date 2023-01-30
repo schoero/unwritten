@@ -80,7 +80,6 @@ export type Entities =
   | SetterEntity
   | SignatureEntity
   | SourceFileEntity
-  | ThisEntity
   | TypeAliasEntity
   | TypeParameterEntity
   | Types
@@ -102,13 +101,6 @@ export type TupleMemberEntity = Entity<EntityKind.TupleMember> & JSDocTags & {
   type: Types;
   name?: Name;
   position?: Position;
-};
-
-
-//-- This
-
-export type ThisEntity = Entity<EntityKind.ThisType> & {
-  type?: Types;
 };
 
 

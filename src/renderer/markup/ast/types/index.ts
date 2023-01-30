@@ -12,6 +12,7 @@ export * from "./number-literal.js";
 export * from "./string.js";
 export * from "./string-literal.js";
 export * from "./symbol.js";
+export * from "./template-literal.js";
 export * from "./tuple.js";
 export * from "./undefined.js";
 export * from "./union.js";

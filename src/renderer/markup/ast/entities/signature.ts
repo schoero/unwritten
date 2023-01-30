@@ -27,6 +27,15 @@ export function renderSignatureForTableOfContents(ctx: RenderContext<MarkupRende
   return renderLink(ctx, renderedSignature, signatureEntity.id);
 }
 
+export function renderSignaturesForDocumentation(ctx: RenderContext<MarkupRenderer>, signatureEntities: SignatureEntity[]): RenderedSignatureForDocumentation {
+  return signatureEntities.reduce<RenderedSignatureForDocumentation>((acc, signatureEntity) => {
+    const renderedSignatureForDocumentation = renderSignatureForDocumentation(ctx, signatureEntity);
+    return {
+      ...acc,
+      ...renderedSignatureForDocumentation
+    };
+  }, {});
+}
 
 export function renderSignatureForDocumentation(ctx: RenderContext<MarkupRenderer>, signatureEntity: SignatureEntity): RenderedSignatureForDocumentation {
 

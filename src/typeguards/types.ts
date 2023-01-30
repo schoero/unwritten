@@ -2,6 +2,7 @@ import { TypeKind } from "quickdoks:compiler:enums/types.js";
 
 import type {
   AnyType,
+  ArrayType,
   BigIntLiteralType,
   BigIntType,
   BooleanLiteralType,
@@ -19,6 +20,8 @@ import type {
   StringLiteralType,
   StringType,
   SymbolType,
+  TemplateLiteralType,
+  TupleType,
   Types,
   UndefinedType,
   UnionType,
@@ -30,6 +33,10 @@ import type {
 
 export function isAnyType(type: Types): type is AnyType {
   return type.kind === TypeKind.Any;
+}
+
+export function isArrayType(type: Types): type is ArrayType {
+  return type.kind === TypeKind.Array;
 }
 
 export function isBigIntLiteralType(type: Types): type is BigIntLiteralType {
@@ -72,10 +79,10 @@ export function isNullType(type: Types): type is NullType {
   return type.kind === TypeKind.Null;
 }
 
-
 export function isNumberLiteralType(type: Types): type is NumberLiteralType {
   return type.kind === TypeKind.NumberLiteral;
 }
+
 
 export function isNumberType(type: Types): type is NumberType {
   return type.kind === TypeKind.Number;
@@ -99,6 +106,14 @@ export function isStringType(type: Types): type is StringType {
 
 export function isSymbolType(type: Types): type is SymbolType {
   return type.kind === TypeKind.Symbol;
+}
+
+export function isTemplateLiteralType(type: Types): type is TemplateLiteralType {
+  return type.kind === TypeKind.TemplateLiteral;
+}
+
+export function isTupleType(type: Types): type is TupleType {
+  return type.kind === TypeKind.Tuple;
 }
 
 export function isUndefinedType(type: Types): type is UndefinedType {

@@ -199,13 +199,16 @@ export type RenderedObjectLiteralType = [
 
 //-- Function
 
-export type RenderedFunctionForTableOfContents = RenderedSignatureForTableOfContents[];
-export type RenderedFunctionForDocumentation = {
-  [key in keyof RenderedSignatureForDocumentation]: RenderedSignatureForDocumentation[key]
-};
+export type RenderedFunctionForTableOfContents = RenderedSignaturesForTableOfContents;
+export type RenderedFunctionForDocumentation = RenderedSignaturesForDocumentation;
 
 
 //-- Signature
+
+export type RenderedSignaturesForTableOfContents = RenderedSignatureForTableOfContents[];
+export type RenderedSignaturesForDocumentation = {
+  [key in keyof RenderedSignatureForDocumentation]: RenderedSignatureForDocumentation[key]
+};
 
 export type RenderedSignatureForTableOfContents = RenderedName;
 export type RenderedSignatureForDocumentation = {
@@ -281,9 +284,12 @@ export type RenderedEnumForDocumentation = {
 export type RenderedInterfaceForTableOfContents = RenderedName;
 export type RenderedInterfaceForDocumentation = {
   [interfaceName: RenderedName]: [
+    jsdocTags: RenderedJSDocTags,
+    position: RenderedPosition,
     description: Description,
     example: Example,
-    members: [RenderedPropertyForDocumentation[]]
+    constructSignatures: RenderedSignaturesForDocumentation,
+    callSignatures: RenderedSignaturesForDocumentation
   ];
 };
 

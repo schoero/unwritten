@@ -34,20 +34,21 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     [RenderCategories.Module]: "Module",
     [RenderCategories.Modules]: "Modules"
   },
+  indentation: "  ",
   parameterEncapsulation: ["`", "`"],
   propertyEncapsulation: ["`", "`"],
   removeHyphenAtStartOfTag: true,
   renderOrder: [
-    EntityKind.Namespace,
     EntityKind.Module,
-    EntityKind.Function,
+    EntityKind.Namespace,
     EntityKind.Class,
+    EntityKind.Function,
     EntityKind.Variable,
     EntityKind.Enum,
     EntityKind.TypeAlias,
     EntityKind.Interface
   ],
-  stringLiteralTypeEncapsulation: ["`", "`"],
+  stringLiteralEncapsulation: ["\"", "\""],
   tagEncapsulation: ["`", "`"],
   typeEncapsulation: ["&lt;", "&gt;"],
   typeParameterEncapsulation: ["&lt;", "&gt;"]

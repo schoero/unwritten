@@ -32,15 +32,13 @@ scope("Compiler", EntityKind.Interface, () => {
     const testFileContent = ts`
       export interface Interface {
         (): void;
-        static staticProp: string;
-        protected protectedProp: string; 
         new (): void;
         method(a: number): void;
         method(a: string): void;
         prop: string;
         funcProp: () => void;
         get getter(): string;
-        set setter(value: string): void;
+        set setter(value: string);
       }
     `;
 
@@ -58,17 +56,7 @@ scope("Compiler", EntityKind.Interface, () => {
     });
 
     it("should be able to handle properties", () => {
-      expect(exportedInterface.properties).to.have.lengthOf(4);
-    });
-
-    it("should be able to handle static properties", () => {
-      expect(exportedInterface.properties.filter(prop =>
-        prop.modifiers.includes("static"))).to.have.lengthOf(1);
-    });
-
-    it("should be able to handle instance properties", () => {
-      expect(exportedInterface.properties.filter(prop =>
-        prop.modifiers.includes("protected"))).to.have.lengthOf(1);
+      expect(exportedInterface.properties).to.have.lengthOf(2);
     });
 
     it("should be able to handle overloaded methods", () => {
