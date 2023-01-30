@@ -2,7 +2,7 @@
 
 import { cac } from "cac";
 
-import { name, version } from "quickdoks:utils:package-json.js";
+import { name, version } from "unwritten:utils:package-json.js";
 
 import { debug } from "./debug.js";
 import { generate } from "./generate.js";

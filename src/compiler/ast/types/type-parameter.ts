@@ -1,13 +1,13 @@
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByType } from "quickdoks:compiler:mixins/id.js";
-import { getNameByType } from "quickdoks:compiler:mixins/name.js";
-import { lockType } from "quickdoks:compiler:utils/ts.js";
+import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByType } from "unwritten:compiler:mixins/id.js";
+import { getNameByType } from "unwritten:compiler:mixins/name.js";
+import { lockType } from "unwritten:compiler:utils/ts.js";
 
 import type { TypeParameter } from "typescript";
 
-import type { TypeParameterType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { TypeParameterType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export const createTypeParameterType = (ctx: CompilerContext, type: TypeParameter): TypeParameterType => lockType(ctx, type, () => {

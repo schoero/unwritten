@@ -1,27 +1,27 @@
 <div align="center">
-  <img alt="quickdoks" width="128" height="128" src="assets/quickdoks.svg">
+  <img alt="unwritten" width="128" height="128" src="assets/unwritten.svg">
 </div>
 
 ---
 
 <div align="center">
-  <a href="https://github.com/schoero/quickdoks/blob/main/LICENSE">
-    <img alt="MIT License" src="https://img.shields.io/npm/l/quickdoks?color=brightgreen&style=flat-square">
+  <a href="https://github.com/schoero/unwritten/blob/main/LICENSE">
+    <img alt="MIT License" src="https://img.shields.io/npm/l/unwritten?color=brightgreen&style=flat-square">
   </a>
-  <a href="https://www.npmjs.com/package/quickdoks">
-    <img alt="Version" src="https://img.shields.io/npm/v/quickdoks?color=brightgreen&style=flat-square">
+  <a href="https://www.npmjs.com/package/unwritten">
+    <img alt="Version" src="https://img.shields.io/npm/v/unwritten?color=brightgreen&style=flat-square">
   </a>
-  <a href="https://github.com/schoero/quickdoks/issues">
-    <img alt="Issues" src="https://img.shields.io/github/issues-raw/schoero/quickdoks?style=flat-square">
+  <a href="https://github.com/schoero/unwritten/issues">
+    <img alt="Issues" src="https://img.shields.io/github/issues-raw/schoero/unwritten?style=flat-square">
   </a>
-  <a href="https://www.npmjs.com/package/quickdoks">
-    <img alt="Downloads" src="https://img.shields.io/npm/dw/quickdoks?style=flat-square">
+  <a href="https://www.npmjs.com/package/unwritten">
+    <img alt="Downloads" src="https://img.shields.io/npm/dw/unwritten?style=flat-square">
   </a>
-  <a href="https://github.com/schoero/quickdoks/stargazers">
-    <img alt="Downloads" src="https://img.shields.io/github/stars/schoero/quickdoks?color=brightgreen&style=flat-square">
+  <a href="https://github.com/schoero/unwritten/stargazers">
+    <img alt="Downloads" src="https://img.shields.io/github/stars/schoero/unwritten?color=brightgreen&style=flat-square">
   </a>
-  <a href="https://github.com/schoero/quickdoks/actions?query=workflow%3ACI">
-    <img alt="CI" src="https://img.shields.io/github/workflow/status/schoero/quickdoks/CI?style=flat-square">
+  <a href="https://github.com/schoero/unwritten/actions?query=workflow%3ACI">
+    <img alt="CI" src="https://img.shields.io/github/workflow/status/schoero/unwritten/CI?style=flat-square">
   </a>
 </div>
 
@@ -34,13 +34,13 @@ A cli tool that auto generates documentation from your JavaScript or TypeScript 
 ## Installation
 
 ```sh
-npm i quickdoks
+npm i unwritten
 ```
 
 ## Usage
 
 ```sh
-quickdoks generate <path/to/entry-file.ts> [options]
+unwritten generate <path/to/entry-file.ts> [options]
 ```
 
 ## Options
@@ -51,13 +51,13 @@ quickdoks generate <path/to/entry-file.ts> [options]
                                         # the current working directory.
 
 --tsconfig <path/to/tsconfig.json>      # Provide a tsconfig file used to
--t <path/to/tsconfig.json>              # compile your project. quickdoks will
+-t <path/to/tsconfig.json>              # compile your project. unwritten will
                                         # try to find the tsconfig by itself if
                                         # no tsconfig.json is provided.
 
---config <path/to/.quickdoks.json>      # Provide a quickdoks config used to
--c <path/to/.quickdoks.json>            # render the documentation. quickdoks
-                                        # will try to find the .quickdoks.json
+--config <path/to/.unwritten.json>      # Provide a unwritten config used to
+-c <path/to/.unwritten.json>            # render the documentation. unwritten
+                                        # will try to find the .unwritten.json
                                         # config by itself if none is provided
                                         # or uses the default config.
 
@@ -67,7 +67,7 @@ quickdoks generate <path/to/entry-file.ts> [options]
 --silent                                # Disables the output.
 -s
 
---version                               # Returns the installed quickdoks
+--version                               # Returns the installed unwritten
 -v                                      # version.
 ```
 
@@ -76,7 +76,7 @@ quickdoks generate <path/to/entry-file.ts> [options]
 You can configure how your documentation will be rendered using a configuration file. The simplest way to create such a configuration file is by using the following command:
 
 ```sh
-quickdoks init
+unwritten init
 ```
 
-This will create a `.quickdoks.json` file in the current working directory with the default configuration. You can change or remove any of the options in the configuration file.
+This will create a `.unwritten.json` file in the current working directory with the default configuration. You can change or remove any of the options in the configuration file.

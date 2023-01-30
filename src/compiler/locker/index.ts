@@ -1,8 +1,8 @@
-import { ensureTypeHasId, getIdByType } from "quickdoks:compiler:mixins/id.js";
+import { ensureTypeHasId, getIdByType } from "unwritten:compiler:mixins/id.js";
 
 import type { Type } from "typescript";
 
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export class Locker {

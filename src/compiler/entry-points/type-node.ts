@@ -5,7 +5,7 @@ import {
   isTupleTypeNode,
   isTypeQueryNode,
   isTypeReferenceNode
-} from "quickdoks:compiler:typeguards/type-nodes.js";
+} from "unwritten:compiler:typeguards/type-nodes.js";
 import {
   createArrayTypeByArrayTypeNode,
   createExpressionType,
@@ -13,14 +13,14 @@ import {
   createTupleByTupleTypeNode,
   createTypeQueryType,
   createTypeReferenceType
-} from "quickdoks:compiler:types";
+} from "unwritten:compiler:types";
 
 import { parseType } from "./type.js";
 
 import type { TypeNode } from "typescript";
 
-import type { Types } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function parseTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {

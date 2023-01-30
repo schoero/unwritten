@@ -1,16 +1,16 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "quickdoks:compiler/enums/entities.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
+import { EntityKind } from "unwritten:compiler/enums/entities.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
   renderVariableForDocumentation,
   renderVariableForTableOfContents
-} from "quickdoks:renderer/markup/ast/entities/variable.js";
-import { createRenderContext } from "quickdoks:tests:utils/context.js";
-import { scope } from "quickdoks:tests:utils/scope.js";
+} from "unwritten:renderer/markup/ast/entities/variable.js";
+import { createRenderContext } from "unwritten:tests:utils/context.js";
+import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { VariableEntity } from "quickdoks:compiler/type-definitions/entities.js";
-import type { Testable } from "quickdoks:type-definitions/utils.js";
+import type { VariableEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("Renderer", EntityKind.Variable, () => {

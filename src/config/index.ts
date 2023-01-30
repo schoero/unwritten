@@ -1,15 +1,15 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { BuiltInRenderers } from "quickdoks:renderer:enums/renderer.js";
-import { defaultRenderConfig } from "quickdoks:renderer:markup/config/default.js";
-import { findFile } from "quickdoks:utils:finder.js";
-import { override } from "quickdoks:utils:override.js";
+import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import { defaultRenderConfig } from "unwritten:renderer:markup/config/default.js";
+import { findFile } from "unwritten:utils:finder.js";
+import { override } from "unwritten:utils:override.js";
 
 import { defaultCompilerConfig, defaultExternalTypes } from "./default.js";
 
-import type { CompleteConfig, Config } from "quickdoks:type-definitions/config.d.js";
-import type { DefaultContext } from "quickdoks:type-definitions/context.d.js";
+import type { CompleteConfig, Config } from "unwritten:type-definitions/config.d.js";
+import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
 
 
 export async function createConfig(ctx: DefaultContext, configOrPath?: Config | string): Promise<CompleteConfig> {
@@ -35,10 +35,10 @@ export async function createConfig(ctx: DefaultContext, configOrPath?: Config | 
   } else if(typeof configOrPath === "undefined"){
 
     absoluteConfigPath = findFile([
-      ".quickdoks.json",
-      ".quickdoks.js",
-      ".quickdoks.mjs",
-      ".quickdoks.cjs"
+      ".unwritten.json",
+      ".unwritten.js",
+      ".unwritten.mjs",
+      ".unwritten.cjs"
     ], configOrPath);
 
     if(absoluteConfigPath === undefined){

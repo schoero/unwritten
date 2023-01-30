@@ -1,10 +1,10 @@
 import { minimatch } from "minimatch";
 
-import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
+import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
 
 import type { Declaration, Symbol } from "typescript";
 
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function isSymbolExcluded(ctx: CompilerContext, symbol: Symbol): boolean {

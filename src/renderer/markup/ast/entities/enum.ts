@@ -1,12 +1,12 @@
-import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
+import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
-import type { Enum } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { Enum } from "unwritten:compiler:type-definitions/types.d.js";
 import type {
   MarkupRenderer,
   RenderedEnumForDocumentation,
   RenderedEnumForTableOfContents
-} from "quickdoks:renderer:markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+} from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function renderEnumForTableOfContents(ctx: RenderContext<MarkupRenderer>, enumType: Enum): RenderedEnumForTableOfContents {

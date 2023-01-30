@@ -1,14 +1,14 @@
-import { createSignatureEntity } from "quickdoks:compiler:entities";
-import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
+import { createSignatureEntity } from "unwritten:compiler:entities";
+import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
   isFunctionLikeDeclaration,
   isMethodSignatureDeclaration
-} from "quickdoks:compiler:typeguards/declarations.js";
-import { functionOverloadDeclarationFilter } from "quickdoks:compiler:utils/filter.js";
-import { assert } from "quickdoks:utils/general.js";
+} from "unwritten:compiler:typeguards/declarations.js";
+import { functionOverloadDeclarationFilter } from "unwritten:compiler:utils/filter.js";
+import { assert } from "unwritten:utils/general.js";
 
 import type {
   CallSignatureDeclaration,
@@ -21,8 +21,8 @@ import type {
 import type {
   FunctionLikeEntityKinds,
   InferFunctionLikeEntityKind
-} from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+} from "unwritten:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(ctx: CompilerContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> {

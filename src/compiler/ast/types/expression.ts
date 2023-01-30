@@ -1,13 +1,13 @@
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByTypeNode } from "quickdoks:compiler:mixins/id.js";
-import { getNameByType } from "quickdoks:compiler:mixins/name.js";
+import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByTypeNode } from "unwritten:compiler:mixins/id.js";
+import { getNameByType } from "unwritten:compiler:mixins/name.js";
 
 import type { ExpressionWithTypeArguments } from "typescript";
 
-import type { ExpressionType } from "quickdoks:compiler:type-definitions/types.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { ExpressionType } from "unwritten:compiler:type-definitions/types.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createExpressionType(ctx: CompilerContext, expressionWithTypeArguments: ExpressionWithTypeArguments): ExpressionType {

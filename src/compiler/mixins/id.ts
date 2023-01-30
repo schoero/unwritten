@@ -1,7 +1,7 @@
 import type { Declaration, Symbol, Type, TypeNode } from "typescript";
 
-import type { ID } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { ID } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function getIdBySymbol(ctx: CompilerContext, symbol: Symbol): ID {

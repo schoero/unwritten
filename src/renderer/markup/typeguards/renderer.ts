@@ -3,7 +3,7 @@ import type {
   RenderedMultilineContent,
   RenderedTitle,
   RenderObject
-} from "quickdoks:renderer:markup/types/renderer.js";
+} from "unwritten:renderer:markup/types/renderer.js";
 
 
 export function isRenderedList(renderObject: RenderObject): renderObject is RenderedList {

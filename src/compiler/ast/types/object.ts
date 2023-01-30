@@ -4,23 +4,23 @@ import {
   createPropertyEntity,
   createSetterEntity,
   createSignatureEntity
-} from "quickdoks:compiler:entities";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByType } from "quickdoks:compiler:mixins/id.js";
-import { getPositionByType } from "quickdoks:compiler:mixins/position.js";
+} from "unwritten:compiler:entities";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByType } from "unwritten:compiler:mixins/id.js";
+import { getPositionByType } from "unwritten:compiler:mixins/position.js";
 import {
   isGetterSymbol,
   isMethodSymbol,
   isPropertySymbol,
   isSetterSymbol
-} from "quickdoks:compiler:typeguards/symbols.js";
-import { isThisType } from "quickdoks:compiler:typeguards/types.js";
-import { lockType } from "quickdoks:compiler:utils/ts.js";
+} from "unwritten:compiler:typeguards/symbols.js";
+import { isThisType } from "unwritten:compiler:typeguards/types.js";
+import { lockType } from "unwritten:compiler:utils/ts.js";
 
 import type { ObjectType as TSObjectType } from "typescript";
 
-import type { InferObjectLikeType, ObjectLikeTypeKinds } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.js";
+import type { InferObjectLikeType, ObjectLikeTypeKinds } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.js";
 
 
 export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKinds>(ctx: CompilerContext, type: TSObjectType, kind: ObjectLikeTypeKind = TypeKind.Object as ObjectLikeTypeKind): InferObjectLikeType<ObjectLikeTypeKind> => lockType(ctx, type, () => {

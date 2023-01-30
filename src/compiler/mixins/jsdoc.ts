@@ -1,11 +1,11 @@
 import ts from "typescript";
 
-import { JSDocTags } from "quickdoks:compiler:enums/jsdoc.js";
+import { JSDocTags } from "unwritten:compiler:enums/jsdoc.js";
 
 import type { Declaration, ParameterDeclaration, Symbol, Type, TypeParameterDeclaration } from "typescript";
 
-import type { Description } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { Description } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function getDescriptionByDeclaration(ctx: CompilerContext, declaration: Declaration): Description | undefined {

@@ -1,21 +1,21 @@
-import { createParameterEntity, createTypeParameterEntity } from "quickdoks:compiler:entities";
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { getIdByDeclaration } from "quickdoks:compiler:mixins/id.js";
+import { createParameterEntity, createTypeParameterEntity } from "unwritten:compiler:entities";
+import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { getIdByDeclaration } from "unwritten:compiler:mixins/id.js";
 import {
   getDescriptionByDeclaration,
   getJSDocTagsByDeclaration,
   getReturnTypeDescription
-} from "quickdoks:compiler:mixins/jsdoc.js";
-import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.js";
-import { getNameByDeclaration } from "quickdoks:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
-import { assert } from "quickdoks:utils:general.js";
+} from "unwritten:compiler:mixins/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:compiler:mixins/modifiers.js";
+import { getNameByDeclaration } from "unwritten:compiler:mixins/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { Signature as TSSignature, SignatureDeclaration } from "typescript";
 
-import type { SignatureEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createSignatureEntity(ctx: CompilerContext, signature: TSSignature): SignatureEntity {

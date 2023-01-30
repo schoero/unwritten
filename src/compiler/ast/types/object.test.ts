@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { isObjectType } from "quickdoks:compiler:typeguards/types.js";
-import { createObjectLikeType } from "quickdoks:compiler:types";
-import { compile } from "quickdoks:tests:utils/compile.js";
-import { scope } from "quickdoks:tests:utils/scope.js";
-import { ts } from "quickdoks:tests:utils/template.js";
-import { assert } from "quickdoks:utils/general.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { isObjectType } from "unwritten:compiler:typeguards/types.js";
+import { createObjectLikeType } from "unwritten:compiler:types";
+import { compile } from "unwritten:tests:utils/compile.js";
+import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:tests:utils/template.js";
+import { assert } from "unwritten:utils/general.js";
 
 
 scope("Compiler", EntityKind.Function, () => {

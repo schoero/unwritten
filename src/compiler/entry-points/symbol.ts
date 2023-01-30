@@ -1,4 +1,4 @@
-import { createUnresolvedType } from "quickdoks:compiler:ast/types/unresolved.js";
+import { createUnresolvedType } from "unwritten:compiler:ast/types/unresolved.js";
 import {
   createClassEntity,
   createEnumEntity,
@@ -10,7 +10,7 @@ import {
   createSourceFileEntity,
   createTypeAliasEntity,
   createVariableEntity
-} from "quickdoks:compiler:entities";
+} from "unwritten:compiler:entities";
 import {
   isClassSymbol,
   isEnumSymbol,
@@ -22,13 +22,13 @@ import {
   isSourceFileSymbol,
   isTypeAliasSymbol,
   isVariableSymbol
-} from "quickdoks:compiler:typeguards/symbols.js";
-import { resolveSymbolInCaseOfImport } from "quickdoks:compiler:utils/ts.js";
+} from "unwritten:compiler:typeguards/symbols.js";
+import { resolveSymbolInCaseOfImport } from "unwritten:compiler:utils/ts.js";
 
 import type { Symbol } from "typescript";
 
-import type { Entities } from "quickdoks:compiler:type-definitions/entities.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { Entities } from "unwritten:compiler:type-definitions/entities.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Entities {

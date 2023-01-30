@@ -1,12 +1,12 @@
-import { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
-import { render } from "quickdoks:renderer:markup/shared/index.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { render } from "unwritten:renderer:markup/shared/index.js";
 
 import * as helpers from "./helpers.js";
 
-import type { ExportableEntities } from "quickdoks:compiler/type-definitions/entities.js";
-import type { HTMLRenderer } from "quickdoks:renderer:markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.js";
-import type { Renderer } from "quickdoks:type-definitions/renderer.js";
+import type { ExportableEntities } from "unwritten:compiler/type-definitions/entities.js";
+import type { HTMLRenderer } from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.js";
+import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
 function verifyRenderer(renderer: Renderer): asserts renderer is HTMLRenderer {

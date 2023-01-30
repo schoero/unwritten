@@ -2,16 +2,16 @@ import { writeFileSync } from "node:fs";
 
 import { expect, it } from "vitest";
 
-import { EntityKind } from "quickdoks:compiler/enums/entities.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { renderRenderObject } from "quickdoks:renderer/markup/shared/index.js";
-import { createRenderContext } from "quickdoks:tests:utils/context.js";
-import { scope } from "quickdoks:tests:utils/scope.js";
+import { EntityKind } from "unwritten:compiler/enums/entities.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { renderRenderObject } from "unwritten:renderer/markup/shared/index.js";
+import { createRenderContext } from "unwritten:tests:utils/context.js";
+import { scope } from "unwritten:tests:utils/scope.js";
 
 import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./interface.js";
 
-import type { InterfaceEntity } from "quickdoks:compiler/type-definitions/entities.js";
-import type { Testable } from "quickdoks:type-definitions/utils.js";
+import type { InterfaceEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("Renderer", TypeKind.Interface, () => {

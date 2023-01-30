@@ -18,7 +18,7 @@ import {
   renderUnionType,
   renderUnknownType,
   renderVoidType
-} from "quickdoks:renderer:markup/ast/types/index.js";
+} from "unwritten:renderer:markup/ast/types/index.js";
 import {
   isAnyType,
   isArrayType,
@@ -39,11 +39,11 @@ import {
   isUnionType,
   isUnknownType,
   isVoidType
-} from "quickdoks:typeguards/types.js";
+} from "unwritten:typeguards/types.js";
 
-import type { Types } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { MarkupRenderer, RenderedTypes } from "quickdoks:renderer:markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
+import type { MarkupRenderer, RenderedTypes } from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function renderType(ctx: RenderContext<MarkupRenderer>, type: Types): RenderedTypes {

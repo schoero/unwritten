@@ -1,15 +1,15 @@
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByTypeNode } from "quickdoks:compiler:mixins/id.js";
-import { getNameByTypeNode } from "quickdoks:compiler:mixins/name.js";
-import { isTypeReferenceNode } from "quickdoks:compiler:typeguards/type-nodes.js";
-import { createExpressionType } from "quickdoks:compiler:types";
+import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByTypeNode } from "unwritten:compiler:mixins/id.js";
+import { getNameByTypeNode } from "unwritten:compiler:mixins/name.js";
+import { isTypeReferenceNode } from "unwritten:compiler:typeguards/type-nodes.js";
+import { createExpressionType } from "unwritten:compiler:types";
 
 import type { TypeReferenceNode, TypeReferenceType as TSTypeReferenceType } from "typescript";
 
-import type { ExpressionType, TypeReferenceType } from "quickdoks:compiler:type-definitions/types.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { ExpressionType, TypeReferenceType } from "unwritten:compiler:type-definitions/types.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createTypeReferenceType(ctx: CompilerContext, type: TSTypeReferenceType): ExpressionType | TypeReferenceType {

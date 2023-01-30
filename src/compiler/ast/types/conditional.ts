@@ -1,11 +1,11 @@
-import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByType } from "quickdoks:compiler:mixins/id.js";
+import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByType } from "unwritten:compiler:mixins/id.js";
 
 import type { ConditionalType as TSConditionalType } from "typescript";
 
-import type { ConditionalType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { ConditionalType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createConditionalType(ctx: CompilerContext, type: TSConditionalType): ConditionalType {

@@ -3,9 +3,9 @@ import { dirname, resolve } from "node:path";
 
 import ts from "typescript";
 
-import { findFile } from "quickdoks:utils:finder.js";
+import { findFile } from "unwritten:utils:finder.js";
 
-import type { DefaultContext } from "quickdoks:type-definitions/context.d.js";
+import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function compile(ctx: DefaultContext, entryFilePath: string, tsConfigFilePath?: string) {

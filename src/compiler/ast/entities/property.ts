@@ -1,17 +1,17 @@
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
-import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.js";
-import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
+import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:compiler:mixins/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:compiler:mixins/modifiers.js";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler:mixins/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
 import {
   isParameterDeclaration,
   isPropertyAssignment,
   isPropertyDeclaration,
   isPropertySignatureDeclaration
-} from "quickdoks:compiler:typeguards/declarations.js";
-import { assert } from "quickdoks:utils:general.js";
+} from "unwritten:compiler:typeguards/declarations.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type {
   ParameterDeclaration,
@@ -21,8 +21,8 @@ import type {
   Symbol
 } from "typescript";
 
-import type { PropertyEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { PropertyEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createPropertyEntity(ctx: CompilerContext, symbol: Symbol): PropertyEntity {

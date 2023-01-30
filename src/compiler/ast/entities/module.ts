@@ -1,11 +1,11 @@
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
 
 import { createSourceFileEntity } from "./source-file.js";
 
 import type { Symbol } from "typescript";
 
-import type { ModuleEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { ModuleEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createModuleEntity(ctx: CompilerContext, symbol: Symbol): ModuleEntity {

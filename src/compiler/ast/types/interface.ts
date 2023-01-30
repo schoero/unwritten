@@ -1,13 +1,13 @@
-import { createObjectLikeType } from "quickdoks:compiler:ast/types/object.js";
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getNameByType } from "quickdoks:compiler:mixins/name.js";
-import { lockType } from "quickdoks:compiler:utils/ts.js";
+import { createObjectLikeType } from "unwritten:compiler:ast/types/object.js";
+import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getNameByType } from "unwritten:compiler:mixins/name.js";
+import { lockType } from "unwritten:compiler:utils/ts.js";
 
 import type { InterfaceType as TSInterfaceType } from "typescript";
 
-import type { InterfaceType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { InterfaceType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export const createInterfaceByType = (ctx: CompilerContext, type: TSInterfaceType): InterfaceType => lockType(ctx, type, () => {

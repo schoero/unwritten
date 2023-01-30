@@ -1,4 +1,4 @@
-import type { Entities } from "quickdoks:compiler:type-definitions/entities.js";
+import type { Entities } from "unwritten:compiler:type-definitions/entities.js";
 
 
 export type ObjectValues<O extends Object> = O[keyof O];

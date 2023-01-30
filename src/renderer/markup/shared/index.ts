@@ -6,7 +6,7 @@ import {
   isNamespaceEntity,
   isTypeAliasEntity,
   isVariableEntity
-} from "quickdoks:typeguards/entities.js";
+} from "unwritten:typeguards/entities.js";
 
 import { renderClassForDocumentation, renderClassForTableOfContents } from "../ast/entities/class.js";
 import { renderEnumForDocumentation, renderEnumForTableOfContents } from "../ast/entities/enum.js";
@@ -29,8 +29,8 @@ import type {
   RenderObject
 } from "../types/renderer.js";
 
-import type { ExportableEntities } from "quickdoks:compiler:type-definitions/entities.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function render<CustomRenderer extends MarkupRenderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]): string {
@@ -228,7 +228,7 @@ export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObj
     if(isRenderedMultilineContent(element)){
       const renderedElements = element
         .filter(el => el !== undefined)
-        .map(el => renderNestedElement(el!));
+        .map(el => renderNestedElement(el));
       renderElement(renderedElements);
     }
 

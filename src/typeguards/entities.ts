@@ -1,4 +1,4 @@
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
 
 import type {
   ClassEntity,
@@ -11,7 +11,7 @@ import type {
   NamespaceEntity,
   TypeAliasEntity,
   VariableEntity
-} from "quickdoks:compiler:type-definitions/entities.d.js";
+} from "unwritten:compiler:type-definitions/entities.d.js";
 
 
 export function isClassEntity(entity: Entities): entity is ClassEntity {

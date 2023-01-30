@@ -1,7 +1,7 @@
 import type { Declaration, Node, Symbol, Type } from "typescript";
 
-import type { Position } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { Position } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function getPositionByNode(ctx: CompilerContext, node: Node): Position {

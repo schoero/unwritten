@@ -1,4 +1,4 @@
-import type { EntityKind } from "quickdoks:compiler:enums/entities.js";
+import type { EntityKind } from "unwritten:compiler:enums/entities.js";
 import type {
   Description,
   ID,
@@ -6,8 +6,8 @@ import type {
   Modifiers,
   Name,
   Position
-} from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { ExpressionType, LiteralTypes, Types } from "quickdoks:compiler:type-definitions/types.d.js";
+} from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { ExpressionType, LiteralTypes, Types } from "unwritten:compiler:type-definitions/types.d.js";
 
 
 type Entity<Kind> = {

@@ -2,9 +2,9 @@ import { getCategoryName } from "./renderer.js";
 
 import type { MarkupRenderer } from "../types/renderer.js";
 
-import type { ExportableEntities } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { MarkupRenderConfig } from "unwritten:renderer:markup/types/config.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function sortExportableTypes(ctx: RenderContext<MarkupRenderer>, types: ExportableEntities[]): ExportableEntities[] {

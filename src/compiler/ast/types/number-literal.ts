@@ -1,10 +1,10 @@
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByType } from "quickdoks:compiler:mixins/id.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByType } from "unwritten:compiler:mixins/id.js";
 
 import type { NumberLiteralType as TSNumberLiteralType } from "typescript";
 
-import type { NumberLiteralType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { NumberLiteralType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createNumberLiteralType(ctx: CompilerContext, type: TSNumberLiteralType): NumberLiteralType {

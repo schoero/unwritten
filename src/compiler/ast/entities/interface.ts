@@ -1,9 +1,9 @@
-import { createPropertyEntity, createSignatureEntity, createTypeParameterEntity } from "quickdoks:compiler:entities";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
+import { createPropertyEntity, createSignatureEntity, createTypeParameterEntity } from "unwritten:compiler:entities";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler:mixins/jsdoc.js";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler:mixins/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
@@ -12,16 +12,16 @@ import {
   isMethodSignatureDeclaration,
   isPropertySignatureDeclaration,
   isSetterDeclaration
-} from "quickdoks:compiler:typeguards/declarations.js";
-import { createExpressionType } from "quickdoks:compiler:types";
-import { isExpressionType } from "quickdoks:typeguards/types.js";
-import { assert } from "quickdoks:utils:general.js";
+} from "unwritten:compiler:typeguards/declarations.js";
+import { createExpressionType } from "unwritten:compiler:types";
+import { isExpressionType } from "unwritten:typeguards/types.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "typescript";
 
-import type { InterfaceEntity, MergedInterfaceEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { ExpressionType } from "quickdoks:compiler:type-definitions/types.js";
-import type { CompilerContext } from "quickdoks:types:context.d.js";
+import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { ExpressionType } from "unwritten:compiler:type-definitions/types.js";
+import type { CompilerContext } from "unwritten:types:context.d.js";
 
 
 export function createInterfaceEntity(ctx: CompilerContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity {

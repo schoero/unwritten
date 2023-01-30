@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
-import { getExportsFromIndexFile, getFilesInDirectory } from "quickdoks:tests:utils/export.js";
-import { scope } from "quickdoks:tests:utils/scope.js";
+import { getExportsFromIndexFile, getFilesInDirectory } from "unwritten:tests:utils/export.js";
+import { scope } from "unwritten:tests:utils/scope.js";
 
 
 scope("Renderer", "Types", () => {

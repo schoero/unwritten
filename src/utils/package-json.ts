@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { assert } from "quickdoks:utils:general.js";
+import { assert } from "unwritten:utils:general.js";
 
 
 const currentDirectoryPath = dirname(fileURLToPath(import.meta.url));

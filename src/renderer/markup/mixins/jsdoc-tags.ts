@@ -3,8 +3,8 @@ import { encapsulate } from "../utils/renderer.js";
 
 import type { MarkupRenderer, RenderedJSDocTags } from "../types/renderer.js";
 
-import type { JSDocTags } from "quickdoks:compiler/type-definitions/mixins.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.js";
+import type { JSDocTags } from "unwritten:compiler/type-definitions/mixins.js";
+import type { RenderContext } from "unwritten:type-definitions/context.js";
 
 
 export function renderJSDocTags(ctx: RenderContext<MarkupRenderer>, jsdocTags: JSDocTags): RenderedJSDocTags {

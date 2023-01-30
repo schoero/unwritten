@@ -1,7 +1,7 @@
 import type { TypeChecker } from "typescript";
 
-import type { Locker } from "quickdoks:compiler:locker/index.js";
-import type { Logger } from "quickdoks:logger/index.js";
+import type { Locker } from "unwritten:compiler:locker/index.js";
+import type { Logger } from "unwritten:logger/index.js";
 
 import type { CompleteConfig } from "./config.js";
 import type { Renderer } from "./renderer.js";

@@ -1,14 +1,14 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "quickdoks:compiler/enums/entities.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { createRenderContext } from "quickdoks:tests:utils/context.js";
-import { scope } from "quickdoks:tests:utils/scope.js";
+import { EntityKind } from "unwritten:compiler/enums/entities.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { createRenderContext } from "unwritten:tests:utils/context.js";
+import { scope } from "unwritten:tests:utils/scope.js";
 
 import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./type-alias.js";
 
-import type { TypeAliasEntity } from "quickdoks:compiler/type-definitions/entities.js";
-import type { Testable } from "quickdoks:type-definitions/utils.js";
+import type { TypeAliasEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("Renderer", EntityKind.TypeAlias, () => {
@@ -170,7 +170,7 @@ scope("Renderer", EntityKind.TypeAlias, () => {
     it("should have matching type parameters", () => {
       expect(typeParameters).to.not.equal(undefined);
       expect(typeParameters).to.have.lengthOf(1);
-      expect(typeParameters![0]).to.equal("&lt;T&gt;: string Type parameter description");
+      expect(typeParameters[0]).to.equal("&lt;T&gt;: string Type parameter description");
     });
 
   }

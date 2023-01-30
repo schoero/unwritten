@@ -3,17 +3,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "quickdoks:*": ["src/*"],
-      "quickdoks:api:*": ["src/api/*"],
-      "quickdoks:bin:*": ["src/bin/*"],
-      "quickdoks:compiler:*": ["src/compiler/*"],
-      "quickdoks:compiler:entities": ["src/compiler/ast/entities/index.js"],
-      "quickdoks:compiler:types": ["src/compiler/ast/types/index.js"],
-      "quickdoks:logger:*": ["src/logger/*"],
-      "quickdoks:renderer:*": ["src/renderer/*"],
-      "quickdoks:tests:*": ["tests/*"],
-      "quickdoks:types:*": ["src/type-definitions/*"],
-      "quickdoks:utils:*": ["src/utils/*"]
+      "unwritten:*": ["src/*"],
+      "unwritten:api:*": ["src/api/*"],
+      "unwritten:bin:*": ["src/bin/*"],
+      "unwritten:compiler:*": ["src/compiler/*"],
+      "unwritten:compiler:entities": ["src/compiler/ast/entities/index.js"],
+      "unwritten:compiler:types": ["src/compiler/ast/types/index.js"],
+      "unwritten:logger:*": ["src/logger/*"],
+      "unwritten:renderer:*": ["src/renderer/*"],
+      "unwritten:tests:*": ["tests/*"],
+      "unwritten:types:*": ["src/type-definitions/*"],
+      "unwritten:utils:*": ["src/utils/*"]
     },
     "target": "ES2020"
   },

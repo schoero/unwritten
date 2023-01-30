@@ -1,4 +1,4 @@
-import type { JSDocTags as JSDocTagNames } from "quickdoks:compiler:enums/jsdoc.js";
+import type { JSDocTags as JSDocTagNames } from "unwritten:compiler:enums/jsdoc.js";
 
 
 export type Name = string;

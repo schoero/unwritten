@@ -1,10 +1,10 @@
-import { TypeKind } from "quickdoks:compiler/enums/types.js";
-import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
+import { TypeKind } from "unwritten:compiler/enums/types.js";
+import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
 
-import type { TupleMemberEntity } from "quickdoks:compiler/type-definitions/entities.js";
-import type { TupleType } from "quickdoks:compiler/type-definitions/types.js";
-import type { MarkupRenderer, RenderedTupleType } from "quickdoks:renderer/markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.js";
+import type { TupleMemberEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type { TupleType } from "unwritten:compiler/type-definitions/types.js";
+import type { MarkupRenderer, RenderedTupleType } from "unwritten:renderer/markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.js";
 
 
 export function renderTupleType(ctx: RenderContext<MarkupRenderer>, tupleType: TupleType): RenderedTupleType {

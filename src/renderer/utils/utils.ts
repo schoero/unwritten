@@ -1,4 +1,4 @@
-import type { RenderedTitle } from "quickdoks:renderer/markup/types/renderer.js";
+import type { RenderedTitle } from "unwritten:renderer/markup/types/renderer.js";
 
 
 export function unTitle(renderedTitle: RenderedTitle) {

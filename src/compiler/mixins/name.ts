@@ -1,11 +1,11 @@
 import ts from "typescript";
 
-import { isConstructorDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { isConstructorDeclaration } from "unwritten:compiler:typeguards/declarations.js";
 
 import type { Declaration, Node, Symbol, Type } from "typescript";
 
-import type { Name } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { Name } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function getNameBySymbol(ctx: CompilerContext, symbol: Symbol): Name {

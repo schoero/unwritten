@@ -1,9 +1,9 @@
-import { TypeKind } from "quickdoks:compiler/enums/types.js";
-import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
+import { TypeKind } from "unwritten:compiler/enums/types.js";
+import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
 
-import type { ArrayType } from "quickdoks:compiler/type-definitions/types.js";
-import type { MarkupRenderer, RenderedArrayType } from "quickdoks:renderer/markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.js";
+import type { ArrayType } from "unwritten:compiler/type-definitions/types.js";
+import type { MarkupRenderer, RenderedArrayType } from "unwritten:renderer/markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.js";
 
 
 export function renderArrayType(ctx: RenderContext<MarkupRenderer>, arrayType: ArrayType): RenderedArrayType {

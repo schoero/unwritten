@@ -1,8 +1,8 @@
-import { contentFilter } from "quickdoks:compiler:utils/filter.js";
-import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
-import { renderJSDocTags } from "quickdoks:renderer/markup/mixins/jsdoc-tags.js";
-import { renderName } from "quickdoks:renderer/markup/mixins/name.js";
-import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
+import { contentFilter } from "unwritten:compiler:utils/filter.js";
+import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
+import { renderJSDocTags } from "unwritten:renderer/markup/mixins/jsdoc-tags.js";
+import { renderName } from "unwritten:renderer/markup/mixins/name.js";
+import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderDescription } from "../../mixins/description.js";
 import { renderExample } from "../../mixins/example.js";
@@ -11,13 +11,13 @@ import { renderRemarks } from "../../mixins/remarks.js";
 
 import { renderParameterForDocumentation, renderParametersForSignature } from "./parameter.js";
 
-import type { SignatureEntity } from "quickdoks:compiler/type-definitions/entities.js";
+import type { SignatureEntity } from "unwritten:compiler/type-definitions/entities.js";
 import type {
   MarkupRenderer,
   RenderedSignatureForDocumentation,
   RenderedSignatureForTableOfContents
-} from "quickdoks:renderer:markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+} from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function renderSignatureForTableOfContents(ctx: RenderContext<MarkupRenderer>, signatureEntity: SignatureEntity): RenderedSignatureForTableOfContents {

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/array-type */
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByType } from "quickdoks:compiler:mixins/id.js";
-import { getPositionByNode } from "quickdoks:compiler:mixins/position.js";
-import { isTypeReferenceType } from "quickdoks:compiler:typeguards/types.js";
-import { assert } from "quickdoks:utils:general.js";
+import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByType } from "unwritten:compiler:mixins/id.js";
+import { getPositionByNode } from "unwritten:compiler:mixins/position.js";
+import { isTypeReferenceType } from "unwritten:compiler:typeguards/types.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { ArrayTypeNode, TypeReference, TypeReferenceNode } from "typescript";
 
-import type { ArrayType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { ArrayType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createArrayType(ctx: CompilerContext, typeReference: TypeReference): ArrayType {

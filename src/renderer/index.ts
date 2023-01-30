@@ -1,15 +1,15 @@
-import { assert } from "quickdoks:utils:general.js";
+import { assert } from "unwritten:utils:general.js";
 
-import type { Renderer } from "quickdoks:type-definitions/renderer.d.js";
+import type { Renderer } from "unwritten:type-definitions/renderer.d.js";
 
 
 export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {
 
   if(renderer === undefined || renderer === "markdown"){
-    const { markdownRenderer } = await import("quickdoks:renderer/markup/markdown/index.js");
+    const { markdownRenderer } = await import("unwritten:renderer/markup/markdown/index.js");
     renderer = markdownRenderer;
   } else if(renderer === "html"){
-    const { htmlRenderer } = await import("quickdoks:renderer:markup/html/index.js");
+    const { htmlRenderer } = await import("unwritten:renderer:markup/html/index.js");
     renderer = htmlRenderer;
   } else if(typeof renderer === "string"){
     const { default: importedRenderer } = await import(renderer);

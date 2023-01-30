@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { scope } from "quickdoks:tests:utils/scope.js";
+import { scope } from "unwritten:tests:utils/scope.js";
 
 import { isPathExcluded } from "./exclude.js";
 

@@ -1,10 +1,10 @@
-import { createSourceFileEntity } from "quickdoks:compiler:entities";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
+import { createSourceFileEntity } from "unwritten:compiler:entities";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
 
 import type { Symbol } from "typescript";
 
-import type { NamespaceEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { NamespaceEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createNamespaceEntity(ctx: CompilerContext, symbol: Symbol): NamespaceEntity {

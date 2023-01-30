@@ -1,17 +1,17 @@
 {
   "version": "0.0.1",
   "type": "module",
-  "name": "quickdoks",
-  "description": "quickdoks is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
+  "name": "unwritten",
+  "description": "unwritten is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
   "license": "MIT",
   "author": "Roger Schönbächler",
-  "homepage": "https://github.com/schoero/quickdoks#readme",
+  "homepage": "https://github.com/schoero/unwritten#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/schoero/quickdoks.git"
+    "url": "git+https://github.com/schoero/unwritten.git"
   },
   "bugs": {
-    "url": "https://github.com/schoero/quickdoks/issues"
+    "url": "https://github.com/schoero/unwritten/issues"
   },
   "main": "lib/api/index.js",
   "scripts": {

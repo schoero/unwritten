@@ -1,15 +1,15 @@
-import { renderDescription } from "quickdoks:renderer/markup/mixins/description.js";
-import { renderExample } from "quickdoks:renderer/markup/mixins/example.js";
-import { renderJSDocTags } from "quickdoks:renderer/markup/mixins/jsdoc-tags.js";
-import { renderName } from "quickdoks:renderer/markup/mixins/name.js";
-import { renderPosition } from "quickdoks:renderer/markup/mixins/position.js";
-import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
+import { renderDescription } from "unwritten:renderer/markup/mixins/description.js";
+import { renderExample } from "unwritten:renderer/markup/mixins/example.js";
+import { renderJSDocTags } from "unwritten:renderer/markup/mixins/jsdoc-tags.js";
+import { renderName } from "unwritten:renderer/markup/mixins/name.js";
+import { renderPosition } from "unwritten:renderer/markup/mixins/position.js";
+import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderSignaturesForDocumentation } from "./signature.js";
 
-import type { InterfaceEntity } from "quickdoks:compiler/type-definitions/entities.js";
-import type { MarkupRenderer, RenderedInterfaceForDocumentation } from "quickdoks:renderer:markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+import type { InterfaceEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type { MarkupRenderer, RenderedInterfaceForDocumentation } from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function renderInterfaceForTableOfContents(ctx: RenderContext<MarkupRenderer>, iface: InterfaceEntity) {

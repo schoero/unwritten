@@ -1,22 +1,22 @@
-import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
-import { renderDescription } from "quickdoks:renderer/markup/mixins/description.js";
-import { renderExample } from "quickdoks:renderer/markup/mixins/example.js";
-import { renderJSDocTags } from "quickdoks:renderer/markup/mixins/jsdoc-tags.js";
-import { renderName } from "quickdoks:renderer/markup/mixins/name.js";
-import { renderPosition } from "quickdoks:renderer/markup/mixins/position.js";
-import { renderRemarks } from "quickdoks:renderer/markup/mixins/remarks.js";
-import { getRenderConfig } from "quickdoks:renderer/markup/utils/config.js";
-import { encapsulate, renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
+import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
+import { renderDescription } from "unwritten:renderer/markup/mixins/description.js";
+import { renderExample } from "unwritten:renderer/markup/mixins/example.js";
+import { renderJSDocTags } from "unwritten:renderer/markup/mixins/jsdoc-tags.js";
+import { renderName } from "unwritten:renderer/markup/mixins/name.js";
+import { renderPosition } from "unwritten:renderer/markup/mixins/position.js";
+import { renderRemarks } from "unwritten:renderer/markup/mixins/remarks.js";
+import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
+import { encapsulate, renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderTypeParameterForDocumentation, renderTypeParametersForSignature } from "./type-parameter.js";
 
-import type { TypeAliasEntity } from "quickdoks:compiler/type-definitions/entities.js";
+import type { TypeAliasEntity } from "unwritten:compiler/type-definitions/entities.js";
 import type {
   MarkupRenderer,
   RenderedTypeAliasForDocumentation,
   RenderedTypeAliasForTableOfContents
-} from "quickdoks:renderer:markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+} from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function renderTypeAliasForTableOfContents(ctx: RenderContext<MarkupRenderer>, typeAliasEntity: TypeAliasEntity): RenderedTypeAliasForTableOfContents {

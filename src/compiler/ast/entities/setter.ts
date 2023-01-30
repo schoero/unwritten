@@ -1,10 +1,10 @@
-import { createFunctionLikeEntity } from "quickdoks:compiler:entities";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
+import { createFunctionLikeEntity } from "unwritten:compiler:entities";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
 
 import type { Symbol } from "typescript";
 
-import type { SetterEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { SetterEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createSetterEntity(ctx: CompilerContext, symbol: Symbol): SetterEntity {

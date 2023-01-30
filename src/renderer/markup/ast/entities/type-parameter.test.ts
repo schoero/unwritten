@@ -1,14 +1,14 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "quickdoks:compiler/enums/entities.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { createRenderContext } from "quickdoks:tests:utils/context.js";
-import { scope } from "quickdoks:tests:utils/scope.js";
+import { EntityKind } from "unwritten:compiler/enums/entities.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { createRenderContext } from "unwritten:tests:utils/context.js";
+import { scope } from "unwritten:tests:utils/scope.js";
 
 import { renderTypeParameterForDocumentation, renderTypeParametersForSignature } from "./type-parameter.js";
 
-import type { TypeParameterEntity } from "quickdoks:compiler/type-definitions/entities.js";
-import type { Testable } from "quickdoks:type-definitions/utils.js";
+import type { TypeParameterEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("Renderer", EntityKind.TypeParameter, () => {

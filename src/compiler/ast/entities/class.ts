@@ -5,13 +5,13 @@ import {
   createPropertyEntity,
   createSetterEntity,
   createTypeParameterEntity
-} from "quickdoks:compiler:entities";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "quickdoks:compiler:mixins/jsdoc.js";
-import { getModifiersByDeclaration } from "quickdoks:compiler:mixins/modifiers.js";
-import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
+} from "unwritten:compiler:entities";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:compiler:mixins/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:compiler:mixins/modifiers.js";
+import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
 import {
   isClassDeclaration,
   isConstructorDeclaration,
@@ -19,16 +19,16 @@ import {
   isMethodDeclaration,
   isPropertyDeclaration,
   isSetterDeclaration
-} from "quickdoks:compiler:typeguards/declarations.js";
-import { createExpressionType } from "quickdoks:compiler:types";
-import { isExpressionType } from "quickdoks:typeguards/types.js";
-import { assert } from "quickdoks:utils:general.js";
+} from "unwritten:compiler:typeguards/declarations.js";
+import { createExpressionType } from "unwritten:compiler:types";
+import { isExpressionType } from "unwritten:typeguards/types.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { ClassLikeDeclaration, HeritageClause, NodeArray, Symbol } from "typescript";
 
-import type { ClassEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { ExpressionType } from "quickdoks:compiler:type-definitions/types.js";
-import type { CompilerContext } from "quickdoks:types:context.d.js";
+import type { ClassEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { ExpressionType } from "unwritten:compiler:type-definitions/types.js";
+import type { CompilerContext } from "unwritten:types:context.d.js";
 
 
 export function createClassEntity(ctx: CompilerContext, symbol: Symbol): ClassEntity {

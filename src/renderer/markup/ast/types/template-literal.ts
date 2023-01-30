@@ -1,8 +1,8 @@
-import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
 
-import type { TemplateLiteralType } from "quickdoks:compiler/type-definitions/types.js";
-import type { MarkupRenderer, RenderedStringLiteralType } from "quickdoks:renderer/markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.js";
+import type { TemplateLiteralType } from "unwritten:compiler/type-definitions/types.js";
+import type { MarkupRenderer, RenderedStringLiteralType } from "unwritten:renderer/markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.js";
 
 
 export function renderTemplateLiteralType(ctx: RenderContext<MarkupRenderer>, templateLiteralType: TemplateLiteralType): RenderedStringLiteralType {

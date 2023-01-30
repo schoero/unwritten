@@ -1,8 +1,8 @@
-import { renderType } from "quickdoks:renderer/markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
 
-import type { UnionType } from "quickdoks:compiler/type-definitions/types.js";
-import type { MarkupRenderer, RenderedUnionType } from "quickdoks:renderer/markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.js";
+import type { UnionType } from "unwritten:compiler/type-definitions/types.js";
+import type { MarkupRenderer, RenderedUnionType } from "unwritten:renderer/markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.js";
 
 
 export function renderUnionType(ctx: RenderContext<MarkupRenderer>, unionType: UnionType): RenderedUnionType {

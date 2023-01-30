@@ -1,7 +1,7 @@
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
 
-import type { CompilerConfig, ExternalTypes } from "quickdoks:type-definitions/config.js";
-import type { Complete } from "quickdoks:type-definitions/utils.js";
+import type { CompilerConfig, ExternalTypes } from "unwritten:type-definitions/config.js";
+import type { Complete } from "unwritten:type-definitions/utils.js";
 
 
 export const defaultCompilerConfig: Complete<CompilerConfig> = {

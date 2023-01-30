@@ -1,9 +1,9 @@
-import type { ExportableEntities } from "quickdoks:compiler/type-definitions/entities.js";
-import type { JSDocTags as JSDocTagNames } from "quickdoks:compiler:enums/jsdoc.js";
-import type { Description, Example, JSDocTags, Remarks } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { BuiltInRenderers } from "quickdoks:renderer:enums/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.js";
-import type { Renderer } from "quickdoks:type-definitions/renderer.js";
+import type { ExportableEntities } from "unwritten:compiler/type-definitions/entities.js";
+import type { JSDocTags as JSDocTagNames } from "unwritten:compiler:enums/jsdoc.js";
+import type { Description, Example, JSDocTags, Remarks } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.js";
+import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
 export type MarkupRenderer = Renderer & {

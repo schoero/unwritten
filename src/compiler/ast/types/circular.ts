@@ -1,12 +1,12 @@
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByType } from "quickdoks:compiler:mixins/id.js";
-import { getNameByType } from "quickdoks:compiler:mixins/name.js";
-import { getPositionBySymbol } from "quickdoks:compiler:mixins/position.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByType } from "unwritten:compiler:mixins/id.js";
+import { getNameByType } from "unwritten:compiler:mixins/name.js";
+import { getPositionBySymbol } from "unwritten:compiler:mixins/position.js";
 
 import type { Type } from "typescript";
 
-import type { CircularType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { CircularType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createLinkToType(ctx: CompilerContext, type: Type): CircularType {

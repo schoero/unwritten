@@ -1,12 +1,12 @@
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
-import { getPositionBySymbol } from "quickdoks:compiler:mixins/position.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
+import { getPositionBySymbol } from "unwritten:compiler:mixins/position.js";
 
 import type { Symbol, Type, TypeNode } from "typescript";
 
-import type { UnresolvedType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { UnresolvedType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createUnresolvedType(ctx: CompilerContext, symbol: Symbol): UnresolvedType {

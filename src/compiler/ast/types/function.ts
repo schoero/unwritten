@@ -1,11 +1,11 @@
-import { createSignatureEntity } from "quickdoks:compiler:entities";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByType } from "quickdoks:compiler:mixins/id.js";
+import { createSignatureEntity } from "unwritten:compiler:entities";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByType } from "unwritten:compiler:mixins/id.js";
 
 import type { ObjectType } from "typescript";
 
-import type { FunctionType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { FunctionType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createFunctionType(ctx: CompilerContext, type: ObjectType): FunctionType {

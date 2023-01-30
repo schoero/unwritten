@@ -1,11 +1,11 @@
 import ts from "typescript";
 
-import { isPropertyDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
+import { isPropertyDeclaration } from "unwritten:compiler:typeguards/declarations.js";
 
 import type { Declaration } from "typescript";
 
-import type { Modifiers, NativeModifiers } from "quickdoks:compiler:type-definitions/mixins.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { Modifiers, NativeModifiers } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function getModifiersByDeclaration(ctx: CompilerContext, declaration: Declaration): Modifiers[] {

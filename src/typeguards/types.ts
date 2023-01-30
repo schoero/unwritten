@@ -1,4 +1,4 @@
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
 
 import type {
   AnyType,
@@ -28,7 +28,7 @@ import type {
   UnknownType,
   UnresolvedType,
   VoidType
-} from "quickdoks:compiler:type-definitions/types.d.js";
+} from "unwritten:compiler:type-definitions/types.d.js";
 
 
 export function isAnyType(type: Types): type is AnyType {

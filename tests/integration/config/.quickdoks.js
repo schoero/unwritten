@@ -1,7 +1,7 @@
 export default {
   "renderConfig": {
     "test": {
-      ".quickdoks.js": true
+      ".unwritten.js": true
     }
   }
 }

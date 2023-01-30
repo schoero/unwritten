@@ -1,16 +1,16 @@
-import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { getInitializerByDeclaration } from "quickdoks:compiler:mixins/initializer.js";
-import { getParameterDescription } from "quickdoks:compiler:mixins/jsdoc.js";
-import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
-import { assert } from "quickdoks:utils:general.js";
+import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { getInitializerByDeclaration } from "unwritten:compiler:mixins/initializer.js";
+import { getParameterDescription } from "unwritten:compiler:mixins/jsdoc.js";
+import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { ParameterDeclaration } from "typescript";
 
-import type { ParameterEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { ParameterEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createParameterEntity(ctx: CompilerContext, declaration: ParameterDeclaration): ParameterEntity {

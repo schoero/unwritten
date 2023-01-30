@@ -1,6 +1,6 @@
-import { createFunctionType } from "quickdoks:compiler:ast/types/function.js";
-import { createObjectLikeType } from "quickdoks:compiler:ast/types/object.js";
-import { getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
+import { createFunctionType } from "unwritten:compiler:ast/types/function.js";
+import { createObjectLikeType } from "unwritten:compiler:ast/types/object.js";
+import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
 import {
   isAnyType,
   isBigIntLiteralType,
@@ -29,7 +29,7 @@ import {
   isUnionType,
   isUnknownType,
   isVoidType
-} from "quickdoks:compiler:typeguards/types.js";
+} from "unwritten:compiler:typeguards/types.js";
 import {
   createAnyType,
   createBigIntLiteralType,
@@ -59,15 +59,15 @@ import {
   createUnresolvedByType,
   createUnresolvedType,
   createVoidType
-} from "quickdoks:compiler:types";
-import { isTypeLocked } from "quickdoks:compiler:utils/ts.js";
-import { isSymbolExcluded } from "quickdoks:utils:exclude.js";
-import { assert } from "quickdoks:utils:general.js";
+} from "unwritten:compiler:types";
+import { isTypeLocked } from "unwritten:compiler:utils/ts.js";
+import { isSymbolExcluded } from "unwritten:utils:exclude.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { Declaration, ObjectType as TSObjectType, Symbol, Type } from "typescript";
 
-import type { Types } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 /* Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */

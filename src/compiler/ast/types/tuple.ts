@@ -1,19 +1,19 @@
 import ts from "typescript";
 
-import { parseType } from "quickdoks:compiler:entry-points/type.js";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdByType } from "quickdoks:compiler:mixins/id.js";
-import { getNameByDeclaration } from "quickdoks:compiler:mixins/name.js";
-import { getPositionByNode } from "quickdoks:compiler:mixins/position.js";
-import { isTupleTypeReferenceType } from "quickdoks:compiler:typeguards/types.js";
-import { assert } from "quickdoks:utils:general.js";
+import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdByType } from "unwritten:compiler:mixins/id.js";
+import { getNameByDeclaration } from "unwritten:compiler:mixins/name.js";
+import { getPositionByNode } from "unwritten:compiler:mixins/position.js";
+import { isTupleTypeReferenceType } from "unwritten:compiler:typeguards/types.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { TupleTypeNode, TupleTypeReference, Type } from "typescript";
 
-import type { TupleMemberEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { TupleType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { TupleMemberEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { TupleType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): TupleType {

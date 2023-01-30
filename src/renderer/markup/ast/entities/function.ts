@@ -1,12 +1,12 @@
 import { renderSignatureForTableOfContents, renderSignaturesForDocumentation } from "./signature.js";
 
-import type { FunctionLikeEntities } from "quickdoks:compiler/type-definitions/entities.js";
+import type { FunctionLikeEntities } from "unwritten:compiler/type-definitions/entities.js";
 import type {
   MarkupRenderer,
   RenderedFunctionForDocumentation,
   RenderedFunctionForTableOfContents
-} from "quickdoks:renderer:markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+} from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function renderFunctionForTableOfContents(ctx: RenderContext<MarkupRenderer>, func: FunctionLikeEntities): RenderedFunctionForTableOfContents {

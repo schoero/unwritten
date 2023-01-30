@@ -1,15 +1,15 @@
-import { createTypeByDeclaration } from "quickdoks:compiler:entry-points/type.js";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
+import { createTypeByDeclaration } from "unwritten:compiler:entry-points/type.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:mixins/id.js";
 import {
   getDescriptionByDeclaration,
   getDescriptionBySymbol,
   getJSDocTagsByDeclaration
-} from "quickdoks:compiler:mixins/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "quickdoks:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
-import { isEnumDeclaration } from "quickdoks:compiler:typeguards/declarations.js";
-import { assert } from "quickdoks:utils:general.js";
+} from "unwritten:compiler:mixins/jsdoc.js";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler:mixins/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+import { isEnumDeclaration } from "unwritten:compiler:typeguards/declarations.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
 
@@ -17,8 +17,8 @@ import type {
   EnumEntity,
   EnumMemberEntity,
   MergedEnumEntity
-} from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+} from "unwritten:compiler:type-definitions/entities.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function createEnumEntity(ctx: CompilerContext, symbol: Symbol): EnumEntity | MergedEnumEntity {

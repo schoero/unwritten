@@ -1,6 +1,6 @@
 import { describe } from "vitest";
 
-import type { TypeKind } from "quickdoks:compiler:enums/types.js";
+import type { TypeKind } from "unwritten:compiler:enums/types.js";
 
 
 type Scopes = "Compiler" | "E2E" | "Integration" | "Renderer" | "Types";

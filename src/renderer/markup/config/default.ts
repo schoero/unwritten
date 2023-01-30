@@ -1,8 +1,8 @@
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { RenderCategories } from "quickdoks:renderer:markup/types/renderer.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { RenderCategories } from "unwritten:renderer:markup/types/renderer.js";
 
-import type { MarkupRenderConfig } from "quickdoks:renderer:markup/types/config.js";
-import type { Complete } from "quickdoks:type-definitions/utils.js";
+import type { MarkupRenderConfig } from "unwritten:renderer:markup/types/config.js";
+import type { Complete } from "unwritten:type-definitions/utils.js";
 
 
 export const defaultRenderConfig: Complete<MarkupRenderConfig> = {

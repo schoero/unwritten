@@ -1,11 +1,11 @@
 import { expect, it } from "vitest";
 
-import { createClassEntity } from "quickdoks:compiler:entities";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { getIdBySymbol } from "quickdoks:compiler:mixins/id.js";
-import { compile } from "quickdoks:tests:utils/compile.js";
-import { scope } from "quickdoks:tests:utils/scope.js";
-import { ts } from "quickdoks:tests:utils/template.js";
+import { createClassEntity } from "unwritten:compiler:entities";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { compile } from "unwritten:tests:utils/compile.js";
+import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 
 scope("Compiler", EntityKind.Class, () => {

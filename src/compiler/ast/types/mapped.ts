@@ -1,19 +1,19 @@
-import { createTypeParameterEntity } from "quickdoks:compiler:entities";
-import { parseTypeNode } from "quickdoks:compiler:entry-points/type-node.js";
-import { EntityKind } from "quickdoks:compiler:enums/entities.js";
-import { TypeKind } from "quickdoks:compiler:enums/types.js";
-import { getIdBySymbol, getIdByTypeNode } from "quickdoks:compiler:mixins/id.js";
-import { getPositionByDeclaration } from "quickdoks:compiler:mixins/position.js";
-import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "quickdoks:compiler:typeguards/type-nodes.js";
-import { lockType } from "quickdoks:compiler:utils/ts.js";
-import { isLiteralType } from "quickdoks:typeguards/types.js";
-import { assert } from "quickdoks:utils:general.js";
+import { createTypeParameterEntity } from "unwritten:compiler:entities";
+import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { getIdBySymbol, getIdByTypeNode } from "unwritten:compiler:mixins/id.js";
+import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "unwritten:compiler:typeguards/type-nodes.js";
+import { lockType } from "unwritten:compiler:utils/ts.js";
+import { isLiteralType } from "unwritten:typeguards/types.js";
+import { assert } from "unwritten:utils:general.js";
 
 import type { ObjectType, TypeNode } from "typescript";
 
-import type { MappedTypeMemberEntity } from "quickdoks:compiler:type-definitions/entities.d.js";
-import type { MappedType } from "quickdoks:compiler:type-definitions/types.d.js";
-import type { CompilerContext } from "quickdoks:type-definitions/context.d.js";
+import type { MappedTypeMemberEntity } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { MappedType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export const createMappedTypeByType = (ctx: CompilerContext, type: ObjectType): MappedType => lockType(ctx, type, () => {

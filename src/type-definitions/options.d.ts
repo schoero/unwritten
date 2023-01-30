@@ -1,4 +1,4 @@
-import type { BuiltInRenderers } from "quickdoks:renderer/enums/renderer.js";
+import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 
 import type { Config } from "./config.js";
 
@@ -18,7 +18,7 @@ export interface Options {
 }
 
 export interface APIOptions extends Options {
-  /** Path to .quickdoks.json or Config object. */
+  /** Path to .unwritten.json or Config object. */
   config?: Config | string;
   /**
    * Whether the output should be rendered as HTML or Markdown.
@@ -29,7 +29,7 @@ export interface APIOptions extends Options {
 }
 
 export interface CLIOptions extends Options {
-  /** Path to .quickdoks.json */
+  /** Path to .unwritten.json */
   config?: string;
   /**
    * Whether the output should be rendered as HTML or Markdown.

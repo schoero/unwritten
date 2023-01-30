@@ -1,14 +1,14 @@
-import { renderLink } from "quickdoks:renderer:markup/utils/renderer.js";
+import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderForDocumentation, renderForTableOfContents } from "../../shared/index.js";
 
-import type { Namespace } from "quickdoks:compiler:type-definitions/types.d.js";
+import type { Namespace } from "unwritten:compiler:type-definitions/types.d.js";
 import type {
   MarkupRenderer,
   RenderedNamespaceForDocumentation,
   RenderedNamespaceForTableOfContents
-} from "quickdoks:renderer:markup/types/renderer.js";
-import type { RenderContext } from "quickdoks:type-definitions/context.d.js";
+} from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function renderNamespaceForTableOfContents(ctx: RenderContext<MarkupRenderer>, namespaceType: Namespace): RenderedNamespaceForTableOfContents {
