@@ -1,6 +1,6 @@
 <div align="center">
-  <img alt="unwritten" width="192" height="192" src="assets/unwritten-dark.svg#gh-dark-mode-only">
-  <img alt="unwritten" width="192" height="192" src="assets/unwritten-light.svg#gh-light-mode-only">
+  <img alt="unwritten" width="192" height="96" src="assets/unwritten-dark.svg#gh-dark-mode-only">
+  <img alt="unwritten" width="192" height="96" src="assets/unwritten-light.svg#gh-light-mode-only">
 </div>
 
 ---
