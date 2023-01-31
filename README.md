@@ -1,6 +1,9 @@
 <div align="center">
-  <img alt="unwritten" width="192" height="96" src="assets/unwritten-dark.svg#gh-dark-mode-only">
-  <img alt="unwritten" width="192" height="96" src="assets/unwritten-light.svg#gh-light-mode-only">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/unwritten-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/unwritten-light.svg">
+    <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="assets/unwritten.svg">
+</picture>
 </div>
 
 ---
