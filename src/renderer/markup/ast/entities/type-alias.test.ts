@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:compiler/enums/entities.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./type-alias.js";
 
-import type { TypeAliasEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type { TypeAliasEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 

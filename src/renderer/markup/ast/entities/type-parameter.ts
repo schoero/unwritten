@@ -1,26 +1,25 @@
-import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
-import { renderDescription } from "unwritten:renderer/markup/mixins/description.js";
+import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
+import { renderDescription } from "unwritten:renderer:markup/shared/description.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { TypeParameterEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type {
-  MarkupRenderer,
+  MarkupRenderContext,
   RenderedTypeParameterForDocumentation,
   RenderedTypeParameterForSignature,
   RenderedTypeParametersForSignature
 } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function renderTypeParametersForSignature(ctx: RenderContext<MarkupRenderer>, typeParameterEntities: TypeParameterEntity[]): RenderedTypeParametersForSignature {
+export function renderTypeParametersForSignature(ctx: MarkupRenderContext, typeParameterEntities: TypeParameterEntity[]): RenderedTypeParametersForSignature {
   return typeParameterEntities
     .map((parameter, index) => renderTypeParameterForSignature(ctx, parameter))
     .join(", ");
 }
 
 
-export function renderTypeParameterForDocumentation(ctx: RenderContext<MarkupRenderer>, typeParameterEntity: TypeParameterEntity): RenderedTypeParameterForDocumentation {
+export function renderTypeParameterForDocumentation(ctx: MarkupRenderContext, typeParameterEntity: TypeParameterEntity): RenderedTypeParameterForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -35,6 +34,6 @@ export function renderTypeParameterForDocumentation(ctx: RenderContext<MarkupRen
 }
 
 
-function renderTypeParameterForSignature(ctx: RenderContext<MarkupRenderer>, typeParameterEntity: TypeParameterEntity): RenderedTypeParameterForSignature {
+function renderTypeParameterForSignature(ctx: MarkupRenderContext, typeParameterEntity: TypeParameterEntity): RenderedTypeParameterForSignature {
   return `${typeParameterEntity.name}`;
 }

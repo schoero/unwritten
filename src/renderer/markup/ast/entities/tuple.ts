@@ -1,11 +1,10 @@
-import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
 
 import type { TupleType } from "unwritten:compiler:type-definitions/types.d.js";
-import type { MarkupRenderer } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types/renderer.js";
 
 
-export function renderTupleType(ctx: RenderContext<MarkupRenderer>, type: TupleType) {
+export function renderTupleType(ctx: MarkupRenderContext, type: TupleType) {
   const renderedMembers = type.members.map(type => {
     const label = type.name !== undefined ? `${type.name}: ` : "";
     return `${label}${renderType(ctx, type)}`;

@@ -1,6 +1,6 @@
 import { parseType } from "unwritten:compiler:entry-points/type.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:mixins/id.js";
+import { getIdByType } from "unwritten:compiler:shared/id.js";
 
 import type { UnionType as TSUnionType } from "typescript";
 

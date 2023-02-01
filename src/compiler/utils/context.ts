@@ -2,7 +2,7 @@ import { Locker } from "unwritten:compiler:locker/index.js";
 
 import type { TypeChecker } from "typescript";
 
-import type { CompleteConfig } from "unwritten:compiler:type-definitions/config.d..js";
+import type { CompleteConfig } from "unwritten:type-definitions/config.js";
 import type { CompilerContext, DefaultContext } from "unwritten:type-definitions/context.d.js";
 
 

@@ -6,8 +6,8 @@ import {
   createSignatureEntity
 } from "unwritten:compiler:entities";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:mixins/id.js";
-import { getPositionByType } from "unwritten:compiler:mixins/position.js";
+import { getIdByType } from "unwritten:compiler:shared/id.js";
+import { getPositionByType } from "unwritten:compiler:shared/position.js";
 import {
   isGetterSymbol,
   isMethodSymbol,

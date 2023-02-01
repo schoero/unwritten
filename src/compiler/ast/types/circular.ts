@@ -1,7 +1,7 @@
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:mixins/id.js";
-import { getNameByType } from "unwritten:compiler:mixins/name.js";
-import { getPositionBySymbol } from "unwritten:compiler:mixins/position.js";
+import { getIdByType } from "unwritten:compiler:shared/id.js";
+import { getNameByType } from "unwritten:compiler:shared/name.js";
+import { getPositionBySymbol } from "unwritten:compiler:shared/position.js";
 
 import type { Type } from "typescript";
 

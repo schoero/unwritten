@@ -1,5 +1,5 @@
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:mixins/id.js";
+import { getIdByType } from "unwritten:compiler:shared/id.js";
 
 import type { BigIntLiteralType as TSBigIntLiteralType } from "typescript";
 

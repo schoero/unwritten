@@ -1,6 +1,6 @@
 import { createFunctionType } from "unwritten:compiler:ast/types/function.js";
 import { createObjectLikeType } from "unwritten:compiler:ast/types/object.js";
-import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
+import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
 import {
   isAnyType,
   isBigIntLiteralType,

@@ -1,15 +1,15 @@
 import { createParameterEntity, createTypeParameterEntity } from "unwritten:compiler:entities";
 import { parseType } from "unwritten:compiler:entry-points/type.js";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdByDeclaration } from "unwritten:compiler:mixins/id.js";
+import { getIdByDeclaration } from "unwritten:compiler:shared/id.js";
 import {
   getDescriptionByDeclaration,
   getJSDocTagsByDeclaration,
   getReturnTypeDescription
-} from "unwritten:compiler:mixins/jsdoc.js";
-import { getModifiersByDeclaration } from "unwritten:compiler:mixins/modifiers.js";
-import { getNameByDeclaration } from "unwritten:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+} from "unwritten:compiler:shared/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:compiler:shared/modifiers.js";
+import { getNameByDeclaration } from "unwritten:compiler:shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Signature as TSSignature, SignatureDeclaration } from "typescript";

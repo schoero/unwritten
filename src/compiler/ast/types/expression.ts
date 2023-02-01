@@ -1,8 +1,8 @@
 import { parseType } from "unwritten:compiler:entry-points/type.js";
 import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByTypeNode } from "unwritten:compiler:mixins/id.js";
-import { getNameByType } from "unwritten:compiler:mixins/name.js";
+import { getIdByTypeNode } from "unwritten:compiler:shared/id.js";
+import { getNameByType } from "unwritten:compiler:shared/name.js";
 
 import type { ExpressionWithTypeArguments } from "typescript";
 

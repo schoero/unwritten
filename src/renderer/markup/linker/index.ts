@@ -3,19 +3,19 @@ import type { MarkupRenderer } from "../types/renderer.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 
 
-function attachRegistry(ctx: RenderContext<MarkupRenderer>) {
+function attachRegistry(ctx: MarkupRenderContext) {
   if(ctx.renderer._linkRegistry !== undefined){
     return;
   }
   ctx.renderer._linkRegistry = new Map<string, (number | string)[]>();
 }
 
-function getRegistry(ctx: RenderContext<MarkupRenderer>) {
+function getRegistry(ctx: MarkupRenderContext) {
   attachRegistry(ctx);
   return ctx.renderer._linkRegistry!;
 }
 
-export function createAnchor(ctx: RenderContext<MarkupRenderer>, name: string, id: number | string): string {
+export function createAnchor(ctx: MarkupRenderContext, name: string, id: number | string): string {
 
   const registry = getRegistry(ctx);
 
@@ -30,12 +30,12 @@ export function createAnchor(ctx: RenderContext<MarkupRenderer>, name: string, i
     registry.set(name, [id]);
   }
 
-  return getAnchor(name, id);
+  return getAnchor(ctx, name, id);
 
 }
 
 
-function getAnchor(ctx: RenderContext<MarkupRenderer>, name: string, id: number | string): string {
+function getAnchor(ctx: MarkupRenderContext, name: string, id: number | string): string {
 
   const registry = getRegistry(ctx);
 

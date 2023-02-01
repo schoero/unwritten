@@ -1,33 +1,32 @@
 import { contentFilter } from "unwritten:compiler:utils/filter.js";
-import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
-import { renderJSDocTags } from "unwritten:renderer/markup/mixins/jsdoc-tags.js";
-import { renderName } from "unwritten:renderer/markup/mixins/name.js";
+import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
+import { renderJSDocTags } from "unwritten:renderer:markup/shared/jsdoc-tags.js";
+import { renderName } from "unwritten:renderer:markup/shared/name.js";
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
-import { renderDescription } from "../../mixins/description.js";
-import { renderExample } from "../../mixins/example.js";
-import { renderPosition } from "../../mixins/position.js";
-import { renderRemarks } from "../../mixins/remarks.js";
+import { renderDescription } from "../../shared/description.js";
+import { renderExample } from "../../shared/example.js";
+import { renderPosition } from "../../shared/position.js";
+import { renderRemarks } from "../../shared/remarks.js";
 
 import { renderParameterForDocumentation, renderParametersForSignature } from "./parameter.js";
 
-import type { SignatureEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type {
-  MarkupRenderer,
+  MarkupRenderContext,
   RenderedSignatureForDocumentation,
   RenderedSignatureForTableOfContents
 } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function renderSignatureForTableOfContents(ctx: RenderContext<MarkupRenderer>, signatureEntity: SignatureEntity): RenderedSignatureForTableOfContents {
+export function renderSignatureForTableOfContents(ctx: MarkupRenderContext, signatureEntity: SignatureEntity): RenderedSignatureForTableOfContents {
   const name = renderName(ctx, signatureEntity.name);
   const renderedParameters = renderParametersForSignature(ctx, signatureEntity.parameters);
   const renderedSignature = `${name}(${renderedParameters})`;
   return renderLink(ctx, renderedSignature, signatureEntity.id);
 }
 
-export function renderSignaturesForDocumentation(ctx: RenderContext<MarkupRenderer>, signatureEntities: SignatureEntity[]): RenderedSignatureForDocumentation {
+export function renderSignaturesForDocumentation(ctx: MarkupRenderContext, signatureEntities: SignatureEntity[]): RenderedSignatureForDocumentation {
   return signatureEntities.reduce<RenderedSignatureForDocumentation>((acc, signatureEntity) => {
     const renderedSignatureForDocumentation = renderSignatureForDocumentation(ctx, signatureEntity);
     return {
@@ -37,7 +36,7 @@ export function renderSignaturesForDocumentation(ctx: RenderContext<MarkupRender
   }, {});
 }
 
-export function renderSignatureForDocumentation(ctx: RenderContext<MarkupRenderer>, signatureEntity: SignatureEntity): RenderedSignatureForDocumentation {
+export function renderSignatureForDocumentation(ctx: MarkupRenderContext, signatureEntity: SignatureEntity): RenderedSignatureForDocumentation {
 
   const name = renderName(ctx, signatureEntity.name);
   const renderedParameters = renderParametersForSignature(ctx, signatureEntity.parameters);

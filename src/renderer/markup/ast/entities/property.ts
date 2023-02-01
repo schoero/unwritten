@@ -1,23 +1,21 @@
-import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, renderLink, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { Property } from "unwritten:compiler:type-definitions/types.d.js";
 import type {
-  MarkupRenderer,
   RenderedPropertyForDocumentation,
   RenderedPropertyForTableOfContents
 } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function renderPropertyForTableOfContents(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForTableOfContents {
+export function renderPropertyForTableOfContents(ctx: MarkupRenderContext, property: Property): RenderedPropertyForTableOfContents {
   const link = renderLink(ctx, property.name, property.id);
   return link;
 }
 
 
-export function renderPropertyForDocumentation(ctx: RenderContext<MarkupRenderer>, property: Property): RenderedPropertyForDocumentation {
+export function renderPropertyForDocumentation(ctx: MarkupRenderContext, property: Property): RenderedPropertyForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
 

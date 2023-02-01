@@ -1,22 +1,21 @@
-import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, renderLink, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { EnumMember, Member } from "unwritten:compiler:type-definitions/types.d.js";
 import type {
-  MarkupRenderer,
+  MarkupRenderContext,
   RenderedMemberForDocumentation,
   RenderedMemberForTableOfContents
 } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function renderMemberForTableOfContents(ctx: RenderContext<MarkupRenderer>, member: EnumMember | Member): RenderedMemberForTableOfContents {
+export function renderMemberForTableOfContents(ctx: MarkupRenderContext, member: EnumMember | Member): RenderedMemberForTableOfContents {
   return renderLink(ctx, member.name, member.id);
 }
 
 
-export function renderMemberForDocumentation(ctx: RenderContext<MarkupRenderer>, member: EnumMember | Member): RenderedMemberForDocumentation {
+export function renderMemberForDocumentation(ctx: MarkupRenderContext, member: EnumMember | Member): RenderedMemberForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
 

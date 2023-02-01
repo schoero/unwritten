@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/array-type */
 import { parseType } from "unwritten:compiler:entry-points/type.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:mixins/id.js";
-import { getPositionByNode } from "unwritten:compiler:mixins/position.js";
+import { getIdByType } from "unwritten:compiler:shared/id.js";
+import { getPositionByNode } from "unwritten:compiler:shared/position.js";
 import { isTypeReferenceType } from "unwritten:compiler:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 

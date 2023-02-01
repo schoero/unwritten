@@ -1,11 +1,10 @@
-import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
 
-import type { TemplateLiteralType } from "unwritten:compiler/type-definitions/types.js";
-import type { MarkupRenderer, RenderedStringLiteralType } from "unwritten:renderer/markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.js";
+import type { TemplateLiteralType } from "unwritten:compiler:type-definitions/types.js";
+import type { RenderedStringLiteralType } from "unwritten:renderer:markup/types/renderer.js";
 
 
-export function renderTemplateLiteralType(ctx: RenderContext<MarkupRenderer>, templateLiteralType: TemplateLiteralType): RenderedStringLiteralType {
+export function renderTemplateLiteralType(ctx: MarkupRenderContext, templateLiteralType: TemplateLiteralType): RenderedStringLiteralType {
 
   const head = templateLiteralType.head ?? "";
   const types = templateLiteralType.types;

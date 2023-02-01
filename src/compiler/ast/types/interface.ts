@@ -1,7 +1,7 @@
 import { createObjectLikeType } from "unwritten:compiler:ast/types/object.js";
 import { parseType } from "unwritten:compiler:entry-points/type.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getNameByType } from "unwritten:compiler:mixins/name.js";
+import { getNameByType } from "unwritten:compiler:shared/name.js";
 import { lockType } from "unwritten:compiler:utils/ts.js";
 
 import type { InterfaceType as TSInterfaceType } from "typescript";

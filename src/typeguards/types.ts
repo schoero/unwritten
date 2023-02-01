@@ -11,6 +11,7 @@ import type {
   ExpressionType,
   FunctionType,
   IntersectionType,
+  LiteralTypes,
   NeverType,
   NullType,
   NumberLiteralType,
@@ -71,6 +72,13 @@ export function isIntersectionType(type: Types): type is IntersectionType {
   return type.kind === TypeKind.Intersection;
 }
 
+export function isLiteralType(type: Types): type is LiteralTypes {
+  return isStringLiteralType(type) ||
+  isNumberLiteralType(type) ||
+  isBooleanLiteralType(type) ||
+  isBigIntLiteralType(type);
+}
+
 export function isNeverType(type: Types): type is NeverType {
   return type.kind === TypeKind.Never;
 }
@@ -82,7 +90,6 @@ export function isNullType(type: Types): type is NullType {
 export function isNumberLiteralType(type: Types): type is NumberLiteralType {
   return type.kind === TypeKind.NumberLiteral;
 }
-
 
 export function isNumberType(type: Types): type is NumberType {
   return type.kind === TypeKind.Number;

@@ -17,7 +17,7 @@ export type CompilerContext = DefaultContext & {
   locker: Locker;
 };
 
-export type RenderContext<CustomRenderer extends Renderer = Renderer> = DefaultContext & {
+export type RenderContext<CustomRenderer extends Renderer> = DefaultContext & {
   config: CompleteConfig;
   renderer: CustomRenderer;
 };

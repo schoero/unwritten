@@ -58,7 +58,7 @@ scope("Compiler", EntityKind.Parameter, () => {
 
     it("should have a matching position", () => {
       expect(parameter.position).to.deep.equal({
-        column: 37,
+        column: 31,
         file: "/file.ts",
         line: 4
       });

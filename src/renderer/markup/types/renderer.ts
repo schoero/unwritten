@@ -6,8 +6,17 @@ import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
-export type MarkupRenderer = Renderer & {
-  name: BuiltInRenderers;
+export type MarkupRenderContext = HTMLRenderContext | MarkdownRenderContext;
+export type MarkupRenderer = HTMLRenderer | MarkdownRenderer;
+
+
+//-- Markdown renderer
+
+export type MarkdownRenderContext = RenderContext<MarkdownRenderer>;
+export type MarkdownRenderer = Renderer & {
+  fileExtension: "md";
+  name: BuiltInRenderers.Markdown;
+  render: <CustomRenderer extends Renderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]) => string;
   renderAnchorLink: (text: string, anchor: string) => string;
   renderBoldText: (text: string) => string;
   renderCode: (code: string, language?: string) => string;
@@ -30,16 +39,34 @@ export type MarkupRenderer = Renderer & {
   _linkRegistry?: Map<string, (number | string)[]>;
 };
 
-export type MarkdownRenderer = MarkupRenderer & {
-  fileExtension: "md";
-  name: BuiltInRenderers.Markdown;
-  render: (context: RenderContext<MarkdownRenderer>, entities: ExportableEntities[]) => string;
-};
 
-export type HTMLRenderer = MarkupRenderer & {
+//-- HTML renderer
+
+export type HTMLRenderContext = RenderContext<HTMLRenderer>;
+export type HTMLRenderer = Renderer & {
   fileExtension: "html";
   name: BuiltInRenderers.HTML;
-  render: (context: RenderContext<HTMLRenderer>, entities: ExportableEntities[]) => string;
+  render: <CustomRenderer extends Renderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]) => string;
+  renderAnchorLink: (text: string, anchor: string) => string;
+  renderBoldText: (text: string) => string;
+  renderCode: (code: string, language?: string) => string;
+  renderHorizontalRule: () => string;
+  renderHyperLink: (text: string, url: string) => string;
+  renderItalicText: (text: string) => string;
+  renderLineBreak: () => string;
+  renderList: (items: string[]) => string;
+  renderListEnd: () => string | undefined | void;
+  renderListItem: (item: string) => string;
+  renderListStart: () => string | undefined | void;
+  renderNewLine: () => string;
+  renderParagraph: (text: string) => string;
+  renderSmallText: (text: string) => string;
+  renderSourceCodeLink: (file: string, line: number, column: number) => string;
+  renderStrikeThroughText: (text: string) => string;
+  renderTitle: (title: string, size: number, anchor?: string) => string;
+  renderUnderlineText: (text: string) => string;
+  renderWarning: (text: string) => string;
+  _linkRegistry?: Map<string, (number | string)[]>;
 };
 
 
@@ -288,8 +315,8 @@ export type RenderedInterfaceForDocumentation = {
     position: RenderedPosition,
     description: Description,
     example: Example,
-    constructSignatures: RenderedSignaturesForDocumentation,
-    callSignatures: RenderedSignaturesForDocumentation
+    constructSignatures: [RenderedSignaturesForDocumentation[string]],
+    callSignatures: [RenderedSignaturesForDocumentation[string]]
   ];
 };
 

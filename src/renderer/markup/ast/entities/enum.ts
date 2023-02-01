@@ -2,20 +2,19 @@ import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { Enum } from "unwritten:compiler:type-definitions/types.d.js";
 import type {
-  MarkupRenderer,
+  MarkupRenderContext,
   RenderedEnumForDocumentation,
   RenderedEnumForTableOfContents
 } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function renderEnumForTableOfContents(ctx: RenderContext<MarkupRenderer>, enumType: Enum): RenderedEnumForTableOfContents {
+export function renderEnumForTableOfContents(ctx: MarkupRenderContext, enumType: Enum): RenderedEnumForTableOfContents {
   const link = renderLink(ctx, enumType.name, enumType.id);
   return link;
 }
 
 
-export function renderEnumForDocumentation(ctx: RenderContext<MarkupRenderer>, enumType: Enum): RenderedEnumForDocumentation {
+export function renderEnumForDocumentation(ctx: MarkupRenderContext, enumType: Enum): RenderedEnumForDocumentation {
 
   const enumName = enumType.name;
   const description = enumType.description;

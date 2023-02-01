@@ -7,11 +7,11 @@ import {
   createTypeParameterEntity
 } from "unwritten:compiler:entities";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:mixins/id.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:compiler:mixins/jsdoc.js";
-import { getModifiersByDeclaration } from "unwritten:compiler:mixins/modifiers.js";
-import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:shared/id.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:compiler:shared/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:compiler:shared/modifiers.js";
+import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import {
   isClassDeclaration,
   isConstructorDeclaration,

@@ -1,15 +1,14 @@
 import { getDefaultConfig } from "unwritten:config/index.js";
-import { markdownRenderer } from "unwritten:renderer/markup/markdown/index.js";
+import htmlRenderer from "unwritten:renderer:markup/html/index.js";
 import { override } from "unwritten:utils:override.js";
 
-import type { MarkupRenderer } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
+import type { HTMLRenderContext } from "unwritten:renderer/markup/types/renderer.js";
 
 
 const testConfig = override(getDefaultConfig(), {
   externalTypes: {},
   renderConfig: {
-    markdown: {
+    html: {
       parameterEncapsulation: false,
       propertyEncapsulation: false,
       tagEncapsulation: false,
@@ -18,9 +17,9 @@ const testConfig = override(getDefaultConfig(), {
   }
 });
 
-export function createRenderContext(): RenderContext<MarkupRenderer> {
+export function createRenderContext(): HTMLRenderContext {
   return {
-    config: JSON.parse(JSON.stringify(testConfig)),
-    renderer: markdownRenderer
+    config: structuredClone(testConfig),
+    renderer: htmlRenderer
   };
 }

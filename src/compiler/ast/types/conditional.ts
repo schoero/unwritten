@@ -1,6 +1,6 @@
 import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:mixins/id.js";
+import { getIdByType } from "unwritten:compiler:shared/id.js";
 
 import type { ConditionalType as TSConditionalType } from "typescript";
 

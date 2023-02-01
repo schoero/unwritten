@@ -10,7 +10,12 @@
       }
     },
     {
-      "files": ["**/typeguards/*.ts", "**/compiler/mixins/jsdoc.ts", "**/renderer/**/helpers.ts"],
+      "files": [
+        "**/typeguards/*.ts",
+        "**/compiler/mixins/jsdoc.ts",
+        "**/renderer/**/markdown/index.ts",
+        "**/renderer/**/html/index.ts"
+      ],
       "parser": "@typescript-eslint/parser",
       "rules": {
         "padding-line-between-statements": [

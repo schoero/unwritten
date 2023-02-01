@@ -8,32 +8,31 @@ import {
   isVariableEntity
 } from "unwritten:typeguards/entities.js";
 
-import { renderClassForDocumentation, renderClassForTableOfContents } from "../ast/entities/class.js";
-import { renderEnumForDocumentation, renderEnumForTableOfContents } from "../ast/entities/enum.js";
-import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "../ast/entities/function.js";
-import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "../ast/entities/interface.js";
-import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "../ast/entities/namespace.js";
-import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "../ast/entities/type-alias.js";
-import { renderVariableForDocumentation, renderVariableForTableOfContents } from "../ast/entities/variable.js";
-import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "../typeguards/renderer.js";
-import { getRenderConfig } from "../utils/config.js";
-import { getCategoryName } from "../utils/renderer.js";
-import { sortExportableTypes } from "../utils/sort.js";
+import { renderClassForDocumentation, renderClassForTableOfContents } from "./ast/entities/class.js";
+import { renderEnumForDocumentation, renderEnumForTableOfContents } from "./ast/entities/enum.js";
+import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./ast/entities/function.js";
+import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./ast/entities/interface.js";
+import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "./ast/entities/namespace.js";
+import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./ast/entities/type-alias.js";
+import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./ast/entities/variable.js";
+import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "./typeguards/renderer.js";
+import { getRenderConfig } from "./utils/config.js";
+import { getCategoryName } from "./utils/renderer.js";
+import { sortExportableTypes } from "./utils/sort.js";
+
+import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
 
 import type {
-  MarkupRenderer,
+  MarkupRenderContext,
   RenderedCategoryForDocumentation,
   RenderedCategoryForTableOfContents,
   RenderedEntitiesForDocumentation,
   RenderedEntitiesForTableOfContents,
   RenderObject
-} from "../types/renderer.js";
-
-import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
+} from "./types/renderer.js";
 
 
-export function render<CustomRenderer extends MarkupRenderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]): string {
+export function render(ctx: MarkupRenderContext, entities: ExportableEntities[]): string {
 
   const sortedEntities = sortExportableTypes(ctx, entities);
 
@@ -53,7 +52,7 @@ export function render<CustomRenderer extends MarkupRenderer>(ctx: RenderContext
 }
 
 
-export function renderForTableOfContents(ctx: RenderContext<MarkupRenderer>, entities: ExportableEntities[]): [RenderedCategoryForTableOfContents[]] {
+export function renderForTableOfContents(ctx: MarkupRenderContext, entities: ExportableEntities[]): [RenderedCategoryForTableOfContents[]] {
 
   const tableOfContents: RenderedCategoryForTableOfContents[][] = [];
 
@@ -82,7 +81,7 @@ export function renderForTableOfContents(ctx: RenderContext<MarkupRenderer>, ent
 }
 
 
-export function renderForDocumentation(ctx: RenderContext<MarkupRenderer>, entities: ExportableEntities[]): RenderedCategoryForDocumentation {
+export function renderForDocumentation(ctx: MarkupRenderContext, entities: ExportableEntities[]): RenderedCategoryForDocumentation {
 
   const documentation: RenderedCategoryForDocumentation = {};
 
@@ -106,7 +105,7 @@ export function renderForDocumentation(ctx: RenderContext<MarkupRenderer>, entit
 }
 
 
-export function renderTypeForTableOfContents(ctx: RenderContext<MarkupRenderer>, entities: ExportableEntities): RenderedEntitiesForTableOfContents {
+export function renderTypeForTableOfContents(ctx: MarkupRenderContext, entities: ExportableEntities): RenderedEntitiesForTableOfContents {
 
   if(isFunctionEntity(entities)){
     return renderFunctionForTableOfContents(ctx, entities);
@@ -129,7 +128,7 @@ export function renderTypeForTableOfContents(ctx: RenderContext<MarkupRenderer>,
 }
 
 
-export function renderTypeForDocumentation(ctx: RenderContext<MarkupRenderer>, entities: ExportableEntities): RenderedEntitiesForDocumentation {
+export function renderTypeForDocumentation(ctx: MarkupRenderContext, entities: ExportableEntities): RenderedEntitiesForDocumentation {
 
   if(isFunctionEntity(entities)){
     return renderFunctionForDocumentation(ctx, entities);
@@ -152,7 +151,7 @@ export function renderTypeForDocumentation(ctx: RenderContext<MarkupRenderer>, e
 }
 
 
-export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObject: RenderObject): string {
+export function renderRenderObject(ctx: MarkupRenderContext, renderObject: RenderObject): string {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -183,7 +182,7 @@ export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObj
     //-- Inline element
 
     if(typeof element === "string"){
-      return indentElement(element);
+      return element;
     }
 
     const currentOutput: string[] = [];
@@ -216,8 +215,8 @@ export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObj
 
       const listEnd = ctx.renderer.renderListEnd();
       if(listEnd !== undefined){
-        renderElement(listEnd);
         indentation--;
+        renderElement(listEnd);
       }
 
     }
@@ -228,7 +227,7 @@ export function renderRenderObject(ctx: RenderContext<MarkupRenderer>, renderObj
     if(isRenderedMultilineContent(element)){
       const renderedElements = element
         .filter(el => el !== undefined)
-        .map(el => renderNestedElement(el));
+        .map(el => renderNestedElement(el!));
       renderElement(renderedElements);
     }
 

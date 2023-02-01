@@ -1,10 +1,10 @@
 import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
-import { getInitializerByDeclaration } from "unwritten:compiler:mixins/initializer.js";
-import { getParameterDescription } from "unwritten:compiler:mixins/jsdoc.js";
-import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+import { getIdBySymbol } from "unwritten:compiler:shared/id.js";
+import { getInitializerByDeclaration } from "unwritten:compiler:shared/initializer.js";
+import { getParameterDescription } from "unwritten:compiler:shared/jsdoc.js";
+import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { ParameterDeclaration } from "typescript";

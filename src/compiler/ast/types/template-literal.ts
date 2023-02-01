@@ -1,6 +1,6 @@
 import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByTypeNode } from "unwritten:compiler:mixins/id.js";
+import { getIdByTypeNode } from "unwritten:compiler:shared/id.js";
 
 import type { TemplateLiteralTypeNode } from "typescript";
 

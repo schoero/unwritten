@@ -1,9 +1,9 @@
 import { createPropertyEntity, createSignatureEntity, createTypeParameterEntity } from "unwritten:compiler:entities";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:mixins/id.js";
-import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler:mixins/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:shared/id.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler:shared/jsdoc.js";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler:shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,

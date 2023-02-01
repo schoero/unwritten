@@ -10,5 +10,5 @@ export type Renderer = {
   /** The name of the render extension */
   name: string;
   /** The render function */
-  render: <CustomRenderer extends Renderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]) => string;
+  render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => string;
 };

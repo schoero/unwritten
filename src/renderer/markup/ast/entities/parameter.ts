@@ -1,19 +1,18 @@
-import { renderType } from "unwritten:renderer/markup/entry-points/types.js";
-import { renderDescription } from "unwritten:renderer/markup/mixins/description.js";
+import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
+import { renderDescription } from "unwritten:renderer:markup/shared/description.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { ParameterEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type {
-  MarkupRenderer,
+  MarkupRenderContext,
   RenderedParameterForDocumentation,
   RenderedParameterForSignature,
   RenderedParametersForSignature
 } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>, parameterEntities: ParameterEntity[]): RenderedParametersForSignature {
+export function renderParametersForSignature(ctx: MarkupRenderContext, parameterEntities: ParameterEntity[]): RenderedParametersForSignature {
   return parameterEntities.map((parameter, index) => {
     const renderedParameter = renderParameterForSignature(ctx, parameter);
     if(index === 0){
@@ -25,7 +24,7 @@ export function renderParametersForSignature(ctx: RenderContext<MarkupRenderer>,
 }
 
 
-export function renderParameterForDocumentation(ctx: RenderContext<MarkupRenderer>, parameterEntity: ParameterEntity): RenderedParameterForDocumentation {
+export function renderParameterForDocumentation(ctx: MarkupRenderContext, parameterEntity: ParameterEntity): RenderedParameterForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -41,7 +40,7 @@ export function renderParameterForDocumentation(ctx: RenderContext<MarkupRendere
 }
 
 
-function renderParameterForSignature(ctx: RenderContext<MarkupRenderer>, parameterEntity: ParameterEntity): RenderedParameterForSignature {
+function renderParameterForSignature(ctx: MarkupRenderContext, parameterEntity: ParameterEntity): RenderedParameterForSignature {
   const rest = parameterEntity.rest === true ? "..." : "";
   return `${rest}${parameterEntity.name}`;
 }

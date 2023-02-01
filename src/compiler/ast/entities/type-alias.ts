@@ -1,9 +1,9 @@
 import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
-import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler:mixins/jsdoc.js";
-import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:mixins/position.js";
+import { getIdBySymbol } from "unwritten:compiler:shared/id.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler:shared/jsdoc.js";
+import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import { isTypeAliasDeclaration } from "unwritten:compiler:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
 

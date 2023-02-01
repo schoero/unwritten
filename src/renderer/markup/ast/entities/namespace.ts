@@ -1,20 +1,19 @@
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
-import { renderForDocumentation, renderForTableOfContents } from "../../shared/index.js";
+import { renderForDocumentation, renderForTableOfContents } from "../../index.js";
 
-import type { Namespace } from "unwritten:compiler:type-definitions/types.d.js";
+import type { NamespaceEntity } from "unwritten:compiler/type-definitions/entities.js";
 import type {
-  MarkupRenderer,
+  MarkupRenderContext,
   RenderedNamespaceForDocumentation,
   RenderedNamespaceForTableOfContents
 } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function renderNamespaceForTableOfContents(ctx: RenderContext<MarkupRenderer>, namespaceType: Namespace): RenderedNamespaceForTableOfContents {
+export function renderNamespaceForTableOfContents(ctx: MarkupRenderContext, namespaceEntity: NamespaceEntity): RenderedNamespaceForTableOfContents {
 
-  const namespaceName = renderLink(ctx, namespaceType.name, namespaceType.id);
-  const entities = renderForTableOfContents(ctx, namespaceType.exports);
+  const namespaceName = renderLink(ctx, namespaceEntity.name, namespaceEntity.id);
+  const entities = renderForTableOfContents(ctx, namespaceEntity.exports);
 
   return [
     namespaceName,
@@ -24,7 +23,7 @@ export function renderNamespaceForTableOfContents(ctx: RenderContext<MarkupRende
 }
 
 
-export function renderNamespaceForDocumentation(ctx: RenderContext<MarkupRenderer>, namespaceType: Namespace): RenderedNamespaceForDocumentation {
+export function renderNamespaceForDocumentation(ctx: MarkupRenderContext, namespaceType: Namespace): RenderedNamespaceForDocumentation {
 
   const title = namespaceType.name;
   const entities = renderForDocumentation(ctx, namespaceType.exports);

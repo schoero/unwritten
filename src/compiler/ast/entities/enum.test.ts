@@ -3,7 +3,7 @@ import { assert, expect, it } from "vitest";
 import { createEnumEntity } from "unwritten:compiler:entities";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { getIdBySymbol } from "unwritten:compiler:shared/id.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
@@ -89,7 +89,7 @@ scope("Compiler", EntityKind.Enum, () => {
 
     it("should have a matching position", () => {
       expect(exportedEnum.position).to.deep.equal({
-        column: 6,
+        column: 0,
         file: "/file.ts",
         line: 5
       });

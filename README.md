@@ -10,22 +10,22 @@
 
 <div align="center">
   <a href="https://github.com/schoero/unwritten/blob/main/LICENSE">
-    <img alt="MIT License" src="https://img.shields.io/npm/l/unwritten?color=brightgreen&style=flat-square">
+    <img alt="MIT License" src="https://img.shields.io/npm/l/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
   </a>
   <a href="https://www.npmjs.com/package/unwritten">
-    <img alt="Version" src="https://img.shields.io/npm/v/unwritten?color=brightgreen&style=flat-square">
+    <img alt="Version" src="https://img.shields.io/npm/v/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
   </a>
   <a href="https://github.com/schoero/unwritten/issues">
-    <img alt="Issues" src="https://img.shields.io/github/issues-raw/schoero/unwritten?style=flat-square">
+    <img alt="Issues" src="https://img.shields.io/github/issues-raw/schoero/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
   </a>
   <a href="https://www.npmjs.com/package/unwritten">
-    <img alt="Downloads" src="https://img.shields.io/npm/dw/unwritten?style=flat-square">
+    <img alt="Downloads" src="https://img.shields.io/npm/dw/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
   </a>
   <a href="https://github.com/schoero/unwritten/stargazers">
-    <img alt="Downloads" src="https://img.shields.io/github/stars/schoero/unwritten?color=brightgreen&style=flat-square">
+    <img alt="Downloads" src="https://img.shields.io/github/stars/schoero/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
   </a>
   <a href="https://github.com/schoero/unwritten/actions?query=workflow%3ACI">
-    <img alt="CI" src="https://img.shields.io/github/workflow/status/schoero/unwritten/CI?style=flat-square">
+    <img alt="CI" src="https://img.shields.io/github/workflow/status/schoero/unwritten/CI?labelColor=454c5c&color=00AD51&&style=flat-square">
   </a>
 </div>
 

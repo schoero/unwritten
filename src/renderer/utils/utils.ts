@@ -1,8 +1,9 @@
-import type { RenderedTitle } from "unwritten:renderer/markup/types/renderer.js";
+import type { RenderedList, RenderedTitle } from "unwritten:renderer:markup/types/renderer.js";
 
 
-export function unTitle(renderedTitle: RenderedTitle) {
-  const title = Object.keys(renderedTitle)[0];
-  const content = renderedTitle[title];
-  return { content, title };
+export function convertTitlesToList(renderedTitle: RenderedTitle): RenderedList {
+  return Object.entries(renderedTitle).reduce<RenderedList>((acc, [title, content]) => {
+    acc[0].push(title, content);
+    return acc;
+  }, [[]]);
 }

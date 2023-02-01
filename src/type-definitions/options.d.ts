@@ -1,4 +1,4 @@
-import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import type { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 
 import type { Config } from "./config.js";
 

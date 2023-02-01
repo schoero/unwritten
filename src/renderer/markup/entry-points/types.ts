@@ -42,11 +42,10 @@ import {
 } from "unwritten:typeguards/types.js";
 
 import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
-import type { MarkupRenderer, RenderedTypes } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
+import type { RenderedTypes } from "unwritten:renderer:markup/types/renderer.js";
 
 
-export function renderType(ctx: RenderContext<MarkupRenderer>, type: Types): RenderedTypes {
+export function renderType(ctx: MarkupRenderContext, type: Types): RenderedTypes {
 
   if(isAnyType(type)){
     return renderAnyType(ctx, type);

@@ -6,14 +6,13 @@ import { renderPropertyForDocumentation, renderPropertyForTableOfContents } from
 
 import type { ClassEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type {
-  MarkupRenderer,
+  MarkupRenderContext,
   RenderedClassForDocumentation,
   RenderedClassForTableOfContents
 } from "unwritten:renderer:markup/types/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function renderClassForTableOfContents(ctx: RenderContext<MarkupRenderer>, classEntity: ClassEntity): RenderedClassForTableOfContents {
+export function renderClassForTableOfContents(ctx: MarkupRenderContext, classEntity: ClassEntity): RenderedClassForTableOfContents {
 
   const renderConfig = getRenderConfig(ctx);
   const name = renderLink(ctx, classEntity.name, classEntity.id);
@@ -72,7 +71,7 @@ export function renderClassForTableOfContents(ctx: RenderContext<MarkupRenderer>
 }
 
 
-export function renderClassForDocumentation(ctx: RenderContext<MarkupRenderer>, classEntity: ClassEntity): RenderedClassForDocumentation {
+export function renderClassForDocumentation(ctx: MarkupRenderContext, classEntity: ClassEntity): RenderedClassForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
   const className = renderLink(ctx, classEntity.name, classEntity.id);

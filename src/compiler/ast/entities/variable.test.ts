@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { createVariableEntity } from "unwritten:compiler:entities";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
+import { getIdBySymbol } from "unwritten:compiler:shared/id.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
@@ -65,7 +65,7 @@ scope("Compiler", EntityKind.Variable, () => {
 
     it("should have a matching position", () => {
       expect(exportedVariable.position).to.deep.equal({
-        column: 19,
+        column: 13,
         file: "/file.ts",
         line: 5
       });

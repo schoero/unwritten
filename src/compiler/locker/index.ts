@@ -1,4 +1,4 @@
-import { ensureTypeHasId, getIdByType } from "unwritten:compiler:mixins/id.js";
+import { ensureTypeHasId, getIdByType } from "unwritten:compiler:shared/id.js";
 
 import type { Type } from "typescript";
 

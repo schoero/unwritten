@@ -1,7 +1,7 @@
 import { parseSymbol } from "unwritten:compiler:entry-points/symbol.js";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdBySymbol } from "unwritten:compiler:mixins/id.js";
-import { getNameBySymbol } from "unwritten:compiler:mixins/name.js";
+import { getIdBySymbol } from "unwritten:compiler:shared/id.js";
+import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
 import { getExportedSymbols } from "unwritten:compiler:utils/ts.js";
 import { isExportableEntity } from "unwritten:typeguards/entities.js";
 import { assert } from "unwritten:utils:general.js";

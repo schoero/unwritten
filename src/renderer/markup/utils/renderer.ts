@@ -23,7 +23,7 @@ export function encapsulate(text: string, encapsulation: Encapsulation | false |
 }
 
 
-export function renderLink(ctx: RenderContext<MarkupRenderer>, text: string, id?: number): string {
+export function renderLink(ctx: MarkupRenderContext, text: string, id?: number): string {
   if(id !== undefined){
     const anchor = createAnchor(ctx, text, id);
     return ctx.renderer.renderAnchorLink(text, anchor);
@@ -33,7 +33,7 @@ export function renderLink(ctx: RenderContext<MarkupRenderer>, text: string, id?
 }
 
 
-export function getCategoryName(ctx: RenderContext<MarkupRenderer>, key: RenderCategories | string, plural: boolean = false): string {
+export function getCategoryName(ctx: MarkupRenderContext, key: RenderCategories | string, plural: boolean = false): string {
 
   const renderConfig = getRenderConfig(ctx);
 
