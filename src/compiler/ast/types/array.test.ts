@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/array-type */
 
-import { ts } from "unwritten:tests:utils/template.js";
 import { assert, describe, expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:compiler:entities";
@@ -8,6 +7,7 @@ import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 
 scope("Compiler", TypeKind.Array, () => {

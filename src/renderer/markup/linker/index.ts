@@ -1,6 +1,4 @@
-import type { MarkupRenderer } from "../types/renderer.js";
-
-import type { RenderContext } from "unwritten:type-definitions/context.js";
+import type { MarkupRenderContext } from "../types/renderer.js";
 
 
 function attachRegistry(ctx: MarkupRenderContext) {
