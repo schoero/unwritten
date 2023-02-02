@@ -19,7 +19,7 @@ const testConfig = override(getDefaultConfig(), {
 
 export function createRenderContext(): HTMLRenderContext {
   return {
-    config: structuredClone(testConfig),
+    config: JSON.parse(JSON.stringify(testConfig)),
     renderer: htmlRenderer
   };
 }
