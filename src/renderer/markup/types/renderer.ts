@@ -122,6 +122,7 @@ export type RenderedTitle = {
 };
 
 export type SingleLineContent = string;
+export type RenderedParagraph = [SingleLineContent];
 export type RenderedMultilineContent = (RenderedList | RenderedTitle | RenderObject | SingleLineContent | undefined)[];
 
 export type RenderedList = [RenderedMultilineContent | RenderObject[]];

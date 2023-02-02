@@ -61,16 +61,38 @@ scope("Renderer", "Render abstraction", () => {
     {
 
       const testFileContent: RenderedTitle = {
-        title: "element"
+        heading: ["element"]
       };
-
 
       const renderedList = renderRenderObject(createRenderContext(), testFileContent);
 
-      it("should render nested lists correctly", () => {
+      it("should render titles correctly", () => {
         expect(renderedList).to.equal(html`
-          <h1>title</h1>
-          element
+          <h1>heading</h1>
+          <p>element</p>
+        `);
+      });
+
+    }
+
+    {
+
+      const testFileContent: RenderedTitle = {
+        heading1: {
+          heading2: {
+            heading3: ["element"]
+          }
+        }
+      };
+
+      const renderedList = renderRenderObject(createRenderContext(), testFileContent);
+
+      it("should render nested titles correctly", () => {
+        expect(renderedList).to.equal(html`
+          <h1>heading1</h1>
+          <h2>heading2</h2>
+          <h3>heading3</h3>
+          <p>element</p>
         `);
       });
 

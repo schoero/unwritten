@@ -15,7 +15,12 @@ import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } fr
 import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "./ast/entities/namespace.js";
 import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./ast/entities/type-alias.js";
 import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./ast/entities/variable.js";
-import { isRenderedList, isRenderedMultilineContent, isRenderedTitle } from "./typeguards/renderer.js";
+import {
+  isRenderedList,
+  isRenderedMultilineContent,
+  isRenderedParagraph,
+  isRenderedTitle
+} from "./typeguards/renderer.js";
 import { getRenderConfig } from "./utils/config.js";
 import { getCategoryName } from "./utils/renderer.js";
 import { sortExportableTypes } from "./utils/sort.js";
@@ -219,6 +224,13 @@ export function renderRenderObject(ctx: MarkupRenderContext, renderObject: Rende
         renderElement(listEnd);
       }
 
+    }
+
+
+    //-- Paragraph
+
+    if(isRenderedParagraph(element)){
+      renderElement(ctx.renderer.renderParagraph(renderNestedElement(element[0])));
     }
 
 

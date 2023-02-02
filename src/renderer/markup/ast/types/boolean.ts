@@ -12,7 +12,7 @@ export function renderBooleanType(ctx: MarkupRenderContext, booleanType: Boolean
 
   const name = booleanType.name;
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.Boolean] && ctx.renderer.renderHyperLink(ctx, encapsulatedName, ctx.config.externalTypes[TypeKind.Boolean]);
+  const link = ctx.config.externalTypes[TypeKind.Boolean] && ctx.renderer.renderHyperLink(encapsulatedName, ctx.config.externalTypes[TypeKind.Boolean]);
 
   return link ?? encapsulatedName;
 
