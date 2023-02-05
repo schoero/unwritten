@@ -16,12 +16,12 @@ scope("Renderer", "Render abstraction", () => {
       it("should convert complex text to markdown compatible anchor ids", () => {
 
         const testFunctionSignature = ts`
-          test()
+          testFunction()
         `;
 
         const anchorId = convertTextToAnchorId(testFunctionSignature);
 
-        expect(anchorId).to.equal("test");
+        expect(anchorId).to.equal("testfunction");
 
       });
 
@@ -32,12 +32,12 @@ scope("Renderer", "Render abstraction", () => {
       it("should convert complex text to markdown compatible anchor ids", () => {
 
         const testFunctionSignature = ts`
-          test(param)
+          testFunction(param)
         `;
 
         const anchorId = convertTextToAnchorId(testFunctionSignature);
 
-        expect(anchorId).to.equal("testparam");
+        expect(anchorId).to.equal("testfunctionparam");
 
       });
 
@@ -48,12 +48,12 @@ scope("Renderer", "Render abstraction", () => {
       it("should convert complex text to markdown compatible anchor ids", () => {
 
         const testFunctionSignature = ts`
-          test(param, param2)
+          testFunction(param, param2)
         `;
 
         const anchorId = convertTextToAnchorId(testFunctionSignature);
 
-        expect(anchorId).to.equal("testparam-param2");
+        expect(anchorId).to.equal("testfunctionparam-param2");
 
       });
 
@@ -64,12 +64,12 @@ scope("Renderer", "Render abstraction", () => {
       it("should convert complex text to markdown compatible anchor ids", () => {
 
         const testFunctionSignature = ts`
-          test(param[, param2])
+          testFunction(param[, param2])
         `;
 
         const anchorId = convertTextToAnchorId(testFunctionSignature);
 
-        expect(anchorId).to.equal("testparam-param2");
+        expect(anchorId).to.equal("testfunctionparam-param2");
 
       });
 

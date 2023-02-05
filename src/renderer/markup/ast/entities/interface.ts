@@ -1,11 +1,10 @@
-import { getAnchorLink } from "unwritten:renderer/markup/utils/linker.js";
+import { getAnchorIdentifier } from "unwritten:renderer/markup/utils/linker.js";
 import { renderDescription } from "unwritten:renderer:markup/shared/description.js";
 import { renderExample } from "unwritten:renderer:markup/shared/example.js";
 import { renderJSDocTags } from "unwritten:renderer:markup/shared/jsdoc-tags.js";
 import { renderName } from "unwritten:renderer:markup/shared/name.js";
 import { renderPosition } from "unwritten:renderer:markup/shared/position.js";
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
-import { assert } from "unwritten:utils/general.js";
 
 import { renderSignatureForTableOfContents, renderSignaturesForDocumentation } from "./signature.js";
 
@@ -24,9 +23,7 @@ export function renderInterfaceForTableOfContents(ctx: MarkupRenderContext, ifac
 export function renderInterfaceForDocumentation(ctx: MarkupRenderContext, iface: InterfaceEntity): RenderedInterfaceForDocumentation {
 
   const interfaceName = renderName(ctx, iface.name);
-  const anchor = getAnchorLink(ctx, interfaceName, iface.id);
-
-  assert(anchor, "Interface anchor must be defined.");
+  const anchorIdentifier = getAnchorIdentifier(ctx, interfaceName, iface.id);
 
   const jsdocTags = renderJSDocTags(ctx, iface);
   const position = renderPosition(ctx, iface.position);
@@ -40,7 +37,7 @@ export function renderInterfaceForDocumentation(ctx: MarkupRenderContext, iface:
   const renderedConstructSignatures = renderSignaturesForDocumentation(ctx, iface.constructSignatures);
 
   return {
-    [anchor]: [
+    [anchorIdentifier]: [
       jsdocTags,
       position,
       description,

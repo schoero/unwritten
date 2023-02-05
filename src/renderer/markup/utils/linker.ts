@@ -47,13 +47,30 @@ export function createAnchor(ctx: MarkupRenderContext, name: string, id: number)
 }
 
 
+export function getAnchorIdentifier(ctx: MarkupRenderContext, name: string, id: number, index: number = 0): AnchorIdentifier {
+  return `${convertTextToAnchorId(name)}-${id}-${index}`;
+}
+
+
 export function getAnchorLink(ctx: MarkupRenderContext, identifier: AnchorIdentifier): string | undefined {
 
   const registry = getRegistry(ctx);
 
-  const [name, id, index] = identifier.split("-");
+  const [_, id, index] = identifier.split("-");
 
-  return registry[name]![+id]![+index];
+  for(const key of Object.keys(registry)){
+
+    if(!(id in registry[key])){
+      continue;
+    }
+
+    const anchors = Object.values(registry[key][+id]);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if(anchors[+index] !== undefined){
+      return anchors[+index];
+    }
+
+  }
 
 }
 
@@ -65,9 +82,7 @@ export function getAnchorText(ctx: MarkupRenderContext, identifier: AnchorIdenti
   const [_, id, index] = identifier.split("-");
 
   for(const key of Object.keys(registry)){
-    if(key !== id){
-      continue;
-    }
+
     if(!(id in registry[key])){
       continue;
     }

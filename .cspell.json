@@ -3,12 +3,14 @@
     "@schoero/cspell-config"
   ],
   "words": [
-    "unwritten",
-    "untitle",
     "Mergeable",
+    "renderable",
+    "Renderable",
+    "testfunction",
+    "testfunctionparam",
     "tsdoc",
     "typeguards",
-    "Renderable",
-    "renderable"
+    "untitle",
+    "unwritten"
   ]
 }

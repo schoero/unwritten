@@ -11,6 +11,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./interface.js";
 
 import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { AnchorIdentifier } from "unwritten:renderer/markup/utils/linker.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
@@ -25,7 +26,7 @@ scope("Renderer", TypeKind.Interface, () => {
         {
           description: "Call signature description",
           example: "Call signature example",
-          id: 1,
+          id: 2,
           kind: EntityKind.Signature,
           modifiers: [],
           name: undefined,
@@ -47,6 +48,7 @@ scope("Renderer", TypeKind.Interface, () => {
       description: undefined,
       getterSignatures: [],
       heritage: undefined,
+      id: 1,
       kind: EntityKind.Interface,
       methodSignatures: [],
       name: "Interface",
@@ -67,7 +69,7 @@ scope("Renderer", TypeKind.Interface, () => {
     const renderedInterfaceForTableOfContents = renderInterfaceForTableOfContents(ctx, simpleInterface as InterfaceEntity);
     const renderedInterfaceForDocumentation = renderInterfaceForDocumentation(ctx, simpleInterface as InterfaceEntity);
 
-    const interfaceName = Object.keys(renderedInterfaceForDocumentation)[0]!;
+    const interfaceName = Object.keys(renderedInterfaceForDocumentation)[0]! as AnchorIdentifier;
     const interfaceContent = renderedInterfaceForDocumentation[interfaceName]!;
 
     const documentation = renderRenderObject(ctx, renderedInterfaceForDocumentation);
