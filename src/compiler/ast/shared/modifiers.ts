@@ -4,7 +4,7 @@ import { isPropertyDeclaration } from "unwritten:compiler:typeguards/declaration
 
 import type { Declaration } from "typescript";
 
-import type { Modifiers, NativeModifiers } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { Modifiers, NativeModifiers } from "unwritten:compiler/type-definitions/shared.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 

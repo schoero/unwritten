@@ -34,6 +34,18 @@ scope("Renderer", "Render abstraction", () => {
 
     {
 
+      const testFileContent: RenderedList = [[]];
+
+      const renderedList = renderRenderObject(createRenderContext(), testFileContent);
+
+      it("should not render empty lists", () => {
+        expect(renderedList).to.equal(html``);
+      });
+
+    }
+
+    {
+
       const testFileContent: RenderedList = [[
         "element 1",
         [[

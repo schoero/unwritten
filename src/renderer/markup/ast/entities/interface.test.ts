@@ -1,3 +1,5 @@
+import { writeFileSync } from "node:fs";
+
 import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
@@ -16,11 +18,14 @@ scope("Renderer", TypeKind.Interface, () => {
 
   {
 
+    // #region Entity
+
     const simpleInterface: Testable<InterfaceEntity> = {
       callSignatures: [
         {
           description: "Call signature description",
           example: "Call signature example",
+          id: 1,
           kind: EntityKind.Signature,
           modifiers: [],
           name: undefined,
@@ -54,269 +59,8 @@ scope("Renderer", TypeKind.Interface, () => {
       setterSignatures: [],
       typeParameters: undefined
     };
-    // const simpleInterface: Testable<InterfaceEntity> = {
-    //   callSignatures: [
-    //     {
-    //       description: undefined,
-    //       kind: EntityKind.Signature,
-    //       modifiers: [],
-    //       name: undefined,
-    //       parameters: [],
-    //       position: {
-    //         column: 6,
-    //         file: "/file.ts",
-    //         line: 2
-    //       },
-    //       returnType: {
-    //         description: undefined,
-    //         kind: TypeKind.Void,
-    //         name: "void"
-    //       },
-    //       typeParameters: undefined
-    //     }
-    //   ],
-    //   constructSignatures: [
-    //     {
-    //       description: undefined,
-    //       kind: EntityKind.Signature,
-    //       modifiers: [],
-    //       name: undefined,
-    //       parameters: [],
-    //       position: {
-    //         column: 6,
-    //         file: "/file.ts",
-    //         line: 3
-    //       },
-    //       returnType: {
-    //         description: undefined,
-    //         kind: TypeKind.Void,
-    //         name: "void"
-    //       },
-    //       typeParameters: undefined
-    //     }
-    //   ],
-    //   description: undefined,
-    //   getterSignatures: [
-    //     {
-    //       description: undefined,
-    //       kind: EntityKind.Signature,
-    //       modifiers: [],
-    //       name: "getter",
-    //       parameters: [],
-    //       position: {
-    //         column: 6,
-    //         file: "/file.ts",
-    //         line: 5
-    //       },
-    //       returnType: {
-    //         description: undefined,
-    //         kind: TypeKind.String,
-    //         name: "string"
-    //       },
-    //       typeParameters: undefined
-    //     }
-    //   ],
-    //   heritage: undefined,
-    //   kind: EntityKind.Interface,
-    //   methodSignatures: [],
-    //   name: "Interface",
-    //   position: {
-    //     column: 0,
-    //     file: "/file.ts",
-    //     line: 1
-    //   },
-    //   properties: [
-    //     {
-    //       description: undefined,
-    //       kind: EntityKind.Property,
-    //       modifiers: [],
-    //       name: "funcProp",
-    //       optional: false,
-    //       position: {
-    //         column: 6,
-    //         file: "/file.ts",
-    //         line: 4
-    //       },
-    //       type: {
-    //         kind: TypeKind.Function,
-    //         signatures: [
-    //           {
-    //             description: undefined,
-    //             kind: EntityKind.Signature,
-    //             modifiers: [],
-    //             name: undefined,
-    //             parameters: [],
-    //             position: {
-    //               column: 16,
-    //               file: "/file.ts",
-    //               line: 4
-    //             },
-    //             returnType: {
-    //               description: undefined,
-    //               kind: TypeKind.Void,
-    //               name: "void"
-    //             },
-    //             typeParameters: undefined
-    //           }
-    //         ]
-    //       }
-    //     },
-    //     {
-    //       description: undefined,
-    //       kind: EntityKind.Property,
-    //       modifiers: [],
-    //       name: "method",
-    //       optional: false,
-    //       position: {
-    //         column: 6,
-    //         file: "/file.ts",
-    //         line: 6
-    //       },
-    //       type: {
-    //         kind: TypeKind.Intersection,
-    //         types: [
-    //           {
-    //             kind: TypeKind.Function,
-    //             signatures: [
-    //               {
-    //                 description: undefined,
-    //                 kind: EntityKind.Signature,
-    //                 modifiers: [],
-    //                 name: undefined,
-    //                 parameters: [
-    //                   {
-    //                     description: undefined,
-    //                     initializer: undefined,
-    //                     kind: EntityKind.Parameter,
-    //                     name: "a",
-    //                     optional: false,
-    //                     position: {
-    //                       column: 16,
-    //                       file: "/file.ts",
-    //                       line: 6
-    //                     },
-    //                     rest: false,
-    //                     type: {
-    //                       kind: TypeKind.Number,
-    //                       name: "number"
-    //                     }
-    //                   }
-    //                 ],
-    //                 position: {
-    //                   column: 15,
-    //                   file: "/file.ts",
-    //                   line: 6
-    //                 },
-    //                 returnType: {
-    //                   description: undefined,
-    //                   kind: TypeKind.Void,
-    //                   name: "void"
-    //                 },
-    //                 typeParameters: undefined
-    //               }
-    //             ]
-    //           },
-    //           {
-    //             kind: TypeKind.Function,
-    //             signatures: [
-    //               {
-    //                 description: undefined,
-    //                 kind: EntityKind.Signature,
-    //                 modifiers: [],
-    //                 name: undefined,
-    //                 parameters: [
-    //                   {
-    //                     description: undefined,
-    //                     initializer: undefined,
-    //                     kind: EntityKind.Parameter,
-    //                     name: "a",
-    //                     optional: false,
-    //                     position: {
-    //                       column: 40,
-    //                       file: "/file.ts",
-    //                       line: 6
-    //                     },
-    //                     rest: false,
-    //                     type: {
-    //                       kind: TypeKind.String,
-    //                       name: "string"
-    //                     }
-    //                   }
-    //                 ],
-    //                 position: {
-    //                   column: 39,
-    //                   file: "/file.ts",
-    //                   line: 6
-    //                 },
-    //                 returnType: {
-    //                   description: undefined,
-    //                   kind: TypeKind.Void,
-    //                   name: "void"
-    //                 },
-    //                 typeParameters: undefined
-    //               }
-    //             ]
-    //           }
-    //         ]
-    //       }
-    //     },
-    //     {
-    //       description: undefined,
-    //       kind: EntityKind.Property,
-    //       modifiers: [],
-    //       name: "prop",
-    //       optional: false,
-    //       position: {
-    //         column: 6,
-    //         file: "/file.ts",
-    //         line: 7
-    //       },
-    //       type: {
-    //         kind: TypeKind.String,
-    //         name: "string"
-    //       }
-    //     }
-    //   ],
-    //   setterSignatures: [
-    //     {
-    //       description: undefined,
-    //       kind: EntityKind.Signature,
-    //       modifiers: [],
-    //       name: "setter",
-    //       parameters: [
-    //         {
-    //           description: undefined,
-    //           initializer: undefined,
-    //           kind: EntityKind.Parameter,
-    //           name: "value",
-    //           optional: false,
-    //           position: {
-    //             column: 17,
-    //             file: "/file.ts",
-    //             line: 8
-    //           },
-    //           rest: false,
-    //           type: {
-    //             kind: TypeKind.String,
-    //             name: "string"
-    //           }
-    //         }
-    //       ],
-    //       position: {
-    //         column: 6,
-    //         file: "/file.ts",
-    //         line: 8
-    //       },
-    //       returnType: {
-    //         description: undefined,
-    //         kind: TypeKind.Any,
-    //         name: "any"
-    //       },
-    //       typeParameters: undefined
-    //     }
-    //   ],
-    //   typeParameters: undefined
-    // };
+
+    // #endregion
 
     const ctx = createRenderContext();
 
@@ -327,6 +71,8 @@ scope("Renderer", TypeKind.Interface, () => {
     const interfaceContent = renderedInterfaceForDocumentation[interfaceName]!;
 
     const documentation = renderRenderObject(ctx, renderedInterfaceForDocumentation);
+
+    writeFileSync("interface.html", documentation);
 
     it("should have matching interface name", () => {
       expect(renderedInterfaceForTableOfContents).to.equal("Address");

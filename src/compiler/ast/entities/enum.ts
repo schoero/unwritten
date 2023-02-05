@@ -1,13 +1,13 @@
-import { createTypeByDeclaration } from "unwritten:compiler:entry-points/type.js";
-import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:shared/id.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler/ast/shared/id.js";
 import {
   getDescriptionByDeclaration,
   getDescriptionBySymbol,
   getJSDocTagsByDeclaration
-} from "unwritten:compiler:shared/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler:shared/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
+} from "unwritten:compiler/ast/shared/jsdoc.js";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler/ast/shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler/ast/shared/position.js";
+import { createTypeByDeclaration } from "unwritten:compiler:ast/index.js";
+import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { isEnumDeclaration } from "unwritten:compiler:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
 

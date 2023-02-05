@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-import { parse } from "unwritten:compiler:entry-points/index.js";
+import { parse } from "unwritten:compiler/ast/index.js";
 import { compile } from "unwritten:compiler:index.js";
 import { createContext as createCompilerContext } from "unwritten:compiler:utils/context.js";
 import { getEntryFileSymbolFromProgram } from "unwritten:compiler:utils/ts.js";

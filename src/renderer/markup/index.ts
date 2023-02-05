@@ -1,20 +1,4 @@
-import {
-  isClassEntity,
-  isEnumEntity,
-  isFunctionEntity,
-  isInterfaceEntity,
-  isNamespaceEntity,
-  isTypeAliasEntity,
-  isVariableEntity
-} from "unwritten:typeguards/entities.js";
-
-import { renderClassForDocumentation, renderClassForTableOfContents } from "./ast/entities/class.js";
-import { renderEnumForDocumentation, renderEnumForTableOfContents } from "./ast/entities/enum.js";
-import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./ast/entities/function.js";
-import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./ast/entities/interface.js";
-import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "./ast/entities/namespace.js";
-import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./ast/entities/type-alias.js";
-import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./ast/entities/variable.js";
+import { renderEntityForDocumentation, renderEntityForTableOfContents } from "./ast/index.js";
 import {
   isRenderedList,
   isRenderedMultilineContent,
@@ -22,6 +6,7 @@ import {
   isRenderedTitle
 } from "./typeguards/renderer.js";
 import { getRenderConfig } from "./utils/config.js";
+import { getAnchorLink, getAnchorText } from "./utils/linker.js";
 import { getCategoryName } from "./utils/renderer.js";
 import { sortExportableTypes } from "./utils/sort.js";
 
@@ -31,10 +16,10 @@ import type {
   MarkupRenderContext,
   RenderedCategoryForDocumentation,
   RenderedCategoryForTableOfContents,
-  RenderedEntitiesForDocumentation,
   RenderedEntitiesForTableOfContents,
   RenderObject
 } from "./types/renderer.js";
+import type { AnchorIdentifier } from "./utils/linker.js";
 
 
 export function render(ctx: MarkupRenderContext, entities: ExportableEntities[]): string {
@@ -75,7 +60,7 @@ export function renderForTableOfContents(ctx: MarkupRenderContext, entities: Exp
     }
 
     const category = tableOfContents.find(category => category[0]?.[0] === categoryName)!;
-    const renderedType = renderTypeForTableOfContents(ctx, type);
+    const renderedType = renderEntityForTableOfContents(ctx, type);
 
     category[0]![1][0].push(renderedType);
 
@@ -97,61 +82,16 @@ export function renderForDocumentation(ctx: MarkupRenderContext, entities: Expor
 
     const title = getCategoryName(ctx, type.kind, true);
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if(documentation[title] === undefined){
       documentation[title] = [];
     }
 
-    documentation[title]!.push(renderTypeForDocumentation(ctx, type));
+    documentation[title]!.push(renderEntityForDocumentation(ctx, type));
 
   }
 
   return documentation;
-
-}
-
-
-export function renderTypeForTableOfContents(ctx: MarkupRenderContext, entities: ExportableEntities): RenderedEntitiesForTableOfContents {
-
-  if(isFunctionEntity(entities)){
-    return renderFunctionForTableOfContents(ctx, entities);
-  } else if(isClassEntity(entities)){
-    return renderClassForTableOfContents(ctx, entities);
-  } else if(isTypeAliasEntity(entities)){
-    return renderTypeAliasForTableOfContents(ctx, entities);
-  } else if(isInterfaceEntity(entities)){
-    return renderInterfaceForTableOfContents(ctx, entities);
-  } else if(isVariableEntity(entities)){
-    return renderVariableForTableOfContents(ctx, entities);
-  } else if(isEnumEntity(entities)){
-    return renderEnumForTableOfContents(ctx, entities);
-  } else if(isNamespaceEntity(entities)){
-    return renderNamespaceForTableOfContents(ctx, entities);
-  }
-
-  throw new Error(`Unexpected entity kind: ${entities.kind}`);
-
-}
-
-
-export function renderTypeForDocumentation(ctx: MarkupRenderContext, entities: ExportableEntities): RenderedEntitiesForDocumentation {
-
-  if(isFunctionEntity(entities)){
-    return renderFunctionForDocumentation(ctx, entities);
-  } else if(isClassEntity(entities)){
-    return renderClassForDocumentation(ctx, entities);
-  } else if(isTypeAliasEntity(entities)){
-    return renderTypeAliasForDocumentation(ctx, entities);
-  } else if(isInterfaceEntity(entities)){
-    return renderInterfaceForDocumentation(ctx, entities);
-  } else if(isVariableEntity(entities)){
-    return renderVariableForDocumentation(ctx, entities);
-  } else if(isEnumEntity(entities)){
-    return renderEnumForDocumentation(ctx, entities);
-  } else if(isNamespaceEntity(entities)){
-    return renderNamespaceForDocumentation(ctx, entities);
-  }
-
-  throw new Error(`Unexpected entity kind: ${entities.kind}`);
 
 }
 
@@ -196,6 +136,10 @@ export function renderRenderObject(ctx: MarkupRenderContext, renderObject: Rende
     //-- List
 
     if(isRenderedList(element)){
+
+      if(element[0].length === 0){
+        return "";
+      }
 
       const listStart = ctx.renderer.renderListStart();
       if(listStart !== undefined){
@@ -250,12 +194,15 @@ export function renderRenderObject(ctx: MarkupRenderContext, renderObject: Rende
 
       for(const key in element){
 
-        const title = ctx.renderer.renderTitle(key, size);
+        const name = getAnchorText(ctx, key as AnchorIdentifier);
+        const anchor = getAnchorLink(ctx, key as AnchorIdentifier);
+
+        const title = ctx.renderer.renderTitle(name ?? key, size, anchor);
 
         renderElement(title);
         size++;
 
-        const content = renderNestedElement(element[key]!);
+        const content = renderNestedElement(name ?? key);
 
         renderElement(content);
         size--;

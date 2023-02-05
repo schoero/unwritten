@@ -1,4 +1,4 @@
-import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer/markup/ast/index.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, renderLink, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 

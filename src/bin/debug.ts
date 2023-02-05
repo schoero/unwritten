@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
-import { parse } from "unwritten:compiler:entry-points/index.js";
+import { parse } from "unwritten:compiler/ast/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { sortKeys } from "unwritten:utils:general.js";
 

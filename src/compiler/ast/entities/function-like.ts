@@ -1,6 +1,6 @@
+import { getIdBySymbol } from "unwritten:compiler/ast/shared/id.js";
+import { getNameBySymbol } from "unwritten:compiler/ast/shared/name.js";
 import { createSignatureEntity } from "unwritten:compiler:entities";
-import { getIdBySymbol } from "unwritten:compiler:shared/id.js";
-import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,

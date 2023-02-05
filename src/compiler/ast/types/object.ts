@@ -1,3 +1,5 @@
+import { getIdByType } from "unwritten:compiler/ast/shared/id.js";
+import { getPositionByType } from "unwritten:compiler/ast/shared/position.js";
 import {
   createGetterEntity,
   createMethodEntity,
@@ -6,8 +8,6 @@ import {
   createSignatureEntity
 } from "unwritten:compiler:entities";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:shared/id.js";
-import { getPositionByType } from "unwritten:compiler:shared/position.js";
 import {
   isGetterSymbol,
   isMethodSymbol,

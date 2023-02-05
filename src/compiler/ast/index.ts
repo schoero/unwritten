@@ -1,6 +1,38 @@
+import { getNameBySymbol } from "unwritten:compiler/ast/shared/name.js";
 import { createFunctionType } from "unwritten:compiler:ast/types/function.js";
 import { createObjectLikeType } from "unwritten:compiler:ast/types/object.js";
-import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
+import {
+  createClassEntity,
+  createEnumEntity,
+  createFunctionEntity,
+  createInterfaceEntity,
+  createModuleEntity,
+  createNamespaceEntity,
+  createPropertyEntity,
+  createSourceFileEntity,
+  createTypeAliasEntity,
+  createVariableEntity
+} from "unwritten:compiler:entities";
+import {
+  isClassSymbol,
+  isEnumSymbol,
+  isFunctionSymbol,
+  isInterfaceSymbol,
+  isModuleSymbol,
+  isNamespaceSymbol,
+  isPropertySymbol,
+  isSourceFileSymbol,
+  isTypeAliasSymbol,
+  isVariableSymbol
+} from "unwritten:compiler:typeguards/symbols.js";
+import {
+  isArrayTypeNode,
+  isExpressionWithTypeArguments,
+  isTemplateLiteralTypeNode,
+  isTupleTypeNode,
+  isTypeQueryNode,
+  isTypeReferenceNode
+} from "unwritten:compiler:typeguards/type-nodes.js";
 import {
   isAnyType,
   isBigIntLiteralType,
@@ -32,12 +64,14 @@ import {
 } from "unwritten:compiler:typeguards/types.js";
 import {
   createAnyType,
+  createArrayTypeByArrayTypeNode,
   createBigIntLiteralType,
   createBigIntType,
   createBooleanLiteralType,
   createBooleanType,
   createClassType,
   createConditionalType,
+  createExpressionType,
   createInterfaceByType,
   createIntersectionTypeByType,
   createLinkToType,
@@ -50,9 +84,13 @@ import {
   createStringLiteralType,
   createStringType,
   createSymbolType,
+  createTemplateLiteralType,
+  createTupleByTupleTypeNode,
   createTupleTypeByTypeReference,
   createTypeLiteralType,
   createTypeParameterType,
+  createTypeQueryType,
+  createTypeReferenceType,
   createUndefinedType,
   createUnionTypeByType,
   createUnknownType,
@@ -60,14 +98,77 @@ import {
   createUnresolvedType,
   createVoidType
 } from "unwritten:compiler:types";
-import { isTypeLocked } from "unwritten:compiler:utils/ts.js";
+import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:compiler:utils/ts.js";
 import { isSymbolExcluded } from "unwritten:utils:exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { Declaration, ObjectType as TSObjectType, Symbol, Type } from "typescript";
+import type { Declaration, ObjectType as TSObjectType, Symbol, Type, TypeNode } from "typescript";
 
+import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { Entities } from "unwritten:compiler:type-definitions/entities.js";
 import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+
+
+export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): ExportableEntities[] {
+  assert(isSourceFileSymbol(sourceFileSymbol), "Source file symbol is not a source file symbol");
+  return createSourceFileEntity(ctx, sourceFileSymbol).exports;
+}
+
+
+export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Entities {
+
+  const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
+
+  if(isVariableSymbol(resolvedSymbol)){
+    return createVariableEntity(ctx, resolvedSymbol);
+  } else if(isFunctionSymbol(resolvedSymbol)){
+    return createFunctionEntity(ctx, resolvedSymbol);
+  } else if(isClassSymbol(resolvedSymbol)){
+    return createClassEntity(ctx, resolvedSymbol);
+  } else if(isInterfaceSymbol(resolvedSymbol)){
+    return createInterfaceEntity(ctx, resolvedSymbol);
+  } else if(isTypeAliasSymbol(resolvedSymbol)){
+    return createTypeAliasEntity(ctx, resolvedSymbol);
+  } else if(isEnumSymbol(resolvedSymbol)){
+    return createEnumEntity(ctx, resolvedSymbol);
+  } else if(isNamespaceSymbol(symbol)){
+    return createNamespaceEntity(ctx, resolvedSymbol);
+  } else if(isModuleSymbol(symbol)){
+    return createModuleEntity(ctx, resolvedSymbol);
+  } else if(isSourceFileSymbol(symbol)){
+    return createSourceFileEntity(ctx, resolvedSymbol);
+  } else if(isPropertySymbol(symbol)){
+    return createPropertyEntity(ctx, resolvedSymbol);
+  } else {
+    return createUnresolvedType(ctx, resolvedSymbol);
+  }
+
+}
+
+
+export function parseTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
+
+  if(isArrayTypeNode(typeNode)){
+    return createArrayTypeByArrayTypeNode(ctx, typeNode);
+  } else if(isTupleTypeNode(typeNode)){
+    return createTupleByTupleTypeNode(ctx, typeNode);
+  } else if(isTypeQueryNode(typeNode)){
+    return createTypeQueryType(ctx, typeNode);
+  } else if(isTemplateLiteralTypeNode(typeNode)){
+    return createTemplateLiteralType(ctx, typeNode);
+  }
+
+  if(isTypeReferenceNode(typeNode)){
+    return createTypeReferenceType(ctx, typeNode);
+  } else if(isExpressionWithTypeArguments(typeNode)){
+    return createExpressionType(ctx, typeNode);
+  }
+
+  const type = ctx.checker.getTypeFromTypeNode(typeNode);
+  return parseType(ctx, type);
+
+}
 
 
 /* Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */

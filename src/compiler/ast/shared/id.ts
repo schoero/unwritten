@@ -1,6 +1,6 @@
 import type { Declaration, Symbol, Type, TypeNode } from "typescript";
 
-import type { ID } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { ID } from "unwritten:compiler/type-definitions/shared.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 

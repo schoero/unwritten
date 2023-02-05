@@ -1,5 +1,5 @@
+import { getIdByType } from "unwritten:compiler/ast/shared/id.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:shared/id.js";
 import { isSymbolType } from "unwritten:compiler:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 

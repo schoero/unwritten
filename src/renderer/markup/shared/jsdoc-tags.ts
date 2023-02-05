@@ -3,7 +3,7 @@ import { encapsulate } from "../utils/renderer.js";
 
 import type { MarkupRenderContext, RenderedJSDocTags } from "../types/renderer.js";
 
-import type { JSDocTags } from "unwritten:compiler:type-definitions/mixins.js";
+import type { JSDocTags } from "unwritten:compiler/type-definitions/shared.js";
 
 
 export function renderJSDocTags(ctx: MarkupRenderContext, jsdocTags: JSDocTags): RenderedJSDocTags {

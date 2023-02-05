@@ -4,7 +4,7 @@ import { JSDocTags } from "unwritten:compiler:enums/jsdoc.js";
 
 import type { Declaration, ParameterDeclaration, Symbol, Type, TypeParameterDeclaration } from "typescript";
 
-import type { Description } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { Description } from "unwritten:compiler/type-definitions/shared.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 

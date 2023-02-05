@@ -1,9 +1,9 @@
+import { getIdBySymbol, getIdByTypeNode } from "unwritten:compiler/ast/shared/id.js";
+import { getPositionByDeclaration } from "unwritten:compiler/ast/shared/position.js";
+import { parseTypeNode } from "unwritten:compiler:ast/index.js";
 import { createTypeParameterEntity } from "unwritten:compiler:entities";
-import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdBySymbol, getIdByTypeNode } from "unwritten:compiler:shared/id.js";
-import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "unwritten:compiler:typeguards/type-nodes.js";
 import { lockType } from "unwritten:compiler:utils/ts.js";
 import { isLiteralType } from "unwritten:typeguards/types.js";

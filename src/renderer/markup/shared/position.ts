@@ -1,6 +1,6 @@
 import type { MarkupRenderContext, RenderedPosition } from "../types/renderer.js";
 
-import type { Position } from "unwritten:compiler:type-definitions/mixins.js";
+import type { Position } from "unwritten:compiler/type-definitions/shared.js";
 
 
 export function renderPosition(ctx: MarkupRenderContext, position: Position | undefined): RenderedPosition {

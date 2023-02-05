@@ -12,7 +12,7 @@ export function renderUndefinedType(ctx: MarkupRenderContext, undefinedType: Und
 
   const name = undefinedType.name;
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.Undefined] && ctx.renderer.renderHyperLink(ctx, encapsulatedName, ctx.config.externalTypes[TypeKind.Undefined]);
+  const link = ctx.config.externalTypes[TypeKind.Undefined] && ctx.renderer.renderHyperLink(encapsulatedName, ctx.config.externalTypes[TypeKind.Undefined]);
 
   return link ?? encapsulatedName;
 

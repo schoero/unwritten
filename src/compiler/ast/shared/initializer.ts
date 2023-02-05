@@ -1,4 +1,4 @@
-import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { parseType } from "unwritten:compiler:ast/index.js";
 
 import type { ParameterDeclaration } from "typescript";
 

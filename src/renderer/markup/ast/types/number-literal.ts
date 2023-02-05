@@ -13,7 +13,7 @@ export function renderNumberLiteralType(ctx: MarkupRenderContext, numberType: Nu
   const name = numberType.name;
   const value = numberType.value.toString();
   const encapsulatedValue = encapsulate(value.toString(), renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.NumberLiteral] && ctx.renderer.renderHyperLink(ctx, encapsulatedValue, ctx.config.externalTypes[TypeKind.NumberLiteral]);
+  const link = ctx.config.externalTypes[TypeKind.NumberLiteral] && ctx.renderer.renderHyperLink(encapsulatedValue, ctx.config.externalTypes[TypeKind.NumberLiteral]);
 
   return link ?? encapsulatedValue;
 

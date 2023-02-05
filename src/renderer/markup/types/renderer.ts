@@ -1,6 +1,8 @@
+import type { AnchorIdentifier, LinkRegistry } from "../utils/linker.js";
+
 import type { ExportableEntities } from "unwritten:compiler/type-definitions/entities.js";
+import type { Description, Example, JSDocTags, Remarks } from "unwritten:compiler/type-definitions/shared.js";
 import type { JSDocTags as JSDocTagNames } from "unwritten:compiler:enums/jsdoc.js";
-import type { Description, Example, JSDocTags, Remarks } from "unwritten:compiler:type-definitions/mixins.d.js";
 import type { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
@@ -17,7 +19,7 @@ export type MarkdownRenderer = Renderer & {
   fileExtension: "md";
   name: BuiltInRenderers.Markdown;
   render: <CustomRenderer extends Renderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]) => string;
-  renderAnchorLink: (text: string, anchor: string) => string;
+  renderAnchorLink: (text: string, anchor: string) => RenderedLink;
   renderBoldText: (text: string) => string;
   renderCode: (code: string, language?: string) => string;
   renderHorizontalRule: () => string;
@@ -36,7 +38,7 @@ export type MarkdownRenderer = Renderer & {
   renderTitle: (title: string, size: number, anchor?: string) => string;
   renderUnderlineText: (text: string) => string;
   renderWarning: (text: string) => string;
-  _linkRegistry?: Map<string, (number | string)[]>;
+  _linkRegistry?: LinkRegistry;
 };
 
 
@@ -66,7 +68,7 @@ export type HTMLRenderer = Renderer & {
   renderTitle: (title: string, size: number, anchor?: string) => string;
   renderUnderlineText: (text: string) => string;
   renderWarning: (text: string) => string;
-  _linkRegistry?: Map<string, (number | string)[]>;
+  _linkRegistry?: LinkRegistry;
 };
 
 
@@ -118,7 +120,7 @@ export type RenderedPosition = string | undefined;
 export type RenderObject = RenderedList | RenderedMultilineContent | RenderedTitle | SingleLineContent;
 
 export type RenderedTitle = {
-  [title: SingleLineContent]: RenderObject;
+  [title: AnchorIdentifier | string]: RenderObject;
 };
 
 export type SingleLineContent = string;
@@ -126,6 +128,8 @@ export type RenderedParagraph = [SingleLineContent];
 export type RenderedMultilineContent = (RenderedList | RenderedTitle | RenderObject | SingleLineContent | undefined)[];
 
 export type RenderedList = [RenderedMultilineContent | RenderObject[]];
+
+export type RenderedLink = string;
 
 
 //-- Rendered entities
@@ -238,9 +242,9 @@ export type RenderedSignaturesForDocumentation = {
   [key in keyof RenderedSignatureForDocumentation]: RenderedSignatureForDocumentation[key]
 };
 
-export type RenderedSignatureForTableOfContents = RenderedName;
+export type RenderedSignatureForTableOfContents = RenderedLink;
 export type RenderedSignatureForDocumentation = {
-  [signature: RenderedName]: [
+  [signature: AnchorIdentifier]: [
     jsdocTags: RenderedJSDocTags,
     position: RenderedPosition,
     parametersAndReturnType: [
@@ -267,7 +271,7 @@ export type RenderedClassForTableOfContents = [
 ];
 
 export type RenderedClassForDocumentation = {
-  [className: string]: [
+  [className: AnchorIdentifier]: [
     description: Description,
     example: Example,
     constructor: { [constructorTitle: string]: RenderedFunctionForDocumentation; } | undefined,
@@ -311,13 +315,16 @@ export type RenderedEnumForDocumentation = {
 
 export type RenderedInterfaceForTableOfContents = RenderedName;
 export type RenderedInterfaceForDocumentation = {
-  [interfaceName: RenderedName]: [
+  [interfaceName: AnchorIdentifier]: [
     jsdocTags: RenderedJSDocTags,
     position: RenderedPosition,
     description: Description,
     example: Example,
-    constructSignatures: [RenderedSignaturesForDocumentation[string]],
-    callSignatures: [RenderedSignaturesForDocumentation[string]]
+    constructSignatures: [RenderedSignaturesForTableOfContents] | undefined,
+    callSignatures: [RenderedSignaturesForTableOfContents] | undefined,
+    // Implementations
+    constructSignatures: RenderedSignaturesForDocumentation | undefined,
+    callSignatures: RenderedSignaturesForDocumentation | undefined
   ];
 };
 

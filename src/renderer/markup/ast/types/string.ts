@@ -12,7 +12,7 @@ export function renderStringType(ctx: MarkupRenderContext, stringType: StringTyp
 
   const name = stringType.name;
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.String] && ctx.renderer.renderHyperLink(ctx, encapsulatedName, ctx.config.externalTypes[TypeKind.String]);
+  const link = ctx.config.externalTypes[TypeKind.String] && ctx.renderer.renderHyperLink(encapsulatedName, ctx.config.externalTypes[TypeKind.String]);
 
   return link ?? encapsulatedName;
 

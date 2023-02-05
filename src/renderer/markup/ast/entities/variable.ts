@@ -1,4 +1,4 @@
-import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer/markup/ast/index.js";
 import { renderName } from "unwritten:renderer:markup/shared/name.js";
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 

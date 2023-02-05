@@ -4,7 +4,7 @@ import { isConstructorDeclaration } from "unwritten:compiler:typeguards/declarat
 
 import type { Declaration, Node, Symbol, Type } from "typescript";
 
-import type { Name } from "unwritten:compiler:type-definitions/mixins.d.js";
+import type { Name } from "unwritten:compiler/type-definitions/shared.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 

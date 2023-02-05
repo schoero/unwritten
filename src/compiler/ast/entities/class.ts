@@ -1,3 +1,8 @@
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler/ast/shared/id.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:compiler/ast/shared/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:compiler/ast/shared/modifiers.js";
+import { getNameBySymbol } from "unwritten:compiler/ast/shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler/ast/shared/position.js";
 import {
   createConstructorEntity,
   createGetterEntity,
@@ -7,11 +12,6 @@ import {
   createTypeParameterEntity
 } from "unwritten:compiler:entities";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:shared/id.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:compiler:shared/jsdoc.js";
-import { getModifiersByDeclaration } from "unwritten:compiler:shared/modifiers.js";
-import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import {
   isClassDeclaration,
   isConstructorDeclaration,

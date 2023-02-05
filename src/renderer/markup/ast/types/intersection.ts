@@ -1,4 +1,4 @@
-import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer/markup/ast/index.js";
 
 import type { IntersectionType } from "unwritten:compiler:type-definitions/types.js";
 import type { MarkupRenderContext, RenderedIntersectionType } from "unwritten:renderer:markup/types/renderer.js";

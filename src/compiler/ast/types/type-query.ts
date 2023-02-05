@@ -1,6 +1,6 @@
-import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { getIdByTypeNode } from "unwritten:compiler/ast/shared/id.js";
+import { parseType } from "unwritten:compiler:ast/index.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByTypeNode } from "unwritten:compiler:shared/id.js";
 
 import type { TypeQueryNode } from "typescript";
 

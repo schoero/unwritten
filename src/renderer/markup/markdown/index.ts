@@ -3,7 +3,7 @@ import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { render as sharedRender } from "unwritten:renderer:markup/index.js";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
-import type { MarkdownRenderer } from "unwritten:renderer:markup/types/renderer.js";
+import type { MarkdownRenderer, RenderedLink } from "unwritten:renderer:markup/types/renderer.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
@@ -18,14 +18,6 @@ function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is RenderConte
   verifyRenderer(ctx.renderer);
 }
 
-function textToAnchorLink(text: string): string {
-  let link = text.toLowerCase();
-
-  link = link.replace(/[^\d\sa-z-]/gi, "");
-  link = link.replace(/\s/g, "-");
-  return link;
-}
-
 
 const markdownRenderer: MarkdownRenderer = {
   fileExtension: "md",
@@ -34,8 +26,8 @@ const markdownRenderer: MarkdownRenderer = {
     verifyContext(ctx);
     return sharedRender(ctx, entities);
   },
-  renderAnchorLink: (name: string, anchor: string): string => {
-    return `[${name}](#${textToAnchorLink(anchor)})`;
+  renderAnchorLink: (name: string, anchor: string): RenderedLink => {
+    return `[${name}](#${anchor})`;
   },
   renderBoldText: (text: string): string => {
     return `**${text}**`;

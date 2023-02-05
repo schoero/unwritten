@@ -1,7 +1,7 @@
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
-import { renderFunctionForDocumentation, renderFunctionForTableOfContents } from "./function.js";
+import { renderFunctionEntityForDocumentation, renderFunctionEntityForTableOfContents } from "./function.js";
 import { renderPropertyForDocumentation, renderPropertyForTableOfContents } from "./property.js";
 
 import type { ClassEntity } from "unwritten:compiler:type-definitions/entities.js";
@@ -26,7 +26,7 @@ export function renderClassForTableOfContents(ctx: MarkupRenderContext, classEnt
   if(classEntity.ctor !== undefined){
     const constructorTitle = renderConfig.categoryNames.constructor;
     classEntity.ctor.name = "constructor";
-    const renderedConstructor = renderFunctionForTableOfContents(ctx, classEntity.ctor);
+    const renderedConstructor = renderFunctionEntityForTableOfContents(ctx, classEntity.ctor);
     constructors = [[constructorTitle, [renderedConstructor]]];
   }
   if(classEntity.properties.length > 0){
@@ -38,7 +38,7 @@ export function renderClassForTableOfContents(ctx: MarkupRenderContext, classEnt
   if(classEntity.methods.length > 0){
     const nameTitle = renderConfig.categoryNames.methods;
     const renderedMethods = classEntity.methods.reduce<string[]>((acc, method) => {
-      acc.push(...renderFunctionForTableOfContents(ctx, method));
+      acc.push(...renderFunctionEntityForTableOfContents(ctx, method));
       return acc;
     }, []);
 
@@ -46,13 +46,13 @@ export function renderClassForTableOfContents(ctx: MarkupRenderContext, classEnt
   }
   if(classEntity.setters.length > 0){
     const settersTitle = renderConfig.categoryNames.setters;
-    const renderedSetters = classEntity.setters.map(setter => renderFunctionForTableOfContents(ctx, setter));
+    const renderedSetters = classEntity.setters.map(setter => renderFunctionEntityForTableOfContents(ctx, setter));
 
     setters = [[settersTitle, renderedSetters]];
   }
   if(classEntity.getters.length > 0){
     const gettersTitle = renderConfig.categoryNames.getters;
-    const renderedGetters = classEntity.getters.map(getter => renderFunctionForTableOfContents(ctx, getter));
+    const renderedGetters = classEntity.getters.map(getter => renderFunctionEntityForTableOfContents(ctx, getter));
 
     getters = [[gettersTitle, renderedGetters]];
   }
@@ -87,7 +87,7 @@ export function renderClassForDocumentation(ctx: MarkupRenderContext, classEntit
 
   if(classEntity.ctor !== undefined){
     const constructorTitle = renderConfig.categoryNames.constructor;
-    const renderedConstructor = renderFunctionForDocumentation(ctx, classEntity.ctor);
+    const renderedConstructor = renderFunctionEntityForDocumentation(ctx, classEntity.ctor);
 
     constructor = { [constructorTitle]: renderedConstructor };
   }
@@ -99,19 +99,19 @@ export function renderClassForDocumentation(ctx: MarkupRenderContext, classEntit
   }
   if(classEntity.methods.length > 0){
     const methodsTitle = renderConfig.categoryNames.methods;
-    const renderedMethods = classEntity.methods.map(method => renderFunctionForDocumentation(ctx, method));
+    const renderedMethods = classEntity.methods.map(method => renderFunctionEntityForDocumentation(ctx, method));
 
     methods = { [methodsTitle]: renderedMethods };
   }
   if(classEntity.setters.length > 0){
     const settersTitle = renderConfig.categoryNames.setters;
-    const renderedSetters = classEntity.setters.map(setter => renderFunctionForDocumentation(ctx, setter));
+    const renderedSetters = classEntity.setters.map(setter => renderFunctionEntityForDocumentation(ctx, setter));
 
     setters = { [settersTitle]: renderedSetters };
   }
   if(classEntity.getters.length > 0){
     const gettersTitle = renderConfig.categoryNames.getters;
-    const renderedGetters = classEntity.getters.map(getter => renderFunctionForDocumentation(ctx, getter));
+    const renderedGetters = classEntity.getters.map(getter => renderFunctionEntityForDocumentation(ctx, getter));
 
     getters = { [gettersTitle]: renderedGetters };
   }

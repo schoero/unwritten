@@ -1,7 +1,7 @@
+import { getIdByType } from "unwritten:compiler/ast/shared/id.js";
+import { getNameByType } from "unwritten:compiler/ast/shared/name.js";
+import { getPositionBySymbol } from "unwritten:compiler/ast/shared/position.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:shared/id.js";
-import { getNameByType } from "unwritten:compiler:shared/name.js";
-import { getPositionBySymbol } from "unwritten:compiler:shared/position.js";
 
 import type { Type } from "typescript";
 

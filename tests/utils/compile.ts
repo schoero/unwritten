@@ -3,7 +3,6 @@ import { readFileSync } from "node:fs";
 import ts from "typescript";
 
 import { reportCompilerDiagnostics } from "unwritten:compiler:index.js";
-import { Locker } from "unwritten:compiler:locker/index.js";
 import { getDefaultConfig } from "unwritten:config/index.js";
 import { override } from "unwritten:utils/override.js";
 import { assert } from "unwritten:utils:general.js";
@@ -61,8 +60,7 @@ export function compile(code: string, compilerOptions?: ts.CompilerOptions, conf
 
   const ctx: CompilerContext = {
     checker,
-    config: override(config ?? {}, getDefaultConfig()),
-    locker: new Locker()
+    config: override(config ?? {}, getDefaultConfig())
   };
 
 

@@ -1,6 +1,6 @@
 import { minimatch } from "minimatch";
 
-import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
+import { getPositionByDeclaration } from "unwritten:compiler/ast/shared/position.js";
 
 import type { Declaration, Symbol } from "typescript";
 

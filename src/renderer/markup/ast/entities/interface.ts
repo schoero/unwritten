@@ -1,12 +1,13 @@
+import { getAnchorLink } from "unwritten:renderer/markup/utils/linker.js";
 import { renderDescription } from "unwritten:renderer:markup/shared/description.js";
 import { renderExample } from "unwritten:renderer:markup/shared/example.js";
 import { renderJSDocTags } from "unwritten:renderer:markup/shared/jsdoc-tags.js";
 import { renderName } from "unwritten:renderer:markup/shared/name.js";
 import { renderPosition } from "unwritten:renderer:markup/shared/position.js";
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
-import { convertTitlesToList } from "unwritten:renderer:utils/utils.js";
+import { assert } from "unwritten:utils/general.js";
 
-import { renderSignaturesForDocumentation } from "./signature.js";
+import { renderSignatureForTableOfContents, renderSignaturesForDocumentation } from "./signature.js";
 
 import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type {
@@ -23,22 +24,31 @@ export function renderInterfaceForTableOfContents(ctx: MarkupRenderContext, ifac
 export function renderInterfaceForDocumentation(ctx: MarkupRenderContext, iface: InterfaceEntity): RenderedInterfaceForDocumentation {
 
   const interfaceName = renderName(ctx, iface.name);
+  const anchor = getAnchorLink(ctx, interfaceName, iface.id);
+
+  assert(anchor, "Interface anchor must be defined.");
+
   const jsdocTags = renderJSDocTags(ctx, iface);
   const position = renderPosition(ctx, iface.position);
   const description = renderDescription(ctx, iface.description);
   const example = renderExample(ctx, iface.example);
 
-  const renderedCallSignatures = convertTitlesToList(renderSignaturesForDocumentation(ctx, iface.callSignatures));
-  const renderedConstructSignatures = convertTitlesToList(renderSignaturesForDocumentation(ctx, iface.constructSignatures));
+  const renderedCallSignatureTitles = iface.callSignatures.map(signatureEntity => renderSignatureForTableOfContents(ctx, signatureEntity));
+  const renderedConstructSignatureTitles = iface.constructSignatures.map(signatureEntity => renderSignatureForTableOfContents(ctx, signatureEntity));
+
+  const renderedCallSignatures = renderSignaturesForDocumentation(ctx, iface.callSignatures);
+  const renderedConstructSignatures = renderSignaturesForDocumentation(ctx, iface.constructSignatures);
 
   return {
-    [interfaceName]: [
+    [anchor]: [
       jsdocTags,
       position,
       description,
       example,
-      renderedConstructSignatures,
-      renderedCallSignatures
+      [renderedCallSignatureTitles],
+      [renderedConstructSignatureTitles],
+      renderedCallSignatures,
+      renderedConstructSignatures
     ]
   };
 

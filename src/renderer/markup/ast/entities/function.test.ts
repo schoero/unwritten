@@ -3,8 +3,8 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
-  renderFunctionForDocumentation,
-  renderFunctionForTableOfContents
+  renderFunctionEntityForDocumentation,
+  renderFunctionEntityForTableOfContents
 } from "unwritten:renderer:markup/ast/entities/function.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -50,8 +50,8 @@ scope("Renderer", EntityKind.Function, () => {
 
     const ctx = createRenderContext();
 
-    const renderedFunctionForTableOfContents = renderFunctionForTableOfContents(ctx, testFunction as FunctionEntity);
-    const renderedFunctionForDocumentation = renderFunctionForDocumentation(ctx, testFunction as FunctionEntity);
+    const renderedFunctionForTableOfContents = renderFunctionEntityForTableOfContents(ctx, testFunction as FunctionEntity);
+    const renderedFunctionForDocumentation = renderFunctionEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
     it("should have only one signature", () => {
       expect(renderedFunctionForTableOfContents).to.have.lengthOf(1);

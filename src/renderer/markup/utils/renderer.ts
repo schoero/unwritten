@@ -1,12 +1,11 @@
 import { contentFilter } from "unwritten:compiler:utils/filter.js";
 import { RenderCategories } from "unwritten:renderer:markup/types/renderer.js";
 
-import { createAnchor } from "../linker/index.js";
-
 import { getRenderConfig } from "./config.js";
+import { createAnchor } from "./linker.js";
 
 import type { Encapsulation } from "unwritten:renderer:markup/types/config.js";
-import type { MarkupRenderContext } from "unwritten:renderer:markup/types/renderer.js";
+import type { MarkupRenderContext, RenderedLink } from "unwritten:renderer:markup/types/renderer.js";
 import type { DeepOmit } from "unwritten:type-definitions/utils.js";
 
 
@@ -22,13 +21,19 @@ export function encapsulate(text: string, encapsulation: Encapsulation | false |
 }
 
 
-export function renderLink(ctx: MarkupRenderContext, text: string, id?: number): string {
+export function renderLink(ctx: MarkupRenderContext, text: string, id?: number): RenderedLink {
   if(id !== undefined){
     const anchor = createAnchor(ctx, text, id);
     return ctx.renderer.renderAnchorLink(text, anchor);
   } else {
     return text;
   }
+}
+
+
+export function renderTitle(ctx: MarkupRenderContext, text: string): string {
+  const anchor = createAnchor(ctx, text, id);
+  return ctx.renderer.renderTitle(text, anchor);
 }
 
 

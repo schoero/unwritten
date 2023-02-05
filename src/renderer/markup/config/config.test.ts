@@ -34,7 +34,7 @@ scope("Renderer", "Config", () => {
 
     {
 
-      ctx.config.renderConfig.markdown.typeEncapsulation = ["`", "`"];
+      ctx.config.renderConfig.html.typeEncapsulation = ["`", "`"];
 
       const renderedStringType = renderStringType(ctx, stringType as StringType);
 
@@ -57,7 +57,7 @@ scope("Renderer", "Config", () => {
 
     const ctx = createRenderContext();
 
-    ctx.config.renderConfig.markdown.stringLiteralEncapsulation = false;
+    ctx.config.renderConfig.html.stringLiteralEncapsulation = false;
 
     {
 
@@ -71,13 +71,13 @@ scope("Renderer", "Config", () => {
 
     {
 
-      ctx.config.renderConfig.markdown.typeEncapsulation = ["`", "`"];
-      ctx.config.renderConfig.markdown.stringLiteralEncapsulation = ["\"", "\""];
+      ctx.config.renderConfig.html.typeEncapsulation = ["`", "`"];
+      ctx.config.renderConfig.html.stringLiteralEncapsulation = ['"', '"'];
 
       const renderedStringType = renderStringLiteralType(ctx, stringLiteralType as StringLiteralType);
 
       it("should be possible to change the encapsulation", () => {
-        expect(renderedStringType).to.equal("`\"test\"`");
+        expect(renderedStringType).to.equal('`"test"`');
       });
 
     }
@@ -102,7 +102,7 @@ scope("Renderer", "Config", () => {
       const renderedStringType = renderStringType(ctx, stringType as StringType);
 
       it("should use the default encapsulation", () => {
-        expect(renderedStringType).to.equal(`[string](${ctx.config.externalTypes[TypeKind.String]})`);
+        expect(renderedStringType).to.equal(`<a href="${ctx.config.externalTypes[TypeKind.String]}">string</a>`);
       });
 
     }

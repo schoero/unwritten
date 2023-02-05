@@ -1,4 +1,5 @@
 import { isAliasedSymbol } from "unwritten:compiler:typeguards/symbols.js";
+import * as locker from "unwritten:compiler:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Map as TSMap, Program, Symbol, Type } from "typescript";
@@ -20,13 +21,13 @@ export function normalizeTSMap<T>(tsMap: Map<string, T> | TSMap<T>): Map<string,
 //-- Locker
 
 export function isTypeLocked(ctx: CompilerContext, type: Type) {
-  return ctx.locker.isTypeLocked(ctx, type);
+  return locker.isTypeLocked(ctx, type);
 }
 
 export function lockType<T extends Types>(ctx: CompilerContext, type: Type, callback: (ctx: CompilerContext, type: Type) => T): T {
-  ctx.locker.lockType(ctx, type);
+  locker.lockType(ctx, type);
   const returnType = callback(ctx, type);
-  ctx.locker.unlockType(ctx, type);
+  locker.unlockType(ctx, type);
   return returnType;
 }
 

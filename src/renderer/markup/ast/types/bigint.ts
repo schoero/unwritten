@@ -12,7 +12,7 @@ export function renderBigIntType(ctx: MarkupRenderContext, bigIntType: BigIntTyp
 
   const name = bigIntType.name;
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.BigInt] && ctx.renderer.renderHyperLink(ctx, encapsulatedName, ctx.config.externalTypes[TypeKind.BigInt]);
+  const link = ctx.config.externalTypes[TypeKind.BigInt] && ctx.renderer.renderHyperLink(encapsulatedName, ctx.config.externalTypes[TypeKind.BigInt]);
 
   return link ?? encapsulatedName;
 

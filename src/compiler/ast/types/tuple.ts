@@ -1,11 +1,11 @@
 import ts from "typescript";
 
-import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { getIdByType } from "unwritten:compiler/ast/shared/id.js";
+import { getNameByDeclaration } from "unwritten:compiler/ast/shared/name.js";
+import { getPositionByNode } from "unwritten:compiler/ast/shared/position.js";
+import { parseType } from "unwritten:compiler:ast/index.js";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:shared/id.js";
-import { getNameByDeclaration } from "unwritten:compiler:shared/name.js";
-import { getPositionByNode } from "unwritten:compiler:shared/position.js";
 import { isTupleTypeReferenceType } from "unwritten:compiler:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 

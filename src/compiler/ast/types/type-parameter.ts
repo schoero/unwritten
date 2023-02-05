@@ -1,7 +1,7 @@
-import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { getIdByType } from "unwritten:compiler/ast/shared/id.js";
+import { getNameByType } from "unwritten:compiler/ast/shared/name.js";
+import { parseType } from "unwritten:compiler:ast/index.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:shared/id.js";
-import { getNameByType } from "unwritten:compiler:shared/name.js";
 import { lockType } from "unwritten:compiler:utils/ts.js";
 
 import type { TypeParameter } from "typescript";

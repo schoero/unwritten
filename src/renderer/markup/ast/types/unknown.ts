@@ -12,7 +12,7 @@ export function renderUnknownType(ctx: MarkupRenderContext, unknownType: Unknown
 
   const name = unknownType.name;
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.Unknown] && ctx.renderer.renderHyperLink(ctx, encapsulatedName, ctx.config.externalTypes[TypeKind.Unknown]);
+  const link = ctx.config.externalTypes[TypeKind.Unknown] && ctx.renderer.renderHyperLink(encapsulatedName, ctx.config.externalTypes[TypeKind.Unknown]);
 
   return link ?? encapsulatedName;
 

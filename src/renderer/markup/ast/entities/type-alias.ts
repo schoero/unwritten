@@ -1,4 +1,4 @@
-import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer/markup/ast/index.js";
 import { renderDescription } from "unwritten:renderer:markup/shared/description.js";
 import { renderExample } from "unwritten:renderer:markup/shared/example.js";
 import { renderJSDocTags } from "unwritten:renderer:markup/shared/jsdoc-tags.js";

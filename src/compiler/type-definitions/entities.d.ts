@@ -1,4 +1,3 @@
-import type { EntityKind } from "unwritten:compiler:enums/entities.js";
 import type {
   Description,
   ID,
@@ -6,7 +5,8 @@ import type {
   Modifiers,
   Name,
   Position
-} from "unwritten:compiler:type-definitions/mixins.d.js";
+} from "unwritten:compiler/type-definitions/shared.js";
+import type { EntityKind } from "unwritten:compiler:enums/entities.js";
 import type { ExpressionType, LiteralTypes, Types } from "unwritten:compiler:type-definitions/types.d.js";
 
 

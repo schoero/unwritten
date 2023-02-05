@@ -2,7 +2,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/unwritten-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/unwritten-light.svg">
-    <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="assets/unwritten.svg">
+    <img alt="unwritten" src="assets/unwritten.svg">
 </picture>
 </div>
 

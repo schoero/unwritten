@@ -1,5 +1,5 @@
+import { getIdByType } from "unwritten:compiler/ast/shared/id.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:shared/id.js";
 
 import type { LiteralType } from "typescript";
 

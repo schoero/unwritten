@@ -1,5 +1,3 @@
-import { Locker } from "unwritten:compiler:locker/index.js";
-
 import type { TypeChecker } from "typescript";
 
 import type { CompleteConfig } from "unwritten:type-definitions/config.js";
@@ -7,14 +5,9 @@ import type { CompilerContext, DefaultContext } from "unwritten:type-definitions
 
 
 export function createContext(defaultContext: DefaultContext, checker: TypeChecker, config: CompleteConfig): CompilerContext {
-
-  const locker = new Locker();
-
   return {
     checker,
     config,
-    locker,
     ...defaultContext
   };
-
 }

@@ -1,9 +1,9 @@
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler/ast/shared/id.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler/ast/shared/jsdoc.js";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler/ast/shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler/ast/shared/position.js";
 import { createPropertyEntity, createSignatureEntity, createTypeParameterEntity } from "unwritten:compiler:entities";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler:shared/id.js";
-import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler:shared/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler:shared/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,

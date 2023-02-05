@@ -1,6 +1,5 @@
 import type { TypeChecker } from "typescript";
 
-import type { Locker } from "unwritten:compiler:locker/index.js";
 import type { Logger } from "unwritten:logger/index.js";
 
 import type { CompleteConfig } from "./config.js";
@@ -14,7 +13,10 @@ export type DefaultContext = {
 export type CompilerContext = DefaultContext & {
   checker: TypeChecker;
   config: CompleteConfig;
-  locker: Locker;
+  /**
+   * @internal
+   */
+  locker?: Set<number>;
 };
 
 export type RenderContext<CustomRenderer extends Renderer> = DefaultContext & {

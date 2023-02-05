@@ -1,8 +1,7 @@
-import { parseType } from "unwritten:compiler:entry-points/type.js";
-import { parseTypeNode } from "unwritten:compiler:entry-points/type-node.js";
+import { getIdByTypeNode } from "unwritten:compiler/ast/shared/id.js";
+import { getNameByTypeNode } from "unwritten:compiler/ast/shared/name.js";
+import { parseType, parseTypeNode } from "unwritten:compiler:ast/index.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByTypeNode } from "unwritten:compiler:shared/id.js";
-import { getNameByTypeNode } from "unwritten:compiler:shared/name.js";
 import { isTypeReferenceNode } from "unwritten:compiler:typeguards/type-nodes.js";
 import { createExpressionType } from "unwritten:compiler:types";
 

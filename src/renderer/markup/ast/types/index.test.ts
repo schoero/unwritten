@@ -17,14 +17,14 @@ scope("Renderer", "Types", () => {
       continue;
     }
 
-    it(`should export from all files of the current directory`, () => {
+    it("should export from all files of the current directory", () => {
       const exportName = file.replace(".ts", ".js");
       expect(indexExports).to.include(`export * from "./${exportName}";`);
     });
 
   }
 
-  it(`should not export from itself`, () => {
+  it("should not export from itself", () => {
     expect(indexExports).not.to.include(`export * from "./index.js";`);
   });
 

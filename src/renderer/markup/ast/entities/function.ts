@@ -8,11 +8,11 @@ import type {
 } from "unwritten:renderer:markup/types/renderer.js";
 
 
-export function renderFunctionForTableOfContents(ctx: MarkupRenderContext, func: FunctionLikeEntities): RenderedFunctionForTableOfContents {
-  return func.signatures.map(signature => renderSignatureForTableOfContents(ctx, signature));
+export function renderFunctionEntityForTableOfContents(ctx: MarkupRenderContext, functionLikeEntity: FunctionLikeEntities): RenderedFunctionForTableOfContents {
+  return functionLikeEntity.signatures.map(signature => renderSignatureForTableOfContents(ctx, signature));
 }
 
 
-export function renderFunctionForDocumentation(ctx: MarkupRenderContext, func: FunctionLikeEntities): RenderedFunctionForDocumentation {
-  return renderSignaturesForDocumentation(ctx, func.signatures);
+export function renderFunctionEntityForDocumentation(ctx: MarkupRenderContext, functionLikeEntity: FunctionLikeEntities): RenderedFunctionForDocumentation {
+  return renderSignaturesForDocumentation(ctx, functionLikeEntity.signatures);
 }

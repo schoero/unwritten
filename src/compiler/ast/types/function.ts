@@ -1,6 +1,6 @@
+import { getIdByType } from "unwritten:compiler/ast/shared/id.js";
 import { createSignatureEntity } from "unwritten:compiler:entities";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { getIdByType } from "unwritten:compiler:shared/id.js";
 
 import type { ObjectType } from "typescript";
 

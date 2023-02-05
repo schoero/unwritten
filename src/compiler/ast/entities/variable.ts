@@ -1,10 +1,10 @@
-import { parseType } from "unwritten:compiler:entry-points/type.js";
+import { getIdBySymbol } from "unwritten:compiler/ast/shared/id.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler/ast/shared/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:compiler/ast/shared/modifiers.js";
+import { getNameBySymbol } from "unwritten:compiler/ast/shared/name.js";
+import { getPositionByDeclaration } from "unwritten:compiler/ast/shared/position.js";
+import { parseType } from "unwritten:compiler:ast/index.js";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { getIdBySymbol } from "unwritten:compiler:shared/id.js";
-import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:compiler:shared/jsdoc.js";
-import { getModifiersByDeclaration } from "unwritten:compiler:shared/modifiers.js";
-import { getNameBySymbol } from "unwritten:compiler:shared/name.js";
-import { getPositionByDeclaration } from "unwritten:compiler:shared/position.js";
 import { isVariableDeclaration } from "unwritten:compiler:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
 

@@ -1,4 +1,4 @@
-import { renderType } from "unwritten:renderer:markup/entry-points/types.js";
+import { renderType } from "unwritten:renderer/markup/ast/index.js";
 
 import type { TupleType } from "unwritten:compiler:type-definitions/types.d.js";
 import type { MarkupRenderContext } from "unwritten:renderer/markup/types/renderer.js";

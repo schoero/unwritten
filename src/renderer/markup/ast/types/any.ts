@@ -12,7 +12,7 @@ export function renderAnyType(ctx: MarkupRenderContext, anyType: AnyType): Rende
 
   const name = anyType.name;
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.Any] && ctx.renderer.renderHyperLink(ctx, encapsulatedName, ctx.config.externalTypes[TypeKind.Any]);
+  const link = ctx.config.externalTypes[TypeKind.Any] && ctx.renderer.renderHyperLink(encapsulatedName, ctx.config.externalTypes[TypeKind.Any]);
 
   return link ?? encapsulatedName;
 
