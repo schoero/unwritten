@@ -13,11 +13,8 @@ import { renderRemarks } from "../../shared/remarks.js";
 import { renderParameterForDocumentation, renderParametersForSignature } from "./parameter.js";
 
 import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
-import type {
-  MarkupRenderContext,
-  RenderedSignatureForDocumentation,
-  RenderedSignatureForTableOfContents
-} from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderedSignatureForDocumentation } from "unwritten:renderer/markup/types-definitions/ast.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderSignatureForTableOfContents(ctx: MarkupRenderContext, signatureEntity: SignatureEntity): RenderedSignatureForTableOfContents {
@@ -27,7 +24,7 @@ export function renderSignatureForTableOfContents(ctx: MarkupRenderContext, sign
   return renderLink(ctx, renderedSignature, signatureEntity.id);
 }
 
-export function renderSignaturesForDocumentation(ctx: MarkupRenderContext, signatureEntities: SignatureEntity[]): RenderedSignatureForDocumentation {
+export function renderSignaturesForDocumentation(ctx: MarkupRenderContext, signatureEntities: SignatureEntity[]): RenderedSignatureForDocumentation[] {
   return signatureEntities.reduce<RenderedSignatureForDocumentation>((acc, signatureEntity) => {
     const renderedSignatureForDocumentation = renderSignatureForDocumentation(ctx, signatureEntity);
     return {
@@ -58,16 +55,19 @@ export function renderSignatureForDocumentation(ctx: MarkupRenderContext, signat
   const returnTypeWithDescription = returnDescription ? `Returns: ${returnType} ${returnDescription}` : `Returns: ${returnType}`;
   const parameterAndReturnValueList = [...parameters, returnTypeWithDescription].filter(contentFilter);
 
-  return {
-    [anchorIdentifier]: [
+  /* content: [
+    title: ASTHeading,
+    tags: ASTText,
+    parametersAndReturnType: ASTList,
+    description: ASTParagraph,
+    remarks: ASTParagraph,
+    example: ASTParagraph
+  ]; */
+  return <RenderedSignatureForDocumentation>{
+    content: [
+      renderedSignature,
       jsdocTags,
-      position,
-      [
-        parameterAndReturnValueList
-      ],
-      description,
-      remarks,
-      example
+      parameterAndReturnValueList
     ]
   };
 

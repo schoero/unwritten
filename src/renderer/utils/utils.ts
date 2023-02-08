@@ -1,4 +1,4 @@
-import type { RenderedList, RenderedTitle } from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderedList, RenderedTitle } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function convertTitlesToList(renderedTitle: RenderedTitle): RenderedList {

@@ -12,7 +12,7 @@ import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entiti
 import type {
   MarkupRenderContext,
   RenderedInterfaceForDocumentation
-} from "unwritten:renderer:markup/types/renderer.js";
+} from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderInterfaceForTableOfContents(ctx: MarkupRenderContext, iface: InterfaceEntity) {

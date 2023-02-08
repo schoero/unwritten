@@ -3,7 +3,7 @@ import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { SymbolType } from "unwritten:compiler:type-definitions/types.js";
-import type { RenderedSymbolType } from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderedSymbolType } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderSymbolType(ctx: MarkupRenderContext, symbolType: SymbolType): RenderedSymbolType {

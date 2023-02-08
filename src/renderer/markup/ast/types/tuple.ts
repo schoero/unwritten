@@ -3,7 +3,7 @@ import { renderType } from "unwritten:renderer/markup/ast/index.js";
 
 import type { TupleMemberEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { TupleType } from "unwritten:compiler:type-definitions/types.js";
-import type { RenderedTupleType } from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderedTupleType } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderTupleType(ctx: MarkupRenderContext, tupleType: TupleType): RenderedTupleType {

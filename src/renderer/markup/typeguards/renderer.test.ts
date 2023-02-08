@@ -4,7 +4,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 
 import { isRenderedList, isRenderedMultilineContent, isRenderedParagraph, isRenderedTitle } from "./renderer.js";
 
-import type { RenderedList, RenderedMultilineContent, RenderedParagraph, RenderedTitle } from "../types/renderer.js";
+import type { RenderedList, RenderedMultilineContent, RenderedParagraph, RenderedTitle } from "../types-definitions/renderer.js";
 
 
 scope("Renderer", "Render abstraction typeguards", () => {

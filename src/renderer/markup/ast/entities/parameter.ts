@@ -9,7 +9,7 @@ import type {
   RenderedParameterForDocumentation,
   RenderedParameterForSignature,
   RenderedParametersForSignature
-} from "unwritten:renderer:markup/types/renderer.js";
+} from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderParametersForSignature(ctx: MarkupRenderContext, parameterEntities: ParameterEntity[]): RenderedParametersForSignature {

@@ -1,6 +1,6 @@
 import type { TypeKind } from "unwritten:compiler:enums/types.js";
+import type { HTMLRenderConfig, MarkdownRenderConfig } from "unwritten:renderer/markup/types-definitions/config.js";
 import type { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
-import type { MarkupRenderConfig } from "unwritten:renderer:markup/types/config.js";
 
 import type { Complete } from "./utils.js";
 
@@ -23,8 +23,8 @@ export type CompleteConfig = Config & {
 };
 
 export type CompleteRenderConfig = {
-  [BuiltInRenderers.Markdown]: Complete<MarkupRenderConfig>;
-  [BuiltInRenderers.HTML]: Complete<MarkupRenderConfig>;
+  [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
+  [BuiltInRenderers.HTML]: Complete<HTMLRenderConfig>;
   [key: string]: {
     [key: string]: any;
   };

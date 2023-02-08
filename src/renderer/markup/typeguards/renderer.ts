@@ -4,7 +4,7 @@ import type {
   RenderedParagraph,
   RenderedTitle,
   RenderObject
-} from "unwritten:renderer:markup/types/renderer.js";
+} from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function isRenderedList(renderObject: RenderObject): renderObject is RenderedList {

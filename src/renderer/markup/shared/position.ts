@@ -1,4 +1,4 @@
-import type { MarkupRenderContext, RenderedPosition } from "../types/renderer.js";
+import type { MarkupRenderContext, RenderedPosition } from "../types-definitions/renderer.js";
 
 import type { Position } from "unwritten:compiler/type-definitions/shared.js";
 

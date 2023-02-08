@@ -1,6 +1,6 @@
-import type { MarkupRenderContext } from "../types/renderer.js";
+import type { MarkupRenderContext } from "../types-definitions/renderer.js";
 
-import type { MarkupRenderConfig } from "unwritten:renderer:markup/types/config.js";
+import type { MarkupRenderConfig } from "unwritten:renderer/markup/types-definitions/config.js";
 import type { Complete } from "unwritten:type-definitions/utils.js";
 
 

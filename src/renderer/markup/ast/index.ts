@@ -70,7 +70,7 @@ import type {
   RenderedEntitiesForDocumentation,
   RenderedEntitiesForTableOfContents,
   RenderedTypes
-} from "unwritten:renderer:markup/types/renderer.js";
+} from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderType(ctx: MarkupRenderContext, type: Types): RenderedTypes {

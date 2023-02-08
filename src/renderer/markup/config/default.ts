@@ -1,7 +1,11 @@
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { RenderCategories } from "unwritten:renderer:markup/types/renderer.js";
+import { RenderCategories } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
-import type { MarkupRenderConfig } from "unwritten:renderer:markup/types/config.js";
+import type {
+  HTMLRenderConfig,
+  MarkdownRenderConfig,
+  MarkupRenderConfig
+} from "unwritten:renderer/markup/types-definitions/config.js";
 import type { Complete } from "unwritten:type-definitions/utils.js";
 
 
@@ -52,4 +56,15 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   tagEncapsulation: ["`", "`"],
   typeEncapsulation: ["&lt;", "&gt;"],
   typeParameterEncapsulation: ["&lt;", "&gt;"]
+};
+
+
+export const defaultMarkdownRenderConfig: Complete<MarkdownRenderConfig> = {
+  ...defaultRenderConfig,
+  allowedHTMLTags: false
+};
+
+
+export const defaultHTMLRenderConfig: Complete<HTMLRenderConfig> = {
+  ...defaultRenderConfig
 };

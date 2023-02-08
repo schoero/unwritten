@@ -1,4 +1,4 @@
-import type { MarkupRenderContext, RenderedRemarks } from "../types/renderer.js";
+import type { MarkupRenderContext, RenderedRemarks } from "../types-definitions/renderer.js";
 
 import type { Remarks } from "unwritten:compiler/type-definitions/shared.js";
 

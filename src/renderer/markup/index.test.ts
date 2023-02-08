@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { renderRenderObject } from "unwritten:renderer:markup/index.js";
+import { renderAST } from "unwritten:renderer:markup/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { html } from "unwritten:tests:utils/template.js";
 
-import type { RenderedList, RenderedTitle } from "./types/renderer.js";
+import type { RenderedList, RenderedTitle } from "./types-definitions/renderer.js";
 
 
 scope("Renderer", "Render abstraction", () => {
@@ -19,15 +19,15 @@ scope("Renderer", "Render abstraction", () => {
         "element 2"
       ]];
 
-      const renderedList = renderRenderObject(createRenderContext(), testFileContent);
+      const renderedList = renderAST(createRenderContext(), testFileContent);
 
       it("should render lists correctly", () => {
         expect(renderedList).to.equal(html`
-        <ul>
-          <li>element 1</li>
-          <li>element 2</li>
-        </ul>
-      `);
+          <ul>
+            <li>element 1</li>
+            <li>element 2</li>
+          </ul>
+        `);
       });
 
     }
@@ -36,7 +36,7 @@ scope("Renderer", "Render abstraction", () => {
 
       const testFileContent: RenderedList = [[]];
 
-      const renderedList = renderRenderObject(createRenderContext(), testFileContent);
+      const renderedList = renderAST(createRenderContext(), testFileContent);
 
       it("should not render empty lists", () => {
         expect(renderedList).to.equal(html``);
@@ -54,7 +54,7 @@ scope("Renderer", "Render abstraction", () => {
         ]]
       ]];
 
-      const renderedList = renderRenderObject(createRenderContext(), testFileContent);
+      const renderedList = renderAST(createRenderContext(), testFileContent);
 
       it("should render nested lists correctly", () => {
         expect(renderedList).to.equal(html`
@@ -76,7 +76,7 @@ scope("Renderer", "Render abstraction", () => {
         heading: ["element"]
       };
 
-      const renderedList = renderRenderObject(createRenderContext(), testFileContent);
+      const renderedList = renderAST(createRenderContext(), testFileContent);
 
       it("should render titles correctly", () => {
         expect(renderedList).to.equal(html`
@@ -97,7 +97,7 @@ scope("Renderer", "Render abstraction", () => {
         }
       };
 
-      const renderedList = renderRenderObject(createRenderContext(), testFileContent);
+      const renderedList = renderAST(createRenderContext(), testFileContent);
 
       it("should render nested titles correctly", () => {
         expect(renderedList).to.equal(html`

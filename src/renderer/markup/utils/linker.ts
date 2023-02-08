@@ -1,4 +1,4 @@
-import type { MarkupRenderContext } from "../types/renderer.js";
+import type { MarkupRenderContext } from "../types-definitions/renderer.js";
 
 
 export type AnchorIdentifier = `${string}-${number}-${number}`;

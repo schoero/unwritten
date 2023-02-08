@@ -1,4 +1,4 @@
-import type { MarkupRenderContext, RenderedExample } from "../types/renderer.js";
+import type { MarkupRenderContext, RenderedExample } from "../types-definitions/renderer.js";
 
 import type { Example } from "unwritten:compiler/type-definitions/shared.js";
 

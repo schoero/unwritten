@@ -1,11 +1,11 @@
 import { contentFilter } from "unwritten:compiler:utils/filter.js";
-import { RenderCategories } from "unwritten:renderer:markup/types/renderer.js";
+import { RenderCategories } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 import { getRenderConfig } from "./config.js";
 import { createAnchor } from "./linker.js";
 
-import type { Encapsulation } from "unwritten:renderer:markup/types/config.js";
-import type { MarkupRenderContext, RenderedLink } from "unwritten:renderer:markup/types/renderer.js";
+import type { Encapsulation } from "unwritten:renderer/markup/types-definitions/config.js";
+import type { MarkupRenderContext, RenderedLink } from "unwritten:renderer/markup/types-definitions/renderer.js";
 import type { DeepOmit } from "unwritten:type-definitions/utils.js";
 
 

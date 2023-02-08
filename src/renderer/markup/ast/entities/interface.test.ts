@@ -4,7 +4,7 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { renderRenderObject } from "unwritten:renderer:markup/index.js";
+import { renderAST } from "unwritten:renderer:markup/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -72,7 +72,7 @@ scope("Renderer", TypeKind.Interface, () => {
     const interfaceName = Object.keys(renderedInterfaceForDocumentation)[0]! as AnchorIdentifier;
     const interfaceContent = renderedInterfaceForDocumentation[interfaceName]!;
 
-    const documentation = renderRenderObject(ctx, renderedInterfaceForDocumentation);
+    const documentation = renderAST(ctx, renderedInterfaceForDocumentation);
 
     writeFileSync("interface.html", documentation);
 

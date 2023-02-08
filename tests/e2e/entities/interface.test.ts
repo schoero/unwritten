@@ -6,7 +6,7 @@ import {
   renderInterfaceForDocumentation,
   renderInterfaceForTableOfContents
 } from "unwritten:renderer:markup/ast/entities/interface.js";
-import { renderRenderObject } from "unwritten:renderer:markup/index.js";
+import { renderAST } from "unwritten:renderer:markup/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -40,7 +40,7 @@ scope("E2E", EntityKind.Interface, () => {
     const interfaceName = Object.keys(renderedInterfaceForDocumentation)[0]!;
     const interfaceContent = renderedInterfaceForDocumentation[interfaceName]!;
 
-    const documentation = renderRenderObject(renderContext, renderedInterfaceForDocumentation);
+    const documentation = renderAST(renderContext, renderedInterfaceForDocumentation);
 
     it("should be able to parse an interface", () => {
       expect(documentation).to.equal(`

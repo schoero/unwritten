@@ -13,7 +13,7 @@ import type {
   MarkupRenderContext,
   RenderedVariableForDocumentation,
   RenderedVariableForTableOfContents
-} from "unwritten:renderer:markup/types/renderer.js";
+} from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderVariableForTableOfContents(ctx: MarkupRenderContext, variable: VariableEntity): RenderedVariableForTableOfContents {

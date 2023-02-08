@@ -4,12 +4,12 @@ import { render as sharedRender } from "unwritten:renderer:markup/index.js";
 import { html } from "unwritten:tests:utils/template.js";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
-import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types/renderer.js";
+import type { HTMLRenderContext, HTMLRenderer as HTMLRendererType } from "unwritten:renderer/markup/types-definitions/renderer.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
-function verifyRenderer(renderer: Renderer): asserts renderer is HTMLRenderer {
+function verifyRenderer(renderer: Renderer): asserts renderer is HTMLRendererType {
   if(renderer.name !== BuiltInRenderers.Markdown){
     throw new Error(`Renderer '${renderer.name}' is not a Markdown renderer.`);
   }
@@ -20,76 +20,100 @@ function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is HTMLRenderC
 }
 
 
-const htmlRenderer: HTMLRenderer = {
-  fileExtension: "html",
-  name: BuiltInRenderers.HTML,
-  render: <CustomRenderer extends Renderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]) => {
+export default class HTMLRenderer implements HTMLRendererType {
+
+  public fileExtension = "html";
+  public name = BuiltInRenderers.HTML;
+
+
+  public render<CustomRenderer extends Renderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]) {
     verifyContext(ctx);
     return sharedRender(ctx, entities);
-  },
-  renderAnchorLink: (name: string, anchor: string): string => {
+  }
+
+  public renderAnchorLink(name: string, anchor: string): string {
     return `<a href="#${anchor}">${name}</a>`;
-  },
-  renderBoldText: (text: string): string => {
+  }
+
+  public renderAnchorTag(anchor: string): string {
+    return `<a id="${anchor}"></a>`;
+  }
+
+  public renderBoldText(text: string): string {
     return `<b>${text}</b>`;
-  },
-  renderCode: (code: string, language?: string): string => {
+  }
+
+  public renderCode(code: string, language?: string): string {
     return `<pre><code language="${language ? language : ""}">${code}</code></pre>`;
-  },
-  renderHorizontalRule: (): string => {
-    return `<hr>${htmlRenderer.renderNewLine()}`;
-  },
-  renderHyperLink: (name: string, url: string) => {
+  }
+
+  public renderHorizontalRule(): string {
+    return `<hr>${this.renderNewLine()}`;
+  }
+
+  public renderHyperLink(name: string, url: string) {
     return `<a href="${url}">${name}</a>`;
-  },
-  renderItalicText: (text: string): string => {
+  }
+
+  public renderItalicText(text: string): string {
     return `<i>${text}</i>`;
-  },
-  renderLineBreak: (): string => {
+  }
+
+  public renderLineBreak(): string {
     return "<br>";
-  },
-  renderList: (items: string[]): string => {
+  }
+
+  public renderList(items: string[]): string {
     return [
-      htmlRenderer.renderListStart(),
-      ...items.map(item => htmlRenderer.renderListItem(item)),
-      htmlRenderer.renderListEnd()
-    ].join(htmlRenderer.renderNewLine());
-  },
-  renderListEnd: (): string => {
+      this.renderListStart(),
+      ...items.map(item => this.renderListItem(item)),
+      this.renderListEnd()
+    ].join(this.renderNewLine());
+  }
+
+  public renderListEnd(): string {
     return "</ul>";
-  },
-  renderListItem: (item: string): string => {
+  }
+
+  public renderListItem(item: string): string {
     return html`<li>${item}</li>`;
-  },
-  renderListStart: (): string => {
+  }
+
+  public renderListStart() {
     return "<ul>";
-  },
-  renderNewLine: (): string => {
+  }
+
+  public renderNewLine(): string {
     return "\n";
-  },
-  renderParagraph: (text: string): string => {
+  }
+
+  public renderParagraph(text: string): string {
     return `<p>${text}</p>`;
-  },
-  renderSmallText: (text: string): string => {
+  }
+
+  public renderSmallText(text: string): string {
     return `<small>${text}</small>`;
-  },
-  renderSourceCodeLink: (file: string, line: number, column: number): string => {
+  }
+
+  public renderSourceCodeLink(file: string, line: number, column: number): string {
     const url = `${file}#L${line}`;
-    return htmlRenderer.renderHyperLink(`${file}:${line}`, url);
-  },
-  renderStrikeThroughText: (text: string): string => {
+    return this.renderHyperLink(`${file}:${line}`, url);
+  }
+
+  public renderStrikeThroughText(text: string): string {
     return `<del>${text}</del>`;
-  },
-  renderTitle: (title: string, size: number, anchor?: string): string => {
+  }
+
+  public renderTitle(title: string, size: number, anchor?: string): string {
     const id = anchor ? ` id="${anchor}"` : "";
     return `<h${size}${id}>${title}</h${size}>`;
-  },
-  renderUnderlineText: (text: string): string => {
+  }
+
+  public renderUnderlineText(text: string): string {
     return `<u>${text}</u>`;
-  },
-  renderWarning: (text: string): string => {
+  }
+
+  public renderWarning(text: string): string {
     return `<blockquote>${text}</blockquote>`;
   }
-};
-
-export default htmlRenderer;
+}

@@ -3,7 +3,7 @@ import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { NullType } from "unwritten:compiler:type-definitions/types.js";
-import type { RenderedNullType } from "unwritten:renderer:markup/types/renderer.js";
+import type { RenderedNullType } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderNullType(ctx: MarkupRenderContext, nullType: NullType): RenderedNullType {

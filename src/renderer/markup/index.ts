@@ -1,4 +1,5 @@
 import { renderEntityForDocumentation, renderEntityForTableOfContents } from "./ast/index.js";
+import { ASTKinds } from "./enums/ast.js";
 import {
   isRenderedList,
   isRenderedMultilineContent,
@@ -12,13 +13,8 @@ import { sortExportableTypes } from "./utils/sort.js";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
 
-import type {
-  MarkupRenderContext,
-  RenderedCategoryForDocumentation,
-  RenderedCategoryForTableOfContents,
-  RenderedEntitiesForTableOfContents,
-  RenderObject
-} from "./types/renderer.js";
+import type { ASTHeading } from "./types-definitions/ast.js";
+import type { MarkupRenderContext } from "./types-definitions/renderer.js";
 import type { AnchorIdentifier } from "./utils/linker.js";
 
 
@@ -29,15 +25,16 @@ export function render(ctx: MarkupRenderContext, entities: ExportableEntities[])
   const tableOfContents = renderForTableOfContents(ctx, sortedEntities);
   const documentation = renderForDocumentation(ctx, sortedEntities);
 
-  const renderObject: RenderObject = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    "API Documentation": [
+  const ast: ASTHeading = {
+    content: [
       tableOfContents,
       documentation
-    ]
+    ],
+    kind: ASTKinds.Heading,
+    text: "API Documentation"
   };
 
-  return renderRenderObject(ctx, renderObject);
+  return renderAST(ctx, ast);
 
 }
 
@@ -96,7 +93,7 @@ export function renderForDocumentation(ctx: MarkupRenderContext, entities: Expor
 }
 
 
-export function renderRenderObject(ctx: MarkupRenderContext, renderObject: RenderObject): string {
+export function renderAST(ctx: MarkupRenderContext, renderObject: RenderObject): string {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -183,7 +180,7 @@ export function renderRenderObject(ctx: MarkupRenderContext, renderObject: Rende
     if(isRenderedMultilineContent(element)){
       const renderedElements = element
         .filter(el => el !== undefined)
-        .map(el => renderNestedElement(el!));
+        .map(el => renderNestedElement(el));
       renderElement(renderedElements);
     }
 

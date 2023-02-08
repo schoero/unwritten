@@ -1,9 +1,9 @@
 import { getCategoryName } from "./renderer.js";
 
-import type { MarkupRenderContext } from "../types/renderer.js";
+import type { MarkupRenderContext } from "../types-definitions/renderer.js";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
-import type { MarkupRenderConfig } from "unwritten:renderer:markup/types/config.js";
+import type { MarkupRenderConfig } from "unwritten:renderer/markup/types-definitions/config.js";
 
 
 export function sortExportableTypes(ctx: MarkupRenderContext, types: ExportableEntities[]): ExportableEntities[] {
