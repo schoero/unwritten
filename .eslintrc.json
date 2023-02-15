@@ -3,7 +3,7 @@
   "plugins": ["sort-exports"],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": ["*.ts"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "ecmaVersion": 2020
@@ -12,9 +12,8 @@
     {
       "files": [
         "**/typeguards/*.ts",
-        "**/compiler/mixins/jsdoc.ts",
-        "**/renderer/**/markdown/index.ts",
-        "**/renderer/**/html/index.ts"
+        "**/utils/*.ts",
+        "**/compiler/shared/jsdoc.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {

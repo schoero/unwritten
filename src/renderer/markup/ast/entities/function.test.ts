@@ -54,49 +54,156 @@ scope("Renderer", EntityKind.Function, () => {
     const renderedFunctionForDocumentation = renderFunctionEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
     it("should have only one signature", () => {
-      expect(renderedFunctionForTableOfContents).to.have.lengthOf(1);
-      expect(Object.keys(renderedFunctionForDocumentation)).to.have.lengthOf(1);
+      expect(renderedFunctionForTableOfContents.content).to.have.lengthOf(1);
+      expect(Object.keys(renderedFunctionForDocumentation.content)).to.have.lengthOf(1);
     });
 
-    const renderedFunctionSignature = Object.keys(renderedFunctionForDocumentation)[0]!;
-    const renderedFunctionBody = renderedFunctionForDocumentation[renderedFunctionSignature]!;
+  }
 
-    const [
-      tags,
-      position,
-      parametersAndReturnType,
-      description,
-      remarks,
-      example
-    ] = renderedFunctionBody;
+  {
 
-    it("should have matching function signature", () => {
-      expect(renderedFunctionForTableOfContents[0]).to.equal("testFunction()");
-      expect(renderedFunctionSignature).to.equal("testFunction()");
-    });
+    // #region Overloads
 
-    it("should have a position", () => {
-      expect(position).to.not.equal(undefined);
-    });
+    const testFunction: Testable<FunctionEntity> = {
+      kind: EntityKind.Function,
+      name: "add",
+      signatures: [
+        {
+          description: undefined,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: "add",
+          parameters: [
+            {
+              description: undefined,
+              initializer: undefined,
+              kind: EntityKind.Parameter,
+              name: "a",
+              optional: false,
+              position: {
+                column: 20,
+                file: "/file.ts",
+                line: 1
+              },
+              rest: false,
+              type: {
+                kind: TypeKind.Number,
+                name: "number"
+              }
+            },
+            {
+              description: undefined,
+              initializer: undefined,
+              kind: EntityKind.Parameter,
+              name: "b",
+              optional: false,
+              position: {
+                column: 31,
+                file: "/file.ts",
+                line: 1
+              },
+              rest: false,
+              type: {
+                kind: TypeKind.Number,
+                name: "number"
+              }
+            }
+          ],
+          position: {
+            column: 0,
+            file: "/file.ts",
+            line: 1
+          },
+          returnType: {
+            description: undefined,
+            kind: TypeKind.Number,
+            name: "number"
+          },
+          typeParameters: undefined
+        },
+        {
+          description: undefined,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: "add",
+          parameters: [
+            {
+              description: undefined,
+              initializer: undefined,
+              kind: EntityKind.Parameter,
+              name: "a",
+              optional: false,
+              position: {
+                column: 20,
+                file: "/file.ts",
+                line: 2
+              },
+              rest: false,
+              type: {
+                kind: TypeKind.Number,
+                name: "number"
+              }
+            },
+            {
+              description: undefined,
+              initializer: undefined,
+              kind: EntityKind.Parameter,
+              name: "b",
+              optional: false,
+              position: {
+                column: 31,
+                file: "/file.ts",
+                line: 2
+              },
+              rest: false,
+              type: {
+                kind: TypeKind.Number,
+                name: "number"
+              }
+            },
+            {
+              description: undefined,
+              initializer: undefined,
+              kind: EntityKind.Parameter,
+              name: "c",
+              optional: false,
+              position: {
+                column: 42,
+                file: "/file.ts",
+                line: 2
+              },
+              rest: false,
+              type: {
+                kind: TypeKind.Number,
+                name: "number"
+              }
+            }
+          ],
+          position: {
+            column: 0,
+            file: "/file.ts",
+            line: 2
+          },
+          returnType: {
+            description: undefined,
+            kind: TypeKind.Number,
+            name: "number"
+          },
+          typeParameters: undefined
+        }
+      ]
+    };
 
-    it("should have a jsdoc tag", () => {
-      expect(tags).to.not.equal(undefined);
-    });
+    // #endregion
 
-    it("should have a matching return type", () => {
-      expect(parametersAndReturnType[0][0]).to.equal("Returns: void Returns nothing");
-    });
+    const ctx = createRenderContext();
 
-    it("should have a matching description", () => {
-      expect(description).to.equal("Function description");
-    });
+    const renderedFunctionForTableOfContents = renderFunctionEntityForTableOfContents(ctx, testFunction as FunctionEntity);
+    const renderedFunctionForDocumentation = renderFunctionEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
-    it("should have matching remarks", () => {
-      expect(remarks).to.equal("This is a remark");
-    });
-
-    it("should have a matching example", () => {
-      expect(example).to.equal("testFunction();");
+    it("should have only one signature", () => {
+      expect(renderedFunctionForTableOfContents.content).to.have.lengthOf(2);
+      expect(Object.keys(renderedFunctionForDocumentation.content)).to.have.lengthOf(2);
     });
 
   }

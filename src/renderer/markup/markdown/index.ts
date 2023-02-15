@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
-import HTMLRenderer from "unwritten:renderer:markup/html/index.js";
+import { HTMLRenderer } from "unwritten:renderer:markup/html/index.js";
 import { render as sharedRender } from "unwritten:renderer:markup/index.js";
 import { assert } from "unwritten:utils/general.js";
 
@@ -8,7 +8,7 @@ import type { ExportableEntities } from "unwritten:compiler:type-definitions/ent
 import type {
   MarkdownRenderContext,
   MarkdownRenderer as MarkdownRendererType
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+} from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
@@ -101,7 +101,7 @@ class MarkdownRenderer extends HTMLRenderer implements MarkdownRendererType {
   }
 
   public override renderSmallText(text: string): string {
-    return `<small>${text}</small>`;
+    return this._isHTMLTagAllowed("small") ? super.renderSmallText(text) : text;
   }
 
   public override renderSourceCodeLink(file: string, line: number, column: number): string {

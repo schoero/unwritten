@@ -3,7 +3,7 @@ import type { ExportableEntities } from "unwritten:compiler:type-definitions/ent
 import type { RenderContext } from "./context.js";
 
 
-export type Renderer = {
+export interface Renderer {
   [key: string]: any;
   /** The file extension the renderer generates */
   fileExtension: string;
@@ -11,4 +11,4 @@ export type Renderer = {
   name: string;
   /** The render function */
   render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => string;
-};
+}

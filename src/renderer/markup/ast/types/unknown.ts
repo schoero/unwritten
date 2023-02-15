@@ -3,10 +3,8 @@ import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { UnknownType } from "unwritten:compiler:type-definitions/types.js";
-import type {
-  MarkupRenderContext,
-  RenderedUnknownType
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { RenderedUnknownType } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderUnknownType(ctx: MarkupRenderContext, unknownType: UnknownType): RenderedUnknownType {

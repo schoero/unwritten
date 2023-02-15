@@ -2,9 +2,14 @@ import { expect, it } from "vitest";
 
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import { isRenderedList, isRenderedMultilineContent, isRenderedParagraph, isRenderedTitle } from "./renderer.js";
+import { isListNode, isParagraphNode, isRenderedMultilineContent, isTitleNode } from "./renderer.js";
 
-import type { RenderedList, RenderedMultilineContent, RenderedParagraph, RenderedTitle } from "../types-definitions/renderer.js";
+import type {
+  RenderedList,
+  RenderedMultilineContent,
+  RenderedParagraph,
+  RenderedTitle
+} from "../types-definitions/markup.js";
 
 
 scope("Renderer", "Render abstraction typeguards", () => {
@@ -18,9 +23,9 @@ scope("Renderer", "Render abstraction typeguards", () => {
         "element 2"
       ]];
 
-      expect(isRenderedList(simpleList)).to.equal(true);
-      expect(isRenderedParagraph(simpleList)).to.equal(false);
-      expect(isRenderedTitle(simpleList)).to.equal(false);
+      expect(isListNode(simpleList)).to.equal(true);
+      expect(isParagraphNode(simpleList)).to.equal(false);
+      expect(isTitleNode(simpleList)).to.equal(false);
       expect(isRenderedMultilineContent(simpleList)).to.equal(false);
 
       const nestedList: RenderedList = [[
@@ -31,18 +36,18 @@ scope("Renderer", "Render abstraction typeguards", () => {
         ]]
       ]];
 
-      expect(isRenderedList(nestedList)).to.equal(true);
-      expect(isRenderedParagraph(nestedList)).to.equal(false);
-      expect(isRenderedTitle(nestedList)).to.equal(false);
+      expect(isListNode(nestedList)).to.equal(true);
+      expect(isParagraphNode(nestedList)).to.equal(false);
+      expect(isTitleNode(nestedList)).to.equal(false);
       expect(isRenderedMultilineContent(nestedList)).to.equal(false);
 
       const listWithParagraph: RenderedList = [[
         ["element 1"]
       ]];
 
-      expect(isRenderedList(listWithParagraph)).to.equal(true);
-      expect(isRenderedParagraph(listWithParagraph)).to.equal(false);
-      expect(isRenderedTitle(listWithParagraph)).to.equal(false);
+      expect(isListNode(listWithParagraph)).to.equal(true);
+      expect(isParagraphNode(listWithParagraph)).to.equal(false);
+      expect(isTitleNode(listWithParagraph)).to.equal(false);
       expect(isRenderedMultilineContent(listWithParagraph)).to.equal(false);
 
       const listWithMultilineContent: RenderedList = [[
@@ -52,9 +57,9 @@ scope("Renderer", "Render abstraction typeguards", () => {
         ]
       ]];
 
-      expect(isRenderedList(listWithMultilineContent)).to.equal(true);
-      expect(isRenderedParagraph(listWithMultilineContent)).to.equal(false);
-      expect(isRenderedTitle(listWithMultilineContent)).to.equal(false);
+      expect(isListNode(listWithMultilineContent)).to.equal(true);
+      expect(isParagraphNode(listWithMultilineContent)).to.equal(false);
+      expect(isTitleNode(listWithMultilineContent)).to.equal(false);
       expect(isRenderedMultilineContent(listWithMultilineContent)).to.equal(false);
 
     });
@@ -66,9 +71,9 @@ scope("Renderer", "Render abstraction typeguards", () => {
         "element"
       ];
 
-      expect(isRenderedParagraph(simpleParagraph)).to.equal(true);
-      expect(isRenderedList(simpleParagraph)).to.equal(false);
-      expect(isRenderedTitle(simpleParagraph)).to.equal(false);
+      expect(isParagraphNode(simpleParagraph)).to.equal(true);
+      expect(isListNode(simpleParagraph)).to.equal(false);
+      expect(isTitleNode(simpleParagraph)).to.equal(false);
       expect(isRenderedMultilineContent(simpleParagraph)).to.equal(false);
 
     });
@@ -82,9 +87,9 @@ scope("Renderer", "Render abstraction typeguards", () => {
       ];
 
       expect(isRenderedMultilineContent(simpleParagraph)).to.equal(true);
-      expect(isRenderedParagraph(simpleParagraph)).to.equal(false);
-      expect(isRenderedList(simpleParagraph)).to.equal(false);
-      expect(isRenderedTitle(simpleParagraph)).to.equal(false);
+      expect(isParagraphNode(simpleParagraph)).to.equal(false);
+      expect(isListNode(simpleParagraph)).to.equal(false);
+      expect(isTitleNode(simpleParagraph)).to.equal(false);
 
       const multilineContentWithParagraphs: RenderedMultilineContent = [
         ["element 1"],
@@ -92,9 +97,9 @@ scope("Renderer", "Render abstraction typeguards", () => {
       ];
 
       expect(isRenderedMultilineContent(multilineContentWithParagraphs)).to.equal(true);
-      expect(isRenderedParagraph(multilineContentWithParagraphs)).to.equal(false);
-      expect(isRenderedList(multilineContentWithParagraphs)).to.equal(false);
-      expect(isRenderedTitle(multilineContentWithParagraphs)).to.equal(false);
+      expect(isParagraphNode(multilineContentWithParagraphs)).to.equal(false);
+      expect(isListNode(multilineContentWithParagraphs)).to.equal(false);
+      expect(isTitleNode(multilineContentWithParagraphs)).to.equal(false);
 
     });
 
@@ -104,10 +109,10 @@ scope("Renderer", "Render abstraction typeguards", () => {
         title: "content"
       };
 
-      expect(isRenderedTitle(simpleTitle)).to.equal(true);
+      expect(isTitleNode(simpleTitle)).to.equal(true);
       expect(isRenderedMultilineContent(simpleTitle)).to.equal(false);
-      expect(isRenderedParagraph(simpleTitle)).to.equal(false);
-      expect(isRenderedList(simpleTitle)).to.equal(false);
+      expect(isParagraphNode(simpleTitle)).to.equal(false);
+      expect(isListNode(simpleTitle)).to.equal(false);
 
     });
 
@@ -117,9 +122,9 @@ scope("Renderer", "Render abstraction typeguards", () => {
       const multilineContentWithParagraphs: RenderedMultilineContent = [paragraph, paragraph];
       const listWithMultilineContentWithParagraphs: RenderedList = [[multilineContentWithParagraphs]];
 
-      expect(isRenderedList(listWithMultilineContentWithParagraphs)).to.equal(true);
-      expect(isRenderedParagraph(listWithMultilineContentWithParagraphs)).to.equal(false);
-      expect(isRenderedTitle(listWithMultilineContentWithParagraphs)).to.equal(false);
+      expect(isListNode(listWithMultilineContentWithParagraphs)).to.equal(true);
+      expect(isParagraphNode(listWithMultilineContentWithParagraphs)).to.equal(false);
+      expect(isTitleNode(listWithMultilineContentWithParagraphs)).to.equal(false);
       expect(isRenderedMultilineContent(listWithMultilineContentWithParagraphs)).to.equal(false);
 
     });

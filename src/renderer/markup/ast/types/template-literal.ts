@@ -1,6 +1,7 @@
 import { renderType } from "unwritten:renderer/markup/ast/index.js";
 
 import type { TemplateLiteralType } from "unwritten:compiler:type-definitions/types.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type { RenderedStringLiteralType } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 

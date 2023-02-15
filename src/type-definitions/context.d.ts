@@ -6,20 +6,20 @@ import type { CompleteConfig } from "./config.js";
 import type { Renderer } from "./renderer.js";
 
 
-export type DefaultContext = {
+export interface DefaultContext {
   logger?: typeof Logger;
-};
+}
 
-export type CompilerContext = DefaultContext & {
+export interface CompilerContext extends DefaultContext {
   checker: TypeChecker;
   config: CompleteConfig;
   /**
    * @internal
    */
   locker?: Set<number>;
-};
+}
 
-export type RenderContext<CustomRenderer extends Renderer> = DefaultContext & {
+export interface RenderContext<CustomRenderer extends Renderer> extends DefaultContext {
   config: CompleteConfig;
   renderer: CustomRenderer;
-};
+}

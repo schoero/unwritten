@@ -1,5 +1,5 @@
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { RenderCategories } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import { RenderCategories } from "unwritten:renderer:markup/types-definitions/renderer.d.js";
 
 import type {
   HTMLRenderConfig,

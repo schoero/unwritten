@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 
-import { renderAST } from "unwritten:renderer:markup/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { html } from "unwritten:tests:utils/template.js";
 
-import type { RenderedList, RenderedTitle } from "./types-definitions/renderer.js";
+import { createListNode } from "./utils/nodes.js";
+import { renderListNode } from "./index.js";
+
+import type { ListNode } from "./types-definitions/nodes.js";
 
 
 scope("Renderer", "Render abstraction", () => {
@@ -14,12 +16,12 @@ scope("Renderer", "Render abstraction", () => {
 
     {
 
-      const testFileContent: RenderedList = [[
+      const testFileContent: ListNode = createListNode([
         "element 1",
         "element 2"
-      ]];
+      ]);
 
-      const renderedList = renderAST(createRenderContext(), testFileContent);
+      const renderedList = renderListNode({ indentation: 0, renderContext: createRenderContext(), size: 1 }, testFileContent);
 
       it("should render lists correctly", () => {
         expect(renderedList).to.equal(html`
@@ -34,9 +36,9 @@ scope("Renderer", "Render abstraction", () => {
 
     {
 
-      const testFileContent: RenderedList = [[]];
+      const testFileContent: ListNode = createListNode([]);
 
-      const renderedList = renderAST(createRenderContext(), testFileContent);
+      const renderedList = renderListNode({ indentation: 0, renderContext: createRenderContext(), size: 1 }, testFileContent);
 
       it("should not render empty lists", () => {
         expect(renderedList).to.equal(html``);
@@ -46,65 +48,27 @@ scope("Renderer", "Render abstraction", () => {
 
     {
 
-      const testFileContent: RenderedList = [[
+      const testFileContent: ListNode = createListNode([
         "element 1",
-        [[
+        createListNode([
           "element 2",
           "element 3"
-        ]]
-      ]];
+        ])
+      ]);
 
-      const renderedList = renderAST(createRenderContext(), testFileContent);
+      const renderedList = renderListNode({ indentation: 0, renderContext: createRenderContext(), size: 1 }, testFileContent);
+
 
       it("should render nested lists correctly", () => {
         expect(renderedList).to.equal(html`
           <ul>
             <li>element 1
-            <ul>
-              <li>element 2</li>
-              <li>element 3</li>
-            </ul></li>
+              <ul>
+                <li>element 2</li>
+                <li>element 3</li>
+              </ul>
+            </li>
           </ul>
-        `);
-      });
-
-    }
-
-    {
-
-      const testFileContent: RenderedTitle = {
-        heading: ["element"]
-      };
-
-      const renderedList = renderAST(createRenderContext(), testFileContent);
-
-      it("should render titles correctly", () => {
-        expect(renderedList).to.equal(html`
-          <h1>heading</h1>
-          <p>element</p>
-        `);
-      });
-
-    }
-
-    {
-
-      const testFileContent: RenderedTitle = {
-        heading1: {
-          heading2: {
-            heading3: ["element"]
-          }
-        }
-      };
-
-      const renderedList = renderAST(createRenderContext(), testFileContent);
-
-      it("should render nested titles correctly", () => {
-        expect(renderedList).to.equal(html`
-          <h1>heading1</h1>
-          <h2>heading2</h2>
-          <h3>heading3</h3>
-          <p>element</p>
         `);
       });
 

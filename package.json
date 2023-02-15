@@ -37,15 +37,15 @@
   ],
   "dependencies": {
     "cac": "^6.7.14",
-    "minimatch": "^6.1.6",
+    "minimatch": "^6.2.0",
     "typescript": "^4.9.5"
   },
   "devDependencies": {
-    "@schoero/cspell-config": "^1.6.8",
-    "@schoero/eslint-config": "^1.34.7",
+    "@schoero/cspell-config": "^1.6.9",
+    "@schoero/eslint-config": "^1.34.9",
     "@schoero/markdownlint-config": "^1.1.4",
     "@schoero/ts-config": "^0.3.2",
-    "@schoero/vite-config": "^0.0.16",
+    "@schoero/vite-config": "^0.0.17",
     "@types/minimatch": "^5.1.2",
     "@types/node": "^18.13.0",
     "eslint-plugin-sort-exports": "^0.8.0",

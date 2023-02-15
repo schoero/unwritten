@@ -2,7 +2,8 @@ import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { renderType } from "unwritten:renderer/markup/ast/index.js";
 
 import type { ArrayType } from "unwritten:compiler:type-definitions/types.js";
-import type { MarkupRenderContext, RenderedArrayType } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { RenderedArrayType } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 export function renderArrayType(ctx: MarkupRenderContext, arrayType: ArrayType): RenderedArrayType {

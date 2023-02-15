@@ -1,8 +1,8 @@
-import type { MarkupRenderContext, RenderedDescription } from "../types-definitions/renderer.js";
+import type { MarkupRenderContext } from "../types-definitions/markup.js";
 
 import type { Description } from "unwritten:compiler/type-definitions/shared.js";
 
 
-export function renderDescription(ctx: MarkupRenderContext, description: Description): RenderedDescription {
-  return description;
+export function renderDescription(ctx: MarkupRenderContext, description: Description): string {
+  return description ?? "";
 }

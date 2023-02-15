@@ -4,14 +4,17 @@ import { render as sharedRender } from "unwritten:renderer:markup/index.js";
 import { html } from "unwritten:tests:utils/template.js";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
-import type { HTMLRenderContext, HTMLRenderer as HTMLRendererType } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type {
+  HTMLRenderContext,
+  HTMLRenderer as HTMLRendererType
+} from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
 function verifyRenderer(renderer: Renderer): asserts renderer is HTMLRendererType {
-  if(renderer.name !== BuiltInRenderers.Markdown){
-    throw new Error(`Renderer '${renderer.name}' is not a Markdown renderer.`);
+  if(renderer.name !== BuiltInRenderers.HTML){
+    throw new Error(`Renderer '${renderer.name}' is not a HTML renderer.`);
   }
 }
 
@@ -20,7 +23,7 @@ function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is HTMLRenderC
 }
 
 
-export default class HTMLRenderer implements HTMLRendererType {
+export class HTMLRenderer implements HTMLRendererType {
 
   public fileExtension = "html";
   public name = BuiltInRenderers.HTML;
@@ -116,4 +119,7 @@ export default class HTMLRenderer implements HTMLRendererType {
   public renderWarning(text: string): string {
     return `<blockquote>${text}</blockquote>`;
   }
+
 }
+
+export default new HTMLRenderer();

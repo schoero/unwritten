@@ -1,7 +1,16 @@
-import { expect, it } from "vitest";
+import { assert, expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
+import {
+  isContainerNode,
+  isSmallNode,
+  isLinkNode,
+  isListNode,
+  isParagraphNode,
+  isPositionNode,
+  isTitleNode
+} from "unwritten:renderer/markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -45,49 +54,58 @@ scope("Renderer", EntityKind.Signature, () => {
     const renderedSignatureForTableOfContents = renderSignatureForTableOfContents(ctx, signatureEntity as SignatureEntity);
     const renderedSignatureForDocumentation = renderSignatureForDocumentation(ctx, signatureEntity as SignatureEntity);
 
-    const renderedSignatureTitle = Object.keys(renderedSignatureForDocumentation)[0]!;
-    const renderedSignatureContent = renderedSignatureForDocumentation[renderedSignatureTitle]!;
+    assert(isLinkNode(renderedSignatureForTableOfContents), "Rendered signature for table of contents is not a link");
+    assert(isContainerNode(renderedSignatureForDocumentation), "Rendered signature for documentation is not a container");
 
     const [
-      tags,
+      title,
       position,
+      tags,
       parametersAndReturnType,
       description,
       remarks,
       example
-    ] = renderedSignatureContent;
+    ] = renderedSignatureForDocumentation.content;
 
     it("should have matching table of contents entry", () => {
-      expect(renderedSignatureForTableOfContents).to.equal("testSignature()");
+      expect(renderedSignatureForTableOfContents.content).to.equal("testSignature()");
     });
 
     it("should have a matching documentation title", () => {
-      expect(renderedSignatureTitle).to.equal("testSignature()");
+      assert(isTitleNode(title), "Rendered signature title is not a title node");
+      expect(title.content).to.equal("testSignature()");
     });
 
     it("should have a position", () => {
-      expect(position).to.not.equal(undefined);
+      assert(isPositionNode(position), "Rendered signature position is not a position ndoe");
+      expect(position.content).to.not.equal(undefined);
     });
 
     it("should have a jsdoc tag", () => {
+      assert(isSmallNode(tags), "Rendered signature tags is not a jsdoc tag node");
       expect(tags).to.not.equal(undefined);
     });
 
     it("should have a matching return type", () => {
-      expect(parametersAndReturnType[0][0]).to.match(/Returns: void/);
-      expect(parametersAndReturnType[0][0]).to.match(/Return type description$/);
+      assert(isListNode(parametersAndReturnType), "Rendered signature parameters and return type is not a list node");
+      expect(parametersAndReturnType.content).to.have.lengthOf(1);
+      expect(parametersAndReturnType.content[0]).to.match(/Returns: void/);
+      expect(parametersAndReturnType.content[0]).to.match(/Return type description$/);
     });
 
     it("should have a matching description", () => {
-      expect(description).to.equal("Signature description");
+      assert(isParagraphNode(description), "Rendered signature description is not a paragraph node");
+      expect(description.content).to.equal("Signature description");
     });
 
     it("should have matching remarks", () => {
-      expect(remarks).to.equal("Signature remarks");
+      assert(isParagraphNode(remarks), "Rendered signature remarks is not a paragraph node");
+      expect(remarks.content).to.equal("Signature remarks");
     });
 
     it("should have a matching example", () => {
-      expect(example).to.equal("Signature example");
+      assert(isParagraphNode(example), "Rendered signature example is not a paragraph node");
+      expect(example.content).to.equal("Signature example");
     });
 
   }

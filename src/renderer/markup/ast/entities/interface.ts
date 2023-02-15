@@ -2,17 +2,13 @@ import { getAnchorIdentifier } from "unwritten:renderer/markup/utils/linker.js";
 import { renderDescription } from "unwritten:renderer:markup/shared/description.js";
 import { renderExample } from "unwritten:renderer:markup/shared/example.js";
 import { renderJSDocTags } from "unwritten:renderer:markup/shared/jsdoc-tags.js";
-import { renderName } from "unwritten:renderer:markup/shared/name.js";
 import { renderPosition } from "unwritten:renderer:markup/shared/position.js";
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
-import { renderSignatureForTableOfContents, renderSignaturesForDocumentation } from "./signature.js";
+import { renderSignatureForDocumentation, renderSignatureForTableOfContents } from "./signature.js";
 
 import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
-import type {
-  MarkupRenderContext,
-  RenderedInterfaceForDocumentation
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 
 
 export function renderInterfaceForTableOfContents(ctx: MarkupRenderContext, iface: InterfaceEntity) {
@@ -22,7 +18,7 @@ export function renderInterfaceForTableOfContents(ctx: MarkupRenderContext, ifac
 
 export function renderInterfaceForDocumentation(ctx: MarkupRenderContext, iface: InterfaceEntity): RenderedInterfaceForDocumentation {
 
-  const interfaceName = renderName(ctx, iface.name);
+  const interfaceName = iface.name;
   const anchorIdentifier = getAnchorIdentifier(ctx, interfaceName, iface.id);
 
   const jsdocTags = renderJSDocTags(ctx, iface);
@@ -33,8 +29,8 @@ export function renderInterfaceForDocumentation(ctx: MarkupRenderContext, iface:
   const renderedCallSignatureTitles = iface.callSignatures.map(signatureEntity => renderSignatureForTableOfContents(ctx, signatureEntity));
   const renderedConstructSignatureTitles = iface.constructSignatures.map(signatureEntity => renderSignatureForTableOfContents(ctx, signatureEntity));
 
-  const renderedCallSignatures = renderSignaturesForDocumentation(ctx, iface.callSignatures);
-  const renderedConstructSignatures = renderSignaturesForDocumentation(ctx, iface.constructSignatures);
+  const renderedCallSignatures = iface.callSignatures.map(signatureEntity => renderSignatureForDocumentation(ctx, signatureEntity));
+  const renderedConstructSignatures = iface.constructSignatures.map(signatureEntity => renderSignatureForDocumentation(ctx, signatureEntity));
 
   return {
     [anchorIdentifier]: [

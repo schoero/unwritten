@@ -1,4 +1,4 @@
-import type { MarkupRenderContext } from "../types-definitions/renderer.js";
+import type { MarkupRenderContext } from "../types-definitions/markup.js";
 
 
 export type AnchorIdentifier = `${string}-${number}-${number}`;
@@ -9,16 +9,21 @@ export type LinkRegistry = {
   };
 };
 
-function attachRegistry(ctx: MarkupRenderContext) {
-  if(ctx.renderer._linkRegistry !== undefined){
-    return;
-  }
-  ctx.renderer._linkRegistry = {};
+function attachRegistry(ctx: MarkupRenderContext): asserts ctx is MarkupRenderContext & { renderer: { linkRegistry: LinkRegistry; }; } {
+  ctx.renderer.linkRegistry ??= {};
 }
 
 function getRegistry(ctx: MarkupRenderContext) {
   attachRegistry(ctx);
-  return ctx.renderer._linkRegistry!;
+  return ctx.renderer.linkRegistry;
+}
+
+
+export function convertTextToAnchorId(text: string): string {
+  let link = text.toLowerCase();
+  link = link.replace(/[^\d\sa-z-]/gi, "");
+  link = link.replace(/\s/g, "-");
+  return link;
 }
 
 
@@ -74,7 +79,6 @@ export function getAnchorLink(ctx: MarkupRenderContext, identifier: AnchorIdenti
 
 }
 
-
 export function getAnchorText(ctx: MarkupRenderContext, identifier: AnchorIdentifier): string | undefined {
 
   const registry = getRegistry(ctx);
@@ -95,11 +99,4 @@ export function getAnchorText(ctx: MarkupRenderContext, identifier: AnchorIdenti
 
   }
 
-}
-
-export function convertTextToAnchorId(text: string): string {
-  let link = text.toLowerCase();
-  link = link.replace(/[^\d\sa-z-]/gi, "");
-  link = link.replace(/\s/g, "-");
-  return link;
 }

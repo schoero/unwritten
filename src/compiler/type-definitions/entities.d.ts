@@ -85,36 +85,36 @@ export type Entities =
   | Types
   | VariableEntity;
 
-export type PropertyEntity = Entity<EntityKind.Property> & JSDocTags & {
+export interface PropertyEntity extends Entity<EntityKind.Property>, JSDocTags {
   modifiers: Modifiers[];
   name: Name;
   optional: boolean;
   type: Types;
   description?: Description;
   position?: Position;
-};
+}
 
 
-export type TupleMemberEntity = Entity<EntityKind.TupleMember> & JSDocTags & {
+export interface TupleMemberEntity extends Entity<EntityKind.TupleMember>, JSDocTags {
   optional: boolean;
   rest: boolean;
   type: Types;
   name?: Name;
   position?: Position;
-};
+}
 
 
 //-- Function
 
-export type FunctionLikeEntity<Kind extends FunctionLikeEntityKinds> = Entity<Kind> & {
+export interface FunctionLikeEntity<Kind extends FunctionLikeEntityKinds> extends Entity<Kind> {
   signatures: SignatureEntity[];
   name?: Name;
-};
+}
 
-export type FunctionEntity = FunctionLikeEntity<EntityKind.Function> & {
-};
+export interface FunctionEntity extends FunctionLikeEntity<EntityKind.Function> {
+}
 
-export type SignatureEntity = Entity<EntityKind.Signature> & JSDocTags & {
+export interface SignatureEntity extends Entity<EntityKind.Signature>, JSDocTags {
   parameters: ParameterEntity[];
   returnType: Types & { description?: Description; } ;
   description?: Description;
@@ -122,12 +122,12 @@ export type SignatureEntity = Entity<EntityKind.Signature> & JSDocTags & {
   name?: Name;
   position?: Position;
   typeParameters?: TypeParameterEntity[];
-};
+}
 
 
 //-- Parameter
 
-export type ParameterEntity = Entity<EntityKind.Parameter> & JSDocTags & {
+export interface ParameterEntity extends Entity<EntityKind.Parameter>, JSDocTags {
   name: Name;
   optional: boolean;
   rest: boolean;
@@ -135,12 +135,12 @@ export type ParameterEntity = Entity<EntityKind.Parameter> & JSDocTags & {
   initializer?: Types;
   position?: Position;
   type?: Types;
-};
+}
 
 
 //-- Interface
 
-export type InterfaceEntity = Entity<EntityKind.Interface> & JSDocTags & {
+export interface InterfaceEntity extends Entity<EntityKind.Interface>, JSDocTags {
   callSignatures: SignatureEntity[];
   constructSignatures: SignatureEntity[];
   getterSignatures: SignatureEntity[];
@@ -153,16 +153,16 @@ export type InterfaceEntity = Entity<EntityKind.Interface> & JSDocTags & {
   position?: Position;
   typeArguments?: Types[];
   typeParameters?: TypeParameterEntity[];
-};
+}
 
-export type MergedInterfaceEntity = InterfaceEntity & {
+export interface MergedInterfaceEntity extends InterfaceEntity {
   declarations: Omit<InterfaceEntity, "id" | "name">[];
-};
+}
 
 
 //-- Class
 
-export type ClassEntity = Entity<EntityKind.Class> & JSDocTags & {
+export interface ClassEntity extends Entity<EntityKind.Class>, JSDocTags {
   getters: GetterEntity[];
   methods: MethodEntity[];
   modifiers: Modifiers[];
@@ -174,110 +174,110 @@ export type ClassEntity = Entity<EntityKind.Class> & JSDocTags & {
   heritage?: ExpressionType;
   position?: Position;
   typeParameters?: TypeParameterEntity[];
-};
+}
 
-export type ConstructorEntity = FunctionLikeEntity<EntityKind.Constructor> & {};
+export interface ConstructorEntity extends FunctionLikeEntity<EntityKind.Constructor> {}
 
-export type MethodEntity = FunctionLikeEntity<EntityKind.Method> & {};
+export interface MethodEntity extends FunctionLikeEntity<EntityKind.Method> {}
 
-export type SetterEntity = FunctionLikeEntity<EntityKind.Setter> & {};
+export interface SetterEntity extends FunctionLikeEntity<EntityKind.Setter> {}
 
-export type GetterEntity = FunctionLikeEntity<EntityKind.Getter> & {};
+export interface GetterEntity extends FunctionLikeEntity<EntityKind.Getter> {}
 
 
 //-- Variable
 
-export type VariableEntity = Entity<EntityKind.Variable> & JSDocTags & {
+export interface VariableEntity extends Entity<EntityKind.Variable>, JSDocTags {
   modifiers: Modifiers[];
   name: Name;
   type: Types;
   description?: Description;
   position?: Position;
-};
+}
 
 
 //-- Type alias
 
-export type TypeAliasEntity = Entity<EntityKind.TypeAlias> & JSDocTags & {
+export interface TypeAliasEntity extends Entity<EntityKind.TypeAlias>, JSDocTags {
   name: Name;
   type: Types;
   description?: Description;
   position?: Position;
   typeParameters?: TypeParameterEntity[];
-};
+}
 
 
 //-- Mapped Type member
 
-export type MappedTypeMemberEntity = Entity<EntityKind.MappedTypeMember> & {
+export interface MappedTypeMemberEntity extends Entity<EntityKind.MappedTypeMember> {
   keyType: LiteralTypes;
   valueType: Types;
-};
+}
 
 
 //-- Enum
 
-export type EnumEntity = Entity<EntityKind.Enum> & JSDocTags & {
+export interface EnumEntity extends Entity<EntityKind.Enum>, JSDocTags {
   members: EnumMemberEntity[];
   name: Name;
   description?: Description;
   position?: Position;
-};
+}
 
-export type MergedEnumEntity = EnumEntity & {
+export interface MergedEnumEntity extends EnumEntity {
   declarations: Omit<EnumEntity, "id" | "name">[];
-};
+}
 
-export type EnumMemberEntity = Entity<EntityKind.EnumMember> & JSDocTags & {
+export interface EnumMemberEntity extends Entity<EntityKind.EnumMember>, JSDocTags {
   name: Name;
   type: Types;
   description?: Description;
   position?: Position;
-};
+}
 
 
 //-- Member
 
-export type MemberEntity = Entity<EntityKind.Member> & JSDocTags & {
+export interface MemberEntity extends Entity<EntityKind.Member>, JSDocTags {
   modifiers: Modifiers[];
   optional: boolean;
   type: Types;
   description?: Description;
   parent?: Types;
   position?: Position;
-};
+}
 
 
 //-- Module
 
-export type ModuleEntity = Entity<EntityKind.Module> & {
+export interface ModuleEntity extends Entity<EntityKind.Module> {
   exports: ExportableEntities[];
   name: Name;
-};
+}
 
 
 //-- Source file (module)
 
-export type SourceFileEntity = Entity<EntityKind.SourceFile> & {
+export interface SourceFileEntity extends Entity<EntityKind.SourceFile> {
   exports: ExportableEntities[];
   name: Name;
-};
+}
 
 
 //-- Namespace
 
-export type NamespaceEntity = Entity<EntityKind.Namespace> & {
+export interface NamespaceEntity extends Entity<EntityKind.Namespace> {
   exports: ExportableEntities[];
   name: Name;
-};
+}
 
 
 //-- TypeParameter
 
-export type TypeParameterEntity = Entity<EntityKind.TypeParameter> & {
+export interface TypeParameterEntity extends Entity<EntityKind.TypeParameter> {
   name: Name;
   constraint?: Types;
   description?: Description;
   initializer?: Types;
   position?: Position;
-};
+}

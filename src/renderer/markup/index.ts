@@ -1,47 +1,59 @@
-import { renderEntityForDocumentation, renderEntityForTableOfContents } from "./ast/index.js";
-import { ASTKinds } from "./enums/ast.js";
+import { renderEntityForTableOfContents } from "./ast/index.js";
 import {
-  isRenderedList,
-  isRenderedMultilineContent,
-  isRenderedParagraph,
-  isRenderedTitle
+  isAnchorNode,
+  isContainerNode,
+  isLinkNode,
+  isListNode,
+  isParagraphNode,
+  isSmallNode,
+  isTitleNode
 } from "./typeguards/renderer.js";
-import { getRenderConfig } from "./utils/config.js";
-import { getAnchorLink, getAnchorText } from "./utils/linker.js";
+import { createContainerNode, createListNode, createTitleNode } from "./utils/nodes.js";
 import { getCategoryName } from "./utils/renderer.js";
-import { sortExportableTypes } from "./utils/sort.js";
+import { sortExportableEntities } from "./utils/sort.js";
 
-import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
-
-import type { ASTHeading } from "./types-definitions/ast.js";
-import type { MarkupRenderContext } from "./types-definitions/renderer.js";
-import type { AnchorIdentifier } from "./utils/linker.js";
+import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
+import type {
+  MarkupRenderContext,
+  MarkupRenderContexts
+} from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type {
+  AnchorNode,
+  ASTNodes,
+  ContainerNode,
+  LinkNode,
+  ListNode,
+  ParagraphNode,
+  SmallNode,
+  TitleNode
+} from "unwritten:renderer:markup/types-definitions/nodes.d.js";
+import type {
+  RenderedCategoryForDocumentation,
+  RenderedCategoryForTableOfContents
+} from "unwritten:renderer:markup/types-definitions/renderer.d.js";
 
 
 export function render(ctx: MarkupRenderContext, entities: ExportableEntities[]): string {
 
-  const sortedEntities = sortExportableTypes(ctx, entities);
+  const sortedEntities = sortExportableEntities(ctx, entities);
 
   const tableOfContents = renderForTableOfContents(ctx, sortedEntities);
   const documentation = renderForDocumentation(ctx, sortedEntities);
 
-  const ast: ASTHeading = {
-    content: [
-      tableOfContents,
-      documentation
-    ],
-    kind: ASTKinds.Heading,
-    text: "API Documentation"
-  };
+  const ast = createContainerNode(
+    createTitleNode("API Documentation"),
+    ...tableOfContents,
+    ...documentation
+  );
 
-  return renderAST(ctx, ast);
+  return renderNode({ indentation: 0, renderContext: ctx, size: 1 }, ast);
 
 }
 
 
-export function renderForTableOfContents(ctx: MarkupRenderContext, entities: ExportableEntities[]): [RenderedCategoryForTableOfContents[]] {
+export function renderForTableOfContents(ctx: MarkupRenderContext, entities: ExportableEntities[]): RenderedCategoryForTableOfContents[] {
 
-  const tableOfContents: RenderedCategoryForTableOfContents[][] = [];
+  const tableOfContents: RenderedCategoryForTableOfContents[] = [];
 
 
   //-- Render entities
@@ -49,42 +61,55 @@ export function renderForTableOfContents(ctx: MarkupRenderContext, entities: Exp
   for(const type of entities){
 
     const categoryName = getCategoryName(ctx, type.kind, true);
-
-    const existingCategory = tableOfContents.find(category => category[0]?.[0] === categoryName);
+    const existingCategory = tableOfContents.find(category => category.content[0].content === categoryName);
 
     if(existingCategory === undefined){
-      tableOfContents.push([[categoryName, [<RenderedEntitiesForTableOfContents[]>[]]]]);
+      tableOfContents.push(
+        createContainerNode(
+          createTitleNode(categoryName),
+          createListNode([])
+        )
+      );
     }
 
-    const category = tableOfContents.find(category => category[0]?.[0] === categoryName)!;
-    const renderedType = renderEntityForTableOfContents(ctx, type);
+    const category = tableOfContents.find(category => category.content[0].content === categoryName)!;
+    const renderedEntity = renderEntityForTableOfContents(ctx, type);
 
-    category[0]![1][0].push(renderedType);
+    category.content[1].content.push(renderedEntity);
+
 
   }
 
-  return <[RenderedCategoryForTableOfContents[]]>tableOfContents;
+  return tableOfContents;
 
 }
 
 
-export function renderForDocumentation(ctx: MarkupRenderContext, entities: ExportableEntities[]): RenderedCategoryForDocumentation {
+export function renderForDocumentation(ctx: MarkupRenderContext, entities: ExportableEntities[]): RenderedCategoryForDocumentation[] {
 
-  const documentation: RenderedCategoryForDocumentation = {};
+  const documentation: RenderedCategoryForDocumentation[] = [];
 
 
   //-- Render entities
 
   for(const type of entities){
 
-    const title = getCategoryName(ctx, type.kind, true);
+    const categoryName = getCategoryName(ctx, type.kind, true);
+    const existingCategory = documentation.find(category => category.content[0].content === categoryName);
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if(documentation[title] === undefined){
-      documentation[title] = [];
+    if(existingCategory === undefined){
+      documentation.push(
+        createContainerNode(
+          createTitleNode(categoryName),
+          createContainerNode()
+        )
+      );
     }
 
-    documentation[title]!.push(renderEntityForDocumentation(ctx, type));
+    const category = documentation.find(category => category.content[0].content === categoryName)!;
+    const renderedEntity = renderEntityForTableOfContents(ctx, type);
+
+    (category.content[1].content as ASTNodes[]).push(renderedEntity);
 
   }
 
@@ -92,126 +117,79 @@ export function renderForDocumentation(ctx: MarkupRenderContext, entities: Expor
 
 }
 
+interface RenderNodeContext {
+  renderContext: MarkupRenderContexts;
+  size: number;
+}
 
-export function renderAST(ctx: MarkupRenderContext, renderObject: RenderObject): string {
+export function renderNode(ctx: RenderNodeContext, node: ASTNodes): string {
 
-  const renderConfig = getRenderConfig(ctx);
+  if(isContainerNode(node)){
+    return renderContainerNode(ctx, node);
+  } else if(isTitleNode(node)){
+    return renderTitleNode(ctx, node);
+  } else if(isParagraphNode(node)){
+    return renderParagraphNode(ctx, node);
+  } else if(isListNode(node)){
+    return renderListNode(ctx, node);
+  } else if(isLinkNode(node)){
+    return renderLinkNode(ctx, node);
+  } else if(isAnchorNode(node)){
+    return renderAnchorNode(ctx, node);
+  } else if(isSmallNode(node)){
+    return renderSmallNode(ctx, node);
+  } else {
+    return node;
+  }
 
+}
 
-  //-- State
+export function renderContainerNode(ctx: RenderNodeContext, node: ContainerNode): string {
+  if(typeof node.content === "string"){
+    return node.content;
+  } else if(Array.isArray(node.content)){
+    return node.content.map(child =>
+      renderNode(ctx, child)).join(ctx.renderContext.renderer.renderNewLine());
+  } else {
+    return renderNode(ctx, node.content);
+  }
+}
 
-  let size = 1;
-  let indentation = 0;
+export function renderTitleNode(ctx: RenderNodeContext, node: TitleNode): string {
+  const title = ctx.renderContext.renderer.renderTitle(node.content, ctx.size, node.id);
+  ctx.size++;
+  return title;
+}
 
-  const indentElement = (element: string): string => {
-    const indentedElement = `${renderConfig.indentation.repeat(indentation)}${element}`;
-    return indentedElement;
-  };
+export function renderParagraphNode(ctx: RenderNodeContext, node: ParagraphNode): string {
+  return ctx.renderContext.renderer.renderParagraph(node.content);
+}
 
+export function renderListNode(ctx: RenderNodeContext, node: ListNode): string {
 
-  const renderNestedElement = (element: RenderObject): string => {
+  if(node.content.length === 0){
+    return "";
+  }
 
-    const renderElement = (element: string[] | string): void => {
-      const indentedElements = (
-        Array.isArray(element)
-          ? element
-          : [element]
-      ).map(indentElement);
-      currentOutput.push(...indentedElements);
-    };
+  const listStart = ctx.renderContext.renderer.renderListStart();
 
+  const listItems = node.content.map(item =>
+    ctx.renderContext.renderer.renderListItem(renderNode(ctx, item)));
 
-    //-- Inline element
+  const listEnd = ctx.renderContext.renderer.renderListEnd();
 
-    if(typeof element === "string"){
-      return element;
-    }
+  return listStart + listItems.join(ctx.renderContext.renderer.renderNewLine()) + listEnd;
+}
 
-    const currentOutput: string[] = [];
+export function renderLinkNode(ctx: RenderNodeContext, node: LinkNode): string {
+  // TODO: Add support for external/source code links
+  return ctx.renderContext.renderer.renderAnchorLink(node.content, node.link);
+}
 
+export function renderAnchorNode(ctx: RenderNodeContext, node: AnchorNode): string {
+  return ctx.renderContext.renderer.renderAnchorTag(node.id);
+}
 
-    //-- List
-
-    if(isRenderedList(element)){
-
-      if(element[0].length === 0){
-        return "";
-      }
-
-      const listStart = ctx.renderer.renderListStart();
-      if(listStart !== undefined){
-        renderElement(listStart);
-        indentation++;
-      }
-
-      for(let i = 0; i < element[0].length; i++){
-
-        // For semantically valid html we need to render nested lists inside the current list item
-        if(element[0][i + 1] !== undefined && isRenderedList(element[0][i + 1]!)){
-          const renderedNestedElement = element[0][i + 1] !== undefined ? ctx.renderer.renderNewLine() + renderNestedElement(element[0][i + 1]!) : "";
-
-          renderElement(ctx.renderer.renderListItem(renderNestedElement(element[0][i]!) + renderedNestedElement));
-          i++; // Skip next element
-          continue;
-        }
-
-        renderElement(ctx.renderer.renderListItem(renderNestedElement(element[0][i]!)));
-
-      }
-
-      const listEnd = ctx.renderer.renderListEnd();
-      if(listEnd !== undefined){
-        indentation--;
-        renderElement(listEnd);
-      }
-
-    }
-
-
-    //-- Paragraph
-
-    if(isRenderedParagraph(element)){
-      renderElement(ctx.renderer.renderParagraph(renderNestedElement(element[0])));
-    }
-
-
-    //-- Multiline output
-
-    if(isRenderedMultilineContent(element)){
-      const renderedElements = element
-        .filter(el => el !== undefined)
-        .map(el => renderNestedElement(el));
-      renderElement(renderedElements);
-    }
-
-
-    //-- Title
-
-    if(isRenderedTitle(element)){
-
-      for(const key in element){
-
-        const name = getAnchorText(ctx, key as AnchorIdentifier);
-        const anchor = getAnchorLink(ctx, key as AnchorIdentifier);
-
-        const title = ctx.renderer.renderTitle(name ?? key, size, anchor);
-
-        renderElement(title);
-        size++;
-
-        const content = renderNestedElement(name ?? key);
-
-        renderElement(content);
-        size--;
-
-      }
-
-    }
-
-    return currentOutput.join(ctx.renderer.renderNewLine());
-
-  };
-
-  return renderNestedElement(renderObject);
-
+export function renderSmallNode(ctx: RenderNodeContext, node: SmallNode): string {
+  return ctx.renderContext.renderer.renderSmallText(node.content);
 }

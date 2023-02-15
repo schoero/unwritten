@@ -19,15 +19,7 @@ import {
   renderUnknownType,
   renderVoidType
 } from "unwritten:renderer:markup/ast/types/index.js";
-import {
-  isClassEntity,
-  isEnumEntity,
-  isFunctionEntity,
-  isInterfaceEntity,
-  isNamespaceEntity,
-  isTypeAliasEntity,
-  isVariableEntity
-} from "unwritten:typeguards/entities.js";
+import { isFunctionEntity } from "unwritten:typeguards/entities.js";
 import {
   isAnyType,
   isArrayType,
@@ -50,27 +42,12 @@ import {
   isVoidType
 } from "unwritten:typeguards/types.js";
 
-import {
-  renderClassForDocumentation,
-  renderClassForTableOfContents,
-  renderEnumForDocumentation,
-  renderEnumForTableOfContents,
-  renderFunctionEntityForDocumentation,
-  renderFunctionEntityForTableOfContents
-} from "./entities/index.js";
-import { renderInterfaceForDocumentation, renderInterfaceForTableOfContents } from "./entities/interface.js";
-import { renderNamespaceForDocumentation, renderNamespaceForTableOfContents } from "./entities/namespace.js";
-import { renderTypeAliasForDocumentation, renderTypeAliasForTableOfContents } from "./entities/type-alias.js";
-import { renderVariableForDocumentation, renderVariableForTableOfContents } from "./entities/variable.js";
+import { renderFunctionEntityForDocumentation, renderFunctionEntityForTableOfContents } from "./entities/index.js";
 
 import type { ExportableEntities } from "unwritten:compiler/type-definitions/entities.js";
 import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
-import type {
-  MarkupRenderContext,
-  RenderedEntitiesForDocumentation,
-  RenderedEntitiesForTableOfContents,
-  RenderedTypes
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { RenderedTypes } from "unwritten:renderer:markup/types-definitions/renderer.d.js";
 
 
 export function renderType(ctx: MarkupRenderContext, type: Types): RenderedTypes {
@@ -124,18 +101,6 @@ export function renderEntityForTableOfContents(ctx: MarkupRenderContext, entity:
 
   if(isFunctionEntity(entity)){
     return renderFunctionEntityForTableOfContents(ctx, entity);
-  } else if(isClassEntity(entity)){
-    return renderClassForTableOfContents(ctx, entity);
-  } else if(isTypeAliasEntity(entity)){
-    return renderTypeAliasForTableOfContents(ctx, entity);
-  } else if(isInterfaceEntity(entity)){
-    return renderInterfaceForTableOfContents(ctx, entity);
-  } else if(isVariableEntity(entity)){
-    return renderVariableForTableOfContents(ctx, entity);
-  } else if(isEnumEntity(entity)){
-    return renderEnumForTableOfContents(ctx, entity);
-  } else if(isNamespaceEntity(entity)){
-    return renderNamespaceForTableOfContents(ctx, entity);
   }
 
   throw new Error(`Unexpected entity kind: ${entity.kind}`);
@@ -147,18 +112,6 @@ export function renderEntityForDocumentation(ctx: MarkupRenderContext, entity: E
 
   if(isFunctionEntity(entity)){
     return renderFunctionEntityForDocumentation(ctx, entity);
-  } else if(isClassEntity(entity)){
-    return renderClassForDocumentation(ctx, entity);
-  } else if(isTypeAliasEntity(entity)){
-    return renderTypeAliasForDocumentation(ctx, entity);
-  } else if(isInterfaceEntity(entity)){
-    return renderInterfaceForDocumentation(ctx, entity);
-  } else if(isVariableEntity(entity)){
-    return renderVariableForDocumentation(ctx, entity);
-  } else if(isEnumEntity(entity)){
-    return renderEnumForDocumentation(ctx, entity);
-  } else if(isNamespaceEntity(entity)){
-    return renderNamespaceForDocumentation(ctx, entity);
   }
 
   throw new Error(`Unexpected entity kind: ${entity.kind}`);

@@ -1,39 +1,18 @@
 import { contentFilter } from "unwritten:compiler:utils/filter.js";
-import { RenderCategories } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import { RenderCategories } from "unwritten:renderer:markup/types-definitions/renderer.d.js";
 
 import { getRenderConfig } from "./config.js";
 import { createAnchor } from "./linker.js";
 
 import type { Encapsulation } from "unwritten:renderer/markup/types-definitions/config.js";
-import type { MarkupRenderContext, RenderedLink } from "unwritten:renderer/markup/types-definitions/renderer.js";
-import type { DeepOmit } from "unwritten:type-definitions/utils.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.js";
 
-
-export function spaceBetween(...strings: string[]) {
-  return strings.filter(contentFilter).join(" ");
-}
 
 export function encapsulate(text: string, encapsulation: Encapsulation | false | undefined) {
   if(encapsulation === undefined || encapsulation === false){
     return text;
   }
   return `${encapsulation[0]}${text}${encapsulation[1]}`;
-}
-
-
-export function renderLink(ctx: MarkupRenderContext, text: string, id?: number): RenderedLink {
-  if(id !== undefined){
-    const anchor = createAnchor(ctx, text, id);
-    return ctx.renderer.renderAnchorLink(text, anchor);
-  } else {
-    return text;
-  }
-}
-
-
-export function renderTitle(ctx: MarkupRenderContext, text: string): string {
-  const anchor = createAnchor(ctx, text, id);
-  return ctx.renderer.renderTitle(text, anchor);
 }
 
 
@@ -52,8 +31,13 @@ export function getCategoryName(ctx: MarkupRenderContext, key: RenderCategories 
 }
 
 
-export function flatten<T>(arr: T[][]): T[] {
-  return arr.reduce((a, b) => a.concat(b), []);
+export function renderLink(ctx: MarkupRenderContext, text: string, id?: number): string {
+  if(id !== undefined){
+    const anchor = createAnchor(ctx, text, id);
+    return ctx.renderer.renderAnchorLink(text, anchor);
+  } else {
+    return text;
+  }
 }
 
 
@@ -90,20 +74,6 @@ function pluralizeCategoryKey(key: RenderCategories): RenderCategories {
   }
 }
 
-
-type MultilineOutput = (MultilineOutput | string | undefined)[];
-
-export function filterContentRecursively(strings: MultilineOutput): DeepOmit<MultilineOutput, "undefined"> {
-  return strings.reduce<DeepOmit<MultilineOutput, "undefined">>((acc, string) => {
-    if(typeof string === "string"){
-      acc.push(string);
-    }
-    if(Array.isArray(string)){
-      const filtered = filterContentRecursively(string);
-      if(filtered.length > 0){
-        acc.push(filtered);
-      }
-    }
-    return acc;
-  }, []);
+export function spaceBetween(...strings: string[]) {
+  return strings.filter(contentFilter).join(" ");
 }
