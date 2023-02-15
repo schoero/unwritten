@@ -5,7 +5,7 @@ import type { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import type { Complete } from "./utils.js";
 
 
-export type Config = {
+export interface Config {
   /** Compiler configuration. */
   compilerConfig?: CompilerConfig;
   /** Extend another config */
@@ -14,38 +14,36 @@ export type Config = {
   externalTypes?: ExternalTypes;
   /** Render configuration. */
   renderConfig?: RenderConfig;
-};
+}
 
-export type CompleteConfig = Config & {
+export interface CompleteConfig extends Config {
   compilerConfig: Complete<CompilerConfig>;
   externalTypes: ExternalTypes;
   renderConfig: CompleteRenderConfig;
-};
+}
 
-export type CompleteRenderConfig = {
+export interface CompleteRenderConfig {
   [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
   [BuiltInRenderers.HTML]: Complete<HTMLRenderConfig>;
   [key: string]: {
     [key: string]: any;
   };
-};
+}
 
-export type RenderConfig = {
+export interface RenderConfig {
   [key: string]: {
     [key: string]: any;
   };
-};
+}
 
-export type ConfigWithSchema = Config & {
+export interface ConfigWithSchema extends Config {
   $schema: string;
-};
+}
 
-export type CompilerConfig = {
-
+export interface CompilerConfig {
   /** An array of excluded directories. */
   exclude?: string[];
-
-};
+}
 
 export type ExternalTypes = {
   [key in TypeKind | string]?: string;

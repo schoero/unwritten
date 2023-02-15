@@ -1,6 +1,6 @@
 import { generateConfig } from "unwritten:config/generator.js";
 
 
-export function init() {
-  generateConfig();
+export function init(path?: string) {
+  generateConfig(path);
 }

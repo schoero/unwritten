@@ -20,7 +20,7 @@ cli
 
 //-- Add commands
 
-cli.command("init")
+cli.command("init [path]", "Create a new config file.")
   .action(init);
 
 

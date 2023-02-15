@@ -1,3 +1,10 @@
+export function assert(expression: any, message?: string): asserts expression {
+  if(!expression){
+    throw new Error(message ?? "Assertion failed.");
+  }
+}
+
+
 export function sortKeys(_: string, value: any) {
 
   if(!(typeof value === "object") || Array.isArray(value)){
@@ -11,11 +18,4 @@ export function sortKeys(_: string, value: any) {
     return sorted;
   }, {});
 
-}
-
-
-export function assert(expression: any, message?: string): asserts expression {
-  if(!expression){
-    throw new Error(message ?? "Assertion failed.");
-  }
 }
