@@ -6,6 +6,8 @@
   "exclude": [
     "node_modules",
     "tests/**/*.ts",
+    "src/**/*.test.ts",
+    "src/**/*.test-d.ts",
     "lib"
   ]
 }

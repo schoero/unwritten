@@ -19,8 +19,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts",
-    "src/local/test.test.tsx"],
+    "tests/**/*.ts"
+  ],
   "exclude": [
     "node_modules",
     "lib"
