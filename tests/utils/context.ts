@@ -1,5 +1,5 @@
 import { getDefaultConfig } from "unwritten:config/index.js";
-import htmlRenderer from "unwritten:renderer:markup/html/index.js";
+import * as htmlRenderer from "unwritten:renderer:markup/html/index.js";
 import { override } from "unwritten:utils:override.js";
 
 import type { HTMLRenderContext } from "unwritten:renderer/markup/types-definitions/markup.d.js";

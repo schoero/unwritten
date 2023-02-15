@@ -20,4 +20,5 @@ export function createStringLiteralType(ctx: CompilerContext, type: TSStringLite
     name,
     value
   };
+
 }

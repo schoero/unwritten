@@ -1,15 +1,7 @@
 import type { JSDocTags } from "unwritten:compiler/type-definitions/shared.js";
 import type { JSDocTags as JSDocTagNames } from "unwritten:compiler:enums/jsdoc.js";
 
-import type {
-  ContainerNode,
-  LinkNode,
-  ListNode,
-  ParagraphNode,
-  PositionNode,
-  SmallNode,
-  TitleNode
-} from "./nodes.js";
+import type { ContainerNode, LinkNode, ListNode, ParagraphNode, SmallNode, TitleNode } from "./nodes.js";
 
 
 //-- Categories
@@ -48,11 +40,11 @@ export type CategoryNames = {
 };
 
 export interface RenderedCategoryForTableOfContents extends ContainerNode {
-  content: [TitleNode, ListNode];
+  children: [TitleNode, ListNode];
 }
 
 export interface RenderedCategoryForDocumentation extends ContainerNode {
-  content: [TitleNode, ContainerNode];
+  children: [TitleNode, ContainerNode];
 }
 
 
@@ -136,11 +128,11 @@ export type RenderedEntitiesForTableOfContents =
 //-- Function
 
 export interface RenderedFunctionEntityForTableOfContents extends ContainerNode {
-  content: RenderedSignatureEntityForTableOfContents[];
+  children: RenderedSignatureEntityForTableOfContents[];
 }
 
 export interface RenderedFunctionEntityForDocumentation extends ContainerNode {
-  content: RenderedSignatureEntityForDocumentation[];
+  children: RenderedSignatureEntityForDocumentation[];
 }
 
 
@@ -151,9 +143,9 @@ export interface RenderedSignatureEntityForTableOfContents extends LinkNode {
 }
 
 export interface RenderedSignatureEntityForDocumentation extends ContainerNode {
-  content: [
+  children: [
     title: TitleNode,
-    position: PositionNode,
+    position: SmallNode,
     tags: SmallNode,
     parametersAndReturnType: ListNode,
     description: ParagraphNode,

@@ -43,7 +43,7 @@ scope("Compiler", TypeKind.Circular, () => {
       }
       interface InterfaceC {
         b: InterfaceB
-      }i
+      }
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);

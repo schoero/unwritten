@@ -74,4 +74,23 @@ scope("Compiler", EntityKind.Function, () => {
     });
   }
 
+  {
+
+    const testFileContent = ts`
+      export async function functionSymbol(): boolean {
+        return true;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
+    const exportedFunction = createFunctionEntity(ctx, symbol);
+
+    it("should be able to parse an async function", () => {
+      expect(exportedFunction.kind).to.equal(EntityKind.Function);
+    });
+
+  }
+
 });

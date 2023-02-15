@@ -10,26 +10,27 @@ export interface MarkupRenderer extends Renderer {
   fileExtension: string;
   name: BuiltInRenderers.HTML | BuiltInRenderers.Markdown;
   render: <CustomRenderer extends Renderer>(ctx: RenderContext<CustomRenderer>, entities: ExportableEntities[]) => string;
-  renderAnchorLink: (text: string, anchor: string) => string;
-  renderAnchorTag: (anchor: string) => string;
-  renderBoldText: (text: string) => string;
-  renderCode: (code: string, language?: string) => string;
-  renderHorizontalRule: () => string;
-  renderHyperLink: (text: string, url: string) => string;
-  renderItalicText: (text: string) => string;
-  renderLineBreak: () => string;
-  renderList: (items: string[]) => string;
-  renderListEnd: () => string;
-  renderListItem: (item: string) => string;
-  renderListStart: () => string;
-  renderNewLine: () => string;
-  renderParagraph: (text: string) => string;
-  renderSmallText: (text: string) => string;
-  renderSourceCodeLink: (file: string, line: number, column: number) => string;
-  renderStrikeThroughText: (text: string) => string;
-  renderTitle: (title: string, size: number, id?: string) => string;
-  renderUnderlineText: (text: string) => string;
-  renderWarning: (text: string) => string;
+  renderAnchorLink: (ctx: MarkupRenderContexts, text: string, anchor: string) => string;
+  renderAnchorTag: (ctx: MarkupRenderContexts, anchor: string) => string;
+  renderBoldText: (ctx: MarkupRenderContexts, text: string) => string;
+  renderCode: (ctx: MarkupRenderContexts, code: string, language?: string) => string;
+  renderHorizontalRule: (ctx: MarkupRenderContexts) => string;
+  renderHyperLink: (ctx: MarkupRenderContexts, text: string, url: string) => string;
+  renderIndentation: (ctx: MarkupRenderContexts) => string;
+  renderItalicText: (ctx: MarkupRenderContexts, text: string) => string;
+  renderLineBreak: (ctx: MarkupRenderContexts) => string;
+  renderList: (ctx: MarkupRenderContexts, items: string[]) => string;
+  renderListEnd: (ctx: MarkupRenderContexts) => string;
+  renderListItem: (ctx: MarkupRenderContexts, item: string) => string;
+  renderListStart: (ctx: MarkupRenderContexts) => string;
+  renderNewLine: (ctx: MarkupRenderContexts) => string;
+  renderParagraph: (ctx: MarkupRenderContexts, text: string) => string;
+  renderSmallText: (ctx: MarkupRenderContexts, text: string) => string;
+  renderSourceCodeLink: (ctx: MarkupRenderContexts, file: string, line: number, column: number) => string;
+  renderStrikeThroughText: (ctx: MarkupRenderContexts, text: string) => string;
+  renderTitle: (ctx: MarkupRenderContexts, title: string, size: number, id?: string) => string;
+  renderUnderlineText: (ctx: MarkupRenderContexts, text: string) => string;
+  renderWarning: (ctx: MarkupRenderContexts, text: string) => string;
 }
 
 
@@ -37,16 +38,19 @@ export interface MarkupRenderer extends Renderer {
 
 export type MarkupRenderContexts = HTMLRenderContext | MarkdownRenderContext;
 
-
-interface MarkupRenderContext extends RenderContext<Renderer> {
+interface MarkupRenderContext<Renderer extends MarkupRenderer = MarkupRenderer> extends RenderContext<Renderer> {
   indentation: number;
   linkRegistry: LinkRegistry;
 }
 
-export type MarkdownRenderContext = MarkupRenderContext;
+export interface MarkdownRenderContext extends MarkupRenderContext<MarkdownRenderer> {
+}
+
 export interface MarkdownRenderer extends MarkupRenderer {
 }
 
-export type HTMLRenderContext = MarkupRenderContext;
+export interface HTMLRenderContext extends MarkupRenderContext<HTMLRenderer> {
+}
+
 export interface HTMLRenderer extends MarkupRenderer {
 }

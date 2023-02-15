@@ -14,6 +14,8 @@ scope("Renderer", "Render abstraction", () => {
 
   describe("renderRenderObject", () => {
 
+    const ctx = createRenderContext();
+
     {
 
       const testFileContent: ListNode = createListNode([
@@ -21,7 +23,7 @@ scope("Renderer", "Render abstraction", () => {
         "element 2"
       ]);
 
-      const renderedList = renderListNode({ indentation: 0, renderContext: createRenderContext(), size: 1 }, testFileContent);
+      const renderedList = renderListNode(ctx, testFileContent);
 
       it("should render lists correctly", () => {
         expect(renderedList).to.equal(html`
@@ -38,7 +40,7 @@ scope("Renderer", "Render abstraction", () => {
 
       const testFileContent: ListNode = createListNode([]);
 
-      const renderedList = renderListNode({ indentation: 0, renderContext: createRenderContext(), size: 1 }, testFileContent);
+      const renderedList = renderListNode(ctx, testFileContent);
 
       it("should not render empty lists", () => {
         expect(renderedList).to.equal(html``);
@@ -56,8 +58,7 @@ scope("Renderer", "Render abstraction", () => {
         ])
       ]);
 
-      const renderedList = renderListNode({ indentation: 0, renderContext: createRenderContext(), size: 1 }, testFileContent);
-
+      const renderedList = renderListNode(ctx, testFileContent);
 
       it("should render nested lists correctly", () => {
         expect(renderedList).to.equal(html`

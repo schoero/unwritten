@@ -13,10 +13,7 @@ import { getCategoryName } from "./utils/renderer.js";
 import { sortExportableEntities } from "./utils/sort.js";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
-import type {
-  MarkupRenderContext,
-  MarkupRenderContexts
-} from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   AnchorNode,
   ASTNodes,
@@ -41,12 +38,15 @@ export function render(ctx: MarkupRenderContext, entities: ExportableEntities[])
   const documentation = renderForDocumentation(ctx, sortedEntities);
 
   const ast = createContainerNode(
-    createTitleNode("API Documentation"),
-    ...tableOfContents,
-    ...documentation
+    createTitleNode(
+      "API Documentation",
+      undefined,
+      ...tableOfContents,
+      ...documentation
+    )
   );
 
-  return renderNode({ indentation: 0, renderContext: ctx, size: 1 }, ast);
+  return renderNode(ctx, ast);
 
 }
 
@@ -61,7 +61,7 @@ export function renderForTableOfContents(ctx: MarkupRenderContext, entities: Exp
   for(const type of entities){
 
     const categoryName = getCategoryName(ctx, type.kind, true);
-    const existingCategory = tableOfContents.find(category => category.content[0].content === categoryName);
+    const existingCategory = tableOfContents.find(category => category.children[0].title === categoryName);
 
     if(existingCategory === undefined){
       tableOfContents.push(
@@ -72,10 +72,10 @@ export function renderForTableOfContents(ctx: MarkupRenderContext, entities: Exp
       );
     }
 
-    const category = tableOfContents.find(category => category.content[0].content === categoryName)!;
+    const category = tableOfContents.find(category => category.children[0].title === categoryName)!;
     const renderedEntity = renderEntityForTableOfContents(ctx, type);
 
-    category.content[1].content.push(renderedEntity);
+    category.children[1].children.push(renderedEntity);
 
 
   }
@@ -95,7 +95,7 @@ export function renderForDocumentation(ctx: MarkupRenderContext, entities: Expor
   for(const type of entities){
 
     const categoryName = getCategoryName(ctx, type.kind, true);
-    const existingCategory = documentation.find(category => category.content[0].content === categoryName);
+    const existingCategory = documentation.find(category => category.children[0].title === categoryName);
 
     if(existingCategory === undefined){
       documentation.push(
@@ -106,10 +106,10 @@ export function renderForDocumentation(ctx: MarkupRenderContext, entities: Expor
       );
     }
 
-    const category = documentation.find(category => category.content[0].content === categoryName)!;
+    const category = documentation.find(category => category.children[0].title === categoryName)!;
     const renderedEntity = renderEntityForTableOfContents(ctx, type);
 
-    (category.content[1].content as ASTNodes[]).push(renderedEntity);
+    (category.children[1].children as ASTNodes[]).push(renderedEntity);
 
   }
 
@@ -117,17 +117,14 @@ export function renderForDocumentation(ctx: MarkupRenderContext, entities: Expor
 
 }
 
-interface RenderNodeContext {
-  renderContext: MarkupRenderContexts;
-  size: number;
-}
+export function renderNode(ctx: MarkupRenderContext, node: ASTNodes): string {
 
-export function renderNode(ctx: RenderNodeContext, node: ASTNodes): string {
+  const size = 1;
 
   if(isContainerNode(node)){
     return renderContainerNode(ctx, node);
   } else if(isTitleNode(node)){
-    return renderTitleNode(ctx, node);
+    return renderTitleNode(ctx, size, node);
   } else if(isParagraphNode(node)){
     return renderParagraphNode(ctx, node);
   } else if(isListNode(node)){
@@ -144,52 +141,87 @@ export function renderNode(ctx: RenderNodeContext, node: ASTNodes): string {
 
 }
 
-export function renderContainerNode(ctx: RenderNodeContext, node: ContainerNode): string {
-  if(typeof node.content === "string"){
-    return node.content;
-  } else if(Array.isArray(node.content)){
-    return node.content.map(child =>
-      renderNode(ctx, child)).join(ctx.renderContext.renderer.renderNewLine());
+export function renderContainerNode(ctx: MarkupRenderContext, node: ContainerNode): string {
+  if(typeof node.children === "string"){
+    return node.children;
+  } else if(Array.isArray(node.children)){
+    return node.children.map(child =>
+      renderNode(ctx, child)).join(ctx.renderer.renderNewLine(ctx));
   } else {
-    return renderNode(ctx, node.content);
+    return renderNode(ctx, node.children);
   }
 }
 
-export function renderTitleNode(ctx: RenderNodeContext, node: TitleNode): string {
-  const title = ctx.renderContext.renderer.renderTitle(node.content, ctx.size, node.id);
-  ctx.size++;
+export function renderTitleNode(ctx: MarkupRenderContext, size: number, node: TitleNode): string {
+  const title = ctx.renderer.renderTitle(ctx, node.title, size, node.id);
   return title;
 }
 
-export function renderParagraphNode(ctx: RenderNodeContext, node: ParagraphNode): string {
-  return ctx.renderContext.renderer.renderParagraph(node.content);
+export function renderParagraphNode(ctx: MarkupRenderContext, node: ParagraphNode): string {
+  return ctx.renderer.renderParagraph(ctx, node.children);
 }
 
-export function renderListNode(ctx: RenderNodeContext, node: ListNode): string {
+export function renderListNode(ctx: MarkupRenderContext, node: ListNode): string {
 
-  if(node.content.length === 0){
+  if(node.children.length === 0){
     return "";
   }
 
-  const listStart = ctx.renderContext.renderer.renderListStart();
+  const listStart = ctx.renderer.renderListStart(ctx);
 
-  const listItems = node.content.map(item =>
-    ctx.renderContext.renderer.renderListItem(renderNode(ctx, item)));
+  const listItems: string[] = [];
 
-  const listEnd = ctx.renderContext.renderer.renderListEnd();
+  for(let i = 0; i < node.children.length; i++){
+    // For semantically valid html we need to render nested lists inside the current list item
+    const item = node.children[i];
+    const nextItem = node.children[i + 1];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if(nextItem !== undefined && isListNode(nextItem)){
 
-  return listStart + listItems.join(ctx.renderContext.renderer.renderNewLine()) + listEnd;
+      listItems.push(
+        ctx.renderer.renderListItem(ctx, [
+          (() => {
+            const renderedNode = renderNode(ctx, item);
+            ctx.indentation++;
+            return renderedNode;
+          })(),
+          (() => {
+            const renderedNode = renderNode(ctx, nextItem);
+            ctx.indentation--;
+            return renderedNode;
+          })(),
+          ctx.renderer.renderIndentation(ctx)
+        ].join(ctx.renderer.renderNewLine(ctx)))
+      );
+
+      i++; // Skip the next item
+      continue;
+
+    }
+
+    listItems.push(ctx.renderer.renderListItem(ctx, renderNode(ctx, item)));
+
+  }
+
+  const listEnd = ctx.renderer.renderListEnd(ctx);
+
+  return [listStart, ...listItems, listEnd].join(ctx.renderer.renderNewLine(ctx));
+
 }
 
-export function renderLinkNode(ctx: RenderNodeContext, node: LinkNode): string {
+export function renderLinkNode(ctx: MarkupRenderContext, node: LinkNode): string {
   // TODO: Add support for external/source code links
-  return ctx.renderContext.renderer.renderAnchorLink(node.content, node.link);
+  return ctx.renderer.renderAnchorLink(ctx, node.children, node.link);
 }
 
-export function renderAnchorNode(ctx: RenderNodeContext, node: AnchorNode): string {
-  return ctx.renderContext.renderer.renderAnchorTag(node.id);
+export function renderAnchorNode(ctx: MarkupRenderContext, node: AnchorNode): string {
+  return ctx.renderer.renderAnchorTag(ctx, node.id);
 }
 
-export function renderSmallNode(ctx: RenderNodeContext, node: SmallNode): string {
-  return ctx.renderContext.renderer.renderSmallText(node.content);
+export function renderSmallNode(ctx: MarkupRenderContext, node: SmallNode): string {
+  return ctx.renderer.renderSmallText(ctx, node.children);
+}
+
+function isRenderedList(arg0: any) {
+  throw new Error("Function not implemented.");
 }

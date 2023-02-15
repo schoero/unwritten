@@ -50,7 +50,6 @@ scope("Compiler", EntityKind.Signature, () => {
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
-
     it("should have one signature", () => {
       expect(exportedFunction.signatures).to.have.lengthOf(1);
     });

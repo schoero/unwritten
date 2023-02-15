@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
-import { defaultRenderConfig } from "unwritten:renderer:markup/config/default.js";
+import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default.js";
 import { findFile } from "unwritten:utils:finder.js";
 import { override } from "unwritten:utils:override.js";
 
@@ -96,8 +96,8 @@ export function getDefaultConfig(): CompleteConfig {
     compilerConfig: defaultCompilerConfig,
     externalTypes: defaultExternalTypes,
     renderConfig: {
-      [BuiltInRenderers.Markdown]: defaultRenderConfig,
-      [BuiltInRenderers.HTML]: defaultRenderConfig
+      [BuiltInRenderers.Markdown]: defaultMarkdownRenderConfig,
+      [BuiltInRenderers.HTML]: defaultHTMLRenderConfig
     }
   };
 

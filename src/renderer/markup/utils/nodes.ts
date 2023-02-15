@@ -3,46 +3,47 @@ import { ASTNodeKinds } from "../enums/nodes.js";
 import type { ASTNodes, LinkNode, ParagraphNode, SmallNode, TitleNode } from "../types-definitions/nodes.js";
 
 
-export function createContainerNode<T extends ASTNodes[]>(...content: T) {
+export function createContainerNode<T extends ASTNodes[]>(...children: T) {
   return {
-    content,
+    children,
     kind: ASTNodeKinds.Container
   } as const;
 }
 
-export function createLinkNode(content: string, link: string): LinkNode {
+export function createLinkNode(children: string, link: string): LinkNode {
   return {
-    content,
+    children,
     kind: ASTNodeKinds.Link,
     link
   };
 }
 
-export function createListNode<T extends ASTNodes>(content: T[]) {
+export function createListNode<T extends ASTNodes>(children: T[]) {
   return {
-    content,
+    children,
     kind: ASTNodeKinds.List
   } as const;
 }
 
-export function createParagraphNode(content: string): ParagraphNode {
+export function createParagraphNode(children: string): ParagraphNode {
   return {
-    content,
+    children,
     kind: ASTNodeKinds.Paragraph
   };
 }
 
-export function createSmallNode(content: string): SmallNode {
+export function createSmallNode(children: string): SmallNode {
   return {
-    content,
+    children,
     kind: ASTNodeKinds.Small
   };
 }
 
-export function createTitleNode(content: string, id?: string): TitleNode {
+export function createTitleNode(title: string, id?: string, ...children: ASTNodes[]): TitleNode {
   return {
-    content,
+    children,
     id,
-    kind: ASTNodeKinds.Title
+    kind: ASTNodeKinds.Title,
+    title
   };
 }

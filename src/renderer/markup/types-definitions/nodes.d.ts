@@ -12,7 +12,7 @@ export type ASTNodes =
   | string;
 
 interface ASTNode<T extends ASTNodeKinds> {
-  content: ASTNodes | ASTNodes[];
+  children: ASTNodes | ASTNodes[];
   kind: T;
 }
 
@@ -20,28 +20,29 @@ export interface ContainerNode extends ASTNode<ASTNodeKinds.Container> {
 }
 
 export interface AnchorNode extends ASTNode<ASTNodeKinds.Anchor> {
-  content: string;
+  children: string;
   id: string;
 }
 
 export interface ListNode extends ASTNode<ASTNodeKinds.List> {
-  content: ASTNodes[];
+  children: ASTNodes[];
 }
 
 export interface ParagraphNode extends ASTNode<ASTNodeKinds.Paragraph> {
-  content: string;
+  children: string;
 }
 
 export interface TitleNode extends ASTNode<ASTNodeKinds.Title> {
-  content: string;
+  children: ASTNodes[];
+  title: string;
   id?: string;
 }
 
 export interface LinkNode extends ASTNode<ASTNodeKinds.Link> {
-  content: string;
+  children: string;
   link: string;
 }
 
 export interface SmallNode extends ASTNode<ASTNodeKinds.Small> {
-  content: string;
+  children: string;
 }

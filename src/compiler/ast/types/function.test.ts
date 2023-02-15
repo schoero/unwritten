@@ -1,6 +1,6 @@
 import { assert, expect, it } from "vitest";
 
-import { createFunctionEntity, createTypeAliasEntity } from "unwritten:compiler:entities";
+import { createTypeAliasEntity } from "unwritten:compiler:entities";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
@@ -100,25 +100,6 @@ scope("Compiler", EntityKind.Function, () => {
     it("should have a matching return type", () => {
       assert(exportedTypeAlias1.type.kind === TypeKind.Function);
       expect(exportedTypeAlias1.type.signatures[0]!.returnType.kind).to.equal(TypeKind.Boolean);
-    });
-
-  }
-
-  {
-
-    const testFileContent = ts`
-      export async function functionSymbol(): boolean {
-        return true;
-      }
-    `;
-
-    const { exportedSymbols, ctx } = compile(testFileContent);
-
-    const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
-    const exportedFunction = createFunctionEntity(ctx, symbol);
-
-    it("should be able to parse an async function", () => {
-      expect(exportedFunction.kind).to.equal(EntityKind.Function);
     });
 
   }

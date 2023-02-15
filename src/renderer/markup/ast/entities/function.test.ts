@@ -54,8 +54,8 @@ scope("Renderer", EntityKind.Function, () => {
     const renderedFunctionForDocumentation = renderFunctionEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
     it("should have only one signature", () => {
-      expect(renderedFunctionForTableOfContents.content).to.have.lengthOf(1);
-      expect(Object.keys(renderedFunctionForDocumentation.content)).to.have.lengthOf(1);
+      expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(1);
+      expect(Object.keys(renderedFunctionForDocumentation.children)).to.have.lengthOf(1);
     });
 
   }
@@ -202,8 +202,8 @@ scope("Renderer", EntityKind.Function, () => {
     const renderedFunctionForDocumentation = renderFunctionEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
     it("should have only one signature", () => {
-      expect(renderedFunctionForTableOfContents.content).to.have.lengthOf(2);
-      expect(Object.keys(renderedFunctionForDocumentation.content)).to.have.lengthOf(2);
+      expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(2);
+      expect(Object.keys(renderedFunctionForDocumentation.children)).to.have.lengthOf(2);
     });
 
   }
