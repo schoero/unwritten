@@ -1,4 +1,4 @@
-import type { MarkupRenderContext } from "../types-definitions/markup.js";
+import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
 
 export type AnchorIdentifier = `${string}-${number}-${number}`;
@@ -9,11 +9,11 @@ export type LinkRegistry = {
   };
 };
 
-function attachRegistry(ctx: MarkupRenderContext): asserts ctx is MarkupRenderContext & { renderer: { linkRegistry: LinkRegistry; }; } {
+function attachRegistry(ctx: MarkupRenderContexts): asserts ctx is MarkupRenderContexts & { renderer: { linkRegistry: LinkRegistry; }; } {
   ctx.renderer.linkRegistry ??= {};
 }
 
-function getRegistry(ctx: MarkupRenderContext) {
+function getRegistry(ctx: MarkupRenderContexts) {
   attachRegistry(ctx);
   return ctx.renderer.linkRegistry;
 }
@@ -27,7 +27,7 @@ export function convertTextToAnchorId(text: string): string {
 }
 
 
-export function createAnchor(ctx: MarkupRenderContext, name: string, id: number): AnchorIdentifier {
+export function createAnchor(ctx: MarkupRenderContexts, name: string, id: number): AnchorIdentifier {
 
   const registry = getRegistry(ctx);
 
@@ -52,12 +52,12 @@ export function createAnchor(ctx: MarkupRenderContext, name: string, id: number)
 }
 
 
-export function getAnchorIdentifier(ctx: MarkupRenderContext, name: string, id: number, index: number = 0): AnchorIdentifier {
+export function getAnchorIdentifier(ctx: MarkupRenderContexts, name: string, id: number, index: number = 0): AnchorIdentifier {
   return `${convertTextToAnchorId(name)}-${id}-${index}`;
 }
 
 
-export function getAnchorLink(ctx: MarkupRenderContext, identifier: AnchorIdentifier): string | undefined {
+export function getAnchorLink(ctx: MarkupRenderContexts, identifier: AnchorIdentifier): string | undefined {
 
   const registry = getRegistry(ctx);
 
@@ -79,7 +79,7 @@ export function getAnchorLink(ctx: MarkupRenderContext, identifier: AnchorIdenti
 
 }
 
-export function getAnchorText(ctx: MarkupRenderContext, identifier: AnchorIdentifier): string | undefined {
+export function getAnchorText(ctx: MarkupRenderContexts, identifier: AnchorIdentifier): string | undefined {
 
   const registry = getRegistry(ctx);
 

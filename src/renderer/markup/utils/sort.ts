@@ -1,12 +1,12 @@
 import { getCategoryName } from "./renderer.js";
 
-import type { MarkupRenderContext } from "../types-definitions/markup.js";
+import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
 import type { MarkupRenderConfig } from "unwritten:renderer/markup/types-definitions/config.js";
 
 
-export function sortExportableEntities(ctx: MarkupRenderContext, entities: ExportableEntities[]): ExportableEntities[] {
+export function sortExportableEntities(ctx: MarkupRenderContexts, entities: ExportableEntities[]): ExportableEntities[] {
 
   const order = (ctx.config.renderConfig[ctx.renderer.name] as MarkupRenderConfig).renderOrder?.reduce((acc, category) => {
     const name = getCategoryName(ctx, category);

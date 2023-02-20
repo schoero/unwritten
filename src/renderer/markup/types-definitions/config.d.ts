@@ -3,7 +3,7 @@ import type { ExportableEntityKinds } from "unwritten:compiler:type-definitions/
 import type { CategoryNames } from "./renderer.js";
 
 
-export type MarkupRenderConfig = {
+export interface MarkupRenderConfig {
 
   /**
     * Defines the title of the categories for the rendered entities.
@@ -12,6 +12,9 @@ export type MarkupRenderConfig = {
 
   /** Indentation characters */
   indentation?: string;
+
+  /** Newline character */
+  newLine?: "\n" | "\r\n" | "os";
 
   /**
    * Defines how parameters should be encapsulated in the rendered output.
@@ -53,15 +56,15 @@ export type MarkupRenderConfig = {
    * Defines how type parameters should be encapsulated in the rendered output.
    */
   typeParameterEncapsulation?: Encapsulation | false;
-};
+}
 
-export type MarkdownRenderConfig = MarkupRenderConfig & {
+export interface MarkdownRenderConfig extends MarkupRenderConfig {
   /** Defines which HTML tags are allowed in the rendered output. */
   allowedHTMLTags?: string[] | false;
-};
+}
 
-export type HTMLRenderConfig = MarkupRenderConfig & {
+export interface HTMLRenderConfig extends MarkupRenderConfig {
 
-};
+}
 
 export type Encapsulation = [prefix: string, suffix: string];

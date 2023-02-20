@@ -6,9 +6,11 @@ import type { Renderer } from "unwritten:type-definitions/renderer.d.js";
 export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {
 
   if(renderer === undefined || renderer === "markdown"){
-    renderer = await import("unwritten:renderer:markup/markdown/index.js");
+    const { default: markdownRenderer } = await import("unwritten:renderer:markup/markdown/index.js");
+    renderer = markdownRenderer;
   } else if(renderer === "html"){
-    renderer = await import("unwritten:renderer:markup/html/index.js");
+    const { default: htmlRenderer } = await import("unwritten:renderer:markup/html/index.js");
+    renderer = htmlRenderer;
   } else if(typeof renderer === "string"){
     const { default: importedRenderer } = await import(renderer);
     renderer = importedRenderer;

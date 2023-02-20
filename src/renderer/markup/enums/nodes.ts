@@ -1,11 +1,14 @@
 export enum ASTNodeKinds {
   Anchor = "Anchor",
+  Bold = "Bold",
   Container = "Container",
+  Italic = "Italic",
   Link = "Link",
   List = "List",
   ListItem = "ListItem",
   Paragraph = "Paragraph",
-  Root = "Root",
   Small = "Small",
-  Title = "Title"
+  Strikethrough = "Strikethrough",
+  Title = "Title",
+  Wrapper = "Wrapper"
 }

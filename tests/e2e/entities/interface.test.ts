@@ -5,7 +5,7 @@ import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import {
   renderInterfaceForDocumentation,
   renderInterfaceForTableOfContents
-} from "unwritten:renderer:markup/ast/entities/interface.js";
+} from "unwritten:renderer/markup/ast-converter/entities/interface.js";
 import { renderAST } from "unwritten:renderer:markup/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";

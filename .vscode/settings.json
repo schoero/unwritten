@@ -35,7 +35,7 @@
 
   //-- ES module import
 
-  "typescript.preferences.importModuleSpecifier": "shortest",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.importModuleSpecifierEnding": "js",
   "typescript.preferences.useAliasesForRenames": true,
 

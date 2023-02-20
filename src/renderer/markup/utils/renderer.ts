@@ -5,7 +5,7 @@ import { getRenderConfig } from "./config.js";
 import { createAnchor } from "./linker.js";
 
 import type { Encapsulation } from "unwritten:renderer/markup/types-definitions/config.js";
-import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.js";
+import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
 
 
 export function encapsulate(text: string, encapsulation: Encapsulation | false | undefined) {
@@ -16,7 +16,7 @@ export function encapsulate(text: string, encapsulation: Encapsulation | false |
 }
 
 
-export function getCategoryName(ctx: MarkupRenderContext, key: RenderCategories | string, plural: boolean = false): string {
+export function getCategoryName(ctx: MarkupRenderContexts, key: RenderCategories | string, plural: boolean = false): string {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -31,7 +31,7 @@ export function getCategoryName(ctx: MarkupRenderContext, key: RenderCategories 
 }
 
 
-export function renderLink(ctx: MarkupRenderContext, text: string, id?: number): string {
+export function renderLink(ctx: MarkupRenderContexts, text: string, id?: number): string {
   if(id !== undefined){
     const anchor = createAnchor(ctx, text, id);
     return ctx.renderer.renderAnchorLink(text, anchor);

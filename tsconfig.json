@@ -11,6 +11,8 @@
       "unwritten:compiler:types": ["src/compiler/ast/types/index.js"],
       "unwritten:logger:*": ["src/logger/*"],
       "unwritten:renderer:*": ["src/renderer/*"],
+      "unwritten:renderer:html*": ["src/renderer/markup/html/*"],
+      "unwritten:renderer:markdown*": ["src/renderer/markup/markdown/*"],
       "unwritten:tests:*": ["tests/*"],
       "unwritten:types:*": ["src/type-definitions/*"],
       "unwritten:utils:*": ["src/utils/*"]

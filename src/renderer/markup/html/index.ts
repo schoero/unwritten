@@ -1,15 +1,35 @@
 /* eslint-disable arrow-body-style */
+import { renderAnchorNode } from "unwritten:renderer/markup/html/ast/anchor.js";
+import { renderBoldNode } from "unwritten:renderer/markup/html/ast/bold.js";
+import { renderItalicNode } from "unwritten:renderer/markup/html/ast/italic.js";
+import { renderLinkNode } from "unwritten:renderer/markup/html/ast/link.js";
+import { renderParagraphNode } from "unwritten:renderer/markup/html/ast/paragraph.js";
+import { renderSmallNode } from "unwritten:renderer/markup/html/ast/small.js";
+import { renderStrikethroughNode } from "unwritten:renderer/markup/html/ast/strikethrough.js";
+import { renderWrapperNode } from "unwritten:renderer/markup/html/ast/wrapper.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
-import { render as sharedRender } from "unwritten:renderer:markup/index.js";
+import { renderListNode } from "unwritten:renderer:html/ast/list.js";
+import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index.js";
+import {
+  isAnchorNode,
+  isBoldNode,
+  isContainerNode,
+  isItalicNode,
+  isLinkNode,
+  isListNode,
+  isParagraphNode,
+  isSmallNode,
+  isStrikethroughNode,
+  isTitleNode,
+  isWrapperNode
+} from "unwritten:renderer:markup/typeguards/renderer.js";
 
-import { getRenderConfig } from "../utils/config.js";
+import { renderContainerNode } from "./ast/container.js";
+import { renderTitleNode } from "./ast/title.js";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
-import type {
-  HTMLRenderContext,
-  HTMLRenderer,
-  MarkupRenderContexts
-} from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
@@ -24,105 +44,46 @@ function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is HTMLRenderC
   verifyRenderer(ctx.renderer);
 }
 
+const htmlRenderer: HTMLRenderer = {
+  fileExtension: ".html",
+  name: BuiltInRenderers.HTML,
 
-export const fileExtension = "html";
-export const name = BuiltInRenderers.HTML;
+  render(ctx: RenderContext<Renderer>, entities: ExportableEntities[]) {
+    verifyContext(ctx);
+    const markupAST = convertToMarkupAST(ctx, entities);
+    return renderContainerNode(ctx, markupAST);
+  }
+};
 
-export function render(ctx: RenderContext<Renderer>, entities: ExportableEntities[]) {
-  verifyContext(ctx);
-  return sharedRender(ctx, entities);
+
+export function renderNode(ctx: HTMLRenderContext, node: ASTNodes): string {
+
+  if(isLinkNode(node)){
+    return renderLinkNode(ctx, node);
+  } else if(isParagraphNode(node)){
+    return renderParagraphNode(ctx, node);
+  } else if(isContainerNode(node)){
+    return renderContainerNode(ctx, node);
+  } else if(isListNode(node)){
+    return renderListNode(ctx, node);
+  } else if(isAnchorNode(node)){
+    return renderAnchorNode(ctx, node);
+  } else if(isSmallNode(node)){
+    return renderSmallNode(ctx, node);
+  } else if(isBoldNode(node)){
+    return renderBoldNode(ctx, node);
+  } else if(isItalicNode(node)){
+    return renderItalicNode(ctx, node);
+  } else if(isStrikethroughNode(node)){
+    return renderStrikethroughNode(ctx, node);
+  } else if(isTitleNode(node)){
+    return renderTitleNode(ctx, node);
+  } else if(isWrapperNode(node)){
+    return renderWrapperNode(ctx, node);
+  } else {
+    return node;
+  }
+
 }
 
-export function renderAnchorLink(ctx: MarkupRenderContexts, name: string, anchor: string): string {
-  return `<a href="#${anchor}">${name}</a>`;
-}
-
-export function renderAnchorTag(ctx: MarkupRenderContexts, anchor: string): string {
-  return `<a id="${anchor}"></a>`;
-}
-
-export function renderBoldText(ctx: MarkupRenderContexts, text: string): string {
-  return `<b>${text}</b>`;
-}
-
-export function renderCode(ctx: MarkupRenderContexts, code: string, language?: string): string {
-  return `<pre><code language="${language ? language : ""}">${code}</code></pre>`;
-}
-
-export function renderHorizontalRule(ctx: MarkupRenderContexts): string {
-  return `<hr>${renderNewLine(ctx)}`;
-}
-
-export function renderHyperLink(ctx: MarkupRenderContexts, name: string, url: string) {
-  return `<a href="${url}">${name}</a>`;
-}
-
-export function renderItalicText(ctx: MarkupRenderContexts, text: string): string {
-  return `<i>${text}</i>`;
-}
-
-export function renderLineBreak(ctx: MarkupRenderContexts): string {
-  return "<br>";
-}
-
-export function renderList(ctx: MarkupRenderContexts, items: string[]): string {
-  return [
-    renderListStart(ctx),
-    ...items.map(item => renderListItem(ctx, item)),
-    renderListEnd(ctx)
-  ].join(renderNewLine(ctx));
-}
-
-export function renderListEnd(ctx: MarkupRenderContexts): string {
-  ctx.indentation--;
-  return `${renderIndentation(ctx)}</ul>`;
-}
-
-export function renderListItem(ctx: MarkupRenderContexts, item: string): string {
-  return `${renderIndentation(ctx)}<li>${item}</li>`;
-}
-
-export function renderListStart(ctx: MarkupRenderContexts) {
-  const listStart = `${renderIndentation(ctx)}<ul>`;
-  ctx.indentation++;
-  return listStart;
-}
-
-export function renderNewLine(ctx: MarkupRenderContexts): string {
-  return "\n";
-}
-
-export function renderParagraph(ctx: MarkupRenderContexts, text: string): string {
-  return `${renderIndentation(ctx)}<p>${text}</p>`;
-}
-
-export function renderSmallText(ctx: MarkupRenderContexts, text: string): string {
-  return `<small>${text}</small>`;
-}
-
-export function renderSourceCodeLink(ctx: MarkupRenderContexts, file: string, line: number, column: number): string {
-  const url = `${file}#L${line}`;
-  return renderHyperLink(ctx, `${file}:${line}`, url);
-}
-
-export function renderStrikeThroughText(ctx: MarkupRenderContexts, text: string): string {
-  return `<del>${text}</del>`;
-}
-
-export function renderTitle(ctx: MarkupRenderContexts, title: string, size: number, anchor?: string): string {
-  const id = anchor ? ` id="${anchor}"` : "";
-  return `${renderIndentation(ctx)}<h${size}${id}>${title}</h${size}>`;
-}
-
-export function renderUnderlineText(ctx: MarkupRenderContexts, text: string): string {
-  return `<u>${text}</u>`;
-}
-
-export function renderWarning(ctx: MarkupRenderContexts, text: string): string {
-  return `<blockquote>${text}</blockquote>`;
-}
-
-export function renderIndentation(ctx: MarkupRenderContexts): string {
-  const renderConfig = getRenderConfig(ctx);
-  return renderConfig.indentation.repeat(ctx.indentation);
-}
+export default htmlRenderer;

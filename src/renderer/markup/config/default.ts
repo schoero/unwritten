@@ -39,6 +39,7 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     [RenderCategories.Modules]: "Modules"
   },
   indentation: "  ",
+  newLine: "\n",
   parameterEncapsulation: ["`", "`"],
   propertyEncapsulation: ["`", "`"],
   removeHyphenAtStartOfTag: true,

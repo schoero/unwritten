@@ -4,9 +4,8 @@ import type { RenderContext } from "./context.js";
 
 
 export interface Renderer {
-  [key: string]: any;
   /** The file extension the renderer generates */
-  fileExtension: string;
+  fileExtension: `.${string}`;
   /** The name of the render extension */
   name: string;
   /** The render function */

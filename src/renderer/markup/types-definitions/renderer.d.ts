@@ -1,7 +1,15 @@
 import type { JSDocTags } from "unwritten:compiler/type-definitions/shared.js";
 import type { JSDocTags as JSDocTagNames } from "unwritten:compiler:enums/jsdoc.js";
 
-import type { ContainerNode, LinkNode, ListNode, ParagraphNode, SmallNode, TitleNode } from "./nodes.js";
+import type {
+  ContainerNode,
+  LinkNode,
+  ListNode,
+  ParagraphNode,
+  SmallNode,
+  TitleNode,
+  WrapperNode
+} from "./nodes.js";
 
 
 //-- Categories
@@ -39,11 +47,11 @@ export type CategoryNames = {
   [key in RenderCategories]: string;
 };
 
-export interface RenderedCategoryForTableOfContents extends ContainerNode {
+export interface ConvertedCategoryForTableOfContents extends ContainerNode {
   children: [TitleNode, ListNode];
 }
 
-export interface RenderedCategoryForDocumentation extends ContainerNode {
+export interface ConvertedCategoryForDocumentation extends ContainerNode {
   children: [TitleNode, ContainerNode];
 }
 
@@ -55,96 +63,106 @@ export type RenderableJSDocTags = Pick<JSDocTags, JSDocTagNames.Alpha | JSDocTag
 
 //-- Types
 
-export type RenderedTypes =
-| RenderedAnyType
-| RenderedArrayType
-| RenderedBigIntLiteralType
-| RenderedBigIntType
-| RenderedBooleanLiteralType
-| RenderedBooleanType
-| RenderedNeverType
-| RenderedNullType
-| RenderedNumberLiteralType
-| RenderedNumberType
-| RenderedStringLiteralType
-| RenderedStringType
-| RenderedSymbolType
-| RenderedTupleType
-| RenderedUndefinedType
-| RenderedUnionType
-| RenderedUnknownType
-| RenderedVoidType;
+export type ConvertedTypes =
+  | ConvertedArrayType
+  | ConvertedIntersectionType
+  | ConvertedLiteralTypes
+  | ConvertedPrimitiveTypes
+  | ConvertedTupleType
+  | ConvertedUnionType;
 
 
 //-- Primitive types
 
-export type RenderedStringType = string;
-export type RenderedNumberType = string;
-export type RenderedBooleanType = string;
-export type RenderedBigIntType = string;
-export type RenderedSymbolType = string;
-export type RenderedVoidType = string;
-export type RenderedUndefinedType = string;
-export type RenderedNullType = string;
-export type RenderedNeverType = string;
-export type RenderedUnknownType = string;
-export type RenderedAnyType = string;
+export type ConvertedPrimitiveTypes =
+  | ConvertedAnyType
+  | ConvertedBigIntType
+  | ConvertedBooleanType
+  | ConvertedNeverType
+  | ConvertedNullType
+  | ConvertedNumberType
+  | ConvertedStringType
+  | ConvertedSymbolType
+  | ConvertedUndefinedType
+  | ConvertedUnknownType
+  | ConvertedVoidType;
+
+
+export type ConvertedStringType = LinkNode | string;
+export type ConvertedNumberType = LinkNode | string;
+export type ConvertedBooleanType = LinkNode | string;
+export type ConvertedBigIntType = LinkNode | string;
+export type ConvertedSymbolType = LinkNode | string;
+export type ConvertedVoidType = LinkNode | string;
+export type ConvertedUndefinedType = LinkNode | string;
+export type ConvertedNullType = LinkNode | string;
+export type ConvertedNeverType = LinkNode | string;
+export type ConvertedUnknownType = LinkNode | string;
+export type ConvertedAnyType = LinkNode | string;
 
 
 //-- Literal types
 
-export type RenderedStringLiteralType = string;
-export type RenderedNumberLiteralType = string;
-export type RenderedBooleanLiteralType = string;
-export type RenderedBigIntLiteralType = string;
+export type ConvertedLiteralTypes =
+  | ConvertedBigIntLiteralType
+  | ConvertedBooleanLiteralType
+  | ConvertedNumberLiteralType
+  | ConvertedStringLiteralType;
+
+export type ConvertedStringLiteralType = string;
+export type ConvertedNumberLiteralType = string;
+export type ConvertedBooleanLiteralType = string;
+export type ConvertedBigIntLiteralType = string;
+
+export type ConvertedTemplateLiteralType = WrapperNode;
 
 
 //-- Array type
 
-export type RenderedArrayType = string;
+export type ConvertedArrayType = WrapperNode<["(", ConvertedTypes, ")", "[]"] | [ConvertedTypes, "[]"]>;
 
 
 //-- Tuple type
 
-export type RenderedTupleType = string;
+export type ConvertedTupleType = WrapperNode<["[", ...ConvertedTupleMember[], "]"]>;
+export type ConvertedTupleMember = WrapperNode;
 
 
 //-- Union type
 
-export type RenderedUnionType = string;
+export type ConvertedUnionType = WrapperNode;
 
 
 //-- Intersection type
 
-export type RenderedIntersectionType = string;
+export type ConvertedIntersectionType = WrapperNode;
 
 
 //-- Entities
 
-export type RenderedEntitiesForTableOfContents =
-  | RenderedFunctionEntityForTableOfContents;
+export type ConvertedEntitiesForTableOfContents =
+  | ConvertedFunctionEntityForTableOfContents;
 
 
 //-- Function
 
-export interface RenderedFunctionEntityForTableOfContents extends ContainerNode {
-  children: RenderedSignatureEntityForTableOfContents[];
+export interface ConvertedFunctionEntityForTableOfContents extends ContainerNode {
+  children: ConvertedSignatureEntityForTableOfContents[];
 }
 
-export interface RenderedFunctionEntityForDocumentation extends ContainerNode {
-  children: RenderedSignatureEntityForDocumentation[];
+export interface ConvertedFunctionEntityForDocumentation extends ContainerNode {
+  children: ConvertedSignatureEntityForDocumentation[];
 }
 
 
 //-- Signature
 
-export interface RenderedSignatureEntityForTableOfContents extends LinkNode {
+export interface ConvertedSignatureEntityForTableOfContents extends LinkNode {
 
 }
 
-export interface RenderedSignatureEntityForDocumentation extends ContainerNode {
+export interface ConvertedSignatureEntityForDocumentation extends TitleNode {
   children: [
-    title: TitleNode,
     position: SmallNode,
     tags: SmallNode,
     parametersAndReturnType: ListNode,
@@ -155,8 +173,44 @@ export interface RenderedSignatureEntityForDocumentation extends ContainerNode {
 }
 
 
+//-- Variable
+
+export interface ConvertedVariableEntityForTableOfContents extends LinkNode {
+
+}
+
+export interface ConvertedVariableEntityForDocumentation extends TitleNode {
+  children: [
+    position: SmallNode,
+    tags: SmallNode,
+    type: ParagraphNode,
+    description: ParagraphNode,
+    remarks: ParagraphNode,
+    example: ParagraphNode
+  ];
+}
+
+
+//-- Interface
+
+export interface ConvertedInterfaceEntityForTableOfContents extends LinkNode {
+
+}
+
+export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
+  children: [
+    position: SmallNode,
+    tags: SmallNode,
+    properties: ListNode,
+    description: ParagraphNode,
+    remarks: ParagraphNode,
+    example: ParagraphNode
+  ];
+}
+
+
 //-- Parameter
 
-export type RenderedParameterEntityForSignature = string;
-export type RenderedParameterEntitiesForSignature = string;
-export type RenderedParameterEntityForDocumentation = string;
+export type ConvertedParameterEntityForSignature = WrapperNode;
+export type ConvertedParameterEntitiesForSignature = WrapperNode;
+export type ConvertedParameterEntityForDocumentation = WrapperNode;
