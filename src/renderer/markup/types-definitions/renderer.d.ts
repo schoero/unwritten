@@ -2,13 +2,13 @@ import type { JSDocTags } from "unwritten:compiler/type-definitions/shared.js";
 import type { JSDocTags as JSDocTagNames } from "unwritten:compiler:enums/jsdoc.js";
 
 import type {
+  ASTNodes,
   ContainerNode,
   LinkNode,
   ListNode,
   ParagraphNode,
   SmallNode,
-  TitleNode,
-  WrapperNode
+  TitleNode
 } from "./nodes.js";
 
 
@@ -114,28 +114,28 @@ export type ConvertedNumberLiteralType = string;
 export type ConvertedBooleanLiteralType = string;
 export type ConvertedBigIntLiteralType = string;
 
-export type ConvertedTemplateLiteralType = WrapperNode;
+export type ConvertedTemplateLiteralType = ASTNodes[];
 
 
 //-- Array type
 
-export type ConvertedArrayType = WrapperNode<["(", ConvertedTypes, ")", "[]"] | [ConvertedTypes, "[]"]>;
+export type ConvertedArrayType = ["(", ConvertedTypes, ")", "[]"] | [ConvertedTypes, "[]"];
 
 
 //-- Tuple type
 
-export type ConvertedTupleType = WrapperNode<["[", ...ConvertedTupleMember[], "]"]>;
-export type ConvertedTupleMember = WrapperNode;
+export type ConvertedTupleType = ["[", ...ConvertedTupleMember[], "]"];
+export type ConvertedTupleMember = ASTNodes[];
 
 
 //-- Union type
 
-export type ConvertedUnionType = WrapperNode;
+export type ConvertedUnionType = ASTNodes[];
 
 
 //-- Intersection type
 
-export type ConvertedIntersectionType = WrapperNode;
+export type ConvertedIntersectionType = ASTNodes[];
 
 
 //-- Entities
@@ -211,6 +211,6 @@ export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
 
 //-- Parameter
 
-export type ConvertedParameterEntityForSignature = WrapperNode;
-export type ConvertedParameterEntitiesForSignature = WrapperNode;
-export type ConvertedParameterEntityForDocumentation = WrapperNode;
+export type ConvertedParameterEntityForSignature = ASTNodes[];
+export type ConvertedParameterEntitiesForSignature = ASTNodes[];
+export type ConvertedParameterEntityForDocumentation = ASTNodes[];

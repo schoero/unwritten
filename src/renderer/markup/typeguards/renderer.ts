@@ -11,63 +11,57 @@ import type {
   ParagraphNode,
   SmallNode,
   StrikethroughNode,
-  TitleNode,
-  WrapperNode
+  TitleNode
 } from "../types-definitions/nodes.js";
 
 
 export function isAnchorNode(node: ASTNodes): node is AnchorNode {
-  return typeof node === "object" &&
-     node.kind === ASTNodeKinds.Anchor;
+  return typeof node === "object" && !Array.isArray(node) &&
+  node.kind === ASTNodeKinds.Anchor;
 }
 
 export function isBoldNode(node: ASTNodes): node is BoldNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
       node.kind === ASTNodeKinds.Bold;
 }
 
 export function isContainerNode(node: ASTNodes): node is ContainerNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
      node.kind === ASTNodeKinds.Container;
 }
 
 export function isItalicNode(node: ASTNodes): node is ItalicNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
       node.kind === ASTNodeKinds.Italic;
 }
 
 export function isLinkNode(node: ASTNodes): node is LinkNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
      node.kind === ASTNodeKinds.Link;
 }
 
 export function isListNode(node: ASTNodes): node is ListNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
      node.kind === ASTNodeKinds.List;
 }
 
 export function isParagraphNode(node: ASTNodes): node is ParagraphNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
      node.kind === ASTNodeKinds.Paragraph;
 }
 
 export function isSmallNode(node: ASTNodes): node is SmallNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
      node.kind === ASTNodeKinds.Small;
 }
 
 export function isStrikethroughNode(node: ASTNodes): node is StrikethroughNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
       node.kind === ASTNodeKinds.Strikethrough;
 }
 
 
 export function isTitleNode(node: ASTNodes): node is TitleNode {
-  return typeof node === "object" &&
+  return typeof node === "object" && !Array.isArray(node) &&
      node.kind === ASTNodeKinds.Title;
-}
-
-export function isWrapperNode(node: ASTNodes): node is WrapperNode {
-  return typeof node === "object" &&
-     node.kind === ASTNodeKinds.Wrapper;
 }

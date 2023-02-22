@@ -9,6 +9,5 @@ export enum ASTNodeKinds {
   Paragraph = "Paragraph",
   Small = "Small",
   Strikethrough = "Strikethrough",
-  Title = "Title",
-  Wrapper = "Wrapper"
+  Title = "Title"
 }

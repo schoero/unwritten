@@ -1,7 +1,6 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
-import { createWrapperNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
-import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
+import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { ParameterEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -12,24 +11,23 @@ import type {
 
 
 export function convertParametersForSignature(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[]): ConvertedParameterEntitiesForSignature {
-  return createWrapperNode(
-    ...parameterEntities.map((parameter, index) => {
-      const convertedParameter = convertParameterForSignature(ctx, parameter);
-      if(index === 0){
-        return createWrapperNode(
-          parameter.optional === true ? "[" : "",
-          convertedParameter,
-          parameter.optional === true ? "]" : ""
-        );
-      } else {
-        return createWrapperNode(
-          parameter.optional === true ? "[, " : "",
-          convertedParameter,
-          parameter.optional === true ? "]" : ""
-        );
-      }
-    })
-  );
+  const renderedParameters = parameterEntities.flatMap((parameter, index) => {
+    const convertedParameter = convertParameterForSignature(ctx, parameter);
+    if(index === 0){
+      return [
+        parameter.optional === true ? "[" : "",
+        ...convertedParameter,
+        parameter.optional === true ? "]" : ""
+      ];
+    } else {
+      return [
+        parameter.optional === true ? "[, " : ", ",
+        ...convertedParameter,
+        parameter.optional === true ? "]" : ""
+      ];
+    }
+  });
+  return renderedParameters;
 }
 
 
@@ -43,10 +41,10 @@ export function convertParameterForDocumentation(ctx: MarkupRenderContexts, para
   const type = parameterEntity.type ? convertType(ctx, parameterEntity.type) : "";
   const rest = parameterEntity.rest === true ? encapsulate("rest", renderConfig.tagEncapsulation) : "";
   const optional = parameterEntity.optional === true ? encapsulate("optional", renderConfig.tagEncapsulation) : "";
-  const initializer = parameterEntity.initializer !== undefined ? `Default: ${convertType(ctx, parameterEntity.initializer)}` : "";
+  const initializer = parameterEntity.initializer !== undefined ? [`Default: `, convertType(ctx, parameterEntity.initializer)] : "";
 
-  return createWrapperNode(
-    `${name}:`,
+  return spaceBetween(
+    name,
     type,
     description,
     optional,
@@ -62,9 +60,9 @@ function convertParameterForSignature(ctx: MarkupRenderContexts, parameterEntity
   const rest = parameterEntity.rest === true ? "..." : "";
   const name = parameterEntity.name;
 
-  return createWrapperNode(
+  return [
     rest,
     name
-  );
+  ];
 
 }

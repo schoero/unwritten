@@ -3,7 +3,6 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertTupleType } from "unwritten:renderer/markup/ast-converter/types/tuple.js";
-import { isWrapperNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -48,8 +47,7 @@ scope("Renderer", TypeKind.Tuple, () => {
     const renderedType = convertTupleType(ctx, type as TupleType);
 
     it("should be able to render tuple types", () => {
-      expect(isWrapperNode(renderedType)).to.equal(true);
-      expect(renderedType.children).to.equal("[string, number]");
+      expect(renderedType).to.equal("[string, number]");
     });
 
   }

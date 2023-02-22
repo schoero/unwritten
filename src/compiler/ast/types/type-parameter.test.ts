@@ -6,8 +6,6 @@ import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
-import type { TypeParameterType } from "unwritten:compiler:type-definitions/types.js";
-
 
 scope("Compiler", TypeKind.TypeParameter, () => {
 
@@ -27,7 +25,7 @@ scope("Compiler", TypeKind.TypeParameter, () => {
       expect(exportedTypeAlias.typeParameters).toHaveLength(1);
       expect(exportedTypeAlias.type.type).to.not.equal(undefined);
       assert(exportedTypeAlias.type.type!.kind === TypeKind.TypeParameter);
-      expect((exportedTypeAlias.type.type as TypeParameterType).name).to.equal("T");
+      expect(exportedTypeAlias.type.type.name).to.equal("T");
     });
 
   }

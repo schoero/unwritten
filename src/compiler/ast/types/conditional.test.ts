@@ -6,8 +6,6 @@ import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
-import type { TypeParameterType } from "unwritten:compiler:type-definitions/types.d.js";
-
 
 scope("Compiler", TypeKind.Conditional, () => {
 
@@ -31,8 +29,8 @@ scope("Compiler", TypeKind.Conditional, () => {
       assert(conditionalTypeAlias.type.checkType.kind === TypeKind.TypeReference);
       expect(conditionalTypeAlias.type.checkType.type).to.not.equal(undefined);
       assert(conditionalTypeAlias.type.checkType.type!.kind === TypeKind.TypeParameter);
-      expect((conditionalTypeAlias.type.checkType.type! as TypeParameterType).constraint).to.not.equal(undefined);
-      expect((conditionalTypeAlias.type.checkType.type! as TypeParameterType).constraint!.kind).to.equal(TypeKind.Union);
+      expect(conditionalTypeAlias.type.checkType.type.constraint).to.not.equal(undefined);
+      expect(conditionalTypeAlias.type.checkType.type.constraint!.kind).to.equal(TypeKind.Union);
     });
 
     it("should have a matching extendsType", () => {

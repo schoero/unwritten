@@ -7,8 +7,6 @@ import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
-import type { UnionType } from "unwritten:compiler:type-definitions/types.d.js";
-
 
 scope("Compiler", TypeKind.Mapped, () => {
 
@@ -62,7 +60,7 @@ scope("Compiler", TypeKind.Mapped, () => {
       expect(exportedTypeAlias.type.typeParameter.name).to.equal("K");
       expect(exportedTypeAlias.type.typeParameter.constraint).to.not.equal(undefined);
       assert(exportedTypeAlias.type.typeParameter.constraint!.kind === TypeKind.Union);
-      expect((exportedTypeAlias.type.typeParameter.constraint! as UnionType).types).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.typeParameter.constraint.types).to.have.lengthOf(2);
     });
 
   }

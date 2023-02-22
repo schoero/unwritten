@@ -1,5 +1,4 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
-import { createWrapperNode } from "unwritten:renderer/markup/utils/nodes.js";
 
 import type { TemplateLiteralType } from "unwritten:compiler:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -24,6 +23,6 @@ export function convertTemplateLiteralType(ctx: MarkupRenderContexts, templateLi
     ];
   }, []);
 
-  return createWrapperNode(head, ...renderedTemplateLiteralType);
+  return [head, ...renderedTemplateLiteralType];
 
 }

@@ -2,7 +2,6 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertTemplateLiteralType } from "unwritten:renderer/markup/ast-converter/types/index.js";
-import { isWrapperNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -37,11 +36,10 @@ scope("Renderer", TypeKind.StringLiteral, () => {
     const renderedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
 
     it("should render template literal types", () => {
-      expect(isWrapperNode(renderedType)).to.equal(true);
-      expect(renderedType.children[0]).to.equal("${");
-      expect(renderedType.children[1]).to.equal("number");
-      expect(renderedType.children[2]).to.equal("}");
-      expect(renderedType.children[3]).to.equal("px");
+      expect(renderedType[0]).to.equal("${");
+      expect(renderedType[1]).to.equal("number");
+      expect(renderedType[2]).to.equal("}");
+      expect(renderedType[3]).to.equal("px");
     });
 
   }

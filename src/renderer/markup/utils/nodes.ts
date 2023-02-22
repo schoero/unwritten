@@ -10,8 +10,7 @@ import type {
   ParagraphNode,
   SmallNode,
   StrikethroughNode,
-  TitleNode,
-  WrapperNode
+  TitleNode
 } from "../types-definitions/nodes.js";
 
 
@@ -62,21 +61,21 @@ export function createListNode<T extends ASTNodes[]>(...children: T): ListNode {
   };
 }
 
-export function createParagraphNode(children: string): ParagraphNode {
+export function createParagraphNode(children: ParagraphNode["children"]): ParagraphNode {
   return {
     children,
     kind: ASTNodeKinds.Paragraph
   };
 }
 
-export function createSmallNode(children: string): SmallNode {
+export function createSmallNode(children: SmallNode["children"]): SmallNode {
   return {
     children,
     kind: ASTNodeKinds.Small
   };
 }
 
-export function createStrikethroughNode(children: string): StrikethroughNode {
+export function createStrikethroughNode(children: StrikethroughNode["children"]): StrikethroughNode {
   return {
     children,
     kind: ASTNodeKinds.Strikethrough
@@ -89,12 +88,5 @@ export function createTitleNode<Children extends ASTNodes[]>(title: string, id: 
     id,
     kind: ASTNodeKinds.Title,
     title
-  } as const;
-}
-
-export function createWrapperNode<Children extends ASTNodes[]>(...children: Children): WrapperNode<Children> {
-  return {
-    children,
-    kind: ASTNodeKinds.Wrapper
   } as const;
 }

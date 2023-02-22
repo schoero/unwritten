@@ -3,6 +3,7 @@ import type { ASTNodeKinds } from "unwritten:renderer/markup/enums/nodes.js";
 
 export type ASTNodes =
   | AnchorNode
+  | ASTNodes[]
   | BoldNode
   | ContainerNode
   | ItalicNode
@@ -12,7 +13,6 @@ export type ASTNodes =
   | SmallNode
   | StrikethroughNode
   | TitleNode
-  | WrapperNode
   | string;
 
 interface ASTNode<T extends ASTNodeKinds> {
@@ -20,11 +20,11 @@ interface ASTNode<T extends ASTNodeKinds> {
   kind: T;
 }
 
+/** Container node children will be joined with new lines */
 export interface ContainerNode extends ASTNode<ASTNodeKinds.Container> {
 }
 
 export interface AnchorNode extends ASTNode<ASTNodeKinds.Anchor> {
-  children: string;
   id: string;
 }
 
@@ -33,11 +33,6 @@ export interface ListNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTN
 }
 
 export interface ParagraphNode extends ASTNode<ASTNodeKinds.Paragraph> {
-  children: string;
-}
-
-export interface WrapperNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Wrapper> {
-  children: Children;
 }
 
 export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title> {
@@ -52,17 +47,13 @@ export interface LinkNode extends ASTNode<ASTNodeKinds.Link> {
 }
 
 export interface SmallNode extends ASTNode<ASTNodeKinds.Small> {
-  children: string;
 }
 
 export interface BoldNode extends ASTNode<ASTNodeKinds.Bold> {
-  children: string;
 }
 
 export interface ItalicNode extends ASTNode<ASTNodeKinds.Italic> {
-  children: string;
 }
 
 export interface StrikethroughNode extends ASTNode<ASTNodeKinds.Strikethrough> {
-  children: string;
 }

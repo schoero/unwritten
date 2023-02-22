@@ -1,5 +1,13 @@
-export function ts(typeScriptCode: TemplateStringsArray, ...values: (boolean | number | string)[]) {
-  return createTemplateTag(typeScriptCode, ...values);
+export function createTemplateTag(templateStrings: TemplateStringsArray, ...values: (boolean | number | string)[]) {
+  const assembledTemplateString = assembleTemplateString(templateStrings, ...values);
+  const contentWithoutSurroundingNewLines = removeSurroundingNewLines(assembledTemplateString);
+  const minIndentation = findCommonIndentation(contentWithoutSurroundingNewLines);
+  const contentWithoutCommonIndentation = removeCommonIndentation(contentWithoutSurroundingNewLines, minIndentation);
+  return contentWithoutCommonIndentation;
+}
+
+export function css(htmlCode: TemplateStringsArray, ...values: (boolean | number | string)[]) {
+  return createTemplateTag(htmlCode, ...values);
 }
 
 export function html(htmlCode: TemplateStringsArray, ...values: (boolean | number | string)[]) {
@@ -10,17 +18,9 @@ export function md(htmlCode: TemplateStringsArray, ...values: (boolean | number 
   return createTemplateTag(htmlCode, ...values);
 }
 
-export function css(htmlCode: TemplateStringsArray, ...values: (boolean | number | string)[]) {
-  return createTemplateTag(htmlCode, ...values);
-}
 
-
-export function createTemplateTag(templateStrings: TemplateStringsArray, ...values: (boolean | number | string)[]) {
-  const assembledTemplateString = assembleTemplateString(templateStrings, ...values);
-  const contentWithoutSurroundingNewLines = removeSurroundingNewLines(assembledTemplateString);
-  const minIndentation = findCommonIndentation(contentWithoutSurroundingNewLines);
-  const contentWithoutCommonIndentation = removeCommonIndentation(contentWithoutSurroundingNewLines, minIndentation);
-  return contentWithoutCommonIndentation;
+export function ts(typeScriptCode: TemplateStringsArray, ...values: (boolean | number | string)[]) {
+  return createTemplateTag(typeScriptCode, ...values);
 }
 
 function assembleTemplateString(templateString: TemplateStringsArray, ...values: (boolean | number | string)[]) {

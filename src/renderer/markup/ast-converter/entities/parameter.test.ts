@@ -2,6 +2,11 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
+import {
+  convertParameterForDocumentation,
+  convertParametersForSignature
+} from "unwritten:renderer/markup/ast-converter/entities/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -37,16 +42,19 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const renderedParametersForSignature = convertParametersForSignature(ctx, [parameterEntity as ParameterEntity]);
-    const renderedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntity as ParameterEntity);
+    const convertedParametersForSignature = convertParametersForSignature(ctx, [parameterEntity as ParameterEntity]);
+    const convertedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntity as ParameterEntity);
+
+    const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
+    const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
     it("should have a matching name", () => {
       expect(renderedParametersForSignature).to.equal("parameter");
-      expect(renderedParameterForDocumentation).to.match(/parameter: .*$/);
+      expect(renderedParameterForDocumentation).to.match(/parameter .*$/);
     });
 
     it("should have a matching type", () => {
-      expect(renderedParameterForDocumentation).to.match(/^.*: number$/);
+      expect(renderedParameterForDocumentation).to.match(/^.* number$/);
     });
 
   }
@@ -96,7 +104,9 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const renderedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
+    const convertedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
+
+    const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
 
     it("should join multiple parameters with a `,`", () => {
       expect(renderedParametersForSignature).to.equal("a, b");
@@ -149,8 +159,11 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const renderedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
-    const renderedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntities[1] as ParameterEntity);
+    const convertedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
+    const convertedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntities[1] as ParameterEntity);
+
+    const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
+    const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
     it("should encapsulate optional parameters in `[]`", () => {
       expect(renderedParametersForSignature).to.equal("a[, b]");
@@ -210,8 +223,11 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const renderedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
-    const renderedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntities[1] as ParameterEntity);
+    const convertedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
+    const convertedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntities[1] as ParameterEntity);
+
+    const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
+    const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
     it("should encapsulate optional parameters in `[]`", () => {
       expect(renderedParametersForSignature).to.equal("a, ...b");

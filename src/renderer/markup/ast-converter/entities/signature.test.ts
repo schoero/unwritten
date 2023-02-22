@@ -14,6 +14,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
+import { convertSignatureForDocumentation, convertSignatureForTableOfContents } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 
 
 scope("Renderer", EntityKind.Signature, () => {
@@ -47,11 +48,11 @@ scope("Renderer", EntityKind.Signature, () => {
 
     const ctx = createRenderContext();
 
-    const renderedSignatureForTableOfContents = convertSignatureForTableOfContents(ctx, signatureEntity as SignatureEntity);
-    const renderedSignatureForDocumentation = convertSignatureForDocumentation(ctx, signatureEntity as SignatureEntity);
+    const convertedSignatureForTableOfContents = convertSignatureForTableOfContents(ctx, signatureEntity as SignatureEntity);
+    const convertedSignatureForDocumentation = convertSignatureForDocumentation(ctx, signatureEntity as SignatureEntity);
 
-    assert(isLinkNode(renderedSignatureForTableOfContents), "Rendered signature for table of contents is not a link");
-    assert(isTitleNode(renderedSignatureForDocumentation), "Rendered signature for documentation is not a container");
+    assert(isLinkNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not a link");
+    assert(isTitleNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a container");
 
     const [
       position,
@@ -63,13 +64,13 @@ scope("Renderer", EntityKind.Signature, () => {
     ] = convertedSignatureForDocumentation.children;
 
     it("should have matching table of contents entry", () => {
-      expect(isLinkNode(renderedSignatureForTableOfContents)).to.equal(true);
-      expect(renderedSignatureForTableOfContents.children).to.equal("testSignature()");
+      expect(isLinkNode(convertedSignatureForTableOfContents)).to.equal(true);
+      expect(convertedSignatureForTableOfContents.children).to.equal("testSignature()");
     });
 
     it("should have a matching documentation title", () => {
-      expect(isTitleNode(renderedSignatureForDocumentation)).to.equal(true);
-      expect(renderedSignatureForDocumentation.title).to.equal("testSignature()");
+      expect(isTitleNode(convertedSignatureForDocumentation)).to.equal(true);
+      expect(convertedSignatureForDocumentation.title).to.equal("testSignature()");
     });
 
     it("should have a position", () => {

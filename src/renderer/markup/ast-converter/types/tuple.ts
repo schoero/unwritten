@@ -1,6 +1,5 @@
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
-import { createWrapperNode } from "unwritten:renderer/markup/utils/nodes.js";
 
 import type { TupleMemberEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { TupleType } from "unwritten:compiler:type-definitions/types.js";
@@ -15,11 +14,11 @@ export function convertTupleType(ctx: MarkupRenderContexts, tupleType: TupleType
 
   const convertedMembers = tupleType.members.map(member => convertTupleMember(ctx, member));
 
-  return createWrapperNode(
+  return [
     "[" as const,
     ...convertedMembers,
     "]" as const
-  );
+  ];
 
 }
 
@@ -39,7 +38,7 @@ function convertTupleMember(ctx: MarkupRenderContexts, tupleMember: TupleMemberE
     );
 
 
-  return createWrapperNode(
+  return [
     renderedName,
     renderedRest,
     restNeedsParentheses ? "(" as const : "" as const,
@@ -47,6 +46,6 @@ function convertTupleMember(ctx: MarkupRenderContexts, tupleMember: TupleMemberE
     renderedOptional,
     restNeedsParentheses ? ")" as const : "" as const,
     renderedRestBrackets
-  );
+  ];
 
 }

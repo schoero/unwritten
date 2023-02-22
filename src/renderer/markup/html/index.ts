@@ -6,7 +6,6 @@ import { renderLinkNode } from "unwritten:renderer/markup/html/ast/link.js";
 import { renderParagraphNode } from "unwritten:renderer/markup/html/ast/paragraph.js";
 import { renderSmallNode } from "unwritten:renderer/markup/html/ast/small.js";
 import { renderStrikethroughNode } from "unwritten:renderer/markup/html/ast/strikethrough.js";
-import { renderWrapperNode } from "unwritten:renderer/markup/html/ast/wrapper.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderListNode } from "unwritten:renderer:html/ast/list.js";
 import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index.js";
@@ -20,8 +19,7 @@ import {
   isParagraphNode,
   isSmallNode,
   isStrikethroughNode,
-  isTitleNode,
-  isWrapperNode
+  isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
 
 import { renderContainerNode } from "./ast/container.js";
@@ -78,10 +76,12 @@ export function renderNode(ctx: HTMLRenderContext, node: ASTNodes): string {
     return renderStrikethroughNode(ctx, node);
   } else if(isTitleNode(node)){
     return renderTitleNode(ctx, node);
-  } else if(isWrapperNode(node)){
-    return renderWrapperNode(ctx, node);
   } else {
-    return node;
+    if(Array.isArray(node)){
+      return node.map(n => renderNode(ctx, n)).join("");
+    } else {
+      return node;
+    }
   }
 
 }

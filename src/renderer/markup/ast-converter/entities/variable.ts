@@ -34,7 +34,7 @@ export function convertVariableForDocumentation(ctx: MarkupRenderContexts, varia
   const position = variable.position ? convertPosition(ctx, variable.position) : "";
   const jsdocTags = convertJSDocTags(ctx, variable);
 
-  const type = `Type: ${convertType(ctx, variable.type)}`;
+  const type = ["Type: ", convertType(ctx, variable.type)];
 
   return createTitleNode(
     name,

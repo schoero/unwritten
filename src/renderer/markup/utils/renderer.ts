@@ -1,4 +1,3 @@
-import { contentFilter } from "unwritten:compiler:utils/filter.js";
 import { RenderCategories } from "unwritten:renderer:markup/types-definitions/renderer.d.js";
 
 import { getRenderConfig } from "./config.js";
@@ -6,13 +5,14 @@ import { createAnchor } from "./linker.js";
 
 import type { Encapsulation } from "unwritten:renderer/markup/types-definitions/config.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 
 
-export function encapsulate(text: string, encapsulation: Encapsulation | false | undefined) {
+export function encapsulate(node: ASTNodes, encapsulation: Encapsulation | false | undefined) {
   if(encapsulation === undefined || encapsulation === false){
-    return text;
+    return node;
   }
-  return `${encapsulation[0]}${text}${encapsulation[1]}`;
+  return [encapsulation[0], node, encapsulation[1]];
 }
 
 
@@ -28,16 +28,6 @@ export function getCategoryName(ctx: MarkupRenderContexts, key: RenderCategories
 
   return plural ? renderConfig.categoryNames[pluralizeCategoryKey(key)] : renderConfig.categoryNames[key];
 
-}
-
-
-export function renderLink(ctx: MarkupRenderContexts, text: string, id?: number): string {
-  if(id !== undefined){
-    const anchor = createAnchor(ctx, text, id);
-    return ctx.renderer.renderAnchorLink(text, anchor);
-  } else {
-    return text;
-  }
 }
 
 
@@ -74,6 +64,40 @@ function pluralizeCategoryKey(key: RenderCategories): RenderCategories {
   }
 }
 
-export function spaceBetween(...strings: string[]) {
-  return strings.filter(contentFilter).join(" ");
+/** Filters empty strings from converted ASTNodes[] */
+// export function nodeFilter<T extends ASTNodes[]>(fn: () => T): T extends (infer R)[] ? Exclude<R, "">[] : T {
+//   const returnValue = fn();
+//   if(Array.isArray(returnValue)){
+//     return returnValue
+//       .filter(value => value !== "") as
+//       T extends (infer R)[] ? Exclude<R, "">[] : T;
+//   } else {
+//     return returnValue;
+//   }
+// }
+
+export function nodeFilter(node: ASTNodes) {
+  return node !== "";
+}
+
+export function renderLink(ctx: MarkupRenderContexts, text: string, id?: number): string {
+  if(id !== undefined){
+    const anchor = createAnchor(ctx, text, id);
+    return ctx.renderer.renderAnchorLink(text, anchor);
+  } else {
+    return text;
+  }
+}
+
+export function spaceBetween(...nodes: ASTNodes[]) {
+  return nodes
+    .filter(nodeFilter)
+    .reduce<ASTNodes[]>((acc, node, index) => {
+    if(index > 0){
+      acc.push(" ", node);
+    } else {
+      acc.push(node);
+    }
+    return acc;
+  }, []);
 }
