@@ -45,8 +45,8 @@ export function convertSignatureForDocumentation(ctx: MarkupRenderContexts, sign
   const renderedSignature = [signatureName, "(", renderedParameters, ")"];
   const id = signatureEntity.id;
 
-  const jsdocTags = convertJSDocTags(ctx, signatureEntity);
   const position = signatureEntity.position ? convertPosition(ctx, signatureEntity.position) : "";
+  const jsdocTags = convertJSDocTags(ctx, signatureEntity);
 
   const parameters = signatureEntity.parameters
     .map(parameter => convertParameterForDocumentation(ctx, parameter));
@@ -59,8 +59,7 @@ export function convertSignatureForDocumentation(ctx: MarkupRenderContexts, sign
   const returnDescription = signatureEntity.returnType.description ?? "";
 
   const returnTypeWithDescription = spaceBetween(
-    t("returns", { capitalize: true }),
-    ":",
+    `${t("returns", { capitalize: true })}:`,
     returnType,
     returnDescription
   );

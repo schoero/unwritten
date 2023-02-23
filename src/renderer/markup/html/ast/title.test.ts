@@ -13,15 +13,17 @@ scope("Renderer", "HTMLRenderer", () => {
   const ctx = createRenderContext();
 
   it("should render a single title correctly", () => {
-    const titleNode = createTitleNode("Title", "title");
+    const titleNode = createTitleNode("Title", 0);
     expect(renderTitleNode(ctx, titleNode)).to.equal("<h1>Title</h1>");
   });
 
   it("should increase size for nested titles", () => {
     const titleNode = createTitleNode(
       "Title",
-      "title",
-      createTitleNode("SubTitle", "subtitle")
+      0,
+      [
+        createTitleNode("SubTitle", 1)
+      ]
     );
     expect(renderTitleNode(ctx, titleNode)).to.equal(html`
       <h1>Title</h1>
@@ -32,9 +34,11 @@ scope("Renderer", "HTMLRenderer", () => {
   it("should not increase size for titles on the same level", () => {
     const titleNode = createTitleNode(
       "Title",
-      "title",
-      createTitleNode("Subtitle", "subtitle"),
-      createTitleNode("Another Subtitle", "another-subtitle")
+      0,
+      [
+        createTitleNode("Subtitle", 2),
+        createTitleNode("Another Subtitle", 2)
+      ]
     );
     expect(renderTitleNode(ctx, titleNode)).to.equal(html`
       <h1>Title</h1>

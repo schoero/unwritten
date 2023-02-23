@@ -3,6 +3,7 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertTupleType } from "unwritten:renderer/markup/ast-converter/types/tuple.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -44,7 +45,8 @@ scope("Renderer", TypeKind.Tuple, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertTupleType(ctx, type as TupleType);
+    const convertedType = convertTupleType(ctx, type as TupleType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render tuple types", () => {
       expect(renderedType).to.equal("[string, number]");
@@ -86,7 +88,8 @@ scope("Renderer", TypeKind.Tuple, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertTupleType(ctx, type as TupleType);
+    const convertedType = convertTupleType(ctx, type as TupleType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render tuple type members with labels", () => {
       expect(renderedType).to.equal("[first: string, second: number]");
@@ -126,7 +129,8 @@ scope("Renderer", TypeKind.Tuple, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertTupleType(ctx, type as TupleType);
+    const convertedType = convertTupleType(ctx, type as TupleType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render optional tuple type members", () => {
       expect(renderedType).to.equal("[string, number?]");
@@ -168,7 +172,8 @@ scope("Renderer", TypeKind.Tuple, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertTupleType(ctx, type as TupleType);
+    const convertedType = convertTupleType(ctx, type as TupleType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render rest tuple type members", () => {
       expect(renderedType).to.equal("[string, ...number[]]");
@@ -219,7 +224,8 @@ scope("Renderer", TypeKind.Tuple, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertTupleType(ctx, type as TupleType);
+    const convertedType = convertTupleType(ctx, type as TupleType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render union rest tuple type members", () => {
       expect(renderedType).to.equal("[string, ...(string | number)[]]");

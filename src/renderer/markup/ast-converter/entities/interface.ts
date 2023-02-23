@@ -1,7 +1,9 @@
-import { convertSignatureForDocumentation } from "unwritten:renderer/markup/ast-converter/entities/index.js";
+import {
+  convertPropertyForDocumentation,
+  convertSignatureForDocumentation
+} from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
-import { getAnchorIdentifier } from "unwritten:renderer/markup/utils/linker.js";
 import { createParagraphNode, createSmallNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
@@ -24,12 +26,15 @@ export function convertInterfaceForDocumentation(ctx: MarkupRenderContexts, inte
   const example = interfaceEntity.example ?? "";
   const remarks = interfaceEntity.remarks ?? "";
 
-  const anchorIdentifier = getAnchorIdentifier(ctx, name, interfaceEntity.id);
   const position = interfaceEntity.position ? convertPosition(ctx, interfaceEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, interfaceEntity);
 
-  const renderedCallSignatures = interfaceEntity.callSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
-  const renderedConstructSignatures = interfaceEntity.constructSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
+  const convertedCallSignatures = interfaceEntity.callSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
+  const convertedConstructSignatures = interfaceEntity.constructSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
+  const convertedProperties = interfaceEntity.properties.map(propertyEntity => convertPropertyForDocumentation(ctx, propertyEntity));
+  const convertedSetters = interfaceEntity.setterSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
+  const convertedGetters = interfaceEntity.getterSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
+  const convertedMethods = interfaceEntity.methodSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
 
   return createTitleNode(
     name,
@@ -40,8 +45,12 @@ export function convertInterfaceForDocumentation(ctx: MarkupRenderContexts, inte
       createParagraphNode(description),
       createParagraphNode(remarks),
       createParagraphNode(example),
-      renderedConstructSignatures,
-      renderedCallSignatures
+      convertedConstructSignatures,
+      convertedCallSignatures,
+      convertedProperties,
+      convertedMethods,
+      convertedSetters,
+      convertedGetters
     ]
   );
 

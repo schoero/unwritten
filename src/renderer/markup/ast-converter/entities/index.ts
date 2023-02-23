@@ -1,4 +1,4 @@
-export * from "./function.js";
+export * from "./function-like.js";
 export * from "./interface.js";
 export * from "./parameter.js";
 export * from "./property.js";

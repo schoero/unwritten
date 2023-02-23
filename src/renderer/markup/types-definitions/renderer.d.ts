@@ -88,17 +88,17 @@ export type ConvertedPrimitiveTypes =
   | ConvertedVoidType;
 
 
-export type ConvertedStringType = LinkNode | string;
-export type ConvertedNumberType = LinkNode | string;
-export type ConvertedBooleanType = LinkNode | string;
-export type ConvertedBigIntType = LinkNode | string;
-export type ConvertedSymbolType = LinkNode | string;
-export type ConvertedVoidType = LinkNode | string;
-export type ConvertedUndefinedType = LinkNode | string;
-export type ConvertedNullType = LinkNode | string;
-export type ConvertedNeverType = LinkNode | string;
-export type ConvertedUnknownType = LinkNode | string;
-export type ConvertedAnyType = LinkNode | string;
+export type ConvertedStringType = ASTNodes;
+export type ConvertedNumberType = ASTNodes;
+export type ConvertedBooleanType = ASTNodes;
+export type ConvertedBigIntType = ASTNodes;
+export type ConvertedSymbolType = ASTNodes;
+export type ConvertedVoidType = ASTNodes;
+export type ConvertedUndefinedType = ASTNodes;
+export type ConvertedNullType = ASTNodes;
+export type ConvertedNeverType = ASTNodes;
+export type ConvertedUnknownType = ASTNodes;
+export type ConvertedAnyType = ASTNodes;
 
 
 //-- Literal types
@@ -109,10 +109,10 @@ export type ConvertedLiteralTypes =
   | ConvertedNumberLiteralType
   | ConvertedStringLiteralType;
 
-export type ConvertedStringLiteralType = string;
-export type ConvertedNumberLiteralType = string;
-export type ConvertedBooleanLiteralType = string;
-export type ConvertedBigIntLiteralType = string;
+export type ConvertedStringLiteralType = ASTNodes;
+export type ConvertedNumberLiteralType = ASTNodes;
+export type ConvertedBooleanLiteralType = ASTNodes;
+export type ConvertedBigIntLiteralType = ASTNodes;
 
 export type ConvertedTemplateLiteralType = ASTNodes[];
 
@@ -205,7 +205,11 @@ export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
     remarks: ParagraphNode,
     example: ParagraphNode,
     constructSignatures: ConvertedSignatureEntityForDocumentation[],
-    callSignatures: ConvertedSignatureEntityForDocumentation[]
+    callSignatures: ConvertedSignatureEntityForDocumentation[],
+    properties: ConvertedPropertyEntityForDocumentation[],
+    methods: ConvertedSignatureEntityForDocumentation[],
+    setters: ConvertedSignatureEntityForDocumentation[],
+    getters: ConvertedSignatureEntityForDocumentation[]
   ];
 }
 

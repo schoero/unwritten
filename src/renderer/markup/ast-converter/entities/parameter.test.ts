@@ -239,4 +239,45 @@ scope("Renderer", EntityKind.Parameter, () => {
 
   }
 
+  {
+
+    // #region Default value
+
+    const parameterEntities: Testable<ParameterEntity> = {
+      description: undefined,
+      initializer: {
+        kind: TypeKind.NumberLiteral,
+        name: "number",
+        value: 7
+      },
+      kind: EntityKind.Parameter,
+      name: "a",
+      optional: false,
+      position: {
+        column: 20,
+        file: "/file.ts",
+        line: 1
+      },
+      rest: false,
+      type: {
+        kind: TypeKind.Number,
+        name: "number"
+      }
+    };
+
+    // #endregion
+
+    const ctx = createRenderContext();
+
+    const convertedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntities as ParameterEntity);
+
+    const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
+
+    it("Should render default values", () => {
+      expect(renderedParameterForDocumentation).to.match(/Default: 7$/);
+    });
+
+  }
+
+
 });

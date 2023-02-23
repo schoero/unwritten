@@ -278,7 +278,11 @@ scope("Renderer", TypeKind.Interface, () => {
       remarks,
       example,
       constructSignatures,
-      callSignatures
+      callSignatures,
+      properties,
+      methods,
+      setters,
+      getters
     ] = convertedInterfaceForDocumentation.children;
 
     it("should have matching interface name", () => {
@@ -316,6 +320,23 @@ scope("Renderer", TypeKind.Interface, () => {
     it("should have one call signature", () => {
       expect(callSignatures).to.have.lengthOf(1);
     });
+
+    it("should have two properties", () => {
+      expect(properties).to.have.lengthOf(2);
+    });
+
+    it("should have one method signature", () => {
+      expect(methods).to.have.lengthOf(1);
+    });
+
+    it("should have one setter signature", () => {
+      expect(setters).to.have.lengthOf(1);
+    });
+
+    it("should have one getter signature", () => {
+      expect(getters).to.have.lengthOf(1);
+    });
+
 
   }
 

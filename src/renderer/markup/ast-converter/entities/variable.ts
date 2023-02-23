@@ -30,7 +30,6 @@ export function convertVariableForDocumentation(ctx: MarkupRenderContexts, varia
   const example = variableEntity.example ?? "";
   const remarks = variableEntity.remarks ?? "";
 
-  const anchorId = getAnchorIdentifier(ctx, name, variableEntity.id);
   const position = variableEntity.position ? convertPosition(ctx, variableEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, variableEntity);
 
@@ -40,8 +39,8 @@ export function convertVariableForDocumentation(ctx: MarkupRenderContexts, varia
     name,
     variableEntity.id,
     [
-      createSmallNode(jsdocTags),
-      createParagraphNode(position),
+      createSmallNode(position),
+      createParagraphNode(jsdocTags),
       createParagraphNode(type),
       createParagraphNode(description),
       createParagraphNode(example),

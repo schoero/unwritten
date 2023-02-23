@@ -12,7 +12,7 @@ import type {
 
 export function convertTupleType(ctx: MarkupRenderContexts, tupleType: TupleType): ConvertedTupleType {
 
-  const convertedMembers = tupleType.members.map(member => convertTupleMember(ctx, member));
+  const convertedMembers = convertTupleMembers(ctx, tupleType.members);
 
   return [
     "[" as const,
@@ -23,18 +23,35 @@ export function convertTupleType(ctx: MarkupRenderContexts, tupleType: TupleType
 }
 
 
-function convertTupleMember(ctx: MarkupRenderContexts, tupleMember: TupleMemberEntity): ConvertedTupleMember {
+function convertTupleMembers(ctx: MarkupRenderContexts, tupleMemberEntities: TupleMemberEntity[]): ConvertedTupleMember[] {
 
-  const renderedType = convertType(ctx, tupleMember.type);
+  const convertedMembers = tupleMemberEntities.map((member, index) => {
+    if(index === 0){
+      return convertTupleMember(ctx, member);
+    } else {
+      return [
+        ", ",
+        ...convertTupleMember(ctx, member)
+      ];
+    }
+  });
 
-  const renderedName = tupleMember.name ? `${tupleMember.name}: ` : "";
-  const renderedOptional = tupleMember.optional ? "?" : "";
-  const renderedRest = tupleMember.rest ? "..." : "";
-  const renderedRestBrackets = tupleMember.rest ? "[]" : "";
-  const restNeedsParentheses = tupleMember.rest &&
+  return convertedMembers;
+
+}
+
+function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleMemberEntity): ConvertedTupleMember {
+
+  const renderedType = convertType(ctx, tupleMemberEntity.type);
+
+  const renderedName = tupleMemberEntity.name ? `${tupleMemberEntity.name}: ` : "";
+  const renderedOptional = tupleMemberEntity.optional ? "?" : "";
+  const renderedRest = tupleMemberEntity.rest ? "..." : "";
+  const renderedRestBrackets = tupleMemberEntity.rest ? "[]" : "";
+  const restNeedsParentheses = tupleMemberEntity.rest &&
     (
-      tupleMember.type.kind === TypeKind.Union ||
-      tupleMember.type.kind === TypeKind.Intersection
+      tupleMemberEntity.type.kind === TypeKind.Union ||
+      tupleMemberEntity.type.kind === TypeKind.Intersection
     );
 
 

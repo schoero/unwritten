@@ -53,11 +53,10 @@ export function convertParameterForDocumentation(ctx: MarkupRenderContexts, para
     : "";
 
   const initializer = parameterEntity.initializer !== undefined
-    ? [
-      t("default", { capitalize: true }),
-      ":",
+    ? spaceBetween(
+      `${t("default", { capitalize: true })}:`,
       convertType(ctx, parameterEntity.initializer)
-    ]
+    )
     : "";
 
   return spaceBetween(

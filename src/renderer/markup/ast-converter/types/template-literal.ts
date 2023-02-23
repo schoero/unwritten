@@ -16,6 +16,7 @@ export function convertTemplateLiteralType(ctx: MarkupRenderContexts, templateLi
     const renderedType = convertType(ctx, type);
     const span = spans[index] ?? "";
     return [
+      ...acc,
       "${",
       renderedType,
       "}",

@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertTemplateLiteralType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -33,13 +34,11 @@ scope("Renderer", TypeKind.StringLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
+    const convertedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render template literal types", () => {
-      expect(renderedType[0]).to.equal("${");
-      expect(renderedType[1]).to.equal("number");
-      expect(renderedType[2]).to.equal("}");
-      expect(renderedType[3]).to.equal("px");
+      expect(renderedType).to.equal("${number}px");
     });
 
   }
@@ -71,7 +70,8 @@ scope("Renderer", TypeKind.StringLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
+    const convertedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render template literal types", () => {
       expect(renderedType).to.equal("PREFIX-${number}-MIDDLE-${string}-SUFFIX");
@@ -133,7 +133,8 @@ scope("Renderer", TypeKind.StringLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
+    const convertedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render template literal types", () => {
       expect(renderedType).to.equal("border-${\"top\" | \"bottom\" | \"left\" | \"right\"}-${\"width\"}: ${number}px");

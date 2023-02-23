@@ -86,7 +86,8 @@ scope("Renderer", EntityKind.Signature, () => {
 
     it("should have a jsdoc tag", () => {
       expect(isParagraphNode(tags)).to.equal(true);
-      expect(tags).to.not.equal(undefined);
+      const renderedTags = renderNode(ctx, tags.children);
+      expect(renderedTags).to.equal("beta");
     });
 
     it("should have a matching return type", () => {
