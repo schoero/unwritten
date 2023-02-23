@@ -147,7 +147,28 @@ export type ConvertedIntersectionType = ASTNodes[];
 //-- Entities
 
 export type ConvertedEntitiesForTableOfContents =
-  | ConvertedFunctionEntityForTableOfContents;
+  | ConvertedFunctionEntityForTableOfContents
+  | ConvertedInterfaceEntityForTableOfContents
+  | ConvertedNamespaceEntityForTableOfContents
+  | ConvertedVariableEntityForTableOfContents;
+
+
+export type ConvertedEntitiesForDocumentation =
+  | ConvertedFunctionEntityForDocumentation
+  | ConvertedInterfaceEntityForDocumentation
+  | ConvertedNamespaceEntityForDocumentation
+  | ConvertedVariableEntityForDocumentation;
+
+
+//-- Namespace
+
+export interface ConvertedNamespaceEntityForTableOfContents extends TitleNode {
+  children: ConvertedEntitiesForTableOfContents[];
+}
+
+export interface ConvertedNamespaceEntityForDocumentation extends TitleNode {
+  children: ConvertedEntitiesForDocumentation[];
+}
 
 
 //-- Function

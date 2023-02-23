@@ -3,8 +3,8 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
-  convertParameterForDocumentation,
-  convertParametersForSignature
+  convertParameterEntitiesForSignature,
+  convertParameterEntityForDocumentation
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -42,8 +42,8 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const convertedParametersForSignature = convertParametersForSignature(ctx, [parameterEntity as ParameterEntity]);
-    const convertedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntity as ParameterEntity);
+    const convertedParametersForSignature = convertParameterEntitiesForSignature(ctx, [parameterEntity as ParameterEntity]);
+    const convertedParameterForDocumentation = convertParameterEntityForDocumentation(ctx, parameterEntity as ParameterEntity);
 
     const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
@@ -104,7 +104,7 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const convertedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
+    const convertedParametersForSignature = convertParameterEntitiesForSignature(ctx, parameterEntities as ParameterEntity[]);
 
     const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
 
@@ -159,8 +159,8 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const convertedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
-    const convertedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntities[1] as ParameterEntity);
+    const convertedParametersForSignature = convertParameterEntitiesForSignature(ctx, parameterEntities as ParameterEntity[]);
+    const convertedParameterForDocumentation = convertParameterEntityForDocumentation(ctx, parameterEntities[1] as ParameterEntity);
 
     const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
@@ -223,8 +223,8 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const convertedParametersForSignature = convertParametersForSignature(ctx, parameterEntities as ParameterEntity[]);
-    const convertedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntities[1] as ParameterEntity);
+    const convertedParametersForSignature = convertParameterEntitiesForSignature(ctx, parameterEntities as ParameterEntity[]);
+    const convertedParameterForDocumentation = convertParameterEntityForDocumentation(ctx, parameterEntities[1] as ParameterEntity);
 
     const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
@@ -269,7 +269,7 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const convertedParameterForDocumentation = convertParameterForDocumentation(ctx, parameterEntities as ParameterEntity);
+    const convertedParameterForDocumentation = convertParameterEntityForDocumentation(ctx, parameterEntities as ParameterEntity);
 
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 

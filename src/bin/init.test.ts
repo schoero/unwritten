@@ -12,6 +12,7 @@ import { init } from "./init.js";
 scope("E2E", "init", () => {
 
   vi.mock("node:fs", async () => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await vi.importActual<typeof import("node:fs")>("node:fs");
     return {
       ...actual,

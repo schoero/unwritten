@@ -1,6 +1,12 @@
 import {
-  convertFunctionEntityForDocumentation,
-  convertFunctionEntityForTableOfContents
+  convertFunctionLikeEntityForDocumentation,
+  convertFunctionLikeEntityForTableOfContents,
+  convertInterfaceEntityForDocumentation,
+  convertInterfaceEntityForTableOfContents,
+  convertNamespaceEntityForDocumentation,
+  convertNamespaceEntityForTableOfContents,
+  convertVariableEntityForDocumentation,
+  convertVariableEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import {
   convertAnyType,
@@ -27,7 +33,12 @@ import {
 import { createContainerNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
-import { isFunctionEntity } from "unwritten:typeguards/entities.js";
+import {
+  isFunctionEntity,
+  isInterfaceEntity,
+  isNamespaceEntity,
+  isVariableEntity
+} from "unwritten:typeguards/entities.js";
 import {
   isAnyType,
   isArrayType,
@@ -58,6 +69,7 @@ import type { ASTNodes, ContainerNode } from "unwritten:renderer:markup/types-de
 import type {
   ConvertedCategoryForDocumentation,
   ConvertedCategoryForTableOfContents,
+  ConvertedEntitiesForDocumentation,
   ConvertedEntitiesForTableOfContents,
   ConvertedTypes
 } from "unwritten:renderer:markup/types-definitions/renderer.d.js";
@@ -115,7 +127,13 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
 export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entity: ExportableEntities): ConvertedEntitiesForTableOfContents {
 
   if(isFunctionEntity(entity)){
-    return convertFunctionEntityForTableOfContents(ctx, entity);
+    return convertFunctionLikeEntityForTableOfContents(ctx, entity);
+  } else if(isInterfaceEntity(entity)){
+    return convertInterfaceEntityForTableOfContents(ctx, entity);
+  } else if(isVariableEntity(entity)){
+    return convertVariableEntityForTableOfContents(ctx, entity);
+  } else if(isNamespaceEntity(entity)){
+    return convertNamespaceEntityForTableOfContents(ctx, entity);
   }
 
   throw new Error(`Unexpected entity kind: ${entity.kind}`);
@@ -123,10 +141,16 @@ export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entit
 }
 
 
-export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity: ExportableEntities): ConvertedCategoryForDocumentation {
+export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity: ExportableEntities): ConvertedEntitiesForDocumentation {
 
   if(isFunctionEntity(entity)){
-    return convertFunctionEntityForDocumentation(ctx, entity);
+    return convertFunctionLikeEntityForDocumentation(ctx, entity);
+  } else if(isInterfaceEntity(entity)){
+    return convertInterfaceEntityForDocumentation(ctx, entity);
+  } else if(isVariableEntity(entity)){
+    return convertVariableEntityForDocumentation(ctx, entity);
+  } else if(isNamespaceEntity(entity)){
+    return convertNamespaceEntityForDocumentation(ctx, entity);
   }
 
   throw new Error(`Unexpected entity kind: ${entity.kind}`);
@@ -145,8 +169,10 @@ export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: Exportab
     createTitleNode(
       "API Documentation",
       undefined,
-      ...tableOfContents,
-      ...documentation
+      [
+        ...tableOfContents,
+        ...documentation
+      ]
     )
   );
 

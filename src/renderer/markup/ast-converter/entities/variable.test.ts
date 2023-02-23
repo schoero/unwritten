@@ -3,8 +3,8 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
-  convertVariableForDocumentation,
-  convertVariableForTableOfContents
+  convertVariableEntityForDocumentation,
+  convertVariableEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import {
@@ -51,8 +51,8 @@ scope("Renderer", EntityKind.Variable, () => {
 
     const ctx = createRenderContext();
 
-    const convertedVariableForTableOfContents = convertVariableForTableOfContents(ctx, variableEntity as VariableEntity);
-    const convertedVariableForDocumentation = convertVariableForDocumentation(ctx, variableEntity as VariableEntity);
+    const convertedVariableForTableOfContents = convertVariableEntityForTableOfContents(ctx, variableEntity as VariableEntity);
+    const convertedVariableForDocumentation = convertVariableEntityForDocumentation(ctx, variableEntity as VariableEntity);
 
     assert(isLinkNode(convertedVariableForTableOfContents), "Rendered variable for table of contents is not a link");
     assert(isTitleNode(convertedVariableForDocumentation), "Rendered variable for documentation is not a container");

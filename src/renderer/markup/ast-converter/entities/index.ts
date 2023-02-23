@@ -1,5 +1,6 @@
 export * from "./function-like.js";
 export * from "./interface.js";
+export * from "./namespace.js";
 export * from "./parameter.js";
 export * from "./property.js";
 export * from "./signature.js";

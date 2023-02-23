@@ -3,8 +3,8 @@ import { assert, expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
-  convertSignatureForDocumentation,
-  convertSignatureForTableOfContents
+  convertSignatureEntityForDocumentation,
+  convertSignatureEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import {
@@ -52,8 +52,8 @@ scope("Renderer", EntityKind.Signature, () => {
 
     const ctx = createRenderContext();
 
-    const convertedSignatureForTableOfContents = convertSignatureForTableOfContents(ctx, signatureEntity as SignatureEntity);
-    const convertedSignatureForDocumentation = convertSignatureForDocumentation(ctx, signatureEntity as SignatureEntity);
+    const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity as SignatureEntity);
+    const convertedSignatureForDocumentation = convertSignatureEntityForDocumentation(ctx, signatureEntity as SignatureEntity);
 
     assert(isLinkNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not a link");
     assert(isTitleNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a container");

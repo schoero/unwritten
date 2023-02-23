@@ -1,6 +1,6 @@
 import {
-  convertParameterForDocumentation,
-  convertParametersForSignature
+  convertParameterEntitiesForSignature,
+  convertParameterEntityForDocumentation
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
@@ -23,10 +23,10 @@ import type {
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertSignatureForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForTableOfContents {
+export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForTableOfContents {
 
   const name = signatureEntity.name ?? "";
-  const renderedParameters = convertParametersForSignature(ctx, signatureEntity.parameters);
+  const renderedParameters = convertParameterEntitiesForSignature(ctx, signatureEntity.parameters);
   const renderedSignature = [name, "(", renderedParameters, ")"];
 
   return createLinkNode(
@@ -36,12 +36,12 @@ export function convertSignatureForTableOfContents(ctx: MarkupRenderContexts, si
 
 }
 
-export function convertSignatureForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForDocumentation {
+export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForDocumentation {
 
   const t = useTranslation(ctx);
 
   const signatureName = signatureEntity.name ?? "";
-  const renderedParameters = convertParametersForSignature(ctx, signatureEntity.parameters);
+  const renderedParameters = convertParameterEntitiesForSignature(ctx, signatureEntity.parameters);
   const renderedSignature = [signatureName, "(", renderedParameters, ")"];
   const id = signatureEntity.id;
 
@@ -49,7 +49,7 @@ export function convertSignatureForDocumentation(ctx: MarkupRenderContexts, sign
   const jsdocTags = convertJSDocTags(ctx, signatureEntity);
 
   const parameters = signatureEntity.parameters
-    .map(parameter => convertParameterForDocumentation(ctx, parameter));
+    .map(parameter => convertParameterEntityForDocumentation(ctx, parameter));
 
   const returnType = convertType(ctx, signatureEntity.returnType);
 

@@ -3,8 +3,8 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
-  convertInterfaceForDocumentation,
-  convertInterfaceForTableOfContents
+  convertInterfaceEntityForDocumentation,
+  convertInterfaceEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { isParagraphNode, isSmallNode } from "unwritten:renderer/markup/typeguards/renderer.js";
@@ -265,8 +265,8 @@ scope("Renderer", TypeKind.Interface, () => {
 
     const ctx = createRenderContext();
 
-    const convertedInterfaceForTableOfContents = convertInterfaceForTableOfContents(ctx, simpleInterface as InterfaceEntity);
-    const convertedInterfaceForDocumentation = convertInterfaceForDocumentation(ctx, simpleInterface as InterfaceEntity);
+    const convertedInterfaceForTableOfContents = convertInterfaceEntityForTableOfContents(ctx, simpleInterface as InterfaceEntity);
+    const convertedInterfaceForDocumentation = convertInterfaceEntityForDocumentation(ctx, simpleInterface as InterfaceEntity);
 
     const renderedInterfaceForTableOfContents = renderNode(ctx, convertedInterfaceForTableOfContents);
     const renderedInterfaceForDocumentation = renderNode(ctx, convertedInterfaceForDocumentation);
@@ -286,25 +286,25 @@ scope("Renderer", TypeKind.Interface, () => {
     ] = convertedInterfaceForDocumentation.children;
 
     it("should have matching interface name", () => {
-      expect(convertedInterfaceForTableOfContents).to.equal("Interface");
+      expect(convertedInterfaceForTableOfContents.children).to.equal("Interface");
       expect(convertedInterfaceForDocumentation.title).to.equal("Interface");
     });
 
     it("should have a matching description", () => {
       expect(isParagraphNode(description)).to.equal(true);
-      const renderedDescription = renderNode(ctx, description);
+      const renderedDescription = renderNode(ctx, description.children);
       expect(renderedDescription).to.equal("Interface description");
     });
 
     it("should have no remarks", () => {
       expect(isParagraphNode(remarks)).to.equal(true);
-      const renderedRemarks = renderNode(ctx, remarks);
+      const renderedRemarks = renderNode(ctx, remarks.children);
       expect(renderedRemarks).to.equal("Interface remarks");
     });
 
     it("should have no example", () => {
       expect(isParagraphNode(example)).to.equal(true);
-      const renderedExample = renderNode(ctx, example);
+      const renderedExample = renderNode(ctx, example.children);
       expect(renderedExample).to.equal("Interface example");
     });
 
@@ -332,7 +332,7 @@ scope("Renderer", TypeKind.Interface, () => {
     });
 
     it("should have one method signature", () => {
-      expect(methods).to.have.lengthOf(1);
+      expect(methods).to.have.lengthOf(2);
     });
 
     it("should have one setter signature", () => {

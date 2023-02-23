@@ -1,6 +1,6 @@
 import {
-  convertSignatureForDocumentation,
-  convertSignatureForTableOfContents
+  convertSignatureEntityForDocumentation,
+  convertSignatureEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { createContainerNode } from "unwritten:renderer/markup/utils/nodes.js";
 
@@ -12,15 +12,15 @@ import type {
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertFunctionEntityForTableOfContents(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntities): ConvertedFunctionEntityForTableOfContents {
+export function convertFunctionLikeEntityForTableOfContents(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntities): ConvertedFunctionEntityForTableOfContents {
   return createContainerNode(
-    ...functionLikeEntity.signatures.map(signature => convertSignatureForTableOfContents(ctx, signature))
+    ...functionLikeEntity.signatures.map(signature => convertSignatureEntityForTableOfContents(ctx, signature))
   );
 }
 
 
-export function convertFunctionEntityForDocumentation(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntities): ConvertedFunctionEntityForDocumentation {
+export function convertFunctionLikeEntityForDocumentation(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntities): ConvertedFunctionEntityForDocumentation {
   return createContainerNode(
-    ...functionLikeEntity.signatures.map(signature => convertSignatureForDocumentation(ctx, signature))
+    ...functionLikeEntity.signatures.map(signature => convertSignatureEntityForDocumentation(ctx, signature))
   );
 }

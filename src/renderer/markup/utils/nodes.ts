@@ -87,7 +87,7 @@ export function createStrikethroughNode(...children: ASTNodes[]): StrikethroughN
   };
 }
 
-export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, id: number | undefined, children: Children = [] as unknown as Children): TitleNode<Children> {
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, id?: number | undefined, children: Children = [] as unknown as Children): TitleNode<Children> {
   return {
     children,
     id,

@@ -3,8 +3,8 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
-  convertPropertyForDocumentation,
-  convertPropertyForSignature
+  convertPropertyEntityForDocumentation,
+  convertPropertyEntityForSignature
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { isParagraphNode, isSmallNode } from "unwritten:renderer/markup/typeguards/renderer.js";
@@ -44,8 +44,8 @@ scope("Renderer", EntityKind.Property, () => {
 
     const ctx = createRenderContext();
 
-    const convertedPropertyForSignature = convertPropertyForSignature(ctx, propertyEntity as PropertyEntity);
-    const convertedPropertyForDocumentation = convertPropertyForDocumentation(ctx, propertyEntity as PropertyEntity);
+    const convertedPropertyForSignature = convertPropertyEntityForSignature(ctx, propertyEntity as PropertyEntity);
+    const convertedPropertyForDocumentation = convertPropertyEntityForDocumentation(ctx, propertyEntity as PropertyEntity);
 
     const [
       position,

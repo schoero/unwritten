@@ -19,7 +19,7 @@ import type {
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertPropertyForSignature(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
+export function convertPropertyEntityForSignature(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
 
   const name = propertyEntity.name;
 
@@ -30,7 +30,7 @@ export function convertPropertyForSignature(ctx: MarkupRenderContexts, propertyE
 
 }
 
-export function convertPropertyForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
+export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
   const t = useTranslation(ctx);

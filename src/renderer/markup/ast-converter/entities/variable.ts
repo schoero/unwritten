@@ -17,13 +17,13 @@ import type {
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertVariableForTableOfContents(ctx: MarkupRenderContexts, variable: VariableEntity): ConvertedVariableEntityForTableOfContents {
+export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContexts, variable: VariableEntity): ConvertedVariableEntityForTableOfContents {
   const anchorIdentifier = getAnchorIdentifier(ctx, variable.name, variable.id);
   return createLinkNode(variable.name, anchorIdentifier);
 }
 
 
-export function convertVariableForDocumentation(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
+export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
 
   const name = variableEntity.name;
   const description = variableEntity.description ?? "";

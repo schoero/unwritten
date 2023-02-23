@@ -11,9 +11,9 @@ import type {
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertParametersForSignature(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[]): ConvertedParameterEntitiesForSignature {
+export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[]): ConvertedParameterEntitiesForSignature {
   const renderedParameters = parameterEntities.flatMap((parameter, index) => {
-    const convertedParameter = convertParameterForSignature(ctx, parameter);
+    const convertedParameter = convertParameterEntityForSignature(ctx, parameter);
     if(index === 0){
       return [
         parameter.optional === true ? "[" : "",
@@ -32,7 +32,7 @@ export function convertParametersForSignature(ctx: MarkupRenderContexts, paramet
 }
 
 
-export function convertParameterForDocumentation(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity): ConvertedParameterEntityForDocumentation {
+export function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity): ConvertedParameterEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
   const t = useTranslation(ctx);
@@ -71,7 +71,7 @@ export function convertParameterForDocumentation(ctx: MarkupRenderContexts, para
 }
 
 
-function convertParameterForSignature(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity): ConvertedParameterEntitiesForSignature {
+function convertParameterEntityForSignature(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity): ConvertedParameterEntitiesForSignature {
 
   const rest = parameterEntity.rest === true ? "..." : "";
   const name = parameterEntity.name;
