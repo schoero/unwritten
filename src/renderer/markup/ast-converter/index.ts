@@ -30,6 +30,7 @@ import {
   convertUnknownType,
   convertVoidType
 } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { convertTypeReferenceType } from "unwritten:renderer/markup/ast-converter/types/type-reference.js";
 import { createContainerNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
@@ -56,6 +57,7 @@ import {
   isSymbolType,
   isTemplateLiteralType,
   isTupleType,
+  isTypeReferenceType,
   isUndefinedType,
   isUnionType,
   isUnknownType,
@@ -117,6 +119,8 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
     return convertVoidType(ctx, type);
   } else if(isFunctionType(type)){
     return convertFunctionType(ctx, type);
+  } else if(isTypeReferenceType(type)){
+    return convertTypeReferenceType(ctx, type);
   }
 
   throw new Error(`Unknown type: ${type.kind}`);
