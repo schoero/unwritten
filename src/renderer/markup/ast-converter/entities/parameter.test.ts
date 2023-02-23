@@ -279,5 +279,4 @@ scope("Renderer", EntityKind.Parameter, () => {
 
   }
 
-
 });

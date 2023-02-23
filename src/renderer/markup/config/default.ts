@@ -65,6 +65,8 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     constructor_other: "constructors",
     default: "default",
     deprecated: "deprecated",
+    enum_one: "enum",
+    enum_other: "enums",
     function_one: "function",
     function_other: "functions",
     getter_one: "getter",

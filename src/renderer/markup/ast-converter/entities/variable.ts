@@ -8,6 +8,7 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
+import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
 
 import type { VariableEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -25,6 +26,8 @@ export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContext
 
 export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
 
+  const t = useTranslation(ctx);
+
   const name = variableEntity.name;
   const description = variableEntity.description ?? "";
   const example = variableEntity.example ?? "";
@@ -33,7 +36,7 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
   const position = variableEntity.position ? convertPosition(ctx, variableEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, variableEntity);
 
-  const type = ["Type: ", convertType(ctx, variableEntity.type)];
+  const type = [`${t("type", { capitalize: true })}: `, convertType(ctx, variableEntity.type)];
 
   return createTitleNode(
     name,

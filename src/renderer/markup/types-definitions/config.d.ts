@@ -57,6 +57,8 @@ export interface MarkupRenderConfig {
     constructor_other?: string;
     default?: string;
     deprecated?: string;
+    enum_one?: string;
+    enum_other?: string;
     function_one?: string;
     function_other?: string;
     getter_one?: string;

@@ -3,13 +3,13 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
-  convertNamespaceEntityForDocumentation,
-  convertNamespaceEntityForTableOfContents
+  convertModuleEntityForDocumentation,
+  convertModuleEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { NamespaceEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { ModuleEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
@@ -19,7 +19,7 @@ scope("Renderer", EntityKind.Function, () => {
 
     // #region Entity
 
-    const testFunction: Testable<NamespaceEntity> = {
+    const testFunction: Testable<ModuleEntity> = {
       exports: [
         {
           description: undefined,
@@ -37,20 +37,20 @@ scope("Renderer", EntityKind.Function, () => {
           typeParameters: undefined
         }
       ],
-      kind: EntityKind.Namespace,
-      name: "Namespace"
+      kind: EntityKind.Module,
+      name: "Module"
     };
 
     // #endregion
 
     const ctx = createRenderContext();
 
-    const renderedFunctionForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, testFunction as NamespaceEntity);
-    const renderedFunctionForDocumentation = convertNamespaceEntityForDocumentation(ctx, testFunction as NamespaceEntity);
+    const renderedFunctionForTableOfContents = convertModuleEntityForTableOfContents(ctx, testFunction as ModuleEntity);
+    const renderedFunctionForDocumentation = convertModuleEntityForDocumentation(ctx, testFunction as ModuleEntity);
 
     it("should have a matching title", () => {
-      expect(renderedFunctionForTableOfContents.children).to.equal("Namespace");
-      expect(renderedFunctionForDocumentation.title).to.equal("Namespace");
+      expect(renderedFunctionForTableOfContents.children).to.equal("Module");
+      expect(renderedFunctionForDocumentation.title).to.equal("Module");
     });
 
     it("should have matching children", () => {

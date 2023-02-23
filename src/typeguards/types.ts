@@ -23,6 +23,7 @@ import type {
   SymbolType,
   TemplateLiteralType,
   TupleType,
+  TypeReferenceType,
   Types,
   UndefinedType,
   UnionType,
@@ -121,6 +122,10 @@ export function isTemplateLiteralType(type: Types): type is TemplateLiteralType 
 
 export function isTupleType(type: Types): type is TupleType {
   return type.kind === TypeKind.Tuple;
+}
+
+export function isTypeReferenceType(type: Types): type is TypeReferenceType {
+  return type.kind === TypeKind.TypeReference;
 }
 
 export function isUndefinedType(type: Types): type is UndefinedType {

@@ -12,7 +12,8 @@ const testConfig = override(getDefaultConfig(), {
       parameterEncapsulation: false,
       propertyEncapsulation: false,
       tagEncapsulation: false,
-      typeEncapsulation: false
+      typeEncapsulation: false,
+      typeParameterEncapsulation: false
     }
   }
 });

@@ -123,6 +123,11 @@ export type ConvertedTemplateLiteralType = ASTNodes[];
 export type ConvertedFunctionType = ASTNodes[];
 
 
+//-- Type reference
+
+export type ConvertedTypeReferenceType = ASTNodes;
+
+
 //-- Array type
 
 export type ConvertedArrayType = ["(", ConvertedTypes, ")", "[]"] | [ConvertedTypes, "[]"];
@@ -149,6 +154,7 @@ export type ConvertedIntersectionType = ASTNodes[];
 export type ConvertedEntitiesForTableOfContents =
   | ConvertedFunctionEntityForTableOfContents
   | ConvertedInterfaceEntityForTableOfContents
+  | ConvertedModuleEntityForTableOfContents
   | ConvertedNamespaceEntityForTableOfContents
   | ConvertedVariableEntityForTableOfContents;
 
@@ -156,6 +162,7 @@ export type ConvertedEntitiesForTableOfContents =
 export type ConvertedEntitiesForDocumentation =
   | ConvertedFunctionEntityForDocumentation
   | ConvertedInterfaceEntityForDocumentation
+  | ConvertedModuleEntityForDocumentation
   | ConvertedNamespaceEntityForDocumentation
   | ConvertedVariableEntityForDocumentation;
 
@@ -168,6 +175,35 @@ export interface ConvertedNamespaceEntityForTableOfContents extends TitleNode {
 
 export interface ConvertedNamespaceEntityForDocumentation extends TitleNode {
   children: ConvertedEntitiesForDocumentation[];
+}
+
+
+//-- Module
+
+export interface ConvertedModuleEntityForTableOfContents extends TitleNode {
+  children: ConvertedEntitiesForTableOfContents[];
+}
+
+export interface ConvertedModuleEntityForDocumentation extends TitleNode {
+  children: ConvertedEntitiesForDocumentation[];
+}
+
+
+//-- Type alias
+
+export interface ConvertedTypeAliasEntityForTableOfContents extends LinkNode {
+
+}
+
+export interface ConvertedTypeAliasEntityForDocumentation extends TitleNode {
+  children: [
+    position: SmallNode,
+    tags: ParagraphNode,
+    typeParametersAndType: ListNode,
+    description: ParagraphNode,
+    remarks: ParagraphNode,
+    example: ParagraphNode
+  ];
 }
 
 
@@ -246,6 +282,13 @@ export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
 export type ConvertedParameterEntityForSignature = ASTNodes[];
 export type ConvertedParameterEntitiesForSignature = ASTNodes[];
 export type ConvertedParameterEntityForDocumentation = ASTNodes[];
+
+
+//-- Type parameter
+
+export type ConvertedTypeParameterEntityForSignature = ASTNodes;
+export type ConvertedTypeParameterEntitiesForSignature = ASTNodes[];
+export type ConvertedTypeParameterEntityForDocumentation = ASTNodes[];
 
 
 //-- Property

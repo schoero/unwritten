@@ -7,7 +7,8 @@ import type { ParameterEntity } from "unwritten:compiler:type-definitions/entiti
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedParameterEntitiesForSignature,
-  ConvertedParameterEntityForDocumentation
+  ConvertedParameterEntityForDocumentation,
+  ConvertedParameterEntityForSignature
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
@@ -71,7 +72,7 @@ export function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts
 }
 
 
-function convertParameterEntityForSignature(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity): ConvertedParameterEntitiesForSignature {
+function convertParameterEntityForSignature(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity): ConvertedParameterEntityForSignature {
 
   const rest = parameterEntity.rest === true ? "..." : "";
   const name = parameterEntity.name;

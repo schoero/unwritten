@@ -55,7 +55,7 @@ scope("Renderer", EntityKind.Function, () => {
 
     it("should have only one signature", () => {
       expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(1);
-      expect(Object.keys(renderedFunctionForDocumentation.children)).to.have.lengthOf(1);
+      expect(renderedFunctionForDocumentation.children).to.have.lengthOf(1);
     });
 
   }
@@ -203,7 +203,7 @@ scope("Renderer", EntityKind.Function, () => {
 
     it("should have only one signature", () => {
       expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(2);
-      expect(Object.keys(renderedFunctionForDocumentation.children)).to.have.lengthOf(2);
+      expect(renderedFunctionForDocumentation.children).to.have.lengthOf(2);
     });
 
   }
