@@ -1,13 +1,13 @@
-import { expectTypeOf, it } from "vitest";
+import { expectTypeOf, test } from "vitest";
 
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { DeepPartialByKey, DeepRequiredByKey } from "./utils.js";
+import type { Complete, DeepPartialByKey, DeepRequiredByKey, TranslationWithoutSuffixes } from "./utils.js";
 
 
 scope("Types", "Utils", () => {
 
-  {
+  test("DeepPartialByKey", () => {
 
     type TestType = {
       id: number;
@@ -18,20 +18,18 @@ scope("Types", "Utils", () => {
       };
     };
 
-    it("should make deep nested properties that match the key optional", () => {
-      expectTypeOf<DeepPartialByKey<TestType, "id">>().toEqualTypeOf<{
+    expectTypeOf<DeepPartialByKey<TestType, "id">>().toEqualTypeOf<{
+      name: string;
+      type: {
         name: string;
-        type: {
-          name: string;
-          id?: number;
-        };
         id?: number;
-      }>();
-    });
+      };
+      id?: number;
+    }>();
 
-  }
+  });
 
-  {
+  test("CompleteByKey", () => {
 
     type TestType = {
       name: string;
@@ -42,17 +40,48 @@ scope("Types", "Utils", () => {
       id?: number;
     };
 
-    it("should make deep nested properties that match the key required", () => {
-      expectTypeOf<DeepRequiredByKey<TestType, "id">>().toEqualTypeOf<{
+    expectTypeOf<DeepRequiredByKey<TestType, "id">>().toEqualTypeOf<{
+      id: number;
+      name: string;
+      type: {
         id: number;
         name: string;
-        type: {
-          id: number;
-          name: string;
-        };
-      }>();
-    });
+      };
+    }>();
 
-  }
+  });
+
+  test("Complete", () => {
+
+    type TestType = {
+      name?: string;
+      nested?: {
+        nestedName?: string;
+      };
+    };
+
+    type Test = Complete<TestType>;
+
+    expectTypeOf<Complete<TestType>>().toEqualTypeOf<{
+      name: string;
+      nested: {
+        nestedName: string;
+      };
+    }>();
+
+  });
+
+  test("TranslationWithoutSuffixes", () => {
+
+    type TestType = {
+      name_one?: string;
+      name_other?: string;
+    };
+
+    expectTypeOf<TranslationWithoutSuffixes<TestType>>().toEqualTypeOf<{
+      name?: string;
+    }>();
+
+  });
 
 });

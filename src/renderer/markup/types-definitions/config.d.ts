@@ -47,6 +47,45 @@ export interface MarkupRenderConfig {
    */
   tagEncapsulation?: Encapsulation | false;
 
+  /** Translations for otherwise hardcoded labels */
+  translations?: {
+    abstract?: string;
+    beta?: string;
+    class_one?: string;
+    class_other?: string;
+    constructor_one?: string;
+    constructor_other?: string;
+    default?: string;
+    deprecated?: string;
+    function_one?: string;
+    function_other?: string;
+    getter_one?: string;
+    getter_other?: string;
+    interface?: string;
+    interface_other?: string;
+    internal?: string;
+    method_one?: string;
+    method_other?: string;
+    module_one?: string;
+    module_other?: string;
+    namespace_one?: string;
+    namespace_other?: string;
+    optional?: string;
+    property_one?: string;
+    property_other?: string;
+    readonly?: string;
+    required?: string;
+    rest?: string;
+    returns?: string;
+    setter_one?: string;
+    setter_other?: string;
+    static?: string;
+    type?: string;
+    type_other?: string;
+    variable_one?: string;
+    variable_other?: string;
+  };
+
   /**
    * Defines how type annotations should be encapsulated in the rendered output.
    */

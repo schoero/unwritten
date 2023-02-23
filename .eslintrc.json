@@ -36,15 +36,13 @@
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {
-        "rules": {
-          "no-restricted-imports": [
-            "error", {
-              "patterns": [
-                "unwritten:renderer:markdown*"
-              ]
-            }
-          ]
-        }
+        "no-restricted-imports": [
+          "error", {
+            "patterns": [
+              "unwritten:renderer:markdown*"
+            ]
+          }
+        ]
       }
     },
     {
@@ -53,15 +51,13 @@
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {
-        "rules": {
-          "no-restricted-imports": [
-            "error", {
-              "patterns": [
-                "unwritten:renderer:html*"
-              ]
-            }
-          ]
-        }
+        "no-restricted-imports": [
+          "error", {
+            "patterns": [
+              "unwritten:renderer:html*"
+            ]
+          }
+        ]
       }
     }
   ]

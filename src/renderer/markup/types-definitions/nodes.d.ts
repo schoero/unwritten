@@ -37,13 +37,15 @@ export interface ParagraphNode extends ASTNode<ASTNodeKinds.Paragraph> {
 
 export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title> {
   children: Children;
-  title: string;
-  id?: string;
+  title: ASTNodes;
+  /** Internal id of the entity */
+  id?: number;
 }
 
 export interface LinkNode extends ASTNode<ASTNodeKinds.Link> {
-  children: string;
-  link: string;
+  /** Internal id of the entity */
+  id?: number;
+  link?: string;
 }
 
 export interface SmallNode extends ASTNode<ASTNodeKinds.Small> {

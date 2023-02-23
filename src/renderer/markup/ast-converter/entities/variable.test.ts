@@ -81,7 +81,7 @@ scope("Renderer", EntityKind.Variable, () => {
     });
 
     it("should have a jsdoc tag", () => {
-      expect(isSmallNode(tags)).to.equal(true);
+      expect(isParagraphNode(tags)).to.equal(true);
       expect(tags.children).to.not.equal(undefined);
     });
 

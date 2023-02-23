@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { RenderCategories } from "unwritten:renderer:markup/types-definitions/renderer.d.js";
 
@@ -55,6 +56,43 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   ],
   stringLiteralEncapsulation: ["\"", "\""],
   tagEncapsulation: ["`", "`"],
+  translations: {
+    abstract: "abstract",
+    beta: "beta",
+    class_one: "class",
+    class_other: "classes",
+    constructor_one: "constructor",
+    constructor_other: "constructors",
+    default: "default",
+    deprecated: "deprecated",
+    function_one: "function",
+    function_other: "functions",
+    getter_one: "getter",
+    getter_other: "getters",
+    interface: "interface",
+    interface_other: "interfaces",
+    internal: "internal",
+    method_one: "method",
+    method_other: "methods",
+    module_one: "module",
+    module_other: "modules",
+    namespace_one: "namespace",
+    namespace_other: "namespaces",
+    optional: "optional",
+    property_one: "property",
+    property_other: "properties",
+    readonly: "readonly",
+    required: "required",
+    rest: "rest",
+    returns: "returns",
+    setter_one: "setter",
+    setter_other: "setters",
+    static: "static",
+    type: "type",
+    type_other: "types",
+    variable_one: "variable",
+    variable_other: "variables"
+  },
   typeEncapsulation: ["&lt;", "&gt;"],
   typeParameterEncapsulation: ["&lt;", "&gt;"]
 };

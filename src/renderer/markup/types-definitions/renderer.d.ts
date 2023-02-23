@@ -164,7 +164,7 @@ export interface ConvertedSignatureEntityForTableOfContents extends LinkNode {
 export interface ConvertedSignatureEntityForDocumentation extends TitleNode {
   children: [
     position: SmallNode,
-    tags: SmallNode,
+    tags: ParagraphNode,
     parametersAndReturnType: ListNode,
     description: ParagraphNode,
     remarks: ParagraphNode,
@@ -182,7 +182,7 @@ export interface ConvertedVariableEntityForTableOfContents extends LinkNode {
 export interface ConvertedVariableEntityForDocumentation extends TitleNode {
   children: [
     position: SmallNode,
-    tags: SmallNode,
+    tags: ParagraphNode,
     type: ParagraphNode,
     description: ParagraphNode,
     remarks: ParagraphNode,
@@ -200,11 +200,12 @@ export interface ConvertedInterfaceEntityForTableOfContents extends LinkNode {
 export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
   children: [
     position: SmallNode,
-    tags: SmallNode,
-    properties: ListNode,
+    tags: ParagraphNode,
     description: ParagraphNode,
     remarks: ParagraphNode,
-    example: ParagraphNode
+    example: ParagraphNode,
+    constructSignatures: ConvertedSignatureEntityForDocumentation[],
+    callSignatures: ConvertedSignatureEntityForDocumentation[]
   ];
 }
 
@@ -214,3 +215,21 @@ export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
 export type ConvertedParameterEntityForSignature = ASTNodes[];
 export type ConvertedParameterEntitiesForSignature = ASTNodes[];
 export type ConvertedParameterEntityForDocumentation = ASTNodes[];
+
+
+//-- Property
+
+export interface ConvertedPropertyEntityForTableOfContents extends LinkNode {
+
+}
+
+export interface ConvertedPropertyEntityForDocumentation extends TitleNode {
+  children: [
+    position: SmallNode,
+    tags: ParagraphNode,
+    type: ParagraphNode,
+    description: ParagraphNode,
+    remarks: ParagraphNode,
+    example: ParagraphNode
+  ];
+}

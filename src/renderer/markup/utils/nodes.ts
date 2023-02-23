@@ -44,9 +44,14 @@ export function createItalicNode(children: string): ItalicNode {
   };
 }
 
-export function createLinkNode(children: string, link: string): LinkNode {
+export function createLinkNode(children: ASTNodes, link: string): LinkNode;
+export function createLinkNode(children: ASTNodes, id: number): LinkNode;
+export function createLinkNode(children: ASTNodes, linkOrId: number | string): LinkNode {
+  const id = typeof linkOrId === "number" ? linkOrId : undefined;
+  const link = typeof linkOrId === "string" ? linkOrId : undefined;
   return {
     children,
+    id,
     kind: ASTNodeKinds.Link,
     link
   };
@@ -61,28 +66,28 @@ export function createListNode<T extends ASTNodes[]>(...children: T): ListNode {
   };
 }
 
-export function createParagraphNode(children: ParagraphNode["children"]): ParagraphNode {
+export function createParagraphNode(...children: ASTNodes[]): ParagraphNode {
   return {
     children,
     kind: ASTNodeKinds.Paragraph
   };
 }
 
-export function createSmallNode(children: SmallNode["children"]): SmallNode {
+export function createSmallNode(...children: ASTNodes[]): SmallNode {
   return {
     children,
     kind: ASTNodeKinds.Small
   };
 }
 
-export function createStrikethroughNode(children: StrikethroughNode["children"]): StrikethroughNode {
+export function createStrikethroughNode(...children: ASTNodes[]): StrikethroughNode {
   return {
     children,
     kind: ASTNodeKinds.Strikethrough
   };
 }
 
-export function createTitleNode<Children extends ASTNodes[]>(title: string, id: string | undefined, children: Children): TitleNode<Children> {
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, id: number | undefined, children: Children): TitleNode<Children> {
   return {
     children,
     id,

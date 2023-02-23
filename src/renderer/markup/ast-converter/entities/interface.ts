@@ -1,11 +1,8 @@
-import {
-  convertSignatureForDocumentation,
-  convertSignatureForTableOfContents
-} from "unwritten:renderer/markup/ast-converter/entities/index.js";
+import { convertSignatureForDocumentation } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
 import { getAnchorIdentifier } from "unwritten:renderer/markup/utils/linker.js";
-import { createListNode, createSmallNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createParagraphNode, createSmallNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
@@ -15,37 +12,36 @@ import type {
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertInterfaceForTableOfContents(ctx: MarkupRenderContexts, iface: InterfaceEntity) {
-  return renderLink(ctx, iface.name, iface.id);
+export function convertInterfaceForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity) {
+  return renderLink(ctx, interfaceEntity.name, interfaceEntity.id);
 }
 
 
-export function convertInterfaceForDocumentation(ctx: MarkupRenderContexts, iface: InterfaceEntity): ConvertedInterfaceEntityForDocumentation {
+export function convertInterfaceForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity): ConvertedInterfaceEntityForDocumentation {
 
-  const name = iface.name;
-  const description = iface.description ?? "";
-  const example = iface.example ?? "";
-  const remarks = iface.remarks ?? "";
+  const name = interfaceEntity.name;
+  const description = interfaceEntity.description ?? "";
+  const example = interfaceEntity.example ?? "";
+  const remarks = interfaceEntity.remarks ?? "";
 
-  const anchorIdentifier = getAnchorIdentifier(ctx, name, iface.id);
-  const position = iface.position ? convertPosition(ctx, iface.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, iface);
+  const anchorIdentifier = getAnchorIdentifier(ctx, name, interfaceEntity.id);
+  const position = interfaceEntity.position ? convertPosition(ctx, interfaceEntity.position) : "";
+  const jsdocTags = convertJSDocTags(ctx, interfaceEntity);
 
-  const renderedCallSignatureTitles = iface.callSignatures.map(signatureEntity => convertSignatureForTableOfContents(ctx, signatureEntity));
-  const renderedConstructSignatureTitles = iface.constructSignatures.map(signatureEntity => convertSignatureForTableOfContents(ctx, signatureEntity));
-
-  const renderedCallSignatures = iface.callSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
-  const renderedConstructSignatures = iface.constructSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
+  const renderedCallSignatures = interfaceEntity.callSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
+  const renderedConstructSignatures = interfaceEntity.constructSignatures.map(signatureEntity => convertSignatureForDocumentation(ctx, signatureEntity));
 
   return createTitleNode(
     name,
-    anchorIdentifier,
+    interfaceEntity.id,
     [
       createSmallNode(position),
-      createSmallNode(jsdocTags),
-      createListNode(
-        render
-      )
+      createParagraphNode(jsdocTags),
+      createParagraphNode(description),
+      createParagraphNode(remarks),
+      createParagraphNode(example),
+      renderedConstructSignatures,
+      renderedCallSignatures
     ]
   );
 

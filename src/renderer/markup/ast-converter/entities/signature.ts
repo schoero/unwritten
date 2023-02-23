@@ -5,7 +5,6 @@ import {
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
-import { getAnchorIdentifier, getAnchorLink } from "unwritten:renderer/markup/utils/linker.js";
 import {
   createLinkNode,
   createListNode,
@@ -13,7 +12,8 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
-import { renderLink } from "unwritten:renderer:markup/utils/renderer.js";
+import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -25,25 +25,25 @@ import type {
 
 export function convertSignatureForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForTableOfContents {
 
-  const name = signatureEntity.name;
+  const name = signatureEntity.name ?? "";
   const renderedParameters = convertParametersForSignature(ctx, signatureEntity.parameters);
-  const renderedSignature = `${name}(${renderedParameters})`;
+  const renderedSignature = [name, "(", renderedParameters, ")"];
 
   return createLinkNode(
     renderedSignature,
-    renderLink(ctx, renderedSignature, signatureEntity.id)
+    signatureEntity.id
   );
 
 }
 
 export function convertSignatureForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForDocumentation {
 
-  const signatureName = signatureEntity.name;
-  const renderedParameters = convertParametersForSignature(ctx, signatureEntity.parameters);
-  const renderedSignature = `${signatureName}(${renderedParameters})`;
+  const t = useTranslation(ctx);
 
-  const anchorIdentifier = getAnchorIdentifier(ctx, renderedSignature, signatureEntity.id);
-  const anchorLink = getAnchorLink(ctx, anchorIdentifier);
+  const signatureName = signatureEntity.name ?? "";
+  const renderedParameters = convertParametersForSignature(ctx, signatureEntity.parameters);
+  const renderedSignature = [signatureName, "(", renderedParameters, ")"];
+  const id = signatureEntity.id;
 
   const jsdocTags = convertJSDocTags(ctx, signatureEntity);
   const position = signatureEntity.position ? convertPosition(ctx, signatureEntity.position) : "";
@@ -56,19 +56,25 @@ export function convertSignatureForDocumentation(ctx: MarkupRenderContexts, sign
   const description = signatureEntity.description ?? "";
   const example = signatureEntity.example ?? "";
   const remarks = signatureEntity.remarks ?? "";
+  const returnDescription = signatureEntity.returnType.description ?? "";
 
-  const returnDescription = signatureEntity.returnType.description;
-
-  const returnTypeWithDescription = returnDescription ? `Returns: ${returnType} ${returnDescription}` : `Returns: ${returnType}`;
-  const parameterAndReturnValueList = [...parameters, returnTypeWithDescription];
+  const returnTypeWithDescription = spaceBetween(
+    t("returns", { capitalize: true }),
+    ":",
+    returnType,
+    returnDescription
+  );
 
   return createTitleNode(
     renderedSignature,
-    anchorLink,
+    id,
     [
       createSmallNode(position),
-      createSmallNode(jsdocTags),
-      createListNode(parameterAndReturnValueList),
+      createParagraphNode(jsdocTags),
+      createListNode(
+        ...parameters,
+        returnTypeWithDescription
+      ),
       createParagraphNode(description),
       createParagraphNode(remarks),
       createParagraphNode(example)

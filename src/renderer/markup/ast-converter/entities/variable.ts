@@ -23,25 +23,25 @@ export function convertVariableForTableOfContents(ctx: MarkupRenderContexts, var
 }
 
 
-export function convertVariableForDocumentation(ctx: MarkupRenderContexts, variable: VariableEntity): ConvertedVariableEntityForDocumentation {
+export function convertVariableForDocumentation(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
 
-  const name = variable.name;
-  const description = variable.description ?? "";
-  const example = variable.example ?? "";
-  const remarks = variable.remarks ?? "";
+  const name = variableEntity.name;
+  const description = variableEntity.description ?? "";
+  const example = variableEntity.example ?? "";
+  const remarks = variableEntity.remarks ?? "";
 
-  const anchorId = getAnchorIdentifier(ctx, name, variable.id);
-  const position = variable.position ? convertPosition(ctx, variable.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, variable);
+  const anchorId = getAnchorIdentifier(ctx, name, variableEntity.id);
+  const position = variableEntity.position ? convertPosition(ctx, variableEntity.position) : "";
+  const jsdocTags = convertJSDocTags(ctx, variableEntity);
 
-  const type = ["Type: ", convertType(ctx, variable.type)];
+  const type = ["Type: ", convertType(ctx, variableEntity.type)];
 
   return createTitleNode(
     name,
-    anchorId,
+    variableEntity.id,
     [
       createSmallNode(jsdocTags),
-      createSmallNode(position),
+      createParagraphNode(position),
       createParagraphNode(type),
       createParagraphNode(description),
       createParagraphNode(example),

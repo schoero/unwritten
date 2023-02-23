@@ -3,6 +3,11 @@ import { assert, expect, it } from "vitest";
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
+  convertSignatureForDocumentation,
+  convertSignatureForTableOfContents
+} from "unwritten:renderer/markup/ast-converter/entities/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
+import {
   isLinkNode,
   isListNode,
   isParagraphNode,
@@ -14,7 +19,6 @@ import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
-import { convertSignatureForDocumentation, convertSignatureForTableOfContents } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 
 
 scope("Renderer", EntityKind.Signature, () => {
@@ -65,12 +69,14 @@ scope("Renderer", EntityKind.Signature, () => {
 
     it("should have matching table of contents entry", () => {
       expect(isLinkNode(convertedSignatureForTableOfContents)).to.equal(true);
-      expect(convertedSignatureForTableOfContents.children).to.equal("testSignature()");
+      const renderedSignatureForTableOfContents = renderNode(ctx, convertedSignatureForTableOfContents.children);
+      expect(renderedSignatureForTableOfContents).to.equal("testSignature()");
     });
 
     it("should have a matching documentation title", () => {
       expect(isTitleNode(convertedSignatureForDocumentation)).to.equal(true);
-      expect(convertedSignatureForDocumentation.title).to.equal("testSignature()");
+      const renderedSignatureForDocumentation = renderNode(ctx, convertedSignatureForDocumentation.title);
+      expect(renderedSignatureForDocumentation).to.equal("testSignature()");
     });
 
     it("should have a position", () => {
@@ -79,30 +85,33 @@ scope("Renderer", EntityKind.Signature, () => {
     });
 
     it("should have a jsdoc tag", () => {
-      expect(isSmallNode(tags)).to.equal(true);
+      expect(isParagraphNode(tags)).to.equal(true);
       expect(tags).to.not.equal(undefined);
     });
 
     it("should have a matching return type", () => {
       expect(isListNode(parametersAndReturnType)).to.equal(true);
-      expect(parametersAndReturnType.children).to.have.lengthOf(1);
-      expect(parametersAndReturnType.children[0]).to.match(/Returns: void/);
-      expect(parametersAndReturnType.children[0]).to.match(/Return type description$/);
+      const renderedParametersAndReturnType = renderNode(ctx, parametersAndReturnType.children[0]);
+      expect(renderedParametersAndReturnType).to.match(/^Returns: void/);
+      expect(renderedParametersAndReturnType).to.match(/Return type description$/);
     });
 
     it("should have a matching description", () => {
       expect(isParagraphNode(description)).to.equal(true);
-      expect(description.children).to.equal("Signature description");
+      const renderedDescription = renderNode(ctx, description.children);
+      expect(renderedDescription).to.equal("Signature description");
     });
 
     it("should have matching remarks", () => {
       expect(isParagraphNode(description)).to.equal(true);
-      expect(remarks.children).to.equal("Signature remarks");
+      const renderedRemarks = renderNode(ctx, remarks.children);
+      expect(renderedRemarks).to.equal("Signature remarks");
     });
 
     it("should have a matching example", () => {
       expect(isParagraphNode(description)).to.equal(true);
-      expect(example.children).to.equal("Signature example");
+      const renderedExample = renderNode(ctx, example.children);
+      expect(renderedExample).to.equal("Signature example");
     });
 
   }
