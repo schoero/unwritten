@@ -5,6 +5,6 @@ import type { ParagraphNode } from "unwritten:renderer/markup/types-definitions/
 
 
 export function renderParagraphNode(ctx: HTMLRenderContext, paragraphNode: ParagraphNode): string {
-  const content = paragraphNode.children;
+  const content = renderNode(ctx, paragraphNode.children);
   return content === "" ? content : `<p>${renderNode(ctx, content)}</p>`;
 }

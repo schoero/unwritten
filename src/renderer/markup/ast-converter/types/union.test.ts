@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertUnionType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -33,12 +34,11 @@ scope("Renderer", TypeKind.Union, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertUnionType(ctx, type as UnionType);
+    const convertedType = convertUnionType(ctx, type as UnionType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render join multiple types with a `|`", () => {
-      expect(renderedType[0]).to.equal("string");
-      expect(renderedType[1]).to.equal(" | ");
-      expect(renderedType[2]).to.equal("number");
+      expect(renderedType).to.equal("string | number");
     });
 
   }

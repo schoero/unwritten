@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertBigIntLiteralType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -25,7 +26,8 @@ scope("Renderer", TypeKind.BigIntLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertBigIntLiteralType(ctx, type as BigIntLiteralType);
+    const convertedType = convertBigIntLiteralType(ctx, type as BigIntLiteralType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
       expect(renderedType).to.equal("7");
@@ -47,7 +49,8 @@ scope("Renderer", TypeKind.BigIntLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertBigIntLiteralType(ctx, type as BigIntLiteralType);
+    const convertedType = convertBigIntLiteralType(ctx, type as BigIntLiteralType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
       expect(renderedType).to.equal("-7");

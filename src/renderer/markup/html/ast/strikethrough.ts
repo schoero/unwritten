@@ -5,7 +5,7 @@ import type { StrikethroughNode } from "unwritten:renderer/markup/types-definiti
 
 
 export function renderStrikethroughNode(ctx: HTMLRenderContext, strikethroughNode: StrikethroughNode): string {
-  const content = strikethroughNode.children;
+  const content = renderNode(ctx, strikethroughNode.children);
   return content === "" ? content : `<del>${renderNode(ctx, content)}</del>`;
 
 }

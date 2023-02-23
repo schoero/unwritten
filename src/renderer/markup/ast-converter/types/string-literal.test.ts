@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertStringLiteralType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -25,9 +26,10 @@ scope("Renderer", TypeKind.StringLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertStringLiteralType(ctx, type as StringLiteralType);
+    const convertedType = convertStringLiteralType(ctx, type as StringLiteralType);
 
     it("should render the literal value", () => {
+      const renderedType = renderNode(ctx, convertedType);
       expect(renderedType).to.equal("\"test\"");
     });
 

@@ -15,7 +15,7 @@ scope("Renderer", "HTMLRenderer", () => {
   it("should render a paragraph node correctly", () => {
     const paragraphNode = createParagraphNode("Paragraph text");
     expect(renderParagraphNode(ctx, paragraphNode)).to.equal(html`
-      <del>Paragraph text</del>
+      <p>Paragraph text</p>
     `);
   });
 

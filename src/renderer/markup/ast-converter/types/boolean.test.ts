@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertBooleanType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -24,7 +25,8 @@ scope("Renderer", TypeKind.Boolean, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertBooleanType(ctx, type as BooleanType);
+    const convertedType = convertBooleanType(ctx, type as BooleanType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render the name of the type", () => {
       expect(renderedType).to.equal("boolean");

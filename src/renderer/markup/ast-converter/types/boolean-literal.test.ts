@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { convertBooleanLiteralType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -25,7 +26,8 @@ scope("Renderer", TypeKind.BooleanLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertBooleanLiteralType(ctx, type as BooleanLiteralType);
+    const convertedType = convertBooleanLiteralType(ctx, type as BooleanLiteralType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
       expect(renderedType).to.equal("true");
@@ -47,7 +49,8 @@ scope("Renderer", TypeKind.BooleanLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const renderedType = convertBooleanLiteralType(ctx, type as BooleanLiteralType);
+    const convertedType = convertBooleanLiteralType(ctx, type as BooleanLiteralType);
+    const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
       expect(renderedType).to.equal("false");

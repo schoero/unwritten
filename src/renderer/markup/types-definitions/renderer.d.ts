@@ -109,12 +109,18 @@ export type ConvertedLiteralTypes =
   | ConvertedNumberLiteralType
   | ConvertedStringLiteralType;
 
+
 export type ConvertedStringLiteralType = ASTNodes;
 export type ConvertedNumberLiteralType = ASTNodes;
 export type ConvertedBooleanLiteralType = ASTNodes;
 export type ConvertedBigIntLiteralType = ASTNodes;
 
 export type ConvertedTemplateLiteralType = ASTNodes[];
+
+
+//-- Function type
+
+export type ConvertedFunctionType = ASTNodes[];
 
 
 //-- Array type

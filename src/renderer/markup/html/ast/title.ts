@@ -7,7 +7,7 @@ import type { TitleNode } from "unwritten:renderer/markup/types-definitions/node
 
 export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): string {
 
-  const title = titleNode.title;
+  const title = renderNode(ctx, titleNode.title);
   const size = ctx.size;
 
   const renderedTitle = `<h${size}>${title}</h${size}>`;
