@@ -9,6 +9,7 @@ import {
   convertBigIntType,
   convertBooleanLiteralType,
   convertBooleanType,
+  convertFunctionType,
   convertNeverType,
   convertNullType,
   convertNumberLiteralType,
@@ -34,6 +35,7 @@ import {
   isBigIntType,
   isBooleanLiteralType,
   isBooleanType,
+  isFunctionType,
   isNeverType,
   isNullType,
   isNumberLiteralType,
@@ -101,6 +103,8 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
     return convertUnknownType(ctx, type);
   } else if(isVoidType(type)){
     return convertVoidType(ctx, type);
+  } else if(isFunctionType(type)){
+    return convertFunctionType(ctx, type);
   }
 
   throw new Error(`Unknown type: ${type.kind}`);

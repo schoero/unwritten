@@ -4,7 +4,7 @@ import { RenderableJSDocTags } from "unwritten:renderer/markup/enums/jsdoc.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import { hasRenderableJSDocTags } from "./jsdoc-tags.js";
+import { convertJSDocTags, hasRenderableJSDocTags } from "./jsdoc-tags.js";
 
 
 scope("Renderer", "HTMLRenderer", () => {

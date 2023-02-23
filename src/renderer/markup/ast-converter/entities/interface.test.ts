@@ -7,7 +7,7 @@ import {
   convertInterfaceForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
-import { isParagraphNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { isParagraphNode, isSmallNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -292,25 +292,31 @@ scope("Renderer", TypeKind.Interface, () => {
 
     it("should have a matching description", () => {
       expect(isParagraphNode(description)).to.equal(true);
-      expect(description.children).to.equal("Interface description");
-    });
-
-    it("should have no example", () => {
-      expect(isParagraphNode(example)).to.equal(true);
-      expect(example.children).to.equal("Interface example");
+      const renderedDescription = renderNode(ctx, description);
+      expect(renderedDescription).to.equal("Interface description");
     });
 
     it("should have no remarks", () => {
       expect(isParagraphNode(remarks)).to.equal(true);
-      expect(remarks.children).to.equal("Interface remarks");
+      const renderedRemarks = renderNode(ctx, remarks);
+      expect(renderedRemarks).to.equal("Interface remarks");
+    });
+
+    it("should have no example", () => {
+      expect(isParagraphNode(example)).to.equal(true);
+      const renderedExample = renderNode(ctx, example);
+      expect(renderedExample).to.equal("Interface example");
     });
 
     it("should have a position", () => {
+      expect(isSmallNode(position)).to.equal(true);
       expect(position.children).to.not.equal("");
     });
 
     it("should have no tags", () => {
-      expect(tags.children).to.equal("");
+      expect(isParagraphNode(tags)).to.equal(true);
+      const renderedTags = renderNode(ctx, tags);
+      expect(renderedTags).to.equal("");
     });
 
     it("should have one construct signature", () => {
