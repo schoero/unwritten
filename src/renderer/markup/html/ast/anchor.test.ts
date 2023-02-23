@@ -8,7 +8,7 @@ import { html } from "unwritten:tests:utils/template.js";
 import { renderAnchorNode } from "./anchor.js";
 
 
-scope("Renderer", "HTMLRenderer", () => {
+scope("MarkupRenderer", "AnchorNode", () => {
 
   const ctx = createRenderContext();
 

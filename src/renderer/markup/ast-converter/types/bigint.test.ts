@@ -10,7 +10,7 @@ import type { BigIntType } from "unwritten:compiler:type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", TypeKind.BigInt, () => {
+scope("MarkupRenderer", TypeKind.BigInt, () => {
 
   {
 

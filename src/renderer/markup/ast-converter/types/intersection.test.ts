@@ -10,7 +10,7 @@ import type { IntersectionType } from "unwritten:compiler:type-definitions/types
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", TypeKind.Intersection, () => {
+scope("MarkupRenderer", TypeKind.Intersection, () => {
 
   {
 

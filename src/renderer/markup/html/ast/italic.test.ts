@@ -8,7 +8,7 @@ import { html } from "unwritten:tests:utils/template.js";
 import { renderItalicNode } from "./italic.js";
 
 
-scope("Renderer", "HTMLRenderer", () => {
+scope("MarkupRenderer", "ItalicNode", () => {
 
   const ctx = createRenderContext();
 

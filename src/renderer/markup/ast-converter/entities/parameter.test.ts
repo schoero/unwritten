@@ -14,7 +14,7 @@ import type { ParameterEntity } from "unwritten:compiler:type-definitions/entiti
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", EntityKind.Parameter, () => {
+scope("MarkupRenderer", EntityKind.Parameter, () => {
 
   {
 
@@ -243,7 +243,7 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     // #region Default value
 
-    const parameterEntities: Testable<ParameterEntity> = {
+    const parameterEntity: Testable<ParameterEntity> = {
       description: undefined,
       initializer: {
         kind: TypeKind.NumberLiteral,
@@ -269,7 +269,7 @@ scope("Renderer", EntityKind.Parameter, () => {
 
     const ctx = createRenderContext();
 
-    const convertedParameterForDocumentation = convertParameterEntityForDocumentation(ctx, parameterEntities as ParameterEntity);
+    const convertedParameterForDocumentation = convertParameterEntityForDocumentation(ctx, parameterEntity as ParameterEntity);
 
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 

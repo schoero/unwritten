@@ -15,7 +15,7 @@ import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entiti
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", TypeKind.Interface, () => {
+scope("MarkupRenderer", TypeKind.Interface, () => {
 
   {
 

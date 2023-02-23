@@ -13,7 +13,7 @@ import type { FunctionEntity } from "unwritten:compiler:type-definitions/entitie
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", EntityKind.Function, () => {
+scope("MarkupRenderer", EntityKind.Function, () => {
 
   {
 
@@ -201,7 +201,7 @@ scope("Renderer", EntityKind.Function, () => {
     const renderedFunctionForTableOfContents = convertFunctionLikeEntityForTableOfContents(ctx, testFunction as FunctionEntity);
     const renderedFunctionForDocumentation = convertFunctionLikeEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
-    it("should have only one signature", () => {
+    it("should have multiple signatures", () => {
       expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(2);
       expect(renderedFunctionForDocumentation.children).to.have.lengthOf(2);
     });

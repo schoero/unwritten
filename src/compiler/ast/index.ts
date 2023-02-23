@@ -106,7 +106,7 @@ import type { Declaration, ObjectType as TSObjectType, Symbol, Type, TypeNode } 
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
 import type { Entities } from "unwritten:compiler:type-definitions/entities.js";
-import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
+import type { Types, UnresolvedType } from "unwritten:compiler:type-definitions/types.d.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
@@ -116,7 +116,7 @@ export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): Exportabl
 }
 
 
-export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Entities {
+export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Entities | UnresolvedType {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 

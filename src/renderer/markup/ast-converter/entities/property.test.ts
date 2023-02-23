@@ -15,7 +15,7 @@ import type { PropertyEntity } from "unwritten:compiler:type-definitions/entitie
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", EntityKind.Property, () => {
+scope("MarkupRenderer", EntityKind.Property, () => {
 
   {
 

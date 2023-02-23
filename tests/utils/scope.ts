@@ -3,7 +3,17 @@ import { describe } from "vitest";
 import type { TypeKind } from "unwritten:compiler:enums/types.js";
 
 
-type Scopes = "Compiler" | "E2E" | "Integration" | "Renderer" | "Types";
+type Scopes =
+  | "Compiler"
+  | "E2E"
+  | "HTMLRenderer"
+  | "Integration"
+  | "JSONRenderer"
+  | "MarkdownRenderer"
+  | "MarkupRenderer"
+  | "Types"
+  | "TypeScriptRenderer";
+
 type Units = TypeKind | string;
 
 type DescribeReturnType = ReturnType<typeof describe>;

@@ -1,8 +1,8 @@
 import { renderIndentation } from "unwritten:renderer:html/utils/indentation.js";
 import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 
+import { renderNewLine } from "../../../utils/new-line.js";
 import { renderNode } from "../index.js";
-import { renderNewLine } from "../utils/new-line.js";
 
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes, ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";

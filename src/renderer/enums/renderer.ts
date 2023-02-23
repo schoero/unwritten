@@ -1,4 +1,6 @@
 export enum BuiltInRenderers {
   HTML = "html",
-  Markdown = "markdown"
+  JSON = "json",
+  Markdown = "md",
+  TypeScript = "ts"
 }

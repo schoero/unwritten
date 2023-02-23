@@ -10,7 +10,7 @@ import type { VoidType } from "unwritten:compiler:type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", TypeKind.Void, () => {
+scope("MarkupRenderer", TypeKind.Void, () => {
 
   {
 

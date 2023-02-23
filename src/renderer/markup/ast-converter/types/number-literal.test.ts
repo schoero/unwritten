@@ -10,7 +10,7 @@ import type { NumberLiteralType } from "unwritten:compiler:type-definitions/type
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", TypeKind.NumberLiteral, () => {
+scope("MarkupRenderer", TypeKind.NumberLiteral, () => {
 
   {
 

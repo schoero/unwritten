@@ -12,7 +12,9 @@
       "unwritten:logger:*": ["src/logger/*"],
       "unwritten:renderer:*": ["src/renderer/*"],
       "unwritten:renderer:html*": ["src/renderer/markup/html/*"],
+      "unwritten:renderer:json*": ["src/renderer/json/*"],
       "unwritten:renderer:markdown*": ["src/renderer/markup/markdown/*"],
+      "unwritten:renderer:ts*": ["src/renderer/typescript/*"],
       "unwritten:tests:*": ["tests/*"],
       "unwritten:types:*": ["src/type-definitions/*"],
       "unwritten:utils:*": ["src/utils/*"]

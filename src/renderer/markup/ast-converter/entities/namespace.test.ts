@@ -13,7 +13,7 @@ import type { NamespaceEntity } from "unwritten:compiler:type-definitions/entiti
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", EntityKind.Function, () => {
+scope("MarkupRenderer", EntityKind.Namespace, () => {
 
   {
 

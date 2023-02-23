@@ -6,7 +6,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { renderIndentation } from "./indentation.js";
 
 
-scope("Renderer", "HTMLRenderer", () => {
+scope("HTMLRenderer", "HTMLRenderer", () => {
 
   const ctx = createRenderContext();
 

@@ -1,4 +1,4 @@
-import { convertTypeParameterEntitiesForSignature } from "unwritten:renderer/markup/ast-converter/entities/index.js";
+import { convertTypeParameterEntityForDocumentation } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
@@ -37,7 +37,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const jsdocTags = convertJSDocTags(ctx, typeAliasEntity);
 
   const typeParameters = typeAliasEntity.typeParameters
-    ? convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters)
+    ? typeAliasEntity.typeParameters.map(typeParameter => convertTypeParameterEntityForDocumentation(ctx, typeParameter))
     : "";
 
   const type = [`${t("type", { capitalize: true })}: `, convertType(ctx, typeAliasEntity.type)];

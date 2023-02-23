@@ -14,7 +14,7 @@ import type { TypeParameterEntity } from "unwritten:compiler:type-definitions/en
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", EntityKind.Parameter, () => {
+scope("MarkupRenderer", EntityKind.TypeParameter, () => {
 
   {
 

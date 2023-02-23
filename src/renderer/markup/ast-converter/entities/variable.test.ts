@@ -21,7 +21,7 @@ import type { VariableEntity } from "unwritten:compiler:type-definitions/entitie
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", EntityKind.Variable, () => {
+scope("MarkupRenderer", EntityKind.Variable, () => {
 
   {
 

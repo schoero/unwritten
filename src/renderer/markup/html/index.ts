@@ -32,8 +32,12 @@ import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
+export function isHTMLRenderer(renderer: Renderer): renderer is HTMLRenderer {
+  return renderer.name === BuiltInRenderers.HTML;
+}
+
 function verifyRenderer(renderer: Renderer): asserts renderer is HTMLRenderer {
-  if(renderer.name !== BuiltInRenderers.HTML){
+  if(!isHTMLRenderer(renderer)){
     throw new Error(`Renderer '${renderer.name}' is not a HTML renderer.`);
   }
 }
@@ -43,14 +47,29 @@ function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is HTMLRenderC
 }
 
 const htmlRenderer: HTMLRenderer = {
+
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
 
+
   render(ctx: RenderContext<Renderer>, entities: ExportableEntities[]) {
+
+
+    //-- Initialize the context
+
     verifyContext(ctx);
+
+    ctx.indentation = 0;
+    ctx.size = 1;
+
+
+    //-- Render
+
     const markupAST = convertToMarkupAST(ctx, entities);
     return renderContainerNode(ctx, markupAST);
+
   }
+
 };
 
 

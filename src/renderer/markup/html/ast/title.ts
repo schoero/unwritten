@@ -1,5 +1,5 @@
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderNode } from "unwritten:renderer:html/index.js";
-import { renderNewLine } from "unwritten:renderer:html/utils/new-line.js";
 
 import type { HTMLRenderContext } from "unwritten:renderer/markup/types-definitions/markup.js";
 import type { TitleNode } from "unwritten:renderer/markup/types-definitions/nodes.js";

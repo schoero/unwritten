@@ -50,9 +50,10 @@ unwritten generate <path/to/entry-file.ts> [options]
 ## Options
 
 ```sh
---output <path/to/output/file-name>     # Specify the output directory and file-
--o <path/to/output/file-name>           # name. Defaults to ./docs/api based on
-                                        # the current working directory.
+--output <path/to/output/file-name>     # Specify the output directory and the
+-o <path/to/output/file-name>           # file name. Defaults to ./docs/api 
+                                        # based on the current working 
+                                        # directory.
 
 --tsconfig <path/to/tsconfig.json>      # Provide a tsconfig file used to
 -t <path/to/tsconfig.json>              # compile your project. unwritten will
@@ -65,8 +66,12 @@ unwritten generate <path/to/entry-file.ts> [options]
                                         # config by itself if none is provided
                                         # or uses the default config.
 
---renderer <markdown | html>            # Choose the format of the rendered 
--r <markdown | html>                    # output. Defaults to markdown.
+--renderer <md | html | json | ts>      # Choose the format of the rendered 
+-r <md | html | json | ts>              # output. Defaults to `md` for markdown.
+                                        # It is also possible to provide a
+                                        # custom renderer by providing the path
+                                        # to the file that default exports the 
+                                        # renderer.
 
 --silent                                # Disables the output.
 -s

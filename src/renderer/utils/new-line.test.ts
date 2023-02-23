@@ -4,7 +4,7 @@ import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 
-scope("Renderer", "HTMLRenderer", () => {
+scope("Renderer", "utils", () => {
 
   const ctx = createRenderContext();
 

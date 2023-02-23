@@ -82,7 +82,6 @@ export type Entities =
   | SourceFileEntity
   | TypeAliasEntity
   | TypeParameterEntity
-  | Types
   | VariableEntity;
 
 export interface PropertyEntity extends Entity<EntityKind.Property>, JSDocTags {

@@ -1,3 +1,4 @@
+import type { Types } from "unwritten:compiler/type-definitions/types.js";
 import type { Entities } from "unwritten:compiler:type-definitions/entities.js";
 
 
@@ -100,4 +101,4 @@ type DeepRequiredByKeyObject<T, K extends PropertyKey> =
 
 //-- Test
 
-export type Testable<Entity extends Entities> = DeepPartialByKey<Entity, "id" | "modifiers">;
+export type Testable<Entity extends Entities | Types> = DeepPartialByKey<Entity, "id" | "modifiers">;

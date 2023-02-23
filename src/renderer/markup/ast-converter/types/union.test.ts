@@ -10,7 +10,7 @@ import type { UnionType } from "unwritten:compiler:type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", TypeKind.Union, () => {
+scope("MarkupRenderer", TypeKind.Union, () => {
 
   {
 

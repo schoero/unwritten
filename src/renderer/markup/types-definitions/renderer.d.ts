@@ -284,11 +284,18 @@ export type ConvertedParameterEntitiesForSignature = ASTNodes[];
 export type ConvertedParameterEntityForDocumentation = ASTNodes[];
 
 
-//-- Type parameter
+//-- Type Parameter
 
 export type ConvertedTypeParameterEntityForSignature = ASTNodes;
 export type ConvertedTypeParameterEntitiesForSignature = ASTNodes[];
 export type ConvertedTypeParameterEntityForDocumentation = ASTNodes[];
+
+
+//-- Type Argument
+
+export type ConvertedTypeArgumentEntityForSignature = ASTNodes;
+export type ConvertedTypeArgumentEntitiesForSignature = ASTNodes[];
+export type ConvertedTypeArgumentEntityForDocumentation = ASTNodes[];
 
 
 //-- Property

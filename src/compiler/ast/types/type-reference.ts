@@ -1,4 +1,4 @@
-import { getIdByTypeNode } from "unwritten:compiler/ast/shared/id.js";
+import { getIdBySymbol, getIdByTypeNode } from "unwritten:compiler/ast/shared/id.js";
 import { getNameByTypeNode } from "unwritten:compiler/ast/shared/name.js";
 import { parseType, parseTypeNode } from "unwritten:compiler:ast/index.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
@@ -25,11 +25,14 @@ export function createTypeReferenceByTypeNode(ctx: CompilerContext, typeNode: Ty
   const type = parseType(ctx, tsType);
   const id = getIdByTypeNode(ctx, typeNode);
   const kind = TypeKind.TypeReference;
+  const symbol = ctx.checker.getSymbolAtLocation(typeNode.typeName);
+  const symbolId = symbol && getIdBySymbol(ctx, symbol);
 
   return {
     id,
     kind,
     name,
+    symbolId,
     type,
     typeArguments
   };

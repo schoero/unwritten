@@ -4,7 +4,7 @@ import { getExportsFromIndexFile, getFilesInDirectory } from "unwritten:tests:ut
 import { scope } from "unwritten:tests:utils/scope.js";
 
 
-scope("Renderer", "Entities", () => {
+scope("MarkupRenderer", "Entities", () => {
 
   const importUrl = import.meta.url;
 

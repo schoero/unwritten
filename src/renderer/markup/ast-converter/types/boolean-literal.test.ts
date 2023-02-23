@@ -10,7 +10,7 @@ import type { BooleanLiteralType } from "unwritten:compiler:type-definitions/typ
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", TypeKind.BooleanLiteral, () => {
+scope("MarkupRenderer", TypeKind.BooleanLiteral, () => {
 
   {
 

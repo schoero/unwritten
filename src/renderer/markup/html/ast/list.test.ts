@@ -8,7 +8,7 @@ import { html } from "unwritten:tests:utils/template.js";
 import { renderListNode } from "./list.js";
 
 
-scope("Renderer", "HTMLRenderer", () => {
+scope("MarkupRenderer", "ListNode", () => {
 
   const ctx = createRenderContext();
 

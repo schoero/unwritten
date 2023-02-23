@@ -8,7 +8,7 @@ import { html } from "unwritten:tests:utils/template.js";
 import { renderStrikethroughNode } from "./strikethrough.js";
 
 
-scope("Renderer", "HTMLRenderer", () => {
+scope("MarkupRenderer", "StrikethroughNode", () => {
 
   const ctx = createRenderContext();
 

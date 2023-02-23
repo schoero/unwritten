@@ -10,7 +10,7 @@ import type { StringLiteralType } from "unwritten:compiler:type-definitions/type
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", TypeKind.StringLiteral, () => {
+scope("MarkupRenderer", TypeKind.StringLiteral, () => {
 
   {
 

@@ -13,7 +13,7 @@ import type { ModuleEntity } from "unwritten:compiler:type-definitions/entities.
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", EntityKind.Function, () => {
+scope("MarkupRenderer", EntityKind.Module, () => {
 
   {
 

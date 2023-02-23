@@ -9,6 +9,7 @@ import {
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import {
   isLinkNode,
+  isListNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -21,7 +22,7 @@ import type { TypeAliasEntity } from "unwritten:compiler:type-definitions/entiti
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("Renderer", EntityKind.TypeAlias, () => {
+scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
   {
 
@@ -30,6 +31,7 @@ scope("Renderer", EntityKind.TypeAlias, () => {
     const typeAliasEntity: Testable<TypeAliasEntity> = {
       description: "Type alias description",
       example: "Type alias example",
+      id: 4054,
       kind: EntityKind.TypeAlias,
       name: "TypeAlias",
       position: {
@@ -39,13 +41,17 @@ scope("Renderer", EntityKind.TypeAlias, () => {
       },
       remarks: "Type alias remarks",
       type: {
+        id: 4456,
         kind: TypeKind.TypeReference,
         name: "A",
+        symbolId: 4052,
         type: {
           constraint: {
-            kind: TypeKind.String,
-            name: "string"
+            id: 16,
+            kind: TypeKind.Number,
+            name: "number"
           },
+          id: 2611,
           kind: TypeKind.TypeParameter,
           name: "A"
         },
@@ -54,11 +60,18 @@ scope("Renderer", EntityKind.TypeAlias, () => {
       typeParameters: [
         {
           constraint: {
-            kind: TypeKind.String,
-            name: "string"
+            id: 16,
+            kind: TypeKind.Number,
+            name: "number"
           },
-          description: "- Type parameter description",
-          initializer: undefined,
+          description: "Type parameter description",
+          id: 4052,
+          initializer: {
+            id: 2126,
+            kind: TypeKind.NumberLiteral,
+            name: "number",
+            value: 7
+          },
           kind: EntityKind.TypeParameter,
           name: "A",
           position: {
@@ -111,7 +124,7 @@ scope("Renderer", EntityKind.TypeAlias, () => {
     });
 
     it("should have a matching type", () => {
-      expect(isParagraphNode(type)).to.equal(true);
+      expect(isListNode(type)).to.equal(true);
       const renderedType = renderNode(ctx, type.children);
       expect(renderedType).to.match(/7$/);
     });

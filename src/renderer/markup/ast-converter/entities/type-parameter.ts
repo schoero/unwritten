@@ -13,7 +13,15 @@ import type {
 
 
 export function convertTypeParameterEntitiesForSignature(ctx: MarkupRenderContexts, typeParameterEntities: TypeParameterEntity[]): ConvertedTypeParameterEntitiesForSignature {
-  const renderedTypeParameters = typeParameterEntities.flatMap((typeParameter, index) => convertTypeParameterEntityForSignature(ctx, typeParameter));
+  const renderedTypeParameters = typeParameterEntities.flatMap((typeParameter, index) => {
+    const convertedTypeParameter = convertTypeParameterEntityForSignature(ctx, typeParameter);
+    if(index === 0){
+      return [convertedTypeParameter];
+    } else {
+      return [", ", convertedTypeParameter];
+    }
+  });
+
   return renderedTypeParameters;
 }
 
