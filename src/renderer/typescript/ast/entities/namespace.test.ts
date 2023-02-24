@@ -2,10 +2,9 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import {
-  convertNamespaceEntityForDocumentation,
-  convertNamespaceEntityForTableOfContents
-} from "unwritten:renderer/markup/ast-converter/entities/index.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { renderNamespaceEntity } from "unwritten:renderer/typescript/ast/entities/namespace.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -13,7 +12,7 @@ import type { NamespaceEntity } from "unwritten:compiler:type-definitions/entiti
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("MarkupRenderer", EntityKind.Namespace, () => {
+scope("TypeScriptRenderer", EntityKind.Namespace, () => {
 
   {
 
@@ -43,13 +42,14 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
 
     // #endregion
 
-    const ctx = createRenderContext();
+    const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
-    const renderedFunctionForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity as NamespaceEntity);
-    const renderedFunctionForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity as NamespaceEntity);
+    const renderedNamespace = renderNamespaceEntity(ctx, namespaceEntity as NamespaceEntity);
+    const renderedNamespaceLines = renderedNamespace.split(renderNewLine(ctx));
+
 
     it("should have a matching title", () => {
-      expect(renderedFunctionForTableOfContents.title).to.equal("Namespace");
+      expect(renderedFunctionForTableOfContents.children).to.equal("Namespace");
       expect(renderedFunctionForDocumentation.title).to.equal("Namespace");
     });
 

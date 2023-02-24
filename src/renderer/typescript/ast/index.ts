@@ -1,4 +1,5 @@
 import { renderFunctionLikeEntity } from "unwritten:renderer/typescript/ast/entities/function-like.js";
+import { renderTypeAliasEntity, renderVariableEntity } from "unwritten:renderer/typescript/ast/entities/index.js";
 import {
   renderAnyType,
   renderArrayType,
@@ -12,12 +13,13 @@ import {
   renderStringType,
   renderSymbolType,
   renderTupleType,
+  renderTypeReferenceType,
   renderUndefinedType,
   renderUnionType,
   renderUnknownType,
   renderVoidType
 } from "unwritten:renderer/typescript/ast/types/index.js";
-import { isFunctionEntity } from "unwritten:typeguards/entities.js";
+import { isFunctionEntity, isTypeAliasEntity, isVariableEntity } from "unwritten:typeguards/entities.js";
 import {
   isAnyType,
   isArrayType,
@@ -31,6 +33,7 @@ import {
   isStringType,
   isSymbolType,
   isTupleType,
+  isTypeReferenceType,
   isUndefinedType,
   isUnionType,
   isUnknownType,
@@ -43,6 +46,7 @@ import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type
 
 
 export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
+
   if(isStringType(type)){
     return renderStringType(ctx, type);
   } else if(isStringLiteralType(type)){
@@ -75,12 +79,20 @@ export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
     return renderVoidType(ctx, type);
   } else if(isTupleType(type)){
     return renderTupleType(ctx, type);
+  } else if(isTypeReferenceType(type)){
+    return renderTypeReferenceType(ctx, type);
   }
 
 }
 
 export function renderEntity(ctx: TypeScriptRenderContext, entity: ExportableEntities): string {
+
   if(isFunctionEntity(entity)){
     return renderFunctionLikeEntity(ctx, entity);
+  } else if(isVariableEntity(entity)){
+    return renderVariableEntity(ctx, entity);
+  } else if(isTypeAliasEntity(entity)){
+    return renderTypeAliasEntity(ctx, entity);
   }
+
 }

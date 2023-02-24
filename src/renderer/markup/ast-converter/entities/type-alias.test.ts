@@ -104,12 +104,12 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
     it("should have matching table of contents entry", () => {
       expect(isLinkNode(convertedTypeAliasForTableOfContents)).to.equal(true);
-      expect(convertedTypeAliasForTableOfContents.children).to.equal("numberTypeAlias");
+      expect(convertedTypeAliasForTableOfContents.children).to.equal("TypeAlias");
     });
 
     it("should have a matching documentation title", () => {
       expect(isTitleNode(convertedTypeAliasForDocumentation)).to.equal(true);
-      expect(convertedTypeAliasForDocumentation.title).to.equal("numberTypeAlias");
+      expect(convertedTypeAliasForDocumentation.title).to.equal("TypeAlias");
     });
 
     it("should have a position", () => {
@@ -126,7 +126,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     it("should have a matching type", () => {
       expect(isListNode(type)).to.equal(true);
       const renderedType = renderNode(ctx, type.children);
-      expect(renderedType).to.match(/7$/);
+      expect(renderedType).to.match(/Type: .*A.*$/);
     });
 
     it("should have a matching description", () => {

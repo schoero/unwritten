@@ -22,8 +22,8 @@ scope("MarkupRenderer", EntityKind.TypeParameter, () => {
 
     const typeParameterEntity: Testable<TypeParameterEntity> = {
       constraint: {
-        kind: TypeKind.String,
-        name: "string"
+        kind: TypeKind.Number,
+        name: "number"
       },
       description: "Type parameter description",
       initializer: {
@@ -61,7 +61,7 @@ scope("MarkupRenderer", EntityKind.TypeParameter, () => {
     });
 
     it("should have a matching type", () => {
-      expect(renderedParameterForDocumentation).to.match(/^.* string .*/);
+      expect(renderedParameterForDocumentation).to.match(/^.* number .*/);
     });
 
     it("should have a matching initializer", () => {

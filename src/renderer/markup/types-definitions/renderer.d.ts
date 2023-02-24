@@ -156,6 +156,7 @@ export type ConvertedEntitiesForTableOfContents =
   | ConvertedInterfaceEntityForTableOfContents
   | ConvertedModuleEntityForTableOfContents
   | ConvertedNamespaceEntityForTableOfContents
+  | ConvertedTypeAliasEntityForTableOfContents
   | ConvertedVariableEntityForTableOfContents;
 
 
@@ -164,6 +165,7 @@ export type ConvertedEntitiesForDocumentation =
   | ConvertedInterfaceEntityForDocumentation
   | ConvertedModuleEntityForDocumentation
   | ConvertedNamespaceEntityForDocumentation
+  | ConvertedTypeAliasEntityForDocumentation
   | ConvertedVariableEntityForDocumentation;
 
 

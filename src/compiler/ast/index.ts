@@ -8,7 +8,6 @@ import {
   createInterfaceEntity,
   createModuleEntity,
   createNamespaceEntity,
-  createPropertyEntity,
   createSourceFileEntity,
   createTypeAliasEntity,
   createVariableEntity
@@ -20,7 +19,6 @@ import {
   isInterfaceSymbol,
   isModuleSymbol,
   isNamespaceSymbol,
-  isPropertySymbol,
   isSourceFileSymbol,
   isTypeAliasSymbol,
   isVariableSymbol
@@ -105,8 +103,7 @@ import { assert } from "unwritten:utils:general.js";
 import type { Declaration, ObjectType as TSObjectType, Symbol, Type, TypeNode } from "typescript";
 
 import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
-import type { Entities } from "unwritten:compiler:type-definitions/entities.js";
-import type { Types, UnresolvedType } from "unwritten:compiler:type-definitions/types.d.js";
+import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
@@ -116,7 +113,7 @@ export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): Exportabl
 }
 
 
-export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Entities | UnresolvedType {
+export function parseSymbol(ctx: CompilerContext, symbol: Symbol): ExportableEntities {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 
@@ -136,12 +133,8 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): Entities | Un
     return createNamespaceEntity(ctx, resolvedSymbol);
   } else if(isModuleSymbol(symbol)){
     return createModuleEntity(ctx, resolvedSymbol);
-  } else if(isSourceFileSymbol(symbol)){
-    return createSourceFileEntity(ctx, resolvedSymbol);
-  } else if(isPropertySymbol(symbol)){
-    return createPropertyEntity(ctx, resolvedSymbol);
   } else {
-    return createUnresolvedType(ctx, resolvedSymbol);
+    throw new Error(`Symbol ${getNameBySymbol(ctx, resolvedSymbol)} is not exportable`);
   }
 
 }

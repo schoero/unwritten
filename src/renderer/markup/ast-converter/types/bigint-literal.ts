@@ -12,7 +12,7 @@ export function convertBigIntLiteralType(ctx: MarkupRenderContexts, bigIntType: 
 
   const name = bigIntType.name;
   const value = bigIntType.value.toString();
-  const encapsulatedValue = encapsulate(value.toString(), renderConfig.typeEncapsulation);
+  const encapsulatedValue = encapsulate(value, renderConfig.typeEncapsulation);
 
   return encapsulatedValue;
 

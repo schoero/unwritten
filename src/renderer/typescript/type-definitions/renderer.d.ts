@@ -9,4 +9,5 @@ export interface TypeScriptRenderer extends Renderer {
 }
 
 export interface TypeScriptRenderContext extends RenderContext<TypeScriptRenderer> {
+  indentation: number;
 }

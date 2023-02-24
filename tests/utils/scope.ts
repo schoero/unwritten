@@ -11,6 +11,7 @@ type Scopes =
   | "JSONRenderer"
   | "MarkdownRenderer"
   | "MarkupRenderer"
+  | "Renderer"
   | "Types"
   | "TypeScriptRenderer";
 

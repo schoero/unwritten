@@ -31,6 +31,7 @@ export type ExportableEntities =
   | ClassEntity
   | EnumEntity
   | FunctionEntity
+  | InterfaceEntity
   | ModuleEntity
   | NamespaceEntity
   | TypeAliasEntity

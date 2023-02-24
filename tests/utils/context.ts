@@ -22,6 +22,9 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
       tagEncapsulation: false,
       typeEncapsulation: false,
       typeParameterEncapsulation: false
+    },
+    ts: {
+      renderEmptyFunctionBody: false
     }
   }
 });
@@ -48,6 +51,7 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
   // } else if(rendererName === BuiltInRenderers.Markdown){
   //   renderer = markdownRenderer;
   } else if(rendererName === BuiltInRenderers.TypeScript){
+    (ctx as TypeScriptRenderContext).indentation = 0;
     ctx.renderer = typescriptRenderer;
   } else {
     ctx.renderer = jsonRenderer;

@@ -31,6 +31,8 @@ const typescriptRenderer: TypeScriptRenderer = {
 
     verifyContext(ctx);
 
+    ctx.indentation = 0;
+
 
     //-- Render
 

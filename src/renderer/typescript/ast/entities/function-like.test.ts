@@ -195,14 +195,15 @@ scope("TypeScriptRenderer", EntityKind.Function, () => {
 
     // #endregion
 
-    const ctx = createRenderContext(BuiltInRenderers.TypeScript);
-    const renderConfig = getRenderConfig(ctx);
-
-    const renderedFunction = renderFunctionLikeEntity(ctx, testFunction as FunctionEntity);
-    const renderedSignatures = renderedFunction.split(renderConfig.newLine);
-
     it("should have multiple signatures", () => {
+      const ctx = createRenderContext(BuiltInRenderers.TypeScript);
+      const renderConfig = getRenderConfig(ctx);
+
+      const renderedFunction = renderFunctionLikeEntity(ctx, testFunction as FunctionEntity);
+      const renderedSignatures = renderedFunction.split(renderConfig.newLine);
+
       expect(renderedSignatures).to.have.lengthOf(2);
+
     });
 
   }

@@ -5,6 +5,8 @@ import {
   convertInterfaceEntityForTableOfContents,
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents,
+  convertTypeAliasEntityForDocumentation,
+  convertTypeAliasEntityForTableOfContents,
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
@@ -38,6 +40,7 @@ import {
   isFunctionEntity,
   isInterfaceEntity,
   isNamespaceEntity,
+  isTypeAliasEntity,
   isVariableEntity
 } from "unwritten:typeguards/entities.js";
 import {
@@ -138,6 +141,8 @@ export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entit
     return convertVariableEntityForTableOfContents(ctx, entity);
   } else if(isNamespaceEntity(entity)){
     return convertNamespaceEntityForTableOfContents(ctx, entity);
+  } else if(isTypeAliasEntity(entity)){
+    return convertTypeAliasEntityForTableOfContents(ctx, entity);
   }
 
   throw new Error(`Unexpected entity kind: ${entity.kind}`);
@@ -155,6 +160,8 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
     return convertVariableEntityForDocumentation(ctx, entity);
   } else if(isNamespaceEntity(entity)){
     return convertNamespaceEntityForDocumentation(ctx, entity);
+  } else if(isTypeAliasEntity(entity)){
+    return convertTypeAliasEntityForDocumentation(ctx, entity);
   }
 
   throw new Error(`Unexpected entity kind: ${entity.kind}`);
