@@ -66,14 +66,14 @@ scope("Compiler", EntityKind.Property, () => {
          * Property description 
          * @example Property example
          */
-        property: "value"
+        property: "value",
       };
       export class Class {
         /** 
          * Property description 
          * @example Property example
          */
-        property: string;
+        property: string = "test";
       }
     `;
 

@@ -59,8 +59,13 @@ export function normalizeTSMap<T>(tsMap: Map<string, T> | TSMap<T>): Map<string,
 }
 
 //-- Symbol helpers
+
 /**
  * Resolves symbols from imports to their actual symbols.
+ *
+ * @param ctx - Compiler context
+ * @param symbol - Symbol to resolve
+ * @returns Resolved symbol
  */
 export function resolveSymbolInCaseOfImport(ctx: CompilerContext, symbol: Symbol): Symbol {
   if(isAliasedSymbol(symbol)){

@@ -14,7 +14,7 @@ export function renderNamespaceEntity(ctx: TypeScriptRenderContext, namespaceEnt
   const renderedIndentation = renderIndentation(ctx);
   const renderedEmptyLine = `${renderNewLine(ctx)}${renderNewLine(ctx)}`;
 
-  const renderedHeader = `${renderedIndentation}export namespace ${namespaceEntity.name} {`;
+  const renderedHeader = `${renderedIndentation}namespace ${namespaceEntity.name} {`;
   ctx.indentation++;
 
   const renderedBody = namespaceEntity.exports.map(

@@ -1,9 +1,17 @@
-import { renderFunctionLikeEntity } from "unwritten:renderer/typescript/ast/entities/function-like.js";
-import { renderTypeAliasEntity, renderVariableEntity } from "unwritten:renderer/typescript/ast/entities/index.js";
+import {
+  renderFunctionLikeEntity,
+  renderInterfaceEntity,
+  renderNamespaceEntity,
+  renderTypeAliasEntity,
+  renderVariableEntity
+} from "unwritten:renderer/typescript/ast/entities/index.js";
 import {
   renderAnyType,
   renderArrayType,
   renderBooleanLiteralType,
+  renderExpressionType,
+  renderFunctionType,
+  renderInterfaceType,
   renderIntersectionType,
   renderNeverType,
   renderNullType,
@@ -19,11 +27,20 @@ import {
   renderUnknownType,
   renderVoidType
 } from "unwritten:renderer/typescript/ast/types/index.js";
-import { isFunctionEntity, isTypeAliasEntity, isVariableEntity } from "unwritten:typeguards/entities.js";
+import {
+  isFunctionEntity,
+  isInterfaceEntity,
+  isNamespaceEntity,
+  isTypeAliasEntity,
+  isVariableEntity
+} from "unwritten:typeguards/entities.js";
 import {
   isAnyType,
   isArrayType,
   isBooleanLiteralType,
+  isExpressionType,
+  isFunctionType,
+  isInterfaceType,
   isIntersectionType,
   isNeverType,
   isNullType,
@@ -81,6 +98,12 @@ export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
     return renderTupleType(ctx, type);
   } else if(isTypeReferenceType(type)){
     return renderTypeReferenceType(ctx, type);
+  } else if(isExpressionType(type)){
+    return renderExpressionType(ctx, type);
+  } else if(isInterfaceType(type)){
+    return renderInterfaceType(ctx, type);
+  } else if(isFunctionType(type)){
+    return renderFunctionType(ctx, type);
   }
 
 }
@@ -93,6 +116,10 @@ export function renderEntity(ctx: TypeScriptRenderContext, entity: ExportableEnt
     return renderVariableEntity(ctx, entity);
   } else if(isTypeAliasEntity(entity)){
     return renderTypeAliasEntity(ctx, entity);
+  } else if(isInterfaceEntity(entity)){
+    return renderInterfaceEntity(ctx, entity);
+  } else if(isNamespaceEntity(entity)){
+    return renderNamespaceEntity(ctx, entity);
   }
 
 }

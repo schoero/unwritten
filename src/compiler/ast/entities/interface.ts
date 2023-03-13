@@ -78,7 +78,7 @@ function mergeMembers<Key extends keyof {
   [Key in keyof InterfaceEntity as InterfaceEntity[Key] extends any[] ? Key : never]: InterfaceEntity[Key]
 }>(interfaces: InterfaceEntity[], key: Key): InterfaceEntity[Key] {
   // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
-  return interfaces.reduce<Interface[Key]>((acc, declaration) => [
+  return interfaces.reduce<InterfaceEntity[Key]>((acc, declaration) => [
     ...acc,
     ...declaration[key]
   ], []);

@@ -269,12 +269,12 @@ export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
     description: ParagraphNode,
     remarks: ParagraphNode,
     example: ParagraphNode,
-    constructSignatures: ConvertedSignatureEntityForDocumentation[],
-    callSignatures: ConvertedSignatureEntityForDocumentation[],
-    properties: ConvertedPropertyEntityForDocumentation[],
-    methods: ConvertedSignatureEntityForDocumentation[],
-    setters: ConvertedSignatureEntityForDocumentation[],
-    getters: ConvertedSignatureEntityForDocumentation[]
+    constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+    methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
   ];
 }
 

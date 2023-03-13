@@ -9,6 +9,8 @@ import type {
   GetterEntity,
   InterfaceEntity,
   NamespaceEntity,
+  PropertyEntity,
+  SignatureEntity,
   TypeAliasEntity,
   VariableEntity
 } from "unwritten:compiler:type-definitions/entities.d.js";
@@ -46,6 +48,14 @@ export function isInterfaceEntity(entity: Entities): entity is InterfaceEntity {
 
 export function isNamespaceEntity(entity: Entities): entity is NamespaceEntity {
   return entity.kind === EntityKind.Namespace;
+}
+
+export function isPropertyEntity(entity: Entities): entity is PropertyEntity {
+  return entity.kind === EntityKind.Property;
+}
+
+export function isSignatureEntity(entity: Entities): entity is SignatureEntity {
+  return entity.kind === EntityKind.Signature;
 }
 
 export function isTypeAliasEntity(entity: Entities): entity is TypeAliasEntity {

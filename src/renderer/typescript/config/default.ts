@@ -6,7 +6,6 @@ export const defaultTypeScriptRenderConfig: Complete<TypeScriptRenderConfig> = {
   indentation: "  ",
   newLine: "\n",
   quote: "\"",
-  renderExportsKeyword: true,
   renderJSDoc: true,
   renderSemicolon: true,
   renderTypesInSignatures: true

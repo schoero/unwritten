@@ -55,6 +55,7 @@ scope("TypeScriptRenderer", EntityKind.Function, () => {
 
     it("should have only one signature", () => {
       expect(renderedSignatures).to.have.lengthOf(1);
+      expect(renderedSignatures[0]).to.equal("testFunction(): void");
     });
 
   }

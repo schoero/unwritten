@@ -10,6 +10,7 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
+import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
 
 import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -25,6 +26,8 @@ export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContex
 
 
 export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity): ConvertedInterfaceEntityForDocumentation {
+
+  const t = useTranslation(ctx);
 
   const name = interfaceEntity.name;
   const description = interfaceEntity.description ?? "";
@@ -50,12 +53,12 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
       createParagraphNode(description),
       createParagraphNode(remarks),
       createParagraphNode(example),
-      convertedConstructSignatures,
-      convertedCallSignatures,
-      convertedProperties,
-      convertedMethods,
-      convertedSetters,
-      convertedGetters
+      createTitleNode(t("construct-signature", { count: 99 }), undefined, convertedConstructSignatures),
+      createTitleNode(t("call-signature", { count: 99 }), undefined, convertedCallSignatures),
+      createTitleNode(t("property", { count: 99 }), undefined, convertedProperties),
+      createTitleNode(t("method", { count: 99 }), undefined, convertedMethods),
+      createTitleNode(t("setter", { count: 99 }), undefined, convertedSetters),
+      createTitleNode(t("getter", { count: 99 }), undefined, convertedGetters)
     ]
   );
 

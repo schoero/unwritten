@@ -1,7 +1,6 @@
 import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderNamespaceEntity } from "unwritten:renderer/typescript/ast/entities/namespace.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
@@ -19,23 +18,7 @@ scope("TypeScriptRenderer", EntityKind.Namespace, () => {
     // #region Entity
 
     const namespaceEntity: Testable<NamespaceEntity> = {
-      exports: [
-        {
-          description: undefined,
-          kind: EntityKind.TypeAlias,
-          name: "Test",
-          position: {
-            column: 2,
-            file: "/file.ts",
-            line: 2
-          },
-          type: {
-            kind: TypeKind.String,
-            name: "string"
-          },
-          typeParameters: undefined
-        }
-      ],
+      exports: [],
       kind: EntityKind.Namespace,
       name: "Namespace"
     };
@@ -47,15 +30,17 @@ scope("TypeScriptRenderer", EntityKind.Namespace, () => {
     const renderedNamespace = renderNamespaceEntity(ctx, namespaceEntity as NamespaceEntity);
     const renderedNamespaceLines = renderedNamespace.split(renderNewLine(ctx));
 
-
-    it("should have a matching title", () => {
-      expect(renderedFunctionForTableOfContents.children).to.equal("Namespace");
-      expect(renderedFunctionForDocumentation.title).to.equal("Namespace");
+    it("should have a matching header", () => {
+      expect(renderedNamespaceLines[0]).to.equal("namespace Namespace {");
     });
 
-    it("should have matching children", () => {
-      expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(1);
-      expect(renderedFunctionForDocumentation.children).to.have.lengthOf(1);
+    it("should have insert empty lines between exports", () => {
+      expect(renderedNamespaceLines[1]).to.equal("");
+      expect(renderedNamespaceLines[3]).to.equal("");
+    });
+
+    it("should have a matching footer", () => {
+      expect(renderedNamespaceLines[4]).to.equal("}");
     });
 
   }

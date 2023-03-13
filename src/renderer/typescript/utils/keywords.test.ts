@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { renderExportKeyword, renderQuote, renderSemicolon } from "unwritten:renderer/typescript/utils/keywords.js";
+import { renderQuote, renderSemicolon } from "unwritten:renderer/typescript/utils/keywords.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -9,13 +9,6 @@ import { scope } from "unwritten:tests:utils/scope.js";
 scope("TypeScriptRenderer", "utils", () => {
 
   const ctx = createRenderContext(BuiltInRenderers.TypeScript);
-
-  it("should the export keyword only of specified", () => {
-    ctx.config.renderConfig.ts.renderExportsKeyword = true;
-    expect(renderExportKeyword(ctx)).to.equal("export ");
-    ctx.config.renderConfig.ts.renderExportsKeyword = false;
-    expect(renderExportKeyword(ctx)).to.equal("");
-  });
 
   it("should the semicolon only of specified", () => {
     ctx.config.renderConfig.ts.renderSemicolon = true;

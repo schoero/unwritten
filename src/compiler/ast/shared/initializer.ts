@@ -1,12 +1,12 @@
 import { parseType } from "unwritten:compiler:ast/index.js";
 
-import type { ParameterDeclaration } from "typescript";
+import type { ParameterDeclaration, PropertyAssignment, PropertyDeclaration, PropertySignature } from "typescript";
 
 import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function getInitializerByDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration): Types | undefined {
+export function getInitializerByDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature): Types | undefined {
   if(declaration.initializer === undefined){
     return;
   }

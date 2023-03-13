@@ -1,4 +1,5 @@
 import { getIdByDeclaration, getIdBySymbol } from "unwritten:compiler/ast/shared/id.js";
+import { getInitializerByDeclaration } from "unwritten:compiler/ast/shared/initializer.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:compiler/ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:compiler/ast/shared/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:compiler/ast/shared/name.js";
@@ -66,6 +67,7 @@ function parsePropertyDeclaration(ctx: CompilerContext, declaration: ParameterDe
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
+  const initializer = getInitializerByDeclaration(ctx, declaration);
   const optional = declaration.questionToken !== undefined;
   const kind = EntityKind.Property;
 
@@ -74,6 +76,7 @@ function parsePropertyDeclaration(ctx: CompilerContext, declaration: ParameterDe
   return {
     description,
     id,
+    initializer,
     kind,
     modifiers,
     name,

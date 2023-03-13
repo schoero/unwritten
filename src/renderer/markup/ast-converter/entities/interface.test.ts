@@ -320,29 +320,184 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have one construct signature", () => {
-      expect(constructSignatures).to.have.lengthOf(1);
+      expect(constructSignatures.children).to.have.lengthOf(1);
     });
 
     it("should have one call signature", () => {
-      expect(callSignatures).to.have.lengthOf(1);
+      expect(callSignatures.children).to.have.lengthOf(1);
     });
 
     it("should have two properties", () => {
-      expect(properties).to.have.lengthOf(2);
+      expect(properties.children).to.have.lengthOf(2);
     });
 
     it("should have one method signature", () => {
-      expect(methods).to.have.lengthOf(2);
+      expect(methods.children).to.have.lengthOf(2);
     });
 
     it("should have one setter signature", () => {
-      expect(setters).to.have.lengthOf(1);
+      expect(setters.children).to.have.lengthOf(1);
     });
 
     it("should have one getter signature", () => {
-      expect(getters).to.have.lengthOf(1);
+      expect(getters.children).to.have.lengthOf(1);
     });
 
+  }
+
+  {
+
+    // #region Entity
+
+    const simpleInterface: Testable<InterfaceEntity> = {
+      callSignatures: [],
+      constructSignatures: [],
+      description: undefined,
+      getterSignatures: [],
+      heritage: [
+        {
+          id: 4455,
+          instanceType: {
+            callSignatures: [],
+            constructSignatures: [],
+            getters: [],
+            id: 2611,
+            isThis: false,
+            kind: TypeKind.Interface,
+            methods: [],
+            name: "Base",
+            position: {
+              column: 0,
+              file: "/file.ts",
+              line: 1
+            },
+            properties: [
+              {
+                description: undefined,
+                id: 4053,
+                kind: EntityKind.Property,
+                modifiers: [],
+                name: "prop",
+                optional: false,
+                position: {
+                  column: 2,
+                  file: "/file.ts",
+                  line: 2
+                },
+                type: {
+                  id: 15,
+                  kind: TypeKind.String,
+                  name: "string"
+                }
+              }
+            ],
+            setters: [],
+            typeParameters: undefined
+          },
+          kind: TypeKind.Expression,
+          name: "Base",
+          staticType: {
+            callSignatures: [],
+            constructSignatures: [],
+            getters: [],
+            id: 2611,
+            isThis: false,
+            kind: TypeKind.Interface,
+            methods: [],
+            name: "Base",
+            position: {
+              column: 0,
+              file: "/file.ts",
+              line: 1
+            },
+            properties: [
+              {
+                description: undefined,
+                id: 4053,
+                kind: EntityKind.Property,
+                modifiers: [],
+                name: "prop",
+                optional: false,
+                position: {
+                  column: 2,
+                  file: "/file.ts",
+                  line: 2
+                },
+                type: {
+                  id: 15,
+                  kind: TypeKind.String,
+                  name: "string"
+                }
+              }
+            ],
+            setters: [],
+            typeParameters: undefined
+          },
+          typeArguments: undefined
+        }
+      ],
+      id: 4054,
+      kind: EntityKind.Interface,
+      methodSignatures: [],
+      name: "Interface",
+      position: {
+        column: 0,
+        file: "/file.ts",
+        line: 4
+      },
+      properties: [
+        {
+          description: undefined,
+          id: 4055,
+          kind: EntityKind.Property,
+          modifiers: [],
+          name: "prop2",
+          optional: false,
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 5
+          },
+          type: {
+            id: 16,
+            kind: TypeKind.Number,
+            name: "number"
+          }
+        }
+      ],
+      setterSignatures: [],
+      typeParameters: undefined
+    };
+
+    // #endregion
+
+    const ctx = createRenderContext();
+
+    const convertedInterfaceForTableOfContents = convertInterfaceEntityForTableOfContents(ctx, simpleInterface as InterfaceEntity);
+    const convertedInterfaceForDocumentation = convertInterfaceEntityForDocumentation(ctx, simpleInterface as InterfaceEntity);
+
+    const [
+      position,
+      tags,
+      description,
+      remarks,
+      example,
+      constructSignatures,
+      callSignatures,
+      properties,
+      methods,
+      setters,
+      getters
+    ] = convertedInterfaceForDocumentation.children;
+
+    it("should have matching interface name", () => {
+      expect(convertedInterfaceForTableOfContents.children).to.equal("Interface");
+      expect(convertedInterfaceForDocumentation.title).to.equal("Interface");
+    });
+
+    it("should have one getter signature", () => {
+      expect(getters.children).to.have.lengthOf(1);
+    });
 
   }
 

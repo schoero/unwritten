@@ -45,7 +45,7 @@ scope("TypeScriptRenderer", EntityKind.Signature, () => {
     const renderedSignature = renderSignatureEntity(ctx, signatureEntity as SignatureEntity);
 
     it("should render signatures correctly", () => {
-      expect(renderedSignature).to.equal("testSignature(): void;");
+      expect(renderedSignature).to.equal("testSignature(): void");
     });
 
   }

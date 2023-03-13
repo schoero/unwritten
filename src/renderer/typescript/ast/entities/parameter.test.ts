@@ -43,7 +43,7 @@ scope("TypeScriptRenderer", EntityKind.Parameter, () => {
     const ctx = createRenderContext(BuiltInRenderers.TypeScript);
     const renderedParameter = renderParameterEntity(ctx, parameterEntity as ParameterEntity);
 
-    it("should have a matching type", () => {
+    it("should render a single parameter correctly", () => {
       expect(renderedParameter).to.equal("parameter: number");
     });
 

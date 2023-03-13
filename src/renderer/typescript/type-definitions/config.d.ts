@@ -9,9 +9,6 @@ export interface TypeScriptRenderConfig {
   /** Quote character */
   quote?: "'" | "\"";
 
-  /** Whether the `export` keyword should be rendered */
-  renderExportsKeyword?: boolean;
-
   /** Whether meta information, such as description, example etc. should be rendered */
   renderJSDoc?: boolean;
 

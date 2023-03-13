@@ -6,8 +6,8 @@ import type { CategoryNames } from "./renderer.js";
 export interface MarkupRenderConfig {
 
   /**
-    * Defines the title of the categories for the rendered entities.
-    */
+   * Defines the title of the categories for the rendered entities.
+   */
   categoryNames?: CategoryNames;
 
   /** Indentation characters */
@@ -33,8 +33,8 @@ export interface MarkupRenderConfig {
   removeHyphenAtStartOfTag?: boolean;
 
   /**
-    * Defines the order in which entities should be rendered.
-    */
+   * Defines the order in which entities should be rendered.
+   */
   renderOrder?: ExportableEntityKinds[];
 
   /**
@@ -51,8 +51,12 @@ export interface MarkupRenderConfig {
   translations?: {
     abstract?: string;
     beta?: string;
+    "call-signature_one"?: string;
+    "call-signature_other"?: string;
     class_one?: string;
     class_other?: string;
+    "construct-signature_one"?: string;
+    "construct-signature_other"?: string;
     constructor_one?: string;
     constructor_other?: string;
     default?: string;

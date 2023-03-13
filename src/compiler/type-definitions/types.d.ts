@@ -194,6 +194,7 @@ export interface TypeReferenceType extends Type<TypeKind.TypeReference> {
 export interface ExpressionType extends Type<TypeKind.Expression> {
   instanceType: Types;
   staticType: Types;
+  /** @deprecated Expressions should render the type instead of rendering the name */
   name?: Name;
   position?: Position;
   typeArguments?: Types[];

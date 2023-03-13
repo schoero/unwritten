@@ -65,12 +65,61 @@ scope("Compiler", TypeKind.Expression, () => {
 
     const testFileContent = ts`
       class Base {
+        public memberProp?: string;
       }
+
+      class Base2 {
+        static staticProp?: string;
+      }
+
       function getBase() {
-          return Base
+        return Math.random() > 0.5 ? Base2 : Base;
       }
-      export class Class extends getBase() {
+
+      export class Class extends getBase() {}
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const exportedClass = createClassEntity(ctx, symbol);
+
+    // TypeScript doesn't support inferring from a union of classes yet
+    it.skip("should be able to parse call expressions", () => {
+      expect(exportedClass.heritage).to.not.equal(undefined);
+      expect(exportedClass.heritage!.kind).to.equal(TypeKind.Expression);
+      assert(exportedClass.heritage!.instanceType.kind === TypeKind.Union);
+      assert(exportedClass.heritage!.staticType.kind === TypeKind.Union);
+      expect(exportedClass.heritage!.instanceType.types).to.have.lengthOf(2);
+      expect(exportedClass.heritage!.staticType.types).to.have.lengthOf(2);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      class Base {
+        prop?: string;
       }
+
+      class Base2 {
+        prop?: number;
+      }
+
+      interface Bases {
+        prop?: string | number;
+      }
+
+      interface BasesConstructor {
+        new (): Bases;
+      }
+
+      function getBase(): BasesConstructor {
+        return Math.random() >= 0.5 ? Base : Base2;
+      }
+
+      export class Class extends getBase() {}
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);
@@ -81,9 +130,11 @@ scope("Compiler", TypeKind.Expression, () => {
     it("should be able to parse call expressions", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.kind).to.equal(TypeKind.Expression);
-      expect(exportedClass.heritage!.instanceType.kind).to.equal(TypeKind.Object);
-      expect(exportedClass.heritage!.staticType.kind).to.equal(TypeKind.Object);
-      expect(exportedClass.heritage!.name).to.equal("Base");
+      assert(exportedClass.heritage!.instanceType.kind === TypeKind.Interface);
+      assert(exportedClass.heritage!.staticType.kind === TypeKind.Interface);
+      expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(0);
+      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.Union);
     });
 
   }

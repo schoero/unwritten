@@ -10,6 +10,7 @@ import type {
   ClassType,
   ExpressionType,
   FunctionType,
+  InterfaceType,
   IntersectionType,
   LiteralTypes,
   NeverType,
@@ -67,6 +68,10 @@ export function isExpressionType(type: Types): type is ExpressionType {
 
 export function isFunctionType(type: Types): type is FunctionType {
   return type.kind === TypeKind.Function;
+}
+
+export function isInterfaceType(type: Types): type is InterfaceType {
+  return type.kind === TypeKind.Interface;
 }
 
 export function isIntersectionType(type: Types): type is IntersectionType {

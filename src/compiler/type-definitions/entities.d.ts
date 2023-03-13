@@ -91,6 +91,7 @@ export interface PropertyEntity extends Entity<EntityKind.Property>, JSDocTags {
   optional: boolean;
   type: Types;
   description?: Description;
+  initializer?: Types;
   position?: Position;
 }
 

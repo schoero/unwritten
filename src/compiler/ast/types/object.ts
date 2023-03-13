@@ -1,4 +1,5 @@
 import { getIdByType } from "unwritten:compiler/ast/shared/id.js";
+import { getNameByType } from "unwritten:compiler/ast/shared/name.js";
 import { getPositionByType } from "unwritten:compiler/ast/shared/position.js";
 import {
   createGetterEntity,
@@ -29,9 +30,6 @@ export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKi
   const tsCallSignatures = type.getCallSignatures();
   const tsProperties = type.getProperties();
 
-
-  //-- Object type
-
   const getterProperties = tsProperties.filter(isGetterSymbol);
   const setterProperties = tsProperties.filter(isSetterSymbol);
   const propertyProperties = tsProperties.filter(isPropertySymbol);
@@ -45,6 +43,7 @@ export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKi
   const setters = setterProperties.map(property => createSetterEntity(ctx, property));
   const properties = propertyProperties.map(property => createPropertyEntity(ctx, property));
 
+  const name = getNameByType(ctx, type);
   const id = getIdByType(ctx, type);
   const position = getPositionByType(ctx, type);
   const isThis = isThisType(type);
@@ -57,6 +56,7 @@ export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKi
     isThis,
     kind,
     methods,
+    name,
     position,
     properties,
     setters

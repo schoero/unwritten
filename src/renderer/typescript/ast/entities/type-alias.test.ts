@@ -79,7 +79,7 @@ scope("TypeScriptRenderer", EntityKind.TypeAlias, () => {
     const renderedTypeAlias = renderTypeAliasEntity(ctx, typeAliasEntity as TypeAliasEntity);
 
     it("should render type alias correctly", () => {
-      expect(renderedTypeAlias).to.equal("export type TypeAlias<A extends number = 7> = A;");
+      expect(renderedTypeAlias).to.equal("type TypeAlias<A extends number = 7> = A;");
     });
 
   }
