@@ -19,12 +19,28 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
   {
 
-    // #region Entity
+    // #region Entity with all possible members
+
+    // #region Source
+
+    // export interface Interface {
+    //   (): void;
+    //   new (): void;
+    //   method(a: number): void;
+    //   method(a: string): void;
+    //   prop: string;
+    //   funcProp: () => void;
+    //   get getter(): string;
+    //   set setter(value: string);
+    // }
+
+    // #endregion
 
     const simpleInterface: Testable<InterfaceEntity> = {
       callSignatures: [
         {
           description: undefined,
+          id: 4455,
           kind: EntityKind.Signature,
           modifiers: [],
           name: undefined,
@@ -32,10 +48,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 7
+            line: 2
           },
           returnType: {
             description: undefined,
+            id: 24,
             kind: TypeKind.Void,
             name: "void"
           },
@@ -45,9 +62,33 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       constructSignatures: [
         {
           description: undefined,
+          id: 4456,
           kind: EntityKind.Signature,
           modifiers: [],
           name: undefined,
+          parameters: [],
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 3
+          },
+          returnType: {
+            description: undefined,
+            id: 24,
+            kind: TypeKind.Void,
+            name: "void"
+          },
+          typeParameters: undefined
+        }
+      ],
+      description: undefined,
+      getterSignatures: [
+        {
+          description: undefined,
+          id: 4460,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: "getter",
           parameters: [],
           position: {
             column: 2,
@@ -56,28 +97,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
           },
           returnType: {
             description: undefined,
-            kind: TypeKind.Void,
-            name: "void"
-          },
-          typeParameters: undefined
-        }
-      ],
-      description: "Interface description",
-      example: "Interface example",
-      getterSignatures: [
-        {
-          description: undefined,
-          kind: EntityKind.Signature,
-          modifiers: [],
-          name: "getter",
-          parameters: [],
-          position: {
-            column: 2,
-            file: "/file.ts",
-            line: 13
-          },
-          returnType: {
-            description: undefined,
+            id: 15,
             kind: TypeKind.String,
             name: "string"
           },
@@ -85,16 +105,19 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
         }
       ],
       heritage: undefined,
+      id: 4052,
       kind: EntityKind.Interface,
       methodSignatures: [
         {
           description: undefined,
+          id: 4458,
           kind: EntityKind.Signature,
           modifiers: [],
           name: "method",
           parameters: [
             {
               description: undefined,
+              id: 4053,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "a",
@@ -102,10 +125,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
               position: {
                 column: 9,
                 file: "/file.ts",
-                line: 9
+                line: 4
               },
               rest: false,
               type: {
+                id: 16,
                 kind: TypeKind.Number,
                 name: "number"
               }
@@ -114,10 +138,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 9
+            line: 4
           },
           returnType: {
             description: undefined,
+            id: 24,
             kind: TypeKind.Void,
             name: "void"
           },
@@ -125,12 +150,14 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
         },
         {
           description: undefined,
+          id: 4459,
           kind: EntityKind.Signature,
           modifiers: [],
           name: "method",
           parameters: [
             {
               description: undefined,
+              id: 4054,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "a",
@@ -138,10 +165,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
               position: {
                 column: 9,
                 file: "/file.ts",
-                line: 10
+                line: 5
               },
               rest: false,
               type: {
+                id: 15,
                 kind: TypeKind.String,
                 name: "string"
               }
@@ -150,10 +178,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 10
+            line: 5
           },
           returnType: {
             description: undefined,
+            id: 24,
             kind: TypeKind.Void,
             name: "void"
           },
@@ -164,11 +193,13 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       position: {
         column: 0,
         file: "/file.ts",
-        line: 6
+        line: 1
       },
       properties: [
         {
           description: undefined,
+          id: 4055,
+          initializer: undefined,
           kind: EntityKind.Property,
           modifiers: [],
           name: "prop",
@@ -176,15 +207,18 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 11
+            line: 6
           },
           type: {
+            id: 15,
             kind: TypeKind.String,
             name: "string"
           }
         },
         {
           description: undefined,
+          id: 4056,
+          initializer: undefined,
           kind: EntityKind.Property,
           modifiers: [],
           name: "funcProp",
@@ -192,13 +226,15 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 12
+            line: 7
           },
           type: {
+            id: 2612,
             kind: TypeKind.Function,
             signatures: [
               {
                 description: undefined,
+                id: 4457,
                 kind: EntityKind.Signature,
                 modifiers: [],
                 name: undefined,
@@ -206,10 +242,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
                 position: {
                   column: 12,
                   file: "/file.ts",
-                  line: 12
+                  line: 7
                 },
                 returnType: {
                   description: undefined,
+                  id: 24,
                   kind: TypeKind.Void,
                   name: "void"
                 },
@@ -219,16 +256,17 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
           }
         }
       ],
-      remarks: "Interface remarks",
       setterSignatures: [
         {
           description: undefined,
+          id: 4461,
           kind: EntityKind.Signature,
           modifiers: [],
           name: "setter",
           parameters: [
             {
               description: undefined,
+              id: 4059,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "value",
@@ -236,10 +274,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
               position: {
                 column: 13,
                 file: "/file.ts",
-                line: 14
+                line: 9
               },
               rest: false,
               type: {
+                id: 15,
                 kind: TypeKind.String,
                 name: "string"
               }
@@ -248,10 +287,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 14
+            line: 9
           },
           returnType: {
             description: undefined,
+            id: 1,
             kind: TypeKind.Any,
             name: "any"
           },
@@ -267,9 +307,6 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     const convertedInterfaceForTableOfContents = convertInterfaceEntityForTableOfContents(ctx, simpleInterface as InterfaceEntity);
     const convertedInterfaceForDocumentation = convertInterfaceEntityForDocumentation(ctx, simpleInterface as InterfaceEntity);
-
-    const renderedInterfaceForTableOfContents = renderNode(ctx, convertedInterfaceForTableOfContents);
-    const renderedInterfaceForDocumentation = renderNode(ctx, convertedInterfaceForDocumentation);
 
     const [
       position,
@@ -288,24 +325,6 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     it("should have matching interface name", () => {
       expect(convertedInterfaceForTableOfContents.children).to.equal("Interface");
       expect(convertedInterfaceForDocumentation.title).to.equal("Interface");
-    });
-
-    it("should have a matching description", () => {
-      expect(isParagraphNode(description)).to.equal(true);
-      const renderedDescription = renderNode(ctx, description.children);
-      expect(renderedDescription).to.equal("Interface description");
-    });
-
-    it("should have no remarks", () => {
-      expect(isParagraphNode(remarks)).to.equal(true);
-      const renderedRemarks = renderNode(ctx, remarks.children);
-      expect(renderedRemarks).to.equal("Interface remarks");
-    });
-
-    it("should have no example", () => {
-      expect(isParagraphNode(example)).to.equal(true);
-      const renderedExample = renderNode(ctx, example.children);
-      expect(renderedExample).to.equal("Interface example");
     });
 
     it("should have a position", () => {
@@ -347,125 +366,351 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
   {
 
-    // #region Entity
+    // #region Entity with JSDoc tags
+
+    // #region Source
+
+    // /**
+    //  * Interface description
+    //  *
+    //  * @example Interface example
+    //  * @remarks Interface remarks
+    //  * @beta
+    //  * @deprecated Interface Deprecation message
+    //  */
+    // export interface Interface {
+    //   /**
+    //    * Call signature description
+    //    *
+    //    * @example Call signature example
+    //    * @remarks Call signature remarks
+    //    * @beta
+    //    * @deprecated Call signature deprecation message
+    //    */
+    //   (): void;
+    //   new (): void;
+    //   funcProp: () => void;
+    //   get getter(): string;
+    //   method: ((a: number) => void) & ((a: string) => void);
+    //   /**
+    //    * Property description
+    //    *
+    //    * @example Property example
+    //    * @remarks Property remarks
+    //    * @beta
+    //    * @deprecated Property deprecation message
+    //    */
+    //   prop: string;
+    //   set setter(value: string);
+    // }
+
+    // #endregion
 
     const simpleInterface: Testable<InterfaceEntity> = {
-      callSignatures: [],
-      constructSignatures: [],
-      description: undefined,
-      getterSignatures: [],
-      heritage: [
+      beta: undefined,
+      callSignatures: [
         {
+          beta: undefined,
+          deprecated: "Call signature deprecation message",
+          description: "Call signature description",
+          example: "Call signature example",
           id: 4455,
-          instanceType: {
-            callSignatures: [],
-            constructSignatures: [],
-            getters: [],
-            id: 2611,
-            isThis: false,
-            kind: TypeKind.Interface,
-            methods: [],
-            name: "Base",
-            position: {
-              column: 0,
-              file: "/file.ts",
-              line: 1
-            },
-            properties: [
-              {
-                description: undefined,
-                id: 4053,
-                kind: EntityKind.Property,
-                modifiers: [],
-                name: "prop",
-                optional: false,
-                position: {
-                  column: 2,
-                  file: "/file.ts",
-                  line: 2
-                },
-                type: {
-                  id: 15,
-                  kind: TypeKind.String,
-                  name: "string"
-                }
-              }
-            ],
-            setters: [],
-            typeParameters: undefined
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: undefined,
+          parameters: [],
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 18
           },
-          kind: TypeKind.Expression,
-          name: "Base",
-          staticType: {
-            callSignatures: [],
-            constructSignatures: [],
-            getters: [],
-            id: 2611,
-            isThis: false,
-            kind: TypeKind.Interface,
-            methods: [],
-            name: "Base",
-            position: {
-              column: 0,
-              file: "/file.ts",
-              line: 1
-            },
-            properties: [
-              {
-                description: undefined,
-                id: 4053,
-                kind: EntityKind.Property,
-                modifiers: [],
-                name: "prop",
-                optional: false,
-                position: {
-                  column: 2,
-                  file: "/file.ts",
-                  line: 2
-                },
-                type: {
-                  id: 15,
-                  kind: TypeKind.String,
-                  name: "string"
-                }
-              }
-            ],
-            setters: [],
-            typeParameters: undefined
+          remarks: "Call signature remarks",
+          returnType: {
+            description: undefined,
+            id: 24,
+            kind: TypeKind.Void,
+            name: "void"
           },
-          typeArguments: undefined
+          typeParameters: undefined
         }
       ],
-      id: 4054,
+      constructSignatures: [
+        {
+          description: undefined,
+          id: 4456,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: undefined,
+          parameters: [],
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 19
+          },
+          returnType: {
+            description: undefined,
+            id: 24,
+            kind: TypeKind.Void,
+            name: "void"
+          },
+          typeParameters: undefined
+        }
+      ],
+      deprecated: "Interface Deprecation message",
+      description: "Interface description",
+      example: "Interface example",
+      getterSignatures: [
+        {
+          description: undefined,
+          id: 4461,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: "getter",
+          parameters: [],
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 21
+          },
+          returnType: {
+            description: undefined,
+            id: 15,
+            kind: TypeKind.String,
+            name: "string"
+          },
+          typeParameters: undefined
+        }
+      ],
+      heritage: undefined,
+      id: 4052,
       kind: EntityKind.Interface,
       methodSignatures: [],
       name: "Interface",
       position: {
         column: 0,
         file: "/file.ts",
-        line: 4
+        line: 9
       },
       properties: [
         {
           description: undefined,
-          id: 4055,
+          id: 4053,
+          initializer: undefined,
           kind: EntityKind.Property,
           modifiers: [],
-          name: "prop2",
+          name: "funcProp",
           optional: false,
           position: {
             column: 2,
             file: "/file.ts",
-            line: 5
+            line: 20
           },
           type: {
-            id: 16,
-            kind: TypeKind.Number,
-            name: "number"
+            id: 2612,
+            kind: TypeKind.Function,
+            signatures: [
+              {
+                description: undefined,
+                id: 4457,
+                kind: EntityKind.Signature,
+                modifiers: [],
+                name: undefined,
+                parameters: [],
+                position: {
+                  column: 12,
+                  file: "/file.ts",
+                  line: 20
+                },
+                returnType: {
+                  description: undefined,
+                  id: 24,
+                  kind: TypeKind.Void,
+                  name: "void"
+                },
+                typeParameters: undefined
+              }
+            ]
+          }
+        },
+        {
+          description: undefined,
+          id: 4060,
+          initializer: undefined,
+          kind: EntityKind.Property,
+          modifiers: [],
+          name: "method",
+          optional: false,
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 22
+          },
+          type: {
+            id: 2615,
+            kind: TypeKind.Intersection,
+            types: [
+              {
+                id: 2613,
+                kind: TypeKind.Function,
+                signatures: [
+                  {
+                    description: undefined,
+                    id: 4459,
+                    kind: EntityKind.Signature,
+                    modifiers: [],
+                    name: undefined,
+                    parameters: [
+                      {
+                        description: undefined,
+                        id: 4056,
+                        initializer: undefined,
+                        kind: EntityKind.Parameter,
+                        name: "a",
+                        optional: false,
+                        position: {
+                          column: 12,
+                          file: "/file.ts",
+                          line: 22
+                        },
+                        rest: false,
+                        type: {
+                          id: 16,
+                          kind: TypeKind.Number,
+                          name: "number"
+                        }
+                      }
+                    ],
+                    position: {
+                      column: 11,
+                      file: "/file.ts",
+                      line: 22
+                    },
+                    returnType: {
+                      description: undefined,
+                      id: 24,
+                      kind: TypeKind.Void,
+                      name: "void"
+                    },
+                    typeParameters: undefined
+                  }
+                ]
+              },
+              {
+                id: 2614,
+                kind: TypeKind.Function,
+                signatures: [
+                  {
+                    description: undefined,
+                    id: 4460,
+                    kind: EntityKind.Signature,
+                    modifiers: [],
+                    name: undefined,
+                    parameters: [
+                      {
+                        description: undefined,
+                        id: 4057,
+                        initializer: undefined,
+                        kind: EntityKind.Parameter,
+                        name: "a",
+                        optional: false,
+                        position: {
+                          column: 36,
+                          file: "/file.ts",
+                          line: 22
+                        },
+                        rest: false,
+                        type: {
+                          id: 15,
+                          kind: TypeKind.String,
+                          name: "string"
+                        }
+                      }
+                    ],
+                    position: {
+                      column: 35,
+                      file: "/file.ts",
+                      line: 22
+                    },
+                    returnType: {
+                      description: undefined,
+                      id: 24,
+                      kind: TypeKind.Void,
+                      name: "void"
+                    },
+                    typeParameters: undefined
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          beta: undefined,
+          deprecated: "Property deprecation message",
+          description: "Property description",
+          example: "Property example",
+          id: 4061,
+          initializer: undefined,
+          kind: EntityKind.Property,
+          modifiers: [],
+          name: "prop",
+          optional: false,
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 31
+          },
+          remarks: "Property remarks",
+          type: {
+            id: 15,
+            kind: TypeKind.String,
+            name: "string"
           }
         }
       ],
-      setterSignatures: [],
+      remarks: "Interface remarks",
+      setterSignatures: [
+        {
+          description: undefined,
+          id: 4462,
+          kind: EntityKind.Signature,
+          modifiers: [],
+          name: "setter",
+          parameters: [
+            {
+              description: undefined,
+              id: 4062,
+              initializer: undefined,
+              kind: EntityKind.Parameter,
+              name: "value",
+              optional: false,
+              position: {
+                column: 13,
+                file: "/file.ts",
+                line: 32
+              },
+              rest: false,
+              type: {
+                id: 15,
+                kind: TypeKind.String,
+                name: "string"
+              }
+            }
+          ],
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 32
+          },
+          returnType: {
+            description: undefined,
+            id: 1,
+            kind: TypeKind.Any,
+            name: "any"
+          },
+          typeParameters: undefined
+        }
+      ],
       typeParameters: undefined
     };
 
@@ -473,15 +718,14 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     const ctx = createRenderContext();
 
-    const convertedInterfaceForTableOfContents = convertInterfaceEntityForTableOfContents(ctx, simpleInterface as InterfaceEntity);
     const convertedInterfaceForDocumentation = convertInterfaceEntityForDocumentation(ctx, simpleInterface as InterfaceEntity);
 
     const [
-      position,
-      tags,
-      description,
-      remarks,
-      example,
+      interfacePosition,
+      interfaceTags,
+      interfaceDescription,
+      interfaceRemarks,
+      interfaceExample,
       constructSignatures,
       callSignatures,
       properties,
@@ -490,13 +734,87 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       getters
     ] = convertedInterfaceForDocumentation.children;
 
-    it("should have matching interface name", () => {
-      expect(convertedInterfaceForTableOfContents.children).to.equal("Interface");
-      expect(convertedInterfaceForDocumentation.title).to.equal("Interface");
+    const [
+      callSignaturePosition,
+      callSignatureTags,
+      callSignatureParameters,
+      callSignatureDescription,
+      callSignatureRemarks,
+      callSignatureExample
+    ] = callSignatures.children[0].children;
+
+    const [
+      propertyPosition,
+      propertyTags,
+      propertyType,
+      propertyDescription,
+      propertyRemarks,
+      propertyExample
+    ] = properties.children[2].children;
+
+    it("should have a matching interface description", () => {
+      expect(interfaceDescription.children[0]).to.equal("Interface description");
     });
 
-    it("should have one getter signature", () => {
-      expect(getters.children).to.have.lengthOf(1);
+    it("should have a matching interface remarks", () => {
+      expect(interfaceRemarks.children[0]).to.equal("Interface remarks");
+    });
+
+    it("should have a matching interface example", () => {
+      expect(interfaceExample.children[0]).to.equal("Interface example");
+    });
+
+    it("should have a interface position", () => {
+      expect(interfacePosition).to.not.equal(undefined);
+    });
+
+    it("should have a interface tags", () => {
+      expect(interfaceTags.children[0]).to.include("beta");
+      expect(interfaceTags.children[0]).to.include("deprecated");
+    });
+
+
+    it("should have a matching call signature description", () => {
+      expect(callSignatureDescription.children[0]).to.equal("Call signature description");
+    });
+
+    it("should have a matching call signature remarks", () => {
+      expect(callSignatureRemarks.children[0]).to.equal("Call signature remarks");
+    });
+
+    it("should have a matching call signature example", () => {
+      expect(callSignatureExample.children[0]).to.equal("Call signature example");
+    });
+
+    it("should have a call signature position", () => {
+      expect(callSignaturePosition).to.not.equal(undefined);
+    });
+
+    it("should have a call signature tags", () => {
+      expect(callSignatureTags.children[0]).to.include("beta");
+      expect(callSignatureTags.children[0]).to.include("deprecated");
+    });
+
+
+    it("should have a matching property description", () => {
+      expect(propertyDescription.children[0]).to.equal("Property description");
+    });
+
+    it("should have a matching property remarks", () => {
+      expect(propertyRemarks.children[0]).to.equal("Property remarks");
+    });
+
+    it("should have a matching property example", () => {
+      expect(propertyExample.children[0]).to.equal("Property example");
+    });
+
+    it("should have a property position", () => {
+      expect(propertyPosition).to.not.equal(undefined);
+    });
+
+    it("should have a property tags", () => {
+      expect(propertyTags.children[0]).to.include("beta");
+      expect(propertyTags.children[0]).to.include("deprecated");
     });
 
   }

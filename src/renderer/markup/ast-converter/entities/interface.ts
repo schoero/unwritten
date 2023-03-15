@@ -11,6 +11,10 @@ import {
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
 import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import {
+  extendInterfacePropertiesWithHeritage,
+  extendInterfaceSignaturesWithHeritage
+} from "unwritten:renderer/utils/heritage.js";
 
 import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -37,12 +41,19 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const position = interfaceEntity.position ? convertPosition(ctx, interfaceEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, interfaceEntity);
 
-  const convertedCallSignatures = interfaceEntity.callSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedConstructSignatures = interfaceEntity.constructSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedProperties = interfaceEntity.properties.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
-  const convertedSetters = interfaceEntity.setterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedGetters = interfaceEntity.getterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedMethods = interfaceEntity.methodSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const properties = extendInterfacePropertiesWithHeritage(interfaceEntity);
+  const constructSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "constructSignatures");
+  const callSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "callSignatures");
+  const methodSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "methodSignatures");
+  const setterSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "setterSignatures");
+  const getterSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "getterSignatures");
+
+  const convertedProperties = properties.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
+  const convertedConstructSignatures = constructSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedCallSignatures = callSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedSetters = setterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedGetters = getterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedMethods = methodSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
 
   return createTitleNode(
     name,

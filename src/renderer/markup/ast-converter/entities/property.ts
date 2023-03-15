@@ -53,10 +53,10 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
     propertyEntity.id,
     [
       createSmallNode(position),
-      createParagraphNode([
+      createParagraphNode(
         jsdocTags,
         optional
-      ]),
+      ),
       createParagraphNode(type),
       createParagraphNode(description),
       createParagraphNode(remarks),

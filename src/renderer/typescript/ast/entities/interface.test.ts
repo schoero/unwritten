@@ -706,7 +706,7 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
 
   {
 
-    // #region Entity with single heritage and overwritten property
+    // #region Entity with single heritage and overridden property
 
     /*
     interface InterfaceA {

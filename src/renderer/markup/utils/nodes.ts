@@ -22,8 +22,7 @@ export function createAnchorNode(children: string, id: string): AnchorNode {
   };
 }
 
-
-export function createBoldNode(children: string): BoldNode {
+export function createBoldNode(...children: ASTNodes[]): BoldNode {
   return {
     children,
     kind: ASTNodeKinds.Bold
@@ -37,7 +36,7 @@ export function createContainerNode<T extends ASTNodes[]>(...children: T) {
   } as const;
 }
 
-export function createItalicNode(children: string): ItalicNode {
+export function createItalicNode(...children: ASTNodes[]): ItalicNode {
   return {
     children,
     kind: ASTNodeKinds.Italic

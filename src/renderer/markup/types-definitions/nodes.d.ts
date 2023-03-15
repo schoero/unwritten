@@ -33,6 +33,7 @@ export interface ListNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTN
 }
 
 export interface ParagraphNode extends ASTNode<ASTNodeKinds.Paragraph> {
+  children: ASTNodes[];
 }
 
 export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title> {
@@ -49,13 +50,17 @@ export interface LinkNode extends ASTNode<ASTNodeKinds.Link> {
 }
 
 export interface SmallNode extends ASTNode<ASTNodeKinds.Small> {
+  children: ASTNodes[];
 }
 
 export interface BoldNode extends ASTNode<ASTNodeKinds.Bold> {
+  children: ASTNodes[];
 }
 
 export interface ItalicNode extends ASTNode<ASTNodeKinds.Italic> {
+  children: ASTNodes[];
 }
 
 export interface StrikethroughNode extends ASTNode<ASTNodeKinds.Strikethrough> {
+  children: ASTNodes[];
 }

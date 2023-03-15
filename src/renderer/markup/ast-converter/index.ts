@@ -18,6 +18,7 @@ import {
   convertBooleanLiteralType,
   convertBooleanType,
   convertFunctionType,
+  convertIntersectionType,
   convertNeverType,
   convertNullType,
   convertNumberLiteralType,
@@ -51,6 +52,7 @@ import {
   isBooleanLiteralType,
   isBooleanType,
   isFunctionType,
+  isIntersectionType,
   isNeverType,
   isNullType,
   isNumberLiteralType,
@@ -116,6 +118,8 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
     return convertUndefinedType(ctx, type);
   } else if(isUnionType(type)){
     return convertUnionType(ctx, type);
+  } else if(isIntersectionType(type)){
+    return convertIntersectionType(ctx, type);
   } else if(isUnknownType(type)){
     return convertUnknownType(ctx, type);
   } else if(isVoidType(type)){
