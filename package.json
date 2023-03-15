@@ -42,12 +42,12 @@
   },
   "devDependencies": {
     "@schoero/cspell-config": "^1.6.9",
-    "@schoero/eslint-config": "^1.35.5",
+    "@schoero/eslint-config": "^1.35.6",
     "@schoero/markdownlint-config": "^1.1.4",
     "@schoero/ts-config": "^0.3.2",
     "@schoero/vite-config": "^0.0.17",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^18.15.2",
+    "@types/node": "^18.15.3",
     "eslint-plugin-sort-exports": "^0.8.0",
     "ts-json-schema-generator": "^1.2.0"
   },
