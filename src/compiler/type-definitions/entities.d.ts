@@ -251,9 +251,11 @@ export interface MemberEntity extends Entity<EntityKind.Member>, JSDocTags {
 
 //-- Module
 
-export interface ModuleEntity extends Entity<EntityKind.Module> {
+export interface ModuleEntity extends Entity<EntityKind.Module>, JSDocTags {
   exports: ExportableEntities[];
   name: Name;
+  description?: Description;
+  position?: Position;
 }
 
 
@@ -267,9 +269,11 @@ export interface SourceFileEntity extends Entity<EntityKind.SourceFile> {
 
 //-- Namespace
 
-export interface NamespaceEntity extends Entity<EntityKind.Namespace> {
+export interface NamespaceEntity extends Entity<EntityKind.Namespace>, JSDocTags {
   exports: ExportableEntities[];
   name: Name;
+  description?: Description;
+  position?: Position;
 }
 
 

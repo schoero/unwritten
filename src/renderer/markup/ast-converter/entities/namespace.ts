@@ -2,7 +2,14 @@ import {
   convertEntityForDocumentation,
   convertEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/index.js";
-import { createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
+import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
+import {
+  createContainerNode,
+  createParagraphNode,
+  createSmallNode,
+  createTitleNode
+} from "unwritten:renderer/markup/utils/nodes.js";
 
 import type { NamespaceEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -33,12 +40,28 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
   const name = namespaceEntity.name;
   const id = namespaceEntity.id;
 
+  const description = namespaceEntity.description ?? "";
+  const remarks = namespaceEntity.remarks ?? "";
+  const example = namespaceEntity.example ?? "";
+
+  const position = namespaceEntity.position ? convertPosition(ctx, namespaceEntity.position) : "";
+  const jsdocTags = convertJSDocTags(ctx, namespaceEntity);
+
   const children = namespaceEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
 
   return createTitleNode(
     name,
     id,
-    children
+    [
+      createSmallNode(position),
+      createParagraphNode(jsdocTags),
+      createParagraphNode(description),
+      createParagraphNode(remarks),
+      createParagraphNode(example),
+      createContainerNode(
+        ...children
+      )
+    ]
   );
 
 }

@@ -1,7 +1,6 @@
 import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { TypeKind } from "unwritten:compiler:enums/types.js";
 import {
   convertModuleEntityForDocumentation,
   convertModuleEntityForTableOfContents
@@ -19,43 +18,83 @@ scope("MarkupRenderer", EntityKind.Module, () => {
 
     // #region Entity
 
-    const testFunction: Testable<ModuleEntity> = {
-      exports: [
-        {
-          description: undefined,
-          kind: EntityKind.TypeAlias,
-          name: "Test",
-          position: {
-            column: 2,
-            file: "/file.ts",
-            line: 2
-          },
-          type: {
-            kind: TypeKind.String,
-            name: "string"
-          },
-          typeParameters: undefined
-        }
-      ],
+    const moduleEntity: Testable<ModuleEntity> = {
+      beta: undefined,
+      deprecated: undefined,
+      description: "Module description",
+      example: "Module example",
+      exports: [],
+      id: 4053,
       kind: EntityKind.Module,
-      name: "Module"
+      name: "Module",
+      position: {
+        column: 4,
+        file: "/file.ts",
+        line: 9
+      },
+      remarks: "Module remarks"
     };
+
+    // #endregion
+
+    // #region Source
+
+    // /**
+    //  * Module description
+    //  *
+    //  * @remarks Module remarks
+    //  * @example Module example
+    //  * @deprecated
+    //  * @beta
+    //  */
+    // export module Module {
+
+    // }
 
     // #endregion
 
     const ctx = createRenderContext();
 
-    const renderedFunctionForTableOfContents = convertModuleEntityForTableOfContents(ctx, testFunction as ModuleEntity);
-    const renderedFunctionForDocumentation = convertModuleEntityForDocumentation(ctx, testFunction as ModuleEntity);
+    const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity as ModuleEntity);
+    const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity as ModuleEntity);
+
+    const [
+      position,
+      tags,
+      description,
+      remarks,
+      example,
+      childrenContainer
+    ] = renderedModuleForDocumentation.children;
 
     it("should have a matching title", () => {
-      expect(renderedFunctionForTableOfContents.children).to.equal("Module");
-      expect(renderedFunctionForDocumentation.title).to.equal("Module");
+      expect(renderedModuleForTableOfContents.title).to.equal("Module");
+      expect(renderedModuleForDocumentation.title).to.equal("Module");
+    });
+
+    it("should have a matching description", () => {
+      expect(description.children[0]).to.equal("Module description");
+    });
+
+    it("should have a matching remarks", () => {
+      expect(remarks.children[0]).to.equal("Module remarks");
+    });
+
+    it("should have a matching example", () => {
+      expect(example.children[0]).to.equal("Module example");
+    });
+
+    it("should have a matching tags", () => {
+      expect(tags.children[0]).to.include("deprecated");
+      expect(tags.children[0]).to.include("beta");
+    });
+
+    it("should have a position", () => {
+      expect(position).to.not.equal(undefined);
     });
 
     it("should have matching children", () => {
-      expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(1);
-      expect(renderedFunctionForDocumentation.children).to.have.lengthOf(1);
+      expect(childrenContainer.children).to.have.lengthOf(0);
     });
 
   }

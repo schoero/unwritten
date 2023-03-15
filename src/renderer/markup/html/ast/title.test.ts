@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createParagraphNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { html } from "unwritten:tests:utils/template.js";
@@ -12,39 +12,59 @@ scope("MarkupRenderer", "TitleNode", () => {
 
   const ctx = createRenderContext();
 
+  it("should not render empty titles", () => {
+    const titleNode = createTitleNode("Title");
+    expect(renderTitleNode(ctx, titleNode)).to.equal("");
+  });
+
   it("should render a single title correctly", () => {
-    const titleNode = createTitleNode("Title", 0);
-    expect(renderTitleNode(ctx, titleNode)).to.equal("<h1>Title</h1>");
+
+    const titleNode = createTitleNode("Title", undefined, [createParagraphNode("Paragraph")]);
+
+    expect(renderTitleNode(ctx, titleNode)).to.equal(html`
+      <h1>Title</h1>
+      <p>Paragraph</p>
+    `);
+
   });
 
   it("should increase size for nested titles", () => {
+
     const titleNode = createTitleNode(
       "Title",
-      0,
+      undefined,
       [
-        createTitleNode("SubTitle", 1)
+        createTitleNode("SubTitle", undefined, [createParagraphNode("Paragraph")])
       ]
     );
+
     expect(renderTitleNode(ctx, titleNode)).to.equal(html`
       <h1>Title</h1>
       <h2>SubTitle</h2>
+      <p>Paragraph</p>
     `);
+
   });
 
   it("should not increase size for titles on the same level", () => {
+
     const titleNode = createTitleNode(
       "Title",
-      0,
+      undefined,
       [
-        createTitleNode("Subtitle", 2),
-        createTitleNode("Another Subtitle", 2)
+        createTitleNode("Subtitle", undefined, [createParagraphNode("Paragraph")]),
+        createTitleNode("Another Subtitle", undefined, [createParagraphNode("Paragraph")])
       ]
     );
+
     expect(renderTitleNode(ctx, titleNode)).to.equal(html`
       <h1>Title</h1>
       <h2>Subtitle</h2>
+      <p>Paragraph</p>
       <h2>Another Subtitle</h2>
+      <p>Paragraph</p>
     `);
+
   });
 
 });

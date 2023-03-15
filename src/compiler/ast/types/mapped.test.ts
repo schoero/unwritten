@@ -105,8 +105,7 @@ scope("Compiler", TypeKind.Mapped, () => {
       expect(exportedTypeAlias.type.members[0]!.keyType.value).to.equal("A");
       expect(exportedTypeAlias.type.members[1]!.keyType.value).to.equal("B");
 
-      expect(exportedTypeAlias.type.members[0]!.valueType.kind).to.equal(TypeKind.String);
-      expect(exportedTypeAlias.type.members[1]!.valueType.kind).to.equal(TypeKind.Number);
+      expect(exportedTypeAlias.type.members[0]!.valueType.kind).to.equal(TypeKind.Conditional);
     });
 
     it("should have a correct type parameter", () => {

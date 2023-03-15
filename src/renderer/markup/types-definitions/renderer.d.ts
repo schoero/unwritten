@@ -176,7 +176,14 @@ export interface ConvertedNamespaceEntityForTableOfContents extends TitleNode {
 }
 
 export interface ConvertedNamespaceEntityForDocumentation extends TitleNode {
-  children: ConvertedEntitiesForDocumentation[];
+  children: [
+    position: SmallNode,
+    tags: ParagraphNode,
+    description: ParagraphNode,
+    remarks: ParagraphNode,
+    example: ParagraphNode,
+    exports: ContainerNode
+  ];
 }
 
 
@@ -187,7 +194,14 @@ export interface ConvertedModuleEntityForTableOfContents extends TitleNode {
 }
 
 export interface ConvertedModuleEntityForDocumentation extends TitleNode {
-  children: ConvertedEntitiesForDocumentation[];
+  children: [
+    position: SmallNode,
+    tags: ParagraphNode,
+    description: ParagraphNode,
+    remarks: ParagraphNode,
+    example: ParagraphNode,
+    exports: ContainerNode
+  ];
 }
 
 
