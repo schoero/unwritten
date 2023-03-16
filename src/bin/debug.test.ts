@@ -25,7 +25,7 @@ scope("E2E", "debug", () => {
         }
       }),
       writeFileSync: vi.fn().mockImplementation((path: string, content: string) => {
-        console.log(path, content);
+        // console.log(path, content);
       })
     };
   });

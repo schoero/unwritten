@@ -12,6 +12,8 @@ export function renderParameterEntities(ctx: TypeScriptRenderContext, parameterE
 
 export function renderParameterEntity(ctx: TypeScriptRenderContext, parameterEntity: ParameterEntity): string {
 
+  const name = parameterEntity.name;
+
   const type = parameterEntity.type
     ? renderType(ctx, parameterEntity.type)
     : "";
@@ -28,6 +30,6 @@ export function renderParameterEntity(ctx: TypeScriptRenderContext, parameterEnt
     ? "..."
     : "";
 
-  return `${rest}${parameterEntity.name}${optional}: ${type}${initializer}`;
+  return `${rest}${name}${optional}: ${type}${initializer}`;
 
 }

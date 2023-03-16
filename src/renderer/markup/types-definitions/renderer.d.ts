@@ -293,6 +293,22 @@ export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
 }
 
 
+export interface ConvertedEnumEntityForTableOfContents extends LinkNode {
+
+}
+
+export interface ConvertedEnumEntityForDocumentation extends TitleNode {
+  children: [
+    position: SmallNode,
+    tags: ParagraphNode,
+    description: ParagraphNode,
+    remarks: ParagraphNode,
+    example: ParagraphNode,
+    members: ListNode
+  ];
+}
+
+
 //-- Parameter
 
 export type ConvertedParameterEntityForSignature = ASTNodes[];
