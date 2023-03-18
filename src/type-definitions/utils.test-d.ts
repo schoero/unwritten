@@ -29,7 +29,7 @@ scope("Types", "Utils", () => {
 
   });
 
-  test("CompleteByKey", () => {
+  test("DeepRequiredByKey", () => {
 
     type TestType = {
       name: string;

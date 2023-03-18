@@ -20,13 +20,7 @@ type DeepPartialObject<T> = {
 
 //-- Complete
 
-export type Complete<ObjectType extends object> = {
-  [Key in keyof ObjectType]-?: ObjectType[Key] extends any[]
-    ? ObjectType[Key]
-    : ObjectType[Key] extends object
-      ? Complete<ObjectType[Key]>
-      : ObjectType[Key];
-};
+export type Complete<ObjectType extends object> = DeepRequiredByKey<ObjectType, string>;
 
 
 //-- Remove translations suffix
