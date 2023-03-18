@@ -9,7 +9,7 @@ import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 
 
 export const createClassType = (ctx: CompilerContext, type: ObjectType): ClassType => lockType(ctx, type, () => {
-  const fromObjectType = createObjectLikeType(ctx, type, TypeKind.ClassType);
+  const fromObjectType = createObjectLikeType(ctx, type, TypeKind.Class);
   return {
     ...fromObjectType
   };

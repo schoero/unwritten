@@ -6,7 +6,7 @@ export enum TypeKind {
   Boolean = "BooleanType",
   BooleanLiteral = "BooleanLiteralType",
   Circular = "CircularType",
-  ClassType = "ClassType",
+  Class = "ClassType",
   Conditional = "ConditionalType",
   Expression = "ExpressionType",
   Function = "FunctionType",

@@ -293,6 +293,30 @@ export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
 }
 
 
+//-- Class
+
+export interface ConvertedClassEntityForTableOfContents extends LinkNode {
+
+}
+
+export interface ConvertedClassEntityForDocumentation extends TitleNode {
+  children: [
+    position: SmallNode,
+    tags: ParagraphNode,
+    description: ParagraphNode,
+    remarks: ParagraphNode,
+    example: ParagraphNode,
+    constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+    methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
+  ];
+}
+
+
+//-- Enum
+
 export interface ConvertedEnumEntityForTableOfContents extends LinkNode {
 
 }

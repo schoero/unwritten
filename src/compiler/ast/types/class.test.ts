@@ -7,7 +7,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
 
-scope("Compiler", TypeKind.ClassType, () => {
+scope("Compiler", TypeKind.Class, () => {
 
   {
 
@@ -24,7 +24,7 @@ scope("Compiler", TypeKind.ClassType, () => {
 
     it("should be able to parse a class type", () => {
       assert(exportedClassType.type.kind === TypeKind.TypeReference);
-      expect(exportedClassType.type.type!.kind).to.equal(TypeKind.ClassType);
+      expect(exportedClassType.type.type!.kind).to.equal(TypeKind.Class);
     });
 
   }
@@ -45,7 +45,7 @@ scope("Compiler", TypeKind.ClassType, () => {
 
     it("should have one property", () => {
       assert(exportedClassType.type.kind === TypeKind.TypeReference);
-      assert(exportedClassType.type.type!.kind === TypeKind.ClassType);
+      assert(exportedClassType.type.type!.kind === TypeKind.Class);
       expect(exportedClassType.type.type.properties).to.have.lengthOf(1);
     });
 

@@ -16,37 +16,37 @@ import {
   extendInterfaceEntitySignaturesWithHeritage
 } from "unwritten:renderer/utils/heritage.js";
 
-import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { ClassEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
-  ConvertedInterfaceEntityForDocumentation,
-  ConvertedInterfaceEntityForTableOfContents
+  ConvertedClassEntityForDocumentation,
+  ConvertedClassEntityForTableOfContents
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity): ConvertedInterfaceEntityForTableOfContents {
-  return createLinkNode(interfaceEntity.name, interfaceEntity.id);
+export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
+  return createLinkNode(classEntity.name, classEntity.id);
 }
 
 
-export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity): ConvertedInterfaceEntityForDocumentation {
+export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForDocumentation {
 
   const t = useTranslation(ctx);
 
-  const name = interfaceEntity.name;
-  const description = interfaceEntity.description ?? "";
-  const example = interfaceEntity.example ?? "";
-  const remarks = interfaceEntity.remarks ?? "";
+  const name = classEntity.name;
+  const description = classEntity.description ?? "";
+  const example = classEntity.example ?? "";
+  const remarks = classEntity.remarks ?? "";
 
-  const position = interfaceEntity.position ? convertPosition(ctx, interfaceEntity.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, interfaceEntity);
+  const position = classEntity.position ? convertPosition(ctx, classEntity.position) : "";
+  const jsdocTags = convertJSDocTags(ctx, classEntity);
 
-  const properties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity);
-  const constructSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "constructSignatures");
-  const callSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "callSignatures");
-  const methodSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "methodSignatures");
-  const setterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "setterSignatures");
-  const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "getterSignatures");
+  const properties = extendInterfaceEntityPropertiesWithHeritage(classEntity);
+  const constructSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "constructSignatures");
+  const callSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "callSignatures");
+  const methodSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "methodSignatures");
+  const setterSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "setterSignatures");
+  const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "getterSignatures");
 
   const convertedProperties = properties.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
   const convertedConstructSignatures = constructSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
@@ -57,7 +57,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
 
   return createTitleNode(
     name,
-    interfaceEntity.id,
+    classEntity.id,
     [
       createSmallNode(position),
       createParagraphNode(jsdocTags),

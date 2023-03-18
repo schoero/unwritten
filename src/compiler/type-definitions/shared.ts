@@ -11,9 +11,14 @@ export type Deprecated = JSDocTags[JSDocTagNames.Deprecated];
 export type Internal = JSDocTags[JSDocTagNames.Internal];
 export type Remarks = JSDocTags[JSDocTagNames.Remarks];
 
-
 export type JSDocTags = {
   -readonly [key in keyof typeof JSDocTagNames as typeof JSDocTagNames[key]]?: string | undefined;
+};
+
+export type JSDoc = JSDocTags & {
+  description?: Description;
+  example?: Example;
+  remarks?: Remarks;
 };
 
 export type Modifiers =

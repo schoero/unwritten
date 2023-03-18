@@ -2,8 +2,8 @@ import { renderPropertyEntity, renderSignatureEntity } from "unwritten:renderer/
 import { renderExpressionType } from "unwritten:renderer/typescript/ast/types/expression.js";
 import { renderSemicolon } from "unwritten:renderer/typescript/utils/keywords.js";
 import {
-  extendInterfacePropertiesWithHeritage,
-  extendInterfaceSignaturesWithHeritage
+  extendInterfaceEntityPropertiesWithHeritage,
+  extendInterfaceEntitySignaturesWithHeritage
 } from "unwritten:renderer/utils/heritage.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
@@ -27,12 +27,12 @@ export function renderInterfaceEntity(ctx: TypeScriptRenderContext, interfaceEnt
     ? ` extends ${renderedHeritages.join(", ")}`
     : "";
 
-  const properties = extendInterfacePropertiesWithHeritage(interfaceEntity);
-  const methodSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "methodSignatures");
-  const getterSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "getterSignatures");
-  const setterSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "setterSignatures");
-  const constructSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "constructSignatures");
-  const callSignatures = extendInterfaceSignaturesWithHeritage(interfaceEntity, "callSignatures");
+  const properties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity);
+  const methodSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "methodSignatures");
+  const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "getterSignatures");
+  const setterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "setterSignatures");
+  const constructSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "constructSignatures");
+  const callSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "callSignatures");
 
   const renderedHeader = `${renderIndentation(ctx)}interface ${renderedName}${renderedHeritage} {`;
   ctx.indentation++;

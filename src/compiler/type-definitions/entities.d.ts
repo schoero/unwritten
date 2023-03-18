@@ -116,11 +116,11 @@ export interface FunctionEntity extends FunctionLikeEntity<EntityKind.Function> 
 }
 
 export interface SignatureEntity extends Entity<EntityKind.Signature>, JSDocTags {
-  parameters: ParameterEntity[];
   returnType: Types & { description?: Description; } ;
   description?: Description;
   modifiers?: Modifiers[];
   name?: Name;
+  parameters?: ParameterEntity[];
   position?: Position;
   typeParameters?: TypeParameterEntity[];
 }

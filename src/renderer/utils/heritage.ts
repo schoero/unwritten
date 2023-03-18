@@ -1,12 +1,95 @@
+import { EntityKind } from "unwritten:compiler/enums/entities.js";
+import { TypeKind } from "unwritten:compiler/enums/types.js";
 import { isSignatureEntity } from "unwritten:typeguards/entities.js";
+import { isInterfaceType } from "unwritten:typeguards/types.js";
 
-import type { InterfaceEntity, PropertyEntity } from "unwritten:compiler/type-definitions/entities.js";
+import type {
+  ClassEntity,
+  ConstructorEntity,
+  GetterEntity,
+  InterfaceEntity,
+  MethodEntity,
+  PropertyEntity,
+  SetterEntity
+} from "unwritten:compiler/type-definitions/entities.js";
 
 
-export function extendInterfacePropertiesWithHeritage(interfaceEntity: InterfaceEntity): PropertyEntity[] {
+type EntityKeys = "getters" | "methods" | "properties" | "setters";
+type EntityMap = {
+  [Key in EntityKeys]: Key extends "properties"
+    ? PropertyEntity
+    : Key extends "getters"
+      ? GetterEntity
+      : Key extends "setters"
+        ? SetterEntity
+        : Key extends "methods"
+          ? MethodEntity
+          : never;
+};
+
+
+export function extendClassEntityConstructorsWithHeritage(classEntity: ClassEntity): ConstructorEntity | undefined {
+
+  if(classEntity.ctor){
+    return classEntity.ctor;
+  }
+
+  if(classEntity.heritage?.staticType.kind === TypeKind.Object){
+
+    if(classEntity.heritage.staticType.constructSignatures.length === 1 &&
+      classEntity.heritage.staticType.constructSignatures[0].parameters === undefined){
+      return;
+    }
+
+    const constructorEntity: ConstructorEntity = {
+      id: classEntity.heritage.staticType.constructSignatures[0].id,
+      kind: EntityKind.Constructor,
+      name: classEntity.heritage.staticType.constructSignatures[0].name,
+      signatures: classEntity.heritage.staticType.constructSignatures
+    };
+
+    return constructorEntity;
+
+  }
+
+}
+
+
+export function extendClassEntityEntitiesWithHeritage<
+  Key extends EntityKeys, Entity extends EntityMap[Key]
+>(
+  classEntity: ClassEntity, key: Key
+): Entity[] {
+
+  const instanceEntities = classEntity.heritage?.instanceType.kind === TypeKind.Object ? classEntity.heritage.instanceType[key] as Entity[] : [] as Entity[];
+  const staticEntities = classEntity.heritage?.staticType.kind === TypeKind.Object ? classEntity.heritage.staticType[key] as Entity[] : [] as Entity[];
+
+  const fromHeritages = [...instanceEntities, ...staticEntities].reduce<{
+    [key: string]: Entity;
+  }>((result, entity) => {
+    result[entity.name ?? key] = entity;
+    return result;
+  }, {});
+
+  const entities = (classEntity[key] as Entity[]).reduce<{
+    [key: string]: Entity;
+  }>((result, entity) => {
+    result[entity.name ?? key] = entity;
+    return result;
+  }, {});
+
+  return Object.values({
+    ...fromHeritages,
+    ...entities
+  });
+
+}
+
+
+export function extendInterfaceEntityPropertiesWithHeritage(interfaceEntity: InterfaceEntity): PropertyEntity[] {
 
   const fromHeritages = interfaceEntity.heritage?.reduce<{ [key: string]: PropertyEntity; }>((result, heritage) => {
-    if(heritage.instanceType.kind !== "InterfaceType"){
+    if(!isInterfaceType(heritage.instanceType)){
       return result;
     }
     heritage.instanceType.properties.forEach(
@@ -31,8 +114,10 @@ export function extendInterfacePropertiesWithHeritage(interfaceEntity: Interface
 
 }
 
+type SignatureKeys = "callSignatures" | "constructSignatures" | "getterSignatures" | "methodSignatures" | "setterSignatures";
 
-export function extendInterfaceSignaturesWithHeritage<Key extends "callSignatures" | "constructSignatures" | "getterSignatures" | "methodSignatures" | "setterSignatures">(interfaceEntity: InterfaceEntity, key: Key): InterfaceEntity[Key] {
+
+export function extendInterfaceEntitySignaturesWithHeritage<Key extends SignatureKeys>(interfaceEntity: InterfaceEntity, key: Key): InterfaceEntity[Key] {
 
   const map = {
     callSignatures: "callSignatures",
@@ -45,18 +130,19 @@ export function extendInterfaceSignaturesWithHeritage<Key extends "callSignature
   const fromHeritages = interfaceEntity.heritage?.reduceRight<{
     [MapKey in keyof typeof map as string]: InterfaceEntity[MapKey];
   }>((result, heritage) => {
-    if(heritage.instanceType.kind === "InterfaceType"){
-      heritage.instanceType[map[key]].forEach(
-        entity => {
-          if(isSignatureEntity(entity)){
-            result[entity.name ?? key] ??= [];
-            result[entity.name ?? key].push(entity);
-          } else {
-            result[entity.name!] = entity.signatures;
-          }
-        }
-      );
+    if(!isInterfaceType(heritage.instanceType)){
+      return result;
     }
+    heritage.instanceType[map[key]].forEach(
+      entity => {
+        if(isSignatureEntity(entity)){
+          result[entity.name ?? key] ??= [];
+          result[entity.name ?? key].push(entity);
+        } else {
+          result[entity.name!] = entity.signatures;
+        }
+      }
+    );
     return result;
   }, {});
 

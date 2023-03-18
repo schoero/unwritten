@@ -31,7 +31,7 @@ scope("Compiler", TypeKind.Object, () => {
       expect(createObjectLikeType(ctx, tsType, TypeKind.ObjectLiteral).kind).to.equal(TypeKind.ObjectLiteral);
       expect(createObjectLikeType(ctx, tsType, TypeKind.Object).kind).to.equal(TypeKind.Object);
       expect(createObjectLikeType(ctx, tsType, TypeKind.Interface).kind).to.equal(TypeKind.Interface);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.ClassType).kind).to.equal(TypeKind.ClassType);
+      expect(createObjectLikeType(ctx, tsType, TypeKind.Class).kind).to.equal(TypeKind.Class);
     });
 
   }

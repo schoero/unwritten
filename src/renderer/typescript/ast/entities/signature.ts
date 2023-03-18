@@ -12,7 +12,9 @@ export function renderSignatureEntity(ctx: TypeScriptRenderContext, signatureEnt
   ).join(" ") ?? "";
 
   const renderedSignatureName = signatureEntity.name ?? "";
-  const renderedParameters = renderParameterEntities(ctx, signatureEntity.parameters);
+  const renderedParameters = signatureEntity.parameters
+    ? renderParameterEntities(ctx, signatureEntity.parameters)
+    : "";
   const renderedReturnType = renderType(ctx, signatureEntity.returnType);
 
   return `${renderedModifiers}${renderedSignatureName}(${renderedParameters}): ${renderedReturnType}`;

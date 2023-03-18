@@ -87,7 +87,11 @@ export type LiteralTypes =
 
 
 export type ObjectLikeTypeKinds =
-  TypeKind.ClassType | TypeKind.Interface | TypeKind.Object | TypeKind.ObjectLiteral | TypeKind.TypeLiteral;
+  | TypeKind.Class
+  | TypeKind.Interface
+  | TypeKind.Object
+  | TypeKind.ObjectLiteral
+  | TypeKind.TypeLiteral;
 
 export type ObjectLikeTypes =
   | ClassType
@@ -97,7 +101,7 @@ export type ObjectLikeTypes =
   | TypeLiteralType;
 
 export type InferObjectLikeType<Kind extends ObjectLikeTypeKinds> =
-  Kind extends TypeKind.ClassType
+  Kind extends TypeKind.Class
     ? ClassType
     : Kind extends TypeKind.Interface
       ? InterfaceType
@@ -163,6 +167,7 @@ export interface ObjectLikeType<Kind extends ObjectLikeTypeKinds> extends Type<K
   properties: PropertyEntity[];
   setters: SetterEntity[];
   name?: Name;
+  position?: Position;
 }
 
 
@@ -262,7 +267,7 @@ export interface FunctionType extends Type<TypeKind.Function> {
 
 //-- Class
 
-export interface ClassType extends ObjectLikeType<TypeKind.ClassType> {
+export interface ClassType extends ObjectLikeType<TypeKind.Class> {
   modifiers: Modifiers[];
   name: Name;
   position: Position;
@@ -313,7 +318,6 @@ export interface MappedType extends Type<TypeKind.Mapped> {
   optional: boolean;
   readonly: boolean;
   typeParameter: TypeParameterEntity;
-  position?: Position;
 }
 
 
@@ -332,6 +336,5 @@ export interface ConditionalType extends Type<TypeKind.Conditional> {
 export interface InterfaceType extends ObjectLikeType<TypeKind.Interface> {
   name: Name;
   properties: PropertyEntity[];
-  position?: Position;
   typeParameters?: TypeParameterEntity[];
 }

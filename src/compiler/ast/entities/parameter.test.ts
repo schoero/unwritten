@@ -42,7 +42,7 @@ scope("Compiler", EntityKind.Parameter, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
-    const parameter = exportedFunction.signatures[0]!.parameters[0]!;
+    const parameter = exportedFunction.signatures[0]!.parameters![0]!;
 
     it("should have a matching kind", () => {
       expect(parameter.kind).to.equal(EntityKind.Parameter);
@@ -80,7 +80,7 @@ scope("Compiler", EntityKind.Parameter, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
-    const parameter = exportedFunction.signatures[0]!.parameters[0]!;
+    const parameter = exportedFunction.signatures[0]!.parameters![0]!;
 
     it("should be able to handle optional types", () => {
       expect(parameter.type!.kind).to.equal(TypeKind.String);
@@ -99,7 +99,7 @@ scope("Compiler", EntityKind.Parameter, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
-    const parameter = exportedFunction.signatures[0]!.parameters[0]!;
+    const parameter = exportedFunction.signatures[0]!.parameters![0]!;
 
     it("should be able to handle initialized types", () => {
       expect(parameter.type!.kind).to.equal(TypeKind.String);
@@ -119,7 +119,7 @@ scope("Compiler", EntityKind.Parameter, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
-    const parameter = exportedFunction.signatures[0]!.parameters[0]!;
+    const parameter = exportedFunction.signatures[0]!.parameters![0]!;
 
     it("should be able to handle rest types", () => {
       expect(parameter.rest).to.equal(true);

@@ -59,7 +59,7 @@ export function isBooleanType(type: Types): type is BooleanType {
 }
 
 export function isClassType(type: Types): type is ClassType {
-  return type.kind === TypeKind.ClassType;
+  return type.kind === TypeKind.Class;
 }
 
 export function isExpressionType(type: Types): type is ExpressionType {

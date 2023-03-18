@@ -26,7 +26,7 @@ import type {
 export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForTableOfContents {
 
   const name = signatureEntity.name ?? "";
-  const renderedParameters = convertParameterEntitiesForSignature(ctx, signatureEntity.parameters);
+  const renderedParameters = signatureEntity.parameters ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters) : "";
   const renderedSignature = [name, "(", renderedParameters, ")"];
 
   return createLinkNode(
@@ -41,15 +41,16 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const t = useTranslation(ctx);
 
   const signatureName = signatureEntity.name ?? "";
-  const renderedParameters = convertParameterEntitiesForSignature(ctx, signatureEntity.parameters);
-  const renderedSignature = [signatureName, "(", renderedParameters, ")"];
+  const renderedSignatureParameters = signatureEntity.parameters ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters) : "";
+  const renderedSignature = [signatureName, "(", renderedSignatureParameters, ")"];
   const id = signatureEntity.id;
 
   const position = signatureEntity.position ? convertPosition(ctx, signatureEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, signatureEntity);
 
-  const parameters = signatureEntity.parameters
-    .map(parameter => convertParameterEntityForDocumentation(ctx, parameter));
+  const parameters = signatureEntity.parameters?.map(
+    parameter => convertParameterEntityForDocumentation(ctx, parameter)
+  ) ?? [];
 
   const returnType = convertType(ctx, signatureEntity.returnType);
 
