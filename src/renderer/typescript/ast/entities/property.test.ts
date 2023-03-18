@@ -49,7 +49,7 @@ scope("TypeScriptRenderer", EntityKind.Property, () => {
     const renderedProperty = renderPropertyEntity(ctx, propertyEntity as PropertyEntity);
 
     it("should render properties correctly", () => {
-      expect(renderedProperty).to.equal(`property: string = "test"`);
+      expect(renderedProperty).to.equal("property: string = \"test\"");
     });
 
   }

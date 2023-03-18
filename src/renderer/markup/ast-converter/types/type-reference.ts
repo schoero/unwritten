@@ -1,7 +1,7 @@
 import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
+import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 
 import type { TypeReferenceType, Types } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";

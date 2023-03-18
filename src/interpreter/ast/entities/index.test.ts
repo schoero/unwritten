@@ -25,7 +25,7 @@ scope("Interpreter", "Entities", () => {
   }
 
   it("should not export from itself", () => {
-    expect(indexExports).not.to.include(`export * from "./index.js";`);
+    expect(indexExports).not.to.include("export * from \"./index.js\";");
   });
 
 });

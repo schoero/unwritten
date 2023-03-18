@@ -43,7 +43,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     });
 
     it("should have a matching name", () => {
-      expect(sourceFile.name).to.equal(`"/file"`);
+      expect(sourceFile.name).to.equal("\"/file\"");
     });
 
     it("should have the right amount of types", () => {

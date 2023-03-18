@@ -29,7 +29,7 @@ scope("TypeScriptRenderer", TypeKind.StringLiteral, () => {
     const renderedType = renderStringLiteralType(ctx, type as StringLiteralType);
 
     it("should be able to render string literal types", () => {
-      expect(renderedType).to.equal(`"Hello"`);
+      expect(renderedType).to.equal("\"Hello\"");
     });
 
   }

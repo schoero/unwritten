@@ -15,32 +15,45 @@ scope("TypeScriptRenderer", EntityKind.TypeAlias, () => {
 
   {
 
-    // #region TypeAlias with all JSDoc tags
+    // #region TypeAlias with type parameters
+
+    // #region Source
+
+    // /**
+    //  * Type alias description
+    //  *
+    //  * @remarks Type alias remarks
+    //  * @example Type alias example
+    //  * @template A - Type parameter description
+    //  */
+    // export type TypeAlias<A extends number = 7> = A;
+
+    // #endregion
 
     const typeAliasEntity: Testable<TypeAliasEntity> = {
       description: "Type alias description",
       example: "Type alias example",
-      id: 4054,
+      id: 4460,
       kind: EntityKind.TypeAlias,
       name: "TypeAlias",
       position: {
         column: 0,
         file: "/file.ts",
-        line: 7
+        line: 8
       },
       remarks: "Type alias remarks",
       type: {
-        id: 4456,
+        id: 4742,
         kind: TypeKind.TypeReference,
         name: "A",
-        symbolId: 4052,
+        symbolId: 4458,
         type: {
           constraint: {
-            id: 16,
+            id: 17,
             kind: TypeKind.Number,
             name: "number"
           },
-          id: 2611,
+          id: 2861,
           kind: TypeKind.TypeParameter,
           name: "A"
         },
@@ -49,14 +62,14 @@ scope("TypeScriptRenderer", EntityKind.TypeAlias, () => {
       typeParameters: [
         {
           constraint: {
-            id: 16,
+            id: 17,
             kind: TypeKind.Number,
             name: "number"
           },
-          description: "Type parameter description",
-          id: 4052,
+          description: "- Type parameter description",
+          id: 4458,
           initializer: {
-            id: 2126,
+            id: 2190,
             kind: TypeKind.NumberLiteral,
             name: "number",
             value: 7
@@ -66,7 +79,7 @@ scope("TypeScriptRenderer", EntityKind.TypeAlias, () => {
           position: {
             column: 22,
             file: "/file.ts",
-            line: 7
+            line: 8
           }
         }
       ]

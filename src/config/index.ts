@@ -74,13 +74,13 @@ async function getExtendConfig(config: Config): Promise<Config> {
   }
 
   if(typeof config.extends !== "string"){
-    throw new Error(`Config extends property must be a string if it exists.`);
+    throw new Error("Config extends property must be a string if it exists.");
   }
 
   let { default: loadedConfig } = await import(config.extends);
 
   if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
-    throw new Error(`The extended config is not an object.`);
+    throw new Error("The extended config is not an object.");
   }
 
   if(typeof loadedConfig.extends === "string"){
