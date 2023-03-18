@@ -6,10 +6,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { Type } from "typescript";
 
 import type { NumberType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createNumberType(ctx: CompilerContext, type: Type): NumberType {
+export function createNumberType(ctx: InterpreterContext, type: Type): NumberType {
 
   assert(isNumberType(type), "type is not a number type");
 

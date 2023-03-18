@@ -7,7 +7,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
 
-scope("Compiler", TypeKind.Unresolved, () => {
+scope("Interpreter", TypeKind.Unresolved, () => {
 
   {
 
@@ -16,7 +16,7 @@ scope("Compiler", TypeKind.Unresolved, () => {
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent, undefined, {
-      compilerConfig: {
+      interpreterConfig: {
         exclude: ["node_modules/**/*"]
       }
     });

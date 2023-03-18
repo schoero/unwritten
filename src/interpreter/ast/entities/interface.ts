@@ -25,10 +25,10 @@ import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "ty
 
 import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ExpressionType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:types:context.d.js";
+import type { InterpreterContext } from "unwritten:types:context.d.js";
 
 
-export function createInterfaceEntity(ctx: CompilerContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity {
+export function createInterfaceEntity(ctx: InterpreterContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity {
 
   const tsDeclarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
 
@@ -88,7 +88,7 @@ function mergeMembers<Key extends keyof {
   ], []);
 }
 
-function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceDeclaration): InterfaceEntity {
+function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: InterfaceDeclaration): InterfaceEntity {
 
   const tsConstructSignatures = declaration.members.filter(isConstructSignatureDeclaration);
   const tsCallSignatures = declaration.members.filter(isCallSignatureDeclaration);
@@ -162,7 +162,7 @@ function parseInterfaceDeclaration(ctx: CompilerContext, declaration: InterfaceD
 }
 
 
-function parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType[] {
+function parseHeritageClauses(ctx: InterpreterContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType[] {
   return heritageClauses
     .flatMap(heritageClause => heritageClause.types.map(expression => createExpressionType(ctx, expression)))
     .filter(isExpressionType);

@@ -6,10 +6,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { Type } from "typescript";
 
 import type { CircularType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createLinkToType(ctx: CompilerContext, type: Type): CircularType {
+export function createLinkToType(ctx: InterpreterContext, type: Type): CircularType {
 
   const id = getIdByType(ctx, type);
   const symbol = type.getSymbol();

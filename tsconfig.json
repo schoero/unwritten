@@ -6,6 +6,7 @@
       "unwritten:*": ["src/*"],
       "unwritten:api:*": ["src/api/*"],
       "unwritten:bin:*": ["src/bin/*"],
+      "unwritten:compiler:*": ["src/compiler/*"],
       "unwritten:interpreter:*": ["src/interpreter/*"],
       "unwritten:interpreter:entities": ["src/interpreter/ast/entities/index.js"],
       "unwritten:interpreter:types": ["src/interpreter/ast/types/index.js"],

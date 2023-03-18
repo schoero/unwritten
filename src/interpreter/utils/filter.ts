@@ -12,10 +12,10 @@ import type {
   Symbol
 } from "typescript";
 
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function functionOverloadDeclarationFilter(ctx: CompilerContext, declaration: CallSignatureDeclaration | ConstructSignatureDeclaration | FunctionLikeDeclaration | MethodSignature, symbol: Symbol): boolean {
+export function functionOverloadDeclarationFilter(ctx: InterpreterContext, declaration: CallSignatureDeclaration | ConstructSignatureDeclaration | FunctionLikeDeclaration | MethodSignature, symbol: Symbol): boolean {
 
   if(isMethodSignatureDeclaration(declaration) || isCallSignatureDeclaration(declaration) || isConstructSignatureDeclaration(declaration)){
     return true;

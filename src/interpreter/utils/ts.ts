@@ -5,10 +5,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { Program, Symbol, Type } from "typescript";
 
 import type { Types } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function getEntryFileSymbolFromProgram(ctx: CompilerContext, program: Program) {
+export function getEntryFileSymbolFromProgram(ctx: InterpreterContext, program: Program) {
 
   const rootFileName = program.getRootFileNames()[0];
 
@@ -27,7 +27,7 @@ export function getEntryFileSymbolFromProgram(ctx: CompilerContext, program: Pro
 }
 
 
-export function getExportedSymbols(ctx: CompilerContext, moduleSymbol: Symbol, exclude?: string[]) {
+export function getExportedSymbols(ctx: InterpreterContext, moduleSymbol: Symbol, exclude?: string[]) {
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, moduleSymbol);
   const exportedSymbols = ctx.checker.getExportsOfModule(resolvedSymbol);
   return exportedSymbols;
@@ -36,12 +36,12 @@ export function getExportedSymbols(ctx: CompilerContext, moduleSymbol: Symbol, e
 
 //-- Locker
 
-export function isTypeLocked(ctx: CompilerContext, type: Type) {
+export function isTypeLocked(ctx: InterpreterContext, type: Type) {
   return locker.isTypeLocked(ctx, type);
 }
 
 
-export function lockType<T extends Types>(ctx: CompilerContext, type: Type, callback: (ctx: CompilerContext, type: Type) => T): T {
+export function lockType<T extends Types>(ctx: InterpreterContext, type: Type, callback: (ctx: InterpreterContext, type: Type) => T): T {
   locker.lockType(ctx, type);
   const returnType = callback(ctx, type);
   locker.unlockType(ctx, type);
@@ -54,11 +54,11 @@ export function lockType<T extends Types>(ctx: CompilerContext, type: Type, call
 /**
  * Resolves symbols from imports to their actual symbols.
  *
- * @param ctx - Compiler context
+ * @param ctx - Interpreter context
  * @param symbol - Symbol to resolve
  * @returns Resolved symbol
  */
-export function resolveSymbolInCaseOfImport(ctx: CompilerContext, symbol: Symbol): Symbol {
+export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Symbol): Symbol {
   if(isAliasedSymbol(symbol)){
     return ctx.checker.getAliasedSymbol(symbol);
   }

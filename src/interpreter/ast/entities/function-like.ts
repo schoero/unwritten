@@ -22,10 +22,10 @@ import type {
   FunctionLikeEntityKinds,
   InferFunctionLikeEntityKind
 } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(ctx: CompilerContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> {
+export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> {
 
   const declarations = symbol.declarations?.filter(declaration =>
     isFunctionLikeDeclaration(declaration) ||

@@ -7,10 +7,10 @@ import { lockType } from "unwritten:interpreter/utils/ts.js";
 import type { InterfaceType as TSInterfaceType } from "typescript";
 
 import type { InterfaceType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export const createInterfaceByType = (ctx: CompilerContext, type: TSInterfaceType): InterfaceType => lockType(ctx, type, () => {
+export const createInterfaceByType = (ctx: InterpreterContext, type: TSInterfaceType): InterfaceType => lockType(ctx, type, () => {
 
   const objectType = createObjectLikeType(ctx, type, TypeKind.Interface);
   const typeParameters = type.typeParameters?.map(type => parseType(ctx, type));

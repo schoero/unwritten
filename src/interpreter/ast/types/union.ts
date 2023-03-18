@@ -5,10 +5,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { UnionType as TSUnionType } from "typescript";
 
 import type { UnionType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createUnionTypeByType(ctx: CompilerContext, type: TSUnionType): UnionType {
+export function createUnionTypeByType(ctx: InterpreterContext, type: TSUnionType): UnionType {
 
   const id = getIdByType(ctx, type);
   const types = type.types.map(type => parseType(ctx, type));

@@ -7,10 +7,10 @@ import { lockType } from "unwritten:interpreter/utils/ts.js";
 import type { TypeParameter } from "typescript";
 
 import type { TypeParameterType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export const createTypeParameterType = (ctx: CompilerContext, type: TypeParameter): TypeParameterType => lockType(ctx, type, () => {
+export const createTypeParameterType = (ctx: InterpreterContext, type: TypeParameter): TypeParameterType => lockType(ctx, type, () => {
 
   const tsConstraint = type.getConstraint();
   const constraint = tsConstraint && parseType(ctx, tsConstraint);

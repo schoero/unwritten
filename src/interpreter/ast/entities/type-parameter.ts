@@ -10,10 +10,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { TypeParameterDeclaration } from "typescript";
 
 import type { TypeParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createTypeParameterEntity(ctx: CompilerContext, declaration: TypeParameterDeclaration): TypeParameterEntity {
+export function createTypeParameterEntity(ctx: InterpreterContext, declaration: TypeParameterDeclaration): TypeParameterEntity {
 
   assert(isTypeParameterDeclaration(declaration), "Declaration is not found");
 

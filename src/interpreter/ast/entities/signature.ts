@@ -15,10 +15,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { Signature as TSSignature, SignatureDeclaration } from "typescript";
 
 import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createSignatureEntity(ctx: CompilerContext, signature: TSSignature): SignatureEntity {
+export function createSignatureEntity(ctx: InterpreterContext, signature: TSSignature): SignatureEntity {
 
   const declaration = signature.getDeclaration() as SignatureDeclaration | undefined;
 
@@ -36,7 +36,7 @@ export function createSignatureEntity(ctx: CompilerContext, signature: TSSignatu
 }
 
 
-function parseSignatureDeclaration(ctx: CompilerContext, declaration: SignatureDeclaration) {
+function parseSignatureDeclaration(ctx: InterpreterContext, declaration: SignatureDeclaration) {
 
   const id = getIdByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
@@ -61,7 +61,7 @@ function parseSignatureDeclaration(ctx: CompilerContext, declaration: SignatureD
 }
 
 
-function getReturnTypeBySignature(ctx: CompilerContext, signature: TSSignature) {
+function getReturnTypeBySignature(ctx: InterpreterContext, signature: TSSignature) {
 
   const declaration = signature.getDeclaration() as SignatureDeclaration | undefined;
   const tsReturnType = signature.getReturnType();

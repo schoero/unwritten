@@ -104,16 +104,16 @@ import type { Declaration, ObjectType as TSObjectType, Symbol, Type, TypeNode } 
 
 import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Types } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function parse(ctx: CompilerContext, sourceFileSymbol: Symbol): ExportableEntities[] {
+export function parse(ctx: InterpreterContext, sourceFileSymbol: Symbol): ExportableEntities[] {
   assert(isSourceFileSymbol(sourceFileSymbol), "Source file symbol is not a source file symbol");
   return createSourceFileEntity(ctx, sourceFileSymbol).exports;
 }
 
 
-export function parseSymbol(ctx: CompilerContext, symbol: Symbol): ExportableEntities {
+export function parseSymbol(ctx: InterpreterContext, symbol: Symbol): ExportableEntities {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 
@@ -140,7 +140,7 @@ export function parseSymbol(ctx: CompilerContext, symbol: Symbol): ExportableEnt
 }
 
 
-export function parseTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
+export function parseTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Types {
 
   if(isArrayTypeNode(typeNode)){
     return createArrayTypeByArrayTypeNode(ctx, typeNode);
@@ -165,7 +165,7 @@ export function parseTypeNode(ctx: CompilerContext, typeNode: TypeNode): Types {
 
 
 /* Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */
-export function createTypeBySymbol(ctx: CompilerContext, symbol: Symbol): Types {
+export function createTypeBySymbol(ctx: InterpreterContext, symbol: Symbol): Types {
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
@@ -176,13 +176,13 @@ export function createTypeBySymbol(ctx: CompilerContext, symbol: Symbol): Types 
 
 }
 
-export function createTypeByDeclaration(ctx: CompilerContext, declaration: Declaration): Types {
+export function createTypeByDeclaration(ctx: InterpreterContext, declaration: Declaration): Types {
   const type = ctx.checker.getTypeAtLocation(declaration);
   return parseType(ctx, type);
 }
 
 
-export function parseType(ctx: CompilerContext, type: Type): Types {
+export function parseType(ctx: InterpreterContext, type: Type): Types {
 
   if(isTypeLocked(ctx, type)){
     return createLinkToType(ctx, type);
@@ -240,7 +240,7 @@ export function parseType(ctx: CompilerContext, type: Type): Types {
 }
 
 
-export function parseObjectType(ctx: CompilerContext, type: TSObjectType): Types {
+export function parseObjectType(ctx: InterpreterContext, type: TSObjectType): Types {
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);

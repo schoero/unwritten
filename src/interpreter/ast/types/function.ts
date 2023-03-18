@@ -5,10 +5,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { ObjectType } from "typescript";
 
 import type { FunctionType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createFunctionType(ctx: CompilerContext, type: ObjectType): FunctionType {
+export function createFunctionType(ctx: InterpreterContext, type: ObjectType): FunctionType {
 
   const callSignatures = type.getCallSignatures(); // Types with constructSignatures are considered object types
   const signatures = callSignatures.map(signature => createSignatureEntity(ctx, signature));

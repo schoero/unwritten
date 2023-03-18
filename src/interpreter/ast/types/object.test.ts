@@ -9,7 +9,7 @@ import { ts } from "unwritten:tests:utils/template.js";
 import { assert } from "unwritten:utils/general.js";
 
 
-scope("Compiler", TypeKind.Object, () => {
+scope("Interpreter", TypeKind.Object, () => {
 
   {
 

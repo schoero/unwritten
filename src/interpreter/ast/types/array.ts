@@ -9,10 +9,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { ArrayTypeNode, TypeReference, TypeReferenceNode } from "typescript";
 
 import type { ArrayType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createArrayType(ctx: CompilerContext, typeReference: TypeReference): ArrayType {
+export function createArrayType(ctx: InterpreterContext, typeReference: TypeReference): ArrayType {
 
   const node = typeReference.node;
   const id = getIdByType(ctx, typeReference);
@@ -30,7 +30,7 @@ export function createArrayType(ctx: CompilerContext, typeReference: TypeReferen
 }
 
 
-export function createArrayTypeByArrayTypeNode(ctx: CompilerContext, arrayTypeNode: ArrayTypeNode | TypeReferenceNode): ArrayType {
+export function createArrayTypeByArrayTypeNode(ctx: InterpreterContext, arrayTypeNode: ArrayTypeNode | TypeReferenceNode): ArrayType {
   const type = ctx.checker.getTypeFromTypeNode(arrayTypeNode);
   assert(isTypeReferenceType(type), "Type is not a type reference");
   return createArrayType(ctx, type);

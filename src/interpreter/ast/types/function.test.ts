@@ -10,7 +10,7 @@ import { ts } from "unwritten:tests:utils/template.js";
 import type { FunctionType } from "unwritten:interpreter/type-definitions/types.js";
 
 
-scope("Compiler", EntityKind.Function, () => {
+scope("Interpreter", EntityKind.Function, () => {
 
   {
 

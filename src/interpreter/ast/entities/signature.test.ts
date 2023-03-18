@@ -10,7 +10,7 @@ import { ts } from "unwritten:tests:utils/template.js";
 import { createInterfaceEntity } from "./interface.js";
 
 
-scope("Compiler", EntityKind.Signature, () => {
+scope("Interpreter", EntityKind.Signature, () => {
 
   {
 

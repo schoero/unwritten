@@ -9,7 +9,7 @@ import { ts } from "unwritten:tests:utils/template.js";
 import { createFunctionEntity } from "./function.js";
 
 
-scope("Compiler", EntityKind.Function, () => {
+scope("Interpreter", EntityKind.Function, () => {
 
   {
 

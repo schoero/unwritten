@@ -7,7 +7,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { isPathExcluded } from "./exclude.js";
 
 
-scope("Compiler", "Utils", () => {
+scope("Interpreter", "Utils", () => {
 
   describe("isPathExcluded", () => {
 

@@ -10,10 +10,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { ParameterDeclaration } from "typescript";
 
 import type { ParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createParameterEntity(ctx: CompilerContext, declaration: ParameterDeclaration): ParameterEntity {
+export function createParameterEntity(ctx: InterpreterContext, declaration: ParameterDeclaration): ParameterEntity {
 
   const symbol = ctx.checker.getSymbolAtLocation(declaration.name);
   const typeNode = declaration.type;

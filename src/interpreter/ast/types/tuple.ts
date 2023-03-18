@@ -13,10 +13,10 @@ import type { TupleTypeNode, TupleTypeReference, Type } from "typescript";
 
 import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TupleType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReference: TupleTypeReference): TupleType {
+export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeReference: TupleTypeReference): TupleType {
 
   const node = typeReference.node;
   const members = getMembers(ctx, typeReference, typeReference.typeArguments);
@@ -34,14 +34,14 @@ export function createTupleTypeByTypeReference(ctx: CompilerContext, typeReferen
 }
 
 
-export function createTupleByTupleTypeNode(ctx: CompilerContext, tupleTypeNode: TupleTypeNode): TupleType {
+export function createTupleByTupleTypeNode(ctx: InterpreterContext, tupleTypeNode: TupleTypeNode): TupleType {
   const type = ctx.checker.getTypeFromTypeNode(tupleTypeNode);
   assert(isTupleTypeReferenceType(type), "Type is not a type reference");
   return createTupleTypeByTypeReference(ctx, type);
 }
 
 
-function getMembers(ctx: CompilerContext, tupleTypeReference: TupleTypeReference, typeArguments?: readonly Type[]) {
+function getMembers(ctx: InterpreterContext, tupleTypeReference: TupleTypeReference, typeArguments?: readonly Type[]) {
 
   const members = typeArguments?.map((typeArgument, index) => {
 

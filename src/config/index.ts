@@ -8,7 +8,7 @@ import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:
 import { findFile } from "unwritten:utils:finder.js";
 import { override } from "unwritten:utils:override.js";
 
-import { defaultCompilerConfig, defaultExternalTypes } from "./default.js";
+import { defaultExternalTypes, defaultInterpreterConfig } from "./default.js";
 
 import type { CompleteConfig, Config } from "unwritten:type-definitions/config.d.js";
 import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
@@ -95,8 +95,8 @@ async function getExtendConfig(config: Config): Promise<Config> {
 export function getDefaultConfig(): CompleteConfig {
 
   const defaultConfig: CompleteConfig = {
-    compilerConfig: defaultCompilerConfig,
     externalTypes: defaultExternalTypes,
+    interpreterConfig: defaultInterpreterConfig,
     renderConfig: {
       [BuiltInRenderers.Markdown]: defaultMarkdownRenderConfig,
       [BuiltInRenderers.HTML]: defaultHTMLRenderConfig,

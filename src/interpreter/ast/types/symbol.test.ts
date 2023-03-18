@@ -7,7 +7,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
 
-scope("Compiler", TypeKind.Symbol, () => {
+scope("Interpreter", TypeKind.Symbol, () => {
 
   it("should be able to handle symbol types", () => {
 

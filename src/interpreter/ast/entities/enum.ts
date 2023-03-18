@@ -18,10 +18,10 @@ import type {
   EnumMemberEntity,
   MergedEnumEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createEnumEntity(ctx: CompilerContext, symbol: Symbol): EnumEntity | MergedEnumEntity {
+export function createEnumEntity(ctx: InterpreterContext, symbol: Symbol): EnumEntity | MergedEnumEntity {
 
   const declarations = symbol.getDeclarations()?.filter(isEnumDeclaration);
 
@@ -65,7 +65,7 @@ function mergeMembers(enums: ReturnType<typeof parseEnumDeclaration>[]): EnumEnt
 }
 
 
-function parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaration) {
+function parseEnumDeclaration(ctx: InterpreterContext, declaration: EnumDeclaration) {
 
   const description = getDescriptionByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
@@ -82,7 +82,7 @@ function parseEnumDeclaration(ctx: CompilerContext, declaration: EnumDeclaration
 }
 
 
-function createEnumMemberByDeclaration(ctx: CompilerContext, declaration: TSEnumMember): EnumMemberEntity {
+function createEnumMemberByDeclaration(ctx: InterpreterContext, declaration: TSEnumMember): EnumMemberEntity {
 
   const id = getIdByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);

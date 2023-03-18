@@ -4,10 +4,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { StringLiteralType as TSStringLiteralType } from "typescript";
 
 import type { StringLiteralType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createStringLiteralType(ctx: CompilerContext, type: TSStringLiteralType): StringLiteralType {
+export function createStringLiteralType(ctx: InterpreterContext, type: TSStringLiteralType): StringLiteralType {
 
   const id = getIdByType(ctx, type);
   const value = type.value;

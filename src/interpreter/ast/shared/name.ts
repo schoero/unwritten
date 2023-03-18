@@ -5,15 +5,15 @@ import { isConstructorDeclaration } from "unwritten:interpreter/typeguards/decla
 import type { Declaration, Node, Symbol, Type } from "typescript";
 
 import type { Name } from "unwritten:interpreter/type-definitions/shared.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function getNameBySymbol(ctx: CompilerContext, symbol: Symbol): Name {
+export function getNameBySymbol(ctx: InterpreterContext, symbol: Symbol): Name {
   return symbol.getName();
 }
 
 
-export function getNameByDeclaration(ctx: CompilerContext, declaration: Declaration): Name | undefined {
+export function getNameByDeclaration(ctx: InterpreterContext, declaration: Declaration): Name | undefined {
 
   if(isConstructorDeclaration(declaration)){
     return "constructor";
@@ -25,12 +25,12 @@ export function getNameByDeclaration(ctx: CompilerContext, declaration: Declarat
 }
 
 
-export function getNameByType(ctx: CompilerContext, type: Type): Name | undefined {
+export function getNameByType(ctx: InterpreterContext, type: Type): Name | undefined {
   const symbol = type.getSymbol();
   return symbol ? getNameBySymbol(ctx, symbol) : undefined;
 }
 
 
-export function getNameByTypeNode(ctx: CompilerContext, typeNode: Node): Name | undefined {
+export function getNameByTypeNode(ctx: InterpreterContext, typeNode: Node): Name | undefined {
   return typeNode.getText();
 }

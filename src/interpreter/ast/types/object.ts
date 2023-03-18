@@ -21,10 +21,10 @@ import { lockType } from "unwritten:interpreter/utils/ts.js";
 import type { ObjectType as TSObjectType } from "typescript";
 
 import type { InferObjectLikeType, ObjectLikeTypeKinds } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKinds>(ctx: CompilerContext, type: TSObjectType, kind: ObjectLikeTypeKind = TypeKind.Object as ObjectLikeTypeKind): InferObjectLikeType<ObjectLikeTypeKind> => lockType(ctx, type, () => {
+export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKinds>(ctx: InterpreterContext, type: TSObjectType, kind: ObjectLikeTypeKind = TypeKind.Object as ObjectLikeTypeKind): InferObjectLikeType<ObjectLikeTypeKind> => lockType(ctx, type, () => {
 
   const tsConstructSignatures = type.getConstructSignatures();
   const tsCallSignatures = type.getCallSignatures();

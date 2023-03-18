@@ -1,10 +1,10 @@
 import { TypeKind } from "unwritten:interpreter/enums/types.js";
 
-import type { CompilerConfig, ExternalTypes } from "unwritten:type-definitions/config.js";
+import type { ExternalTypes, InterpreterConfig } from "unwritten:type-definitions/config.js";
 import type { Complete } from "unwritten:type-definitions/utils.js";
 
 
-export const defaultCompilerConfig: Complete<CompilerConfig> = {
+export const defaultInterpreterConfig: Complete<InterpreterConfig> = {
   exclude: ["node_modules/**/*"]
 };
 

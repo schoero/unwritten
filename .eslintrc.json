@@ -23,7 +23,7 @@
       "files": [
         "**/typeguards/*.ts",
         "**/utils/*.ts",
-        "**/compiler/shared/jsdoc.ts"
+        "**/interpreter/shared/jsdoc.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {

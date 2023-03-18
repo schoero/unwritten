@@ -11,7 +11,7 @@ import { ts } from "unwritten:tests:utils/template.js";
 import type { TypeLiteralType } from "unwritten:interpreter/type-definitions/types.js";
 
 
-scope("Compiler", TypeKind.TypeLiteral, () => {
+scope("Interpreter", TypeKind.TypeLiteral, () => {
 
   {
 

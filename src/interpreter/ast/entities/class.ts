@@ -28,10 +28,10 @@ import type { ClassLikeDeclaration, HeritageClause, NodeArray, Symbol } from "ty
 
 import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ExpressionType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:types:context.d.js";
+import type { InterpreterContext } from "unwritten:types:context.d.js";
 
 
-export function createClassEntity(ctx: CompilerContext, symbol: Symbol): ClassEntity {
+export function createClassEntity(ctx: InterpreterContext, symbol: Symbol): ClassEntity {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -50,7 +50,7 @@ export function createClassEntity(ctx: CompilerContext, symbol: Symbol): ClassEn
 }
 
 
-function parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDeclaration): Omit<ClassEntity, "name"> {
+function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDeclaration): Omit<ClassEntity, "name"> {
 
   const constructorDeclarations = getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isConstructorDeclaration);
   const getterDeclarations = getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isGetterDeclaration);
@@ -92,7 +92,7 @@ function parseClassDeclaration(ctx: CompilerContext, declaration: ClassLikeDecla
 }
 
 
-function getSymbolsByTypeFromClassLikeDeclaration(ctx: CompilerContext, classLikeDeclaration: ClassLikeDeclaration,
+function getSymbolsByTypeFromClassLikeDeclaration(ctx: InterpreterContext, classLikeDeclaration: ClassLikeDeclaration,
   filter:
   | typeof isConstructorDeclaration
   | typeof isGetterDeclaration
@@ -116,7 +116,7 @@ function getSymbolsByTypeFromClassLikeDeclaration(ctx: CompilerContext, classLik
 }
 
 
-function parseHeritageClauses(ctx: CompilerContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType {
+function parseHeritageClauses(ctx: InterpreterContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType {
   return heritageClauses
     .flatMap(heritageClause => heritageClause.types.map(expression => createExpressionType(ctx, expression)))
     .filter(isExpressionType)[0];

@@ -12,10 +12,10 @@ import { createTypeParameterEntity } from "./type-parameter.js";
 import type { Symbol, TypeAliasDeclaration } from "typescript";
 
 import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createTypeAliasEntity(ctx: CompilerContext, symbol: Symbol): TypeAliasEntity {
+export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): TypeAliasEntity {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -38,7 +38,7 @@ export function createTypeAliasEntity(ctx: CompilerContext, symbol: Symbol): Typ
 }
 
 
-function parseTypeAliasDeclaration(ctx: CompilerContext, declaration: TypeAliasDeclaration) {
+function parseTypeAliasDeclaration(ctx: InterpreterContext, declaration: TypeAliasDeclaration) {
 
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);

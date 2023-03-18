@@ -8,7 +8,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
 
-scope("Compiler", TypeKind.TypeReference, () => {
+scope("Interpreter", TypeKind.TypeReference, () => {
 
   {
 

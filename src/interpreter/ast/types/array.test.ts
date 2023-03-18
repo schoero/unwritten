@@ -10,7 +10,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
 
-scope("Compiler", TypeKind.Array, () => {
+scope("Interpreter", TypeKind.Array, () => {
 
   describe("Native Syntax", () => {
 

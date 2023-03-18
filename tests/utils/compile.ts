@@ -2,13 +2,13 @@ import { readFileSync } from "node:fs";
 
 import ts from "typescript";
 
+import { reportCompilerDiagnostics } from "unwritten:compiler:index.js";
 import { getDefaultConfig } from "unwritten:config/index.js";
-import { reportCompilerDiagnostics } from "unwritten:interpreter/index.js";
 import { override } from "unwritten:utils/override.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Config } from "unwritten:type-definitions/config.d.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function compile(code: string, compilerOptions?: ts.CompilerOptions, config?: Config) {
@@ -58,7 +58,7 @@ export function compile(code: string, compilerOptions?: ts.CompilerOptions, conf
 
   //-- Create context
 
-  const ctx: CompilerContext = {
+  const ctx: InterpreterContext = {
     checker,
     config: override(config ?? {}, getDefaultConfig())
   };

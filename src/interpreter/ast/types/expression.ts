@@ -6,10 +6,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { ExpressionWithTypeArguments } from "typescript";
 
 import type { ExpressionType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createExpressionType(ctx: CompilerContext, expressionWithTypeArguments: ExpressionWithTypeArguments): ExpressionType {
+export function createExpressionType(ctx: InterpreterContext, expressionWithTypeArguments: ExpressionWithTypeArguments): ExpressionType {
 
   const id = getIdByTypeNode(ctx, expressionWithTypeArguments);
   const tsInstanceType = ctx.checker.getTypeAtLocation(expressionWithTypeArguments);

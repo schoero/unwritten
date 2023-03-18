@@ -10,7 +10,7 @@ export interface DefaultContext {
   logger?: typeof Logger;
 }
 
-export interface CompilerContext extends DefaultContext {
+export interface InterpreterContext extends DefaultContext {
   checker: TypeChecker;
   config: CompleteConfig;
   /**

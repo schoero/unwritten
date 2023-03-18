@@ -4,10 +4,10 @@ import type { TypeKind } from "unwritten:interpreter/enums/types.js";
 
 
 type Scopes =
-  | "Compiler"
   | "E2E"
   | "HTMLRenderer"
   | "Integration"
+  | "Interpreter"
   | "JSONRenderer"
   | "MarkdownRenderer"
   | "MarkupRenderer"

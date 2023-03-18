@@ -7,7 +7,7 @@ import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 
-scope("Compiler", TypeKind.TemplateLiteral, () => {
+scope("Interpreter", TypeKind.TemplateLiteral, () => {
 
   {
 

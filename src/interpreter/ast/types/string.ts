@@ -6,10 +6,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { Type } from "typescript";
 
 import type { StringType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createStringType(ctx: CompilerContext, type: Type): StringType {
+export function createStringType(ctx: InterpreterContext, type: Type): StringType {
 
   assert(isStringType(type), "type is not a string type");
 

@@ -6,10 +6,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { Type } from "typescript";
 
 import type { BigIntType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createBigIntType(ctx: CompilerContext, type: Type): BigIntType {
+export function createBigIntType(ctx: InterpreterContext, type: Type): BigIntType {
 
   assert(isBigIntType(type), "type is not a string type");
 

@@ -1,10 +1,10 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import { compile } from "unwritten:compiler:index.js";
 import { createConfig } from "unwritten:config/index.js";
 import { parse } from "unwritten:interpreter/ast/index.js";
-import { compile } from "unwritten:interpreter/index.js";
-import { createContext as createCompilerContext } from "unwritten:interpreter/utils/context.js";
+import { createContext as createInterpreterContext } from "unwritten:interpreter/utils/context.js";
 import { getEntryFileSymbolFromProgram } from "unwritten:interpreter/utils/ts.js";
 import { Logger } from "unwritten:logger/index.js";
 import { getRenderer } from "unwritten:renderer:index.js";
@@ -33,9 +33,9 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
   //-- Parse
 
   const config = await createConfig(defaultContext, options?.config);
-  const compilerContext = createCompilerContext(defaultContext, checker, config);
-  const entryFileSymbol = getEntryFileSymbolFromProgram(compilerContext, program);
-  const parsedSymbols = parse(compilerContext, entryFileSymbol);
+  const interpreterContext = createInterpreterContext(defaultContext, checker, config);
+  const entryFileSymbol = getEntryFileSymbolFromProgram(interpreterContext, program);
+  const parsedSymbols = parse(interpreterContext, entryFileSymbol);
 
 
   //-- Render

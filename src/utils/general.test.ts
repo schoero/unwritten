@@ -6,7 +6,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { sortKeys } from "./general.js";
 
 
-scope("Compiler", "Utils", () => {
+scope("Interpreter", "Utils", () => {
 
   describe("sortKeys", () => {
 

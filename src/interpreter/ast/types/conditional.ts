@@ -5,10 +5,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { ConditionalType as TSConditionalType } from "typescript";
 
 import type { ConditionalType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createConditionalType(ctx: CompilerContext, type: TSConditionalType): ConditionalType {
+export function createConditionalType(ctx: InterpreterContext, type: TSConditionalType): ConditionalType {
 
   const root = type.root;
   const id = getIdByType(ctx, type);

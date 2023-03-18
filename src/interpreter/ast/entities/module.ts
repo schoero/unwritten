@@ -7,10 +7,10 @@ import { createSourceFileEntity } from "./source-file.js";
 import type { Symbol } from "typescript";
 
 import type { ModuleEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createModuleEntity(ctx: CompilerContext, symbol: Symbol): ModuleEntity {
+export function createModuleEntity(ctx: InterpreterContext, symbol: Symbol): ModuleEntity {
 
   const fromSourceFile = createSourceFileEntity(ctx, symbol);
 

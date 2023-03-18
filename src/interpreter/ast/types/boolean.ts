@@ -6,10 +6,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { Type } from "typescript";
 
 import type { BooleanType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createBooleanType(ctx: CompilerContext, type: Type): BooleanType {
+export function createBooleanType(ctx: InterpreterContext, type: Type): BooleanType {
 
   assert(isBooleanType(type), "type is not a boolean type");
 

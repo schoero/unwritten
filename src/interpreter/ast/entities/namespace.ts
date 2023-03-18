@@ -6,10 +6,10 @@ import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import type { Symbol } from "typescript";
 
 import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createNamespaceEntity(ctx: CompilerContext, symbol: Symbol): NamespaceEntity {
+export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): NamespaceEntity {
 
   const fromSourceFile = createSourceFileEntity(ctx, symbol);
 

@@ -6,10 +6,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { Symbol, Type, TypeNode } from "typescript";
 
 import type { UnresolvedType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createUnresolvedType(ctx: CompilerContext, symbol: Symbol): UnresolvedType {
+export function createUnresolvedType(ctx: InterpreterContext, symbol: Symbol): UnresolvedType {
 
   const id = getIdBySymbol(ctx, symbol);
   const position = getPositionBySymbol(ctx, symbol);
@@ -26,12 +26,12 @@ export function createUnresolvedType(ctx: CompilerContext, symbol: Symbol): Unre
 }
 
 
-export function createUnresolvedByType(ctx: CompilerContext, type: Type): UnresolvedType {
+export function createUnresolvedByType(ctx: InterpreterContext, type: Type): UnresolvedType {
   return createUnresolvedType(ctx, type.symbol);
 }
 
 
-export function createUnresolvedByTypeNode(ctx: CompilerContext, typeNode: TypeNode): UnresolvedType {
+export function createUnresolvedByTypeNode(ctx: InterpreterContext, typeNode: TypeNode): UnresolvedType {
   const type = ctx.checker.getTypeFromTypeNode(typeNode);
   return createUnresolvedByType(ctx, type);
 }

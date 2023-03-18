@@ -4,7 +4,7 @@ import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/posit
 
 import type { Declaration, Symbol } from "typescript";
 
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
 export function isPathExcluded(path: string, excludePaths: string[]): boolean {
@@ -19,17 +19,17 @@ export function isPathExcluded(path: string, excludePaths: string[]): boolean {
 }
 
 
-function isDeclarationExcluded(ctx: CompilerContext, declaration: Declaration): boolean {
+function isDeclarationExcluded(ctx: InterpreterContext, declaration: Declaration): boolean {
 
   const position = getPositionByDeclaration(ctx, declaration);
-  const excludePaths = ctx.config.compilerConfig.exclude;
+  const excludePaths = ctx.config.interpreterConfig.exclude;
 
   return isPathExcluded(position.file, excludePaths);
 
 }
 
 
-export function isSymbolExcluded(ctx: CompilerContext, symbol: Symbol): boolean {
+export function isSymbolExcluded(ctx: InterpreterContext, symbol: Symbol): boolean {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 

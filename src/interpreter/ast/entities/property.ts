@@ -23,10 +23,10 @@ import type {
 } from "typescript";
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createPropertyEntity(ctx: CompilerContext, symbol: Symbol): PropertyEntity {
+export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): PropertyEntity {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -59,7 +59,7 @@ export function createPropertyEntity(ctx: CompilerContext, symbol: Symbol): Prop
 }
 
 
-function parsePropertyDeclaration(ctx: CompilerContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature) { // ParameterDeclaration can also be a property when defined in a constructor
+function parsePropertyDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature) { // ParameterDeclaration can also be a property when defined in a constructor
 
   const id = getIdByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);

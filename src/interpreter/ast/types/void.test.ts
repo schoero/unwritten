@@ -7,7 +7,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
 
-scope("Compiler", TypeKind.Void, () => {
+scope("Interpreter", TypeKind.Void, () => {
 
   it("should be able to handle void types", () => {
 

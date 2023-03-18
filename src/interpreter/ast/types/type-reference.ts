@@ -8,16 +8,16 @@ import { isTypeReferenceNode } from "unwritten:interpreter/typeguards/type-nodes
 import type { TypeReferenceNode, TypeReferenceType as TSTypeReferenceType } from "typescript";
 
 import type { ExpressionType, TypeReferenceType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createTypeReferenceType(ctx: CompilerContext, type: TSTypeReferenceType): ExpressionType | TypeReferenceType {
+export function createTypeReferenceType(ctx: InterpreterContext, type: TSTypeReferenceType): ExpressionType | TypeReferenceType {
   return isTypeReferenceNode(type)
     ? createTypeReferenceByTypeNode(ctx, type)
     : createExpressionType(ctx, type);
 }
 
-export function createTypeReferenceByTypeNode(ctx: CompilerContext, typeNode: TypeReferenceNode): TypeReferenceType {
+export function createTypeReferenceByTypeNode(ctx: InterpreterContext, typeNode: TypeReferenceNode): TypeReferenceType {
 
   const tsType = ctx.checker.getTypeFromTypeNode(typeNode);
   const typeArguments = typeNode.typeArguments?.map(typeNode => parseTypeNode(ctx, typeNode));

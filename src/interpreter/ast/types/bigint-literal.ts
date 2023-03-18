@@ -4,10 +4,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { BigIntLiteralType as TSBigIntLiteralType } from "typescript";
 
 import type { BigIntLiteralType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createBigIntLiteralType(ctx: CompilerContext, type: TSBigIntLiteralType): BigIntLiteralType {
+export function createBigIntLiteralType(ctx: InterpreterContext, type: TSBigIntLiteralType): BigIntLiteralType {
 
   const id = getIdByType(ctx, type);
   const sign = type.value.negative ? "-" : "";

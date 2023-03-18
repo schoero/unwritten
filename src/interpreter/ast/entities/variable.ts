@@ -11,10 +11,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { Symbol, VariableDeclaration } from "typescript";
 
 import type { VariableEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createVariableEntity(ctx: CompilerContext, symbol: Symbol): VariableEntity {
+export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): VariableEntity {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -41,7 +41,7 @@ export function createVariableEntity(ctx: CompilerContext, symbol: Symbol): Vari
 }
 
 
-function parseVariableDeclaration(ctx: CompilerContext, declaration: VariableDeclaration) {
+function parseVariableDeclaration(ctx: InterpreterContext, declaration: VariableDeclaration) {
 
   const position = getPositionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);

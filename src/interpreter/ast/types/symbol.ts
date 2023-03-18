@@ -6,10 +6,10 @@ import { assert } from "unwritten:utils:general.js";
 import type { Type } from "typescript";
 
 import type { SymbolType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createSymbolType(ctx: CompilerContext, type: Type): SymbolType {
+export function createSymbolType(ctx: InterpreterContext, type: Type): SymbolType {
 
   assert(isSymbolType(type), "type is not a symbol type");
 

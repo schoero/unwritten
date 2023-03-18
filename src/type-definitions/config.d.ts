@@ -8,19 +8,19 @@ import type { Complete } from "./utils.js";
 
 
 export interface Config {
-  /** Compiler configuration. */
-  compilerConfig?: CompilerConfig;
   /** Extend another config */
   extends?: string;
   /** Links to external documentation of native types. */
   externalTypes?: ExternalTypes;
+  /** Interpreter configuration. */
+  interpreterConfig?: InterpreterConfig;
   /** Render configuration. */
   renderConfig?: RenderConfig;
 }
 
 export interface CompleteConfig extends Config {
-  compilerConfig: Complete<CompilerConfig>;
   externalTypes: ExternalTypes;
+  interpreterConfig: Complete<InterpreterConfig>;
   renderConfig: CompleteRenderConfig;
 }
 
@@ -44,7 +44,7 @@ export interface ConfigWithSchema extends Config {
   $schema: string;
 }
 
-export interface CompilerConfig {
+export interface InterpreterConfig {
   /** An array of excluded directories. */
   exclude?: string[];
 }

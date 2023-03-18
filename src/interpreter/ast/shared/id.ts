@@ -1,35 +1,35 @@
 import type { Declaration, Symbol, Type, TypeNode } from "typescript";
 
 import type { ID } from "unwritten:interpreter/type-definitions/shared.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function getIdBySymbol(ctx: CompilerContext, symbol: Symbol): ID {
+export function getIdBySymbol(ctx: InterpreterContext, symbol: Symbol): ID {
   ensureSymbolHasId(ctx, symbol);
   // @ts-expect-error - Internal API
   return symbol.id;
 }
 
-export function getIdByDeclaration(ctx: CompilerContext, declaration: Declaration): ID {
+export function getIdByDeclaration(ctx: InterpreterContext, declaration: Declaration): ID {
   ensureDeclarationHasId(ctx, declaration);
   // @ts-expect-error - Internal API
   return declaration.id;
 }
 
-export function getIdByType(ctx: CompilerContext, type: Type): ID {
+export function getIdByType(ctx: InterpreterContext, type: Type): ID {
   ensureTypeHasId(ctx, type);
   // @ts-expect-error - Internal API
   return type.id;
 }
 
-export function getIdByTypeNode(ctx: CompilerContext, typeNode: TypeNode): ID {
+export function getIdByTypeNode(ctx: InterpreterContext, typeNode: TypeNode): ID {
   ensureTypeNodeHasId(ctx, typeNode);
   // @ts-expect-error - Internal API
   return typeNode.id;
 }
 
 
-export function ensureSymbolHasId(ctx: CompilerContext, symbol: Symbol) {
+export function ensureSymbolHasId(ctx: InterpreterContext, symbol: Symbol) {
 
   // If a symbol has no id, we need to let it interact with the checker to get an id.
 
@@ -40,7 +40,7 @@ export function ensureSymbolHasId(ctx: CompilerContext, symbol: Symbol) {
 
 }
 
-export function ensureDeclarationHasId(ctx: CompilerContext, declaration: Declaration) {
+export function ensureDeclarationHasId(ctx: InterpreterContext, declaration: Declaration) {
 
   // If a declaration has no id, we need to let it interact with the checker to get an id.
 
@@ -52,7 +52,7 @@ export function ensureDeclarationHasId(ctx: CompilerContext, declaration: Declar
 }
 
 
-export function ensureTypeHasId(ctx: CompilerContext, type: Type) {
+export function ensureTypeHasId(ctx: InterpreterContext, type: Type) {
 
   // If a type has no id, we need to let it interact with the checker to get an id.
 
@@ -64,7 +64,7 @@ export function ensureTypeHasId(ctx: CompilerContext, type: Type) {
 }
 
 
-export function ensureTypeNodeHasId(ctx: CompilerContext, typeNode: TypeNode) {
+export function ensureTypeNodeHasId(ctx: InterpreterContext, typeNode: TypeNode) {
 
   // If a typeNode has no id, we need to let it interact with the checker to get an id.
 

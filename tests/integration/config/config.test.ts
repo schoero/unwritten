@@ -12,7 +12,7 @@ scope("Integration", "Config", async () => {
     const config = await createConfig({}, "./tests/integration/config/.unwritten.json");
 
     expect(config).to.not.equal(undefined);
-    expect(config.compilerConfig).to.not.equal(undefined);
+    expect(config.interpreterConfig).to.not.equal(undefined);
     expect(config.renderConfig).to.not.equal(undefined);
     expect(config.renderConfig.test).to.not.equal(undefined);
     expect(config.renderConfig.test[".unwritten.json"]).to.equal(true);
@@ -30,7 +30,7 @@ scope("Integration", "Config", async () => {
     });
 
     expect(config).to.not.equal(undefined);
-    expect(config.compilerConfig).to.not.equal(undefined);
+    expect(config.interpreterConfig).to.not.equal(undefined);
     expect(config.renderConfig).to.not.equal(undefined);
     expect(config.renderConfig.test).to.not.equal(undefined);
     expect(config.renderConfig.test.object).to.equal(true);
@@ -42,7 +42,7 @@ scope("Integration", "Config", async () => {
     const config = await createConfig({}, "./tests/integration/config/.unwritten.js");
 
     expect(config).to.not.equal(undefined);
-    expect(config.compilerConfig).to.not.equal(undefined);
+    expect(config.interpreterConfig).to.not.equal(undefined);
     expect(config.renderConfig).to.not.equal(undefined);
     expect(config.renderConfig.test).to.not.equal(undefined);
     expect(config.renderConfig.test[".unwritten.js"]).to.equal(true);

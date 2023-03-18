@@ -13,10 +13,10 @@ import type { ObjectType, TypeNode } from "typescript";
 
 import type { MappedTypeMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MappedType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export const createMappedTypeByType = (ctx: CompilerContext, type: ObjectType): MappedType => lockType(ctx, type, () => {
+export const createMappedTypeByType = (ctx: InterpreterContext, type: ObjectType): MappedType => lockType(ctx, type, () => {
 
   const symbol = type.symbol;
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
@@ -48,7 +48,7 @@ export const createMappedTypeByType = (ctx: CompilerContext, type: ObjectType): 
 });
 
 
-function parseMember(ctx: CompilerContext, keyTypeNode: TypeNode, valueTypeNode: TypeNode): MappedTypeMemberEntity {
+function parseMember(ctx: InterpreterContext, keyTypeNode: TypeNode, valueTypeNode: TypeNode): MappedTypeMemberEntity {
 
   const keyType = parseTypeNode(ctx, keyTypeNode);
   const valueType = parseTypeNode(ctx, valueTypeNode);
@@ -66,7 +66,7 @@ function parseMember(ctx: CompilerContext, keyTypeNode: TypeNode, valueTypeNode:
 
 }
 
-// export function createMappedTypeByTypeNode(ctx: CompilerContext, typeNode: MappedTypeNode): MappedType {
+// export function createMappedTypeByTypeNode(ctx: InterpreterContext, typeNode: MappedTypeNode): MappedType {
 
 //   const tp = ctx.checker.getTypeFromTypeNode(typeNode);
 

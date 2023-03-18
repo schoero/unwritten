@@ -5,10 +5,10 @@ import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import type { TemplateLiteralTypeNode } from "typescript";
 
 import type { TemplateLiteralType } from "unwritten:interpreter/type-definitions/types.js";
-import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createTemplateLiteralType(ctx: CompilerContext, typeNode: TemplateLiteralTypeNode): TemplateLiteralType {
+export function createTemplateLiteralType(ctx: InterpreterContext, typeNode: TemplateLiteralTypeNode): TemplateLiteralType {
 
   const id = getIdByTypeNode(ctx, typeNode);
   const head = typeNode.head.text;
