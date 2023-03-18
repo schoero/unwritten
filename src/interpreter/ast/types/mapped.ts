@@ -1,7 +1,7 @@
+import { createTypeParameterEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { parseTypeNode } from "unwritten:interpreter/ast/index.js";
 import { getIdBySymbol, getIdByTypeNode } from "unwritten:interpreter/ast/shared/id.js";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
-import { parseTypeNode } from "unwritten:interpreter/ast/index.js";
-import { createTypeParameterEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";

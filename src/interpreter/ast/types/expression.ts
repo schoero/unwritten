@@ -1,6 +1,6 @@
+import { parseType, parseTypeNode } from "unwritten:interpreter/ast/index.js";
 import { getIdByTypeNode } from "unwritten:interpreter/ast/shared/id.js";
 import { getNameByTypeNode } from "unwritten:interpreter/ast/shared/name.js";
-import { parseType, parseTypeNode } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/types.js";
 
 import type { ExpressionWithTypeArguments } from "typescript";

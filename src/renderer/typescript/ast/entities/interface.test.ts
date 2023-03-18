@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderInterfaceEntity } from "unwritten:renderer/typescript/ast/entities/interface.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";

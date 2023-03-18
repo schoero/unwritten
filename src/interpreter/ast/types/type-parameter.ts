@@ -1,6 +1,6 @@
+import { parseType } from "unwritten:interpreter/ast/index.js";
 import { getIdByType } from "unwritten:interpreter/ast/shared/id.js";
 import { getNameByType } from "unwritten:interpreter/ast/shared/name.js";
-import { parseType } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { lockType } from "unwritten:interpreter/utils/ts.js";
 

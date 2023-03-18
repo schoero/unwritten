@@ -1,4 +1,3 @@
-import type { ID, Modifiers, Name, Position } from "unwritten:interpreter/type-definitions/shared.ts";
 import type { TypeKind } from "unwritten:interpreter/enums/types.ts";
 import type {
   GetterEntity,
@@ -10,6 +9,7 @@ import type {
   TupleMemberEntity,
   TypeParameterEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
+import type { ID, Modifiers, Name, Position } from "unwritten:interpreter/type-definitions/shared.ts";
 
 
 type Type<Kind extends TypeKind> = {

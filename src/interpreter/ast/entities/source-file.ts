@@ -1,6 +1,6 @@
+import { parseSymbol } from "unwritten:interpreter/ast/index.js";
 import { getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
 import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { parseSymbol } from "unwritten:interpreter/ast/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { getExportedSymbols } from "unwritten:interpreter/utils/ts.js";
 import { isExportableEntity } from "unwritten:typeguards/entities.js";

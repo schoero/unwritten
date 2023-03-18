@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
-import { getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
 import { createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";

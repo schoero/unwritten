@@ -1,10 +1,10 @@
+import { parseType } from "unwritten:interpreter/ast/index.js";
 import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter/ast/shared/initializer.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter/ast/shared/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
-import { parseType } from "unwritten:interpreter/ast/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import {
   isParameterDeclaration,

@@ -1,5 +1,5 @@
-import { getIdByTypeNode } from "unwritten:interpreter/ast/shared/id.js";
 import { parseTypeNode } from "unwritten:interpreter/ast/index.js";
+import { getIdByTypeNode } from "unwritten:interpreter/ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter/enums/types.js";
 
 import type { TemplateLiteralTypeNode } from "typescript";

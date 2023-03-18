@@ -1,6 +1,6 @@
+import { createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
-import { createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 
 import type { Symbol } from "typescript";

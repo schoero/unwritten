@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/array-type */
+import { parseType } from "unwritten:interpreter/ast/index.js";
 import { getIdByType } from "unwritten:interpreter/ast/shared/id.js";
 import { getPositionByNode } from "unwritten:interpreter/ast/shared/position.js";
-import { parseType } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { isTypeReferenceType } from "unwritten:interpreter/typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";

@@ -1,6 +1,3 @@
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { createFunctionType } from "unwritten:interpreter/ast/types/function.js";
-import { createObjectLikeType } from "unwritten:interpreter/ast/types/object.js";
 import {
   createClassEntity,
   createEnumEntity,
@@ -12,6 +9,45 @@ import {
   createTypeAliasEntity,
   createVariableEntity
 } from "unwritten:interpreter/ast/entities/index.js";
+import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
+import { createFunctionType } from "unwritten:interpreter/ast/types/function.js";
+import {
+  createAnyType,
+  createArrayTypeByArrayTypeNode,
+  createBigIntLiteralType,
+  createBigIntType,
+  createBooleanLiteralType,
+  createBooleanType,
+  createClassType,
+  createConditionalType,
+  createExpressionType,
+  createInterfaceByType,
+  createIntersectionTypeByType,
+  createLinkToType,
+  createMappedTypeByType,
+  createNeverType,
+  createNullType,
+  createNumberLiteralType,
+  createNumberType,
+  createObjectLiteralByType,
+  createStringLiteralType,
+  createStringType,
+  createSymbolType,
+  createTemplateLiteralType,
+  createTupleByTupleTypeNode,
+  createTupleTypeByTypeReference,
+  createTypeLiteralType,
+  createTypeParameterType,
+  createTypeQueryType,
+  createTypeReferenceType,
+  createUndefinedType,
+  createUnionTypeByType,
+  createUnknownType,
+  createUnresolvedByType,
+  createUnresolvedType,
+  createVoidType
+} from "unwritten:interpreter/ast/types/index.js";
+import { createObjectLikeType } from "unwritten:interpreter/ast/types/object.js";
 import {
   isClassSymbol,
   isEnumSymbol,
@@ -60,42 +96,6 @@ import {
   isUnknownType,
   isVoidType
 } from "unwritten:interpreter/typeguards/types.js";
-import {
-  createAnyType,
-  createArrayTypeByArrayTypeNode,
-  createBigIntLiteralType,
-  createBigIntType,
-  createBooleanLiteralType,
-  createBooleanType,
-  createClassType,
-  createConditionalType,
-  createExpressionType,
-  createInterfaceByType,
-  createIntersectionTypeByType,
-  createLinkToType,
-  createMappedTypeByType,
-  createNeverType,
-  createNullType,
-  createNumberLiteralType,
-  createNumberType,
-  createObjectLiteralByType,
-  createStringLiteralType,
-  createStringType,
-  createSymbolType,
-  createTemplateLiteralType,
-  createTupleByTupleTypeNode,
-  createTupleTypeByTypeReference,
-  createTypeLiteralType,
-  createTypeParameterType,
-  createTypeQueryType,
-  createTypeReferenceType,
-  createUndefinedType,
-  createUnionTypeByType,
-  createUnknownType,
-  createUnresolvedByType,
-  createUnresolvedType,
-  createVoidType
-} from "unwritten:interpreter/ast/types/index.js";
 import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import { isSymbolExcluded } from "unwritten:utils:exclude.js";
 import { assert } from "unwritten:utils:general.js";

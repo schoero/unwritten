@@ -1,8 +1,3 @@
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
-import { getModifiersByDeclaration } from "unwritten:interpreter/ast/shared/modifiers.js";
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
 import {
   createConstructorEntity,
   createGetterEntity,
@@ -11,6 +6,12 @@ import {
   createSetterEntity,
   createTypeParameterEntity
 } from "unwritten:interpreter/ast/entities/index.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:interpreter/ast/shared/modifiers.js";
+import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
+import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
+import { createExpressionType } from "unwritten:interpreter/ast/types/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import {
   isClassDeclaration,
@@ -20,7 +21,6 @@ import {
   isPropertyDeclaration,
   isSetterDeclaration
 } from "unwritten:interpreter/typeguards/declarations.js";
-import { createExpressionType } from "unwritten:interpreter/ast/types/index.js";
 import { isExpressionType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 
