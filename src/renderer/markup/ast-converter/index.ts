@@ -17,7 +17,9 @@ import {
   convertBigIntType,
   convertBooleanLiteralType,
   convertBooleanType,
+  convertClassType,
   convertFunctionType,
+  convertInterfaceType,
   convertIntersectionType,
   convertNeverType,
   convertNullType,
@@ -51,7 +53,9 @@ import {
   isBigIntType,
   isBooleanLiteralType,
   isBooleanType,
+  isClassType,
   isFunctionType,
+  isInterfaceType,
   isIntersectionType,
   isNeverType,
   isNullType,
@@ -128,6 +132,10 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
     return convertFunctionType(ctx, type);
   } else if(isTypeReferenceType(type)){
     return convertTypeReferenceType(ctx, type);
+  } else if(isInterfaceType(type)){
+    return convertInterfaceType(ctx, type);
+  } else if(isClassType(type)){
+    return convertClassType(ctx, type);
   }
 
   throw new Error(`Unknown type: ${type.kind}`);

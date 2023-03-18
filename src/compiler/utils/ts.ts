@@ -2,7 +2,7 @@ import { isAliasedSymbol } from "unwritten:compiler:typeguards/symbols.js";
 import * as locker from "unwritten:compiler:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { Map as TSMap, Program, Symbol, Type } from "typescript";
+import type { Program, Symbol, Type } from "typescript";
 
 import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
 import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
@@ -48,15 +48,6 @@ export function lockType<T extends Types>(ctx: CompilerContext, type: Type, call
   return returnType;
 }
 
-
-export function normalizeTSMap<T>(tsMap: Map<string, T> | TSMap<T>): Map<string, T> {
-  if(tsMap instanceof Map){
-    return tsMap;
-  }
-  const map = new Map();
-  tsMap.forEach((value, key) => map.set(key, value));
-  return map;
-}
 
 //-- Symbol helpers
 

@@ -9,6 +9,7 @@ import {
   renderAnyType,
   renderArrayType,
   renderBooleanLiteralType,
+  renderClassType,
   renderExpressionType,
   renderFunctionType,
   renderInterfaceType,
@@ -38,6 +39,7 @@ import {
   isAnyType,
   isArrayType,
   isBooleanLiteralType,
+  isClassType,
   isExpressionType,
   isFunctionType,
   isInterfaceType,
@@ -104,6 +106,8 @@ export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
     return renderInterfaceType(ctx, type);
   } else if(isFunctionType(type)){
     return renderFunctionType(ctx, type);
+  } else if(isClassType(type)){
+    return renderClassType(ctx, type);
   }
 
 }

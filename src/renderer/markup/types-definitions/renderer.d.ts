@@ -149,6 +149,16 @@ export type ConvertedUnionType = ASTNodes[];
 export type ConvertedIntersectionType = ASTNodes[];
 
 
+//-- Interface type
+
+export type ConvertedInterfaceType = ASTNodes;
+
+
+//-- Class type
+
+export type ConvertedClassType = ASTNodes;
+
+
 //-- Entities
 
 export type ConvertedEntitiesForTableOfContents =
@@ -223,14 +233,23 @@ export interface ConvertedTypeAliasEntityForDocumentation extends TitleNode {
 }
 
 
-//-- Function
+//-- Function like
 
-export interface ConvertedFunctionEntityForTableOfContents extends ContainerNode {
+export interface ConvertedFunctionLikeEntityForTableOfContents extends ContainerNode {
   children: ConvertedSignatureEntityForTableOfContents[];
 }
 
-export interface ConvertedFunctionEntityForDocumentation extends ContainerNode {
+export interface ConvertedFunctionLikeEntityForDocumentation extends ContainerNode {
   children: ConvertedSignatureEntityForDocumentation[];
+}
+
+
+//-- Function
+
+export interface ConvertedFunctionEntityForTableOfContents extends ConvertedFunctionLikeEntityForTableOfContents {
+}
+
+export interface ConvertedFunctionEntityForDocumentation extends ConvertedFunctionLikeEntityForDocumentation {
 }
 
 
@@ -308,9 +327,9 @@ export interface ConvertedClassEntityForDocumentation extends TitleNode {
     example: ParagraphNode,
     constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
     properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-    methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
+    methods: TitleNode<ConvertedMethodEntityForDocumentation[]>,
+    setters: TitleNode<ConvertedSetterEntityForDocumentation[]>,
+    getters: TitleNode<ConvertedGetterEntityForDocumentation[]>
   ];
 }
 
@@ -369,4 +388,37 @@ export interface ConvertedPropertyEntityForDocumentation extends TitleNode {
     remarks: ParagraphNode,
     example: ParagraphNode
   ];
+}
+
+
+//-- Method
+
+export interface ConvertedMethodEntityForTableOfContents extends ConvertedFunctionLikeEntityForTableOfContents {
+
+}
+
+export interface ConvertedMethodEntityForDocumentation extends ConvertedFunctionLikeEntityForDocumentation {
+
+}
+
+
+//-- Setter
+
+export interface ConvertedSetterEntityForTableOfContents extends ConvertedFunctionLikeEntityForTableOfContents {
+
+}
+
+export interface ConvertedSetterEntityForDocumentation extends ConvertedFunctionLikeEntityForDocumentation {
+
+}
+
+
+//-- Getter
+
+export interface ConvertedGetterEntityForTableOfContents extends ConvertedFunctionLikeEntityForTableOfContents {
+
+}
+
+export interface ConvertedGetterEntityForDocumentation extends ConvertedFunctionLikeEntityForDocumentation {
+
 }

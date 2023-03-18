@@ -1,4 +1,5 @@
 import {
+  convertFunctionLikeEntityForDocumentation,
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
@@ -12,8 +13,8 @@ import {
 } from "unwritten:renderer/markup/utils/nodes.js";
 import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
 import {
-  extendInterfaceEntityPropertiesWithHeritage,
-  extendInterfaceEntitySignaturesWithHeritage
+  extendClassEntityConstructorsWithHeritage,
+  extendClassEntityEntitiesWithHeritage
 } from "unwritten:renderer/utils/heritage.js";
 
 import type { ClassEntity } from "unwritten:compiler:type-definitions/entities.js";
@@ -41,19 +42,17 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const position = classEntity.position ? convertPosition(ctx, classEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, classEntity);
 
-  const properties = extendInterfaceEntityPropertiesWithHeritage(classEntity);
-  const constructSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "constructSignatures");
-  const callSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "callSignatures");
-  const methodSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "methodSignatures");
-  const setterSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "setterSignatures");
-  const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(classEntity, "getterSignatures");
+  const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
+  const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
+  const methodEntities = extendClassEntityEntitiesWithHeritage(classEntity, "methods");
+  const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
+  const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
 
-  const convertedProperties = properties.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
-  const convertedConstructSignatures = constructSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedCallSignatures = callSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedSetters = setterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedGetters = getterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedMethods = methodSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedConstructSignatures = constructorEntity?.signatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedProperties = propertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
+  const convertedMethods = methodEntities.map(methodEntity => convertFunctionLikeEntityForDocumentation(ctx, methodEntity));
+  const convertedSetters = setterEntities.map(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
+  const convertedGetters = getterEntities.map(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
 
   return createTitleNode(
     name,
@@ -65,7 +64,6 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
       createParagraphNode(remarks),
       createParagraphNode(example),
       createTitleNode(t("construct-signature", { count: 99 }), undefined, convertedConstructSignatures),
-      createTitleNode(t("call-signature", { count: 99 }), undefined, convertedCallSignatures),
       createTitleNode(t("property", { count: 99 }), undefined, convertedProperties),
       createTitleNode(t("method", { count: 99 }), undefined, convertedMethods),
       createTitleNode(t("setter", { count: 99 }), undefined, convertedSetters),

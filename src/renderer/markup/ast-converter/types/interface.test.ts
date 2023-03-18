@@ -1,16 +1,16 @@
 import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { renderInterfaceType } from "unwritten:renderer/typescript/ast/types/interface.js";
+import { convertInterfaceType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { InterfaceType } from "unwritten:compiler/type-definitions/types.js";
+import type { InterfaceType } from "unwritten:compiler:type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("TypeScriptRenderer", TypeKind.Interface, () => {
+scope("MarkupRenderer", TypeKind.Interface, () => {
 
   {
 
@@ -37,11 +37,12 @@ scope("TypeScriptRenderer", TypeKind.Interface, () => {
 
     // #endregion
 
-    const ctx = createRenderContext(BuiltInRenderers.TypeScript);
+    const ctx = createRenderContext();
 
-    const renderedType = renderInterfaceType(ctx, type as InterfaceType);
+    const convertedType = convertInterfaceType(ctx, type as InterfaceType);
+    const renderedType = renderNode(ctx, convertedType);
 
-    it("should be able to render interface types", () => {
+    it("should render the name of the type", () => {
       expect(renderedType).to.equal("Interface");
     });
 

@@ -18,6 +18,21 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
 
     // #region Entity with all possible members
 
+    // #region Source
+
+    // export interface Interface {
+    //   (): void;
+    //   new (): void;
+    //   method(a: number): void;
+    //   method(a: string): void;
+    //   prop: string;
+    //   funcProp: () => void;
+    //   get getter(): string;
+    //   set setter(value: string);
+    // }
+
+    // #endregion
+
     const interfaceEntity: Testable<InterfaceEntity> = {
       callSignatures: [
         {
@@ -288,19 +303,6 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
     const renderedInterface = renderInterfaceEntity(ctx, interfaceEntity as InterfaceEntity);
     const renderedInterfaceLines = renderedInterface.split(renderNewLine(ctx));
 
-    /*
-      export interface Interface {
-        (): void;
-        new (): void;
-        method(a: number): void;
-        method(a: string): void;
-        prop: string;
-        funcProp: () => void;
-        get getter(): string;
-        set setter(value: string);
-      }
-      */
-
     it("should have a matching header", () => {
       expect(renderedInterfaceLines[0]).to.equal("interface Interface {");
     });
@@ -319,14 +321,16 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
 
     // #region Entity with single heritage
 
-    /*
-    interface InterfaceA {
-      propA: string;
-    }
-    export interface InterfaceB extends InterfaceA {
-      propB: string;
-    }
-    */
+    // #region Source
+
+    // interface InterfaceA {
+    //   propA: string;
+    // }
+    // export interface InterfaceB extends InterfaceA {
+    //   propB: string;
+    // }
+
+    // #endregion
 
     const interfaceEntity: Testable<InterfaceEntity> = {
       callSignatures: [],
@@ -474,17 +478,19 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
 
     // #region Entity with multiple heritages
 
-    /*
-    interface InterfaceA {
-      propA: string;
-    }
-    interface InterfaceB {
-      propB: string;
-    }
-    export interface InterfaceC extends InterfaceA, InterfaceB {
-      propC: string;
-    }
-    */
+    // #region Source
+
+    // interface InterfaceA {
+    //   propA: string;
+    // }
+    // interface InterfaceB {
+    //   propB: string;
+    // }
+    // export interface InterfaceC extends InterfaceA, InterfaceB {
+    //   propC: string;
+    // }
+
+    // #endregion
 
     const interfaceEntity: Testable<InterfaceEntity> = {
       callSignatures: [],
@@ -708,16 +714,18 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
 
     // #region Entity with single heritage and overridden property
 
-    /*
-    interface InterfaceA {
-      prop: string | number;
-      test(): string | number;
-    }
-    export interface InterfaceB extends InterfaceA {
-      prop: string;
-      test(): string;
-    }
-    */
+    // #region Source
+
+    // interface InterfaceA {
+    //   prop: string | number;
+    //   test(): string | number;
+    // }
+    // export interface InterfaceB extends InterfaceA {
+    //   prop: string;
+    //   test(): string;
+    // }
+
+    // #endregion
 
     const interfaceEntity: Testable<InterfaceEntity> = {
       callSignatures: [],
@@ -988,14 +996,16 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
 
     // #region Entity with single heritage and overwritten method
 
-    /*
-    interface InterfaceA {
-      prop: string | number;
-      test(): string | number;
-    }
-    export interface InterfaceB extends InterfaceA {
-    }
-    */
+    // #region Source
+
+    // interface InterfaceA {
+    //   prop: string | number;
+    //   test(): string | number;
+    // }
+    // export interface InterfaceB extends InterfaceA {
+    // }
+
+    // #endregion
 
     const interfaceEntity: Testable<InterfaceEntity> = {
       callSignatures: [],

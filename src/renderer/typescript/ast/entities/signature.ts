@@ -1,5 +1,6 @@
 import { renderParameterEntities } from "unwritten:renderer/typescript/ast/entities/parameter.js";
 import { renderType } from "unwritten:renderer/typescript/ast/index.js";
+import { renderModifiers } from "unwritten:renderer/typescript/utils/modifiers.js";
 
 import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
@@ -7,9 +8,9 @@ import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type
 
 export function renderSignatureEntity(ctx: TypeScriptRenderContext, signatureEntity: SignatureEntity): string {
 
-  const renderedModifiers = signatureEntity.modifiers?.map(
-    modifier => modifier
-  ).join(" ") ?? "";
+  const renderedModifiers = signatureEntity.modifiers
+    ? renderModifiers(signatureEntity.modifiers)
+    : "";
 
   const renderedSignatureName = signatureEntity.name ?? "";
   const renderedParameters = signatureEntity.parameters

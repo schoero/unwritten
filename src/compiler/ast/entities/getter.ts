@@ -10,11 +10,9 @@ import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
 export function createGetterEntity(ctx: CompilerContext, symbol: Symbol): GetterEntity {
 
   const functionLike = createFunctionLikeEntity(ctx, symbol, EntityKind.Getter);
-  const kind = EntityKind.Getter;
 
   return {
-    ...functionLike,
-    kind
+    ...functionLike
   };
 
 }

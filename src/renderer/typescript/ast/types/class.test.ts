@@ -2,47 +2,46 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:compiler:enums/types.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { renderInterfaceType } from "unwritten:renderer/typescript/ast/types/interface.js";
+import { renderClassType } from "unwritten:renderer:ts/ast/types/class.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { InterfaceType } from "unwritten:compiler/type-definitions/types.js";
+import type { ClassType } from "unwritten:compiler:type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("TypeScriptRenderer", TypeKind.Interface, () => {
+scope("TypeScriptRenderer", TypeKind.Class, () => {
 
   {
 
     // #region Type
 
-    const type: Testable<InterfaceType> = {
+    const type: Testable<ClassType> = {
       callSignatures: [],
       constructSignatures: [],
       getters: [],
-      id: 2611,
+      id: 2861,
       isThis: false,
-      kind: TypeKind.Interface,
+      kind: TypeKind.Class,
       methods: [],
-      name: "Interface",
+      name: "Class",
       position: {
         column: 0,
         file: "/file.ts",
         line: 1
       },
       properties: [],
-      setters: [],
-      typeParameters: undefined
+      setters: []
     };
 
     // #endregion
 
     const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
-    const renderedType = renderInterfaceType(ctx, type as InterfaceType);
+    const renderedType = renderClassType(ctx, type as ClassType);
 
-    it("should be able to render interface types", () => {
-      expect(renderedType).to.equal("Interface");
+    it("should be able to render class types", () => {
+      expect(renderedType).to.equal("Class");
     });
 
   }
