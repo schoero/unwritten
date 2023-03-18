@@ -1,5 +1,5 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
-import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
@@ -36,7 +36,7 @@ export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, 
 export function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity): ConvertedParameterEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
-  const t = useTranslation(ctx);
+  const translate = getTranslator(ctx);
 
   const description = parameterEntity.description ?? "";
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
@@ -46,16 +46,16 @@ export function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts
     : "";
 
   const rest = parameterEntity.rest === true
-    ? encapsulate(t("rest"), renderConfig.tagEncapsulation)
+    ? encapsulate(translate("rest"), renderConfig.tagEncapsulation)
     : "";
 
   const optional = parameterEntity.optional === true
-    ? encapsulate(t("optional"), renderConfig.tagEncapsulation)
+    ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
     : "";
 
   const initializer = parameterEntity.initializer !== undefined
     ? spaceBetween(
-      `${t("default", { capitalize: true })}:`,
+      `${translate("default", { capitalize: true })}:`,
       convertType(ctx, parameterEntity.initializer)
     )
     : "";

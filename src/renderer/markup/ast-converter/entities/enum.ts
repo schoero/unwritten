@@ -8,7 +8,6 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
-import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
 
 import type { EnumEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -24,8 +23,6 @@ export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContexts, e
 
 
 export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enumEntity: EnumEntity): ConvertedEnumEntityForDocumentation {
-
-  const t = useTranslation(ctx);
 
   const name = enumEntity.name;
   const description = enumEntity.description ?? "";

@@ -11,10 +11,10 @@ interface TranslationOptions {
   count?: number;
 }
 
-export function useTranslation<MarkupRenderContext extends MarkdownRenderContext>(ctx: MarkdownRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<MarkdownRenderConfig>["translations"]>, options?: TranslationOptions) => string;
-export function useTranslation<MarkupRenderContext extends HTMLRenderContext>(ctx: HTMLRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<HTMLRenderConfig>["translations"]>, options?: TranslationOptions) => string;
-export function useTranslation<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions) => string;
-export function useTranslation<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext) {
+export function getTranslator<MarkupRenderContext extends MarkdownRenderContext>(ctx: MarkdownRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<MarkdownRenderConfig>["translations"]>, options?: TranslationOptions) => string;
+export function getTranslator<MarkupRenderContext extends HTMLRenderContext>(ctx: HTMLRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<HTMLRenderConfig>["translations"]>, options?: TranslationOptions) => string;
+export function getTranslator<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions) => string;
+export function getTranslator<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext) {
   return (key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions) => translate(ctx, key, options);
 }
 

@@ -7,7 +7,7 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
-import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
@@ -33,7 +33,7 @@ export function convertPropertyEntityForSignature(ctx: MarkupRenderContexts, pro
 export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
-  const t = useTranslation(ctx);
+  const translate = getTranslator(ctx);
 
   const name = propertyEntity.name;
   const description = propertyEntity.description ?? "";
@@ -45,7 +45,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   const type = convertType(ctx, propertyEntity.type);
 
   const optional = propertyEntity.optional === true
-    ? encapsulate(t("optional"), renderConfig.tagEncapsulation)
+    ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
     : "";
 
   return createTitleNode(

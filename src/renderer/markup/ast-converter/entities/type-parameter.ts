@@ -1,5 +1,5 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
-import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
@@ -29,7 +29,7 @@ export function convertTypeParameterEntitiesForSignature(ctx: MarkupRenderContex
 export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity): ConvertedTypeParameterEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
-  const t = useTranslation(ctx);
+  const translate = getTranslator(ctx);
 
   const description = typeParameterEntity.description ?? "";
   const name = encapsulate(typeParameterEntity.name, renderConfig.typeParameterEncapsulation);
@@ -40,7 +40,7 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
 
   const initializer = typeParameterEntity.initializer !== undefined
     ? spaceBetween(
-      `${t("default", { capitalize: true })}:`,
+      `${translate("default", { capitalize: true })}:`,
       convertType(ctx, typeParameterEntity.initializer)
     )
     : "";

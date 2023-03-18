@@ -10,7 +10,7 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
-import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
   extendInterfaceEntityPropertiesWithHeritage,
   extendInterfaceEntitySignaturesWithHeritage
@@ -31,7 +31,7 @@ export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContex
 
 export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity): ConvertedInterfaceEntityForDocumentation {
 
-  const t = useTranslation(ctx);
+  const translate = getTranslator(ctx);
 
   const name = interfaceEntity.name;
   const description = interfaceEntity.description ?? "";
@@ -64,12 +64,12 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
       createParagraphNode(description),
       createParagraphNode(remarks),
       createParagraphNode(example),
-      createTitleNode(t("construct-signature", { count: 99 }), undefined, convertedConstructSignatures),
-      createTitleNode(t("call-signature", { count: 99 }), undefined, convertedCallSignatures),
-      createTitleNode(t("property", { count: 99 }), undefined, convertedProperties),
-      createTitleNode(t("method", { count: 99 }), undefined, convertedMethods),
-      createTitleNode(t("setter", { count: 99 }), undefined, convertedSetters),
-      createTitleNode(t("getter", { count: 99 }), undefined, convertedGetters)
+      createTitleNode(translate("construct-signature", { count: 99 }), undefined, convertedConstructSignatures),
+      createTitleNode(translate("call-signature", { count: 99 }), undefined, convertedCallSignatures),
+      createTitleNode(translate("property", { count: 99 }), undefined, convertedProperties),
+      createTitleNode(translate("method", { count: 99 }), undefined, convertedMethods),
+      createTitleNode(translate("setter", { count: 99 }), undefined, convertedSetters),
+      createTitleNode(translate("getter", { count: 99 }), undefined, convertedGetters)
     ]
   );
 

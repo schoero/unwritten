@@ -12,7 +12,7 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
-import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
@@ -38,7 +38,7 @@ export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContex
 
 export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForDocumentation {
 
-  const t = useTranslation(ctx);
+  const translate = getTranslator(ctx);
 
   const signatureName = signatureEntity.name ?? "";
   const renderedSignatureParameters = signatureEntity.parameters ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters) : "";
@@ -60,7 +60,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const returnDescription = signatureEntity.returnType.description ?? "";
 
   const returnTypeWithDescription = spaceBetween(
-    `${t("returns", { capitalize: true })}:`,
+    `${translate("returns", { capitalize: true })}:`,
     returnType,
     returnDescription
   );

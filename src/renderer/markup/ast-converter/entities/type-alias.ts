@@ -9,7 +9,7 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
-import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 
 import type { TypeAliasEntity } from "unwritten:compiler:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
@@ -26,7 +26,7 @@ export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContex
 
 export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForDocumentation {
 
-  const t = useTranslation(ctx);
+  const translate = getTranslator(ctx);
 
   const name = typeAliasEntity.name;
   const description = typeAliasEntity.description ?? "";
@@ -40,7 +40,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
     ? typeAliasEntity.typeParameters.map(typeParameter => convertTypeParameterEntityForDocumentation(ctx, typeParameter))
     : "";
 
-  const type = [`${t("type", { capitalize: true })}: `, convertType(ctx, typeAliasEntity.type)];
+  const type = [`${translate("type", { capitalize: true })}: `, convertType(ctx, typeAliasEntity.type)];
 
   return createTitleNode(
     name,

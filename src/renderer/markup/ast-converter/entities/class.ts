@@ -11,7 +11,7 @@ import {
   createSmallNode,
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
-import { useTranslation } from "unwritten:renderer/markup/utils/translations.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
   extendClassEntityConstructorsWithHeritage,
   extendClassEntityEntitiesWithHeritage
@@ -32,7 +32,7 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
 
 export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForDocumentation {
 
-  const t = useTranslation(ctx);
+  const t = getTranslator(ctx);
 
   const name = classEntity.name;
   const description = classEntity.description ?? "";
