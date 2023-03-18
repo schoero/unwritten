@@ -33,7 +33,8 @@ export function ensureSymbolHasId(ctx: CompilerContext, symbol: Symbol) {
 
   // If a symbol has no id, we need to let it interact with the checker to get an id.
 
-  if("id" in symbol === false){
+  // @ts-expect-error - Internal API
+  if(!symbol.id){
     ctx.checker.symbolToString(symbol);
   }
 
@@ -43,7 +44,8 @@ export function ensureDeclarationHasId(ctx: CompilerContext, declaration: Declar
 
   // If a declaration has no id, we need to let it interact with the checker to get an id.
 
-  if("id" in declaration === false){
+  // @ts-expect-error - Internal API
+  if(!declaration.id){
     ctx.checker.getSymbolAtLocation(declaration);
   }
 
@@ -54,7 +56,8 @@ export function ensureTypeHasId(ctx: CompilerContext, type: Type) {
 
   // If a type has no id, we need to let it interact with the checker to get an id.
 
-  if("id" in type === false){
+  // @ts-expect-error - Internal API
+  if(!type.id){
     ctx.checker.typeToString(type);
   }
 
@@ -65,7 +68,8 @@ export function ensureTypeNodeHasId(ctx: CompilerContext, typeNode: TypeNode) {
 
   // If a typeNode has no id, we need to let it interact with the checker to get an id.
 
-  if("id" in typeNode === false){
+  // @ts-expect-error - Internal API
+  if(!typeNode.id){
     ctx.checker.getTypeFromTypeNode(typeNode);
   }
 
