@@ -15,7 +15,7 @@ import {
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
-import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedSignatureEntityForDocumentation,

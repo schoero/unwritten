@@ -1,4 +1,4 @@
-import type { Position } from "unwritten:compiler/type-definitions/shared.js";
+import type { Position } from "unwritten:interpreter/type-definitions/shared.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
 
 

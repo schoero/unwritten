@@ -1,5 +1,5 @@
-import type { JSDocTags } from "unwritten:compiler/type-definitions/shared.js";
-import type { JSDocTags as JSDocTagNames } from "unwritten:compiler:enums/jsdoc.js";
+import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter/enums/jsdoc.ts";
+import type { JSDocTags } from "unwritten:interpreter/type-definitions/shared.ts";
 
 import type {
   ASTNodes,

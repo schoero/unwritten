@@ -9,7 +9,7 @@ import {
   createTitleNode
 } from "unwritten:renderer/markup/utils/nodes.js";
 
-import type { EnumEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { EnumEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedEnumEntityForDocumentation,

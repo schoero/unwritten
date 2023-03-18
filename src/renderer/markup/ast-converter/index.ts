@@ -73,8 +73,8 @@ import {
   isVoidType
 } from "unwritten:typeguards/types.js";
 
-import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
-import type { Types } from "unwritten:compiler:type-definitions/types.d.js";
+import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
+import type { Types } from "unwritten:interpreter/type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type { ASTNodes, ContainerNode } from "unwritten:renderer:markup/types-definitions/nodes.d.js";
 import type {

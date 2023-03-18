@@ -1,4 +1,4 @@
-import type { Modifiers } from "unwritten:compiler/type-definitions/shared.js";
+import type { Modifiers } from "unwritten:interpreter/type-definitions/shared.js";
 
 
 export function renderModifiers(modifiers: Modifiers[]): string {

@@ -1,4 +1,4 @@
-import type { ExportableEntityKinds } from "unwritten:compiler:type-definitions/entities.js";
+import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities.js";
 
 import type { CategoryNames } from "./renderer.js";
 

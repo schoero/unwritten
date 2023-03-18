@@ -25,7 +25,7 @@ import {
 import { renderContainerNode } from "./ast/container.js";
 import { renderTitleNode } from "./ast/title.js";
 
-import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.js";
+import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";

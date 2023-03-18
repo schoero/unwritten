@@ -1,5 +1,5 @@
-import type { Types } from "unwritten:compiler/type-definitions/types.js";
-import type { Entities } from "unwritten:compiler:type-definitions/entities.js";
+import type { Entities } from "unwritten:interpreter/type-definitions/entities.js";
+import type { Types } from "unwritten:interpreter/type-definitions/types.js";
 
 
 export type DeepPartial<T> =

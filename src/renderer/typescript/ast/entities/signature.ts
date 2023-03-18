@@ -2,7 +2,7 @@ import { renderParameterEntities } from "unwritten:renderer/typescript/ast/entit
 import { renderType } from "unwritten:renderer/typescript/ast/index.js";
 import { renderModifiers } from "unwritten:renderer/typescript/utils/modifiers.js";
 
-import type { SignatureEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 

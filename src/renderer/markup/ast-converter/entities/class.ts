@@ -17,7 +17,7 @@ import {
   extendClassEntityEntitiesWithHeritage
 } from "unwritten:renderer/utils/heritage.js";
 
-import type { ClassEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedClassEntityForDocumentation,

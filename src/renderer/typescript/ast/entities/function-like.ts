@@ -3,7 +3,7 @@ import { renderSignatureEntity } from "unwritten:renderer/typescript/ast/entitie
 import { renderSemicolon } from "unwritten:renderer/typescript/utils/keywords.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 
-import type { FunctionLikeEntities } from "unwritten:compiler:type-definitions/entities.js";
+import type { FunctionLikeEntities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 

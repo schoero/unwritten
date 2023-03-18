@@ -3,7 +3,7 @@ import { renderEntity } from "unwritten:renderer/typescript/ast/index.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 
-import type { NamespaceEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 

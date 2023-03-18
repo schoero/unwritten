@@ -11,7 +11,7 @@ import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
-import type { PropertyEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedPropertyEntityForDocumentation,

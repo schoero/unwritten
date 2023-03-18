@@ -2,7 +2,7 @@ import { getCategoryName } from "./renderer.js";
 
 import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
-import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderConfig } from "unwritten:renderer/markup/types-definitions/config.js";
 
 

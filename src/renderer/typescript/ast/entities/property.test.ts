@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderPropertyEntity } from "unwritten:renderer/typescript/ast/entities/property.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { PropertyEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 

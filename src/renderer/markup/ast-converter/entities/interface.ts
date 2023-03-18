@@ -16,7 +16,7 @@ import {
   extendInterfaceEntitySignaturesWithHeritage
 } from "unwritten:renderer/utils/heritage.js";
 
-import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { InterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedInterfaceEntityForDocumentation,

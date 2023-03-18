@@ -1,4 +1,4 @@
-import type { ExportableEntities } from "unwritten:compiler:type-definitions/entities.d.js";
+import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
 
 import type { RenderContext } from "./context.js";
 

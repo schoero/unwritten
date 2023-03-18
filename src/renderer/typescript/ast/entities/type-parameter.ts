@@ -1,6 +1,6 @@
 import { renderType } from "unwritten:renderer/typescript/ast/index.js";
 
-import type { TypeParameterEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { TypeParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 

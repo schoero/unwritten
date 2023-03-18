@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:compiler:enums/entities.js";
+import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import {
   convertModuleEntityForDocumentation,
   convertModuleEntityForTableOfContents
@@ -8,7 +8,7 @@ import {
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { ModuleEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { ModuleEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 

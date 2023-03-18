@@ -1,7 +1,7 @@
 import { RenderableJSDocTags } from "unwritten:renderer/markup/enums/jsdoc.js";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 
-import type { JSDocTags } from "unwritten:compiler/type-definitions/shared.js";
+import type { JSDocTags } from "unwritten:interpreter/type-definitions/shared.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
 
 

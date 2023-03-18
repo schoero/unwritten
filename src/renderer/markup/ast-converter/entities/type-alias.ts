@@ -11,7 +11,7 @@ import {
 } from "unwritten:renderer/markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 
-import type { TypeAliasEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedTypeAliasEntityForDocumentation,

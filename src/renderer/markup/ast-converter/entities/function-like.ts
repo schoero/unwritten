@@ -4,7 +4,7 @@ import {
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { createContainerNode } from "unwritten:renderer/markup/utils/nodes.js";
 
-import type { FunctionLikeEntities } from "unwritten:compiler:type-definitions/entities.js";
+import type { FunctionLikeEntities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedFunctionEntityForDocumentation,

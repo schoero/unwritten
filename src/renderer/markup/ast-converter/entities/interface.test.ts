@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:compiler:enums/entities.js";
-import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import {
   convertInterfaceEntityForDocumentation,
   convertInterfaceEntityForTableOfContents
@@ -11,7 +11,7 @@ import { isParagraphNode, isSmallNode } from "unwritten:renderer/markup/typeguar
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { InterfaceEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { InterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 

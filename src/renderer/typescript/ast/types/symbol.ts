@@ -1,4 +1,4 @@
-import type { SymbolType } from "unwritten:compiler/type-definitions/types.js";
+import type { SymbolType } from "unwritten:interpreter/type-definitions/types.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 

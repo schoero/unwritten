@@ -1,0 +1,32 @@
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
+import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
+import { createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+
+import type { Symbol } from "typescript";
+
+import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { CompilerContext } from "unwritten:type-definitions/context.d.js";
+
+
+export function createNamespaceEntity(ctx: CompilerContext, symbol: Symbol): NamespaceEntity {
+
+  const fromSourceFile = createSourceFileEntity(ctx, symbol);
+
+  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
+
+  const description = declaration && getDescriptionByDeclaration(ctx, declaration);
+  const jsdocTags = declaration && getJSDocTagsByDeclaration(ctx, declaration);
+  const position = declaration && getPositionByDeclaration(ctx, declaration);
+
+  const kind = EntityKind.Namespace;
+
+  return {
+    ...fromSourceFile,
+    description,
+    ...jsdocTags,
+    kind,
+    position
+  };
+
+}

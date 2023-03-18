@@ -1,10 +1,10 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-import { parse } from "unwritten:compiler/ast/index.js";
-import { compile } from "unwritten:compiler:index.js";
-import { createContext as createCompilerContext } from "unwritten:compiler:utils/context.js";
-import { getEntryFileSymbolFromProgram } from "unwritten:compiler:utils/ts.js";
+import { parse } from "unwritten:interpreter/ast/index.js";
+import { compile } from "unwritten:interpreter/index.js";
+import { createContext as createCompilerContext } from "unwritten:interpreter/utils/context.js";
+import { getEntryFileSymbolFromProgram } from "unwritten:interpreter/utils/ts.js";
 import { createConfig } from "unwritten:config/index.js";
 import { Logger } from "unwritten:logger/index.js";
 import { getRenderer } from "unwritten:renderer:index.js";

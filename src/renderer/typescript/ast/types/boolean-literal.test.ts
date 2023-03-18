@@ -1,12 +1,12 @@
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:compiler:enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderBooleanLiteralType } from "unwritten:renderer:ts/ast/types/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { BooleanLiteralType } from "unwritten:compiler:type-definitions/types.js";
+import type { BooleanLiteralType } from "unwritten:interpreter/type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 

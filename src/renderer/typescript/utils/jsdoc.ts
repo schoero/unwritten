@@ -1,7 +1,7 @@
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 
-import type { JSDoc } from "unwritten:compiler/type-definitions/shared.js";
+import type { JSDoc } from "unwritten:interpreter/type-definitions/shared.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 

@@ -2,7 +2,7 @@ import { renderTypeParameterEntity } from "unwritten:renderer/typescript/ast/ent
 import { renderType } from "unwritten:renderer/typescript/ast/index.js";
 import { renderSemicolon } from "unwritten:renderer/typescript/utils/keywords.js";
 
-import type { TypeAliasEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 

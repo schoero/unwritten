@@ -1,6 +1,6 @@
 import { renderType } from "unwritten:renderer/typescript/ast/index.js";
 
-import type { UnionType } from "unwritten:compiler:type-definitions/types.js";
+import type { UnionType } from "unwritten:interpreter/type-definitions/types.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 

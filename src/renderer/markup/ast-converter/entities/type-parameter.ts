@@ -3,7 +3,7 @@ import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
-import type { TypeParameterEntity } from "unwritten:compiler:type-definitions/entities.js";
+import type { TypeParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
 import type {
   ConvertedTypeParameterEntitiesForSignature,

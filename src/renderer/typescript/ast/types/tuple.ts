@@ -1,8 +1,8 @@
-import { TypeKind } from "unwritten:compiler/enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { renderType } from "unwritten:renderer/typescript/ast/index.js";
 
-import type { TupleMemberEntity } from "unwritten:compiler/type-definitions/entities.js";
-import type { TupleType } from "unwritten:compiler:type-definitions/types.js";
+import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { TupleType } from "unwritten:interpreter/type-definitions/types.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 
 
