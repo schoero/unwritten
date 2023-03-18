@@ -1,8 +1,8 @@
-import { renderType } from "unwritten:renderer/typescript/ast/index.js";
-import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
+import { renderType } from "unwritten:renderer:typescript/ast/index.js";
+import { renderIndentation } from "unwritten:renderer:utils/indentation.js";
+import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
 
-import type { EnumEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { EnumEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer:ts/type-definitions/renderer.js";
 
 

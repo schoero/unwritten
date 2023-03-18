@@ -1,21 +1,21 @@
-import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
-import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
-import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
-import { getAnchorIdentifier } from "unwritten:renderer/markup/utils/linker.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
+import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
+import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { getAnchorIdentifier } from "unwritten:renderer:markup/utils/linker.js";
 import {
   createLinkNode,
   createParagraphNode,
   createSmallNode,
   createTitleNode
-} from "unwritten:renderer/markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+} from "unwritten:renderer:markup/utils/nodes.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
-import type { VariableEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedVariableEntityForDocumentation,
   ConvertedVariableEntityForTableOfContents
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContexts, variable: VariableEntity): ConvertedVariableEntityForTableOfContents {

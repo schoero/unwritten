@@ -1,10 +1,10 @@
 import ts from "typescript";
 
-import { JSDocTags } from "unwritten:interpreter/enums/jsdoc.js";
+import { JSDocTags } from "unwritten:interpreter:enums/jsdoc.js";
 
 import type { Declaration, ParameterDeclaration, Symbol, Type, TypeParameterDeclaration } from "typescript";
 
-import type { Description } from "unwritten:interpreter/type-definitions/shared.js";
+import type { Description } from "unwritten:interpreter:type-definitions/shared.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

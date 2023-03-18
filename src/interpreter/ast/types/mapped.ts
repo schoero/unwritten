@@ -1,18 +1,18 @@
-import { createTypeParameterEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { parseTypeNode } from "unwritten:interpreter/ast/index.js";
-import { getIdBySymbol, getIdByTypeNode } from "unwritten:interpreter/ast/shared/id.js";
-import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
-import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
-import { lockType } from "unwritten:interpreter/utils/ts.js";
+import { createTypeParameterEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { getIdBySymbol, getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "unwritten:interpreter:typeguards/type-nodes.js";
+import { lockType } from "unwritten:interpreter:utils/ts.js";
 import { isLiteralType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { ObjectType, TypeNode } from "typescript";
 
-import type { MappedTypeMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MappedType } from "unwritten:interpreter/type-definitions/types.js";
+import type { MappedTypeMemberEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { MappedType } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

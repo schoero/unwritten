@@ -1,12 +1,12 @@
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
-import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 
 import { createSourceFileEntity } from "./source-file.js";
 
 import type { Symbol } from "typescript";
 
-import type { ModuleEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { ModuleEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

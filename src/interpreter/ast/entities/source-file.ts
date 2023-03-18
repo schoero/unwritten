@@ -1,14 +1,14 @@
-import { parseSymbol } from "unwritten:interpreter/ast/index.js";
-import { getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
-import { getExportedSymbols } from "unwritten:interpreter/utils/ts.js";
+import { parseSymbol } from "unwritten:interpreter:ast/index.js";
+import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { getExportedSymbols } from "unwritten:interpreter:utils/ts.js";
 import { isExportableEntity } from "unwritten:typeguards/entities.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Symbol } from "typescript";
 
-import type { ExportableEntities, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { ExportableEntities, SourceFileEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

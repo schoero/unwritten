@@ -1,12 +1,12 @@
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { renderUnionType } from "unwritten:renderer/typescript/ast/types/union.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import { renderUnionType } from "unwritten:renderer:typescript/ast/types/union.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { UnionType } from "unwritten:interpreter/type-definitions/types.js";
+import type { UnionType } from "unwritten:interpreter:type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 

@@ -1,5 +1,5 @@
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { isSignatureEntity } from "unwritten:typeguards/entities.js";
 import { isInterfaceType } from "unwritten:typeguards/types.js";
 
@@ -11,7 +11,7 @@ import type {
   MethodEntity,
   PropertyEntity,
   SetterEntity
-} from "unwritten:interpreter/type-definitions/entities.js";
+} from "unwritten:interpreter:type-definitions/entities.js";
 
 
 type EntityKeys = "getters" | "methods" | "properties" | "setters";

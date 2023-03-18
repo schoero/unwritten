@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { nodeFilter } from "unwritten:renderer/markup/utils/renderer.js";
+import { nodeFilter } from "unwritten:renderer:markup/utils/renderer.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
+import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
 scope("Renderer", "Render abstraction", () => {

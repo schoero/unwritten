@@ -1,4 +1,4 @@
-import type { ASTNodeKinds } from "unwritten:renderer/markup/enums/nodes.js";
+import type { ASTNodeKinds } from "unwritten:renderer:markup/enums/nodes.js";
 
 
 export type ASTNodes =

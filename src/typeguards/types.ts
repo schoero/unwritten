@@ -1,4 +1,4 @@
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type {
   AnyType,
@@ -31,7 +31,7 @@ import type {
   UnknownType,
   UnresolvedType,
   VoidType
-} from "unwritten:interpreter/type-definitions/types.js";
+} from "unwritten:interpreter:type-definitions/types.js";
 
 
 export function isAnyType(type: Types): type is AnyType {

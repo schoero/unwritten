@@ -1,4 +1,4 @@
-import type { TypeScriptRenderConfig } from "unwritten:renderer/typescript/type-definitions/config.js";
+import type { TypeScriptRenderConfig } from "unwritten:renderer:typescript/type-definitions/config.js";
 import type { Complete } from "unwritten:type-definitions/utils.js";
 
 

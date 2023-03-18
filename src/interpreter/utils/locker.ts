@@ -1,4 +1,4 @@
-import { ensureTypeHasId, getIdByType } from "unwritten:interpreter/ast/shared/id.js";
+import { ensureTypeHasId, getIdByType } from "unwritten:interpreter:ast/shared/id.js";
 
 import type { Type } from "typescript";
 

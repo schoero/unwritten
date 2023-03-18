@@ -1,10 +1,10 @@
-import { isAliasedSymbol } from "unwritten:interpreter/typeguards/symbols.js";
-import * as locker from "unwritten:interpreter/utils/locker.js";
+import { isAliasedSymbol } from "unwritten:interpreter:typeguards/symbols.js";
+import * as locker from "unwritten:interpreter:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Program, Symbol, Type } from "typescript";
 
-import type { Types } from "unwritten:interpreter/type-definitions/types.js";
+import type { Types } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

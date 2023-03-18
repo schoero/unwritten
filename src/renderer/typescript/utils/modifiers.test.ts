@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { renderModifiers } from "unwritten:renderer/typescript/utils/modifiers.js";
+import { renderModifiers } from "unwritten:renderer:typescript/utils/modifiers.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 

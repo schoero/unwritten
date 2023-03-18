@@ -1,4 +1,4 @@
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { ExternalTypes, InterpreterConfig } from "unwritten:type-definitions/config.js";
 import type { Complete } from "unwritten:type-definitions/utils.js";

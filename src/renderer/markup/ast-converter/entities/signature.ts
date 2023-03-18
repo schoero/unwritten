@@ -1,26 +1,26 @@
 import {
   convertParameterEntitiesForSignature,
   convertParameterEntityForDocumentation
-} from "unwritten:renderer/markup/ast-converter/entities/index.js";
-import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
-import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
-import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
+import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
+import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import {
   createLinkNode,
   createListNode,
   createParagraphNode,
   createSmallNode,
   createTitleNode
-} from "unwritten:renderer/markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+} from "unwritten:renderer:markup/utils/nodes.js";
 import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
-import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { SignatureEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedSignatureEntityForDocumentation,
   ConvertedSignatureEntityForTableOfContents
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForTableOfContents {

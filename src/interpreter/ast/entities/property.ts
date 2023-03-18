@@ -1,17 +1,17 @@
-import { parseType } from "unwritten:interpreter/ast/index.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
-import { getInitializerByDeclaration } from "unwritten:interpreter/ast/shared/initializer.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
-import { getModifiersByDeclaration } from "unwritten:interpreter/ast/shared/modifiers.js";
-import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+import { parseType } from "unwritten:interpreter:ast/index.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
+import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
+import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   isParameterDeclaration,
   isPropertyAssignment,
   isPropertyDeclaration,
   isPropertySignatureDeclaration
-} from "unwritten:interpreter/typeguards/declarations.js";
+} from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type {
@@ -22,7 +22,7 @@ import type {
   Symbol
 } from "typescript";
 
-import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

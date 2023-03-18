@@ -1,13 +1,13 @@
-import { createSignatureEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
+import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
   isFunctionLikeDeclaration,
   isMethodSignatureDeclaration
-} from "unwritten:interpreter/typeguards/declarations.js";
-import { functionOverloadDeclarationFilter } from "unwritten:interpreter/utils/filter.js";
+} from "unwritten:interpreter:typeguards/declarations.js";
+import { functionOverloadDeclarationFilter } from "unwritten:interpreter:utils/filter.js";
 import { assert } from "unwritten:utils/general.js";
 
 import type {
@@ -21,7 +21,7 @@ import type {
 import type {
   FunctionLikeEntityKinds,
   InferFunctionLikeEntityKind
-} from "unwritten:interpreter/type-definitions/entities.js";
+} from "unwritten:interpreter:type-definitions/entities.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

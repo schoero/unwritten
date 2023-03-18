@@ -2,7 +2,7 @@ import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
   isMethodSignatureDeclaration
-} from "unwritten:interpreter/typeguards/declarations.js";
+} from "unwritten:interpreter:typeguards/declarations.js";
 
 import type {
   CallSignatureDeclaration,

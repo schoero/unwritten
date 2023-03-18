@@ -1,8 +1,8 @@
 import { expect, it } from "vitest";
 
-import { createObjectLikeType } from "unwritten:interpreter/ast/types/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
-import { isObjectType } from "unwritten:interpreter/typeguards/types.js";
+import { createObjectLikeType } from "unwritten:interpreter:ast/types/index.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { isObjectType } from "unwritten:interpreter:typeguards/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";

@@ -2,27 +2,27 @@ import {
   convertFunctionLikeEntityForDocumentation,
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
-} from "unwritten:renderer/markup/ast-converter/entities/index.js";
-import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
-import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
+import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import {
   createLinkNode,
   createParagraphNode,
   createSmallNode,
   createTitleNode
-} from "unwritten:renderer/markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+} from "unwritten:renderer:markup/utils/nodes.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendClassEntityConstructorsWithHeritage,
   extendClassEntityEntitiesWithHeritage
-} from "unwritten:renderer/utils/heritage.js";
+} from "unwritten:renderer:utils/heritage.js";
 
-import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { ClassEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedClassEntityForDocumentation,
   ConvertedClassEntityForTableOfContents
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {

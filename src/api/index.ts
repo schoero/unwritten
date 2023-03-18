@@ -3,9 +3,9 @@ import { dirname, resolve } from "node:path";
 
 import { compile } from "unwritten:compiler:index.js";
 import { createConfig } from "unwritten:config/index.js";
-import { parse } from "unwritten:interpreter/ast/index.js";
-import { createContext as createInterpreterContext } from "unwritten:interpreter/utils/context.js";
-import { getEntryFileSymbolFromProgram } from "unwritten:interpreter/utils/ts.js";
+import { parse } from "unwritten:interpreter:ast/index.js";
+import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
+import { getEntryFileSymbolFromProgram } from "unwritten:interpreter:utils/ts.js";
 import { Logger } from "unwritten:logger/index.js";
 import { getRenderer } from "unwritten:renderer:index.js";
 import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";

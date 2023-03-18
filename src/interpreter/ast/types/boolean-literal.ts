@@ -1,9 +1,9 @@
-import { getIdByType } from "unwritten:interpreter/ast/shared/id.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { LiteralType } from "typescript";
 
-import type { BooleanLiteralType } from "unwritten:interpreter/type-definitions/types.js";
+import type { BooleanLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

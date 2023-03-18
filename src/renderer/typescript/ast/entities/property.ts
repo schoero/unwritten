@@ -1,6 +1,6 @@
 import { renderType } from "unwritten:renderer:ts/ast/index.js";
 
-import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { TypeScriptRenderContext } from "unwritten:renderer:ts/type-definitions/renderer.js";
 
 

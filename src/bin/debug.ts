@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path/posix";
 
-import { parse } from "unwritten:interpreter/ast/index.js";
+import { parse } from "unwritten:interpreter:ast/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { sortKeys } from "unwritten:utils:general.js";
 

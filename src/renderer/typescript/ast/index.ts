@@ -4,7 +4,7 @@ import {
   renderNamespaceEntity,
   renderTypeAliasEntity,
   renderVariableEntity
-} from "unwritten:renderer/typescript/ast/entities/index.js";
+} from "unwritten:renderer:typescript/ast/entities/index.js";
 import {
   renderAnyType,
   renderArrayType,
@@ -27,7 +27,7 @@ import {
   renderUnionType,
   renderUnknownType,
   renderVoidType
-} from "unwritten:renderer/typescript/ast/types/index.js";
+} from "unwritten:renderer:typescript/ast/types/index.js";
 import {
   isFunctionEntity,
   isInterfaceEntity,
@@ -59,9 +59,9 @@ import {
   isVoidType
 } from "unwritten:typeguards/types.js";
 
-import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Types } from "unwritten:interpreter/type-definitions/types.js";
-import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
+import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
+import type { Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type-definitions/renderer.js";
 
 
 export function renderType(ctx: TypeScriptRenderContext, type: Types): string {

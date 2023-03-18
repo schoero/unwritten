@@ -1,23 +1,23 @@
 import { assert, expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
-} from "unwritten:renderer/markup/ast-converter/entities/index.js";
-import { renderNode } from "unwritten:renderer/markup/html/index.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isLinkNode,
   isListNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
-} from "unwritten:renderer/markup/typeguards/renderer.js";
+} from "unwritten:renderer:markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { SignatureEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 

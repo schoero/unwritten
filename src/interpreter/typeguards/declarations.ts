@@ -1,6 +1,6 @@
 import ts from "typescript";
 
-import { isTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
+import { isTypeNode } from "unwritten:interpreter:typeguards/type-nodes.js";
 
 import type { Declaration, FunctionLikeDeclaration, Type, TypeNode } from "typescript";
 

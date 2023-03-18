@@ -1,15 +1,15 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertEnumEntityForDocumentation,
   convertEnumEntityForTableOfContents
-} from "unwritten:renderer/markup/ast-converter/entities/enum.js";
+} from "unwritten:renderer:markup/ast-converter/entities/enum.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { EnumEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { EnumEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 

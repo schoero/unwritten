@@ -1,9 +1,9 @@
-import { renderParameterEntities } from "unwritten:renderer/typescript/ast/entities/parameter.js";
-import { renderType } from "unwritten:renderer/typescript/ast/index.js";
-import { renderModifiers } from "unwritten:renderer/typescript/utils/modifiers.js";
+import { renderParameterEntities } from "unwritten:renderer:typescript/ast/entities/parameter.js";
+import { renderType } from "unwritten:renderer:typescript/ast/index.js";
+import { renderModifiers } from "unwritten:renderer:typescript/utils/modifiers.js";
 
-import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
+import type { SignatureEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type-definitions/renderer.js";
 
 
 export function renderSignatureEntity(ctx: TypeScriptRenderContext, signatureEntity: SignatureEntity): string {

@@ -1,8 +1,8 @@
 import ts from "typescript";
 
-import { isDeclaration } from "unwritten:interpreter/typeguards/declarations.js";
-import { isSymbol } from "unwritten:interpreter/typeguards/symbols.js";
-import { isTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
+import { isDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
+import { isSymbol } from "unwritten:interpreter:typeguards/symbols.js";
+import { isTypeNode } from "unwritten:interpreter:typeguards/type-nodes.js";
 
 import type {
   BigIntLiteralType,

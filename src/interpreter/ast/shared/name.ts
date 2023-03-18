@@ -1,10 +1,10 @@
 import ts from "typescript";
 
-import { isConstructorDeclaration } from "unwritten:interpreter/typeguards/declarations.js";
+import { isConstructorDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
 
 import type { Declaration, Node, Symbol, Type } from "typescript";
 
-import type { Name } from "unwritten:interpreter/type-definitions/shared.js";
+import type { Name } from "unwritten:interpreter:type-definitions/shared.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

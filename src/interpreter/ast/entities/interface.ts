@@ -2,13 +2,13 @@ import {
   createPropertyEntity,
   createSignatureEntity,
   createTypeParameterEntity
-} from "unwritten:interpreter/ast/entities/index.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
-import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
-import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
-import { createExpressionType } from "unwritten:interpreter/ast/types/index.js";
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+} from "unwritten:interpreter:ast/entities/index.js";
+import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
+import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
@@ -17,14 +17,14 @@ import {
   isMethodSignatureDeclaration,
   isPropertySignatureDeclaration,
   isSetterDeclaration
-} from "unwritten:interpreter/typeguards/declarations.js";
+} from "unwritten:interpreter:typeguards/declarations.js";
 import { isExpressionType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "typescript";
 
-import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { ExpressionType } from "unwritten:interpreter/type-definitions/types.js";
+import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { ExpressionType } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:types:context.d.js";
 
 

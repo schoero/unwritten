@@ -1,4 +1,4 @@
-import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
+import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 
 import type { HTMLRenderConfig, MarkdownRenderConfig, MarkupRenderConfig } from "../types-definitions/config.js";
 import type { HTMLRenderContext, MarkdownRenderContext, MarkupRenderContexts } from "../types-definitions/markup.js";

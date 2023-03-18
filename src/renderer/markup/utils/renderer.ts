@@ -3,9 +3,9 @@ import { RenderCategories } from "unwritten:renderer:markup/types-definitions/re
 import { getRenderConfig } from "./config.js";
 import { createAnchor } from "./linker.js";
 
-import type { Encapsulation } from "unwritten:renderer/markup/types-definitions/config.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
+import type { Encapsulation } from "unwritten:renderer:markup/types-definitions/config.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
 export function encapsulate(node: ASTNodes, encapsulation: Encapsulation | false | undefined) {

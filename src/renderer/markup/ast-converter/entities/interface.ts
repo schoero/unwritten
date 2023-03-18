@@ -1,27 +1,27 @@
 import {
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
-} from "unwritten:renderer/markup/ast-converter/entities/index.js";
-import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
-import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
+import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import {
   createLinkNode,
   createParagraphNode,
   createSmallNode,
   createTitleNode
-} from "unwritten:renderer/markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+} from "unwritten:renderer:markup/utils/nodes.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendInterfaceEntityPropertiesWithHeritage,
   extendInterfaceEntitySignaturesWithHeritage
-} from "unwritten:renderer/utils/heritage.js";
+} from "unwritten:renderer:utils/heritage.js";
 
-import type { InterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedInterfaceEntityForDocumentation,
   ConvertedInterfaceEntityForTableOfContents
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity): ConvertedInterfaceEntityForTableOfContents {

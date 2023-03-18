@@ -1,15 +1,15 @@
-import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
-import type { ParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { ParameterEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedParameterEntitiesForSignature,
   ConvertedParameterEntityForDocumentation,
   ConvertedParameterEntityForSignature
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[]): ConvertedParameterEntitiesForSignature {

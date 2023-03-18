@@ -1,13 +1,13 @@
-import { parseType, parseTypeNode } from "unwritten:interpreter/ast/index.js";
-import { getIdBySymbol, getIdByTypeNode } from "unwritten:interpreter/ast/shared/id.js";
-import { getNameByTypeNode } from "unwritten:interpreter/ast/shared/name.js";
-import { createExpressionType } from "unwritten:interpreter/ast/types/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
-import { isTypeReferenceNode } from "unwritten:interpreter/typeguards/type-nodes.js";
+import { parseType, parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { getIdBySymbol, getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
+import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
+import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { isTypeReferenceNode } from "unwritten:interpreter:typeguards/type-nodes.js";
 
 import type { TypeReferenceNode, TypeReferenceType as TSTypeReferenceType } from "typescript";
 
-import type { ExpressionType, TypeReferenceType } from "unwritten:interpreter/type-definitions/types.js";
+import type { ExpressionType, TypeReferenceType } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

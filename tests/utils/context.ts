@@ -1,13 +1,13 @@
 import { getDefaultConfig } from "unwritten:config/index.js";
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import jsonRenderer from "unwritten:renderer/json/index.js";
-import htmlRenderer from "unwritten:renderer/markup/html/index.js";
-import typescriptRenderer from "unwritten:renderer/typescript/index.js";
+import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import jsonRenderer from "unwritten:renderer:json/index.js";
+import htmlRenderer from "unwritten:renderer:markup/html/index.js";
+import typescriptRenderer from "unwritten:renderer:typescript/index.js";
 import { override } from "unwritten:utils:override.js";
 
-import type { JSONRenderContext } from "unwritten:renderer/json/type-definitions/renderer.js";
-import type { HTMLRenderContext, MarkdownRenderContext } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
+import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer.js";
+import type { HTMLRenderContext, MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type-definitions/renderer.js";
 import type { CompleteConfig } from "unwritten:type-definitions/config.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";

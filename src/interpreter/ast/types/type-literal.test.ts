@@ -2,13 +2,13 @@ import { assert } from "node:console";
 
 import { expect, it } from "vitest";
 
-import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
-import type { TypeLiteralType } from "unwritten:interpreter/type-definitions/types.js";
+import type { TypeLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 
 
 scope("Interpreter", TypeKind.TypeLiteral, () => {

@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { renderJSDoc } from "unwritten:renderer/typescript/utils/jsdoc.js";
+import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import { renderJSDoc } from "unwritten:renderer:typescript/utils/jsdoc.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";

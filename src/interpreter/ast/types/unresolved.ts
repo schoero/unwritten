@@ -1,11 +1,11 @@
-import { getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
+import { getPositionBySymbol } from "unwritten:interpreter:ast/shared/position.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { Symbol, Type, TypeNode } from "typescript";
 
-import type { UnresolvedType } from "unwritten:interpreter/type-definitions/types.js";
+import type { UnresolvedType } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

@@ -1,8 +1,8 @@
-import { parseType } from "unwritten:interpreter/ast/index.js";
+import { parseType } from "unwritten:interpreter:ast/index.js";
 
 import type { ParameterDeclaration, PropertyAssignment, PropertyDeclaration, PropertySignature } from "typescript";
 
-import type { Types } from "unwritten:interpreter/type-definitions/types.js";
+import type { Types } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 

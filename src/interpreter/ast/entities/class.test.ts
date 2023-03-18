@@ -1,8 +1,8 @@
 import { expect, it } from "vitest";
 
-import { createClassEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { getIdBySymbol } from "unwritten:interpreter/ast/shared/id.js";
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+import { createClassEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";

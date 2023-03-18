@@ -1,9 +1,9 @@
-import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
 
-import type { IntersectionType } from "unwritten:interpreter/type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
-import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { ConvertedIntersectionType } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { IntersectionType } from "unwritten:interpreter:type-definitions/types.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ConvertedIntersectionType } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertIntersectionType(ctx: MarkupRenderContexts, intersectionType: IntersectionType): ConvertedIntersectionType {

@@ -1,4 +1,4 @@
-import type { EntityKind } from "unwritten:interpreter/enums/entities.ts";
+import type { EntityKind } from "unwritten:interpreter:enums/entities.ts";
 import type {
   Description,
   ID,
@@ -6,8 +6,8 @@ import type {
   Modifiers,
   Name,
   Position
-} from "unwritten:interpreter/type-definitions/shared.ts";
-import type { ExpressionType, LiteralTypes, Types } from "unwritten:interpreter/type-definitions/types.js";
+} from "unwritten:interpreter:type-definitions/shared.ts";
+import type { ExpressionType, LiteralTypes, Types } from "unwritten:interpreter:type-definitions/types.js";
 
 
 type Entity<Kind> = {

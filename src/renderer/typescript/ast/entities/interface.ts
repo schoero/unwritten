@@ -1,15 +1,15 @@
-import { renderPropertyEntity, renderSignatureEntity } from "unwritten:renderer/typescript/ast/entities/index.js";
-import { renderExpressionType } from "unwritten:renderer/typescript/ast/types/expression.js";
-import { renderSemicolon } from "unwritten:renderer/typescript/utils/keywords.js";
+import { renderPropertyEntity, renderSignatureEntity } from "unwritten:renderer:typescript/ast/entities/index.js";
+import { renderExpressionType } from "unwritten:renderer:typescript/ast/types/expression.js";
+import { renderSemicolon } from "unwritten:renderer:typescript/utils/keywords.js";
 import {
   extendInterfaceEntityPropertiesWithHeritage,
   extendInterfaceEntitySignaturesWithHeritage
-} from "unwritten:renderer/utils/heritage.js";
-import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
+} from "unwritten:renderer:utils/heritage.js";
+import { renderIndentation } from "unwritten:renderer:utils/indentation.js";
+import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
 
-import type { InterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
+import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type-definitions/renderer.js";
 
 
 export function renderInterfaceEntity(ctx: TypeScriptRenderContext, interfaceEntity: InterfaceEntity): string {

@@ -9,7 +9,7 @@ import {
   convertTypeAliasEntityForTableOfContents,
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents
-} from "unwritten:renderer/markup/ast-converter/entities/index.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import {
   convertAnyType,
   convertArrayType,
@@ -34,8 +34,8 @@ import {
   convertUnionType,
   convertUnknownType,
   convertVoidType
-} from "unwritten:renderer/markup/ast-converter/types/index.js";
-import { convertTypeReferenceType } from "unwritten:renderer/markup/ast-converter/types/type-reference.js";
+} from "unwritten:renderer:markup/ast-converter/types/index.js";
+import { convertTypeReferenceType } from "unwritten:renderer:markup/ast-converter/types/type-reference.js";
 import { createContainerNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
@@ -73,9 +73,9 @@ import {
   isVoidType
 } from "unwritten:typeguards/types.js";
 
-import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Types } from "unwritten:interpreter/type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.d.js";
+import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
+import type { Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type { ASTNodes, ContainerNode } from "unwritten:renderer:markup/types-definitions/nodes.d.js";
 import type {
   ConvertedCategoryForDocumentation,

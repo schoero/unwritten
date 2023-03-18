@@ -4,23 +4,23 @@ import {
   createPropertyEntity,
   createSetterEntity,
   createSignatureEntity
-} from "unwritten:interpreter/ast/entities/index.js";
-import { getIdByType } from "unwritten:interpreter/ast/shared/id.js";
-import { getNameByType } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByType } from "unwritten:interpreter/ast/shared/position.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+} from "unwritten:interpreter:ast/entities/index.js";
+import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
+import { getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
+import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   isGetterSymbol,
   isMethodSymbol,
   isPropertySymbol,
   isSetterSymbol
-} from "unwritten:interpreter/typeguards/symbols.js";
-import { isThisType } from "unwritten:interpreter/typeguards/types.js";
-import { lockType } from "unwritten:interpreter/utils/ts.js";
+} from "unwritten:interpreter:typeguards/symbols.js";
+import { isThisType } from "unwritten:interpreter:typeguards/types.js";
+import { lockType } from "unwritten:interpreter:utils/ts.js";
 
 import type { ObjectType as TSObjectType } from "typescript";
 
-import type { InferObjectLikeType, ObjectLikeTypeKinds } from "unwritten:interpreter/type-definitions/types.js";
+import type { InferObjectLikeType, ObjectLikeTypeKinds } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 

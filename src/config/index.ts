@@ -1,10 +1,10 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { defaultJSONRenderConfig } from "unwritten:renderer/json/config/default.js";
-import { defaultTypeScriptRenderConfig } from "unwritten:renderer/typescript/config/default.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default.js";
 import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default.js";
+import { defaultTypeScriptRenderConfig } from "unwritten:renderer:typescript/config/default.js";
 import { findFile } from "unwritten:utils:finder.js";
 import { override } from "unwritten:utils:override.js";
 
