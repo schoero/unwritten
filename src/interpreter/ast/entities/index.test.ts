@@ -11,18 +11,20 @@ scope("Interpreter", "Entities", () => {
   const exportedFiles = getFilesInDirectory(importUrl);
   const indexExports = getExportsFromIndexFile(importUrl);
 
-  for(const file of exportedFiles){
+  it("should export from all files of the current directory", () => {
 
-    if(file.includes(".test.ts")){
-      continue;
-    }
+    for(const file of exportedFiles){
 
-    it("should export from all files of the current directory", () => {
+      if(file.includes(".test.ts")){
+        continue;
+      }
+
       const exportName = file.replace(".ts", ".js");
       expect(indexExports).to.include(`export * from "./${exportName}";`);
-    });
 
-  }
+    }
+
+  });
 
   it("should not export from itself", () => {
     expect(indexExports).not.to.include("export * from \"./index.js\";");
