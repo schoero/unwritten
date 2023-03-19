@@ -41,8 +41,8 @@
     "typescript": "^5.0.2"
   },
   "devDependencies": {
-    "@schoero/cspell-config": "^1.6.9",
-    "@schoero/eslint-config": "^1.35.12",
+    "@schoero/cspell-config": "^1.6.10",
+    "@schoero/eslint-config": "^1.35.13",
     "@schoero/markdownlint-config": "^1.1.4",
     "@schoero/ts-config": "^0.3.2",
     "@schoero/vite-config": "^0.0.18",
