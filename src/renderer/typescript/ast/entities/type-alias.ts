@@ -1,3 +1,5 @@
+import { renderJSDoc } from "unwritten:renderer/typescript/utils/jsdoc.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderTypeParameterEntity } from "unwritten:renderer:typescript/ast/entities/type-parameter.js";
 import { renderType } from "unwritten:renderer:typescript/ast/index.js";
 import { renderSemicolon } from "unwritten:renderer:typescript/utils/keywords.js";
@@ -8,9 +10,9 @@ import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type
 
 export function renderTypeAliasEntity(ctx: TypeScriptRenderContext, typeAliasEntity: TypeAliasEntity): string {
 
-  const name = typeAliasEntity.name;
-
   const renderedSemicolon = renderSemicolon(ctx);
+  const renderedJSDoc = renderJSDoc(ctx, typeAliasEntity);
+  const renderedName = typeAliasEntity.name;
 
   const renderedTypeParameters = typeAliasEntity.typeParameters
     ? `<${typeAliasEntity.typeParameters.map(
@@ -20,6 +22,12 @@ export function renderTypeAliasEntity(ctx: TypeScriptRenderContext, typeAliasEnt
 
   const renderedType = renderType(ctx, typeAliasEntity.type);
 
-  return `type ${name}${renderedTypeParameters} = ${renderedType}${renderedSemicolon}`;
+  const renderedTypeAlias = `type ${renderedName}${renderedTypeParameters} = ${renderedType}${renderedSemicolon}`;
+
+  return [
+    renderedJSDoc,
+    renderedTypeAlias
+  ].filter(line => line)
+    .join(renderNewLine(ctx));
 
 }

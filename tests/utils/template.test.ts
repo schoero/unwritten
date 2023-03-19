@@ -3,15 +3,15 @@ import { describe, expect, it } from "vitest";
 import { ts } from "./template.js";
 
 
-describe("Test utils", async () => {
+describe("Test utils", () => {
 
-  it("should inject variables correctly", async () => {
+  it("should inject variables correctly", () => {
     const vars = "test";
     const test = ts`const test = "${vars}";`;
     expect(test).to.equal("const test = \"test\";");
   });
 
-  it("should remove common white spaces from tagged template literals", async () => {
+  it("should remove common white spaces from tagged template literals", () => {
     const test = ts`
       const test = "test";
     `;

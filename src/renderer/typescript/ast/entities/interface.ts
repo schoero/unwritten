@@ -1,3 +1,4 @@
+import { renderJSDoc } from "unwritten:renderer/typescript/utils/jsdoc.js";
 import { renderPropertyEntity, renderSignatureEntity } from "unwritten:renderer:typescript/ast/entities/index.js";
 import { renderExpressionType } from "unwritten:renderer:typescript/ast/types/expression.js";
 import { renderSemicolon } from "unwritten:renderer:typescript/utils/keywords.js";
@@ -16,6 +17,8 @@ export function renderInterfaceEntity(ctx: TypeScriptRenderContext, interfaceEnt
 
   const renderedSemicolon = renderSemicolon(ctx);
   const renderedNewLine = renderNewLine(ctx);
+
+  const renderedJSDoc = renderJSDoc(ctx, interfaceEntity);
 
   const renderedName = interfaceEntity.name;
   const renderedHeritages = interfaceEntity.heritage?.map(
@@ -74,16 +77,21 @@ export function renderInterfaceEntity(ctx: TypeScriptRenderContext, interfaceEnt
     renderedMethodSignatures,
     renderedGetters,
     renderedSetters
-  ].filter(content => content !== "");
+  ];
 
   ctx.indentation--;
 
   const renderedFooter = `${renderIndentation(ctx)}}`;
 
-  return [
+  const renderedInterface = [
+    renderedJSDoc,
     renderedHeader,
-    ...renderedBody,
+    renderedBody,
     renderedFooter
-  ].join(renderedNewLine);
+  ].flat()
+    .filter(line => line)
+    .join(renderedNewLine);
+
+  return renderedInterface;
 
 }

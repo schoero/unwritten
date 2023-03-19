@@ -6,6 +6,7 @@ import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderInterfaceEntity } from "unwritten:renderer:typescript/ast/entities/interface.js";
 import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
+import { splitJSDocAndDeclaration } from "unwritten:tests:utils/jsdoc.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -20,6 +21,9 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
 
     // #region Source
 
+    // /**
+    //  * Interface description
+    //  */
     // export interface Interface {
     //   (): void;
     //   new (): void;
@@ -37,7 +41,7 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
       callSignatures: [
         {
           description: undefined,
-          id: 4455,
+          id: 4741,
           kind: EntityKind.Signature,
           modifiers: [],
           name: undefined,
@@ -45,11 +49,11 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 2
+            line: 5
           },
           returnType: {
             description: undefined,
-            id: 24,
+            id: 25,
             kind: TypeKind.Void,
             name: "void"
           },
@@ -59,7 +63,7 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
       constructSignatures: [
         {
           description: undefined,
-          id: 4456,
+          id: 4742,
           kind: EntityKind.Signature,
           modifiers: [],
           name: undefined,
@@ -67,22 +71,22 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 3
+            line: 6
           },
           returnType: {
             description: undefined,
-            id: 24,
+            id: 25,
             kind: TypeKind.Void,
             name: "void"
           },
           typeParameters: undefined
         }
       ],
-      description: undefined,
+      description: "Interface description",
       getterSignatures: [
         {
           description: undefined,
-          id: 4460,
+          id: 4746,
           kind: EntityKind.Signature,
           modifiers: [],
           name: "getter",
@@ -90,11 +94,11 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 8
+            line: 11
           },
           returnType: {
             description: undefined,
-            id: 15,
+            id: 16,
             kind: TypeKind.String,
             name: "string"
           },
@@ -102,19 +106,19 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
         }
       ],
       heritage: undefined,
-      id: 4052,
+      id: 4458,
       kind: EntityKind.Interface,
       methodSignatures: [
         {
           description: undefined,
-          id: 4458,
+          id: 4744,
           kind: EntityKind.Signature,
           modifiers: [],
           name: "method",
           parameters: [
             {
               description: undefined,
-              id: 4053,
+              id: 4459,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "a",
@@ -122,11 +126,11 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
               position: {
                 column: 9,
                 file: "/file.ts",
-                line: 4
+                line: 7
               },
               rest: false,
               type: {
-                id: 16,
+                id: 17,
                 kind: TypeKind.Number,
                 name: "number"
               }
@@ -135,11 +139,11 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 4
+            line: 7
           },
           returnType: {
             description: undefined,
-            id: 24,
+            id: 25,
             kind: TypeKind.Void,
             name: "void"
           },
@@ -147,14 +151,14 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
         },
         {
           description: undefined,
-          id: 4459,
+          id: 4745,
           kind: EntityKind.Signature,
           modifiers: [],
           name: "method",
           parameters: [
             {
               description: undefined,
-              id: 4054,
+              id: 4460,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "a",
@@ -162,11 +166,11 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
               position: {
                 column: 9,
                 file: "/file.ts",
-                line: 5
+                line: 8
               },
               rest: false,
               type: {
-                id: 15,
+                id: 16,
                 kind: TypeKind.String,
                 name: "string"
               }
@@ -175,11 +179,11 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 5
+            line: 8
           },
           returnType: {
             description: undefined,
-            id: 24,
+            id: 25,
             kind: TypeKind.Void,
             name: "void"
           },
@@ -190,12 +194,13 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
       position: {
         column: 0,
         file: "/file.ts",
-        line: 1
+        line: 4
       },
       properties: [
         {
           description: undefined,
-          id: 4055,
+          id: 4461,
+          initializer: undefined,
           kind: EntityKind.Property,
           modifiers: [],
           name: "prop",
@@ -203,17 +208,18 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 6
+            line: 9
           },
           type: {
-            id: 15,
+            id: 16,
             kind: TypeKind.String,
             name: "string"
           }
         },
         {
           description: undefined,
-          id: 4056,
+          id: 4462,
+          initializer: undefined,
           kind: EntityKind.Property,
           modifiers: [],
           name: "funcProp",
@@ -221,15 +227,15 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 7
+            line: 10
           },
           type: {
-            id: 2612,
+            id: 2862,
             kind: TypeKind.Function,
             signatures: [
               {
                 description: undefined,
-                id: 4457,
+                id: 4743,
                 kind: EntityKind.Signature,
                 modifiers: [],
                 name: undefined,
@@ -237,11 +243,11 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
                 position: {
                   column: 12,
                   file: "/file.ts",
-                  line: 7
+                  line: 10
                 },
                 returnType: {
                   description: undefined,
-                  id: 24,
+                  id: 25,
                   kind: TypeKind.Void,
                   name: "void"
                 },
@@ -254,14 +260,14 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
       setterSignatures: [
         {
           description: undefined,
-          id: 4461,
+          id: 4747,
           kind: EntityKind.Signature,
           modifiers: [],
           name: "setter",
           parameters: [
             {
               description: undefined,
-              id: 4059,
+              id: 4465,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "value",
@@ -269,11 +275,11 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
               position: {
                 column: 13,
                 file: "/file.ts",
-                line: 9
+                line: 12
               },
               rest: false,
               type: {
-                id: 15,
+                id: 16,
                 kind: TypeKind.String,
                 name: "string"
               }
@@ -282,7 +288,7 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 9
+            line: 12
           },
           returnType: {
             description: undefined,
@@ -301,7 +307,13 @@ scope("TypeScriptRenderer", EntityKind.Interface, () => {
     const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
     const renderedInterface = renderInterfaceEntity(ctx, interfaceEntity as InterfaceEntity);
-    const renderedInterfaceLines = renderedInterface.split(renderNewLine(ctx));
+    const renderedLines = renderedInterface.split(renderNewLine(ctx));
+
+    const [[renderedJSDocLines], [renderedInterfaceLines]] = splitJSDocAndDeclaration(renderedLines);
+
+    it("should have matching JSDoc lines", () => {
+      expect(renderedJSDocLines).to.have.lengthOf(3);
+    });
 
     it("should have a matching header", () => {
       expect(renderedInterfaceLines[0]).to.equal("interface Interface {");

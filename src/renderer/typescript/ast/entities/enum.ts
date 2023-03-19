@@ -1,3 +1,4 @@
+import { renderJSDoc } from "unwritten:renderer/typescript/utils/jsdoc.js";
 import { renderType } from "unwritten:renderer:typescript/ast/index.js";
 import { renderIndentation } from "unwritten:renderer:utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
@@ -8,21 +9,30 @@ import type { TypeScriptRenderContext } from "unwritten:renderer:ts/type-definit
 
 export function renderEnumEntity(ctx: TypeScriptRenderContext, enumEntity: EnumEntity): string {
 
-  const name = enumEntity.name;
 
   const renderedNewline = renderNewLine(ctx);
 
-  const renderedHeader = `${renderIndentation(ctx)}enum ${name} {`;
+  const renderedName = enumEntity.name;
+  const renderedJSDoc = renderJSDoc(ctx, enumEntity);
+  const renderedHeader = `${renderIndentation(ctx)}enum ${renderedName} {`;
 
   ctx.indentation++;
 
   const renderedMembers = enumEntity.members.map((member, index) => {
-    const name = member.name;
-    const type = renderType(ctx, member.type);
-    const comma = index === enumEntity.members.length - 1
+
+    const renderedJSDoc = renderJSDoc(ctx, member);
+    const renderedName = member.name;
+    const renderedType = renderType(ctx, member.type);
+    const renderedComma = index === enumEntity.members.length - 1
       ? ""
       : ",";
-    return `${renderIndentation(ctx)}${name} = ${type}${comma}`;
+
+    return [
+      renderedJSDoc,
+      `${renderIndentation(ctx)}${renderedName} = ${renderedType}${renderedComma}`
+    ].filter(line => line)
+      .join(renderedNewline);
+
   });
 
   ctx.indentation--;
@@ -30,9 +40,11 @@ export function renderEnumEntity(ctx: TypeScriptRenderContext, enumEntity: EnumE
   const renderedFooter = `${renderIndentation(ctx)}}`;
 
   return [
+    renderedJSDoc,
     renderedHeader,
     ...renderedMembers,
     renderedFooter
-  ].join(renderedNewline);
+  ].filter(line => line)
+    .join(renderedNewline);
 
 }

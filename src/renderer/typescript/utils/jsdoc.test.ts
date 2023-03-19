@@ -11,6 +11,10 @@ scope("TypeScriptRenderer", "utils", () => {
 
   const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
+  it("should render nothing if no tags are available", () => {
+    expect(renderJSDoc(ctx, {})).to.equal(undefined);
+  });
+
   it("should render the description on a single line if no other tags are available", () => {
     expect(renderJSDoc(ctx, {
       description: "Description"
@@ -73,6 +77,53 @@ scope("TypeScriptRenderer", "utils", () => {
        * @beta
        * @deprecated
        * @internal
+       */
+    `);
+  });
+
+  it("should render parameter descriptions properly", () => {
+    expect(renderJSDoc(ctx, {
+      description: "Description",
+      parameters: [{
+        description: "Parameter description",
+        name: "parameter"
+      }]
+    })).to.equal(ts`
+      /**
+       * Description
+       * 
+       * @param parameter - Parameter description
+       */
+    `);
+  });
+
+  it("should render return type descriptions properly", () => {
+    expect(renderJSDoc(ctx, {
+      description: "Description",
+      returnType: {
+        description: "Return type description"
+      }
+    })).to.equal(ts`
+      /**
+       * Description
+       * 
+       * @returns Return type description
+       */
+    `);
+  });
+
+  it("should render type parameter descriptions properly", () => {
+    expect(renderJSDoc(ctx, {
+      description: "Description",
+      typeParameters: [{
+        description: "Type parameter description",
+        name: "T"
+      }]
+    })).to.equal(ts`
+      /**
+       * Description
+       * 
+       * @template T - Type parameter description
        */
     `);
   });

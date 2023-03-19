@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderSignatureEntity } from "unwritten:renderer:typescript/ast/entities/signature.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -43,9 +44,10 @@ scope("TypeScriptRenderer", EntityKind.Signature, () => {
     const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
     const renderedSignature = renderSignatureEntity(ctx, signatureEntity as SignatureEntity);
+    const renderedSignatures = renderedSignature.split(renderNewLine(ctx));
 
     it("should render signatures correctly", () => {
-      expect(renderedSignature).to.equal("testSignature(): void");
+      expect(renderedSignatures[0]).to.equal("testSignature(): void");
     });
 
   }

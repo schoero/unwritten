@@ -1,3 +1,4 @@
+import { renderJSDoc } from "unwritten:renderer/typescript/utils/jsdoc.js";
 import { renderPropertyEntity, renderSignatureEntity } from "unwritten:renderer:typescript/ast/entities/index.js";
 import { renderExpressionType } from "unwritten:renderer:typescript/ast/types/expression.js";
 import { renderSemicolon } from "unwritten:renderer:typescript/utils/keywords.js";
@@ -16,6 +17,7 @@ export function renderClassEntity(ctx: TypeScriptRenderContext, classEntity: Cla
 
   const renderedSemicolon = renderSemicolon(ctx);
   const renderedNewLine = renderNewLine(ctx);
+  const renderedJSDoc = renderJSDoc(ctx, classEntity);
 
   const renderedName = classEntity.name;
   const renderedHeritage = classEntity.heritage
@@ -29,6 +31,7 @@ export function renderClassEntity(ctx: TypeScriptRenderContext, classEntity: Cla
   const constructors = extendClassEntityConstructorsWithHeritage(classEntity);
 
   const renderedHeader = `${renderIndentation(ctx)}class ${renderedName}${renderedHeritage} {`;
+
   ctx.indentation++;
 
   const renderedConstructor = constructors
@@ -73,16 +76,18 @@ export function renderClassEntity(ctx: TypeScriptRenderContext, classEntity: Cla
     renderedMethods,
     renderedGetters,
     renderedSetters
-  ].filter(content => content !== "");
+  ];
 
   ctx.indentation--;
 
   const renderedFooter = `${renderIndentation(ctx)}}`;
 
   return [
+    renderedJSDoc,
     renderedHeader,
     ...renderedBody,
     renderedFooter
-  ].join(renderedNewLine);
+  ].filter(line => line)
+    .join(renderedNewLine);
 
 }

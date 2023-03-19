@@ -16,6 +16,8 @@ export function renderTypeParameterEntity(ctx: TypeScriptRenderContext, typePara
     ? ` = ${renderType(ctx, typeParameterEntity.initializer)}`
     : "";
 
-  return `${renderedName}${renderedConstraint}${renderedInitializer}`;
+  const renderedTypeParameter = `${renderedName}${renderedConstraint}${renderedInitializer}`;
+
+  return renderedTypeParameter;
 
 }

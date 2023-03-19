@@ -1,4 +1,4 @@
-import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
+import { renderJSDoc } from "unwritten:renderer/typescript/utils/jsdoc.js";
 import { renderEntity } from "unwritten:renderer:typescript/ast/index.js";
 import { renderIndentation } from "unwritten:renderer:utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
@@ -9,10 +9,11 @@ import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type
 
 export function renderNamespaceEntity(ctx: TypeScriptRenderContext, namespaceEntity: NamespaceEntity): string {
 
-  const renderConfig = getRenderConfig(ctx);
-
   const renderedIndentation = renderIndentation(ctx);
-  const renderedEmptyLine = `${renderNewLine(ctx)}${renderNewLine(ctx)}`;
+  const renderedNewLine = renderNewLine(ctx);
+  const renderedEmptyLine = `${renderedNewLine}${renderedIndentation}`;
+
+  const renderedJSDoc = renderJSDoc(ctx, namespaceEntity);
 
   const renderedHeader = `${renderedIndentation}namespace ${namespaceEntity.name} {`;
   ctx.indentation++;
@@ -26,9 +27,11 @@ export function renderNamespaceEntity(ctx: TypeScriptRenderContext, namespaceEnt
   const renderedFooter = `${renderedIndentation}}`;
 
   return [
+    renderedJSDoc,
     renderedHeader,
     renderedBody,
     renderedFooter
-  ].join(renderedEmptyLine);
+  ].filter(line => line)
+    .join(renderedNewLine);
 
 }

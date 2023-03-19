@@ -12,24 +12,24 @@ export function renderParameterEntities(ctx: TypeScriptRenderContext, parameterE
 
 export function renderParameterEntity(ctx: TypeScriptRenderContext, parameterEntity: ParameterEntity): string {
 
-  const name = parameterEntity.name;
+  const renderedName = parameterEntity.name;
 
-  const type = parameterEntity.type
+  const renderedType = parameterEntity.type
     ? renderType(ctx, parameterEntity.type)
     : "";
 
-  const initializer = parameterEntity.initializer
+  const renderedInitializer = parameterEntity.initializer
     ? ` = ${renderType(ctx, parameterEntity.initializer)}`
     : "";
 
-  const optional = parameterEntity.optional === true
+  const renderedQuestionMark = parameterEntity.optional === true
     ? "?"
     : "";
 
-  const rest = parameterEntity.rest === true
+  const renderedDotDotDot = parameterEntity.rest === true
     ? "..."
     : "";
 
-  return `${rest}${name}${optional}: ${type}${initializer}`;
+  return `${renderedDotDotDot}${renderedName}${renderedQuestionMark}: ${renderedType}${renderedInitializer}`;
 
 }

@@ -6,6 +6,7 @@ import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderClassEntity } from "unwritten:renderer:typescript/ast/entities/class.js";
 import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
+import { splitJSDocAndDeclaration } from "unwritten:tests:utils/jsdoc.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { ClassEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -20,6 +21,9 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
 
     // #region Source
 
+    // /**
+    //  * Class description
+    //  */
     // export class Class {
     //   constructor() {}
     //   public property: number = 1;
@@ -46,7 +50,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
             position: {
               column: 2,
               file: "/file.ts",
-              line: 2
+              line: 8
             },
             returnType: {
               callSignatures: [],
@@ -70,7 +74,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
                       position: {
                         column: 2,
                         file: "/file.ts",
-                        line: 5
+                        line: 11
                       },
                       returnType: {
                         description: undefined,
@@ -104,7 +108,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
                       position: {
                         column: 2,
                         file: "/file.ts",
-                        line: 4
+                        line: 10
                       },
                       returnType: {
                         description: undefined,
@@ -121,7 +125,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
               position: {
                 column: 0,
                 file: "/file.ts",
-                line: 1
+                line: 4
               },
               properties: [
                 {
@@ -142,7 +146,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
                   position: {
                     column: 2,
                     file: "/file.ts",
-                    line: 3
+                    line: 9
                   },
                   type: {
                     id: 17,
@@ -176,7 +180,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
                           position: {
                             column: 20,
                             file: "/file.ts",
-                            line: 6
+                            line: 12
                           },
                           rest: false,
                           type: {
@@ -189,7 +193,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
                       position: {
                         column: 2,
                         file: "/file.ts",
-                        line: 6
+                        line: 12
                       },
                       returnType: {
                         description: undefined,
@@ -207,7 +211,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
           }
         ]
       },
-      description: undefined,
+      description: "Class description",
       getters: [
         {
           id: 4462,
@@ -226,7 +230,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
               position: {
                 column: 2,
                 file: "/file.ts",
-                line: 5
+                line: 11
               },
               returnType: {
                 description: undefined,
@@ -260,7 +264,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
               position: {
                 column: 2,
                 file: "/file.ts",
-                line: 4
+                line: 10
               },
               returnType: {
                 description: undefined,
@@ -278,7 +282,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
       position: {
         column: 0,
         file: "/file.ts",
-        line: 1
+        line: 4
       },
       properties: [
         {
@@ -299,7 +303,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
           position: {
             column: 2,
             file: "/file.ts",
-            line: 3
+            line: 9
           },
           type: {
             id: 17,
@@ -333,7 +337,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
                   position: {
                     column: 20,
                     file: "/file.ts",
-                    line: 6
+                    line: 12
                   },
                   rest: false,
                   type: {
@@ -346,7 +350,7 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
               position: {
                 column: 2,
                 file: "/file.ts",
-                line: 6
+                line: 12
               },
               returnType: {
                 description: undefined,
@@ -367,7 +371,13 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
     const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
     const renderedClass = renderClassEntity(ctx, classEntity as ClassEntity);
-    const renderedClassLines = renderedClass.split(renderNewLine(ctx));
+    const renderedLines = renderedClass.split(renderNewLine(ctx));
+
+    const [[renderedJSDocLines], [renderedClassLines]] = splitJSDocAndDeclaration(renderedLines);
+
+    it("should have a matching JSDoc lines", () => {
+      expect(renderedJSDocLines).to.have.lengthOf(3);
+    });
 
     it("should have a matching header", () => {
       expect(renderedClassLines[0]).to.equal("class Class {");
@@ -383,160 +393,178 @@ scope("TypeScriptRenderer", EntityKind.Class, () => {
 
   }
 
-  // {
+  {
 
-  //   // #region Entity with single heritage
+    // #region Entity with single heritage
 
-  //   /*
-  //   class ClassA {
-  //     propA: string;
-  //   }
-  //   export class ClassB extends ClassA {
-  //     propB: string;
-  //   }
-  //   */
+    // class ClassA {
+    //   propA: string;
+    // }
+    // export class ClassB extends ClassA {
+    //   propB: string;
+    // }
 
-  //   const classEntity: Testable<ClassEntity> = {
-  //     callSignatures: [],
-  //     constructSignatures: [],
-  //     description: undefined,
-  //     getterSignatures: [],
-  //     heritage: [
-  //       {
-  //         id: 4455,
-  //         instanceType: {
-  //           callSignatures: [],
-  //           constructSignatures: [],
-  //           getters: [],
-  //           id: 2611,
-  //           isThis: false,
-  //           kind: TypeKind.Class,
-  //           methods: [],
-  //           name: "ClassA",
-  //           position: {
-  //             column: 0,
-  //             file: "/file.ts",
-  //             line: 1
-  //           },
-  //           properties: [
-  //             {
-  //               description: undefined,
-  //               id: 4053,
-  //               initializer: undefined,
-  //               kind: EntityKind.Property,
-  //               modifiers: [],
-  //               name: "propA",
-  //               optional: false,
-  //               position: {
-  //                 column: 2,
-  //                 file: "/file.ts",
-  //                 line: 2
-  //               },
-  //               type: {
-  //                 id: 15,
-  //                 kind: TypeKind.String,
-  //                 name: "string"
-  //               }
-  //             }
-  //           ],
-  //           setters: [],
-  //           typeParameters: undefined
-  //         },
-  //         kind: TypeKind.Expression,
-  //         name: "ClassA",
-  //         staticType: {
-  //           callSignatures: [],
-  //           constructSignatures: [],
-  //           getters: [],
-  //           id: 2611,
-  //           isThis: false,
-  //           kind: TypeKind.Class,
-  //           methods: [],
-  //           name: "ClassA",
-  //           position: {
-  //             column: 0,
-  //             file: "/file.ts",
-  //             line: 1
-  //           },
-  //           properties: [
-  //             {
-  //               description: undefined,
-  //               id: 4053,
-  //               initializer: undefined,
-  //               kind: EntityKind.Property,
-  //               modifiers: [],
-  //               name: "propA",
-  //               optional: false,
-  //               position: {
-  //                 column: 2,
-  //                 file: "/file.ts",
-  //                 line: 2
-  //               },
-  //               type: {
-  //                 id: 15,
-  //                 kind: TypeKind.String,
-  //                 name: "string"
-  //               }
-  //             }
-  //           ],
-  //           setters: [],
-  //           typeParameters: undefined
-  //         },
-  //         typeArguments: undefined
-  //       }
-  //     ],
-  //     id: 4054,
-  //     kind: EntityKind.Class,
-  //     methodSignatures: [],
-  //     name: "ClassB",
-  //     position: {
-  //       column: 0,
-  //       file: "/file.ts",
-  //       line: 4
-  //     },
-  //     properties: [
-  //       {
-  //         description: undefined,
-  //         id: 4055,
-  //         initializer: undefined,
-  //         kind: EntityKind.Property,
-  //         modifiers: [],
-  //         name: "propB",
-  //         optional: false,
-  //         position: {
-  //           column: 2,
-  //           file: "/file.ts",
-  //           line: 5
-  //         },
-  //         type: {
-  //           id: 15,
-  //           kind: TypeKind.String,
-  //           name: "string"
-  //         }
-  //       }
-  //     ],
-  //     setterSignatures: [],
-  //     typeParameters: undefined
-  //   };
+    const classEntity: Testable<ClassEntity> = {
+      ctor: undefined,
+      description: undefined,
+      getters: [],
+      heritage: {
+        id: 4742,
+        instanceType: {
+          callSignatures: [],
+          constructSignatures: [],
+          getters: [],
+          id: 2869,
+          isThis: false,
+          kind: TypeKind.Object,
+          methods: [],
+          name: "ClassA",
+          position: {
+            column: 0,
+            file: "/file.ts",
+            line: 1
+          },
+          properties: [
+            {
+              description: undefined,
+              id: 4459,
+              initializer: undefined,
+              kind: EntityKind.Property,
+              modifiers: [],
+              name: "propA",
+              optional: false,
+              position: {
+                column: 2,
+                file: "/file.ts",
+                line: 2
+              },
+              type: {
+                id: 16,
+                kind: TypeKind.String,
+                name: "string"
+              }
+            }
+          ],
+          setters: []
+        },
+        kind: TypeKind.Expression,
+        name: "ClassA",
+        staticType: {
+          callSignatures: [],
+          constructSignatures: [
+            {
+              kind: EntityKind.Signature,
+              returnType: {
+                callSignatures: [],
+                constructSignatures: [],
+                description: undefined,
+                getters: [],
+                id: 2861,
+                isThis: false,
+                kind: TypeKind.Class,
+                methods: [],
+                name: "ClassA",
+                position: {
+                  column: 0,
+                  file: "/file.ts",
+                  line: 1
+                },
+                properties: [
+                  {
+                    description: undefined,
+                    id: 4459,
+                    initializer: undefined,
+                    kind: EntityKind.Property,
+                    modifiers: [],
+                    name: "propA",
+                    optional: false,
+                    position: {
+                      column: 2,
+                      file: "/file.ts",
+                      line: 2
+                    },
+                    type: {
+                      id: 16,
+                      kind: TypeKind.String,
+                      name: "string"
+                    }
+                  }
+                ],
+                setters: []
+              }
+            }
+          ],
+          getters: [],
+          id: 2864,
+          isThis: false,
+          kind: TypeKind.Object,
+          methods: [],
+          name: "ClassA",
+          position: {
+            column: 0,
+            file: "/file.ts",
+            line: 1
+          },
+          properties: [],
+          setters: []
+        },
+        typeArguments: undefined
+      },
+      id: 4460,
+      kind: EntityKind.Class,
+      methods: [],
+      modifiers: [],
+      name: "ClassB",
+      position: {
+        column: 0,
+        file: "/file.ts",
+        line: 4
+      },
+      properties: [
+        {
+          description: undefined,
+          id: 4461,
+          initializer: undefined,
+          kind: EntityKind.Property,
+          modifiers: [],
+          name: "propB",
+          optional: false,
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 5
+          },
+          type: {
+            id: 16,
+            kind: TypeKind.String,
+            name: "string"
+          }
+        }
+      ],
+      setters: [],
+      typeParameters: undefined
+    };
 
-  //   // #endregion
+    // #endregion
 
-  //   const ctx = createRenderContext(BuiltInRenderers.TypeScript);
+    const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
-  //   const renderedClass = renderClassEntity(ctx, classEntity as ClassEntity);
-  //   const renderedClassLines = renderedClass.split(renderNewLine(ctx));
+    const renderedClass = renderClassEntity(ctx, classEntity as ClassEntity);
+    const renderedLines = renderedClass.split(renderNewLine(ctx));
 
-  //   it("should include the heritage in the header", () => {
-  //     expect(renderedClassLines[0]).to.equal("class ClassB extends ClassA {");
-  //   });
+    const [[renderedJSDocLines], [renderedClassLines]] = splitJSDocAndDeclaration(renderedLines);
 
-  //   it("should contain inherited properties", () => {
-  //     expect(renderedClassLines).to.have.lengthOf(2 + 2);
-  //     expect(renderedClassLines[1]).to.match(/^\s+propA: string;$/);
-  //     expect(renderedClassLines[2]).to.match(/^\s+propB: string;$/);
-  //   });
+    it("should include the heritage in the header", () => {
+      expect(renderedClassLines[0]).to.equal("class ClassB extends ClassA {");
+    });
 
-  // }
+    it("should contain inherited properties", () => {
+      expect(renderedClassLines).to.have.lengthOf(2 + 2);
+      expect(renderedClassLines[1]).to.match(/^\s+propA: string;$/);
+      expect(renderedClassLines[2]).to.match(/^\s+propB: string;$/);
+    });
+
+  }
 
   // {
 

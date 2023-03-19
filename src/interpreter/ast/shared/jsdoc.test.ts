@@ -13,6 +13,7 @@ scope("Interpreter", "JSDoc", () => {
     const testFileContent = ts`
       /**
        * Type description
+       * 
        * @remarks This is a longer description.
        * @alpha This type is in alpha.
        * @beta This type is in beta.

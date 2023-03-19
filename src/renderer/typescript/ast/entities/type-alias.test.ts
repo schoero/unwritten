@@ -2,9 +2,11 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderTypeAliasEntity } from "unwritten:renderer:typescript/ast/entities/type-alias.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
+import { splitJSDocAndDeclaration } from "unwritten:tests:utils/jsdoc.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -90,9 +92,16 @@ scope("TypeScriptRenderer", EntityKind.TypeAlias, () => {
     const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
     const renderedTypeAlias = renderTypeAliasEntity(ctx, typeAliasEntity as TypeAliasEntity);
+    const renderedLines = renderedTypeAlias.split(renderNewLine(ctx));
+
+    const [[renderedJSDocLines], [renderedTypeAliasLines]] = splitJSDocAndDeclaration(renderedLines);
 
     it("should render type alias correctly", () => {
-      expect(renderedTypeAlias).to.equal("type TypeAlias<A extends number = 7> = A;");
+      expect(renderedTypeAliasLines[0]).to.equal("type TypeAlias<A extends number = 7> = A;");
+    });
+
+    it("should have matching JSDoc", () => {
+      expect(renderedJSDocLines).to.have.lengthOf(8);
     });
 
   }

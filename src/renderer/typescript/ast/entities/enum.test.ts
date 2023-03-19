@@ -6,6 +6,7 @@ import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderEnumEntity } from "unwritten:renderer:typescript/ast/entities/enum.js";
 import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
+import { splitJSDocAndDeclaration } from "unwritten:tests:utils/jsdoc.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { EnumEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -115,22 +116,32 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
 
     const ctx = createRenderContext(BuiltInRenderers.TypeScript);
 
-    const renderedEnumEntity = renderEnumEntity(ctx, enumEntity as EnumEntity);
+    const renderedEnum = renderEnumEntity(ctx, enumEntity as EnumEntity);
 
-    const renderedEnumEntityLines = renderedEnumEntity.split(renderNewLine(ctx));
+    const renderedLines = renderedEnum.split(renderNewLine(ctx));
+
+    const [renderedJSDocLines, renderedEnumLines] = splitJSDocAndDeclaration(renderedLines);
+
+    it("should have a matching JSDoc lines", () => {
+      expect(renderedJSDocLines[0]).to.have.lengthOf(9);
+    });
 
     it("should have a matching header", () => {
-      expect(renderedEnumEntityLines[0]).to.equal("enum Enum {");
+      expect(renderedEnumLines[0][0]).to.equal("enum Enum {");
+    });
+
+    it("should have matching member JSDoc lines", () => {
+      expect(renderedJSDocLines[1]).to.have.lengthOf(5);
     });
 
     it("should have matching members", () => {
-      expect(renderedEnumEntityLines[1].trim()).to.equal("A = 0,");
-      expect(renderedEnumEntityLines[2].trim()).to.equal("B = 1,");
-      expect(renderedEnumEntityLines[3].trim()).to.equal("C = 2");
+      expect(renderedEnumLines[1][0].trim()).to.equal("A = 0,");
+      expect(renderedEnumLines[1][1].trim()).to.equal("B = 1,");
+      expect(renderedEnumLines[1][2].trim()).to.equal("C = 2");
     });
 
     it("should have a matching footer", () => {
-      expect(renderedEnumEntityLines[4]).to.equal("}");
+      expect(renderedEnumLines[1][3]).to.equal("}");
     });
 
   }

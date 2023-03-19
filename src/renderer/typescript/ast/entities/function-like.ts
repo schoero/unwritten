@@ -1,3 +1,5 @@
+import { renderJSDoc } from "unwritten:renderer/typescript/utils/jsdoc.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { renderSignatureEntity } from "unwritten:renderer:typescript/ast/entities/signature.js";
 import { renderSemicolon } from "unwritten:renderer:typescript/utils/keywords.js";
@@ -10,13 +12,26 @@ import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type
 export function renderFunctionLikeEntity(ctx: TypeScriptRenderContext, functionLikeEntity: FunctionLikeEntities): string {
 
   const renderConfig = getRenderConfig(ctx);
+
+  const renderedNewLine = renderNewLine(ctx);
+  const renderedEmptyLine = `${renderConfig.newLine}${renderConfig.newLine}`;
   const renderedIndentation = renderIndentation(ctx);
   const renderedSemicolon = renderSemicolon(ctx);
 
   const renderedSignatures = functionLikeEntity.signatures.map(
-    signature =>
-      `${renderedIndentation}${renderSignatureEntity(ctx, signature)}${renderedSemicolon}`
-  ).join(renderConfig.newLine);
+    signature => {
+
+      const renderedJSDoc = renderJSDoc(ctx, signature);
+      const renderedSignature = `${renderedIndentation}${renderSignatureEntity(ctx, signature)}${renderedSemicolon}`;
+
+      return [
+        renderedJSDoc,
+        renderedSignature
+      ].filter(line => line)
+        .join(renderedNewLine);
+
+    }
+  ).join(renderedEmptyLine);
 
   return renderedSignatures;
 
