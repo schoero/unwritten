@@ -14,7 +14,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
 
     const testFileContent = ts`
       export type MappedTypeLiteral = {
-        readonly [K in "A" | "B"]?: K[];
+        readonly [K in "A" | "B"]?: K;
       };
     `;
 
@@ -50,8 +50,8 @@ scope("Interpreter", TypeKind.Mapped, () => {
       expect(exportedTypeAlias.type.members[0]!.keyType.value).to.equal("A");
       expect(exportedTypeAlias.type.members[1]!.keyType.value).to.equal("B");
 
-      expect(exportedTypeAlias.type.members[0]!.valueType.kind).to.equal(TypeKind.Array);
-      expect(exportedTypeAlias.type.members[1]!.valueType.kind).to.equal(TypeKind.Array);
+      expect(exportedTypeAlias.type.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
+      expect(exportedTypeAlias.type.members[1]!.valueType.kind).to.equal(TypeKind.TypeReference);
     });
 
     it("should have a correct type parameter", () => {
