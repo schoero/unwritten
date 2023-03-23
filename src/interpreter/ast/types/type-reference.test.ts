@@ -43,6 +43,25 @@ scope("Interpreter", TypeKind.TypeReference, () => {
   {
 
     const testFileContent = ts`
+      type Generic<T extends string> = T;
+      export type Resolved = Generic<"test">;
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Resolved")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
+
+    it("should should resolve to the actual type", () => {
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+      expect(exportedTypeAlias.type.type!.kind).toBe(TypeKind.StringLiteral);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
       type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
       export type TruthyConditionalTypeReference = ConditionalTypeAlias<"string">;
       export type FalsyConditionalTypeReference = ConditionalTypeAlias<"number">;

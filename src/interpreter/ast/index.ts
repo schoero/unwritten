@@ -20,11 +20,13 @@ import {
   createBooleanType,
   createClassType,
   createConditionalType,
+  createConditionalTypeByTypeNode,
   createExpressionType,
   createInterfaceByType,
-  createIntersectionTypeByType,
+  createIntersectionType,
   createLinkToType,
-  createMappedTypeByType,
+  createMappedType,
+  createMappedTypeByTypeNode,
   createNeverType,
   createNullType,
   createNumberLiteralType,
@@ -41,10 +43,9 @@ import {
   createTypeQueryType,
   createTypeReferenceType,
   createUndefinedType,
-  createUnionTypeByType,
+  createUnionType,
   createUnknownType,
-  createUnresolvedByType,
-  createUnresolvedType,
+  createUnresolved,
   createVoidType
 } from "unwritten:interpreter:ast/types/index.js";
 import { createObjectLikeType } from "unwritten:interpreter:ast/types/object.js";
@@ -61,7 +62,9 @@ import {
 } from "unwritten:interpreter:typeguards/symbols.js";
 import {
   isArrayTypeNode,
+  isConditionalTypeNode,
   isExpressionWithTypeArguments,
+  isMappedTypeNode,
   isTemplateLiteralTypeNode,
   isTupleTypeNode,
   isTypeQueryNode,
@@ -150,6 +153,10 @@ export function parseTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type
     return createTypeQueryType(ctx, typeNode);
   } else if(isTemplateLiteralTypeNode(typeNode)){
     return createTemplateLiteralType(ctx, typeNode);
+  } else if(isMappedTypeNode(typeNode)){
+    return createMappedTypeByTypeNode(ctx, typeNode);
+  } else if(isConditionalTypeNode(typeNode)){
+    return createConditionalTypeByTypeNode(ctx, typeNode);
   }
 
   if(isTypeReferenceNode(typeNode)){
@@ -195,9 +202,7 @@ export function parseType(ctx: InterpreterContext, type: Type): Types {
 
   //-- Order is important! Parse most specific types first
 
-  if(isConditionalType(type)){
-    return createConditionalType(ctx, type);
-  } else if(isStringLiteralType(type)){
+  if(isStringLiteralType(type)){
     return createStringLiteralType(ctx, type);
   } else if(isNumberLiteralType(type)){
     return createNumberLiteralType(ctx, type);
@@ -228,13 +233,15 @@ export function parseType(ctx: InterpreterContext, type: Type): Types {
   } else if(isSymbolType(type)){
     return createSymbolType(ctx, type);
   } else if(isUnionType(type)){
-    return createUnionTypeByType(ctx, type);
+    return createUnionType(ctx, type);
   } else if(isIntersectionType(type)){
-    return createIntersectionTypeByType(ctx, type);
+    return createIntersectionType(ctx, type);
   } else if(isTypeParameterType(type)){
     return createTypeParameterType(ctx, type);
+  } else if(isConditionalType(type)){
+    return createConditionalType(ctx, type);
   } else {
-    return createUnresolvedByType(ctx, type);
+    return createUnresolved(ctx, type);
   }
 
 }
@@ -247,11 +254,11 @@ export function parseObjectType(ctx: InterpreterContext, type: TSObjectType): Ty
   }
 
   if(isSymbolExcluded(ctx, type.symbol)){
-    return createUnresolvedType(ctx, type.symbol);
+    // return createUnresolvedType(ctx, type.symbol);
   }
 
   if(isMappedType(type)){
-    return createMappedTypeByType(ctx, type);
+    return createMappedType(ctx, type);
   } else if(isFunctionLikeType(type)){
     return createFunctionType(ctx, type);
   } else if(isTypeLiteralType(type)){

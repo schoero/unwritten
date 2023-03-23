@@ -318,6 +318,7 @@ export interface MappedType extends Type<TypeKind.Mapped> {
   optional: boolean;
   readonly: boolean;
   typeParameter: TypeParameterEntity;
+  position?: Position;
 }
 
 

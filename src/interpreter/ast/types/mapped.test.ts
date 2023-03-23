@@ -8,13 +8,19 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
 
+// https://github.com/microsoft/TypeScript/pull/12589
+
+export type MappedTypeLiteral = {
+  readonly [K in "A" | "B"]?: K extends "B" ? "b" : "a";
+};
+
 scope("Interpreter", TypeKind.Mapped, () => {
 
   {
 
     const testFileContent = ts`
       export type MappedTypeLiteral = {
-        readonly [K in "A" | "B"]?: K;
+        readonly [K in "A" | "B"]?: K extends "B" ? "b" : "a";
       };
     `;
 

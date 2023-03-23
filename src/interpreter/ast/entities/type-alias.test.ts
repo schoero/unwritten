@@ -111,4 +111,23 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
 
   }
 
+  {
+
+    const testFileContent = ts`
+      type Generic<T extends string> = T;
+      export type Resolved = Generic<"hello">;
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Resolved")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
+
+    it("should should resolve types", () => {
+      expect(exportedTypeAlias.typeParameters).to.not.equal(undefined);
+      expect(exportedTypeAlias.typeParameters).to.have.lengthOf(1);
+    });
+
+  }
+
 });

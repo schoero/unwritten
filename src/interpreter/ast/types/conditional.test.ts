@@ -7,12 +7,15 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
 
 
+// https://github.com/microsoft/TypeScript/pull/21316
+
 scope("Interpreter", TypeKind.Conditional, () => {
 
   {
 
     const testFileContent = ts`
-      export type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
+      // export type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
+      export type ConditionalTypeAlias<T extends "A"> = T extends string ? true : false;
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);

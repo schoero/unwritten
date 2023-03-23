@@ -86,12 +86,12 @@ export type Entities =
   | VariableEntity;
 
 export interface PropertyEntity extends Entity<EntityKind.Property>, JSDocTags {
-  modifiers: Modifiers[];
   name: Name;
-  optional: boolean;
   type: Types;
   description?: Description;
   initializer?: Types;
+  modifiers?: Modifiers[];
+  optional?: boolean;
   position?: Position;
 }
 

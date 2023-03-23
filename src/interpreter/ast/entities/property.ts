@@ -30,7 +30,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration &&
+  assert(!declaration ||
     (
       isPropertySignatureDeclaration(declaration) ||
       isPropertyDeclaration(declaration) ||
@@ -39,11 +39,13 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
     ),
   `Property signature not found ${declaration?.kind}`);
 
-  const tsType = ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration);
+  const tsType = ctx.checker.getTypeOfSymbol(symbol);
+
+  assert(tsType, "Property type not found");
 
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const fromDeclaration = parsePropertyDeclaration(ctx, declaration);
+  const fromDeclaration = declaration ? parsePropertyDeclaration(ctx, declaration) : {};
 
   const type = parseType(ctx, tsType);
   const kind = EntityKind.Property;
@@ -68,7 +70,7 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const initializer = getInitializerByDeclaration(ctx, declaration);
-  const optional = declaration.questionToken !== undefined;
+  const optional = isPropertyAssignment(declaration) ? undefined : !!declaration.questionToken;
   const kind = EntityKind.Property;
 
   assert(name, "Property name not found");

@@ -18,7 +18,6 @@ import {
   renderNullType,
   renderNumberLiteralType,
   renderNumberType,
-  renderObjectType,
   renderStringLiteralType,
   renderStringType,
   renderSymbolType,
@@ -49,7 +48,6 @@ import {
   isNullType,
   isNumberLiteralType,
   isNumberType,
-  isObjectType,
   isStringLiteralType,
   isStringType,
   isSymbolType,
@@ -110,8 +108,6 @@ export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
     return renderFunctionType(ctx, type);
   } else if(isClassType(type)){
     return renderClassType(ctx, type);
-  } else if(isObjectType(type)){
-    return renderObjectType(ctx, type);
   }
 
 }

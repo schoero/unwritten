@@ -8,7 +8,7 @@ import type { IntersectionType } from "unwritten:interpreter:type-definitions/ty
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function createIntersectionTypeByType(ctx: InterpreterContext, type: TSIntersectionType): IntersectionType {
+export function createIntersectionType(ctx: InterpreterContext, type: TSIntersectionType): IntersectionType {
 
   const id = getIdByType(ctx, type);
   const types = type.types.map(type => parseType(ctx, type));

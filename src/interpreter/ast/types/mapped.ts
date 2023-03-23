@@ -1,22 +1,48 @@
-import { createTypeParameterEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { createPropertyEntity, createTypeParameterEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
 import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdBySymbol, getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { isMappedTypeNode, isTypeNode, isUnionTypeNode } from "unwritten:interpreter:typeguards/type-nodes.js";
 import { lockType } from "unwritten:interpreter:utils/ts.js";
 import { isLiteralType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { ObjectType, TypeNode } from "typescript";
+import type { MappedTypeNode, ObjectType, TypeNode } from "typescript";
 
+import type { MappedType } from "unwritten:interpreter/type-definitions/types.js";
 import type { MappedTypeMemberEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { MappedType } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export const createMappedTypeByType = (ctx: InterpreterContext, type: ObjectType): MappedType => lockType(ctx, type, () => {
+export function createMappedTypeByTypeNode(ctx: InterpreterContext, typeNode: MappedTypeNode): MappedType {
+
+  const id = getIdByTypeNode(ctx, typeNode);
+  const position = getPositionByDeclaration(ctx, typeNode);
+  const optional = typeNode.questionToken !== undefined;
+  const readonly = typeNode.readonlyToken !== undefined;
+  const typeParameter = createTypeParameterEntity(ctx, typeNode.typeParameter);
+  const kind = TypeKind.Mapped;
+
+  assert(typeNode.type, "Mapped type must have a type");
+  assert(typeNode.typeParameter.constraint && isUnionTypeNode(typeNode.typeParameter.constraint), "Mapped type must have a union constraint");
+
+  const members = typeNode.typeParameter.constraint.types.map(keyTypeNode => parseMember(ctx, keyTypeNode, typeNode.type!));
+
+  return {
+    id,
+    kind,
+    members,
+    optional,
+    position,
+    readonly,
+    typeParameter
+  };
+
+}
+
+export const createMappedType = (ctx: InterpreterContext, type: ObjectType): MappedType => lockType(ctx, type, () => {
 
   const symbol = type.symbol;
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
@@ -30,10 +56,39 @@ export const createMappedTypeByType = (ctx: InterpreterContext, type: ObjectType
   const typeParameter = createTypeParameterEntity(ctx, declaration.typeParameter);
   const kind = TypeKind.Mapped;
 
-  assert(declaration.type, "Mapped type must have a type");
-  assert(declaration.typeParameter.constraint && isUnionTypeNode(declaration.typeParameter.constraint), "Mapped type must have a union constraint");
+  // assert(declaration.type, "Mapped type must have a type");
+  // assert(declaration.typeParameter.constraint && isUnionTypeNode(declaration.typeParameter.constraint), "Mapped type must have a union constraint");
 
-  const members = declaration.typeParameter.constraint.types.map(keyTypeNode => parseMember(ctx, keyTypeNode, declaration.type!));
+  const props = type.getProperties();
+  const members = props.map(property => createPropertyEntity(ctx, property));
+
+  // const members = declaration.typeParameter.constraint.types.map(keyTypeNode => parseMember(ctx, keyTypeNode, declaration.type!));
+
+  // const id = getIdByType(ctx, type);
+  // const position = getPositionByType(ctx, type);
+  // const optional = false;
+  // const readonly = false;
+
+  // const kind = TypeKind.Mapped;
+
+  // const typeParameter = parseType(ctx, type.typeParameter);
+
+  // const properties = type.getProperties();
+  // const members = properties.map(property => {
+
+  //   const keyType = parseType(ctx, property.links.keyType);
+  //   const mappedType = parseType(ctx, property.links.mappedType);
+  //   const nameType = parseType(ctx, property.links.nameType);
+
+  //   const type = ctx.checker.getTypeAtLocation(property);
+
+
+  //   return {
+  //     keyType,
+  //     mappedType
+  //   };
+
+  // });
 
   return {
     id,

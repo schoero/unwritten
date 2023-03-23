@@ -2,6 +2,7 @@ import ts from "typescript";
 
 import type {
   ArrayTypeNode,
+  ConditionalTypeNode,
   Declaration,
   ExpressionWithTypeArguments,
   IndexedAccessTypeNode,
@@ -21,6 +22,10 @@ export function isArrayTypeNode(typeNode: TypeNode): typeNode is ArrayTypeNode {
 
 export function isArrayTypeReferenceTypeNode(typeNode: TypeNode): typeNode is TypeReferenceNode {
   return isTypeReferenceNode(typeNode) && typeNode.typeName.getText() === "Array" && typeNode.typeArguments?.length === 1;
+}
+
+export function isConditionalTypeNode(typeNode: TypeNode): typeNode is ConditionalTypeNode {
+  return ts.isConditionalTypeNode(typeNode);
 }
 
 export function isExpressionWithTypeArguments(node: TypeNode): node is ExpressionWithTypeArguments {

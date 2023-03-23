@@ -1,12 +1,39 @@
-import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
-import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { parseType, parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { getIdByType, getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
-import type { ConditionalType as TSConditionalType } from "typescript";
+import type { ConditionalType as TSConditionalType, ConditionalTypeNode } from "typescript";
 
 import type { ConditionalType } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
+
+export function createConditionalTypeByTypeNode(ctx: InterpreterContext, typeNode: ConditionalTypeNode): ConditionalType {
+
+  const id = getIdByTypeNode(ctx, typeNode);
+  const checkType = parseTypeNode(ctx, typeNode.checkType);
+  const extendsType = parseTypeNode(ctx, typeNode.extendsType);
+  const trueType = parseTypeNode(ctx, typeNode.trueType);
+  const falseType = parseTypeNode(ctx, typeNode.falseType);
+
+  const type = ctx.checker.getTypeFromTypeNode(typeNode);
+
+  const apparentType = ctx.checker.getApparentType(type);
+
+  const parsedType = parseType(ctx, apparentType);
+
+  const kind = TypeKind.Conditional;
+
+  return {
+    checkType,
+    extendsType,
+    falseType,
+    id,
+    kind,
+    trueType
+  };
+
+}
 
 export function createConditionalType(ctx: InterpreterContext, type: TSConditionalType): ConditionalType {
 

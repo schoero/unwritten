@@ -1,4 +1,4 @@
-import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { parseType, parseTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
@@ -44,6 +44,8 @@ function parseTypeAliasDeclaration(ctx: InterpreterContext, declaration: TypeAli
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const typeNode = declaration.type;
+  const tp = ctx.checker.getTypeFromTypeNode(typeNode);
+  const parsedTp = parseType(ctx, tp);
   const type = parseTypeNode(ctx, typeNode);
 
   return {

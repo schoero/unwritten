@@ -26,12 +26,12 @@ export function createUnresolvedType(ctx: InterpreterContext, symbol: Symbol): U
 }
 
 
-export function createUnresolvedByType(ctx: InterpreterContext, type: Type): UnresolvedType {
+export function createUnresolved(ctx: InterpreterContext, type: Type): UnresolvedType {
   return createUnresolvedType(ctx, type.symbol);
 }
 
 
 export function createUnresolvedByTypeNode(ctx: InterpreterContext, typeNode: TypeNode): UnresolvedType {
   const type = ctx.checker.getTypeFromTypeNode(typeNode);
-  return createUnresolvedByType(ctx, type);
+  return createUnresolved(ctx, type);
 }
