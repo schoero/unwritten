@@ -60,7 +60,7 @@ unwritten generate <path/to/entry-file.ts> [options]
                                         # try to find the tsconfig by itself if
                                         # no tsconfig.json is provided.
 
---config <path/to/.unwritten.json>      # Provide a unwritten config used to
+--config <path/to/.unwritten.json>      # Provide an unwritten config used to
 -c <path/to/.unwritten.json>            # render the documentation. unwritten
                                         # will try to find the .unwritten.json
                                         # config by itself if none is provided
