@@ -44,26 +44,26 @@ scope("Interpreter", EntityKind.Class, () => {
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
 
-    it("should should have a constructor", () => {
+    it("should have a constructor", () => {
       expect(exportedClass.ctor).to.not.equal(undefined);
     });
 
-    it("should should have a property", () => {
+    it("should have a property", () => {
       expect(exportedClass.properties).to.not.equal(undefined);
       expect(exportedClass.properties.length).to.equal(1);
     });
 
-    it("should should have a method", () => {
+    it("should have a method", () => {
       expect(exportedClass.methods).to.not.equal(undefined);
       expect(exportedClass.methods.length).to.equal(1);
     });
 
-    it("should should have a getter", () => {
+    it("should have a getter", () => {
       expect(exportedClass.getters).to.not.equal(undefined);
       expect(exportedClass.getters.length).to.equal(1);
     });
 
-    it("should should have a setter", () => {
+    it("should have a setter", () => {
       expect(exportedClass.setters).to.not.equal(undefined);
       expect(exportedClass.setters.length).to.equal(1);
     });

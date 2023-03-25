@@ -1,7 +1,6 @@
 import { assert, expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -10,17 +9,13 @@ import { ts } from "unwritten:tests:utils/template.js";
 
 // https://github.com/microsoft/TypeScript/pull/12589
 
-export type MappedTypeLiteral = {
-  readonly [K in "A" | "B"]?: K extends "B" ? "b" : "a";
-};
-
 scope("Interpreter", TypeKind.Mapped, () => {
 
   {
 
     const testFileContent = ts`
       export type MappedTypeLiteral = {
-        readonly [K in "A" | "B"]?: K extends "B" ? "b" : "a";
+        readonly [K in "A" | "B"]?: string;
       };
     `;
 
@@ -39,25 +34,15 @@ scope("Interpreter", TypeKind.Mapped, () => {
       expect(exportedTypeAlias.type.optional).to.equal(true);
     });
 
-    it("should the correct amount of members", () => {
+    it("should the correct amount of properties", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
-      expect(exportedTypeAlias.type.members.length).to.equal(2);
+      expect(exportedTypeAlias.type.properties.length).to.equal(2);
     });
 
-    it("should have matching members", () => {
+    it("should have matching properties", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
-
-      expect(exportedTypeAlias.type.members[0]!.kind).to.equal(EntityKind.MappedTypeMember);
-      expect(exportedTypeAlias.type.members[1]!.kind).to.equal(EntityKind.MappedTypeMember);
-
-      expect(exportedTypeAlias.type.members[0]!.keyType.kind).to.equal(TypeKind.StringLiteral);
-      expect(exportedTypeAlias.type.members[1]!.keyType.kind).to.equal(TypeKind.StringLiteral);
-
-      expect(exportedTypeAlias.type.members[0]!.keyType.value).to.equal("A");
-      expect(exportedTypeAlias.type.members[1]!.keyType.value).to.equal("B");
-
-      expect(exportedTypeAlias.type.members[0]!.valueType.kind).to.equal(TypeKind.TypeReference);
-      expect(exportedTypeAlias.type.members[1]!.valueType.kind).to.equal(TypeKind.TypeReference);
+      expect(exportedTypeAlias.type.properties[0]!.type.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.type.properties[1]!.type.kind).to.equal(TypeKind.String);
     });
 
     it("should have a correct type parameter", () => {
@@ -75,7 +60,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
 
     const testFileContent = ts`
       export type MappedTypeLiteral = {
-        readonly [K in "A" | "B"]: K extends "A" ? number : string;
+        [K in "A" | "B"]: K extends "B" ? "b" : "a";
       };
     `;
 
@@ -88,30 +73,23 @@ scope("Interpreter", TypeKind.Mapped, () => {
       expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Mapped);
     });
 
-    it("should be have matching modifiers", () => {
+    it("should the correct amount of properties", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
-      expect(exportedTypeAlias.type.readonly).to.equal(true);
-      expect(exportedTypeAlias.type.optional).to.equal(false);
+      expect(exportedTypeAlias.type.properties.length).to.equal(2);
     });
 
-    it("should the correct amount of members", () => {
-      assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
-      expect(exportedTypeAlias.type.members.length).to.equal(2);
-    });
-
-    it("should have matching members", () => {
+    it("should have matching properties", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
 
-      expect(exportedTypeAlias.type.members[0]!.kind).to.equal(EntityKind.MappedTypeMember);
-      expect(exportedTypeAlias.type.members[1]!.kind).to.equal(EntityKind.MappedTypeMember);
+      assert(exportedTypeAlias.type.properties[0]!.type.kind === TypeKind.StringLiteral);
+      assert(exportedTypeAlias.type.properties[1]!.type.kind === TypeKind.StringLiteral);
 
-      expect(exportedTypeAlias.type.members[0]!.keyType.kind).to.equal(TypeKind.StringLiteral);
-      expect(exportedTypeAlias.type.members[1]!.keyType.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.properties[0]!.name).to.equal("A");
+      expect(exportedTypeAlias.type.properties[0]!.type.value).to.equal("a");
 
-      expect(exportedTypeAlias.type.members[0]!.keyType.value).to.equal("A");
-      expect(exportedTypeAlias.type.members[1]!.keyType.value).to.equal("B");
+      expect(exportedTypeAlias.type.properties[1]!.name).to.equal("B");
+      expect(exportedTypeAlias.type.properties[1]!.type.value).to.equal("b");
 
-      expect(exportedTypeAlias.type.members[0]!.valueType.kind).to.equal(TypeKind.Conditional);
     });
 
     it("should have a correct type parameter", () => {
@@ -121,6 +99,26 @@ scope("Interpreter", TypeKind.Mapped, () => {
       expect(exportedTypeAlias.type.typeParameter.constraint).to.not.equal(undefined);
       assert(exportedTypeAlias.type.typeParameter.constraint!.kind === TypeKind.Union);
       expect(exportedTypeAlias.type.typeParameter.constraint.types).to.have.lengthOf(2);
+    });
+
+    it("should have a correct valueType", () => {
+
+      assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
+      assert(exportedTypeAlias.type.valueType?.kind === TypeKind.Conditional);
+      assert(exportedTypeAlias.type.valueType.checkType.kind === TypeKind.TypeReference);
+
+      expect(exportedTypeAlias.type.valueType.checkType.symbolId).to.equal(exportedTypeAlias.type.typeParameter.id);
+      expect(exportedTypeAlias.type.valueType.checkType.name).to.equal("K");
+
+      assert(exportedTypeAlias.type.valueType.extendsType.kind === TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.valueType.extendsType.value).to.equal("B");
+
+      assert(exportedTypeAlias.type.valueType.trueType.kind === TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.valueType.trueType.value).to.equal("b");
+
+      assert(exportedTypeAlias.type.valueType.falseType.kind === TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.valueType.falseType.value).to.equal("a");
+
     });
 
   }

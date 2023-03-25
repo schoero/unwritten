@@ -14,8 +14,7 @@ scope("Interpreter", TypeKind.Conditional, () => {
   {
 
     const testFileContent = ts`
-      // export type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
-      export type ConditionalTypeAlias<T extends "A"> = T extends string ? true : false;
+      export type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
     `;
 
     const { exportedSymbols, ctx } = compile(testFileContent);

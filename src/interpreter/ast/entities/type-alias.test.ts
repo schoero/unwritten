@@ -123,9 +123,14 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     const symbol = exportedSymbols.find(s => s.name === "Resolved")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    it("should should resolve types", () => {
-      expect(exportedTypeAlias.typeParameters).to.not.equal(undefined);
-      expect(exportedTypeAlias.typeParameters).to.have.lengthOf(1);
+    it("should resolve types", () => {
+      expect(exportedTypeAlias.typeParameters).to.equal(undefined);
+
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+      assert(exportedTypeAlias.type.type !== undefined);
+      assert(exportedTypeAlias.type.type.kind === TypeKind.StringLiteral);
+
+      expect(exportedTypeAlias.type.type.value).to.equal("hello");
     });
 
   }

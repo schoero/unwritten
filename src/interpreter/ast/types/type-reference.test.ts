@@ -52,7 +52,7 @@ scope("Interpreter", TypeKind.TypeReference, () => {
     const symbol = exportedSymbols.find(s => s.name === "Resolved")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    it("should should resolve to the actual type", () => {
+    it("should resolve to the actual type", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedTypeAlias.type.type!.kind).toBe(TypeKind.StringLiteral);
     });

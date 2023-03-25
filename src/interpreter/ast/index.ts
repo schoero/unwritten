@@ -25,7 +25,6 @@ import {
   createInterfaceByType,
   createIntersectionType,
   createLinkToType,
-  createMappedType,
   createMappedTypeByTypeNode,
   createNeverType,
   createNullType,
@@ -46,6 +45,7 @@ import {
   createUnionType,
   createUnknownType,
   createUnresolved,
+  createUnresolvedType,
   createVoidType
 } from "unwritten:interpreter:ast/types/index.js";
 import { createObjectLikeType } from "unwritten:interpreter:ast/types/object.js";
@@ -81,7 +81,6 @@ import {
   isFunctionLikeType,
   isInterfaceType,
   isIntersectionType,
-  isMappedType,
   isNeverType,
   isNullType,
   isNumberLiteralType,
@@ -254,12 +253,10 @@ export function parseObjectType(ctx: InterpreterContext, type: TSObjectType): Ty
   }
 
   if(isSymbolExcluded(ctx, type.symbol)){
-    // return createUnresolvedType(ctx, type.symbol);
+    return createUnresolvedType(ctx, type.symbol);
   }
 
-  if(isMappedType(type)){
-    return createMappedType(ctx, type);
-  } else if(isFunctionLikeType(type)){
+  if(isFunctionLikeType(type)){
     return createFunctionType(ctx, type);
   } else if(isTypeLiteralType(type)){
     return createTypeLiteralType(ctx, type);

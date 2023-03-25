@@ -1,7 +1,6 @@
 import type { TypeKind } from "unwritten:interpreter:enums/types.ts";
 import type {
   GetterEntity,
-  MappedTypeMemberEntity,
   MethodEntity,
   PropertyEntity,
   SetterEntity,
@@ -314,11 +313,12 @@ export interface TypeParameterType extends Type<TypeKind.TypeParameter> {
 //-- Mapped type
 
 export interface MappedType extends Type<TypeKind.Mapped> {
-  members: MappedTypeMemberEntity[];
   optional: boolean;
+  properties: PropertyEntity[];
   readonly: boolean;
   typeParameter: TypeParameterEntity;
   position?: Position;
+  valueType?: Types;
 }
 
 
