@@ -41,16 +41,7 @@ export function isTypeLocked(ctx: InterpreterContext, type: Type) {
 }
 
 
-export function lockType<T extends Types>(ctx: InterpreterContext, type: Type, callback: (ctx: InterpreterContext, type: Type) => T): T {
-  locker.lockType(ctx, type);
-  const returnType = callback(ctx, type);
-  locker.unlockType(ctx, type);
-  return returnType;
-}
-
-
 //-- Symbol helpers
-
 /**
  * Resolves symbols from imports to their actual symbols.
  *
@@ -63,4 +54,12 @@ export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Sym
     return ctx.checker.getAliasedSymbol(symbol);
   }
   return symbol;
+}
+
+
+export function withLockedType<T extends Types>(ctx: InterpreterContext, type: Type, callback: (ctx: InterpreterContext, type: Type) => T): T {
+  locker.lockType(ctx, type);
+  const returnType = callback(ctx, type);
+  locker.unlockType(ctx, type);
+  return returnType;
 }

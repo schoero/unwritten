@@ -1,7 +1,4 @@
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
-import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
+import { renderFunctionType } from "unwritten:renderer/typescript/ast/types/function.js";
 
 import type { FunctionType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -9,13 +6,7 @@ import type { ConvertedFunctionType } from "unwritten:renderer:markup/types-defi
 
 
 export function convertFunctionType(ctx: MarkupRenderContexts, functionType: FunctionType): ConvertedFunctionType {
-
-  const renderConfig = getRenderConfig(ctx);
-
-  const name = functionType.name;
-  const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.Function] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Function]);
-
-  return link ?? encapsulatedName;
-
+  return [
+    renderFunctionType(ctx.childRenderers.ts, functionType)
+  ];
 }

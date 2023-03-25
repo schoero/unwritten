@@ -20,16 +20,17 @@ function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is TypeScriptR
   verifyRenderer(ctx.renderer);
 }
 
+function withVerifiedContext(ctx: RenderContext<Renderer>, callback: (ctx: TypeScriptRenderContext) => string) {
+  verifyContext(ctx);
+  return callback(ctx);
+}
+
 const typescriptRenderer: TypeScriptRenderer = {
+
   fileExtension: ".ts",
   name: BuiltInRenderers.TypeScript,
 
-  render(ctx: RenderContext<Renderer>, entities: ExportableEntities[]) {
-
-
-    //-- Initialize the context
-
-    verifyContext(ctx);
+  render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedContext(ctx, ctx => {
 
     ctx.indentation = 0;
 
@@ -39,7 +40,7 @@ const typescriptRenderer: TypeScriptRenderer = {
     const markupAST = convertToMarkupAST(ctx, entities);
     return renderContainerNode(ctx, markupAST);
 
-  }
+  })
 
 };
 

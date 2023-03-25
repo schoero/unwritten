@@ -6,12 +6,10 @@ export type DeepPartial<T> =
   T extends Function
     ? T
     : T extends (infer InferredArrayMember)[]
-      ? DeepPartialArray<InferredArrayMember>
+      ? DeepPartial<InferredArrayMember>[]
       : T extends object
         ? DeepPartialObject<T>
         : T | undefined;
-
-interface DeepPartialArray<T> extends Array<DeepPartial<T>> {}
 
 type DeepPartialObject<T> = {
   [Key in keyof T]?: DeepPartial<T[Key]>;
@@ -38,13 +36,11 @@ export type DeepOmit<T, K extends PropertyKey> =
   T extends Function
     ? T
     : T extends (infer InferredArrayMember)[]
-      ? DeepOmitArray<InferredArrayMember, K>
+      ? DeepOmit<InferredArrayMember, K>[]
       : T extends object
         ? DeepOmitObject<T, K>
         : T | undefined;
 
-
-interface DeepOmitArray <T, K extends PropertyKey> extends Array<DeepOmit<T, K>> {}
 
 type DeepOmitObject<T, K extends PropertyKey> = {
   [Key in keyof T]?: Key extends K ? never : DeepOmit<T[Key], K>;
@@ -57,13 +53,10 @@ export type DeepPartialByKey<T, K extends PropertyKey> =
   T extends Function
     ? T
     : T extends (infer InferredArrayMember)[]
-      ? DeepPartialByKeyArray<InferredArrayMember, K>
+      ? DeepPartialByKey<InferredArrayMember, K>[]
       : T extends object
         ? DeepPartialByKeyObject<T, K>
         : T;
-
-
-interface DeepPartialByKeyArray <T, K extends PropertyKey> extends Array<DeepPartialByKey<T, K>> {}
 
 type DeepPartialByKeyObject<T, K extends PropertyKey> =
   { [Key in keyof T as Key extends K ? Key : never]?: DeepPartialByKey<T[Key], K> } &
@@ -78,13 +71,10 @@ export type DeepRequiredByKey<T, K extends PropertyKey> =
   T extends Function
     ? T
     : T extends (infer InferredArrayMember)[]
-      ? DeepRequiredByKeyArray<InferredArrayMember, K>
+      ? DeepRequiredByKey<InferredArrayMember, K>[]
       : T extends object
         ? DeepRequiredByKeyObject<T, K>
         : T;
-
-
-interface DeepRequiredByKeyArray <T, K extends PropertyKey> extends Array<DeepRequiredByKey<T, K>> {}
 
 type DeepRequiredByKeyObject<T, K extends PropertyKey> =
   { [Key in keyof T as Key extends K ? Key : never]-?: DeepRequiredByKey<T[Key], K> } &

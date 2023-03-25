@@ -8,7 +8,7 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
-export function encapsulate(node: ASTNodes, encapsulation: Encapsulation | false | undefined) {
+export function encapsulate(node: ASTNodes, encapsulation: Encapsulation | string[] | false | undefined) {
   if(encapsulation === undefined || encapsulation === false){
     return node;
   }

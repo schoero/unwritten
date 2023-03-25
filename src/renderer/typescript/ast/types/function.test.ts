@@ -51,7 +51,7 @@ scope("TypeScriptRenderer", TypeKind.Function, () => {
     const renderedType = renderFunctionType(ctx, type as FunctionType);
 
     it("should be able to render function types", () => {
-      expect(renderedType).to.equal("(): string");
+      expect(renderedType).to.equal("() => string");
     });
 
   }

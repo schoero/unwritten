@@ -36,7 +36,6 @@ export function createRenderContext(rendererName: BuiltInRenderers.TypeScript): 
 export function createRenderContext(rendererName: BuiltInRenderers.JSON): JSONRenderContext;
 export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRenderers.HTML): RenderContext<Renderer> {
 
-
   const ctx: RenderContext<Renderer> = {
     config: JSON.parse(JSON.stringify(testConfig)),
     renderer: htmlRenderer
@@ -47,6 +46,9 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
 
     (ctx as HTMLRenderContext).indentation = 0;
     (ctx as HTMLRenderContext).size = 1;
+    (ctx as HTMLRenderContext).childRenderers = {
+      ts: createRenderContext(BuiltInRenderers.TypeScript)
+    };
 
   // } else if(rendererName === BuiltInRenderers.Markdown){
   //   renderer = markdownRenderer;

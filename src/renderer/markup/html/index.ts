@@ -46,18 +46,18 @@ function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is HTMLRenderC
   verifyRenderer(ctx.renderer);
 }
 
+function withVerifiedContext(ctx: RenderContext<Renderer>, callback: (ctx: HTMLRenderContext) => string) {
+  verifyContext(ctx);
+  return callback(ctx);
+}
+
+
 const htmlRenderer: HTMLRenderer = {
 
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
 
-
-  render(ctx: RenderContext<Renderer>, entities: ExportableEntities[]) {
-
-
-    //-- Initialize the context
-
-    verifyContext(ctx);
+  render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedContext(ctx, ctx => {
 
     ctx.indentation = 0;
     ctx.size = 1;
@@ -68,7 +68,7 @@ const htmlRenderer: HTMLRenderer = {
     const markupAST = convertToMarkupAST(ctx, entities);
     return renderContainerNode(ctx, markupAST);
 
-  }
+  })
 
 };
 

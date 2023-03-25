@@ -21,102 +21,44 @@ scope("TypeScriptRenderer", TypeKind.Interface, () => {
     // #region Source
 
     // export type MappedTypeLiteral = {
-    //   readonly [K in "A" | "B"]?: K;
+    //   readonly [K in "A" | "B"]?: K extends "A" ? "a" : "b";
     // };
 
     // #endregion
 
     const type: Testable<MappedType> = {
-      id: 4461,
+      id: 4745,
       kind: TypeKind.Mapped,
-      members: [
-        {
-          id: 4742,
-          keyType: {
-            id: 2861,
-            kind: TypeKind.StringLiteral,
-            name: "string",
-            value: "A"
-          },
-          kind: EntityKind.MappedTypeMember,
-          valueType: {
-            id: 4744,
-            kind: TypeKind.TypeReference,
-            name: "K",
-            symbolId: 4458,
-            type: {
-              constraint: {
-                id: 2865,
-                kind: TypeKind.Union,
-                types: [
-                  {
-                    id: 2861,
-                    kind: TypeKind.StringLiteral,
-                    name: "string",
-                    value: "A"
-                  },
-                  {
-                    id: 2863,
-                    kind: TypeKind.StringLiteral,
-                    name: "string",
-                    value: "B"
-                  }
-                ]
-              },
-              id: 2866,
-              kind: TypeKind.TypeParameter,
-              name: "K"
-            },
-            typeArguments: undefined
-          }
-        },
-        {
-          id: 4743,
-          keyType: {
-            id: 2863,
-            kind: TypeKind.StringLiteral,
-            name: "string",
-            value: "B"
-          },
-          kind: EntityKind.MappedTypeMember,
-          valueType: {
-            id: 4744,
-            kind: TypeKind.TypeReference,
-            name: "K",
-            symbolId: 4458,
-            type: {
-              constraint: {
-                id: 2865,
-                kind: TypeKind.Union,
-                types: [
-                  {
-                    id: 2861,
-                    kind: TypeKind.StringLiteral,
-                    name: "string",
-                    value: "A"
-                  },
-                  {
-                    id: 2863,
-                    kind: TypeKind.StringLiteral,
-                    name: "string",
-                    value: "B"
-                  }
-                ]
-              },
-              id: 2866,
-              kind: TypeKind.TypeParameter,
-              name: "K"
-            },
-            typeArguments: undefined
-          }
-        }
-      ],
       optional: true,
       position: {
         column: 32,
         file: "/file.ts",
         line: 1
       },
+      properties: [
+        {
+          id: 4461,
+          kind: EntityKind.Property,
+          name: "A",
+          type: {
+            id: 2869,
+            kind: TypeKind.StringLiteral,
+            name: "string",
+            value: "a"
+          }
+        },
+        {
+          id: 4462,
+          kind: EntityKind.Property,
+          name: "B",
+          type: {
+            id: 2871,
+            kind: TypeKind.StringLiteral,
+            name: "string",
+            value: "b"
+          }
+        }
+      ],
       readonly: true,
       typeParameter: {
         constraint: {
@@ -147,6 +89,58 @@ scope("TypeScriptRenderer", TypeKind.Interface, () => {
           file: "/file.ts",
           line: 2
         }
+      },
+      valueType: {
+        checkType: {
+          id: 4744,
+          kind: TypeKind.TypeReference,
+          name: "K",
+          symbolId: 4458,
+          type: {
+            constraint: {
+              id: 2865,
+              kind: TypeKind.Union,
+              types: [
+                {
+                  id: 2861,
+                  kind: TypeKind.StringLiteral,
+                  name: "string",
+                  value: "A"
+                },
+                {
+                  id: 2863,
+                  kind: TypeKind.StringLiteral,
+                  name: "string",
+                  value: "B"
+                }
+              ]
+            },
+            id: 2866,
+            kind: TypeKind.TypeParameter,
+            name: "K"
+          },
+          typeArguments: undefined
+        },
+        extendsType: {
+          id: 2861,
+          kind: TypeKind.StringLiteral,
+          name: "string",
+          value: "A"
+        },
+        falseType: {
+          id: 2871,
+          kind: TypeKind.StringLiteral,
+          name: "string",
+          value: "b"
+        },
+        id: 4746,
+        kind: TypeKind.Conditional,
+        trueType: {
+          id: 2869,
+          kind: TypeKind.StringLiteral,
+          name: "string",
+          value: "a"
+        }
       }
     };
 
@@ -157,20 +151,29 @@ scope("TypeScriptRenderer", TypeKind.Interface, () => {
     const renderedType = renderMappedType(ctx, type as MappedType);
     const renderedLines = renderedType.split(renderNewLine(ctx));
 
+    it("should have the correct number of lines", () => {
+      expect(renderedLines.length).to.equal(2 + 2);
+    });
+
     it("should have a matching header", () => {
       expect(renderedLines[0]).to.equal("{");
     });
 
     it("should support the readonly modifier", () => {
       expect(renderedLines[1]).to.include("readonly");
+      expect(renderedLines[2]).to.include("readonly");
     });
 
     it("should support the optional modifier", () => {
       expect(renderedLines[1]).to.include("?:");
+      expect(renderedLines[2]).to.include("?:");
     });
 
-    it("should support the type parameter", () => {
-      expect(renderedLines[1]).to.include("K in");
+    it("should render the resolved types", () => {
+      expect(renderedLines[1]).to.include("A");
+      expect(renderedLines[1]).to.include("\"a\"");
+      expect(renderedLines[2]).to.include("B");
+      expect(renderedLines[2]).to.include("\"b\"");
     });
 
   }

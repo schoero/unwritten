@@ -10,6 +10,7 @@ import {
   renderAnyType,
   renderArrayType,
   renderBooleanLiteralType,
+  renderBooleanType,
   renderClassType,
   renderExpressionType,
   renderFunctionType,
@@ -40,6 +41,7 @@ import {
   isAnyType,
   isArrayType,
   isBooleanLiteralType,
+  isBooleanType,
   isClassType,
   isExpressionType,
   isFunctionType,
@@ -76,6 +78,8 @@ export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
     return renderNumberType(ctx, type);
   } else if(isNumberLiteralType(type)){
     return renderNumberLiteralType(ctx, type);
+  } else if(isBooleanType(type)){
+    return renderBooleanType(ctx, type);
   } else if(isBooleanLiteralType(type)){
     return renderBooleanLiteralType(ctx, type);
   } else if(isAnyType(type)){

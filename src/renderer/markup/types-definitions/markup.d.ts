@@ -1,3 +1,4 @@
+import type { TypeScriptRenderContext } from "unwritten:renderer/typescript/type-definitions/renderer.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
@@ -10,6 +11,9 @@ export interface MarkupRenderer extends Renderer {
 }
 
 export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> extends RenderContext<CustomMarkupRenderer> {
+  childRenderers: {
+    ts: TypeScriptRenderContext;
+  };
   indentation: number;
   size: number;
 }

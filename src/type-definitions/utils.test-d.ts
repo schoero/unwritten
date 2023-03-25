@@ -60,8 +60,6 @@ scope("Types", "Utils", () => {
       };
     };
 
-    type Test = Complete<TestType>;
-
     expectTypeOf<Complete<TestType>>().toEqualTypeOf<{
       name: string;
       nested: {

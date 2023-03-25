@@ -13,7 +13,7 @@ export function renderFunctionType(ctx: TypeScriptRenderContext, functionType: F
 
   return functionType.signatures.map(
     signature =>
-      `${renderedIndentation}${renderSignatureEntity(ctx, signature)}`
+      `${renderedIndentation}${renderSignatureEntity(ctx, signature, true)}`
   ).join(renderedNewLine);
 
 }

@@ -1,4 +1,3 @@
-import { renderTypeParameterEntity } from "unwritten:renderer/typescript/ast/entities/type-parameter.js";
 import { renderType } from "unwritten:renderer/typescript/ast/index.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
@@ -18,24 +17,19 @@ export function renderMappedType(ctx: TypeScriptRenderContext, mappedType: Mappe
   const renderedReadonlyKeyword = mappedType.readonly ? "readonly " : "";
   const renderedQuestionMark = mappedType.optional ? "?" : "";
 
-  const renderedTypeParameter = renderTypeParameterEntity(ctx, mappedType.typeParameter);
-
-  const renderedMembers = mappedType.members.map(member => {
-
-    const renderedKey = renderType(ctx, member.keyType);
-    const renderedValue = renderType(ctx, member.valueType);
-
+  const renderedProperties = mappedType.properties.map(propertyEntity => {
+    const renderedKey = propertyEntity.name;
+    const renderedValue = renderType(ctx, propertyEntity.type);
     return `${renderIndentation(ctx)}${renderedReadonlyKeyword}${renderedKey}${renderedQuestionMark}: ${renderedValue};`;
-
   });
 
   ctx.indentation--;
 
-  const renderedFooter = `${renderedNewLine}${renderIndentation(ctx)}}`;
+  const renderedFooter = `${renderIndentation(ctx)}}`;
 
   return [
     renderedHeader,
-    ...renderedMembers,
+    ...renderedProperties,
     renderedFooter
   ].join(renderedNewLine);
 

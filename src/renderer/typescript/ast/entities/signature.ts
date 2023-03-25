@@ -6,7 +6,10 @@ import type { SignatureEntity } from "unwritten:interpreter:type-definitions/ent
 import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type-definitions/renderer.js";
 
 
-export function renderSignatureEntity(ctx: TypeScriptRenderContext, signatureEntity: SignatureEntity): string {
+export function renderSignatureEntity(ctx: TypeScriptRenderContext, signatureEntity: SignatureEntity, asArrowFunction: boolean = false): string {
+
+  const renderedArrow = asArrowFunction ? " => " : "";
+  const renderedReturnTypeColon = asArrowFunction ? "" : ": ";
 
   const renderedModifiers = signatureEntity.modifiers
     ? renderModifiers(signatureEntity.modifiers)
@@ -16,8 +19,9 @@ export function renderSignatureEntity(ctx: TypeScriptRenderContext, signatureEnt
   const renderedParameters = signatureEntity.parameters
     ? renderParameterEntities(ctx, signatureEntity.parameters)
     : "";
+
   const renderedReturnType = renderType(ctx, signatureEntity.returnType);
 
-  return `${renderedModifiers}${renderedSignatureName}(${renderedParameters}): ${renderedReturnType}`;
+  return `${renderedModifiers}${renderedSignatureName}(${renderedParameters})${renderedArrow}${renderedReturnTypeColon}${renderedReturnType}`;
 
 }

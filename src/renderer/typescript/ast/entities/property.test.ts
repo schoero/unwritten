@@ -52,7 +52,7 @@ scope("TypeScriptRenderer", EntityKind.Property, () => {
 
     const renderedLines = renderedProperty.split(renderNewLine(ctx));
 
-    const [renderedJSDocLines, renderedPropertyLines] = splitJSDocAndDeclaration(renderedLines);
+    const [[renderedJSDocLines], [renderedPropertyLines]] = splitJSDocAndDeclaration(renderedLines);
 
     it("should have matching JSDoc lines", () => {
       expect(renderedJSDocLines).to.have.lengthOf(6);
