@@ -5,5 +5,5 @@ import type { TypeScriptRenderContext } from "unwritten:renderer:typescript/type
 
 
 export function renderExpressionType(ctx: TypeScriptRenderContext, expressionType: ExpressionType): string {
-  return renderType(ctx, expressionType.staticType);
+  return renderType(ctx, expressionType.instanceType);
 }
