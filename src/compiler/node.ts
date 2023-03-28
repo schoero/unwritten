@@ -3,20 +3,21 @@ import { dirname, resolve } from "node:path";
 
 import ts from "typescript";
 
+import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler/shared.js";
 import { findFile } from "unwritten:utils:finder.js";
 
 import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function compile(ctx: DefaultContext, entryFilePath: string, tsConfigFilePath?: string) {
+export function compile(ctx: DefaultContext, entryFilePath: string, tsConfigOrFilePath?: ts.CompilerOptions | string) {
 
   const absoluteEntryFilePath = resolve(entryFilePath);
-  const absoluteTSConfigFilePath = tsConfigFilePath !== undefined ? resolve(tsConfigFilePath) : undefined;
+  const tsConfigOrAbsoluteFilePath = typeof tsConfigOrFilePath === "string" ? resolve(tsConfigOrFilePath) : tsConfigOrFilePath;
 
 
   //-- Compile
 
-  const compilerOptions = getCompilerOptions(ctx, absoluteEntryFilePath, absoluteTSConfigFilePath);
+  const compilerOptions = getCompilerOptions(ctx, absoluteEntryFilePath, tsConfigOrAbsoluteFilePath);
   const compilerHost = getCompilerHost(compilerOptions);
 
   ctx.logger?.info(`Invoking the TypeScript compiler to compile ${absoluteEntryFilePath}...`);
@@ -39,17 +40,25 @@ function getCompilerHost(compilerOptions: ts.CompilerOptions) {
 }
 
 
-function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfigFilePath?: string): ts.CompilerOptions {
+function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfigOrFilePath?: ts.CompilerOptions | string): ts.CompilerOptions {
+
+
+  //-- Use provided compiler options
+
+  if(typeof tsConfigOrFilePath === "object"){
+    ctx.logger?.info("Use provided compiler options");
+    const { options, errors } = ts.convertCompilerOptionsFromJson(tsConfigOrFilePath, ".");
+    reportCompilerDiagnostics(ctx, errors, EOL);
+    return options;
+  }
 
 
   //-- Get compiler options from provided tsconfig.json
 
-  {
-    if(tsConfigFilePath !== undefined){
-      const compilerOptions = readConfigFile(ctx, tsConfigFilePath);
-      if(compilerOptions !== undefined){
-        return compilerOptions;
-      }
+  if(typeof tsConfigOrFilePath === "string"){
+    const compilerOptions = readConfigFile(ctx, tsConfigOrFilePath);
+    if(compilerOptions !== undefined){
+      return compilerOptions;
     }
   }
 
@@ -123,32 +132,5 @@ function readConfigFile(ctx: DefaultContext, path: string): ts.CompilerOptions |
 
   const options = ts.parseJsonConfigFileContent(configFile.config, ts.sys, configFileBasePath).options;
   return options;
-
-}
-
-function getDefaultCompilerOptions(): ts.CompilerOptions {
-  return {
-    ...ts.getDefaultCompilerOptions(),
-    allowJs: true
-  };
-}
-
-export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: readonly ts.Diagnostic[]) {
-
-  if(diagnostics.length > 0){
-    for(const diagnostic of diagnostics){
-      const message: string = ts.flattenDiagnosticMessageText(diagnostic.messageText, EOL);
-      if(diagnostic.file){
-        const location: ts.LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
-        const formattedMessage: string =
-          `${diagnostic.file.fileName}(${location.line + 1},${location.character + 1}):` +
-          ` [TypeScript] ${message}`;
-
-        ctx.logger?.warn(formattedMessage);
-      } else {
-        ctx.logger?.warn(message);
-      }
-    }
-  }
 
 }

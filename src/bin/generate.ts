@@ -1,4 +1,4 @@
-import { unwritten } from "unwritten:api:index.js";
+import { unwritten } from "unwritten:api/node.js";
 
 import type { APIOptions } from "unwritten:type-definitions/options.js";
 

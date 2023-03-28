@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 
 import ts from "typescript";
 
-import { reportCompilerDiagnostics } from "unwritten:compiler:index.js";
+import { reportCompilerDiagnostics } from "unwritten:compiler:shared.js";
 import { getDefaultConfig } from "unwritten:config/index.js";
 import { override } from "unwritten:utils/override.js";
 import { assert } from "unwritten:utils:general.js";

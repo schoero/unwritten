@@ -1,7 +1,4 @@
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-
-import { compile } from "unwritten:compiler:index.js";
+import { compile } from "unwritten:compiler:browser.js";
 import { createConfig } from "unwritten:config/index.js";
 import { parse } from "unwritten:interpreter:ast/index.js";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
@@ -11,12 +8,10 @@ import { getRenderer } from "unwritten:renderer:index.js";
 import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";
 import { createContext as createDefaultContext } from "unwritten:utils:context.js";
 
-import type { APIOptions } from "unwritten:type-definitions/options.d.js";
+import type { BrowserAPIOptions } from "unwritten:type-definitions/options.d.js";
 
 
-export async function unwritten(entryFilePath: string, options?: APIOptions) {
-
-  const absoluteEntryFilePath = resolve(entryFilePath);
+export async function unwritten(code: string, options?: BrowserAPIOptions): Promise<string> {
 
 
   //-- Logger
@@ -27,7 +22,7 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
 
   //-- Compile
 
-  const { checker, program } = compile(defaultContext, absoluteEntryFilePath, options?.tsconfig);
+  const { checker, program } = compile(defaultContext, code, options?.tsconfig);
 
 
   //-- Parse
@@ -44,19 +39,6 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
   const renderContext = createRenderContext(defaultContext, renderer, config);
   const renderedSymbols = renderer.render(renderContext, parsedSymbols);
 
-
-  //-- Write output to file
-
-  const fileExtension = renderer.fileExtension;
-  const outputPath = options?.output ?? `./docs/api${fileExtension}`;
-  const absoluteOutputDir = resolve(dirname(outputPath));
-
-  if(existsSync(absoluteOutputDir) === false){
-    mkdirSync(absoluteOutputDir, { recursive: true });
-  }
-
-  writeFileSync(outputPath, renderedSymbols);
-
-  return parsedSymbols;
+  return renderedSymbols;
 
 }

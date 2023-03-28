@@ -10,4 +10,15 @@
   * [ ] Per entry point
   * [ ] Per source file
   * [ ] Per entity
-* [ ]
+* [ ] Add browser support
+* [ ] Finalize API
+  * [ ] Renderers
+    * [ ] Object that implements the Renderer interface
+    * [ ] Path to a file that exports a Renderer
+    * [ ] String with the name of a built-in renderer
+    * [ ] undefined
+  * [ ] tsconfig
+    * [ ] tsconfig object
+    * [ ] Path to a tsconfig file
+    * [ ] undefined
+    * [ ] test various finder algorithms and fallback to default config
