@@ -30,14 +30,16 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(!declaration ||
+  assert(
+    !declaration ||
     (
       isPropertySignatureDeclaration(declaration) ||
       isPropertyDeclaration(declaration) ||
       isPropertyAssignment(declaration) ||
       isParameterDeclaration(declaration)
     ),
-  `Property signature not found ${declaration?.kind}`);
+    `Property signature not found ${declaration?.kind}`
+  );
 
   const tsType = ctx.checker.getTypeOfSymbol(symbol);
 

@@ -57,9 +57,7 @@ export function extendClassEntityConstructorsWithHeritage(classEntity: ClassEnti
 
 export function extendClassEntityEntitiesWithHeritage<
   Key extends EntityKeys, Entity extends EntityMap[Key]
->(
-  classEntity: ClassEntity, key: Key
-): Entity[] {
+>(classEntity: ClassEntity, key: Key): Entity[] {
 
   const instanceEntities = classEntity.heritage?.instanceType.kind === TypeKind.Object ? classEntity.heritage.instanceType[key] as Entity[] : [] as Entity[];
   const staticEntities = classEntity.heritage?.staticType.kind === TypeKind.Object ? classEntity.heritage.staticType[key] as Entity[] : [] as Entity[];

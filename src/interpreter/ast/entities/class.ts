@@ -92,13 +92,16 @@ function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDe
 }
 
 
-function getSymbolsByTypeFromClassLikeDeclaration(ctx: InterpreterContext, classLikeDeclaration: ClassLikeDeclaration,
+function getSymbolsByTypeFromClassLikeDeclaration(
+  ctx: InterpreterContext,
+  classLikeDeclaration: ClassLikeDeclaration,
   filter:
   | typeof isConstructorDeclaration
   | typeof isGetterDeclaration
   | typeof isMethodDeclaration
   | typeof isPropertyDeclaration
-  | typeof isSetterDeclaration) {
+  | typeof isSetterDeclaration
+) {
 
   const declarations = classLikeDeclaration.members.filter(filter);
 

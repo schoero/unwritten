@@ -3,7 +3,7 @@
     <source media="(prefers-color-scheme: dark)" srcset="assets/unwritten-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/unwritten-light.svg">
     <img alt="unwritten" src="assets/unwritten.svg">
-</picture>
+  </picture>
 </div>
 
 ---

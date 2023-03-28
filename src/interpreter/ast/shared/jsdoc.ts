@@ -25,9 +25,11 @@ export function getDescriptionByType(ctx: InterpreterContext, type: Type): Descr
   return symbol ? getDescriptionBySymbol(ctx, symbol) : undefined;
 }
 
-export function getJSDocTagsByDeclaration(ctx: InterpreterContext,
+export function getJSDocTagsByDeclaration(
+  ctx: InterpreterContext,
   declaration: Declaration,
-  tags: JSDocTags | JSDocTags[] = Object.values(JSDocTags)): { [tag: string]: string | undefined; } | undefined {
+  tags: JSDocTags | JSDocTags[] = Object.values(JSDocTags)
+): { [tag: string]: string | undefined; } | undefined {
 
   return ts.getJSDocTags(declaration).reduce<{ [tag: string]: string | undefined; }>((acc, tag) => {
     if((typeof tags === "string" ? [tags] : tags).includes(tag.tagName.text as JSDocTags)){
@@ -37,9 +39,11 @@ export function getJSDocTagsByDeclaration(ctx: InterpreterContext,
   }, {});
 }
 
-export function getJSDocTagsBySymbol(ctx: InterpreterContext,
+export function getJSDocTagsBySymbol(
+  ctx: InterpreterContext,
   symbol: Symbol,
-  tags: JSDocTags | JSDocTags[] = Object.values(JSDocTags)): { [tag: string]: string | undefined; } | undefined {
+  tags: JSDocTags | JSDocTags[] = Object.values(JSDocTags)
+): { [tag: string]: string | undefined; } | undefined {
 
   return symbol.getJsDocTags(ctx.checker).reduce<{ [tag: string]: string | undefined; }>((acc, tag) => {
     if((typeof tags === "string" ? [tags] : tags).includes(tag.name as JSDocTags)){
