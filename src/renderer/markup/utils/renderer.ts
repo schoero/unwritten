@@ -64,22 +64,6 @@ function pluralizeCategoryKey(key: RenderCategories): RenderCategories {
   }
 }
 
-/**
- * Filters empty strings from converted ASTNodes[]
- *
- * @param node
- */
-// export function nodeFilter<T extends ASTNodes[]>(fn: () => T): T extends (infer R)[] ? Exclude<R, "">[] : T {
-//   const returnValue = fn();
-//   if(Array.isArray(returnValue)){
-//     return returnValue
-//       .filter(value => value !== "") as
-//       T extends (infer R)[] ? Exclude<R, "">[] : T;
-//   } else {
-//     return returnValue;
-//   }
-// }
-
 export function nodeFilter(node: ASTNodes) {
   return node !== "";
 }

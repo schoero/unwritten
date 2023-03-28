@@ -1,13 +1,24 @@
+import {
+  isParameterDeclaration,
+  isPropertyAssignment,
+  isPropertyDeclaration
+} from "unwritten:interpreter/typeguards/declarations.js";
 import { parseType } from "unwritten:interpreter:ast/index.js";
 
-import type { ParameterDeclaration, PropertyAssignment, PropertyDeclaration, PropertySignature } from "typescript";
+import type { Declaration } from "typescript";
 
 import type { Types } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function getInitializerByDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature): Types | undefined {
-  if(declaration.initializer === undefined){
+export function getInitializerByDeclaration(
+  ctx: InterpreterContext,
+  declaration: Declaration
+): Types | undefined {
+  if(!isParameterDeclaration(declaration) &&
+    !isPropertyDeclaration(declaration) &&
+    !isPropertyAssignment(declaration) ||
+    !declaration.initializer){
     return;
   }
   const type = ctx.checker.getTypeAtLocation(declaration.initializer);
