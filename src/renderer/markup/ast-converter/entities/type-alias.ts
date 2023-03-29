@@ -40,7 +40,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
     ? typeAliasEntity.typeParameters.map(typeParameter => convertTypeParameterEntityForDocumentation(ctx, typeParameter))
     : "";
 
-  const type = [`${translate("type", { capitalize: true })}: `, convertType(ctx, typeAliasEntity.type)];
+  const type = [`${translate("type", { capitalize: true, count: 1 })}: `, convertType(ctx, typeAliasEntity.type)];
 
   return createTitleNode(
     name,

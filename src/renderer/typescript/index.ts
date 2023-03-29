@@ -1,3 +1,5 @@
+import { renderEntity } from "unwritten:renderer/typescript/ast/index.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 
 import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
@@ -34,11 +36,14 @@ const typescriptRenderer: TypeScriptRenderer = {
 
     ctx.indentation = 0;
 
+    const renderedNewLine = renderNewLine(ctx);
+    const renderedEmptyLine = renderedNewLine + renderedNewLine;
 
-    //-- Render
+    const renderedEntities = entities.map(entity => {
+      return renderEntity(ctx, entity);
+    }).join(renderedEmptyLine);
 
-    const markupAST = convertToMarkupAST(ctx, entities);
-    return renderContainerNode(ctx, markupAST);
+    return renderedEntities;
 
   })
 

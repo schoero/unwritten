@@ -1,3 +1,5 @@
+import { getCategoryName } from "unwritten:renderer/markup/utils/renderer.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
   convertFunctionLikeEntityForDocumentation,
   convertFunctionLikeEntityForTableOfContents,
@@ -37,7 +39,6 @@ import {
 } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { convertTypeReferenceType } from "unwritten:renderer:markup/ast-converter/types/type-reference.js";
 import { createContainerNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
 import {
   isFunctionEntity,
@@ -138,7 +139,7 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
     return convertClassType(ctx, type);
   }
 
-  throw new Error(`Unknown type: ${type.kind}`);
+  throw new Error(`Type ${type.kind} is not yet implemented`);
 
 }
 
@@ -157,7 +158,7 @@ export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entit
     return convertTypeAliasEntityForTableOfContents(ctx, entity);
   }
 
-  throw new Error(`Unexpected entity kind: ${entity.kind}`);
+  throw new Error(`Entity ${entity.kind} is not yet implemented`);
 
 }
 
@@ -176,7 +177,7 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
     return convertTypeAliasEntityForDocumentation(ctx, entity);
   }
 
-  throw new Error(`Unexpected entity kind: ${entity.kind}`);
+  throw new Error(`Entity ${entity.kind} is not yet implemented`);
 
 }
 
@@ -206,30 +207,29 @@ export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: Exportab
 
 export function createTableOfContents(ctx: MarkupRenderContexts, entities: ExportableEntities[]): ConvertedCategoryForTableOfContents[] {
 
+  const translate = getTranslator(ctx);
+
   const tableOfContents: ConvertedCategoryForTableOfContents[] = [];
 
+  for(const entity of entities){
 
-  //-- Render entities
-
-  for(const type of entities){
-
-    const categoryName = getCategoryName(ctx, type.kind, true);
+    const categoryName = getCategoryName(entity.kind);
+    const translation = categoryName && translate(categoryName, { count: entities.length });
     const existingCategory = tableOfContents.find(category => category.children[0].title === categoryName);
 
     if(existingCategory === undefined){
       tableOfContents.push(
         createContainerNode(
-          createTitleNode(categoryName),
+          createTitleNode(translation ?? entity.kind),
           createListNode([])
         )
       );
     }
 
     const category = tableOfContents.find(category => category.children[0].title === categoryName)!;
-    const renderedEntity = convertEntityForTableOfContents(ctx, type);
+    const renderedEntity = convertEntityForTableOfContents(ctx, entity);
 
     category.children[1].children.push(renderedEntity);
-
 
   }
 
@@ -240,27 +240,27 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
 
 export function createDocumentation(ctx: MarkupRenderContexts, entities: ExportableEntities[]): ConvertedCategoryForDocumentation[] {
 
+  const translate = getTranslator(ctx);
+
   const documentation: ConvertedCategoryForDocumentation[] = [];
 
+  for(const entity of entities){
 
-  //-- Render entities
-
-  for(const type of entities){
-
-    const categoryName = getCategoryName(ctx, type.kind, true);
+    const categoryName = getCategoryName(entity.kind);
+    const translation = categoryName && translate(categoryName, { count: entities.length });
     const existingCategory = documentation.find(category => category.children[0].title === categoryName);
 
     if(existingCategory === undefined){
       documentation.push(
         createContainerNode(
-          createTitleNode(categoryName),
+          createTitleNode(translation ?? entity.kind),
           createContainerNode()
         )
       );
     }
 
     const category = documentation.find(category => category.children[0].title === categoryName)!;
-    const renderedEntity = convertEntityForTableOfContents(ctx, type);
+    const renderedEntity = convertEntityForTableOfContents(ctx, entity);
 
     (category.children[1].children as ASTNodes[]).push(renderedEntity);
 

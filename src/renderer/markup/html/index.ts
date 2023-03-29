@@ -62,9 +62,6 @@ const htmlRenderer: HTMLRenderer = {
     ctx.indentation = 0;
     ctx.size = 1;
 
-
-    //-- Render
-
     const markupAST = convertToMarkupAST(ctx, entities);
     return renderContainerNode(ctx, markupAST);
 

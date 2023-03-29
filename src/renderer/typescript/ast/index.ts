@@ -116,6 +116,8 @@ export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
     return renderClassType(ctx, type);
   } else if(isObjectType(type)){
     return renderObjectType(ctx, type);
+  } else {
+    throw new Error(`Type ${type.kind} is not yet implemented`);
   }
 
 }
@@ -132,6 +134,8 @@ export function renderEntity(ctx: TypeScriptRenderContext, entity: ExportableEnt
     return renderInterfaceEntity(ctx, entity);
   } else if(isNamespaceEntity(entity)){
     return renderNamespaceEntity(ctx, entity);
+  } else {
+    throw new Error(`Entity ${entity.kind} is not yet implemented`);
   }
 
 }

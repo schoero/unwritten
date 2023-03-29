@@ -36,7 +36,7 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
   const position = variableEntity.position ? convertPosition(ctx, variableEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, variableEntity);
 
-  const type = [`${translate("type", { capitalize: true })}: `, convertType(ctx, variableEntity.type)];
+  const type = [`${translate("type", { capitalize: true, count: 1 })}: `, convertType(ctx, variableEntity.type)];
 
   return createTitleNode(
     name,

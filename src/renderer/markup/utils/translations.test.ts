@@ -18,6 +18,10 @@ scope("Renderer", "translations", () => {
     expect(translate("function", { count: 2 })).to.equal("functions");
   });
 
+  it("should capitalize properly", () => {
+    expect(translate("function", { capitalize: true, count: 1 })).to.equal("Function");
+  });
+
   it("should not pluralize if not specified", () => {
     expect(translate("beta")).to.equal("beta");
   });

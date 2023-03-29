@@ -1,3 +1,6 @@
+* [ ] Reintegrate link registry
+* [ ] Add event property tags
+* [ ] Add support for @throws
 * [ ] Read title from package.json
 * [ ] Read entry point from package.json
 * [ ] Provide "linting" functionality

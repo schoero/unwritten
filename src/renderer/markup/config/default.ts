@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { RenderCategories } from "unwritten:renderer:markup/types-definitions/renderer.d.js";
 
 import type {
   HTMLRenderConfig,
@@ -11,34 +10,6 @@ import type { Complete } from "unwritten:type-definitions/utils.js";
 
 
 export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
-  categoryNames: {
-    [RenderCategories.Function]: "Function",
-    [RenderCategories.Functions]: "Functions",
-    [RenderCategories.Class]: "Class",
-    [RenderCategories.Classes]: "Classes",
-    [RenderCategories.Constructor]: "Constructor",
-    [RenderCategories.Constructors]: "Constructors",
-    [RenderCategories.Property]: "Property",
-    [RenderCategories.Properties]: "Properties",
-    [RenderCategories.Method]: "Method",
-    [RenderCategories.Methods]: "Methods",
-    [RenderCategories.Setter]: "Setter",
-    [RenderCategories.Setters]: "Setters",
-    [RenderCategories.Getter]: "Getter",
-    [RenderCategories.Getters]: "Getters",
-    [RenderCategories.Enum]: "Enum",
-    [RenderCategories.Enums]: "Enums",
-    [RenderCategories.Interface]: "Interface",
-    [RenderCategories.Interfaces]: "Interfaces",
-    [RenderCategories.TypeAlias]: "Type",
-    [RenderCategories.TypeAliases]: "Types",
-    [RenderCategories.Variable]: "Variable",
-    [RenderCategories.Variables]: "Variables",
-    [RenderCategories.Namespace]: "Namespace",
-    [RenderCategories.Namespaces]: "Namespaces",
-    [RenderCategories.Module]: "Module",
-    [RenderCategories.Modules]: "Modules"
-  },
   indentation: "  ",
   newLine: "\n",
   parameterEncapsulation: ["`", "`"],
@@ -94,7 +65,9 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     "setter_one": "setter",
     "setter_other": "setters",
     "static": "static",
-    "type": "type",
+    "type-alias_one": "type alias",
+    "type-alias_other": "type aliases",
+    "type_one": "type",
     "type_other": "types",
     "variable_one": "variable",
     "variable_other": "variables"

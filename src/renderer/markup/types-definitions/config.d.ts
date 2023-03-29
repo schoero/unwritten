@@ -1,14 +1,7 @@
 import type { ExportableEntityKinds } from "unwritten:interpreter:type-definitions/entities.js";
 
-import type { CategoryNames } from "./renderer.js";
-
 
 export interface MarkupRenderConfig {
-
-  /**
-   * Defines the title of the categories for the rendered entities.
-   */
-  categoryNames?: CategoryNames;
 
   /** Indentation characters */
   indentation?: string;
@@ -86,8 +79,10 @@ export interface MarkupRenderConfig {
     setter_one?: string;
     setter_other?: string;
     static?: string;
-    type?: string;
+    type_one?: string;
     type_other?: string;
+    "type-alias_one"?: string;
+    "type-alias_other"?: string;
     variable_one?: string;
     variable_other?: string;
   };
