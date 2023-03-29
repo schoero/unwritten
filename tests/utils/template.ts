@@ -18,7 +18,6 @@ export function md(htmlCode: TemplateStringsArray, ...values: (boolean | number 
   return createTemplateTag(htmlCode, ...values);
 }
 
-
 export function ts(typeScriptCode: TemplateStringsArray, ...values: (boolean | number | string)[]) {
   return createTemplateTag(typeScriptCode, ...values);
 }

@@ -214,13 +214,13 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
   for(const entity of entities){
 
     const categoryName = getCategoryName(entity.kind);
-    const translation = categoryName && translate(categoryName, { count: entities.length });
+    const translation = translate(categoryName, { count: entities.length });
     const existingCategory = tableOfContents.find(category => category.children[0].title === categoryName);
 
     if(existingCategory === undefined){
       tableOfContents.push(
         createContainerNode(
-          createTitleNode(translation ?? entity.kind),
+          createTitleNode(translation),
           createListNode([])
         )
       );
@@ -247,13 +247,13 @@ export function createDocumentation(ctx: MarkupRenderContexts, entities: Exporta
   for(const entity of entities){
 
     const categoryName = getCategoryName(entity.kind);
-    const translation = categoryName && translate(categoryName, { count: entities.length });
+    const translation = translate(categoryName, { count: entities.length });
     const existingCategory = documentation.find(category => category.children[0].title === categoryName);
 
     if(existingCategory === undefined){
       documentation.push(
         createContainerNode(
-          createTitleNode(translation ?? entity.kind),
+          createTitleNode(translation),
           createContainerNode()
         )
       );
