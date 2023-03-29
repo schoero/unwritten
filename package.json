@@ -47,7 +47,7 @@
     "@schoero/ts-config": "^0.3.2",
     "@schoero/vite-config": "^0.0.19",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^18.15.10",
+    "@types/node": "^18.15.11",
     "eslint-plugin-sort-exports": "^0.8.0",
     "ts-json-schema-generator": "^1.2.0"
   },
