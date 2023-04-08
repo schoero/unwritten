@@ -2,9 +2,9 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { renderMappedType } from "unwritten:renderer/typescript/ast/types/mapped.js";
+import { convertMappedType } from "unwritten:renderer/markup/ast-converter/types/mapped.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -12,7 +12,7 @@ import type { MappedType } from "unwritten:interpreter:type-definitions/types.js
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("TypeScriptRenderer", TypeKind.Mapped, () => {
+scope("MarkupRenderer", TypeKind.Mapped, () => {
 
   {
 
@@ -146,34 +146,36 @@ scope("TypeScriptRenderer", TypeKind.Mapped, () => {
 
     // #endregion
 
-    const ctx = createRenderContext(BuiltInRenderers.TypeScript);
+    const ctx = createRenderContext();
 
-    const renderedType = renderMappedType(ctx, type as MappedType);
+    const convertedType = convertMappedType(ctx, type as MappedType);
+    const renderedType = renderNode(ctx, convertedType);
+
     const renderedLines = renderedType.split(renderNewLine(ctx));
 
     it("should have the correct number of lines", () => {
-      expect(renderedLines.length).to.equal(2 + 2);
+      expect(renderedLines.length).to.equal(1 + 2 + 2);
     });
 
     it("should have a matching header", () => {
-      expect(renderedLines[0]).to.equal("{");
+      expect(renderedLines[0]).to.include("properties");
     });
 
     it("should support the readonly modifier", () => {
-      expect(renderedLines[1]).to.include("readonly");
       expect(renderedLines[2]).to.include("readonly");
+      expect(renderedLines[3]).to.include("readonly");
     });
 
     it("should support the optional modifier", () => {
-      expect(renderedLines[1]).to.include("?:");
-      expect(renderedLines[2]).to.include("?:");
+      expect(renderedLines[2]).to.include("optional");
+      expect(renderedLines[3]).to.include("optional");
     });
 
     it("should render the resolved types", () => {
-      expect(renderedLines[1]).to.include("A");
-      expect(renderedLines[1]).to.include("\"a\"");
-      expect(renderedLines[2]).to.include("B");
-      expect(renderedLines[2]).to.include("\"b\"");
+      expect(renderedLines[2]).to.include("A");
+      expect(renderedLines[2]).to.include("\"a\"");
+      expect(renderedLines[3]).to.include("B");
+      expect(renderedLines[3]).to.include("\"b\"");
     });
 
   }

@@ -154,6 +154,27 @@ export type ConvertedIntersectionType = ASTNodes[];
 export type ConvertedInterfaceType = ASTNodes;
 
 
+//-- Mapped type
+
+export interface ConvertedMappedType extends TitleNode {
+  children: [
+    properties: ListNode
+  ];
+}
+
+
+//-- Type literal type
+
+export type ConvertedTypeLiteralType = [
+  constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+  callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+  properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+  methods: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
+  setters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
+  getters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>
+];
+
+
 //-- Class type
 
 export type ConvertedClassType = ASTNodes;

@@ -19,6 +19,7 @@ export async function getRenderer(renderer?: Renderer | string): Promise<Rendere
   validateRenderer(renderer);
 
   return renderer;
+
 }
 
 

@@ -23,6 +23,7 @@ import {
   convertFunctionType,
   convertInterfaceType,
   convertIntersectionType,
+  convertMappedType,
   convertNeverType,
   convertNullType,
   convertNumberLiteralType,
@@ -32,6 +33,7 @@ import {
   convertSymbolType,
   convertTemplateLiteralType,
   convertTupleType,
+  convertTypeLiteralType,
   convertUndefinedType,
   convertUnionType,
   convertUnknownType,
@@ -58,6 +60,7 @@ import {
   isFunctionType,
   isInterfaceType,
   isIntersectionType,
+  isMappedType,
   isNeverType,
   isNullType,
   isNumberLiteralType,
@@ -67,6 +70,7 @@ import {
   isSymbolType,
   isTemplateLiteralType,
   isTupleType,
+  isTypeLiteralType,
   isTypeReferenceType,
   isUndefinedType,
   isUnionType,
@@ -137,6 +141,10 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
     return convertInterfaceType(ctx, type);
   } else if(isClassType(type)){
     return convertClassType(ctx, type);
+  } else if(isTypeLiteralType(type)){
+    return convertTypeLiteralType(ctx, type);
+  } else if(isMappedType(type)){
+    return convertMappedType(ctx, type);
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);

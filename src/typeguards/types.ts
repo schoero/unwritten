@@ -13,6 +13,7 @@ import type {
   InterfaceType,
   IntersectionType,
   LiteralTypes,
+  MappedType,
   NeverType,
   NullType,
   NumberLiteralType,
@@ -24,6 +25,7 @@ import type {
   SymbolType,
   TemplateLiteralType,
   TupleType,
+  TypeLiteralType,
   TypeReferenceType,
   Types,
   UndefinedType,
@@ -85,6 +87,10 @@ export function isLiteralType(type: Types): type is LiteralTypes {
   isBigIntLiteralType(type);
 }
 
+export function isMappedType(type: Types): type is MappedType {
+  return type.kind === TypeKind.Mapped;
+}
+
 export function isNeverType(type: Types): type is NeverType {
   return type.kind === TypeKind.Never;
 }
@@ -127,6 +133,10 @@ export function isTemplateLiteralType(type: Types): type is TemplateLiteralType 
 
 export function isTupleType(type: Types): type is TupleType {
   return type.kind === TypeKind.Tuple;
+}
+
+export function isTypeLiteralType(type: Types): type is TypeLiteralType {
+  return type.kind === TypeKind.TypeLiteral;
 }
 
 export function isTypeReferenceType(type: Types): type is TypeReferenceType {

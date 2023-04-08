@@ -1,6 +1,6 @@
 import { assert, expect, it } from "vitest";
 
-import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { createFunctionEntity, createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -119,6 +119,29 @@ scope("Interpreter", TypeKind.Mapped, () => {
       assert(exportedTypeAlias.type.valueType.falseType.kind === TypeKind.StringLiteral);
       expect(exportedTypeAlias.type.valueType.falseType.value).to.equal("a");
 
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export function fn(): {
+        readonly [K in "A" | "B"]?: K extends "A" ? "a" : "b";
+      } {
+        return {
+          A: "a",
+          B: "b"
+      };
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "fn")!;
+    const exportedFunction = createFunctionEntity(ctx, symbol);
+
+    it("should return a type literal and not a mapped type", () => {
+      expect(exportedFunction.signatures[0].returnType.kind).to.equal(TypeKind.TypeLiteral);
     });
 
   }
