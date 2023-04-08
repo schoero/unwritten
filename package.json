@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@schoero/cspell-config": "^1.6.14",
-    "@schoero/eslint-config": "^1.37.1",
+    "@schoero/eslint-config": "^1.37.2",
     "@schoero/markdownlint-config": "^1.1.4",
     "@schoero/ts-config": "^0.3.2",
     "@schoero/vite-config": "^0.0.19",
@@ -63,6 +63,6 @@
   ],
   "volta": {
     "node": "19.8.1",
-    "npm": "9.2.0"
+    "npm": "9.6.4"
   }
 }
