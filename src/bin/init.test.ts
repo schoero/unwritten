@@ -1,5 +1,5 @@
 import { writeFileSync } from "node:fs";
-import { resolve } from "node:path/posix";
+import { normalize, resolve } from "node:path";
 
 import { expect, it, vi } from "vitest";
 
@@ -12,7 +12,6 @@ import { init } from "./init.js";
 scope("E2E", "init", () => {
 
   vi.mock("node:fs", async () => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await vi.importActual<typeof import("node:fs")>("node:fs");
     return {
       ...actual,
@@ -25,7 +24,7 @@ scope("E2E", "init", () => {
 
     it("should create a config file at the current working directory", () => {
       init();
-      expect(writeFileSync).toHaveBeenCalledWith(`${process.cwd()}/.unwritten.json`, JSON.stringify(getConfigWithSchema(), null, 2));
+      expect(writeFileSync).toHaveBeenCalledWith(normalize(`${process.cwd()}/.unwritten.json`), JSON.stringify(getConfigWithSchema(), null, 2));
     });
 
     it("should create a config file at the provided location", () => {
