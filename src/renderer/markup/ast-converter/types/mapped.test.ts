@@ -3,12 +3,11 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { convertMappedType } from "unwritten:renderer/markup/ast-converter/types/mapped.js";
-import { renderNode } from "unwritten:renderer/markup/html/index.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { MappedType } from "unwritten:interpreter:type-definitions/types.js";
+import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
@@ -149,33 +148,25 @@ scope("MarkupRenderer", TypeKind.Mapped, () => {
     const ctx = createRenderContext();
 
     const convertedType = convertMappedType(ctx, type as MappedType);
-    const renderedType = renderNode(ctx, convertedType);
+    const properties = convertedType.children[0].children;
 
-    const renderedLines = renderedType.split(renderNewLine(ctx));
-
-    it("should have the correct number of lines", () => {
-      expect(renderedLines.length).to.equal(1 + 2 + 2);
-    });
-
-    it("should have a matching header", () => {
-      expect(renderedLines[0]).to.include("properties");
+    it("should have two properties", () => {
+      expect(properties.length).to.equal(2);
     });
 
     it("should support the readonly modifier", () => {
-      expect(renderedLines[2]).to.include("readonly");
-      expect(renderedLines[3]).to.include("readonly");
+      expect(properties[0]).to.include("readonly");
+      expect(properties[1]).to.include("readonly");
     });
 
     it("should support the optional modifier", () => {
-      expect(renderedLines[2]).to.include("optional");
-      expect(renderedLines[3]).to.include("optional");
+      expect(properties[0]).to.include("optional");
+      expect(properties[1]).to.include("optional");
     });
 
     it("should render the resolved types", () => {
-      expect(renderedLines[2]).to.include("A");
-      expect(renderedLines[2]).to.include("\"a\"");
-      expect(renderedLines[3]).to.include("B");
-      expect(renderedLines[3]).to.include("\"b\"");
+      expect((properties[0] as ASTNodes[])[2]).to.include("a");
+      expect((properties[1] as ASTNodes[])[2]).to.include("b");
     });
 
   }

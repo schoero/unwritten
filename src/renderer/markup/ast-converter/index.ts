@@ -1,10 +1,16 @@
 import { getCategoryName } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
+  convertClassEntityForDocumentation,
+  convertClassEntityForTableOfContents,
+  convertEnumEntityForDocumentation,
+  convertEnumEntityForTableOfContents,
   convertFunctionLikeEntityForDocumentation,
   convertFunctionLikeEntityForTableOfContents,
   convertInterfaceEntityForDocumentation,
   convertInterfaceEntityForTableOfContents,
+  convertModuleEntityForDocumentation,
+  convertModuleEntityForTableOfContents,
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents,
   convertTypeAliasEntityForDocumentation,
@@ -28,6 +34,8 @@ import {
   convertNullType,
   convertNumberLiteralType,
   convertNumberType,
+  convertObjectLiteralType,
+  convertObjectType,
   convertStringLiteralType,
   convertStringType,
   convertSymbolType,
@@ -43,6 +51,8 @@ import { convertTypeReferenceType } from "unwritten:renderer:markup/ast-converte
 import { createContainerNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
 import {
+  isClassEntity,
+  isEnumEntity,
   isFunctionEntity,
   isInterfaceEntity,
   isNamespaceEntity,
@@ -65,6 +75,8 @@ import {
   isNullType,
   isNumberLiteralType,
   isNumberType,
+  isObjectLiteralType,
+  isObjectType,
   isStringLiteralType,
   isStringType,
   isSymbolType,
@@ -145,6 +157,10 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
     return convertTypeLiteralType(ctx, type);
   } else if(isMappedType(type)){
     return convertMappedType(ctx, type);
+  } else if(isObjectLiteralType(type)){
+    return convertObjectLiteralType(ctx, type);
+  } else if(isObjectType(type)){
+    return convertObjectType(ctx, type);
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);
@@ -164,9 +180,13 @@ export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entit
     return convertNamespaceEntityForTableOfContents(ctx, entity);
   } else if(isTypeAliasEntity(entity)){
     return convertTypeAliasEntityForTableOfContents(ctx, entity);
+  } else if(isEnumEntity(entity)){
+    return convertEnumEntityForTableOfContents(ctx, entity);
+  } else if(isClassEntity(entity)){
+    return convertClassEntityForTableOfContents(ctx, entity);
+  } else {
+    return convertModuleEntityForTableOfContents(ctx, entity);
   }
-
-  throw new Error(`Entity ${entity.kind} is not yet implemented`);
 
 }
 
@@ -183,9 +203,13 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
     return convertNamespaceEntityForDocumentation(ctx, entity);
   } else if(isTypeAliasEntity(entity)){
     return convertTypeAliasEntityForDocumentation(ctx, entity);
+  } else if(isEnumEntity(entity)){
+    return convertEnumEntityForDocumentation(ctx, entity);
+  } else if(isClassEntity(entity)){
+    return convertClassEntityForDocumentation(ctx, entity);
+  } else {
+    return convertModuleEntityForDocumentation(ctx, entity);
   }
-
-  throw new Error(`Entity ${entity.kind} is not yet implemented`);
 
 }
 

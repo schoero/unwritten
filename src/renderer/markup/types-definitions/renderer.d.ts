@@ -151,21 +151,14 @@ export type ConvertedIntersectionType = ASTNodes[];
 
 //-- Interface type
 
-export type ConvertedInterfaceType = ASTNodes;
+export interface ConvertedInterfaceType extends ConvertedObjectType {
 
-
-//-- Mapped type
-
-export interface ConvertedMappedType extends TitleNode {
-  children: [
-    properties: ListNode
-  ];
 }
 
 
-//-- Type literal type
+//-- Object type
 
-export type ConvertedTypeLiteralType = [
+export type ConvertedObjectType = [
   constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
   callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
   properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
@@ -173,6 +166,30 @@ export type ConvertedTypeLiteralType = [
   setters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
   getters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>
 ];
+
+
+//-- Object literal type
+
+export type ConvertedObjectLiteralType = [
+  properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+  methods: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
+  setters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
+  getters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>
+];
+
+
+//-- Type literal type
+
+export interface ConvertedTypeLiteralType extends ConvertedObjectType {
+
+}
+
+
+//-- Mapped type
+
+export type ConvertedMappedType = TitleNode<[
+  ListNode
+]>;
 
 
 //-- Class type
@@ -192,6 +209,8 @@ export type ConvertedEntitiesForTableOfContents =
 
 
 export type ConvertedEntitiesForDocumentation =
+  | ConvertedClassEntityForDocumentation
+  | ConvertedEnumEntityForDocumentation
   | ConvertedFunctionEntityForDocumentation
   | ConvertedInterfaceEntityForDocumentation
   | ConvertedModuleEntityForDocumentation

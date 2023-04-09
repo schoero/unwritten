@@ -1,4 +1,3 @@
-import { renderObjectType } from "unwritten:renderer/typescript/ast/types/object.js";
 import {
   renderFunctionLikeEntity,
   renderInterfaceEntity,
@@ -9,6 +8,8 @@ import {
 import {
   renderAnyType,
   renderArrayType,
+  renderBigIntLiteralType,
+  renderBigIntType,
   renderBooleanLiteralType,
   renderBooleanType,
   renderClassType,
@@ -16,6 +17,7 @@ import {
   renderFunctionType,
   renderInterfaceType,
   renderIntersectionType,
+  renderMappedType,
   renderNeverType,
   renderNullType,
   renderNumberLiteralType,
@@ -40,6 +42,8 @@ import {
 import {
   isAnyType,
   isArrayType,
+  isBigIntLiteralType,
+  isBigIntType,
   isBooleanLiteralType,
   isBooleanType,
   isClassType,
@@ -47,11 +51,11 @@ import {
   isFunctionType,
   isInterfaceType,
   isIntersectionType,
+  isMappedType,
   isNeverType,
   isNullType,
   isNumberLiteralType,
   isNumberType,
-  isObjectType,
   isStringLiteralType,
   isStringType,
   isSymbolType,
@@ -78,6 +82,10 @@ export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
     return renderNumberType(ctx, type);
   } else if(isNumberLiteralType(type)){
     return renderNumberLiteralType(ctx, type);
+  } else if(isBigIntType(type)){
+    return renderBigIntType(ctx, type);
+  } else if(isBigIntLiteralType(type)){
+    return renderBigIntLiteralType(ctx, type);
   } else if(isBooleanType(type)){
     return renderBooleanType(ctx, type);
   } else if(isBooleanLiteralType(type)){
@@ -114,11 +122,11 @@ export function renderType(ctx: TypeScriptRenderContext, type: Types): string {
     return renderFunctionType(ctx, type);
   } else if(isClassType(type)){
     return renderClassType(ctx, type);
-  } else if(isObjectType(type)){
-    return renderObjectType(ctx, type);
-  } else {
-    throw new Error(`Type ${type.kind} is not yet implemented`);
+  } else if(isMappedType(type)){
+    return renderMappedType(ctx, type);
   }
+
+  throw new Error(`Type ${type.kind} is not yet implemented`);
 
 }
 

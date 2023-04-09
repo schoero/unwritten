@@ -8,6 +8,7 @@ import type {
   FunctionEntity,
   GetterEntity,
   InterfaceEntity,
+  ModuleEntity,
   NamespaceEntity,
   PropertyEntity,
   SignatureEntity,
@@ -44,6 +45,10 @@ export function isGetterEntity(entity: Entities): entity is GetterEntity {
 
 export function isInterfaceEntity(entity: Entities): entity is InterfaceEntity {
   return entity.kind === EntityKind.Interface;
+}
+
+export function isModuleEntity(entity: Entities): entity is ModuleEntity {
+  return entity.kind === EntityKind.Module;
 }
 
 export function isNamespaceEntity(entity: Entities): entity is NamespaceEntity {

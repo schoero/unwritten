@@ -98,4 +98,185 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
   }
 
+  {
+
+    // #region Property with all possible modifiers
+
+    // #region Source
+
+    // export class Class {
+    //   public publicProperty: undefined;
+    //   private privateProperty: undefined;
+    //   static staticProperty: undefined;
+    //   readonly readonlyProperty: undefined;
+    //   accessor accessorProperty: undefined;
+    //   #nativePrivateProperty: undefined;
+    // }
+
+    // #endregion
+
+    const propertyEntities: Testable<PropertyEntity>[] = [
+      {
+        description: undefined,
+        id: 4459,
+        initializer: undefined,
+        kind: EntityKind.Property,
+        modifiers: [
+          "public"
+        ],
+        name: "publicProperty",
+        optional: false,
+        position: {
+          column: 2,
+          file: "/file.ts",
+          line: 2
+        },
+        type: {
+          id: 10,
+          kind: TypeKind.Undefined,
+          name: "undefined"
+        }
+      },
+      {
+        description: undefined,
+        id: 4460,
+        initializer: undefined,
+        kind: EntityKind.Property,
+        modifiers: [
+          "private"
+        ],
+        name: "privateProperty",
+        optional: false,
+        position: {
+          column: 2,
+          file: "/file.ts",
+          line: 3
+        },
+        type: {
+          id: 10,
+          kind: TypeKind.Undefined,
+          name: "undefined"
+        }
+      },
+      {
+        description: undefined,
+        id: 4461,
+        initializer: undefined,
+        kind: EntityKind.Property,
+        modifiers: [
+          "static"
+        ],
+        name: "staticProperty",
+        optional: false,
+        position: {
+          column: 2,
+          file: "/file.ts",
+          line: 4
+        },
+        type: {
+          id: 10,
+          kind: TypeKind.Undefined,
+          name: "undefined"
+        }
+      },
+      {
+        description: undefined,
+        id: 4462,
+        initializer: undefined,
+        kind: EntityKind.Property,
+        modifiers: [
+          "readonly"
+        ],
+        name: "readonlyProperty",
+        optional: false,
+        position: {
+          column: 2,
+          file: "/file.ts",
+          line: 5
+        },
+        type: {
+          id: 10,
+          kind: TypeKind.Undefined,
+          name: "undefined"
+        }
+      },
+      {
+        description: undefined,
+        id: 4463,
+        initializer: undefined,
+        kind: EntityKind.Property,
+        modifiers: [
+          "accessor"
+        ],
+        name: "accessorProperty",
+        optional: false,
+        position: {
+          column: 2,
+          file: "/file.ts",
+          line: 6
+        },
+        type: {
+          id: 10,
+          kind: TypeKind.Undefined,
+          name: "undefined"
+        }
+      },
+      {
+        description: undefined,
+        id: 4464,
+        initializer: undefined,
+        kind: EntityKind.Property,
+        modifiers: [
+          "nativePrivate"
+        ],
+        name: "#nativePrivateProperty",
+        optional: false,
+        position: {
+          column: 2,
+          file: "/file.ts",
+          line: 7
+        },
+        type: {
+          id: 10,
+          kind: TypeKind.Undefined,
+          name: "undefined"
+        }
+      }
+    ];
+
+    // #endregion
+
+    const ctx = createRenderContext();
+
+    const convertedPropertiesForDocumentation = propertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity as PropertyEntity));
+
+    const modifiers = convertedPropertiesForDocumentation.map(convertedPropertyForDocumentation => convertedPropertyForDocumentation.children[1].children[1]);
+
+    it("should render the public modifier", () => {
+      expect(modifiers[0]).to.include("public");
+    });
+
+    it("should render the private modifier", () => {
+      expect(modifiers[1]).to.include("private");
+    });
+
+    it("should render the static modifier", () => {
+      expect(modifiers[2]).to.include("static");
+    });
+
+    it("should render the readonly modifier", () => {
+      expect(modifiers[3]).to.include("readonly");
+    });
+
+    it("should render the accessor as get and set modifiers", () => {
+      expect(modifiers[4]).to.include("get");
+      expect(modifiers[4]).to.include("set");
+    });
+
+    it("should render the native private modifier", () => {
+      expect(modifiers[5]).to.include("private");
+    });
+
+  }
+
 });

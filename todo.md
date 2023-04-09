@@ -26,3 +26,6 @@
     * [ ] Path to a tsconfig file
     * [ ] undefined
     * [ ] test various finder algorithms and fallback to default config
+
+* [ ] Add `additionalTypes` to `ctx` and render after each entity.
+  * [ ] Create integration test for this. Multiple functions that use the same type should only be rendered once.

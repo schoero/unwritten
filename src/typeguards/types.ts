@@ -139,6 +139,10 @@ export function isTypeLiteralType(type: Types): type is TypeLiteralType {
   return type.kind === TypeKind.TypeLiteral;
 }
 
+export function isTypeParameterType(type: Types): type is TypeReferenceType {
+  return type.kind === TypeKind.TypeParameter;
+}
+
 export function isTypeReferenceType(type: Types): type is TypeReferenceType {
   return type.kind === TypeKind.TypeReference;
 }

@@ -1,5 +1,5 @@
 import { writeFileSync } from "node:fs";
-import { resolve } from "node:path/posix";
+import { normalize, resolve } from "node:path";
 
 import { expect, it, vi } from "vitest";
 
@@ -34,7 +34,7 @@ scope("E2E", "debug", () => {
     const inputPath = "path/to/success.ts";
     const outputDir = "some/random/dir";
     debug(inputPath, outputDir);
-    expect(writeFileSync).toHaveBeenCalledWith(`${resolve(process.cwd(), outputDir, "output.json")}`, expect.any(String));
+    expect(writeFileSync).toHaveBeenCalledWith(normalize(`${resolve(process.cwd(), outputDir, "output.json")}`), expect.any(String));
   });
 
   it("should create a error file at the specified directory", () => {
@@ -43,8 +43,8 @@ scope("E2E", "debug", () => {
     try {
       debug(inputPath, outputDir);
     } catch (err){
-      expect(writeFileSync).toHaveBeenNthCalledWith(1, `${resolve(process.cwd(), outputDir, "output.json")}`, expect.any(String));
-      expect(writeFileSync).toHaveBeenNthCalledWith(2, `${resolve(process.cwd(), outputDir, "error.json")}`, expect.any(String));
+      expect(writeFileSync).toHaveBeenNthCalledWith(1, normalize(`${resolve(process.cwd(), outputDir, "output.json")}`), expect.any(String));
+      expect(writeFileSync).toHaveBeenNthCalledWith(2, normalize(`${resolve(process.cwd(), outputDir, "error.json")}`), expect.any(String));
     }
   });
 

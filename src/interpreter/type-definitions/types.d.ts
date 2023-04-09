@@ -187,6 +187,7 @@ export interface ObjectLiteralType extends ObjectLikeType<TypeKind.ObjectLiteral
 export interface TypeReferenceType extends Type<TypeKind.TypeReference> {
   name?: Name;
   position?: Position;
+  /** @deprecated */
   symbolId?: ID;
   type?: Types;
   typeArguments?: Types[];

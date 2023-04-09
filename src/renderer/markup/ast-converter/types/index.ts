@@ -13,6 +13,8 @@ export * from "./never.js";
 export * from "./null.js";
 export * from "./number.js";
 export * from "./number-literal.js";
+export * from "./object.js";
+export * from "./object-literal.js";
 export * from "./string.js";
 export * from "./string-literal.js";
 export * from "./symbol.js";

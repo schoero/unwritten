@@ -1,3 +1,4 @@
+import { renderModifiers } from "unwritten:renderer/markup/utils/modifiers.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
@@ -39,6 +40,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   const description = propertyEntity.description ?? "";
   const example = propertyEntity.example ?? "";
   const remarks = propertyEntity.remarks ?? "";
+  const modifiers = propertyEntity.modifiers ? renderModifiers(ctx, propertyEntity.modifiers) : "";
 
   const jsdocTags = convertJSDocTags(ctx, propertyEntity);
   const position = propertyEntity.position ? convertPosition(ctx, propertyEntity.position) : "";
@@ -55,6 +57,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
       createSmallNode(position),
       createParagraphNode(
         jsdocTags,
+        modifiers,
         optional
       ),
       createParagraphNode(type),

@@ -2,96 +2,44 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertTypeLiteralType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { convertObjectLiteralType } from "unwritten:renderer/markup/ast-converter/types/object-literal.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { TypeLiteralType } from "unwritten:interpreter:type-definitions/types.js";
+import type { ObjectLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
-scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
+scope("MarkupRenderer", TypeKind.ObjectLiteral, () => {
 
   {
 
-    // #region type literal with all possible members
+    // #region object literal type with all possible properties
 
     // #region Source
 
-    // export type TypeLiteral = {
-    //   new (): {};
-    //   (): boolean;
-    //   prop: string;
-    //   funcProp: () => void;
-    //   method(): void;
-    //   get getter(): string;
-    //   set setter(value: string);
+    // export const objectLiteral = {
+    //   prop: "hello",
+    //   funcProp: () => { },
+    //   method() {},
+    //   get getter() { return "hello"; },
+    //   set setter(value: string) { }
     // };
 
     // #endregion
 
-    const type: Testable<TypeLiteralType> = {
-      callSignatures: [
-        {
-          description: undefined,
-          id: 4744,
-          kind: EntityKind.Signature,
-          modifiers: [],
-          name: undefined,
-          parameters: [],
-          position: {
-            column: 2,
-            file: "/file.ts",
-            line: 3
-          },
-          returnType: {
-            description: undefined,
-            id: 23,
-            kind: TypeKind.Boolean,
-            name: "boolean"
-          },
-          typeParameters: undefined
-        }
-      ],
-      constructSignatures: [
-        {
-          description: undefined,
-          id: 4745,
-          kind: EntityKind.Signature,
-          modifiers: [],
-          name: undefined,
-          parameters: [],
-          position: {
-            column: 2,
-            file: "/file.ts",
-            line: 2
-          },
-          returnType: {
-            callSignatures: [],
-            constructSignatures: [],
-            description: undefined,
-            getters: [],
-            id: 39,
-            isThis: false,
-            kind: TypeKind.TypeLiteral,
-            methods: [],
-            name: "__type",
-            position: undefined,
-            properties: [],
-            setters: []
-          },
-          typeParameters: undefined
-        }
-      ],
+    const type: Testable<ObjectLiteralType> = {
+      callSignatures: [],
+      constructSignatures: [],
       getters: [
         {
-          id: 4462,
+          id: 4461,
           kind: EntityKind.Getter,
           name: "getter",
           signatures: [
             {
               description: undefined,
-              id: 4747,
+              id: 4745,
               kind: EntityKind.Signature,
               modifiers: [],
               name: "getter",
@@ -99,7 +47,7 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
               position: {
                 column: 2,
                 file: "/file.ts",
-                line: 7
+                line: 5
               },
               returnType: {
                 description: undefined,
@@ -112,18 +60,18 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
           ]
         }
       ],
-      id: 2862,
+      id: 2866,
       isThis: false,
-      kind: TypeKind.TypeLiteral,
+      kind: TypeKind.ObjectLiteral,
       methods: [
         {
-          id: 4468,
+          id: 4465,
           kind: EntityKind.Method,
           name: "method",
           signatures: [
             {
               description: undefined,
-              id: 4746,
+              id: 4743,
               kind: EntityKind.Signature,
               modifiers: [],
               name: "method",
@@ -131,7 +79,7 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
               position: {
                 column: 2,
                 file: "/file.ts",
-                line: 6
+                line: 4
               },
               returnType: {
                 description: undefined,
@@ -144,25 +92,30 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
           ]
         }
       ],
-      name: "__type",
+      name: "__object",
       position: {
-        column: 26,
+        column: 29,
         file: "/file.ts",
         line: 1
       },
       properties: [
         {
           description: undefined,
-          id: 4459,
-          initializer: undefined,
+          id: 4466,
+          initializer: {
+            id: 2861,
+            kind: TypeKind.StringLiteral,
+            name: "string",
+            value: "hello"
+          },
           kind: EntityKind.Property,
           modifiers: [],
           name: "prop",
-          optional: false,
+          optional: undefined,
           position: {
             column: 2,
             file: "/file.ts",
-            line: 4
+            line: 2
           },
           type: {
             id: 16,
@@ -172,19 +125,9 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
         },
         {
           description: undefined,
-          id: 4460,
-          initializer: undefined,
-          kind: EntityKind.Property,
-          modifiers: [],
-          name: "funcProp",
-          optional: false,
-          position: {
-            column: 2,
-            file: "/file.ts",
-            line: 5
-          },
-          type: {
-            id: 2861,
+          id: 4467,
+          initializer: {
+            id: 2863,
             kind: TypeKind.Function,
             signatures: [
               {
@@ -192,12 +135,47 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
                 id: 4742,
                 kind: EntityKind.Signature,
                 modifiers: [],
-                name: undefined,
+                name: "funcProp",
                 parameters: [],
                 position: {
                   column: 12,
                   file: "/file.ts",
-                  line: 5
+                  line: 3
+                },
+                returnType: {
+                  description: undefined,
+                  id: 25,
+                  kind: TypeKind.Void,
+                  name: "void"
+                },
+                typeParameters: undefined
+              }
+            ]
+          },
+          kind: EntityKind.Property,
+          modifiers: [],
+          name: "funcProp",
+          optional: undefined,
+          position: {
+            column: 2,
+            file: "/file.ts",
+            line: 3
+          },
+          type: {
+            id: 2863,
+            kind: TypeKind.Function,
+            signatures: [
+              {
+                description: undefined,
+                id: 4742,
+                kind: EntityKind.Signature,
+                modifiers: [],
+                name: "funcProp",
+                parameters: [],
+                position: {
+                  column: 12,
+                  file: "/file.ts",
+                  line: 3
                 },
                 returnType: {
                   description: undefined,
@@ -213,20 +191,20 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
       ],
       setters: [
         {
-          id: 4464,
+          id: 4463,
           kind: EntityKind.Setter,
           name: "setter",
           signatures: [
             {
               description: undefined,
-              id: 4748,
+              id: 4746,
               kind: EntityKind.Signature,
               modifiers: [],
               name: "setter",
               parameters: [
                 {
                   description: undefined,
-                  id: 4463,
+                  id: 4462,
                   initializer: undefined,
                   kind: EntityKind.Parameter,
                   name: "value",
@@ -234,7 +212,7 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
                   position: {
                     column: 13,
                     file: "/file.ts",
-                    line: 8
+                    line: 6
                   },
                   rest: false,
                   type: {
@@ -247,13 +225,13 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
               position: {
                 column: 2,
                 file: "/file.ts",
-                line: 8
+                line: 6
               },
               returnType: {
                 description: undefined,
-                id: 1,
-                kind: TypeKind.Any,
-                name: "any"
+                id: 25,
+                kind: TypeKind.Void,
+                name: "void"
               },
               typeParameters: undefined
             }
@@ -266,24 +244,14 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
 
     const ctx = createRenderContext();
 
-    const convertedType = convertTypeLiteralType(ctx, type as TypeLiteralType);
+    const convertedType = convertObjectLiteralType(ctx, type as ObjectLiteralType);
 
     const [
-      constructSignatures,
-      callSignatures,
       properties,
       methods,
       setters,
       getters
     ] = convertedType;
-
-    it("should have one construct signature", () => {
-      expect(constructSignatures.children).to.have.lengthOf(1);
-    });
-
-    it("should have one call signature", () => {
-      expect(callSignatures.children).to.have.lengthOf(1);
-    });
 
     it("should have two properties", () => {
       expect(properties.children).to.have.lengthOf(2);
