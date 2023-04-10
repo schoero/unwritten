@@ -37,12 +37,12 @@
   ],
   "dependencies": {
     "cac": "^6.7.14",
-    "minimatch": "^8.0.3",
+    "minimatch": "^9.0.0",
     "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@schoero/cspell-config": "^1.6.14",
-    "@schoero/eslint-config": "^1.37.2",
+    "@schoero/eslint-config": "^1.38.0",
     "@schoero/markdownlint-config": "^1.1.4",
     "@schoero/ts-config": "^0.3.2",
     "@schoero/vite-config": "^0.0.19",
