@@ -19,7 +19,7 @@ scope("MarkupRenderer", "TitleNode", () => {
 
   it("should render a single title correctly", () => {
 
-    const titleNode = createTitleNode("Title", undefined, [createParagraphNode("Paragraph")]);
+    const titleNode = createTitleNode("Title", createParagraphNode("Paragraph"));
 
     expect(renderTitleNode(ctx, titleNode)).to.equal(html`
       <h1>Title</h1>
@@ -32,10 +32,7 @@ scope("MarkupRenderer", "TitleNode", () => {
 
     const titleNode = createTitleNode(
       "Title",
-      undefined,
-      [
-        createTitleNode("SubTitle", undefined, [createParagraphNode("Paragraph")])
-      ]
+      createTitleNode("SubTitle", createParagraphNode("Paragraph"))
     );
 
     expect(renderTitleNode(ctx, titleNode)).to.equal(html`
@@ -50,14 +47,13 @@ scope("MarkupRenderer", "TitleNode", () => {
 
     const titleNode = createTitleNode(
       "Title",
-      undefined,
-      [
-        createTitleNode("Subtitle", undefined, [createParagraphNode("Paragraph")]),
-        createTitleNode("Another Subtitle", undefined, [createParagraphNode("Paragraph")])
-      ]
+      createTitleNode("Subtitle", createParagraphNode("Paragraph")),
+      createTitleNode("Another Subtitle", createParagraphNode("Paragraph"))
     );
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(html`
+    const renderedTitle = renderTitleNode(ctx, titleNode);
+
+    expect(renderedTitle).to.equal(html`
       <h1>Title</h1>
       <h2>Subtitle</h2>
       <p>Paragraph</p>

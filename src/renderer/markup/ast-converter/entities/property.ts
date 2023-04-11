@@ -53,18 +53,16 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   return createTitleNode(
     name,
     propertyEntity.id,
-    [
-      createSmallNode(position),
-      createParagraphNode(
-        jsdocTags,
-        modifiers,
-        optional
-      ),
-      createParagraphNode(type),
-      createParagraphNode(description),
-      createParagraphNode(remarks),
-      createParagraphNode(example)
-    ]
+    createSmallNode(position),
+    createParagraphNode(
+      jsdocTags,
+      modifiers,
+      optional
+    ),
+    createParagraphNode(type),
+    createParagraphNode(description),
+    createParagraphNode(remarks),
+    createParagraphNode(example)
   );
 
 }

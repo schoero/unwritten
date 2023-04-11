@@ -68,17 +68,38 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   return createTitleNode(
     renderedSignature,
     id,
-    [
-      createSmallNode(position),
-      createParagraphNode(jsdocTags),
-      createListNode(
-        ...parameters,
-        returnTypeWithDescription
-      ),
-      createParagraphNode(description),
-      createParagraphNode(remarks),
-      createParagraphNode(example)
-    ]
+    createSmallNode(position),
+    createParagraphNode(jsdocTags),
+    createListNode(
+      ...parameters,
+      returnTypeWithDescription
+    ),
+    createParagraphNode(description),
+    createParagraphNode(remarks),
+    createParagraphNode(example)
   );
 
 }
+
+// export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForType {
+
+//   const translate = getTranslator(ctx);
+//   const renderConfig = getRenderConfig(ctx);
+
+//   const convertedParameters = signatureEntity.parameters?.map(
+//     parameter => convertParameterEntityForDocumentation(ctx, parameter)
+//   ) ?? [];
+
+//   const returnType = convertType(ctx, signatureEntity.returnType);
+
+//   const renderedReturnType = spaceBetween(
+//     `${translate("returns", { capitalize: true })}:`,
+//     returnType
+//   );
+
+//   return createListNode(
+//     ...convertedParameters,
+//     renderedReturnType
+//   );
+
+// }

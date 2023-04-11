@@ -48,7 +48,7 @@ import {
   convertVoidType
 } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { convertTypeReferenceType } from "unwritten:renderer:markup/ast-converter/types/type-reference.js";
-import { createContainerNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
 import {
   isClassEntity,
@@ -92,8 +92,8 @@ import {
 
 import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
 import type { Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { TitleNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ContainerNode } from "unwritten:renderer:markup/types-definitions/nodes.d.js";
 import type {
   ConvertedCategoryForDocumentation,
   ConvertedCategoryForTableOfContents,
@@ -214,22 +214,17 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
 }
 
 
-export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: ExportableEntities[]): ContainerNode {
+export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: ExportableEntities[]): TitleNode {
 
   const sortedEntities = sortExportableEntities(ctx, entities);
 
   const tableOfContents = createTableOfContents(ctx, sortedEntities);
   const documentation = createDocumentation(ctx, sortedEntities);
 
-  const ast = createContainerNode(
-    createTitleNode(
-      "API Documentation",
-      undefined,
-      [
-        ...tableOfContents,
-        ...documentation
-      ]
-    )
+  const ast = createTitleNode(
+    "API Documentation",
+    ...tableOfContents,
+    ...documentation
   );
 
   return ast;
@@ -247,21 +242,21 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
 
     const categoryName = getCategoryName(entity.kind);
     const translation = translate(categoryName, { count: entities.length });
-    const existingCategory = tableOfContents.find(category => category.children[0].title === categoryName);
+    const existingCategory = tableOfContents.find(category => category.title === categoryName);
 
     if(existingCategory === undefined){
       tableOfContents.push(
-        createContainerNode(
-          createTitleNode(translation),
+        createTitleNode(
+          translation,
           createListNode([])
         )
       );
     }
 
-    const category = tableOfContents.find(category => category.children[0].title === categoryName)!;
-    const renderedEntity = convertEntityForTableOfContents(ctx, entity);
+    const category = tableOfContents.find(category => category.title === categoryName)!;
+    const convertedEntity = convertEntityForTableOfContents(ctx, entity);
 
-    category.children[1].children.push(renderedEntity);
+    category.children[0].children.push(convertedEntity);
 
   }
 
@@ -280,21 +275,18 @@ export function createDocumentation(ctx: MarkupRenderContexts, entities: Exporta
 
     const categoryName = getCategoryName(entity.kind);
     const translation = translate(categoryName, { count: entities.length });
-    const existingCategory = documentation.find(category => category.children[0].title === categoryName);
+    const existingCategory = documentation.find(category => category.title === categoryName);
 
     if(existingCategory === undefined){
       documentation.push(
-        createContainerNode(
-          createTitleNode(translation),
-          createContainerNode()
-        )
+        createTitleNode(translation)
       );
     }
 
-    const category = documentation.find(category => category.children[0].title === categoryName)!;
-    const renderedEntity = convertEntityForTableOfContents(ctx, entity);
+    const category = documentation.find(category => category.title === categoryName)!;
+    const convertedEntity = convertEntityForDocumentation(ctx, entity);
 
-    category.children[1].children.push(renderedEntity);
+    category.children.push(convertedEntity);
 
   }
 

@@ -1,7 +1,7 @@
 import { convertParameterEntityForDocumentation } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/index.js";
 import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
-import { createContainerNode, createListNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createListNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 
@@ -37,9 +37,9 @@ export function convertFunctionType(ctx: MarkupRenderContexts, functionType: Fun
 
   });
 
-  return createContainerNode(
+  return [
     renderedType,
     convertedSignatures[0]
-  );
+  ];
 
 }

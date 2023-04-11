@@ -375,7 +375,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       methods,
       setters,
       getters
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should have one construct signature", () => {
       expect(constructSignatures.children).to.have.lengthOf(1);

@@ -5,7 +5,6 @@ export type ASTNodes =
   | AnchorNode
   | ASTNodes[]
   | BoldNode
-  | ContainerNode
   | ItalicNode
   | LinkNode
   | ListNode
@@ -20,11 +19,6 @@ interface ASTNode<T extends ASTNodeKinds> {
   kind: T;
 }
 
-/** Container node children will be joined with new lines */
-export interface ContainerNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Container> {
-  children: Children;
-}
-
 export interface AnchorNode extends ASTNode<ASTNodeKinds.Anchor> {
   id: string;
 }
@@ -33,8 +27,8 @@ export interface ListNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTN
   children: Children;
 }
 
-export interface ParagraphNode extends ASTNode<ASTNodeKinds.Paragraph> {
-  children: ASTNodes[];
+export interface ParagraphNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Paragraph> {
+  children: Children;
 }
 
 export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title> {
@@ -50,18 +44,18 @@ export interface LinkNode extends ASTNode<ASTNodeKinds.Link> {
   link?: string;
 }
 
-export interface SmallNode extends ASTNode<ASTNodeKinds.Small> {
-  children: ASTNodes[];
+export interface SmallNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Small> {
+  children: Children;
 }
 
-export interface BoldNode extends ASTNode<ASTNodeKinds.Bold> {
-  children: ASTNodes[];
+export interface BoldNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Bold> {
+  children: Children;
 }
 
-export interface ItalicNode extends ASTNode<ASTNodeKinds.Italic> {
-  children: ASTNodes[];
+export interface ItalicNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Italic> {
+  children: Children;
 }
 
-export interface StrikethroughNode extends ASTNode<ASTNodeKinds.Strikethrough> {
-  children: ASTNodes[];
+export interface StrikethroughNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Strikethrough> {
+  children: Children;
 }

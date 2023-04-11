@@ -30,10 +30,7 @@ export function convertMappedType(ctx: MarkupRenderContexts, mappedType: MappedT
 
   return createTitleNode(
     translate("property", { count: 99 }),
-    undefined,
-    [
-      createListNode(...convertedProperties)
-    ]
+    createListNode(...convertedProperties)
   );
 
 }

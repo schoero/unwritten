@@ -12,7 +12,6 @@ import { renderStrikethroughNode } from "unwritten:renderer:markup/html/ast/stri
 import {
   isAnchorNode,
   isBoldNode,
-  isContainerNode,
   isItalicNode,
   isLinkNode,
   isListNode,
@@ -22,7 +21,6 @@ import {
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
 
-import { renderContainerNode } from "./ast/container.js";
 import { renderTitleNode } from "./ast/title.js";
 
 import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
@@ -63,12 +61,11 @@ const htmlRenderer: HTMLRenderer = {
     ctx.size = 1;
 
     const markupAST = convertToMarkupAST(ctx, entities);
-    return renderContainerNode(ctx, markupAST);
+    return renderNode(ctx, markupAST);
 
   })
 
 };
-
 
 export function renderNode(ctx: HTMLRenderContext, node: ASTNodes): string {
 
@@ -76,8 +73,6 @@ export function renderNode(ctx: HTMLRenderContext, node: ASTNodes): string {
     return renderLinkNode(ctx, node);
   } else if(isParagraphNode(node)){
     return renderParagraphNode(ctx, node);
-  } else if(isContainerNode(node)){
-    return renderContainerNode(ctx, node);
   } else if(isListNode(node)){
     return renderListNode(ctx, node);
   } else if(isAnchorNode(node)){

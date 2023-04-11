@@ -4,7 +4,6 @@ import type {
   AnchorNode,
   ASTNodes,
   BoldNode,
-  ContainerNode,
   ItalicNode,
   LinkNode,
   ListNode,
@@ -23,23 +22,18 @@ export function createAnchorNode(children: string, id: string): AnchorNode {
   };
 }
 
-export function createBoldNode(...children: ASTNodes[]): BoldNode {
+export function createBoldNode<Children extends ASTNodes[]>(children: Children): BoldNode<Children>;
+export function createBoldNode<Children extends ASTNodes[]>(...children: Children): BoldNode<Children>;
+export function createBoldNode<Children extends ASTNodes[]>(...children: Children): BoldNode<Children> {
   return {
     children,
     kind: ASTNodeKinds.Bold
   };
 }
 
-export function createContainerNode<Children extends ASTNodes[]>(children: Children): ContainerNode<Children>;
-export function createContainerNode<Children extends ASTNodes[]>(...children: Children): ContainerNode<Children>;
-export function createContainerNode<Children extends ASTNodes[]>(...children: Children): ContainerNode<Children> {
-  return {
-    children,
-    kind: ASTNodeKinds.Container
-  };
-}
-
-export function createItalicNode(...children: ASTNodes[]): ItalicNode {
+export function createItalicNode<Children extends ASTNodes[]>(children: Children): ItalicNode<Children>;
+export function createItalicNode<Children extends ASTNodes[]>(...children: Children): ItalicNode<Children>;
+export function createItalicNode<Children extends ASTNodes[]>(...children: Children): ItalicNode<Children> {
   return {
     children,
     kind: ASTNodeKinds.Italic
@@ -68,28 +62,55 @@ export function createListNode<Children extends ASTNodes[]>(...children: Childre
   };
 }
 
-export function createParagraphNode(...children: ASTNodes[]): ParagraphNode {
+export function createParagraphNode<Children extends ASTNodes[]>(children: Children): ParagraphNode<Children>;
+export function createParagraphNode<Children extends ASTNodes[]>(...children: Children): ParagraphNode<Children>;
+export function createParagraphNode<Children extends ASTNodes[]>(...children: Children): ParagraphNode<Children> {
   return {
     children,
     kind: ASTNodeKinds.Paragraph
   };
 }
 
-export function createSmallNode(...children: ASTNodes[]): SmallNode {
+export function createSmallNode<Children extends ASTNodes[]>(children: Children): SmallNode<Children>;
+export function createSmallNode<Children extends ASTNodes[]>(...children: Children): SmallNode<Children>;
+export function createSmallNode<Children extends ASTNodes[]>(...children: Children): SmallNode<Children> {
   return {
     children,
     kind: ASTNodeKinds.Small
   };
 }
 
-export function createStrikethroughNode(...children: ASTNodes[]): StrikethroughNode {
+export function createStrikethroughNode<Children extends ASTNodes[]>(children: Children): StrikethroughNode<Children>;
+export function createStrikethroughNode<Children extends ASTNodes[]>(...children: Children): StrikethroughNode<Children>;
+export function createStrikethroughNode<Children extends ASTNodes[]>(...children: Children): StrikethroughNode<Children> {
   return {
     children,
     kind: ASTNodeKinds.Strikethrough
   };
 }
 
-export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, id?: number | undefined, children: Children = [] as unknown as Children): TitleNode<Children> {
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, children?: Children): TitleNode<Children>;
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, ...children: Children): TitleNode<Children>;
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, id: number, children?: Children): TitleNode<Children>;
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, id: number, ...children: Children): TitleNode<Children>;
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, ...idOrChildren: Children | [id: number, ...children: Children]): TitleNode<Children> {
+
+  let id: number | undefined;
+  let children: Children;
+
+  if(typeof idOrChildren === "number" || typeof idOrChildren === "undefined"){
+    id = idOrChildren;
+    children = <ASTNodes>[] as Children;
+  } else {
+    if(typeof idOrChildren[0] === "number" || typeof idOrChildren[0] === "undefined"){
+      const [first, ...rest] = idOrChildren;
+      id = first;
+      children = rest as Children;
+    } else {
+      children = idOrChildren as Children;
+    }
+  }
+
   return {
     children,
     id,

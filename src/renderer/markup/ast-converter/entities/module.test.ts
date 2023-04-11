@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   convertModuleEntityForDocumentation,
@@ -16,7 +17,23 @@ scope("MarkupRenderer", EntityKind.Module, () => {
 
   {
 
-    // #region Entity
+    // #region Empty module with all JSDoc tags
+
+    // #region Source
+
+    // /**
+    //  * Module description
+    //  *
+    //  * @remarks Module remarks
+    //  * @example Module example
+    //  * @deprecated
+    //  * @beta
+    //  */
+    // export module Module {
+
+    // }
+
+    // #endregion
 
     const moduleEntity: Testable<ModuleEntity> = {
       beta: undefined,
@@ -37,22 +54,6 @@ scope("MarkupRenderer", EntityKind.Module, () => {
 
     // #endregion
 
-    // #region Source
-
-    // /**
-    //  * Module description
-    //  *
-    //  * @remarks Module remarks
-    //  * @example Module example
-    //  * @deprecated
-    //  * @beta
-    //  */
-    // export module Module {
-
-    // }
-
-    // #endregion
-
     const ctx = createRenderContext();
 
     const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity as ModuleEntity);
@@ -64,7 +65,7 @@ scope("MarkupRenderer", EntityKind.Module, () => {
       description,
       remarks,
       example,
-      childrenContainer
+      ...children
     ] = renderedModuleForDocumentation.children;
 
     it("should have a matching title", () => {
@@ -93,8 +94,88 @@ scope("MarkupRenderer", EntityKind.Module, () => {
       expect(position).to.not.equal(undefined);
     });
 
-    it("should have matching children", () => {
-      expect(childrenContainer.children).to.have.lengthOf(0);
+    it("should have no children", () => {
+      expect(children.length).to.equal(0);
+    });
+
+  }
+
+  {
+
+    // #region module with a function
+
+    // #region Source
+
+    // export module Module {
+    //   export function test(){}
+    // }
+
+    // #endregion
+
+    const moduleEntity: Testable<ModuleEntity> = {
+      description: undefined,
+      exports: [
+        {
+          id: 4460,
+          kind: EntityKind.Function,
+          name: "test",
+          signatures: [
+            {
+              description: undefined,
+              id: 62,
+              kind: EntityKind.Signature,
+              modifiers: [],
+              name: "test",
+              parameters: [],
+              position: {
+                column: 2,
+                file: "/file.ts",
+                line: 2
+              },
+              returnType: {
+                description: undefined,
+                id: 25,
+                kind: TypeKind.Void,
+                name: "void"
+              },
+              typeParameters: undefined
+            }
+          ]
+        }
+      ],
+      id: 4459,
+      kind: EntityKind.Module,
+      name: "Module",
+      position: {
+        column: 0,
+        file: "/file.ts",
+        line: 1
+      }
+    };
+
+    // #endregion
+
+    const ctx = createRenderContext();
+
+    const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity as ModuleEntity);
+    const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity as ModuleEntity);
+
+    const [
+      position,
+      tags,
+      description,
+      remarks,
+      example,
+      ...children
+    ] = renderedModuleForDocumentation.children;
+
+    it("should have a matching title", () => {
+      expect(renderedModuleForTableOfContents.title).to.equal("Module");
+      expect(renderedModuleForDocumentation.title).to.equal("Module");
+    });
+
+    it("should have on child", () => {
+      expect(children.length).to.equal(1);
     });
 
   }

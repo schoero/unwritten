@@ -1,15 +1,7 @@
 import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter:enums/jsdoc.ts";
 import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.ts";
 
-import type {
-  ASTNodes,
-  ContainerNode,
-  LinkNode,
-  ListNode,
-  ParagraphNode,
-  SmallNode,
-  TitleNode
-} from "./nodes.js";
+import type { ASTNodes, LinkNode, ListNode, ParagraphNode, SmallNode, TitleNode } from "./nodes.js";
 
 
 //-- Categories
@@ -47,13 +39,8 @@ export type CategoryNames = {
   [key in RenderCategories]: string;
 };
 
-export type ConvertedCategoryForTableOfContents = ContainerNode<[
-  children: [TitleNode, ListNode]
-]>;
-
-export type ConvertedCategoryForDocumentation = ContainerNode<[
-  children: [TitleNode, ContainerNode]
-]>;
+export type ConvertedCategoryForTableOfContents = TitleNode<[ListNode]>;
+export type ConvertedCategoryForDocumentation = TitleNode<ConvertedEntitiesForDocumentation[]>;
 
 
 export type RenderableJSDocTags = Pick<JSDocTags, JSDocTagNames.Alpha | JSDocTagNames.Beta | JSDocTagNames.Deprecated | JSDocTagNames.Internal>;
@@ -120,10 +107,10 @@ export type ConvertedTemplateLiteralType = ASTNodes[];
 
 //-- Function type
 
-export type ConvertedFunctionType = ContainerNode<[
+export type ConvertedFunctionType = [
   description: ASTNodes,
   parametersAndReturnType: ListNode
-]>;
+];
 
 
 //-- Type reference
@@ -199,6 +186,8 @@ export type ConvertedClassType = ASTNodes;
 //-- Entities
 
 export type ConvertedEntitiesForTableOfContents =
+  | ConvertedClassEntityForTableOfContents
+  | ConvertedEnumEntityForTableOfContents
   | ConvertedFunctionEntityForTableOfContents
   | ConvertedInterfaceEntityForTableOfContents
   | ConvertedModuleEntityForTableOfContents
@@ -220,33 +209,27 @@ export type ConvertedEntitiesForDocumentation =
 
 //-- Namespace
 
-export type ConvertedNamespaceEntityForTableOfContents = TitleNode<[
-  children: ConvertedEntitiesForTableOfContents[]
-]>;
-
+export type ConvertedNamespaceEntityForTableOfContents = TitleNode<ConvertedEntitiesForTableOfContents[]>;
 export type ConvertedNamespaceEntityForDocumentation = TitleNode<[
   position: SmallNode,
   tags: ParagraphNode,
   description: ParagraphNode,
   remarks: ParagraphNode,
   example: ParagraphNode,
-  exports: ContainerNode
+  ...exports: ConvertedEntitiesForDocumentation[]
 ]>;
 
 
 //-- Module
 
-export type ConvertedModuleEntityForTableOfContents = TitleNode<[
-  children: ConvertedEntitiesForTableOfContents[]
-]>;
-
+export type ConvertedModuleEntityForTableOfContents = TitleNode<ConvertedEntitiesForTableOfContents[]>;
 export type ConvertedModuleEntityForDocumentation = TitleNode<[
   position: SmallNode,
   tags: ParagraphNode,
   description: ParagraphNode,
   remarks: ParagraphNode,
   example: ParagraphNode,
-  exports: ContainerNode
+  ...exports: ConvertedEntitiesForDocumentation[]
 ]>;
 
 
@@ -265,13 +248,8 @@ export type ConvertedTypeAliasEntityForDocumentation = TitleNode<[
 
 //-- Function like
 
-export type ConvertedFunctionLikeEntityForTableOfContents = ContainerNode<[
-  signatures: ConvertedSignatureEntityForTableOfContents[]
-]>;
-
-export type ConvertedFunctionLikeEntityForDocumentation = ContainerNode<[
-  signatures: ConvertedSignatureEntityForDocumentation[]
-]>;
+export type ConvertedFunctionLikeEntityForTableOfContents = ConvertedSignatureEntityForTableOfContents[];
+export type ConvertedFunctionLikeEntityForDocumentation = ConvertedSignatureEntityForDocumentation[];
 
 
 //-- Function
@@ -293,11 +271,11 @@ export type ConvertedSignatureEntityForDocumentation = TitleNode<[
   example: ParagraphNode
 ]>;
 
-export type ConvertedSignatureEntityForType = ContainerNode<[
+export type ConvertedSignatureEntityForType = [
   signature: ASTNodes,
   parameters: ListNode,
   returnType: ASTNodes
-]>;
+];
 
 
 //-- Variable

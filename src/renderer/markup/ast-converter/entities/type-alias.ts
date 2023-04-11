@@ -45,17 +45,15 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   return createTitleNode(
     name,
     typeAliasEntity.id,
-    [
-      createSmallNode(position),
-      createParagraphNode(jsdocTags),
-      createListNode([
-        ...typeParameters,
-        type
-      ]),
-      createParagraphNode(description),
-      createParagraphNode(example),
-      createParagraphNode(remarks)
-    ]
+    createSmallNode(position),
+    createParagraphNode(jsdocTags),
+    createListNode([
+      ...typeParameters,
+      type
+    ]),
+    createParagraphNode(description),
+    createParagraphNode(example),
+    createParagraphNode(remarks)
   );
 
 }

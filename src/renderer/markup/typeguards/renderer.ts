@@ -4,7 +4,6 @@ import type {
   AnchorNode,
   ASTNodes,
   BoldNode,
-  ContainerNode,
   ItalicNode,
   LinkNode,
   ListNode,
@@ -23,11 +22,6 @@ export function isAnchorNode(node: ASTNodes): node is AnchorNode {
 export function isBoldNode(node: ASTNodes): node is BoldNode {
   return typeof node === "object" && !Array.isArray(node) &&
       node.kind === ASTNodeKinds.Bold;
-}
-
-export function isContainerNode(node: ASTNodes): node is ContainerNode {
-  return typeof node === "object" && !Array.isArray(node) &&
-     node.kind === ASTNodeKinds.Container;
 }
 
 export function isItalicNode(node: ASTNodes): node is ItalicNode {
@@ -59,7 +53,6 @@ export function isStrikethroughNode(node: ASTNodes): node is StrikethroughNode {
   return typeof node === "object" && !Array.isArray(node) &&
       node.kind === ASTNodeKinds.Strikethrough;
 }
-
 
 export function isTitleNode(node: ASTNodes): node is TitleNode {
   return typeof node === "object" && !Array.isArray(node) &&

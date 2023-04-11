@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   convertNamespaceEntityForDocumentation,
@@ -16,7 +17,23 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
 
   {
 
-    // #region Entity
+    // #region Empty namespace with all JSDoc tags
+
+    // #region Source
+
+    // /**
+    //  * Namespace description
+    //  *
+    //  * @remarks Namespace remarks
+    //  * @example Namespace example
+    //  * @deprecated
+    //  * @beta
+    //  */
+    // export namespace Namespace {
+
+    // }
+
+    // #endregion
 
     const namespaceEntity: Testable<NamespaceEntity> = {
       beta: undefined,
@@ -37,22 +54,6 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
 
     // #endregion
 
-    // #region Source
-
-    // /**
-    //  * Namespace description
-    //  *
-    //  * @remarks Namespace remarks
-    //  * @example Namespace example
-    //  * @deprecated
-    //  * @beta
-    //  */
-    // export namespace Namespace {
-
-    // }
-
-    // #endregion
-
     const ctx = createRenderContext();
 
     const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity as NamespaceEntity);
@@ -64,7 +65,7 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
       description,
       remarks,
       example,
-      childrenContainer
+      ...children
     ] = renderedNamespaceForDocumentation.children;
 
     it("should have a matching title", () => {
@@ -93,8 +94,88 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
       expect(position).to.not.equal(undefined);
     });
 
-    it("should have matching children", () => {
-      expect(childrenContainer.children).to.have.lengthOf(0);
+    it("should have no children", () => {
+      expect(children.length).to.equal(0);
+    });
+
+  }
+
+  {
+
+    // #region namespace with a function
+
+    // #region Source
+
+    // export namespace Namespace {
+    //   export function test(){}
+    // }
+
+    // #endregion
+
+    const namespaceEntity: Testable<NamespaceEntity> = {
+      description: undefined,
+      exports: [
+        {
+          id: 4460,
+          kind: EntityKind.Function,
+          name: "test",
+          signatures: [
+            {
+              description: undefined,
+              id: 62,
+              kind: EntityKind.Signature,
+              modifiers: [],
+              name: "test",
+              parameters: [],
+              position: {
+                column: 2,
+                file: "/file.ts",
+                line: 2
+              },
+              returnType: {
+                description: undefined,
+                id: 25,
+                kind: TypeKind.Void,
+                name: "void"
+              },
+              typeParameters: undefined
+            }
+          ]
+        }
+      ],
+      id: 4459,
+      kind: EntityKind.Namespace,
+      name: "Namespace",
+      position: {
+        column: 0,
+        file: "/file.ts",
+        line: 1
+      }
+    };
+
+    // #endregion
+
+    const ctx = createRenderContext();
+
+    const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity as NamespaceEntity);
+    const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity as NamespaceEntity);
+
+    const [
+      position,
+      tags,
+      description,
+      remarks,
+      example,
+      ...children
+    ] = renderedNamespaceForDocumentation.children;
+
+    it("should have a matching title", () => {
+      expect(renderedNamespaceForTableOfContents.title).to.equal("Namespace");
+      expect(renderedNamespaceForDocumentation.title).to.equal("Namespace");
+    });
+
+    it("should have on child", () => {
+      expect(children.length).to.equal(1);
     });
 
   }

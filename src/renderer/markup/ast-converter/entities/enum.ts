@@ -49,14 +49,12 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   return createTitleNode(
     name,
     enumEntity.id,
-    [
-      createSmallNode(position),
-      createParagraphNode(jsdocTags),
-      createParagraphNode(description),
-      createParagraphNode(remarks),
-      createParagraphNode(example),
-      createListNode(...members)
-    ]
+    createSmallNode(position),
+    createParagraphNode(jsdocTags),
+    createParagraphNode(description),
+    createParagraphNode(remarks),
+    createParagraphNode(example),
+    createListNode(...members)
   );
 
 }

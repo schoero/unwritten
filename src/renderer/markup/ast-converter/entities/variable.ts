@@ -41,14 +41,12 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
   return createTitleNode(
     name,
     variableEntity.id,
-    [
-      createSmallNode(position),
-      createParagraphNode(jsdocTags),
-      createParagraphNode(type),
-      createParagraphNode(description),
-      createParagraphNode(example),
-      createParagraphNode(remarks)
-    ]
+    createSmallNode(position),
+    createParagraphNode(jsdocTags),
+    createParagraphNode(type),
+    createParagraphNode(description),
+    createParagraphNode(example),
+    createParagraphNode(remarks)
   );
 
 }

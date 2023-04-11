@@ -57,18 +57,16 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   return createTitleNode(
     name,
     classEntity.id,
-    [
-      createSmallNode(position),
-      createParagraphNode(jsdocTags),
-      createParagraphNode(description),
-      createParagraphNode(remarks),
-      createParagraphNode(example),
-      createTitleNode(t("construct-signature", { count: 99 }), undefined, convertedConstructSignatures),
-      createTitleNode(t("property", { count: 99 }), undefined, convertedProperties),
-      createTitleNode(t("method", { count: 99 }), undefined, convertedMethods),
-      createTitleNode(t("setter", { count: 99 }), undefined, convertedSetters),
-      createTitleNode(t("getter", { count: 99 }), undefined, convertedGetters)
-    ]
+    createSmallNode(position),
+    createParagraphNode(jsdocTags),
+    createParagraphNode(description),
+    createParagraphNode(remarks),
+    createParagraphNode(example),
+    createTitleNode(t("construct-signature", { count: 99 }), convertedConstructSignatures),
+    createTitleNode(t("property", { count: 99 }), convertedProperties),
+    createTitleNode(t("method", { count: 99 }), convertedMethods),
+    createTitleNode(t("setter", { count: 99 }), convertedSetters),
+    createTitleNode(t("getter", { count: 99 }), convertedGetters)
   );
 
 }

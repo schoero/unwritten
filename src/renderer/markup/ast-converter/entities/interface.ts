@@ -58,19 +58,17 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   return createTitleNode(
     name,
     interfaceEntity.id,
-    [
-      createSmallNode(position),
-      createParagraphNode(jsdocTags),
-      createParagraphNode(description),
-      createParagraphNode(remarks),
-      createParagraphNode(example),
-      createTitleNode(translate("construct-signature", { count: 99 }), undefined, convertedConstructSignatures),
-      createTitleNode(translate("call-signature", { count: 99 }), undefined, convertedCallSignatures),
-      createTitleNode(translate("property", { count: 99 }), undefined, convertedProperties),
-      createTitleNode(translate("method", { count: 99 }), undefined, convertedMethods),
-      createTitleNode(translate("setter", { count: 99 }), undefined, convertedSetters),
-      createTitleNode(translate("getter", { count: 99 }), undefined, convertedGetters)
-    ]
+    createSmallNode(position),
+    createParagraphNode(jsdocTags),
+    createParagraphNode(description),
+    createParagraphNode(remarks),
+    createParagraphNode(example),
+    createTitleNode(translate("construct-signature", { count: 99 }), convertedConstructSignatures),
+    createTitleNode(translate("call-signature", { count: 99 }), convertedCallSignatures),
+    createTitleNode(translate("property", { count: 99 }), convertedProperties),
+    createTitleNode(translate("method", { count: 99 }), convertedMethods),
+    createTitleNode(translate("setter", { count: 99 }), convertedSetters),
+    createTitleNode(translate("getter", { count: 99 }), convertedGetters)
   );
 
 }
