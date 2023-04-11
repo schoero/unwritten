@@ -21,7 +21,8 @@ interface ASTNode<T extends ASTNodeKinds> {
 }
 
 /** Container node children will be joined with new lines */
-export interface ContainerNode extends ASTNode<ASTNodeKinds.Container> {
+export interface ContainerNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Container> {
+  children: Children;
 }
 
 export interface AnchorNode extends ASTNode<ASTNodeKinds.Anchor> {

@@ -4,6 +4,7 @@ import type {
   AnchorNode,
   ASTNodes,
   BoldNode,
+  ContainerNode,
   ItalicNode,
   LinkNode,
   ListNode,
@@ -29,11 +30,13 @@ export function createBoldNode(...children: ASTNodes[]): BoldNode {
   };
 }
 
-export function createContainerNode<T extends ASTNodes[]>(...children: T) {
+export function createContainerNode<Children extends ASTNodes[]>(children: Children): ContainerNode<Children>;
+export function createContainerNode<Children extends ASTNodes[]>(...children: Children): ContainerNode<Children>;
+export function createContainerNode<Children extends ASTNodes[]>(...children: Children): ContainerNode<Children> {
   return {
     children,
     kind: ASTNodeKinds.Container
-  } as const;
+  };
 }
 
 export function createItalicNode(...children: ASTNodes[]): ItalicNode {
@@ -56,9 +59,9 @@ export function createLinkNode(children: ASTNodes, linkOrId: number | string): L
   };
 }
 
-export function createListNode<T extends ASTNodes[]>(children: T): ListNode;
-export function createListNode<T extends ASTNodes[]>(...children: T): ListNode;
-export function createListNode<T extends ASTNodes[]>(...children: T): ListNode {
+export function createListNode<Children extends ASTNodes[]>(children: Children): ListNode<Children>;
+export function createListNode<Children extends ASTNodes[]>(...children: Children): ListNode<Children>;
+export function createListNode<Children extends ASTNodes[]>(...children: Children): ListNode<Children> {
   return {
     children,
     kind: ASTNodeKinds.List

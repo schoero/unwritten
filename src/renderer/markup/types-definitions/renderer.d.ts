@@ -120,7 +120,10 @@ export type ConvertedTemplateLiteralType = ASTNodes[];
 
 //-- Function type
 
-export type ConvertedFunctionType = ASTNodes[];
+export type ConvertedFunctionType = ContainerNode<[
+  description: ASTNodes,
+  parametersAndReturnType: ListNode
+]>;
 
 
 //-- Type reference
@@ -158,14 +161,14 @@ export interface ConvertedInterfaceType extends ConvertedObjectType {
 
 //-- Object type
 
-export type ConvertedObjectType = [
-  constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-  callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-  properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-  methods: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
-  setters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
-  getters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>
-];
+export type ConvertedObjectType = ListNode<[
+  constructSignatures: ConvertedSignatureEntityForDocumentation[],
+  callSignatures: ConvertedSignatureEntityForDocumentation[],
+  properties: ConvertedPropertyEntityForDocumentation[],
+  methods: ConvertedFunctionLikeEntityForDocumentation[],
+  setters: ConvertedFunctionLikeEntityForDocumentation[],
+  getters: ConvertedFunctionLikeEntityForDocumentation[]
+]>;
 
 
 //-- Object literal type

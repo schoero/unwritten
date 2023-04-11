@@ -2,7 +2,6 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { convertFunctionType } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -46,17 +45,25 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     const ctx = createRenderContext();
 
     const convertedType = convertFunctionType(ctx, type as FunctionType);
-    const renderedType = renderNode(ctx, convertedType);
 
-    it("should render the function inline", () => {
-      expect(renderedType).to.equal("() => boolean");
+    it("should render the type function correctly", () => {
+      expect(convertedType.children[0]).to.equal("Function");
+    });
+
+    it("should not have parameters", () => {
+      expect(convertedType.children[1].children.length).to.equal(1);
+    });
+
+    it("should render the return type correctly", () => {
+      expect(convertedType.children[1].children[0]).to.include("Returns:");
+      expect(convertedType.children[1].children[0]).to.include("boolean");
     });
 
   }
 
   {
 
-    // #region Normal function type
+    // #region Normal function type with parameters
 
     const type: Testable<FunctionType> = {
       kind: TypeKind.Function,
@@ -122,10 +129,18 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     const ctx = createRenderContext();
 
     const convertedType = convertFunctionType(ctx, type as FunctionType);
-    const renderedType = renderNode(ctx, convertedType);
 
-    it("should render function parameters correctly", () => {
-      expect(renderedType).to.equal("(a: string, b: number) => boolean");
+    it("should have two parameters", () => {
+      expect(convertedType.children[1].children.length).to.equal(1 + 2);
+      expect(convertedType.children[1].children[0]).to.include("a");
+      expect(convertedType.children[1].children[0]).to.include("string");
+      expect(convertedType.children[1].children[1]).to.include("b");
+      expect(convertedType.children[1].children[1]).to.include("number");
+    });
+
+    it("should render the return type correctly", () => {
+      expect(convertedType.children[1].children[2]).to.include("Returns:");
+      expect(convertedType.children[1].children[2]).to.include("boolean");
     });
 
   }
