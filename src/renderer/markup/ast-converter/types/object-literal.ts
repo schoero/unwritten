@@ -1,4 +1,4 @@
-import { convertObjectType } from "unwritten:renderer/markup/ast-converter/types/object.js";
+import { convertObjectType } from "unwritten:renderer/markup/ast-converter/types/index.js";
 
 import type { ObjectLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";

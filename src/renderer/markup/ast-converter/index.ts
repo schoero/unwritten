@@ -42,12 +42,12 @@ import {
   convertTemplateLiteralType,
   convertTupleType,
   convertTypeLiteralType,
+  convertTypeReferenceType,
   convertUndefinedType,
   convertUnionType,
   convertUnknownType,
   convertVoidType
 } from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { convertTypeReferenceType } from "unwritten:renderer:markup/ast-converter/types/type-reference.js";
 import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
 import {

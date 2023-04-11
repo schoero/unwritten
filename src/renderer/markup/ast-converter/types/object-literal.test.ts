@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertObjectLiteralType } from "unwritten:renderer/markup/ast-converter/types/object-literal.js";
+import { convertObjectLiteralType } from "unwritten:renderer/markup/ast-converter/types/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 

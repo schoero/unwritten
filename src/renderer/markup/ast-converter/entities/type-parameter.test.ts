@@ -5,7 +5,7 @@ import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertTypeParameterEntitiesForSignature,
   convertTypeParameterEntityForDocumentation
-} from "unwritten:renderer:markup/ast-converter/entities/type-parameter.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";

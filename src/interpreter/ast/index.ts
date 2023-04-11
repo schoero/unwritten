@@ -10,7 +10,6 @@ import {
   createVariableEntity
 } from "unwritten:interpreter:ast/entities/index.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
-import { createFunctionType } from "unwritten:interpreter:ast/types/function.js";
 import {
   createAnyType,
   createArrayTypeByArrayTypeNode,
@@ -22,6 +21,7 @@ import {
   createConditionalType,
   createConditionalTypeByTypeNode,
   createExpressionType,
+  createFunctionType,
   createInterfaceByType,
   createIntersectionType,
   createLinkToType,
@@ -30,6 +30,7 @@ import {
   createNullType,
   createNumberLiteralType,
   createNumberType,
+  createObjectLikeType,
   createObjectLiteralByType,
   createStringLiteralType,
   createStringType,
@@ -48,7 +49,6 @@ import {
   createUnresolvedType,
   createVoidType
 } from "unwritten:interpreter:ast/types/index.js";
-import { createObjectLikeType } from "unwritten:interpreter:ast/types/object.js";
 import {
   isClassSymbol,
   isEnumSymbol,

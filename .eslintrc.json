@@ -15,6 +15,20 @@
             "paths": [
               "node:test",
               "test"
+            ],
+            "patterns": [
+              {
+                "group": [
+                  "**/entities/*.js",
+                  "!**/entities/index.js"
+                ]
+              },
+              {
+                "group": [
+                  "**/types/*.js",
+                  "!**/types/index.js"
+                ]
+              }
             ]
           }
         ]

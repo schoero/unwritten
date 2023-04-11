@@ -5,7 +5,7 @@ import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertEnumEntityForDocumentation,
   convertEnumEntityForTableOfContents
-} from "unwritten:renderer:markup/ast-converter/entities/enum.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
