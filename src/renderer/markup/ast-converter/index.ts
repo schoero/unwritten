@@ -93,7 +93,7 @@ import {
 import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
 import type { Types } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ASTNodes, ContainerNode } from "unwritten:renderer:markup/types-definitions/nodes.d.js";
+import type { ContainerNode } from "unwritten:renderer:markup/types-definitions/nodes.d.js";
 import type {
   ConvertedCategoryForDocumentation,
   ConvertedCategoryForTableOfContents,
@@ -294,7 +294,7 @@ export function createDocumentation(ctx: MarkupRenderContexts, entities: Exporta
     const category = documentation.find(category => category.children[0].title === categoryName)!;
     const renderedEntity = convertEntityForTableOfContents(ctx, entity);
 
-    (category.children[1].children as ASTNodes[]).push(renderedEntity);
+    category.children[1].children.push(renderedEntity);
 
   }
 
