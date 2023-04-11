@@ -47,13 +47,13 @@ export type CategoryNames = {
   [key in RenderCategories]: string;
 };
 
-export interface ConvertedCategoryForTableOfContents extends ContainerNode {
-  children: [TitleNode, ListNode];
-}
+export type ConvertedCategoryForTableOfContents = ContainerNode<[
+  children: [TitleNode, ListNode]
+]>;
 
-export interface ConvertedCategoryForDocumentation extends ContainerNode {
-  children: [TitleNode, ContainerNode];
-}
+export type ConvertedCategoryForDocumentation = ContainerNode<[
+  children: [TitleNode, ContainerNode]
+]>;
 
 
 export type RenderableJSDocTags = Pick<JSDocTags, JSDocTagNames.Alpha | JSDocTagNames.Beta | JSDocTagNames.Deprecated | JSDocTagNames.Internal>;
@@ -154,9 +154,7 @@ export type ConvertedIntersectionType = ASTNodes[];
 
 //-- Interface type
 
-export interface ConvertedInterfaceType extends ConvertedObjectType {
-
-}
+export type ConvertedInterfaceType = ConvertedObjectType;
 
 
 //-- Object type
@@ -183,9 +181,7 @@ export type ConvertedObjectLiteralType = [
 
 //-- Type literal type
 
-export interface ConvertedTypeLiteralType extends ConvertedObjectType {
-
-}
+export type ConvertedTypeLiteralType = ConvertedObjectType;
 
 
 //-- Mapped type
@@ -224,175 +220,145 @@ export type ConvertedEntitiesForDocumentation =
 
 //-- Namespace
 
-export interface ConvertedNamespaceEntityForTableOfContents extends TitleNode {
-  children: ConvertedEntitiesForTableOfContents[];
-}
+export type ConvertedNamespaceEntityForTableOfContents = TitleNode<[
+  children: ConvertedEntitiesForTableOfContents[]
+]>;
 
-export interface ConvertedNamespaceEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode,
-    exports: ContainerNode
-  ];
-}
+export type ConvertedNamespaceEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode,
+  exports: ContainerNode
+]>;
 
 
 //-- Module
 
-export interface ConvertedModuleEntityForTableOfContents extends TitleNode {
-  children: ConvertedEntitiesForTableOfContents[];
-}
+export type ConvertedModuleEntityForTableOfContents = TitleNode<[
+  children: ConvertedEntitiesForTableOfContents[]
+]>;
 
-export interface ConvertedModuleEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode,
-    exports: ContainerNode
-  ];
-}
+export type ConvertedModuleEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode,
+  exports: ContainerNode
+]>;
 
 
 //-- Type alias
 
-export interface ConvertedTypeAliasEntityForTableOfContents extends LinkNode {
-
-}
-
-export interface ConvertedTypeAliasEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    typeParametersAndType: ListNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode
-  ];
-}
+export type ConvertedTypeAliasEntityForTableOfContents = LinkNode;
+export type ConvertedTypeAliasEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  typeParametersAndType: ListNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode
+]>;
 
 
 //-- Function like
 
-export interface ConvertedFunctionLikeEntityForTableOfContents extends ContainerNode {
-  children: ConvertedSignatureEntityForTableOfContents[];
-}
+export type ConvertedFunctionLikeEntityForTableOfContents = ContainerNode<[
+  signatures: ConvertedSignatureEntityForTableOfContents[]
+]>;
 
-export interface ConvertedFunctionLikeEntityForDocumentation extends ContainerNode {
-  children: ConvertedSignatureEntityForDocumentation[];
-}
+export type ConvertedFunctionLikeEntityForDocumentation = ContainerNode<[
+  signatures: ConvertedSignatureEntityForDocumentation[]
+]>;
 
 
 //-- Function
 
-export interface ConvertedFunctionEntityForTableOfContents extends ConvertedFunctionLikeEntityForTableOfContents {
-}
-
-export interface ConvertedFunctionEntityForDocumentation extends ConvertedFunctionLikeEntityForDocumentation {
-}
+export type ConvertedFunctionEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
+export type ConvertedFunctionEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
 
 
 //-- Signature
 
-export interface ConvertedSignatureEntityForTableOfContents extends LinkNode {
+export type ConvertedSignatureEntityForTableOfContents = LinkNode;
 
-}
+export type ConvertedSignatureEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  parametersAndReturnType: ListNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode
+]>;
 
-export interface ConvertedSignatureEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    parametersAndReturnType: ListNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode
-  ];
-}
+export type ConvertedSignatureEntityForType = ContainerNode<[
+  signature: ASTNodes,
+  parameters: ListNode,
+  returnType: ASTNodes
+]>;
 
 
 //-- Variable
 
-export interface ConvertedVariableEntityForTableOfContents extends LinkNode {
-
-}
-
-export interface ConvertedVariableEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    type: ParagraphNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode
-  ];
-}
+export type ConvertedVariableEntityForTableOfContents = LinkNode;
+export type ConvertedVariableEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  type: ParagraphNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode
+]>;
 
 
 //-- Interface
 
-export interface ConvertedInterfaceEntityForTableOfContents extends LinkNode {
-
-}
-
-export interface ConvertedInterfaceEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode,
-    constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-    methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
-  ];
-}
+export type ConvertedInterfaceEntityForTableOfContents = LinkNode;
+export type ConvertedInterfaceEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode,
+  constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+  callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+  properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+  methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+  setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+  getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
+]>;
 
 
 //-- Class
 
-export interface ConvertedClassEntityForTableOfContents extends LinkNode {
-
-}
-
-export interface ConvertedClassEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode,
-    constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-    methods: TitleNode<ConvertedMethodEntityForDocumentation[]>,
-    setters: TitleNode<ConvertedSetterEntityForDocumentation[]>,
-    getters: TitleNode<ConvertedGetterEntityForDocumentation[]>
-  ];
-}
+export type ConvertedClassEntityForTableOfContents = LinkNode;
+export type ConvertedClassEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode,
+  constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+  properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+  methods: TitleNode<ConvertedMethodEntityForDocumentation[]>,
+  setters: TitleNode<ConvertedSetterEntityForDocumentation[]>,
+  getters: TitleNode<ConvertedGetterEntityForDocumentation[]>
+]>;
 
 
 //-- Enum
 
-export interface ConvertedEnumEntityForTableOfContents extends LinkNode {
-
-}
-
-export interface ConvertedEnumEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode,
-    members: ListNode
-  ];
-}
+export type ConvertedEnumEntityForTableOfContents = LinkNode;
+export type ConvertedEnumEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode,
+  members: ListNode
+]>;
 
 
 //-- Parameter
@@ -418,50 +384,30 @@ export type ConvertedTypeArgumentEntityForDocumentation = ASTNodes[];
 
 //-- Property
 
-export interface ConvertedPropertyEntityForTableOfContents extends LinkNode {
-
-}
-
-export interface ConvertedPropertyEntityForDocumentation extends TitleNode {
-  children: [
-    position: SmallNode,
-    tags: ParagraphNode,
-    type: ParagraphNode,
-    description: ParagraphNode,
-    remarks: ParagraphNode,
-    example: ParagraphNode
-  ];
-}
+export type ConvertedPropertyEntityForTableOfContents = LinkNode;
+export type ConvertedPropertyEntityForDocumentation = TitleNode<[
+  position: SmallNode,
+  tags: ParagraphNode,
+  type: ParagraphNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode
+]>;
 
 
 //-- Method
 
-export interface ConvertedMethodEntityForTableOfContents extends ConvertedFunctionLikeEntityForTableOfContents {
-
-}
-
-export interface ConvertedMethodEntityForDocumentation extends ConvertedFunctionLikeEntityForDocumentation {
-
-}
+export type ConvertedMethodEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
+export type ConvertedMethodEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
 
 
 //-- Setter
 
-export interface ConvertedSetterEntityForTableOfContents extends ConvertedFunctionLikeEntityForTableOfContents {
-
-}
-
-export interface ConvertedSetterEntityForDocumentation extends ConvertedFunctionLikeEntityForDocumentation {
-
-}
+export type ConvertedSetterEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
+export type ConvertedSetterEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
 
 
 //-- Getter
 
-export interface ConvertedGetterEntityForTableOfContents extends ConvertedFunctionLikeEntityForTableOfContents {
-
-}
-
-export interface ConvertedGetterEntityForDocumentation extends ConvertedFunctionLikeEntityForDocumentation {
-
-}
+export type ConvertedGetterEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
+export type ConvertedGetterEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
