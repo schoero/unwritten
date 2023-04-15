@@ -54,8 +54,8 @@ scope("MarkupRenderer", EntityKind.Function, () => {
     const renderedFunctionForDocumentation = convertFunctionLikeEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
     it("should have only one signature", () => {
-      expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(1);
-      expect(renderedFunctionForDocumentation.children).to.have.lengthOf(1);
+      expect(renderedFunctionForTableOfContents.length).to.equal(1);
+      expect(renderedFunctionForDocumentation.length).to.equal(1);
     });
 
   }
@@ -202,8 +202,8 @@ scope("MarkupRenderer", EntityKind.Function, () => {
     const renderedFunctionForDocumentation = convertFunctionLikeEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
     it("should have multiple signatures", () => {
-      expect(renderedFunctionForTableOfContents.children).to.have.lengthOf(2);
-      expect(renderedFunctionForDocumentation.children).to.have.lengthOf(2);
+      expect(renderedFunctionForTableOfContents.length).to.equal(2);
+      expect(renderedFunctionForDocumentation.length).to.equal(2);
     });
 
   }

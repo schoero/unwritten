@@ -107,10 +107,9 @@ export type ConvertedTemplateLiteralType = ASTNodes[];
 
 //-- Function type
 
-export type ConvertedFunctionType = [
-  description: ASTNodes,
-  parametersAndReturnType: ListNode
-];
+export type ConvertedFunctionType =
+  | ConvertedSignatureEntityForDocumentation
+  | ListNode<ConvertedSignatureEntityForDocumentation[]>;
 
 
 //-- Type reference
@@ -141,29 +140,32 @@ export type ConvertedIntersectionType = ASTNodes[];
 
 //-- Interface type
 
-export type ConvertedInterfaceType = ConvertedObjectType;
+export type ConvertedInterfaceType = [
+  typeName: ASTNodes,
+  object: ConvertedObjectType
+];
 
 
 //-- Object type
 
 export type ConvertedObjectType = ListNode<[
-  constructSignatures: ConvertedSignatureEntityForDocumentation[],
-  callSignatures: ConvertedSignatureEntityForDocumentation[],
-  properties: ConvertedPropertyEntityForDocumentation[],
-  methods: ConvertedFunctionLikeEntityForDocumentation[],
-  setters: ConvertedFunctionLikeEntityForDocumentation[],
-  getters: ConvertedFunctionLikeEntityForDocumentation[]
+  constructSignatures: ConvertedSignatureEntityForType[],
+  callSignatures: ConvertedSignatureEntityForType[],
+  properties: ConvertedPropertyEntityForType[],
+  methods: ConvertedFunctionLikeEntityForType[],
+  setters: ConvertedFunctionLikeEntityForType[],
+  getters: ConvertedFunctionLikeEntityForType[]
 ]>;
 
 
 //-- Object literal type
 
-export type ConvertedObjectLiteralType = [
-  properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-  methods: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
-  setters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>,
-  getters: TitleNode<ConvertedFunctionLikeEntityForDocumentation[]>
-];
+export type ConvertedObjectLiteralType = ListNode<[
+  properties: ConvertedPropertyEntityForType[],
+  methods: ConvertedFunctionLikeEntityForType[],
+  setters: ConvertedFunctionLikeEntityForType[],
+  getters: ConvertedFunctionLikeEntityForType[]
+]>;
 
 
 //-- Type literal type
@@ -180,7 +182,10 @@ export type ConvertedMappedType = TitleNode<[
 
 //-- Class type
 
-export type ConvertedClassType = ASTNodes;
+export type ConvertedClassType = [
+  typeName: ASTNodes,
+  object: ConvertedObjectType
+];
 
 
 //-- Entities
@@ -250,12 +255,14 @@ export type ConvertedTypeAliasEntityForDocumentation = TitleNode<[
 
 export type ConvertedFunctionLikeEntityForTableOfContents = ConvertedSignatureEntityForTableOfContents[];
 export type ConvertedFunctionLikeEntityForDocumentation = ConvertedSignatureEntityForDocumentation[];
+export type ConvertedFunctionLikeEntityForType = ConvertedSignatureEntityForType[];
 
 
 //-- Function
 
 export type ConvertedFunctionEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
 export type ConvertedFunctionEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
+export type ConvertedFunctionEntityForType = ConvertedFunctionLikeEntityForType;
 
 
 //-- Signature
@@ -272,9 +279,13 @@ export type ConvertedSignatureEntityForDocumentation = TitleNode<[
 ]>;
 
 export type ConvertedSignatureEntityForType = [
-  signature: ASTNodes,
-  parameters: ListNode,
-  returnType: ASTNodes
+  renderedSignature: ASTNodes,
+  position: SmallNode,
+  tags: ParagraphNode,
+  parametersAndReturnType: ListNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode
 ];
 
 
@@ -371,6 +382,16 @@ export type ConvertedPropertyEntityForDocumentation = TitleNode<[
   remarks: ParagraphNode,
   example: ParagraphNode
 ]>;
+
+export type ConvertedPropertyEntityForType = [
+  name: ASTNodes,
+  position: SmallNode,
+  tags: ParagraphNode,
+  type: ParagraphNode,
+  description: ParagraphNode,
+  remarks: ParagraphNode,
+  example: ParagraphNode
+];
 
 
 //-- Method

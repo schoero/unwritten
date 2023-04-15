@@ -25,6 +25,27 @@ scope("MarkupRenderer", "ListNode", () => {
     `);
   });
 
+  it("should not render empty list items", () => {
+    const listNode = createListNode(
+      "Item 1",
+      "",
+      "Item 3"
+    );
+    expect(renderListNode(ctx, listNode)).to.equal(html`
+      <ul>
+        <li>Item 1</li>
+        <li>Item 3</li>
+      </ul>
+    `);
+  });
+
+  it("should not render empty lists", () => {
+    const listNode = createListNode(
+      ""
+    );
+    expect(renderListNode(ctx, listNode)).to.equal("");
+  });
+
   it("should render nested lists correctly", () => {
     const listNode = createListNode(
       "Item 1",

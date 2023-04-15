@@ -16,7 +16,8 @@ import type { PropertyEntity } from "unwritten:interpreter:type-definitions/enti
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedPropertyEntityForDocumentation,
-  ConvertedPropertyEntityForTableOfContents
+  ConvertedPropertyEntityForTableOfContents,
+  ConvertedPropertyEntityForType
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -31,7 +32,9 @@ export function convertPropertyEntityForSignature(ctx: MarkupRenderContexts, pro
 
 }
 
-export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
+export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle: false): ConvertedPropertyEntityForType;
+export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle: true): ConvertedPropertyEntityForDocumentation;
+export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle: boolean = true): ConvertedPropertyEntityForDocumentation | ConvertedPropertyEntityForType {
 
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
@@ -50,9 +53,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
     ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
     : "";
 
-  return createTitleNode(
-    name,
-    propertyEntity.id,
+  const content = [
     createSmallNode(position),
     createParagraphNode(
       jsdocTags,
@@ -63,6 +64,17 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
     createParagraphNode(description),
     createParagraphNode(remarks),
     createParagraphNode(example)
-  );
+  ] as const;
+
+  return createTitle
+    ? createTitleNode(
+      name,
+      propertyEntity.id,
+      ...content
+    )
+    : [
+      name,
+      ...content
+    ];
 
 }

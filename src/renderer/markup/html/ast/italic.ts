@@ -5,6 +5,8 @@ import type { ItalicNode } from "unwritten:renderer:markup/types-definitions/nod
 
 
 export function renderItalicNode(ctx: HTMLRenderContext, italicNode: ItalicNode): string {
-  const content = renderNode(ctx, italicNode.children);
-  return content === "" ? content : `<i>${renderNode(ctx, content)}</i>`;
+  const renderedNode = renderNode(ctx, italicNode.children);
+  return renderedNode === ""
+    ? renderedNode
+    : `<i>${renderNode(ctx, renderedNode)}</i>`;
 }

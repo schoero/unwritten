@@ -19,7 +19,8 @@ import type { SignatureEntity } from "unwritten:interpreter:type-definitions/ent
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedSignatureEntityForDocumentation,
-  ConvertedSignatureEntityForTableOfContents
+  ConvertedSignatureEntityForTableOfContents,
+  ConvertedSignatureEntityForType
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -36,7 +37,10 @@ export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContex
 
 }
 
-export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForDocumentation {
+export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity, createTitle: false): ConvertedSignatureEntityForType;
+export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity, createTitle?: true): ConvertedSignatureEntityForDocumentation;
+export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity, createTitle?: boolean): ConvertedSignatureEntityForDocumentation | ConvertedSignatureEntityForType;
+export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity, createTitle: boolean = true): ConvertedSignatureEntityForDocumentation | ConvertedSignatureEntityForType {
 
   const translate = getTranslator(ctx);
 
@@ -65,9 +69,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
     returnDescription
   );
 
-  return createTitleNode(
-    renderedSignature,
-    id,
+  const content = [
     createSmallNode(position),
     createParagraphNode(jsdocTags),
     createListNode(
@@ -77,29 +79,17 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
     createParagraphNode(description),
     createParagraphNode(remarks),
     createParagraphNode(example)
-  );
+  ] as const;
+
+  return createTitle
+    ? createTitleNode(
+      renderedSignature,
+      id,
+      ...content
+    )
+    : [
+      renderedSignature,
+      ...content
+    ];
 
 }
-
-// export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForType {
-
-//   const translate = getTranslator(ctx);
-//   const renderConfig = getRenderConfig(ctx);
-
-//   const convertedParameters = signatureEntity.parameters?.map(
-//     parameter => convertParameterEntityForDocumentation(ctx, parameter)
-//   ) ?? [];
-
-//   const returnType = convertType(ctx, signatureEntity.returnType);
-
-//   const renderedReturnType = spaceBetween(
-//     `${translate("returns", { capitalize: true })}:`,
-//     returnType
-//   );
-
-//   return createListNode(
-//     ...convertedParameters,
-//     renderedReturnType
-//   );
-
-// }

@@ -21,4 +21,5 @@ export const createInterfaceByType = (ctx: InterpreterContext, type: TSInterface
     name,
     typeParameters
   };
+
 });

@@ -2,6 +2,15 @@ import type { Entities } from "unwritten:interpreter:type-definitions/entities.j
 import type { Types } from "unwritten:interpreter:type-definitions/types.js";
 
 
+//-- Mutable
+
+export type Mutable<T> = {
+  -readonly [Key in keyof T]: T[Key];
+};
+
+
+//-- DeepPartial
+
 export type DeepPartial<T> =
   T extends Function
     ? T

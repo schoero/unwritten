@@ -5,6 +5,8 @@ import type { SmallNode } from "unwritten:renderer:markup/types-definitions/node
 
 
 export function renderSmallNode(ctx: HTMLRenderContext, smallNode: SmallNode): string {
-  const content = renderNode(ctx, smallNode.children);
-  return content === "" ? content : `<small>${renderNode(ctx, content)}</small>`;
+  const renderedNode = renderNode(ctx, smallNode.children);
+  return renderedNode === ""
+    ? renderedNode
+    : `<small>${renderNode(ctx, renderedNode)}</small>`;
 }

@@ -52,7 +52,14 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
 
   const listEnd = renderListEnd(ctx);
 
-  return [listStart, ...listItems, listEnd].join(renderNewLine(ctx));
+  const filteredListItems = listItems.filter(listItem => !!listItem);
+
+  if(filteredListItems.length === 0){
+    return "";
+  }
+
+  return [listStart, ...filteredListItems, listEnd]
+    .join(renderNewLine(ctx));
 
 }
 
@@ -64,7 +71,10 @@ function renderListStart(ctx: HTMLRenderContext): string {
 }
 
 function renderListItem(ctx: HTMLRenderContext, content: ASTNodes): string {
-  return `${renderIndentation(ctx)}<li>${renderNode(ctx, content)}</li>`;
+  const renderedNode = renderNode(ctx, content);
+  return renderedNode === ""
+    ? renderedNode
+    : `${renderIndentation(ctx)}<li>${renderNode(ctx, content)}</li>`;
 }
 
 function renderListEnd(ctx: HTMLRenderContext): string {

@@ -7,7 +7,8 @@ import type { FunctionLikeEntities } from "unwritten:interpreter:type-definition
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedFunctionEntityForDocumentation,
-  ConvertedFunctionEntityForTableOfContents
+  ConvertedFunctionEntityForTableOfContents,
+  ConvertedFunctionEntityForType
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -15,7 +16,11 @@ export function convertFunctionLikeEntityForTableOfContents(ctx: MarkupRenderCon
   return functionLikeEntity.signatures.map(signature => convertSignatureEntityForTableOfContents(ctx, signature));
 }
 
-
-export function convertFunctionLikeEntityForDocumentation(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntities): ConvertedFunctionEntityForDocumentation {
-  return functionLikeEntity.signatures.map(signature => convertSignatureEntityForDocumentation(ctx, signature));
+export function convertFunctionLikeEntityForDocumentation(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntities, createTitle: false): ConvertedFunctionEntityForType;
+export function convertFunctionLikeEntityForDocumentation(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntities, createTitle?: true): ConvertedFunctionEntityForDocumentation;
+export function convertFunctionLikeEntityForDocumentation(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntities, createTitle?: boolean): ConvertedFunctionEntityForDocumentation | ConvertedFunctionEntityForType {
+  return functionLikeEntity.signatures.map(
+    signature =>
+      convertSignatureEntityForDocumentation(ctx, signature, createTitle)
+  ) as ConvertedFunctionEntityForDocumentation | ConvertedFunctionEntityForType;
 }

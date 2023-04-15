@@ -375,41 +375,41 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       methods,
       setters,
       getters
-    ] = convertedType.children;
+    ] = convertedType[1].children;
 
     it("should have one construct signature", () => {
-      expect(constructSignatures.children).to.have.lengthOf(1);
+      expect(constructSignatures).to.have.lengthOf(1);
     });
 
     it("should have one call signature", () => {
-      expect(callSignatures.children).to.have.lengthOf(1);
+      expect(callSignatures).to.have.lengthOf(1);
     });
 
     it("should have 4 properties", () => {
-      expect(properties.children).to.have.lengthOf(4);
+      expect(properties).to.have.lengthOf(4);
     });
 
     it("should render modifiers correctly", () => {
 
-      const modifiers = properties.children.map(prop => {
-        return prop.children[1].children[1];
+      const modifiers = properties.map(prop => {
+        return prop[2].children.flat();
       });
 
-      expect(modifiers[0]).to.include("static");
-      expect(modifiers[1]).to.include("protected");
+      expect(modifiers[0]).to.contain("static");
+      expect(modifiers[1]).to.contain("protected");
 
     });
 
     it("should have one method entity", () => {
-      expect(methods.children).to.have.lengthOf(1);
+      expect(methods).to.have.lengthOf(1);
     });
 
     it("should have one setter entity", () => {
-      expect(setters.children).to.have.lengthOf(1);
+      expect(setters).to.have.lengthOf(1);
     });
 
     it("should have one getter entity", () => {
-      expect(getters.children).to.have.lengthOf(1);
+      expect(getters).to.have.lengthOf(1);
     });
 
   }

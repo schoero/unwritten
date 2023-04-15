@@ -15,7 +15,6 @@ type Entity<Kind> = {
   kind: Kind;
 };
 
-
 export type ExportableEntityKinds =
   | EntityKind.Class
   | EntityKind.Enum
@@ -25,7 +24,6 @@ export type ExportableEntityKinds =
   | EntityKind.Namespace
   | EntityKind.TypeAlias
   | EntityKind.Variable;
-
 
 export type ExportableEntities =
   | ClassEntity
