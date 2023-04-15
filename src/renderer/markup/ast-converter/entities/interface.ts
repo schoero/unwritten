@@ -63,12 +63,12 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
     createParagraphNode(description),
     createParagraphNode(remarks),
     createParagraphNode(example),
-    createTitleNode(translate("construct-signature", { count: 99 }), convertedConstructSignatures),
-    createTitleNode(translate("call-signature", { count: 99 }), convertedCallSignatures),
-    createTitleNode(translate("property", { count: 99 }), convertedProperties),
-    createTitleNode(translate("method", { count: 99 }), convertedMethods),
-    createTitleNode(translate("setter", { count: 99 }), convertedSetters),
-    createTitleNode(translate("getter", { count: 99 }), convertedGetters)
+    createTitleNode(translate("construct-signature", { count: 99 }), ...convertedConstructSignatures),
+    createTitleNode(translate("call-signature", { count: 99 }), ...convertedCallSignatures),
+    createTitleNode(translate("property", { count: 99 }), ...convertedProperties),
+    createTitleNode(translate("method", { count: 99 }), ...convertedMethods),
+    createTitleNode(translate("setter", { count: 99 }), ...convertedSetters),
+    createTitleNode(translate("getter", { count: 99 }), ...convertedGetters)
   );
 
 }

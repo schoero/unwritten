@@ -33,7 +33,7 @@ export function convertPropertyEntityForSignature(ctx: MarkupRenderContexts, pro
 }
 
 export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle: false): ConvertedPropertyEntityForType;
-export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle: true): ConvertedPropertyEntityForDocumentation;
+export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle?: true): ConvertedPropertyEntityForDocumentation;
 export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle: boolean = true): ConvertedPropertyEntityForDocumentation | ConvertedPropertyEntityForType {
 
   const renderConfig = getRenderConfig(ctx);
