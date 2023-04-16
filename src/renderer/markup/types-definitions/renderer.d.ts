@@ -142,35 +142,41 @@ export type ConvertedIntersectionType = ASTNodes[];
 
 export type ConvertedInterfaceType = [
   typeName: ASTNodes,
-  object: ConvertedObjectType
+  members: ListNode<(
+    | ConvertedPropertyEntityForType
+    | ConvertedSignatureEntityForType
+  )[]>
 ];
 
 
 //-- Object type
 
-export type ConvertedObjectType = ListNode<[
-  constructSignatures: ConvertedSignatureEntityForType[],
-  callSignatures: ConvertedSignatureEntityForType[],
-  properties: ConvertedPropertyEntityForType[],
-  methods: ConvertedFunctionLikeEntityForType[],
-  setters: ConvertedFunctionLikeEntityForType[],
-  getters: ConvertedFunctionLikeEntityForType[]
-]>;
+export type ConvertedObjectType = ListNode<(
+  | ConvertedPropertyEntityForType
+  | ConvertedSignatureEntityForType
+)[]>;
 
 
 //-- Object literal type
 
-export type ConvertedObjectLiteralType = ListNode<[
-  properties: ConvertedPropertyEntityForType[],
-  methods: ConvertedFunctionLikeEntityForType[],
-  setters: ConvertedFunctionLikeEntityForType[],
-  getters: ConvertedFunctionLikeEntityForType[]
-]>;
+export type ConvertedObjectLiteralType = [
+  typeName: ASTNodes,
+  members: ListNode<(
+    | ConvertedPropertyEntityForType
+    | ConvertedSignatureEntityForType
+  )[]>
+];
 
 
 //-- Type literal type
 
-export type ConvertedTypeLiteralType = ConvertedObjectType;
+export type ConvertedTypeLiteralType = [
+  typeName: ASTNodes,
+  members: ListNode<(
+    | ConvertedPropertyEntityForType
+    | ConvertedSignatureEntityForType
+  )[]>
+];
 
 
 //-- Mapped type

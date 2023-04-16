@@ -11,7 +11,7 @@ export function convertInterfaceType(ctx: MarkupRenderContexts, interfaceType: I
 
   const renderConfig = getRenderConfig(ctx);
 
-  const typeName = interfaceType.name;
+  const typeName = "object";
   const encapsulatedTypeName = encapsulate(typeName, renderConfig.typeEncapsulation);
 
   return [

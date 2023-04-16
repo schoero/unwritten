@@ -56,7 +56,33 @@ scope("MarkupRenderer", "ListNode", () => {
     );
     expect(renderListNode(ctx, listNode)).to.equal(html`
       <ul>
-        <li>Item 1
+        <li>
+          Item 1
+          <ul>
+            <li>Item 2</li>
+            <li>Item 3</li>
+          </ul>
+        </li>
+      </ul>
+    `);
+  });
+
+  it("should render deeply nested lists correctly", () => {
+    const listNode = createListNode([
+      "Item",
+      " ",
+      "1",
+      [
+        createListNode(
+          "Item 2",
+          "Item 3"
+        )
+      ]
+    ]);
+    expect(renderListNode(ctx, listNode)).to.equal(html`
+      <ul>
+        <li>
+          Item 1
           <ul>
             <li>Item 2</li>
             <li>Item 3</li>

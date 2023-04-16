@@ -14,42 +14,69 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
     return "";
   }
 
-  const listStart = renderListStart(ctx);
+  const renderArrayItems = (arrayItems: ASTNodes[]): string[] => {
 
-  const listItems: string[] = [];
+    const nestedListItems: string[] = [];
 
-  for(let i = 0; i < listNode.children.length; i++){
-  // For semantically valid html we need to render nested lists inside the current list item
-    const item = listNode.children[i];
-    const nextItem = listNode.children[i + 1];
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if(nextItem !== undefined && isListNode(nextItem)){
+    for(let i = 0; i < arrayItems.length; i++){
+      // For semantically valid html we need to render nested lists inside the current list item
+      const item = arrayItems[i];
+      const nextItem: ASTNodes | undefined = arrayItems[i + 1];
 
-      listItems.push(
-        renderListItem(ctx, [
-          (() => {
-            const renderedNode = renderNode(ctx, item);
-            ctx.indentation++;
-            return renderedNode;
-          })(),
-          (() => {
-            const renderedNode = renderNode(ctx, nextItem);
-            ctx.indentation--;
-            return renderedNode;
-          })(),
-          renderIndentation(ctx)
-        ].join(renderNewLine(ctx)))
-      );
+      if(Array.isArray(item) && item.flat().some(isListNode)){
 
-      i++; // Skip the next item
-      continue;
+        const renderedNestedItem = item
+          .flat()
+          .map(nestedItem => {
+            if(isListNode(nestedItem)){
+              ctx.indentation++;
+              const renderedNode = renderNode(ctx, [
+                renderNewLine(ctx),
+                renderListNode(ctx, nestedItem)
+              ]);
+              ctx.indentation--;
+              return renderedNode;
+            } else {
+              return renderNode(ctx, nestedItem);
+            }
+          })
+          .join("");
+
+        nestedListItems.push(renderMultilineListItem(ctx, renderedNestedItem));
+        continue;
+
+      } else {
+
+        if(isListNode(nextItem)){
+
+          const renderedCurrentItem = renderNode(ctx, item);
+          ctx.indentation++;
+          const renderedNextItem = renderNode(ctx, nextItem);
+          ctx.indentation--;
+
+          const renderedItems = [
+            renderedCurrentItem,
+            renderedNextItem
+          ].join(renderNewLine(ctx));
+
+          nestedListItems.push(renderMultilineListItem(ctx, renderedItems));
+
+          i++; // Skip the next item
+          continue;
+
+        }
+      }
+
+      nestedListItems.push(renderListItem(ctx, renderNode(ctx, item)));
 
     }
 
-    listItems.push(renderListItem(ctx, renderNode(ctx, item)));
+    return nestedListItems;
 
-  }
+  };
 
+  const listStart = renderListStart(ctx);
+  const listItems = renderArrayItems(listNode.children);
   const listEnd = renderListEnd(ctx);
 
   const filteredListItems = listItems.filter(listItem => !!listItem);
@@ -75,6 +102,24 @@ function renderListItem(ctx: HTMLRenderContext, content: ASTNodes): string {
   return renderedNode === ""
     ? renderedNode
     : `${renderIndentation(ctx)}<li>${renderNode(ctx, content)}</li>`;
+}
+
+function renderMultilineListItem(ctx: HTMLRenderContext, content: ASTNodes): string {
+
+  const renderedNode = renderNode(ctx, content);
+
+  if(renderedNode === ""){
+    return renderedNode;
+  }
+
+  const listStart = `${renderIndentation(ctx)}<li>`;
+  ctx.indentation++;
+  const listContent = `${renderIndentation(ctx)}${renderNode(ctx, content)}`;
+  ctx.indentation--;
+  const listEnd = `${renderIndentation(ctx)}</li>`;
+
+  return [listStart, listContent, listEnd].join(renderNewLine(ctx));
+
 }
 
 function renderListEnd(ctx: HTMLRenderContext): string {

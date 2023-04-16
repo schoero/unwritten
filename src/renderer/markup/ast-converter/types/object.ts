@@ -12,6 +12,7 @@ import type {
   ObjectType,
   TypeLiteralType
 } from "unwritten:interpreter:type-definitions/types.js";
+import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type { ConvertedObjectType } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
@@ -19,8 +20,11 @@ import type { ConvertedObjectType } from "unwritten:renderer:markup/types-defini
 export function convertObjectType(ctx: MarkupRenderContexts, objectLikeType: ClassType | InterfaceType | ObjectLiteralType | ObjectType | TypeLiteralType): ConvertedObjectType {
 
   const convertedConstructSignatures = objectLikeType.constructSignatures.map(
-    constructSignature =>
-      convertSignatureEntityForDocumentation(ctx, constructSignature, false)
+    constructSignature => {
+      const convertedSignature = convertSignatureEntityForDocumentation(ctx, constructSignature, false);
+      (convertedSignature[0] as ASTNodes[]).unshift("new ");
+      return convertedSignature;
+    }
   );
 
   const convertedCallSignatures = objectLikeType.callSignatures.map(
@@ -33,28 +37,28 @@ export function convertObjectType(ctx: MarkupRenderContexts, objectLikeType: Cla
       convertPropertyEntityForDocumentation(ctx, propertyEntity, false)
   );
 
-  const convertedMethods = objectLikeType.methods.map(
+  const convertedMethods = objectLikeType.methods.flatMap(
     methodEntity =>
       convertFunctionLikeEntityForDocumentation(ctx, methodEntity, false)
   );
 
-  const convertedSetters = objectLikeType.setters.map(
+  const convertedSetters = objectLikeType.setters.flatMap(
     setterEntity =>
       convertFunctionLikeEntityForDocumentation(ctx, setterEntity, false)
   );
 
-  const convertedGetters = objectLikeType.getters.map(
+  const convertedGetters = objectLikeType.getters.flatMap(
     getterEntity =>
       convertFunctionLikeEntityForDocumentation(ctx, getterEntity, false)
   );
 
   return createListNode(
-    convertedConstructSignatures,
-    convertedCallSignatures,
-    convertedProperties,
-    convertedMethods,
-    convertedSetters,
-    convertedGetters
+    ...convertedConstructSignatures,
+    ...convertedCallSignatures,
+    ...convertedProperties,
+    ...convertedMethods,
+    ...convertedSetters,
+    ...convertedGetters
   );
 
 }

@@ -3,6 +3,7 @@ import { expect, it } from "vitest";
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { convertObjectType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -16,7 +17,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     // #region Extended classes will have the Object type kind
 
-    // #region Source
+    // #region Source instance type of the baseClass
 
     // class BaseClass {
     //   public instanceProperty: string | undefined;
@@ -187,36 +188,30 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const convertedType = convertObjectType(ctx, type as ObjectType);
 
     const [
-      constructSignatures,
-      callSignatures,
-      properties,
-      methods,
-      setters,
-      getters
+      instanceProperty,
+      method,
+      setter,
+      getter
     ] = convertedType.children;
 
-    it("should have no construct signature", () => {
-      expect(constructSignatures).to.have.lengthOf(0);
+    it("should have the right amount of members", () => {
+      expect(convertedType.children.length).to.equal(4);
     });
 
-    it("should have no call signature", () => {
-      expect(callSignatures).to.have.lengthOf(0);
+    it("should have one matching property", () => {
+      expect(renderNode(ctx, instanceProperty[0])).to.equal("instanceProperty");
     });
 
-    it("should have 4 properties", () => {
-      expect(properties).to.have.lengthOf(1);
+    it("should have one matching method", () => {
+      expect(renderNode(ctx, method[0])).to.equal("method()");
     });
 
-    it("should have one method entity", () => {
-      expect(methods).to.have.lengthOf(1);
+    it("should have one matching setter", () => {
+      expect(renderNode(ctx, setter[0])).to.equal("setter(value)");
     });
 
-    it("should have one setter entity", () => {
-      expect(setters).to.have.lengthOf(1);
-    });
-
-    it("should have one getter entity", () => {
-      expect(getters).to.have.lengthOf(1);
+    it("should have one matching getter", () => {
+      expect(renderNode(ctx, getter[0])).to.equal("getter()");
     });
 
   }
