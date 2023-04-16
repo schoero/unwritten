@@ -714,7 +714,6 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     ] = callSignatures.children[0].children;
 
     const [
-      propertyPosition,
       propertyTags,
       propertyType,
       propertyDescription,
@@ -774,10 +773,6 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a matching property example", () => {
       expect(propertyExample.children[0]).to.equal("Property example");
-    });
-
-    it("should have a property position", () => {
-      expect(propertyPosition).to.not.equal(undefined);
     });
 
     it("should have a property tags", () => {

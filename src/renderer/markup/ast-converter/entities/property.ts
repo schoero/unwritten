@@ -3,12 +3,7 @@ import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
-import {
-  createLinkNode,
-  createParagraphNode,
-  createSmallNode,
-  createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -54,7 +49,6 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
     : "";
 
   const content = [
-    createSmallNode(position),
     createParagraphNode(
       jsdocTags,
       modifiers,

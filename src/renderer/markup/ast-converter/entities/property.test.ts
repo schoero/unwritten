@@ -7,7 +7,7 @@ import {
   convertPropertyEntityForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { isParagraphNode, isSmallNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isParagraphNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -48,7 +48,6 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     const convertedPropertyForDocumentation = convertPropertyEntityForDocumentation(ctx, propertyEntity as PropertyEntity);
 
     const [
-      position,
       tags,
       type,
       description,
@@ -65,11 +64,6 @@ scope("MarkupRenderer", EntityKind.Property, () => {
       expect(isParagraphNode(type)).to.equal(true);
       const renderedType = renderNode(ctx, type.children);
       expect(renderedType).to.equal("string");
-    });
-
-    it("should have a position", () => {
-      expect(isSmallNode(position)).to.equal(true);
-      expect(position.children).to.not.equal(undefined);
     });
 
     it("should have an optional tag", () => {
@@ -250,7 +244,10 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
     const convertedPropertiesForDocumentation = propertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity as PropertyEntity));
 
-    const modifiers = convertedPropertiesForDocumentation.map(convertedPropertyForDocumentation => convertedPropertyForDocumentation.children[1].children[1]);
+    const modifiers = convertedPropertiesForDocumentation.map(
+      convertedPropertyForDocumentation =>
+        convertedPropertyForDocumentation.children[0].children[1]
+    );
 
     it("should render the public modifier", () => {
       expect(modifiers[0]).to.include("public");

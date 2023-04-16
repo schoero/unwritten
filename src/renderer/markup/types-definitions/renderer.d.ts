@@ -375,17 +375,14 @@ export type ConvertedTypeArgumentEntityForDocumentation = ASTNodes[];
 
 export type ConvertedPropertyEntityForTableOfContents = LinkNode;
 export type ConvertedPropertyEntityForDocumentation = TitleNode<[
-  position: SmallNode,
   tags: ParagraphNode,
   type: ParagraphNode,
   description: ParagraphNode,
   remarks: ParagraphNode,
   example: ParagraphNode
 ]>;
-
 export type ConvertedPropertyEntityForType = [
   name: ASTNodes,
-  position: SmallNode,
   tags: ParagraphNode,
   type: ParagraphNode,
   description: ParagraphNode,

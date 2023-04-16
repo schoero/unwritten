@@ -392,7 +392,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     it("should render modifiers correctly", () => {
 
       const modifiers = properties.map(prop => {
-        return prop[2].children.flat();
+        return prop[1].children.flat();
       });
 
       expect(modifiers[0]).to.contain("static");
