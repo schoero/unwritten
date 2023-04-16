@@ -46,7 +46,6 @@ import {
   createUnionType,
   createUnknownType,
   createUnresolved,
-  createUnresolvedType,
   createVoidType
 } from "unwritten:interpreter:ast/types/index.js";
 import {
@@ -99,7 +98,6 @@ import {
   isVoidType
 } from "unwritten:interpreter:typeguards/types.js";
 import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter:utils/ts.js";
-import { isSymbolExcluded } from "unwritten:utils:exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Declaration, ObjectType as TSObjectType, Symbol, Type, TypeNode } from "typescript";
@@ -172,14 +170,11 @@ export function parseTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type
 
 /* Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */
 export function createTypeBySymbol(ctx: InterpreterContext, symbol: Symbol): Types {
-
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
-
-  assert(declaration, `Symbol ${getNameBySymbol(ctx, symbol)} has no declaration`);
-
-  const type = ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration);
+  const type = declaration
+    ? ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration)
+    : ctx.checker.getTypeOfSymbol(symbol);
   return parseType(ctx, type);
-
 }
 
 export function createTypeByDeclaration(ctx: InterpreterContext, declaration: Declaration): Types {
@@ -250,10 +245,6 @@ export function parseObjectType(ctx: InterpreterContext, type: TSObjectType): Ty
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
-  }
-
-  if(isSymbolExcluded(ctx, type.symbol)){
-    return createUnresolvedType(ctx, type.symbol);
   }
 
   if(isFunctionLikeType(type)){

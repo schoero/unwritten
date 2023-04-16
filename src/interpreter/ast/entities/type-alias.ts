@@ -47,7 +47,6 @@ function parseTypeAliasDeclaration(ctx: InterpreterContext, declaration: TypeAli
   const type = parseTypeNode(ctx, typeNode);
 
   return {
-    declaredType: type,
     position,
     type,
     typeParameters,

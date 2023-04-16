@@ -44,7 +44,9 @@ export interface ConfigWithSchema extends Config {
 
 export interface InterpreterConfig {
   /** An array of excluded directories. */
-  exclude?: string[];
+  exclude?: string[] | {
+    [key: string]: string[] | "*";
+  };
 }
 
 export type ExternalTypes = {

@@ -66,6 +66,8 @@ export function isObjectLiteralSymbol(symbol: ts.Symbol): boolean {
 export function isPropertySymbol(symbol: ts.Symbol): boolean {
   return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0 &&
     !isMethodSymbol(symbol) &&
+    !isGetterSymbol(symbol) &&
+    !isSetterSymbol(symbol) &&
     !isPrototypeSymbol(symbol);
 }
 

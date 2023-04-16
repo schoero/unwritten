@@ -1,3 +1,5 @@
+import ts from "typescript";
+
 import { parseType } from "unwritten:interpreter:ast/index.js";
 import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
@@ -47,7 +49,10 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
 
   const id = getIdBySymbol(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const fromDeclaration = declaration ? parsePropertyDeclaration(ctx, declaration) : {};
+  const fromDeclaration = declaration ? parsePropertyDeclaration(ctx, declaration) : <Record<string, any>>{};
+
+  // Partial<{ a: string }> modifiers or custom implementations of that will set the symbol.flags
+  const optional = fromDeclaration.optional || isSymbolOptional(symbol);
 
   const type = parseType(ctx, tsType);
   const kind = EntityKind.Property;
@@ -57,6 +62,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
     id,
     kind,
     name,
+    optional,
     type
   };
 
@@ -89,4 +95,8 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
     ...jsdocTags
   };
 
+}
+
+function isSymbolOptional(symbol: ts.Symbol): boolean {
+  return (symbol.getFlags() & ts.SymbolFlags.Optional) !== 0;
 }

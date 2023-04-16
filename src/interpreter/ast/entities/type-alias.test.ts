@@ -135,4 +135,47 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
 
   }
 
+  {
+
+    const testFileContent = ts`
+      export type UpperCasedType = Uppercase<"hello">;
+      export type PartialType = Partial<{
+        prop: "test";
+      }>;
+      export type ReadonlyType = Readonly<{
+        prop: "test";
+      }>;
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const uppercaseSymbol = exportedSymbols.find(s => s.name === "UpperCasedType")!;
+    const exportedUppercaseTypeAlias = createTypeAliasEntity(ctx, uppercaseSymbol);
+
+    const partialTypeSymbol = exportedSymbols.find(s => s.name === "PartialType")!;
+    const exportedPartialTypeAlias = createTypeAliasEntity(ctx, partialTypeSymbol);
+
+    const readonlyTypeSymbol = exportedSymbols.find(s => s.name === "ReadonlyType")!;
+    const exportedReadonlyTypeAlias = createTypeAliasEntity(ctx, readonlyTypeSymbol);
+
+    it("should support typescript utility types", () => {
+      assert(exportedUppercaseTypeAlias.type.kind === TypeKind.TypeReference);
+      assert(exportedUppercaseTypeAlias.type.type?.kind === TypeKind.StringLiteral);
+      expect(exportedUppercaseTypeAlias.type.type.value).to.equal("HELLO");
+
+      assert(exportedPartialTypeAlias.type.kind === TypeKind.TypeReference);
+      assert(exportedPartialTypeAlias.type.type?.kind === TypeKind.TypeLiteral);
+      expect(exportedPartialTypeAlias.type.type.properties[0].optional).to.equal(true);
+    });
+
+    // Readonly is currently not supported by the typescript compiler api
+    // https://github.com/microsoft/TypeScript/issues/31296
+    it.fails("should support readonly mapped type utilities", () => {
+      assert(exportedReadonlyTypeAlias.type.kind === TypeKind.TypeReference);
+      assert(exportedReadonlyTypeAlias.type.type?.kind === TypeKind.Object);
+      expect(exportedReadonlyTypeAlias.type.type.properties[0].modifiers).to.include("readonly");
+    });
+
+  }
+
 });

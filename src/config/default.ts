@@ -1,3 +1,5 @@
+/* eslint-disable sort-keys/sort-keys-fix */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { ExternalTypes, InterpreterConfig } from "unwritten:type-definitions/config.js";
@@ -5,7 +7,29 @@ import type { Complete } from "unwritten:type-definitions/utils.js";
 
 
 export const defaultInterpreterConfig: Complete<InterpreterConfig> = {
-  exclude: ["node_modules/**/*"]
+  exclude: {
+    "node_modules/**/*": "*",
+    "!node_modules/typescript/lib/**/*": [
+      "Partial",
+      "Required",
+      "Readonly",
+      "Pick",
+      "Record",
+      "Exclude",
+      "Extract",
+      "Omit",
+      "NonNullable",
+      "Parameters",
+      "ConstructorParameters",
+      "ReturnType",
+      "InstanceType",
+      "Uppercase",
+      "Lowercase",
+      "Capitalize",
+      "Uncapitalize",
+      "ThisType"
+    ]
+  }
 };
 
 export const defaultExternalTypes: ExternalTypes = {

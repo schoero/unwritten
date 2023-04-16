@@ -85,7 +85,7 @@ scope("Interpreter", TypeKind.Expression, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     // TypeScript doesn't support inferring from a union of classes yet
-    it.skip("should be able to parse call expressions", () => {
+    it.fails("should be able to parse call expressions", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.kind).to.equal(TypeKind.Expression);
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Union);

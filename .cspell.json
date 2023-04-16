@@ -8,6 +8,7 @@
     "testfunctionparam",
     "tsdoc",
     "typeguards",
-    "unwritten"
+    "unwritten",
+    "uncapitalize"
   ]
 }
