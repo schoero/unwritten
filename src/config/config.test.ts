@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { expect, it, vi } from "vitest";
 
 import { createConfig } from "unwritten:config/index.js";
