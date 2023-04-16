@@ -1,7 +1,0 @@
-{
-  "renderConfig": {
-    "test": {
-      ".unwritten.json": true
-    }
-  }
-}

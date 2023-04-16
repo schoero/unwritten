@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { expect, it } from "vitest";
+import { expect, it, vi } from "vitest";
 
 import { createConfig } from "unwritten:config/index.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -7,9 +6,56 @@ import { scope } from "unwritten:tests:utils/scope.js";
 
 scope("Integration", "Config", async () => {
 
+  vi.mock("node:fs", async () => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await vi.importActual<typeof import("node:fs")>("node:fs");
+    return {
+      ...actual,
+      existsSync: vi.fn().mockImplementation((path: string) => {
+        console.log("MOCK existsSync", path);
+        if(path.includes(".unwritten.json")){
+          console.log("return true");
+          return true;
+        } else if(path.includes(".unwritten.js")){
+          console.log("return true");
+          return true;
+        } else {
+          console.log("return false");
+          return false;
+        }
+      })
+    };
+  });
+
+  vi.mock(`${await getDirectory()}/.unwritten.json`, () => {
+    console.log("MOCK json");
+    return {
+      default: {
+        renderConfig: {
+          test: {
+            ".unwritten.json": true
+          }
+        }
+      }
+    };
+  });
+
+  vi.mock(`${await getDirectory()}/.unwritten.js`, () => {
+    return {
+      default: {
+        renderConfig: {
+          test: {
+            ".unwritten.js": true
+          }
+        }
+      }
+    };
+  });
+
+
   it("should be able to read the config from a relative path", async () => {
 
-    const config = await createConfig({}, "./tests/integration/config/.unwritten.json");
+    const config = await createConfig({}, ".unwritten.json");
 
     expect(config).to.not.equal(undefined);
     expect(config.interpreterConfig).to.not.equal(undefined);
@@ -39,7 +85,7 @@ scope("Integration", "Config", async () => {
 
   it("should be able to read the config from a javascript file", async () => {
 
-    const config = await createConfig({}, "./tests/integration/config/.unwritten.js");
+    const config = await createConfig({}, ".unwritten.js");
 
     expect(config).to.not.equal(undefined);
     expect(config.interpreterConfig).to.not.equal(undefined);
@@ -67,7 +113,7 @@ scope("Integration", "Config", async () => {
   it("should be able to extend a config", async () => {
 
     const config = await createConfig({}, {
-      extends: "./tests/integration/config/.unwritten.json"
+      extends: `${await getDirectory()}/.unwritten.json`
     });
 
     expect(config.renderConfig.test).to.not.equal(undefined);
@@ -91,3 +137,8 @@ scope("Integration", "Config", async () => {
   });
 
 });
+
+async function getDirectory() {
+  const { resolve } = await import("node:path");
+  return resolve("./");
+}

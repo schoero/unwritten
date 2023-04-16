@@ -14,6 +14,14 @@ export function html(htmlCode: TemplateStringsArray, ...values: (boolean | numbe
   return createTemplateTag(htmlCode, ...values);
 }
 
+export function js(javaScriptCode: TemplateStringsArray, ...values: (boolean | number | string)[]) {
+  return createTemplateTag(javaScriptCode, ...values);
+}
+
+export function json(jsonContent: TemplateStringsArray, ...values: (boolean | number | string)[]) {
+  return createTemplateTag(jsonContent, ...values);
+}
+
 export function md(htmlCode: TemplateStringsArray, ...values: (boolean | number | string)[]) {
   return createTemplateTag(htmlCode, ...values);
 }
