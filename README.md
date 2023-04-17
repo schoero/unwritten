@@ -66,8 +66,8 @@ unwritten generate <path/to/entry-file.ts> [options]
                                         # config by itself if none is provided
                                         # or uses the default config.
 
---renderer <md | html | json | ts>      # Choose the format of the rendered 
--r <md | html | json | ts>              # output. Defaults to `md` for markdown.
+--renderer <md | html | json>           # Choose the format of the rendered 
+-r <md | html | json>                   # output. Defaults to `md` for markdown.
                                         # It is also possible to provide a
                                         # custom renderer by providing the path
                                         # to the file that default exports the 
