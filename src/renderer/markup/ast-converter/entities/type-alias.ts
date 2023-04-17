@@ -1,4 +1,7 @@
-import { convertTypeParameterEntityForDocumentation } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import {
+  convertTypeParameterEntitiesForSignature,
+  convertTypeParameterEntityForDocumentation
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
@@ -19,8 +22,15 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContexts, typeAlias: TypeAliasEntity): ConvertedTypeAliasEntityForTableOfContents {
-  return createLinkNode(typeAlias.name, typeAlias.id);
+export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForTableOfContents {
+
+  const signatureName = typeAliasEntity.name;
+  const renderedSignatureTypeParameters = typeAliasEntity.typeParameters
+    ? convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters)
+    : "";
+  const renderedSignature = [signatureName, "<", renderedSignatureTypeParameters, ">"];
+
+  return createLinkNode(renderedSignature, typeAliasEntity.id);
 }
 
 
@@ -28,13 +38,20 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
 
   const translate = getTranslator(ctx);
 
-  const name = typeAliasEntity.name;
+  const signatureName = typeAliasEntity.name;
+  const renderedSignatureTypeParameters = typeAliasEntity.typeParameters
+    ? convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters)
+    : "";
+  const renderedSignature = [signatureName, "<", renderedSignatureTypeParameters, ">"];
+  const id = typeAliasEntity.id;
+
   const description = typeAliasEntity.description ?? "";
   const example = typeAliasEntity.example ?? "";
   const remarks = typeAliasEntity.remarks ?? "";
 
   const position = typeAliasEntity.position ? convertPosition(ctx, typeAliasEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, typeAliasEntity);
+
 
   const typeParameters = typeAliasEntity.typeParameters
     ? typeAliasEntity.typeParameters.map(typeParameter => convertTypeParameterEntityForDocumentation(ctx, typeParameter))
@@ -43,8 +60,8 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const type = [`${translate("type", { capitalize: true, count: 1 })}: `, convertType(ctx, typeAliasEntity.type)];
 
   return createTitleNode(
-    name,
-    typeAliasEntity.id,
+    renderedSignature,
+    id,
     createSmallNode(position),
     createParagraphNode(jsdocTags),
     createListNode([

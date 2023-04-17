@@ -27,7 +27,9 @@ import type {
 export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForTableOfContents {
 
   const name = signatureEntity.name ?? "";
-  const renderedParameters = signatureEntity.parameters ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters) : "";
+  const renderedParameters = signatureEntity.parameters
+    ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters)
+    : "";
   const renderedSignature = [name, "(", renderedParameters, ")"];
 
   return createLinkNode(
@@ -45,7 +47,9 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const translate = getTranslator(ctx);
 
   const signatureName = signatureEntity.name ?? "";
-  const renderedSignatureParameters = signatureEntity.parameters ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters) : "";
+  const renderedSignatureParameters = signatureEntity.parameters
+    ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters)
+    : "";
   const renderedSignature = [signatureName, "(", renderedSignatureParameters, ")"];
   const id = signatureEntity.id;
 

@@ -69,14 +69,12 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have matching table of contents entry", () => {
       expect(isLinkNode(convertedSignatureForTableOfContents)).to.equal(true);
-      const renderedSignatureForTableOfContents = renderNode(ctx, convertedSignatureForTableOfContents.children);
-      expect(renderedSignatureForTableOfContents).to.equal("testSignature()");
+      expect(renderNode(ctx, convertedSignatureForTableOfContents.children)).to.equal("testSignature()");
     });
 
     it("should have a matching documentation title", () => {
       expect(isTitleNode(convertedSignatureForDocumentation)).to.equal(true);
-      const renderedSignatureForDocumentation = renderNode(ctx, convertedSignatureForDocumentation.title);
-      expect(renderedSignatureForDocumentation).to.equal("testSignature()");
+      expect(renderNode(ctx, convertedSignatureForDocumentation.title)).to.equal("testSignature()");
     });
 
     it("should have a position", () => {
@@ -86,8 +84,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a jsdoc tag", () => {
       expect(isParagraphNode(tags)).to.equal(true);
-      const renderedTags = renderNode(ctx, tags.children);
-      expect(renderedTags).to.equal("beta");
+      expect(renderNode(ctx, tags.children)).to.equal("beta");
     });
 
     it("should have a matching return type", () => {
@@ -99,20 +96,17 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a matching description", () => {
       expect(isParagraphNode(description)).to.equal(true);
-      const renderedDescription = renderNode(ctx, description.children);
-      expect(renderedDescription).to.equal("Signature description");
+      expect(renderNode(ctx, description.children)).to.equal("Signature description");
     });
 
     it("should have matching remarks", () => {
       expect(isParagraphNode(description)).to.equal(true);
-      const renderedRemarks = renderNode(ctx, remarks.children);
-      expect(renderedRemarks).to.equal("Signature remarks");
+      expect(renderNode(ctx, remarks.children)).to.equal("Signature remarks");
     });
 
     it("should have a matching example", () => {
       expect(isParagraphNode(description)).to.equal(true);
-      const renderedExample = renderNode(ctx, example.children);
-      expect(renderedExample).to.equal("Signature example");
+      expect(renderNode(ctx, example.children)).to.equal("Signature example");
     });
 
   }

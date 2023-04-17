@@ -117,12 +117,12 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
     it("should have matching table of contents entry", () => {
       expect(isLinkNode(convertedTypeAliasForTableOfContents)).to.equal(true);
-      expect(convertedTypeAliasForTableOfContents.children).to.equal("TypeAlias");
+      expect(renderNode(ctx, convertedTypeAliasForTableOfContents.children)).to.equal("TypeAlias<A>");
     });
 
-    it("should have a matching documentation title", () => {
+    it("should have a matching documentation signature", () => {
       expect(isTitleNode(convertedTypeAliasForDocumentation)).to.equal(true);
-      expect(convertedTypeAliasForDocumentation.title).to.equal("TypeAlias");
+      expect(renderNode(ctx, convertedTypeAliasForDocumentation.title)).to.equal("TypeAlias<A>");
     });
 
     it("should have a position", () => {
