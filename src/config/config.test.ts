@@ -13,7 +13,6 @@ scope("Integration", "Config", async () => {
     return {
       ...actual,
       existsSync: vi.fn().mockImplementation((path: string) => {
-        console.log("MOCK existsSync", path);
         if(path.includes(".unwritten.json")){
           console.log("return true");
           return true;
@@ -29,7 +28,6 @@ scope("Integration", "Config", async () => {
   });
 
   vi.mock(`${await getDirectory()}/.unwritten.json`, () => {
-    console.log("MOCK json");
     return {
       default: {
         renderConfig: {
