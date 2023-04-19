@@ -50,12 +50,12 @@ scope("MarkupRenderer", EntityKind.Function, () => {
 
     const ctx = createRenderContext();
 
-    const renderedFunctionForTableOfContents = convertFunctionLikeEntityForTableOfContents(ctx, testFunction as FunctionEntity);
-    const renderedFunctionForDocumentation = convertFunctionLikeEntityForDocumentation(ctx, testFunction as FunctionEntity);
+    const convertedFunctionForTableOfContents = convertFunctionLikeEntityForTableOfContents(ctx, testFunction as FunctionEntity);
+    const convertedFunctionForDocumentation = convertFunctionLikeEntityForDocumentation(ctx, testFunction as FunctionEntity);
 
-    it("should have only one signature", () => {
-      expect(renderedFunctionForTableOfContents.length).to.equal(1);
-      expect(renderedFunctionForDocumentation.length).to.equal(1);
+    it("should render only one signature", () => {
+      expect(convertedFunctionForTableOfContents.length).to.equal(1);
+      expect(convertedFunctionForDocumentation.length).to.equal(1);
     });
 
   }
