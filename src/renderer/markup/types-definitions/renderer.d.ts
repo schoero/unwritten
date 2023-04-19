@@ -108,8 +108,8 @@ export type ConvertedTemplateLiteralType = ASTNodes[];
 //-- Function type
 
 export type ConvertedFunctionType =
-  | ConvertedSignatureEntityForDocumentation
-  | ListNode<ConvertedSignatureEntityForDocumentation[]>;
+  | ConvertedSignatureEntityForType
+  | ListNode<ConvertedSignatureEntityForType[]>;
 
 
 //-- Type reference
