@@ -3,7 +3,11 @@ import type { DefaultContext, RenderContext } from "unwritten:type-definitions/c
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
-export function createContext<CustomRenderer extends Renderer>(defaultContext: DefaultContext, renderer: CustomRenderer, config: CompleteConfig): RenderContext<CustomRenderer> {
+export function createContext<CustomRenderer extends Renderer>(
+  defaultContext: DefaultContext,
+  renderer: CustomRenderer,
+  config: CompleteConfig
+): RenderContext<CustomRenderer> {
   return {
     config,
     renderer,
