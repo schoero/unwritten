@@ -12,8 +12,8 @@ import type { ID, Modifiers, Name, Position } from "unwritten:interpreter:type-d
 
 
 type Type<Kind extends TypeKind> = {
-  id: ID;
   kind: Kind;
+  typeId: ID;
 };
 
 export type Types =
@@ -255,6 +255,7 @@ export interface CircularType extends Type<TypeKind.Circular> {
 export interface UnresolvedType extends Type<TypeKind.Unresolved> {
   name?: Name;
   position?: Position;
+  symbolId?: ID;
 }
 
 

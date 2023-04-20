@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -39,7 +39,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     });
 
     it("should have a matching id", () => {
-      expect(sourceFile.id).to.equal(getIdBySymbol(ctx, fileSymbol));
+      expect(sourceFile.symbolId).to.equal(getSymbolId(ctx, fileSymbol));
     });
 
     it("should have a matching name", () => {

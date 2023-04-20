@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertTypeAliasEntityForDocumentation,
   convertTypeAliasEntityForTableOfContents
@@ -14,94 +14,36 @@ import {
   isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:tests:utils/template.js";
 import { assert } from "unwritten:utils/general.js";
-
-import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
   {
 
-    // #region TypeAlias with all JSDoc tags
+    const testFileContent = ts`
+       /**
+       * Type alias description
+       *
+       * @remarks Type alias remarks
+       * @example Type alias example
+       * @template A - Type parameter description
+       */
+      export type TypeAlias<A extends number = 7> = A;
+    `;
 
-    // #region Source
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // /**
-    //  * Type alias description
-    //  *
-    //  * @remarks Type alias remarks
-    //  * @example Type alias example
-    //  * @template A - Type parameter description
-    //  */
-    // export type TypeAlias<A extends number = 7> = A;
-
-    // #endregion
-
-    const typeAliasEntity: Testable<TypeAliasEntity> = {
-      description: "Type alias description",
-      example: "Type alias example",
-      id: 4460,
-      kind: EntityKind.TypeAlias,
-      name: "TypeAlias",
-      position: {
-        column: 0,
-        file: "/file.ts",
-        line: 8
-      },
-      remarks: "Type alias remarks",
-      type: {
-        id: 4742,
-        kind: TypeKind.TypeReference,
-        name: "A",
-        symbolId: 4458,
-        type: {
-          constraint: {
-            id: 17,
-            kind: TypeKind.Number,
-            name: "number"
-          },
-          id: 2861,
-          kind: TypeKind.TypeParameter,
-          name: "A"
-        },
-        typeArguments: undefined
-      },
-      typeParameters: [
-        {
-          constraint: {
-            id: 17,
-            kind: TypeKind.Number,
-            name: "number"
-          },
-          description: "- Type parameter description",
-          id: 4458,
-          initializer: {
-            id: 2190,
-            kind: TypeKind.NumberLiteral,
-            name: "number",
-            value: 7
-          },
-          kind: EntityKind.TypeParameter,
-          name: "A",
-          position: {
-            column: 22,
-            file: "/file.ts",
-            line: 8
-          }
-        }
-      ]
-    };
-
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
     const ctx = createRenderContext();
 
-    const convertedTypeAliasForTableOfContents = convertTypeAliasEntityForTableOfContents(ctx, typeAliasEntity as TypeAliasEntity);
-    const convertedTypeAliasForDocumentation = convertTypeAliasEntityForDocumentation(ctx, typeAliasEntity as TypeAliasEntity);
+    const convertedTypeAliasForTableOfContents = convertTypeAliasEntityForTableOfContents(ctx, typeAliasEntity);
+    const convertedTypeAliasForDocumentation = convertTypeAliasEntityForDocumentation(ctx, typeAliasEntity);
 
     assert(isLinkNode(convertedTypeAliasForTableOfContents), "Rendered typeAlias for table of contents is not a link");
     assert(isTitleNode(convertedTypeAliasForDocumentation), "Rendered typeAlias for documentation is not a container");

@@ -10,17 +10,17 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 export function createTypeQueryType(ctx: InterpreterContext, typeNode: TypeQueryNode): TypeQueryType {
 
-  const id = getIdByTypeNode(ctx, typeNode);
+  const typeId = getIdByTypeNode(ctx, typeNode);
   const tsType = ctx.checker.getTypeFromTypeNode(typeNode);
   const type = parseType(ctx, tsType);
   const name = typeNode.exprName.getText();
   const kind = TypeKind.TypeQuery;
 
   return {
-    id,
     kind,
     name,
-    type
+    type,
+    typeId
   };
 
 }

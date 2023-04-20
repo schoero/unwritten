@@ -1,37 +1,27 @@
 import { expect, it } from "vitest";
 
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { convertTemplateLiteralType } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("MarkupRenderer", TypeKind.StringLiteral, () => {
 
   {
 
-    // #region Simple template literal
+    const testFileContent = "export type Type = `${number}px`";
 
-    const type: Testable<TemplateLiteralType> = {
-      head: "",
-      kind: TypeKind.TemplateLiteral,
-      spans: [
-        "px"
-      ],
-      types: [
-        {
-          kind: TypeKind.Number,
-          name: "number"
-        }
-      ]
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
@@ -45,29 +35,13 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
 
   {
 
-    // #region complex template literal
+    const testFileContent = "export type Type = `PREFIX-${number}-MIDDLE-${string}-SUFFIX`";
 
-    const type: Testable<TemplateLiteralType> = {
-      head: "PREFIX-",
-      kind: TypeKind.TemplateLiteral,
-      spans: [
-        "-MIDDLE-",
-        "-SUFFIX"
-      ],
-      types: [
-        {
-          kind: TypeKind.Number,
-          name: "number"
-        },
-        {
-          kind: TypeKind.String,
-          name: "string"
-        }
-      ]
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);
@@ -81,56 +55,13 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
 
   {
 
-    // #region complex template literal
+    const testFileContent = "export type Type = `border-${\"top\" | \"bottom\" | \"left\" | \"right\"}-${\"width\"}: ${number}px`";
 
-    const type: Testable<TemplateLiteralType> = {
-      head: "border-",
-      kind: TypeKind.TemplateLiteral,
-      spans: [
-        "-",
-        ": ",
-        "px"
-      ],
-      types: [
-        {
-          kind: TypeKind.Union,
-          types: [
-            {
-              kind: TypeKind.StringLiteral,
-              name: "string",
-              value: "top"
-            },
-            {
-              kind: TypeKind.StringLiteral,
-              name: "string",
-              value: "bottom"
-            },
-            {
-              kind: TypeKind.StringLiteral,
-              name: "string",
-              value: "left"
-            },
-            {
-              kind: TypeKind.StringLiteral,
-              name: "string",
-              value: "right"
-            }
-          ]
-        },
-        {
-          kind: TypeKind.StringLiteral,
-          name: "string",
-          value: "width"
-        },
-        {
-          kind: TypeKind.Number,
-          name: "number"
-        }
-      ]
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertTemplateLiteralType(ctx, type as TemplateLiteralType);

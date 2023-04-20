@@ -41,23 +41,23 @@ scope("Renderer", "utils", () => {
         getterSignatures: [],
         heritage: [
           {
-            id: 4455,
+            typeId: 4455,
             instanceType: {
               callSignatures: [],
               constructSignatures: [],
               getters: [],
-              id: 2611,
+              typeId: 2611,
               isThis: false,
               kind: TypeKind.Interface,
               methods: [
                 {
-                  id: 4057,
+                  symbolId: 4057,
                   kind: EntityKind.Method,
                   name: "methodA",
                   signatures: [
                     {
                       description: undefined,
-                      id: 4457,
+                      symbolId: 4457,
                       kind: EntityKind.Signature,
                       modifiers: [],
                       name: "methodA",
@@ -69,7 +69,7 @@ scope("Renderer", "utils", () => {
                       },
                       returnType: {
                         description: undefined,
-                        id: 24,
+                        typeId: 24,
                         kind: TypeKind.Void,
                         name: "void"
                       },
@@ -87,7 +87,7 @@ scope("Renderer", "utils", () => {
               properties: [
                 {
                   description: undefined,
-                  id: 4053,
+                  symbolId: 4053,
                   initializer: undefined,
                   kind: EntityKind.Property,
                   modifiers: [],
@@ -99,7 +99,7 @@ scope("Renderer", "utils", () => {
                     line: 2
                   },
                   type: {
-                    id: 15,
+                    typeId: 15,
                     kind: TypeKind.String,
                     name: "string"
                   }
@@ -114,18 +114,18 @@ scope("Renderer", "utils", () => {
               callSignatures: [],
               constructSignatures: [],
               getters: [],
-              id: 2611,
+              typeId: 2611,
               isThis: false,
               kind: TypeKind.Interface,
               methods: [
                 {
-                  id: 4057,
+                  symbolId: 4057,
                   kind: EntityKind.Method,
                   name: "methodA",
                   signatures: [
                     {
                       description: undefined,
-                      id: 4457,
+                      symbolId: 4457,
                       kind: EntityKind.Signature,
                       modifiers: [],
                       name: "methodA",
@@ -137,7 +137,7 @@ scope("Renderer", "utils", () => {
                       },
                       returnType: {
                         description: undefined,
-                        id: 24,
+                        typeId: 24,
                         kind: TypeKind.Void,
                         name: "void"
                       },
@@ -155,7 +155,7 @@ scope("Renderer", "utils", () => {
               properties: [
                 {
                   description: undefined,
-                  id: 4053,
+                  symbolId: 4053,
                   initializer: undefined,
                   kind: EntityKind.Property,
                   modifiers: [],
@@ -167,7 +167,7 @@ scope("Renderer", "utils", () => {
                     line: 2
                   },
                   type: {
-                    id: 15,
+                    typeId: 15,
                     kind: TypeKind.String,
                     name: "string"
                   }
@@ -179,12 +179,12 @@ scope("Renderer", "utils", () => {
             typeArguments: undefined
           }
         ],
-        id: 4054,
+        symbolId: 4054,
         kind: EntityKind.Interface,
         methodSignatures: [
           {
             description: undefined,
-            id: 4456,
+            symbolId: 4456,
             kind: EntityKind.Signature,
             modifiers: [],
             name: "methodB",
@@ -196,7 +196,7 @@ scope("Renderer", "utils", () => {
             },
             returnType: {
               description: undefined,
-              id: 24,
+              typeId: 24,
               kind: TypeKind.Void,
               name: "void"
             },
@@ -212,7 +212,7 @@ scope("Renderer", "utils", () => {
         properties: [
           {
             description: undefined,
-            id: 4055,
+            symbolId: 4055,
             initializer: undefined,
             kind: EntityKind.Property,
             modifiers: [],
@@ -224,7 +224,7 @@ scope("Renderer", "utils", () => {
               line: 6
             },
             type: {
-              id: 15,
+              typeId: 15,
               kind: TypeKind.String,
               name: "string"
             }
@@ -276,23 +276,23 @@ scope("Renderer", "utils", () => {
         getterSignatures: [],
         heritage: [
           {
-            id: 4457,
+            typeId: 4457,
             instanceType: {
               callSignatures: [],
               constructSignatures: [],
               getters: [],
-              id: 2611,
+              typeId: 2611,
               isThis: false,
               kind: TypeKind.Interface,
               methods: [
                 {
-                  id: 4056,
+                  symbolId: 4056,
                   kind: EntityKind.Method,
                   name: "method",
                   signatures: [
                     {
                       description: undefined,
-                      id: 4458,
+                      symbolId: 4458,
                       kind: EntityKind.Signature,
                       modifiers: [],
                       name: "method",
@@ -304,16 +304,16 @@ scope("Renderer", "utils", () => {
                       },
                       returnType: {
                         description: undefined,
-                        id: 30,
+                        typeId: 30,
                         kind: TypeKind.Union,
                         types: [
                           {
-                            id: 15,
+                            typeId: 15,
                             kind: TypeKind.String,
                             name: "string"
                           },
                           {
-                            id: 16,
+                            typeId: 16,
                             kind: TypeKind.Number,
                             name: "number"
                           }
@@ -333,7 +333,7 @@ scope("Renderer", "utils", () => {
               properties: [
                 {
                   description: undefined,
-                  id: 4053,
+                  symbolId: 4053,
                   initializer: undefined,
                   kind: EntityKind.Property,
                   modifiers: [],
@@ -345,16 +345,16 @@ scope("Renderer", "utils", () => {
                     line: 2
                   },
                   type: {
-                    id: 30,
+                    typeId: 30,
                     kind: TypeKind.Union,
                     types: [
                       {
-                        id: 15,
+                        typeId: 15,
                         kind: TypeKind.String,
                         name: "string"
                       },
                       {
-                        id: 16,
+                        typeId: 16,
                         kind: TypeKind.Number,
                         name: "number"
                       }
@@ -371,18 +371,18 @@ scope("Renderer", "utils", () => {
               callSignatures: [],
               constructSignatures: [],
               getters: [],
-              id: 2611,
+              typeId: 2611,
               isThis: false,
               kind: TypeKind.Interface,
               methods: [
                 {
-                  id: 4056,
+                  symbolId: 4056,
                   kind: EntityKind.Method,
                   name: "method",
                   signatures: [
                     {
                       description: undefined,
-                      id: 4458,
+                      symbolId: 4458,
                       kind: EntityKind.Signature,
                       modifiers: [],
                       name: "method",
@@ -394,16 +394,16 @@ scope("Renderer", "utils", () => {
                       },
                       returnType: {
                         description: undefined,
-                        id: 30,
+                        typeId: 30,
                         kind: TypeKind.Union,
                         types: [
                           {
-                            id: 15,
+                            typeId: 15,
                             kind: TypeKind.String,
                             name: "string"
                           },
                           {
-                            id: 16,
+                            typeId: 16,
                             kind: TypeKind.Number,
                             name: "number"
                           }
@@ -423,7 +423,7 @@ scope("Renderer", "utils", () => {
               properties: [
                 {
                   description: undefined,
-                  id: 4053,
+                  symbolId: 4053,
                   initializer: undefined,
                   kind: EntityKind.Property,
                   modifiers: [],
@@ -435,16 +435,16 @@ scope("Renderer", "utils", () => {
                     line: 2
                   },
                   type: {
-                    id: 30,
+                    typeId: 30,
                     kind: TypeKind.Union,
                     types: [
                       {
-                        id: 15,
+                        typeId: 15,
                         kind: TypeKind.String,
                         name: "string"
                       },
                       {
-                        id: 16,
+                        typeId: 16,
                         kind: TypeKind.Number,
                         name: "number"
                       }
@@ -458,12 +458,12 @@ scope("Renderer", "utils", () => {
             typeArguments: undefined
           }
         ],
-        id: 4054,
+        symbolId: 4054,
         kind: EntityKind.Interface,
         methodSignatures: [
           {
             description: undefined,
-            id: 4459,
+            symbolId: 4459,
             kind: EntityKind.Signature,
             modifiers: [],
             name: "method",
@@ -475,7 +475,7 @@ scope("Renderer", "utils", () => {
             },
             returnType: {
               description: undefined,
-              id: 15,
+              typeId: 15,
               kind: TypeKind.String,
               name: "string"
             },
@@ -491,7 +491,7 @@ scope("Renderer", "utils", () => {
         properties: [
           {
             description: undefined,
-            id: 4055,
+            symbolId: 4055,
             initializer: undefined,
             kind: EntityKind.Property,
             modifiers: [],
@@ -503,7 +503,7 @@ scope("Renderer", "utils", () => {
               line: 6
             },
             type: {
-              id: 15,
+              typeId: 15,
               kind: TypeKind.String,
               name: "string"
             }
@@ -558,12 +558,12 @@ scope("Renderer", "utils", () => {
         description: undefined,
         getters: [],
         heritage: {
-          id: 4744,
+          typeId: 4744,
           instanceType: {
             callSignatures: [],
             constructSignatures: [],
             getters: [],
-            id: 2869,
+            typeId: 2869,
             isThis: false,
             kind: TypeKind.Object,
             methods: [],
@@ -576,7 +576,7 @@ scope("Renderer", "utils", () => {
             properties: [
               {
                 description: undefined,
-                id: 4459,
+                symbolId: 4459,
                 initializer: undefined,
                 kind: EntityKind.Property,
                 modifiers: [
@@ -590,7 +590,7 @@ scope("Renderer", "utils", () => {
                   line: 2
                 },
                 type: {
-                  id: 16,
+                  typeId: 16,
                   kind: TypeKind.String,
                   name: "string"
                 }
@@ -610,7 +610,7 @@ scope("Renderer", "utils", () => {
                   constructSignatures: [],
                   description: undefined,
                   getters: [],
-                  id: 2861,
+                  typeId: 2861,
                   isThis: false,
                   kind: TypeKind.Class,
                   methods: [],
@@ -623,7 +623,7 @@ scope("Renderer", "utils", () => {
                   properties: [
                     {
                       description: undefined,
-                      id: 4465,
+                      symbolId: 4465,
                       initializer: undefined,
                       kind: EntityKind.Property,
                       modifiers: [
@@ -637,7 +637,7 @@ scope("Renderer", "utils", () => {
                         line: 2
                       },
                       type: {
-                        id: 16,
+                        typeId: 16,
                         kind: TypeKind.String,
                         name: "string"
                       }
@@ -648,7 +648,7 @@ scope("Renderer", "utils", () => {
               }
             ],
             getters: [],
-            id: 2864,
+            typeId: 2864,
             isThis: false,
             kind: TypeKind.Object,
             methods: [],
@@ -661,7 +661,7 @@ scope("Renderer", "utils", () => {
             properties: [
               {
                 description: undefined,
-                id: 4460,
+                symbolId: 4460,
                 initializer: undefined,
                 kind: EntityKind.Property,
                 modifiers: [
@@ -676,7 +676,7 @@ scope("Renderer", "utils", () => {
                   line: 3
                 },
                 type: {
-                  id: 16,
+                  typeId: 16,
                   kind: TypeKind.String,
                   name: "string"
                 }
@@ -686,7 +686,7 @@ scope("Renderer", "utils", () => {
           },
           typeArguments: undefined
         },
-        id: 4461,
+        symbolId: 4461,
         kind: EntityKind.Class,
         methods: [],
         modifiers: [],
@@ -699,7 +699,7 @@ scope("Renderer", "utils", () => {
         properties: [
           {
             description: undefined,
-            id: 4462,
+            symbolId: 4462,
             initializer: undefined,
             kind: EntityKind.Property,
             modifiers: [
@@ -714,14 +714,14 @@ scope("Renderer", "utils", () => {
               line: 7
             },
             type: {
-              id: 10,
+              typeId: 10,
               kind: TypeKind.Undefined,
               name: "undefined"
             }
           },
           {
             description: undefined,
-            id: 4463,
+            symbolId: 4463,
             initializer: undefined,
             kind: EntityKind.Property,
             modifiers: [
@@ -737,7 +737,7 @@ scope("Renderer", "utils", () => {
               line: 8
             },
             type: {
-              id: 10,
+              typeId: 10,
               kind: TypeKind.Undefined,
               name: "undefined"
             }
@@ -785,12 +785,12 @@ scope("Renderer", "utils", () => {
         description: undefined,
         getters: [],
         heritage: {
-          id: 4743,
+          typeId: 4743,
           instanceType: {
             callSignatures: [],
             constructSignatures: [],
             getters: [],
-            id: 2869,
+            typeId: 2869,
             isThis: false,
             kind: TypeKind.Object,
             methods: [],
@@ -810,14 +810,14 @@ scope("Renderer", "utils", () => {
             constructSignatures: [
               {
                 description: undefined,
-                id: 4741,
+                symbolId: 4741,
                 kind: EntityKind.Signature,
                 modifiers: [],
                 name: "constructor",
                 parameters: [
                   {
                     description: undefined,
-                    id: 4459,
+                    symbolId: 4459,
                     initializer: undefined,
                     kind: EntityKind.Parameter,
                     name: "param",
@@ -829,7 +829,7 @@ scope("Renderer", "utils", () => {
                     },
                     rest: false,
                     type: {
-                      id: 16,
+                      typeId: 16,
                       kind: TypeKind.String,
                       name: "string"
                     }
@@ -845,7 +845,7 @@ scope("Renderer", "utils", () => {
                   constructSignatures: [],
                   description: undefined,
                   getters: [],
-                  id: 2861,
+                  typeId: 2861,
                   isThis: false,
                   kind: TypeKind.Class,
                   methods: [],
@@ -862,7 +862,7 @@ scope("Renderer", "utils", () => {
               }
             ],
             getters: [],
-            id: 2864,
+            typeId: 2864,
             isThis: false,
             kind: TypeKind.Object,
             methods: [],
@@ -877,7 +877,7 @@ scope("Renderer", "utils", () => {
           },
           typeArguments: undefined
         },
-        id: 4460,
+        symbolId: 4460,
         kind: EntityKind.Class,
         methods: [],
         modifiers: [],
@@ -920,12 +920,12 @@ scope("Renderer", "utils", () => {
         description: undefined,
         getters: [],
         heritage: {
-          id: 4742,
+          typeId: 4742,
           instanceType: {
             callSignatures: [],
             constructSignatures: [],
             getters: [],
-            id: 2869,
+            typeId: 2869,
             isThis: false,
             kind: TypeKind.Object,
             methods: [],
@@ -950,7 +950,7 @@ scope("Renderer", "utils", () => {
                   constructSignatures: [],
                   description: undefined,
                   getters: [],
-                  id: 2861,
+                  typeId: 2861,
                   isThis: false,
                   kind: TypeKind.Class,
                   methods: [],
@@ -966,7 +966,7 @@ scope("Renderer", "utils", () => {
               }
             ],
             getters: [],
-            id: 2864,
+            typeId: 2864,
             isThis: false,
             kind: TypeKind.Object,
             methods: [],
@@ -981,7 +981,7 @@ scope("Renderer", "utils", () => {
           },
           typeArguments: undefined
         },
-        id: 4459,
+        symbolId: 4459,
         kind: EntityKind.Class,
         methods: [],
         modifiers: [],
@@ -1023,20 +1023,20 @@ scope("Renderer", "utils", () => {
 
       const classEntity: Testable<ClassEntity> = {
         ctor: {
-          id: 4463,
+          symbolId: 4463,
           kind: EntityKind.Constructor,
           name: "__constructor",
           signatures: [
             {
               description: undefined,
-              id: 4744,
+              symbolId: 4744,
               kind: EntityKind.Signature,
               modifiers: [],
               name: "constructor",
               parameters: [
                 {
                   description: undefined,
-                  id: 4461,
+                  symbolId: 4461,
                   initializer: undefined,
                   kind: EntityKind.Parameter,
                   name: "param",
@@ -1048,7 +1048,7 @@ scope("Renderer", "utils", () => {
                   },
                   rest: false,
                   type: {
-                    id: 16,
+                    typeId: 16,
                     kind: TypeKind.String,
                     name: "string"
                   }
@@ -1064,7 +1064,7 @@ scope("Renderer", "utils", () => {
                 constructSignatures: [],
                 description: undefined,
                 getters: [],
-                id: 2865,
+                typeId: 2865,
                 isThis: false,
                 kind: TypeKind.Class,
                 methods: [],
@@ -1084,12 +1084,12 @@ scope("Renderer", "utils", () => {
         description: undefined,
         getters: [],
         heritage: {
-          id: 4746,
+          typeId: 4746,
           instanceType: {
             callSignatures: [],
             constructSignatures: [],
             getters: [],
-            id: 2869,
+            typeId: 2869,
             isThis: false,
             kind: TypeKind.Object,
             methods: [],
@@ -1109,14 +1109,14 @@ scope("Renderer", "utils", () => {
             constructSignatures: [
               {
                 description: undefined,
-                id: 4741,
+                symbolId: 4741,
                 kind: EntityKind.Signature,
                 modifiers: [],
                 name: "constructor",
                 parameters: [
                   {
                     description: undefined,
-                    id: 4459,
+                    symbolId: 4459,
                     initializer: undefined,
                     kind: EntityKind.Parameter,
                     name: "param",
@@ -1128,16 +1128,16 @@ scope("Renderer", "utils", () => {
                     },
                     rest: false,
                     type: {
-                      id: 31,
+                      typeId: 31,
                       kind: TypeKind.Union,
                       types: [
                         {
-                          id: 16,
+                          typeId: 16,
                           kind: TypeKind.String,
                           name: "string"
                         },
                         {
-                          id: 17,
+                          typeId: 17,
                           kind: TypeKind.Number,
                           name: "number"
                         }
@@ -1155,7 +1155,7 @@ scope("Renderer", "utils", () => {
                   constructSignatures: [],
                   description: undefined,
                   getters: [],
-                  id: 2861,
+                  typeId: 2861,
                   isThis: false,
                   kind: TypeKind.Class,
                   methods: [],
@@ -1172,7 +1172,7 @@ scope("Renderer", "utils", () => {
               }
             ],
             getters: [],
-            id: 2864,
+            typeId: 2864,
             isThis: false,
             kind: TypeKind.Object,
             methods: [],
@@ -1187,7 +1187,7 @@ scope("Renderer", "utils", () => {
           },
           typeArguments: undefined
         },
-        id: 4460,
+        symbolId: 4460,
         kind: EntityKind.Class,
         methods: [],
         modifiers: [],

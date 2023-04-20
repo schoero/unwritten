@@ -1,7 +1,7 @@
 import ts from "typescript";
 
 import { parseType } from "unwritten:interpreter:ast/index.js";
-import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByDeclaration } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByNode } from "unwritten:interpreter:ast/shared/position.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
@@ -21,14 +21,14 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
   const node = typeReference.node;
   const members = getMembers(ctx, typeReference, typeReference.typeArguments);
   const position = node && getPositionByNode(ctx, node);
-  const id = getIdByType(ctx, typeReference);
+  const id = getTypeId(ctx, typeReference);
   const kind = TypeKind.Tuple;
 
   return {
-    id,
     kind,
     members,
-    position
+    position,
+    typeId: id
   };
 
 }
@@ -47,7 +47,7 @@ function getMembers(ctx: InterpreterContext, tupleTypeReference: TupleTypeRefere
 
     const type = parseType(ctx, typeArgument);
 
-    const id = getIdByType(ctx, typeArgument);
+    const typeId = getTypeId(ctx, typeArgument);
     const elementFlag = tupleTypeReference.target.elementFlags[index];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const optional = (elementFlag && elementFlag & ts.ElementFlags.Optional) !== 0;
@@ -58,12 +58,12 @@ function getMembers(ctx: InterpreterContext, tupleTypeReference: TupleTypeRefere
     const kind = EntityKind.TupleMember;
 
     return <TupleMemberEntity>{
-      id,
       kind,
       name,
       optional,
       rest,
-      type
+      type,
+      typeId
     };
 
   });

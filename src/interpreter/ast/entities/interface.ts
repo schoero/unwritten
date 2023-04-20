@@ -3,7 +3,7 @@ import {
   createSignatureEntity,
   createTypeParameterEntity
 } from "unwritten:interpreter:ast/entities/index.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -25,6 +25,7 @@ import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "ty
 
 import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { ExpressionType } from "unwritten:interpreter:type-definitions/types.js";
+import type { PartialByKey } from "unwritten:type-definitions/utils.js";
 import type { InterpreterContext } from "unwritten:types:context.d.js";
 
 
@@ -35,7 +36,7 @@ export function createInterfaceEntity(ctx: InterpreterContext, symbol: Symbol): 
   assert(tsDeclarations && tsDeclarations.length > 0, "Interface declarations not found");
 
   const name = getNameBySymbol(ctx, symbol);
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const declarations = tsDeclarations.map(declaration => parseInterfaceDeclaration(ctx, declaration));
   const kind = EntityKind.Interface;
@@ -44,9 +45,9 @@ export function createInterfaceEntity(ctx: InterpreterContext, symbol: Symbol): 
     return <InterfaceEntity>{
       ...declarations[0],
       description,
-      id,
       kind,
-      name
+      name,
+      symbolId
     };
   } else {
 
@@ -64,12 +65,12 @@ export function createInterfaceEntity(ctx: InterpreterContext, symbol: Symbol): 
       declarations,
       description,
       getterSignatures,
-      id,
       kind,
       methodSignatures,
       name,
       properties,
       setterSignatures,
+      symbolId,
       typeParameters
     };
 
@@ -79,8 +80,11 @@ export function createInterfaceEntity(ctx: InterpreterContext, symbol: Symbol): 
 
 
 function mergeMembers<Key extends keyof {
-  [Key in keyof InterfaceEntity as InterfaceEntity[Key] extends any[] ? Key : never]: InterfaceEntity[Key]
-}>(interfaces: InterfaceEntity[], key: Key): InterfaceEntity[Key] {
+  [Key in keyof InterfaceEntity as InterfaceEntity[Key] extends any[]
+    ? Key
+    : never
+  ]: InterfaceEntity[Key]
+}>(interfaces: ReturnType<typeof parseInterfaceDeclaration>[], key: Key): InterfaceEntity[Key] {
   // @ts-expect-error - TypeScript limitation https://github.com/microsoft/TypeScript/issues/51182
   return interfaces.reduce<InterfaceEntity[Key]>((acc, declaration) => [
     ...acc,
@@ -88,7 +92,8 @@ function mergeMembers<Key extends keyof {
   ], []);
 }
 
-function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: InterfaceDeclaration): InterfaceEntity {
+
+function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: InterfaceDeclaration): PartialByKey<InterfaceEntity, "symbolId"> {
 
   const tsConstructSignatures = declaration.members.filter(isConstructSignatureDeclaration);
   const tsCallSignatures = declaration.members.filter(isCallSignatureDeclaration);
@@ -135,9 +140,11 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
 
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
+
+  const declarationId = getDeclarationId(ctx, declaration);
+  const symbolId = getSymbolIdByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
-  const id = getIdByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const kind = EntityKind.Interface;
 
@@ -146,15 +153,16 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
   return {
     callSignatures,
     constructSignatures,
+    declarationId,
     getterSignatures,
     heritage,
-    id,
     kind,
     methodSignatures,
     name,
     position,
     properties,
     setterSignatures,
+    symbolId,
     typeParameters,
     ...jsdocTags
   };

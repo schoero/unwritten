@@ -8,11 +8,8 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 
 export function createGetterEntity(ctx: InterpreterContext, symbol: Symbol): GetterEntity {
-
   const functionLike = createFunctionLikeEntity(ctx, symbol, EntityKind.Getter);
-
   return {
     ...functionLike
   };
-
 }

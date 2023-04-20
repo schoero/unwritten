@@ -13,7 +13,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 export function createMappedTypeByTypeNode(ctx: InterpreterContext, typeNode: MappedTypeNode): MappedType {
 
   const kind = TypeKind.Mapped;
-  const id = getIdByTypeNode(ctx, typeNode);
+  const typeId = getIdByTypeNode(ctx, typeNode);
   const position = getPositionByDeclaration(ctx, typeNode);
   const optional = typeNode.questionToken !== undefined;
   const readonly = typeNode.readonlyToken !== undefined;
@@ -26,12 +26,12 @@ export function createMappedTypeByTypeNode(ctx: InterpreterContext, typeNode: Ma
   const valueType = typeNode.type && parseTypeNode(ctx, typeNode.type);
 
   return {
-    id,
     kind,
     optional,
     position,
     properties,
     readonly,
+    typeId,
     typeParameter,
     valueType
   };

@@ -19,7 +19,7 @@ import type {
 
 
 export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContexts, variable: VariableEntity): ConvertedVariableEntityForTableOfContents {
-  const anchorIdentifier = getAnchorIdentifier(ctx, variable.name, variable.id);
+  const anchorIdentifier = getAnchorIdentifier(ctx, variable.name, variable.symbolId);
   return createLinkNode(variable.name, anchorIdentifier);
 }
 
@@ -40,7 +40,7 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
 
   return createTitleNode(
     name,
-    variableEntity.id,
+    variableEntity.symbolId,
     createSmallNode(position),
     createParagraphNode(jsdocTags),
     createParagraphNode(type),

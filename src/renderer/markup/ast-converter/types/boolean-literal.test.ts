@@ -1,29 +1,30 @@
 import { expect, it } from "vitest";
 
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { convertBooleanLiteralType } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 import type { BooleanLiteralType } from "unwritten:interpreter:type-definitions/types.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("MarkupRenderer", TypeKind.BooleanLiteral, () => {
 
   {
 
-    // #region True boolean literal
+    const testFileContent = ts`
+      export type Type = true;
+    `;
 
-    const type: Testable<BooleanLiteralType> = {
-      kind: TypeKind.BooleanLiteral,
-      name: "boolean",
-      value: true
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertBooleanLiteralType(ctx, type as BooleanLiteralType);
@@ -37,16 +38,15 @@ scope("MarkupRenderer", TypeKind.BooleanLiteral, () => {
 
   {
 
-    // #region False boolean literal
+    const testFileContent = ts`
+      export type Type = false;
+    `;
 
-    const type: Testable<BooleanLiteralType> = {
-      kind: TypeKind.BooleanLiteral,
-      name: "boolean",
-      value: false
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertBooleanLiteralType(ctx, type as BooleanLiteralType);

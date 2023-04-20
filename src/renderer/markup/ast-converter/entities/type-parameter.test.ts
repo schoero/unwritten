@@ -1,52 +1,38 @@
 import { expect, it } from "vitest";
 
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertTypeParameterEntitiesForSignature,
   convertTypeParameterEntityForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-
-import type { TypeParameterEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 
 scope("MarkupRenderer", EntityKind.TypeParameter, () => {
 
   {
 
-    // #region Simple typeParameter with constraint, initializer and description
+    const testFileContent = ts`
+      /**
+       * @template TypeParameter - Type parameter description
+       */
+      export type TypeAlias<TypeParameter extends number = 7> = TypeParameter;
+    `;
 
-    const typeParameterEntity: Testable<TypeParameterEntity> = {
-      constraint: {
-        kind: TypeKind.Number,
-        name: "number"
-      },
-      description: "Type parameter description",
-      initializer: {
-        kind: TypeKind.NumberLiteral,
-        name: "number",
-        value: 7
-      },
-      kind: EntityKind.TypeParameter,
-      name: "TypeParameter",
-      position: {
-        column: 1,
-        file: "/file.ts",
-        line: 1
-      }
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const typeParameterEntity = typeAliasEntity.typeParameters![0];
     const ctx = createRenderContext();
 
-    const convertedParametersForSignature = convertTypeParameterEntitiesForSignature(ctx, [typeParameterEntity as TypeParameterEntity]);
-    const convertedParameterForDocumentation = convertTypeParameterEntityForDocumentation(ctx, typeParameterEntity as TypeParameterEntity);
+    const convertedParametersForSignature = convertTypeParameterEntitiesForSignature(ctx, [typeParameterEntity]);
+    const convertedParameterForDocumentation = convertTypeParameterEntityForDocumentation(ctx, typeParameterEntity);
 
     const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);

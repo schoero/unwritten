@@ -1,4 +1,4 @@
-import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { NumberLiteralType as TSNumberLiteralType } from "typescript";
@@ -9,15 +9,15 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 export function createNumberLiteralType(ctx: InterpreterContext, type: TSNumberLiteralType): NumberLiteralType {
 
-  const id = getIdByType(ctx, type);
+  const typeId = getTypeId(ctx, type);
   const value = type.value;
   const name = "number";
   const kind = TypeKind.NumberLiteral;
 
   return {
-    id,
     kind,
     name,
+    typeId,
     value
   };
 

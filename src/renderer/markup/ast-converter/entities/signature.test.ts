@@ -1,7 +1,7 @@
 import { assert, expect, it } from "vitest";
 
+import { createFunctionEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
@@ -14,46 +14,36 @@ import {
   isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-
-import type { SignatureEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 
 scope("MarkupRenderer", EntityKind.Signature, () => {
 
   {
 
-    // #region Signature with all JSDoc tags
+    const testFileContent = ts`
+      /**
+       * Signature description
+       * @example Signature example
+       * @remarks Signature remarks
+       * @returns Return type description
+       * @beta
+       */
+      export function testSignature(): void;
+    `;
 
-    const signatureEntity: Testable<SignatureEntity> = {
-      beta: undefined,
-      description: "Signature description",
-      example: "Signature example",
-      kind: EntityKind.Signature,
-      name: "testSignature",
-      parameters: [],
-      position: {
-        column: 4,
-        file: "/file.ts",
-        line: 9
-      },
-      remarks: "Signature remarks",
-      returnType: {
-        description: "Return type description",
-        kind: TypeKind.Void,
-        name: "void"
-      },
-      typeParameters: []
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "testSignature")!;
+    const functionEntity = createFunctionEntity(compilerContext, symbol);
+    const signatureEntity = functionEntity.signatures[0];
     const ctx = createRenderContext();
 
-    const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity as SignatureEntity);
-    const convertedSignatureForDocumentation = convertSignatureEntityForDocumentation(ctx, signatureEntity as SignatureEntity);
+    const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
+    const convertedSignatureForDocumentation = convertSignatureEntityForDocumentation(ctx, signatureEntity);
 
     assert(isLinkNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not a link");
     assert(isTitleNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a container");

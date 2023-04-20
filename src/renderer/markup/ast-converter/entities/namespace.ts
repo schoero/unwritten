@@ -17,9 +17,11 @@ import type {
 export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForTableOfContents {
 
   const name = namespaceEntity.name;
-  const id = namespaceEntity.id;
+  const id = namespaceEntity.symbolId;
 
-  const children = namespaceEntity.exports.map(exportedEntity => convertEntityForTableOfContents(ctx, exportedEntity));
+  const children = namespaceEntity.exports.map(
+    exportedEntity => convertEntityForTableOfContents(ctx, exportedEntity)
+  );
 
   return createTitleNode(
     name,
@@ -33,7 +35,7 @@ export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContex
 export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForDocumentation {
 
   const name = namespaceEntity.name;
-  const id = namespaceEntity.id;
+  const id = namespaceEntity.symbolId;
 
   const description = namespaceEntity.description ?? "";
   const remarks = namespaceEntity.remarks ?? "";

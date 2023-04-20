@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 export function createExpressionType(ctx: InterpreterContext, expressionWithTypeArguments: ExpressionWithTypeArguments): ExpressionType {
 
-  const id = getIdByTypeNode(ctx, expressionWithTypeArguments);
+  const typeId = getIdByTypeNode(ctx, expressionWithTypeArguments);
   const tsInstanceType = ctx.checker.getTypeAtLocation(expressionWithTypeArguments);
   const tsStaticType = ctx.checker.getTypeAtLocation(expressionWithTypeArguments.expression);
 
@@ -22,12 +22,12 @@ export function createExpressionType(ctx: InterpreterContext, expressionWithType
   const kind = TypeKind.Expression;
 
   return {
-    id,
     instanceType,
     kind,
     name,
     staticType,
-    typeArguments
+    typeArguments,
+    typeId
   };
 
 }

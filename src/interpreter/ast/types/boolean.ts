@@ -1,4 +1,4 @@
-import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { isBooleanType } from "unwritten:interpreter:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
@@ -15,12 +15,12 @@ export function createBooleanType(ctx: InterpreterContext, type: Type): BooleanT
 
   const kind = TypeKind.Boolean;
   const name = "boolean";
-  const id = getIdByType(ctx, type);
+  const typeId = getTypeId(ctx, type);
 
   return {
-    id,
     kind,
-    name
+    name,
+    typeId
   };
 
 }

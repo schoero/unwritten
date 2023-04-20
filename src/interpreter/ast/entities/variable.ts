@@ -1,5 +1,5 @@
 import { parseType } from "unwritten:interpreter:ast/index.js";
-import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
@@ -22,7 +22,7 @@ export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): V
 
   const tsType = ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration);
 
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = parseVariableDeclaration(ctx, declaration);
@@ -32,9 +32,9 @@ export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): V
   return {
     ...fromDeclaration,
     description,
-    id,
     kind,
     name,
+    symbolId,
     type
   };
 
@@ -46,8 +46,10 @@ function parseVariableDeclaration(ctx: InterpreterContext, declaration: Variable
   const position = getPositionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
+  const declarationId = getDeclarationId(ctx, declaration);
 
   return {
+    declarationId,
     modifiers,
     position,
     ...jsdocTags

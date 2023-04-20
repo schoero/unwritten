@@ -1,5 +1,5 @@
 import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
-import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -22,7 +22,7 @@ export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): 
   assert(declaration && isTypeAliasDeclaration(declaration), "Type alias declaration is not found");
 
   const name = getNameBySymbol(ctx, symbol);
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = parseTypeAliasDeclaration(ctx, declaration);
   const kind = EntityKind.TypeAlias;
@@ -30,9 +30,9 @@ export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): 
   return {
     ...fromDeclaration,
     description,
-    id,
     kind,
-    name
+    name,
+    symbolId
   };
 
 }
@@ -41,12 +41,14 @@ export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): 
 function parseTypeAliasDeclaration(ctx: InterpreterContext, declaration: TypeAliasDeclaration) {
 
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
+  const declarationId = getDeclarationId(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const typeNode = declaration.type;
   const type = parseTypeNode(ctx, typeNode);
 
   return {
+    declarationId,
     position,
     type,
     typeParameters,

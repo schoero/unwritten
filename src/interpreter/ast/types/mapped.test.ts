@@ -107,7 +107,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
       assert(exportedTypeAlias.type.valueType?.kind === TypeKind.Conditional);
       assert(exportedTypeAlias.type.valueType.checkType.kind === TypeKind.TypeReference);
 
-      expect(exportedTypeAlias.type.valueType.checkType.symbolId).to.equal(exportedTypeAlias.type.typeParameter.id);
+      expect(exportedTypeAlias.type.valueType.checkType.symbolId).to.equal(exportedTypeAlias.type.typeParameter.symbolId);
       expect(exportedTypeAlias.type.valueType.checkType.name).to.equal("K");
 
       assert(exportedTypeAlias.type.valueType.extendsType.kind === TypeKind.StringLiteral);

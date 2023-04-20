@@ -4,19 +4,24 @@ import type { ID } from "unwritten:interpreter:type-definitions/shared.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function getIdBySymbol(ctx: InterpreterContext, symbol: Symbol): ID {
+export function getSymbolId(ctx: InterpreterContext, symbol: Symbol): ID {
   ensureSymbolHasId(ctx, symbol);
   // @ts-expect-error - Internal API
   return symbol.id;
 }
 
-export function getIdByDeclaration(ctx: InterpreterContext, declaration: Declaration): ID {
+export function getDeclarationId(ctx: InterpreterContext, declaration: Declaration): ID {
   ensureDeclarationHasId(ctx, declaration);
   // @ts-expect-error - Internal API
   return declaration.id;
 }
 
-export function getIdByType(ctx: InterpreterContext, type: Type): ID {
+export function getSymbolIdByDeclaration(ctx: InterpreterContext, declaration: Declaration): ID | undefined {
+  const symbol = ctx.checker.getSymbolAtLocation(declaration);
+  return symbol && getSymbolId(ctx, symbol);
+}
+
+export function getTypeId(ctx: InterpreterContext, type: Type): ID {
   ensureTypeHasId(ctx, type);
   // @ts-expect-error - Internal API
   return type.id;

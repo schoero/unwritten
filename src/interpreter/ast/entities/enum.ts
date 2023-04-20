@@ -1,5 +1,5 @@
 import { createTypeByDeclaration } from "unwritten:interpreter:ast/index.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
 import {
   getDescriptionByDeclaration,
   getDescriptionBySymbol,
@@ -27,7 +27,7 @@ export function createEnumEntity(ctx: InterpreterContext, symbol: Symbol): EnumE
 
   assert(declarations && declarations.length > 0, "Enum declarations not found");
 
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclarations = declarations.map(declaration => parseEnumDeclaration(ctx, declaration));
@@ -38,19 +38,19 @@ export function createEnumEntity(ctx: InterpreterContext, symbol: Symbol): EnumE
     return <EnumEntity>{
       ...fromDeclarations[0],
       description,
-      id,
       kind,
       members,
-      name
+      name,
+      symbolId
     };
   } else {
     return <MergedEnumEntity>{
       declarations: fromDeclarations,
       description,
-      id,
       kind,
       members,
-      name
+      name,
+      symbolId
     };
   }
 
@@ -68,11 +68,13 @@ function mergeMembers(enums: ReturnType<typeof parseEnumDeclaration>[]): EnumEnt
 function parseEnumDeclaration(ctx: InterpreterContext, declaration: EnumDeclaration) {
 
   const description = getDescriptionByDeclaration(ctx, declaration);
+  const declarationId = getDeclarationId(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const members = declaration.members.map(member => createEnumMemberByDeclaration(ctx, member));
 
   return {
+    declarationId,
     description,
     members,
     position,
@@ -84,7 +86,8 @@ function parseEnumDeclaration(ctx: InterpreterContext, declaration: EnumDeclarat
 
 function createEnumMemberByDeclaration(ctx: InterpreterContext, declaration: TSEnumMember): EnumMemberEntity {
 
-  const id = getIdByDeclaration(ctx, declaration);
+  const declarationId = getDeclarationId(ctx, declaration);
+  const symbolId = getSymbolIdByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
@@ -95,11 +98,12 @@ function createEnumMemberByDeclaration(ctx: InterpreterContext, declaration: TSE
   assert(name, "Member name not found");
 
   return {
+    declarationId,
     description,
-    id,
     kind,
     name,
     position,
+    symbolId,
     type,
     ...jsdocTags
   };

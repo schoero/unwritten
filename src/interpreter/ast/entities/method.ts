@@ -8,11 +8,8 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 
 export function createMethodEntity(ctx: InterpreterContext, symbol: Symbol): MethodEntity {
-
   const functionLike = createFunctionLikeEntity(ctx, symbol, EntityKind.Method);
-
   return {
     ...functionLike
   };
-
 }

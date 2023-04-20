@@ -5,7 +5,7 @@ import {
   createSetterEntity,
   createSignatureEntity
 } from "unwritten:interpreter:ast/entities/index.js";
-import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
@@ -44,7 +44,7 @@ export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKi
   const properties = propertyProperties.map(property => createPropertyEntity(ctx, property));
 
   const name = getNameByType(ctx, type);
-  const id = getIdByType(ctx, type);
+  const typeId = getTypeId(ctx, type);
   const position = getPositionByType(ctx, type);
   const isThis = isThisType(type);
 
@@ -52,14 +52,14 @@ export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKi
     callSignatures,
     constructSignatures,
     getters,
-    id,
     isThis,
     kind,
     methods,
     name,
     position,
     properties,
-    setters
+    setters,
+    typeId
   };
 
 });

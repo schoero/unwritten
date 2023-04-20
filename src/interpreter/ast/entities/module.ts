@@ -1,3 +1,4 @@
+import { getDeclarationId } from "unwritten:interpreter/ast/shared/id.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
@@ -19,6 +20,7 @@ export function createModuleEntity(ctx: InterpreterContext, symbol: Symbol): Mod
   const description = declaration && getDescriptionByDeclaration(ctx, declaration);
   const jsdocTags = declaration && getJSDocTagsByDeclaration(ctx, declaration);
   const position = declaration && getPositionByDeclaration(ctx, declaration);
+  const declarationId = declaration && getDeclarationId(ctx, declaration);
 
   const kind = EntityKind.Module;
 

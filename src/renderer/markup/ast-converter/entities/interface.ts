@@ -16,7 +16,7 @@ import {
   extendInterfaceEntitySignaturesWithHeritage
 } from "unwritten:renderer:utils/heritage.js";
 
-import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedInterfaceEntityForDocumentation,
@@ -24,12 +24,12 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity): ConvertedInterfaceEntityForTableOfContents {
-  return createLinkNode(interfaceEntity.name, interfaceEntity.id);
+export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForTableOfContents {
+  return createLinkNode(interfaceEntity.name, interfaceEntity.symbolId);
 }
 
 
-export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity): ConvertedInterfaceEntityForDocumentation {
+export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForDocumentation {
 
   const translate = getTranslator(ctx);
 
@@ -57,7 +57,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
 
   return createTitleNode(
     name,
-    interfaceEntity.id,
+    interfaceEntity.symbolId,
     createSmallNode(position),
     createParagraphNode(jsdocTags),
     createParagraphNode(description),

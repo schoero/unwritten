@@ -17,7 +17,7 @@ import type {
 export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContexts, moduleEntity: ModuleEntity): ConvertedModuleEntityForTableOfContents {
 
   const name = moduleEntity.name;
-  const id = moduleEntity.id;
+  const id = moduleEntity.symbolId;
 
   const children = moduleEntity.exports.map(exportedEntity => convertEntityForTableOfContents(ctx, exportedEntity));
 
@@ -33,7 +33,7 @@ export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContexts,
 export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, moduleEntity: ModuleEntity): ConvertedModuleEntityForDocumentation {
 
   const name = moduleEntity.name;
-  const id = moduleEntity.id;
+  const id = moduleEntity.symbolId;
 
   const description = moduleEntity.description ?? "";
   const remarks = moduleEntity.remarks ?? "";

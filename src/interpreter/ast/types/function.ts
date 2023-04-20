@@ -1,5 +1,5 @@
 import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { ObjectType } from "typescript";
@@ -12,15 +12,14 @@ export function createFunctionType(ctx: InterpreterContext, type: ObjectType): F
 
   const callSignatures = type.getCallSignatures(); // Types with constructSignatures are considered object types
   const signatures = callSignatures.map(signature => createSignatureEntity(ctx, signature));
-
-  const id = getIdByType(ctx, type);
+  const typeId = getTypeId(ctx, type);
 
   const kind = TypeKind.Function;
 
   return {
-    id,
     kind,
-    signatures
+    signatures,
+    typeId
   };
 
 }

@@ -10,7 +10,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 export function createTemplateLiteralType(ctx: InterpreterContext, typeNode: TemplateLiteralTypeNode): TemplateLiteralType {
 
-  const id = getIdByTypeNode(ctx, typeNode);
+  const typeId = getIdByTypeNode(ctx, typeNode);
   const head = typeNode.head.text;
   const spans = typeNode.templateSpans.map(span => span.literal.text);
   const types = typeNode.templateSpans.map(span => parseTypeNode(ctx, span.type));
@@ -18,9 +18,9 @@ export function createTemplateLiteralType(ctx: InterpreterContext, typeNode: Tem
 
   return {
     head,
-    id,
     kind,
     spans,
+    typeId,
     types
   };
 

@@ -34,7 +34,7 @@ export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContex
 
   return createLinkNode(
     renderedSignature,
-    signatureEntity.id
+    signatureEntity.symbolId
   );
 
 }
@@ -51,7 +51,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
     ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters)
     : "";
   const renderedSignature = [signatureName, "(", renderedSignatureParameters, ")"];
-  const id = signatureEntity.id;
+  const id = signatureEntity.symbolId;
 
   const position = signatureEntity.position ? convertPosition(ctx, signatureEntity.position) : "";
   const jsdocTags = convertJSDocTags(ctx, signatureEntity);

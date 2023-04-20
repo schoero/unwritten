@@ -1,7 +1,7 @@
 import ts from "typescript";
 
 import { parseType } from "unwritten:interpreter:ast/index.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
@@ -47,7 +47,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
 
   assert(tsType, "Property type not found");
 
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const fromDeclaration = declaration ? parsePropertyDeclaration(ctx, declaration) : <Record<string, any>>{};
 
@@ -59,10 +59,10 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
 
   return {
     ...fromDeclaration,
-    id,
     kind,
     name,
     optional,
+    symbolId,
     type
   };
 
@@ -71,7 +71,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
 
 function parsePropertyDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature) { // ParameterDeclaration can also be a property when defined in a constructor
 
-  const id = getIdByDeclaration(ctx, declaration);
+  const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
@@ -84,8 +84,8 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
   assert(name, "Property name not found");
 
   return {
+    declarationId,
     description,
-    id,
     initializer,
     kind,
     modifiers,

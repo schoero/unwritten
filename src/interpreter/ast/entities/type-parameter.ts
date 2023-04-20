@@ -1,5 +1,5 @@
 import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
-import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getTypeParameterDescription } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -21,7 +21,8 @@ export function createTypeParameterEntity(ctx: InterpreterContext, declaration: 
 
   assert(symbol, "Symbol is not found");
 
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
+  const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getTypeParameterDescription(ctx, declaration);
@@ -31,12 +32,13 @@ export function createTypeParameterEntity(ctx: InterpreterContext, declaration: 
 
   return {
     constraint,
+    declarationId,
     description,
-    id,
     initializer,
     kind,
     name,
-    position
+    position,
+    symbolId
   };
 
 }

@@ -1,7 +1,7 @@
 import { assert, expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
@@ -52,7 +52,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     });
 
     it("should have a matching id", () => {
-      expect(exportedTypeAlias.id).to.equal(getIdBySymbol(ctx, symbol));
+      expect(exportedTypeAlias.symbolId).to.equal(getSymbolId(ctx, symbol));
     });
 
     it("should have a matching description", () => {

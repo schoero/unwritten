@@ -1,103 +1,41 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { createFunctionEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-
-import type { FunctionEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 
 scope("JSONRenderer", "JSON", () => {
 
   {
 
-    // #region simple function
+    const testFileContent = ts`
+      export function add(a: number, b: number): number {
+        return a + b;
+      }
+    `;
 
-    const functionEntity: Testable<FunctionEntity> = {
-      id: 4055,
-      kind: EntityKind.Function,
-      name: "add",
-      signatures: [
-        {
-          description: undefined,
-          id: 4455,
-          kind: EntityKind.Signature,
-          modifiers: [],
-          name: "add",
-          parameters: [
-            {
-              description: undefined,
-              id: 4052,
-              initializer: undefined,
-              kind: EntityKind.Parameter,
-              name: "a",
-              optional: false,
-              position: {
-                column: 20,
-                file: "/file.ts",
-                line: 1
-              },
-              rest: false,
-              type: {
-                id: 16,
-                kind: TypeKind.Number,
-                name: "number"
-              }
-            },
-            {
-              description: undefined,
-              id: 4053,
-              initializer: undefined,
-              kind: EntityKind.Parameter,
-              name: "b",
-              optional: false,
-              position: {
-                column: 31,
-                file: "/file.ts",
-                line: 1
-              },
-              rest: false,
-              type: {
-                id: 16,
-                kind: TypeKind.Number,
-                name: "number"
-              }
-            }
-          ],
-          position: {
-            column: 0,
-            file: "/file.ts",
-            line: 1
-          },
-          returnType: {
-            description: undefined,
-            id: 16,
-            kind: TypeKind.Number,
-            name: "number"
-          },
-          typeParameters: undefined
-        }
-      ]
-    };
+    const { exportedSymbols, ctx } = compile(testFileContent);
 
-    // #endregion
+    const symbol = exportedSymbols.find(s => s.name === "add")!;
+    const functionEntity = createFunctionEntity(ctx, symbol);
 
     it("should not export id's by default", () => {
       const ctx = createRenderContext(BuiltInRenderers.JSON);
-      const renderedOutput = ctx.renderer.render(ctx, [functionEntity as FunctionEntity]);
+      const renderedOutput = ctx.renderer.render(ctx, [functionEntity]);
       const json = JSON.parse(renderedOutput);
-      expect(json[0].id).to.equal(undefined);
+      expect(json[0].symbolId).to.equal(undefined);
     });
 
     it("should be possible to enable ids", () => {
       const ctx = createRenderContext(BuiltInRenderers.JSON);
       ctx.config.renderConfig.json.includeIds = true;
-      const renderedOutput = ctx.renderer.render(ctx, [functionEntity as FunctionEntity]);
+      const renderedOutput = ctx.renderer.render(ctx, [functionEntity]);
       const json = JSON.parse(renderedOutput);
-      expect(json[0].id).to.not.equal(undefined);
+      expect(json[0].symbolId).to.not.equal(undefined);
     });
 
   }

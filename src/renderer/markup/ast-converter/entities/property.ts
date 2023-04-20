@@ -22,7 +22,7 @@ export function convertPropertyEntityForSignature(ctx: MarkupRenderContexts, pro
 
   return createLinkNode(
     name,
-    propertyEntity.id
+    propertyEntity.symbolId
   );
 
 }
@@ -63,7 +63,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   return createTitle
     ? createTitleNode(
       name,
-      propertyEntity.id,
+      propertyEntity.symbolId,
       ...content
     )
     : [

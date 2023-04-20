@@ -1,5 +1,5 @@
 import { parseSymbol } from "unwritten:interpreter:ast/index.js";
-import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { getExportedSymbols } from "unwritten:interpreter:utils/ts.js";
@@ -25,15 +25,15 @@ export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol):
 
   }, []);
 
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const kind = EntityKind.SourceFile;
 
   return {
     exports,
-    id,
     kind,
-    name
+    name,
+    symbolId
   };
 
 }

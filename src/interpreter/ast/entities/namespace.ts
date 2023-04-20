@@ -1,3 +1,4 @@
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
 import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -15,15 +16,19 @@ export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): 
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
+  const symbolId = getSymbolId(ctx, symbol);
   const description = declaration && getDescriptionByDeclaration(ctx, declaration);
   const jsdocTags = declaration && getJSDocTagsByDeclaration(ctx, declaration);
   const position = declaration && getPositionByDeclaration(ctx, declaration);
+  const declarationId = declaration && getDeclarationId(ctx, declaration);
 
   const kind = EntityKind.Namespace;
 
   return {
     ...fromSourceFile,
+    declarationId,
     description,
+    symbolId,
     ...jsdocTags,
     kind,
     position

@@ -9,7 +9,7 @@ import {
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes.js";
 
-import type { EnumEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { EnumEntity, MergedEnumEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedEnumEntityForDocumentation,
@@ -17,12 +17,12 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContexts, enumEntity: EnumEntity): ConvertedEnumEntityForTableOfContents {
-  return createLinkNode(enumEntity.name, enumEntity.id);
+export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForTableOfContents {
+  return createLinkNode(enumEntity.name, enumEntity.symbolId);
 }
 
 
-export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enumEntity: EnumEntity): ConvertedEnumEntityForDocumentation {
+export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForDocumentation {
 
   const name = enumEntity.name;
   const description = enumEntity.description ?? "";
@@ -48,7 +48,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
 
   return createTitleNode(
     name,
-    enumEntity.id,
+    enumEntity.symbolId,
     createSmallNode(position),
     createParagraphNode(jsdocTags),
     createParagraphNode(description),

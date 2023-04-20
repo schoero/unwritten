@@ -1,4 +1,4 @@
-import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { BigIntLiteralType as TSBigIntLiteralType } from "typescript";
@@ -9,16 +9,16 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 export function createBigIntLiteralType(ctx: InterpreterContext, type: TSBigIntLiteralType): BigIntLiteralType {
 
-  const id = getIdByType(ctx, type);
+  const typeId = getTypeId(ctx, type);
   const sign = type.value.negative ? "-" : "";
   const name = "bigint";
   const value = BigInt(sign + type.value.base10Value);
   const kind = TypeKind.BigIntLiteral;
 
   return {
-    id,
     kind,
     name,
+    typeId,
     value
   };
 

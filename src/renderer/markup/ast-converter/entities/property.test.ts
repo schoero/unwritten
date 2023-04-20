@@ -1,51 +1,43 @@
 import { expect, it } from "vitest";
 
+import { createClassEntity, createInterfaceEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertPropertyEntityForDocumentation,
   convertPropertyEntityForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { isParagraphNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-
-import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 
 scope("MarkupRenderer", EntityKind.Property, () => {
 
   {
 
-    // #region Normal property
-
-    const propertyEntity: Testable<PropertyEntity> = {
-      description: "Property description",
-      example: "Property example",
-      kind: EntityKind.Property,
-      modifiers: [],
-      name: "Property",
-      optional: true,
-      position: {
-        column: 2,
-        file: "/file.ts",
-        line: 7
-      },
-      remarks: "Property remarks",
-      type: {
-        kind: TypeKind.String,
-        name: "string"
+    const testFileContent = ts`
+      export interface Interface {
+        /**
+         * Property description
+         * @remarks Property remarks
+         * @example Property example
+         */
+        readonly prop?: string;
       }
-    };
+    `;
 
-    // #endregion
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
+    const symbol = exportedSymbols.find(s => s.name === "Interface")!;
+    const interfaceEntity = createInterfaceEntity(compilerContext, symbol);
+    const propertyEntity = interfaceEntity.properties[0];
     const ctx = createRenderContext();
 
-    const convertedPropertyForSignature = convertPropertyEntityForSignature(ctx, propertyEntity as PropertyEntity);
-    const convertedPropertyForDocumentation = convertPropertyEntityForDocumentation(ctx, propertyEntity as PropertyEntity);
+    const convertedPropertyForSignature = convertPropertyEntityForSignature(ctx, propertyEntity);
+    const convertedPropertyForDocumentation = convertPropertyEntityForDocumentation(ctx, propertyEntity);
 
     const [
       tags,
@@ -56,8 +48,8 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     ] = convertedPropertyForDocumentation.children;
 
     it("should have a matching name", () => {
-      expect(convertedPropertyForSignature.children).to.equal("Property");
-      expect(convertedPropertyForDocumentation.title).to.equal("Property");
+      expect(convertedPropertyForSignature.children).to.equal("prop");
+      expect(convertedPropertyForDocumentation.title).to.equal("prop");
     });
 
     it("should have a matching type", () => {
@@ -69,7 +61,13 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     it("should have an optional tag", () => {
       expect(isParagraphNode(tags)).to.equal(true);
       const renderedTags = renderNode(ctx, tags.children);
-      expect(renderedTags).to.equal("optional");
+      expect(renderedTags).to.contain("optional");
+    });
+
+    it("should have a readonly modifier tag", () => {
+      expect(isParagraphNode(tags)).to.equal(true);
+      const renderedTags = renderNode(ctx, tags.children);
+      expect(renderedTags).to.contain("readonly");
     });
 
     it("should have a matching description", () => {
@@ -94,155 +92,26 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
   {
 
-    // #region Property with all possible modifiers
-
-    // #region Source
-
-    // export class Class {
-    //   public publicProperty: undefined;
-    //   private privateProperty: undefined;
-    //   static staticProperty: undefined;
-    //   readonly readonlyProperty: undefined;
-    //   accessor accessorProperty: undefined;
-    //   #nativePrivateProperty: undefined;
-    // }
-
-    // #endregion
-
-    const propertyEntities: Testable<PropertyEntity>[] = [
-      {
-        description: undefined,
-        id: 4459,
-        initializer: undefined,
-        kind: EntityKind.Property,
-        modifiers: [
-          "public"
-        ],
-        name: "publicProperty",
-        optional: false,
-        position: {
-          column: 2,
-          file: "/file.ts",
-          line: 2
-        },
-        type: {
-          id: 10,
-          kind: TypeKind.Undefined,
-          name: "undefined"
-        }
-      },
-      {
-        description: undefined,
-        id: 4460,
-        initializer: undefined,
-        kind: EntityKind.Property,
-        modifiers: [
-          "private"
-        ],
-        name: "privateProperty",
-        optional: false,
-        position: {
-          column: 2,
-          file: "/file.ts",
-          line: 3
-        },
-        type: {
-          id: 10,
-          kind: TypeKind.Undefined,
-          name: "undefined"
-        }
-      },
-      {
-        description: undefined,
-        id: 4461,
-        initializer: undefined,
-        kind: EntityKind.Property,
-        modifiers: [
-          "static"
-        ],
-        name: "staticProperty",
-        optional: false,
-        position: {
-          column: 2,
-          file: "/file.ts",
-          line: 4
-        },
-        type: {
-          id: 10,
-          kind: TypeKind.Undefined,
-          name: "undefined"
-        }
-      },
-      {
-        description: undefined,
-        id: 4462,
-        initializer: undefined,
-        kind: EntityKind.Property,
-        modifiers: [
-          "readonly"
-        ],
-        name: "readonlyProperty",
-        optional: false,
-        position: {
-          column: 2,
-          file: "/file.ts",
-          line: 5
-        },
-        type: {
-          id: 10,
-          kind: TypeKind.Undefined,
-          name: "undefined"
-        }
-      },
-      {
-        description: undefined,
-        id: 4463,
-        initializer: undefined,
-        kind: EntityKind.Property,
-        modifiers: [
-          "accessor"
-        ],
-        name: "accessorProperty",
-        optional: false,
-        position: {
-          column: 2,
-          file: "/file.ts",
-          line: 6
-        },
-        type: {
-          id: 10,
-          kind: TypeKind.Undefined,
-          name: "undefined"
-        }
-      },
-      {
-        description: undefined,
-        id: 4464,
-        initializer: undefined,
-        kind: EntityKind.Property,
-        modifiers: [
-          "nativePrivate"
-        ],
-        name: "#nativePrivateProperty",
-        optional: false,
-        position: {
-          column: 2,
-          file: "/file.ts",
-          line: 7
-        },
-        type: {
-          id: 10,
-          kind: TypeKind.Undefined,
-          name: "undefined"
-        }
+    const testFileContent = ts`
+      export class Class {
+        public publicProperty: undefined;
+        private privateProperty: undefined;
+        static staticProperty: undefined;
+        readonly readonlyProperty: undefined;
+        accessor accessorProperty: undefined;
+        #nativePrivateProperty: undefined;
       }
-    ];
+    `;
 
-    // #endregion
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const classEntity = createClassEntity(compilerContext, symbol);
     const ctx = createRenderContext();
 
-    const convertedPropertiesForDocumentation = propertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity as PropertyEntity));
+    const convertedPropertiesForDocumentation = classEntity.properties.map(
+      propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity)
+    );
 
     const modifiers = convertedPropertiesForDocumentation.map(
       convertedPropertyForDocumentation =>

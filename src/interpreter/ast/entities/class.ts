@@ -6,7 +6,7 @@ import {
   createSetterEntity,
   createTypeParameterEntity
 } from "unwritten:interpreter:ast/entities/index.js";
-import { getIdByDeclaration, getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
@@ -38,19 +38,19 @@ export function createClassEntity(ctx: InterpreterContext, symbol: Symbol): Clas
   assert(declaration && isClassDeclaration(declaration), "Class declaration is not found");
 
   const fromDeclaration = parseClassDeclaration(ctx, declaration);
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
 
   return {
     ...fromDeclaration,
-    id,
-    name
+    name,
+    symbolId
   };
 
 }
 
 
-function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDeclaration): Omit<ClassEntity, "name"> {
+function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDeclaration): Omit<ClassEntity, "name" | "symbolId"> {
 
   const constructorDeclarations = getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isConstructorDeclaration);
   const getterDeclarations = getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isGetterDeclaration);
@@ -70,15 +70,15 @@ function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDe
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
-  const id = getIdByDeclaration(ctx, declaration);
+  const declarationId = getDeclarationId(ctx, declaration);
   const kind = EntityKind.Class;
 
   return {
     ctor,
+    declarationId,
     description,
     getters,
     heritage,
-    id,
     kind,
     methods,
     modifiers,

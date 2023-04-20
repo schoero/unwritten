@@ -1,4 +1,4 @@
-import { ensureTypeHasId, getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { ensureTypeHasId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 
 import type { Type } from "typescript";
 
@@ -13,19 +13,19 @@ function getLocker(ctx: InterpreterContext) {
 export function isTypeLocked(ctx: InterpreterContext, type: Type) {
   ensureTypeHasId(ctx, type);
   const locker = getLocker(ctx);
-  return locker.has(getIdByType(ctx, type));
+  return locker.has(getTypeId(ctx, type));
 }
 
 
 export function lockType(ctx: InterpreterContext, type: Type) {
   ensureTypeHasId(ctx, type);
   const locker = getLocker(ctx);
-  locker.add(getIdByType(ctx, type));
+  locker.add(getTypeId(ctx, type));
 }
 
 
 export function unlockType(ctx: InterpreterContext, type: Type) {
   ensureTypeHasId(ctx, type);
   const locker = getLocker(ctx);
-  locker.delete(getIdByType(ctx, type));
+  locker.delete(getTypeId(ctx, type));
 }

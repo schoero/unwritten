@@ -1,4 +1,4 @@
-import { getIdByType } from "unwritten:interpreter:ast/shared/id.js";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { isUndefinedType } from "unwritten:interpreter:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
@@ -15,12 +15,12 @@ export function createUndefinedType(ctx: InterpreterContext, type: Type): Undefi
 
   const kind = TypeKind.Undefined;
   const name = "undefined";
-  const id = getIdByType(ctx, type);
+  const typeId = getTypeId(ctx, type);
 
   return {
-    id,
     kind,
-    name
+    name,
+    typeId
   };
 
 }

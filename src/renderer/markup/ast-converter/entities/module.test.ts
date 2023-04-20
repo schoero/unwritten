@@ -1,63 +1,43 @@
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { createModuleEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   convertModuleEntityForDocumentation,
   convertModuleEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-
-import type { ModuleEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 
 scope("MarkupRenderer", EntityKind.Module, () => {
 
   {
 
-    // #region Empty module with all JSDoc tags
+    const testFileContent = ts`
+      /**
+       * Module description
+       *
+       * @remarks Module remarks
+       * @example Module example
+       * @deprecated
+       * @beta
+       */
+      export module Module {
 
-    // #region Source
+      }
+    `;
 
-    // /**
-    //  * Module description
-    //  *
-    //  * @remarks Module remarks
-    //  * @example Module example
-    //  * @deprecated
-    //  * @beta
-    //  */
-    // export module Module {
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // }
-
-    // #endregion
-
-    const moduleEntity: Testable<ModuleEntity> = {
-      beta: undefined,
-      deprecated: undefined,
-      description: "Module description",
-      example: "Module example",
-      exports: [],
-      id: 4053,
-      kind: EntityKind.Module,
-      name: "Module",
-      position: {
-        column: 4,
-        file: "/file.ts",
-        line: 9
-      },
-      remarks: "Module remarks"
-    };
-
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Module")!;
+    const moduleEntity = createModuleEntity(compilerContext, symbol);
     const ctx = createRenderContext();
 
-    const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity as ModuleEntity);
-    const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity as ModuleEntity);
+    const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity);
+    const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity);
 
     const [
       position,
@@ -102,63 +82,20 @@ scope("MarkupRenderer", EntityKind.Module, () => {
 
   {
 
-    // #region module with a function
-
-    // #region Source
-
-    // export module Module {
-    //   export function test(){}
-    // }
-
-    // #endregion
-
-    const moduleEntity: Testable<ModuleEntity> = {
-      description: undefined,
-      exports: [
-        {
-          id: 4460,
-          kind: EntityKind.Function,
-          name: "test",
-          signatures: [
-            {
-              description: undefined,
-              id: 62,
-              kind: EntityKind.Signature,
-              modifiers: [],
-              name: "test",
-              parameters: [],
-              position: {
-                column: 2,
-                file: "/file.ts",
-                line: 2
-              },
-              returnType: {
-                description: undefined,
-                id: 25,
-                kind: TypeKind.Void,
-                name: "void"
-              },
-              typeParameters: undefined
-            }
-          ]
-        }
-      ],
-      id: 4459,
-      kind: EntityKind.Module,
-      name: "Module",
-      position: {
-        column: 0,
-        file: "/file.ts",
-        line: 1
+    const testFileContent = ts`
+      export module Module {
+        export function test(){}
       }
-    };
+    `;
 
-    // #endregion
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
+    const symbol = exportedSymbols.find(s => s.name === "Module")!;
+    const moduleEntity = createModuleEntity(compilerContext, symbol);
     const ctx = createRenderContext();
 
-    const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity as ModuleEntity);
-    const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity as ModuleEntity);
+    const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity);
+    const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity);
 
     const [
       position,

@@ -1,5 +1,5 @@
 import { parseType, parseTypeNode } from "unwritten:interpreter:ast/index.js";
-import { getIdByType, getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
+import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { ConditionalType as TSConditionalType, ConditionalTypeNode } from "typescript";
@@ -10,7 +10,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 export function createConditionalTypeByTypeNode(ctx: InterpreterContext, typeNode: ConditionalTypeNode): ConditionalType {
 
-  const id = getIdByTypeNode(ctx, typeNode);
+  const typeId = getIdByTypeNode(ctx, typeNode);
   const checkType = parseTypeNode(ctx, typeNode.checkType);
   const extendsType = parseTypeNode(ctx, typeNode.extendsType);
   const trueType = parseTypeNode(ctx, typeNode.trueType);
@@ -28,9 +28,9 @@ export function createConditionalTypeByTypeNode(ctx: InterpreterContext, typeNod
     checkType,
     extendsType,
     falseType,
-    id,
     kind,
-    trueType
+    trueType,
+    typeId
   };
 
 }
@@ -38,7 +38,7 @@ export function createConditionalTypeByTypeNode(ctx: InterpreterContext, typeNod
 export function createConditionalType(ctx: InterpreterContext, type: TSConditionalType): ConditionalType {
 
   const root = type.root;
-  const id = getIdByType(ctx, type);
+  const id = getTypeId(ctx, type);
   const checkType = parseTypeNode(ctx, root.node.checkType);
   const extendsType = parseTypeNode(ctx, root.node.extendsType);
   const trueType = parseTypeNode(ctx, root.node.trueType);
@@ -50,9 +50,9 @@ export function createConditionalType(ctx: InterpreterContext, type: TSCondition
     checkType,
     extendsType,
     falseType,
-    id,
     kind,
-    trueType
+    trueType,
+    typeId: id
   };
 
 }

@@ -8,6 +8,7 @@ import type {
   ConstructorEntity,
   GetterEntity,
   InterfaceEntity,
+  MergedInterfaceEntity,
   MethodEntity,
   PropertyEntity,
   SetterEntity
@@ -42,10 +43,10 @@ export function extendClassEntityConstructorsWithHeritage(classEntity: ClassEnti
     }
 
     const constructorEntity: ConstructorEntity = {
-      id: classEntity.heritage.staticType.constructSignatures[0].id,
       kind: EntityKind.Constructor,
       name: classEntity.heritage.staticType.constructSignatures[0].name,
-      signatures: classEntity.heritage.staticType.constructSignatures
+      signatures: classEntity.heritage.staticType.constructSignatures,
+      symbolId: classEntity.heritage.staticType.constructSignatures[0].symbolId
     };
 
     return constructorEntity;
@@ -84,7 +85,7 @@ export function extendClassEntityEntitiesWithHeritage<
 }
 
 
-export function extendInterfaceEntityPropertiesWithHeritage(interfaceEntity: InterfaceEntity): PropertyEntity[] {
+export function extendInterfaceEntityPropertiesWithHeritage(interfaceEntity: InterfaceEntity | MergedInterfaceEntity): PropertyEntity[] {
 
   const fromHeritages = interfaceEntity.heritage?.reduce<{ [key: string]: PropertyEntity; }>((result, heritage) => {
     if(!isInterfaceType(heritage.instanceType)){
@@ -115,7 +116,7 @@ export function extendInterfaceEntityPropertiesWithHeritage(interfaceEntity: Int
 type SignatureKeys = "callSignatures" | "constructSignatures" | "getterSignatures" | "methodSignatures" | "setterSignatures";
 
 
-export function extendInterfaceEntitySignaturesWithHeritage<Key extends SignatureKeys>(interfaceEntity: InterfaceEntity, key: Key): InterfaceEntity[Key] {
+export function extendInterfaceEntitySignaturesWithHeritage<Key extends SignatureKeys>(interfaceEntity: InterfaceEntity | MergedInterfaceEntity, key: Key): InterfaceEntity[Key] {
 
   const map = {
     callSignatures: "callSignatures",

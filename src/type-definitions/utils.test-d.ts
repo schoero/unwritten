@@ -2,10 +2,38 @@ import { expectTypeOf, test } from "vitest";
 
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { Complete, DeepPartialByKey, DeepRequiredByKey, TranslationWithoutSuffixes } from "./utils.js";
+import type {
+  Complete,
+  DeepPartialByKey,
+  DeepRequiredByKey,
+  PartialByKey,
+  TranslationWithoutSuffixes
+} from "./utils.js";
 
 
 scope("Types", "Utils", () => {
+
+  test("PartialByKey", () => {
+
+    type TestType = {
+      id: number;
+      name: string;
+      type: {
+        id: number;
+        name: string;
+      };
+    };
+
+    expectTypeOf<PartialByKey<TestType, "id">>().toEqualTypeOf<{
+      name: string;
+      type: {
+        id: number;
+        name: string;
+      };
+      id?: number;
+    }>();
+
+  });
 
   test("DeepPartialByKey", () => {
 

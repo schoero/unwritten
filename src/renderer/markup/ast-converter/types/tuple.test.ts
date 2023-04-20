@@ -1,48 +1,30 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { convertTupleType } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("MarkupRenderer", TypeKind.Tuple, () => {
 
   {
 
-    // #region simple tuple type
+    const testFileContent = ts`
+      export type Type = [string, number];
+    `;
 
-    const type: Testable<TupleType> = {
-      kind: TypeKind.Tuple,
-      members: [
-        {
-          kind: EntityKind.TupleMember,
-          optional: false,
-          rest: false,
-          type: {
-            kind: TypeKind.String,
-            name: "string"
-          }
-        },
-        {
-          kind: EntityKind.TupleMember,
-          optional: false,
-          rest: false,
-          type: {
-            kind: TypeKind.Number,
-            name: "number"
-          }
-        }
-      ]
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertTupleType(ctx, type as TupleType);
@@ -56,36 +38,15 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
 
   {
 
-    // #region simple tuple type
+    const testFileContent = ts`
+      export type Type = [first: string, second: number];
+    `;
 
-    const type: Testable<TupleType> = {
-      kind: TypeKind.Tuple,
-      members: [
-        {
-          kind: EntityKind.TupleMember,
-          name: "first",
-          optional: false,
-          rest: false,
-          type: {
-            kind: TypeKind.String,
-            name: "string"
-          }
-        },
-        {
-          kind: EntityKind.TupleMember,
-          name: "second",
-          optional: false,
-          rest: false,
-          type: {
-            kind: TypeKind.Number,
-            name: "number"
-          }
-        }
-      ]
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertTupleType(ctx, type as TupleType);
@@ -99,34 +60,15 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
 
   {
 
-    // #region tuple type with optional members
+    const testFileContent = ts`
+      export type Type = [string, number?];
+    `;
 
-    const type: Testable<TupleType> = {
-      kind: TypeKind.Tuple,
-      members: [
-        {
-          kind: EntityKind.TupleMember,
-          optional: false,
-          rest: false,
-          type: {
-            kind: TypeKind.String,
-            name: "string"
-          }
-        },
-        {
-          kind: EntityKind.TupleMember,
-          optional: true,
-          rest: false,
-          type: {
-            kind: TypeKind.Number,
-            name: "number"
-          }
-        }
-      ]
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertTupleType(ctx, type as TupleType);
@@ -140,36 +82,15 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
 
   {
 
-    // #region tuple type with rest members
+    const testFileContent = ts`
+      export type Type = [string, ...number[]];
+    `;
 
-    const type: Testable<TupleType> = {
-      kind: TypeKind.Tuple,
-      members: [
-        {
-          kind: EntityKind.TupleMember,
-          name: undefined,
-          optional: false,
-          rest: false,
-          type: {
-            kind: TypeKind.String,
-            name: "string"
-          }
-        },
-        {
-          kind: EntityKind.TupleMember,
-          name: undefined,
-          optional: false,
-          rest: true,
-          type: {
-            kind: TypeKind.Number,
-            name: "number"
-          }
-        }
-      ]
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertTupleType(ctx, type as TupleType);
@@ -183,45 +104,15 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
 
   {
 
-    // #region tuple type with union rest members
+    const testFileContent = ts`
+      export type Type = [string, ...(string | number)[]];
+    `;
 
-    const type: Testable<TupleType> = {
-      kind: TypeKind.Tuple,
-      members: [
-        {
-          kind: EntityKind.TupleMember,
-          name: undefined,
-          optional: false,
-          rest: false,
-          type: {
-            kind: TypeKind.String,
-            name: "string"
-          }
-        },
-        {
-          kind: EntityKind.TupleMember,
-          name: undefined,
-          optional: false,
-          rest: true,
-          type: {
-            kind: TypeKind.Union,
-            types: [
-              {
-                kind: TypeKind.String,
-                name: "string"
-              },
-              {
-                kind: TypeKind.Number,
-                name: "number"
-              }
-            ]
-          }
-        }
-      ]
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertTupleType(ctx, type as TupleType);

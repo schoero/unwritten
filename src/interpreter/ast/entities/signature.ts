@@ -1,6 +1,6 @@
 import { createParameterEntity, createTypeParameterEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { parseType } from "unwritten:interpreter:ast/index.js";
-import { getIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
 import {
   getDescriptionByDeclaration,
   getJSDocTagsByDeclaration,
@@ -36,9 +36,10 @@ export function createSignatureEntity(ctx: InterpreterContext, signature: TSSign
 }
 
 
-function parseSignatureDeclaration(ctx: InterpreterContext, declaration: SignatureDeclaration) {
+function parseSignatureDeclaration(ctx: InterpreterContext, declaration: SignatureDeclaration): Omit<SignatureEntity, "kind" | "returnType"> {
 
-  const id = getIdByDeclaration(ctx, declaration);
+  const declarationId = getDeclarationId(ctx, declaration);
+  const symbolId = getSymbolIdByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const parameters = declaration.parameters.map(declaration => createParameterEntity(ctx, declaration));
   const typeParameters = declaration.typeParameters?.map(declaration => createTypeParameterEntity(ctx, declaration));
@@ -48,12 +49,13 @@ function parseSignatureDeclaration(ctx: InterpreterContext, declaration: Signatu
   const name = getNameByDeclaration(ctx, declaration);
 
   return {
+    declarationId,
     description,
-    id,
     modifiers,
     name,
     parameters,
     position,
+    symbolId,
     typeParameters,
     ...jsdocTags
   };

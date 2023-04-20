@@ -39,7 +39,7 @@ const jsonRenderer: JSONRenderer = {
 
     return JSON.stringify(entities, (key: PropertyKey, value: boolean | number | string | undefined) => {
       if(!renderConfig.includeIds){
-        if(key === "id" || key === "symbolId"){
+        if(key === "declarationId" || key === "symbolId" || key === "typeId"){
           return;
         }
       }

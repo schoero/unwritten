@@ -1,63 +1,43 @@
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { createNamespaceEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-
-import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
+import { ts } from "unwritten:tests:utils/template.js";
 
 
 scope("MarkupRenderer", EntityKind.Namespace, () => {
 
   {
 
-    // #region Empty namespace with all JSDoc tags
+    const testFileContent = ts`
+      /**
+       * Namespace description
+       *
+       * @remarks Namespace remarks
+       * @example Namespace example
+       * @deprecated
+       * @beta
+       */
+      export namespace Namespace {
 
-    // #region Source
+      }
+    `;
 
-    // /**
-    //  * Namespace description
-    //  *
-    //  * @remarks Namespace remarks
-    //  * @example Namespace example
-    //  * @deprecated
-    //  * @beta
-    //  */
-    // export namespace Namespace {
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // }
-
-    // #endregion
-
-    const namespaceEntity: Testable<NamespaceEntity> = {
-      beta: undefined,
-      deprecated: undefined,
-      description: "Namespace description",
-      example: "Namespace example",
-      exports: [],
-      id: 4053,
-      kind: EntityKind.Namespace,
-      name: "Namespace",
-      position: {
-        column: 4,
-        file: "/file.ts",
-        line: 9
-      },
-      remarks: "Namespace remarks"
-    };
-
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Namespace")!;
+    const namespaceEntity = createNamespaceEntity(compilerContext, symbol);
     const ctx = createRenderContext();
 
-    const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity as NamespaceEntity);
-    const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity as NamespaceEntity);
+    const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity);
+    const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity);
 
     const [
       position,
@@ -102,63 +82,21 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
 
   {
 
-    // #region namespace with a function
 
-    // #region Source
-
-    // export namespace Namespace {
-    //   export function test(){}
-    // }
-
-    // #endregion
-
-    const namespaceEntity: Testable<NamespaceEntity> = {
-      description: undefined,
-      exports: [
-        {
-          id: 4460,
-          kind: EntityKind.Function,
-          name: "test",
-          signatures: [
-            {
-              description: undefined,
-              id: 62,
-              kind: EntityKind.Signature,
-              modifiers: [],
-              name: "test",
-              parameters: [],
-              position: {
-                column: 2,
-                file: "/file.ts",
-                line: 2
-              },
-              returnType: {
-                description: undefined,
-                id: 25,
-                kind: TypeKind.Void,
-                name: "void"
-              },
-              typeParameters: undefined
-            }
-          ]
-        }
-      ],
-      id: 4459,
-      kind: EntityKind.Namespace,
-      name: "Namespace",
-      position: {
-        column: 0,
-        file: "/file.ts",
-        line: 1
+    const testFileContent = ts`
+      export namespace Namespace {
+        export function test(){}
       }
-    };
+    `;
 
-    // #endregion
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
+    const symbol = exportedSymbols.find(s => s.name === "Namespace")!;
+    const namespaceEntity = createNamespaceEntity(compilerContext, symbol);
     const ctx = createRenderContext();
 
-    const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity as NamespaceEntity);
-    const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity as NamespaceEntity);
+    const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity);
+    const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity);
 
     const [
       position,

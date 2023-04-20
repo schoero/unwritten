@@ -1,5 +1,5 @@
 import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import {
   isCallSignatureDeclaration,
@@ -41,14 +41,14 @@ export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(c
     return createSignatureEntity(ctx, signature);
   });
 
-  const id = getIdBySymbol(ctx, symbol);
+  const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
 
   return <InferFunctionLikeEntityKind<Kind>>{
-    id,
     kind,
     name,
-    signatures
+    signatures,
+    symbolId
   };
 
 }

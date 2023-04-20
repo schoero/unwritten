@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
+import { createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents
@@ -13,46 +13,36 @@ import {
   isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:tests:utils/template.js";
 import { assert } from "unwritten:utils/general.js";
-
-import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
 
 
 scope("MarkupRenderer", EntityKind.Variable, () => {
 
   {
 
-    // #region Variable with all JSDoc tags
+    const testFileContent = ts`
+      /**
+       * Variable description
+       * 
+       * @remarks Variable remarks
+       * @example Variable example
+       * @beta
+       */
+      export const numberVariable = 7;
+    `;
 
-    const variableEntity: Testable<VariableEntity> = {
-      beta: undefined,
-      description: "Variable description",
-      example: "Variable example",
-      kind: EntityKind.Variable,
-      modifiers: [],
-      name: "numberVariable",
-      position: {
-        column: 17,
-        file: "/file.ts",
-        line: 9
-      },
-      remarks: "Variable remarks",
-      type: {
-        kind: TypeKind.NumberLiteral,
-        name: "number",
-        value: 7
-      }
-    };
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "numberVariable")!;
+    const variableEntity = createVariableEntity(compilerContext, symbol);
     const ctx = createRenderContext();
 
-    const convertedVariableForTableOfContents = convertVariableEntityForTableOfContents(ctx, variableEntity as VariableEntity);
-    const convertedVariableForDocumentation = convertVariableEntityForDocumentation(ctx, variableEntity as VariableEntity);
+    const convertedVariableForTableOfContents = convertVariableEntityForTableOfContents(ctx, variableEntity);
+    const convertedVariableForDocumentation = convertVariableEntityForDocumentation(ctx, variableEntity);
 
     assert(isLinkNode(convertedVariableForTableOfContents), "Rendered variable for table of contents is not a link");
     assert(isTitleNode(convertedVariableForDocumentation), "Rendered variable for documentation is not a container");

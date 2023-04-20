@@ -1,5 +1,5 @@
 import { parseType, parseTypeNode } from "unwritten:interpreter:ast/index.js";
-import { getIdBySymbol, getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
+import { getIdByTypeNode, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
 import { createExpressionType, createUnresolvedByTypeNode } from "unwritten:interpreter:ast/types/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
@@ -29,18 +29,18 @@ export function createTypeReferenceByTypeNode(ctx: InterpreterContext, typeNode:
     ? createUnresolvedByTypeNode(ctx, typeNode)
     : parseType(ctx, tsType);
 
-  const id = getIdByTypeNode(ctx, typeNode);
+  const typeId = getIdByTypeNode(ctx, typeNode);
   const kind = TypeKind.TypeReference;
   const symbol = ctx.checker.getSymbolAtLocation(typeNode.typeName);
-  const symbolId = symbol && getIdBySymbol(ctx, symbol);
+  const symbolId = symbol && getSymbolId(ctx, symbol);
 
   return {
-    id,
     kind,
     name,
     symbolId,
     type,
-    typeArguments
+    typeArguments,
+    typeId
   };
 
 }

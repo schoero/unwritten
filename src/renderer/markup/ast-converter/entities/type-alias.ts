@@ -30,7 +30,7 @@ export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContex
     : "";
   const renderedSignature = [signatureName, "<", renderedSignatureTypeParameters, ">"];
 
-  return createLinkNode(renderedSignature, typeAliasEntity.id);
+  return createLinkNode(renderedSignature, typeAliasEntity.symbolId);
 }
 
 
@@ -43,7 +43,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
     ? convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters)
     : "";
   const renderedSignature = [signatureName, "<", renderedSignatureTypeParameters, ">"];
-  const id = typeAliasEntity.id;
+  const id = typeAliasEntity.symbolId;
 
   const description = typeAliasEntity.description ?? "";
   const example = typeAliasEntity.example ?? "";

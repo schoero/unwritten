@@ -56,6 +56,13 @@ type DeepOmitObject<T, K extends PropertyKey> = {
 };
 
 
+//-- PartialByKey
+
+export type PartialByKey<T, K extends keyof T> =
+{ [Key in keyof T as Key extends K ? Key : never]?: T[Key] } &
+{ [Key in keyof T as Key extends K ? never : Key]: T[Key] };
+
+
 //-- DeepPartialByKey
 
 export type DeepPartialByKey<T, K extends PropertyKey> =
@@ -94,4 +101,4 @@ type DeepRequiredByKeyObject<T, K extends PropertyKey> =
 
 //-- Test
 
-export type Testable<Entity extends Entities | Types> = DeepPartialByKey<Entity, "id" | "modifiers">;
+export type Testable<Entity extends Entities | Types> = DeepPartialByKey<Entity, "declarationId" | "modifiers" | "symbolId">;

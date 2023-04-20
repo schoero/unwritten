@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { createClassEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getIdBySymbol } from "unwritten:interpreter:ast/shared/id.js";
+import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -90,7 +90,7 @@ scope("Interpreter", EntityKind.Class, () => {
     });
 
     it("should have a matching id", () => {
-      expect(exportedClass.id).to.equal(getIdBySymbol(ctx, exportedSymbols[0]!));
+      expect(exportedClass.symbolId).to.equal(getSymbolId(ctx, exportedSymbols[0]!));
     });
 
     it("should have a matching description", () => {

@@ -26,7 +26,7 @@ import type {
 
 
 export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
-  return createLinkNode(classEntity.name, classEntity.id);
+  return createLinkNode(classEntity.name, classEntity.symbolId);
 }
 
 
@@ -56,7 +56,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
 
   return createTitleNode(
     name,
-    classEntity.id,
+    classEntity.symbolId,
     createSmallNode(position),
     createParagraphNode(jsdocTags),
     createParagraphNode(description),

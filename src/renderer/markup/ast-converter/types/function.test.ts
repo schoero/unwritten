@@ -1,11 +1,14 @@
 import { expect, it } from "vitest";
 
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { convertFunctionType } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:tests:utils/template.js";
 import { assert } from "unwritten:utils/general.js";
 
 import type { FunctionType } from "unwritten:interpreter:type-definitions/types.js";
@@ -16,42 +19,17 @@ scope("MarkupRenderer", TypeKind.Function, () => {
 
   {
 
-    // #region Normal function type
-
-    // #region Source
-
-    // export type FunctionType = () => boolean;
-
-    // #endregion
-
-    const type: Testable<FunctionType> = {
-      kind: TypeKind.Function,
-      signatures: [
-        {
-          description: undefined,
-          kind: EntityKind.Signature,
-          modifiers: [],
-          name: undefined,
-          parameters: [],
-          position: {
-            column: 1,
-            file: "/file.ts",
-            line: 1
-          },
-          returnType: {
-            description: undefined,
-            kind: TypeKind.Boolean,
-            name: "boolean"
-          },
-          typeParameters: undefined
-        }
-      ]
-    };
-
-    // #endregion
-
     const ctx = createRenderContext();
 
+    const testFileContent = ts`
+      export type Type = () => boolean;
+    `;
+
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const convertedType = convertFunctionType(ctx, type as FunctionType);
 
     assert(Array.isArray(convertedType), "single signatures should not be wrapped in a list node");
@@ -82,75 +60,15 @@ scope("MarkupRenderer", TypeKind.Function, () => {
 
   {
 
-    // #region Normal function type with parameters
+    const testFileContent = ts`
+      export type Type = (a: string, b: number) => boolean;
+    `;
 
-    // #region Source
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
 
-    // export type FunctionType = (a: string, b: number) => boolean;
-
-    // #endregion
-
-    const type: Testable<FunctionType> = {
-      kind: TypeKind.Function,
-      signatures: [
-        {
-          description: undefined,
-          kind: EntityKind.Signature,
-          modifiers: [],
-          name: undefined,
-          parameters: [
-            {
-              description: undefined,
-              initializer: undefined,
-              kind: EntityKind.Parameter,
-              name: "a",
-              optional: false,
-              position: {
-                column: 28,
-                file: "/file.ts",
-                line: 1
-              },
-              rest: false,
-              type: {
-                kind: TypeKind.String,
-                name: "string"
-              }
-            },
-            {
-              description: undefined,
-              initializer: undefined,
-              kind: EntityKind.Parameter,
-              name: "b",
-              optional: false,
-              position: {
-                column: 39,
-                file: "/file.ts",
-                line: 1
-              },
-              rest: false,
-              type: {
-                kind: TypeKind.Number,
-                name: "number"
-              }
-            }
-          ],
-          position: {
-            column: 27,
-            file: "/file.ts",
-            line: 1
-          },
-          returnType: {
-            description: undefined,
-            kind: TypeKind.Boolean,
-            name: "boolean"
-          },
-          typeParameters: undefined
-        }
-      ]
-    };
-
-    // #endregion
-
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
     const convertedType = convertFunctionType(ctx, type as FunctionType);
@@ -212,19 +130,16 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     // #endregion
 
     const type: Testable<FunctionType> = {
-      id: 2861,
       kind: TypeKind.Function,
       signatures: [
         {
           description: "Adds two numbers together.",
-          id: 4741,
           kind: EntityKind.Signature,
           modifiers: [],
           name: undefined,
           parameters: [
             {
               description: "The first number.",
-              id: 4458,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "a",
@@ -235,15 +150,15 @@ scope("MarkupRenderer", TypeKind.Function, () => {
                 line: 9
               },
               rest: false,
+              symbolId: 4458,
               type: {
-                id: 17,
                 kind: TypeKind.Number,
-                name: "number"
+                name: "number",
+                typeId: 17
               }
             },
             {
               description: "The second number.",
-              id: 4459,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "b",
@@ -254,10 +169,11 @@ scope("MarkupRenderer", TypeKind.Function, () => {
                 line: 9
               },
               rest: false,
+              symbolId: 4459,
               type: {
-                id: 17,
                 kind: TypeKind.Number,
-                name: "number"
+                name: "number",
+                typeId: 17
               }
             }
           ],
@@ -268,22 +184,21 @@ scope("MarkupRenderer", TypeKind.Function, () => {
           },
           returnType: {
             description: "The sum of the two numbers.",
-            id: 17,
             kind: TypeKind.Number,
-            name: "number"
+            name: "number",
+            typeId: 17
           },
+          symbolId: 4741,
           typeParameters: undefined
         },
         {
           description: "Adds 3 numbers together.",
-          id: 4742,
           kind: EntityKind.Signature,
           modifiers: [],
           name: undefined,
           parameters: [
             {
               description: "The first number.",
-              id: 4460,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "a",
@@ -294,15 +209,15 @@ scope("MarkupRenderer", TypeKind.Function, () => {
                 line: 18
               },
               rest: false,
+              symbolId: 4460,
               type: {
-                id: 17,
                 kind: TypeKind.Number,
-                name: "number"
+                name: "number",
+                typeId: 17
               }
             },
             {
               description: "The second number.",
-              id: 4461,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "b",
@@ -313,15 +228,15 @@ scope("MarkupRenderer", TypeKind.Function, () => {
                 line: 18
               },
               rest: false,
+              symbolId: 4461,
               type: {
-                id: 17,
                 kind: TypeKind.Number,
-                name: "number"
+                name: "number",
+                typeId: 17
               }
             },
             {
               description: "The third number.",
-              id: 4462,
               initializer: undefined,
               kind: EntityKind.Parameter,
               name: "c",
@@ -332,10 +247,11 @@ scope("MarkupRenderer", TypeKind.Function, () => {
                 line: 18
               },
               rest: false,
+              symbolId: 4462,
               type: {
-                id: 17,
                 kind: TypeKind.Number,
-                name: "number"
+                name: "number",
+                typeId: 17
               }
             }
           ],
@@ -346,13 +262,15 @@ scope("MarkupRenderer", TypeKind.Function, () => {
           },
           returnType: {
             description: "The sum of the 3 numbers.",
-            id: 17,
             kind: TypeKind.Number,
-            name: "number"
+            name: "number",
+            typeId: 17
           },
+          symbolId: 4742,
           typeParameters: undefined
         }
-      ]
+      ],
+      typeId: 2861
     };
 
     // #endregion
