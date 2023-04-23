@@ -1,9 +1,12 @@
+import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
+import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
+import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
+import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { renderModifiers } from "unwritten:renderer/markup/utils/modifiers.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
-import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
-import { createLinkNode, createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -27,48 +30,67 @@ export function convertPropertyEntityForSignature(ctx: MarkupRenderContexts, pro
 
 }
 
-export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle: false): ConvertedPropertyEntityForType;
-export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle?: true): ConvertedPropertyEntityForDocumentation;
-export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, createTitle: boolean = true): ConvertedPropertyEntityForDocumentation | ConvertedPropertyEntityForType {
+export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
 
   const name = propertyEntity.name;
-  const description = propertyEntity.description ?? "";
-  const example = propertyEntity.example ?? "";
-  const remarks = propertyEntity.remarks ?? "";
-  const modifiers = propertyEntity.modifiers ? renderModifiers(ctx, propertyEntity.modifiers) : "";
 
-  const jsdocTags = convertJSDocTags(ctx, propertyEntity);
-  const position = propertyEntity.position ? convertPosition(ctx, propertyEntity.position) : "";
-  const type = convertType(ctx, propertyEntity.type);
+  const convertedPosition = convertPosition(ctx, propertyEntity.position);
+  const convertedJSDocTags = convertJSDocTags(ctx, propertyEntity);
+  const convertedDescription = convertDescription(ctx, propertyEntity.description);
+  const convertedRemarks = convertRemarks(ctx, propertyEntity.remarks);
+  const convertedExample = convertExample(ctx, propertyEntity.example);
+  const convertedType = convertType(ctx, propertyEntity.type);
+
+  const modifiers = propertyEntity.modifiers ? renderModifiers(ctx, propertyEntity.modifiers) : "";
 
   const optional = propertyEntity.optional === true
     ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
     : "";
 
-  const content = [
-    createParagraphNode(
-      jsdocTags,
-      modifiers,
-      optional
-    ),
-    createParagraphNode(type),
-    createParagraphNode(description),
-    createParagraphNode(remarks),
-    createParagraphNode(example)
-  ] as const;
+  return createTitleNode(
+    name,
+    propertyEntity.symbolId,
+    convertedJSDocTags,
+    convertedPosition,
+    convertedType,
+    convertedDescription,
+    convertedRemarks,
+    convertedExample
+  );
 
-  return createTitle
-    ? createTitleNode(
-      name,
-      propertyEntity.symbolId,
-      ...content
-    )
-    : [
-      name,
-      ...content
-    ];
+}
+
+export function convertPropertyEntityForType(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForType {
+
+  const renderConfig = getRenderConfig(ctx);
+  const translate = getTranslator(ctx);
+
+  const name = propertyEntity.name;
+
+  const convertedPosition = convertPosition(ctx, propertyEntity.position);
+  const convertedJSDocTags = convertJSDocTags(ctx, propertyEntity);
+  const convertedDescription = convertDescription(ctx, propertyEntity.description);
+  const convertedRemarks = convertRemarks(ctx, propertyEntity.remarks);
+  const convertedExample = convertExample(ctx, propertyEntity.example);
+  const convertedType = convertType(ctx, propertyEntity.type);
+
+  const modifiers = propertyEntity.modifiers ? renderModifiers(ctx, propertyEntity.modifiers) : "";
+
+  const optional = propertyEntity.optional === true
+    ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
+    : "";
+
+  return [
+    name,
+    convertedPosition,
+    convertedJSDocTags,
+    convertedType,
+    convertedDescription,
+    convertedRemarks,
+    convertedExample
+  ];
 
 }

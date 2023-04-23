@@ -42,6 +42,7 @@ import {
   convertTemplateLiteralType,
   convertTupleType,
   convertTypeLiteralType,
+  convertTypeParameterType,
   convertTypeReferenceType,
   convertUndefinedType,
   convertUnionType,
@@ -83,6 +84,7 @@ import {
   isTemplateLiteralType,
   isTupleType,
   isTypeLiteralType,
+  isTypeParameterType,
   isTypeReferenceType,
   isUndefinedType,
   isUnionType,
@@ -161,6 +163,8 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
     return convertObjectLiteralType(ctx, type);
   } else if(isObjectType(type)){
     return convertObjectType(ctx, type);
+  } else if(isTypeParameterType(type)){
+    return convertTypeParameterType(ctx, type);
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);

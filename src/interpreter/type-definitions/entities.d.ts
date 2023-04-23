@@ -30,8 +30,6 @@ export type ExportableEntities =
   | EnumEntity
   | FunctionEntity
   | InterfaceEntity
-  | MergedEnumEntity
-  | MergedInterfaceEntity
   | ModuleEntity
   | NamespaceEntity
   | TypeAliasEntity
@@ -151,13 +149,13 @@ export interface ParameterEntity extends Entity<EntityKind.Parameter>, JSDocTags
 export interface InterfaceEntity extends Entity<EntityKind.Interface>, JSDocTags {
   callSignatures: SignatureEntity[];
   constructSignatures: SignatureEntity[];
-  declarationId: ID;
   getterSignatures: SignatureEntity[];
   methodSignatures: SignatureEntity[];
   name: Name;
   properties: PropertyEntity[];
   setterSignatures: SignatureEntity[];
   symbolId: ID;
+  declarationId?: ID;
   description?: Description;
   heritage?: ExpressionType[];
   position?: Position;
@@ -234,10 +232,10 @@ export interface MappedTypeMemberEntity extends Entity<EntityKind.MappedTypeMemb
 //-- Enum
 
 export interface EnumEntity extends Entity<EntityKind.Enum>, JSDocTags {
-  declarationId: ID;
   members: EnumMemberEntity[];
   name: Name;
   symbolId: ID;
+  declarationId?: ID;
   description?: Description;
   position?: Position;
 }

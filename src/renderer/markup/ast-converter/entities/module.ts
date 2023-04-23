@@ -1,10 +1,13 @@
+import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
+import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import {
   convertEntityForDocumentation,
   convertEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createParagraphNode, createSmallNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { ModuleEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -35,23 +38,24 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
   const name = moduleEntity.name;
   const id = moduleEntity.symbolId;
 
-  const description = moduleEntity.description ?? "";
-  const remarks = moduleEntity.remarks ?? "";
-  const example = moduleEntity.example ?? "";
+  const convertedPosition = convertPosition(ctx, moduleEntity.position);
+  const convertedJSDocTags = convertJSDocTags(ctx, moduleEntity);
+  const convertedDescription = convertDescription(ctx, moduleEntity.description);
+  const convertedRemarks = convertRemarks(ctx, moduleEntity.remarks);
+  const convertedExample = convertExample(ctx, moduleEntity.example);
 
-  const position = moduleEntity.position ? convertPosition(ctx, moduleEntity.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, moduleEntity);
-
-  const children = moduleEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
+  const children = moduleEntity.exports.map(
+    exportedEntity => convertEntityForDocumentation(ctx, exportedEntity)
+  );
 
   return createTitleNode(
     name,
     id,
-    createSmallNode(position),
-    createParagraphNode(jsdocTags),
-    createParagraphNode(description),
-    createParagraphNode(remarks),
-    createParagraphNode(example),
+    convertedPosition,
+    convertedJSDocTags,
+    convertedDescription,
+    convertedRemarks,
+    convertedExample,
     ...children
   );
 

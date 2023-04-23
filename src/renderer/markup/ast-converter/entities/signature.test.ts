@@ -9,7 +9,6 @@ import {
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isLinkNode,
-  isListNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -51,7 +50,9 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     const [
       position,
       tags,
-      parametersAndReturnType,
+      typeParameters,
+      parameters,
+      returnType,
       description,
       remarks,
       example
@@ -68,35 +69,90 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     });
 
     it("should have a position", () => {
-      expect(isSmallNode(position)).to.equal(true);
+      assert(isSmallNode(position));
       expect(position.children).to.not.equal(undefined);
     });
 
     it("should have a jsdoc tag", () => {
-      expect(isParagraphNode(tags)).to.equal(true);
+      assert(isParagraphNode(tags));
       expect(renderNode(ctx, tags.children)).to.equal("beta");
     });
 
+    it("should not have type parameters", () => {
+      expect(typeParameters).to.equal("");
+    });
+
+    it("should not have parameters", () => {
+      expect(parameters).to.equal("");
+    });
+
     it("should have a matching return type", () => {
-      expect(isListNode(parametersAndReturnType)).to.equal(true);
-      const renderedParametersAndReturnType = renderNode(ctx, parametersAndReturnType.children[0]);
-      expect(renderedParametersAndReturnType).to.match(/^Returns: void/);
-      expect(renderedParametersAndReturnType).to.match(/Return type description$/);
+      assert(isTitleNode(returnType));
+      const renderedReturnType = renderNode(ctx, returnType.children[0]);
+      expect(renderedReturnType).to.match(/^Returns: void/);
+      expect(renderedReturnType).to.match(/Return type description$/);
     });
 
     it("should have a matching description", () => {
-      expect(isParagraphNode(description)).to.equal(true);
-      expect(renderNode(ctx, description.children)).to.equal("Signature description");
+      assert(isTitleNode(description));
+      expect(renderNode(ctx, description.children[0].children[0])).to.equal("Signature description");
     });
 
     it("should have matching remarks", () => {
-      expect(isParagraphNode(description)).to.equal(true);
-      expect(renderNode(ctx, remarks.children)).to.equal("Signature remarks");
+      assert(isTitleNode(remarks));
+      expect(renderNode(ctx, remarks.children[0].children[0])).to.equal("Signature remarks");
     });
 
     it("should have a matching example", () => {
-      expect(isParagraphNode(description)).to.equal(true);
-      expect(renderNode(ctx, example.children)).to.equal("Signature example");
+      assert(isTitleNode(example));
+      expect(renderNode(ctx, example.children[0].children[0])).to.equal("Signature example");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      /**
+       * @template TypeParam Type parameter description
+       * @param param Parameter description
+       * @returns Return type description
+       */
+      export function testSignature<TypeParam extends string = "test">(param: TypeParam): TypeParam {
+        return param;
+      }
+    `;
+
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "testSignature")!;
+    const functionEntity = createFunctionEntity(compilerContext, symbol);
+    const signatureEntity = functionEntity.signatures[0];
+    const ctx = createRenderContext();
+
+    const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
+    const convertedSignatureForDocumentation = convertSignatureEntityForDocumentation(ctx, signatureEntity);
+
+    assert(isLinkNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not a link");
+    assert(isTitleNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a container");
+
+    const [
+      position,
+      tags,
+      parametersAndReturnType,
+      description,
+      remarks,
+      example
+    ] = convertedSignatureForDocumentation.children;
+
+    it("should render type parameters in the table of contents entry", () => {
+      expect(isLinkNode(convertedSignatureForTableOfContents)).to.equal(true);
+      expect(renderNode(ctx, convertedSignatureForTableOfContents.children)).to.equal("testSignature<TypeParam>()");
+    });
+
+    it("should have a matching documentation title", () => {
+      expect(isTitleNode(convertedSignatureForDocumentation)).to.equal(true);
+      expect(renderNode(ctx, convertedSignatureForDocumentation.title)).to.equal("testSignature<TypeParam>()");
     });
 
   }

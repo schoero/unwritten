@@ -21,6 +21,11 @@ export function getSymbolIdByDeclaration(ctx: InterpreterContext, declaration: D
   return symbol && getSymbolId(ctx, symbol);
 }
 
+export function getSymbolIdByType(ctx: InterpreterContext, type: Type): ID | undefined {
+  const symbol = type.symbol as Symbol | undefined;
+  return symbol && getSymbolId(ctx, symbol);
+}
+
 export function getTypeId(ctx: InterpreterContext, type: Type): ID {
   ensureTypeHasId(ctx, type);
   // @ts-expect-error - Internal API

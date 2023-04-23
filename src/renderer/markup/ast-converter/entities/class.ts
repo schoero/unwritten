@@ -1,3 +1,6 @@
+import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
+import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import {
   convertFunctionLikeEntityForDocumentation,
   convertPropertyEntityForDocumentation,
@@ -5,12 +8,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import {
-  createLinkNode,
-  createParagraphNode,
-  createSmallNode,
-  createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendClassEntityConstructorsWithHeritage,
@@ -35,12 +33,12 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const t = getTranslator(ctx);
 
   const name = classEntity.name;
-  const description = classEntity.description ?? "";
-  const example = classEntity.example ?? "";
-  const remarks = classEntity.remarks ?? "";
 
-  const position = classEntity.position ? convertPosition(ctx, classEntity.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, classEntity);
+  const convertedPosition = convertPosition(ctx, classEntity.position);
+  const convertedJSDocTags = convertJSDocTags(ctx, classEntity);
+  const convertedDescription = convertDescription(ctx, classEntity.description);
+  const convertedExample = convertExample(ctx, classEntity.example);
+  const convertedRemarks = convertRemarks(ctx, classEntity.remarks);
 
   const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
   const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
@@ -57,16 +55,16 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   return createTitleNode(
     name,
     classEntity.symbolId,
-    createSmallNode(position),
-    createParagraphNode(jsdocTags),
-    createParagraphNode(description),
-    createParagraphNode(remarks),
-    createParagraphNode(example),
-    createTitleNode(t("construct-signature", { count: 99 }), convertedConstructSignatures),
-    createTitleNode(t("property", { count: 99 }), convertedProperties),
-    createTitleNode(t("method", { count: 99 }), convertedMethods),
-    createTitleNode(t("setter", { count: 99 }), convertedSetters),
-    createTitleNode(t("getter", { count: 99 }), convertedGetters)
+    convertedPosition,
+    convertedJSDocTags,
+    convertedDescription,
+    convertedRemarks,
+    convertedExample,
+    createTitleNode(t("construct-signature", { count: convertedConstructSignatures?.length }), convertedConstructSignatures),
+    createTitleNode(t("property", { count: convertedProperties.length }), convertedProperties),
+    createTitleNode(t("method", { count: convertedMethods.length }), convertedMethods),
+    createTitleNode(t("setter", { count: convertedSetters.length }), convertedSetters),
+    createTitleNode(t("getter", { count: convertedGetters.length }), convertedGetters)
   );
 
 }

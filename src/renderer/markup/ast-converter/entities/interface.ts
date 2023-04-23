@@ -1,15 +1,13 @@
+import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
+import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import {
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import {
-  createLinkNode,
-  createParagraphNode,
-  createSmallNode,
-  createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendInterfaceEntityPropertiesWithHeritage,
@@ -34,12 +32,12 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const translate = getTranslator(ctx);
 
   const name = interfaceEntity.name;
-  const description = interfaceEntity.description ?? "";
-  const example = interfaceEntity.example ?? "";
-  const remarks = interfaceEntity.remarks ?? "";
 
-  const position = interfaceEntity.position ? convertPosition(ctx, interfaceEntity.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, interfaceEntity);
+  const convertedDescription = convertDescription(ctx, interfaceEntity.description);
+  const convertedRemarks = convertRemarks(ctx, interfaceEntity.remarks);
+  const convertedExample = convertExample(ctx, interfaceEntity.example);
+  const convertedPosition = convertPosition(ctx, interfaceEntity.position);
+  const convertedJSDocTags = convertJSDocTags(ctx, interfaceEntity);
 
   const properties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity);
   const constructSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "constructSignatures");
@@ -58,17 +56,17 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   return createTitleNode(
     name,
     interfaceEntity.symbolId,
-    createSmallNode(position),
-    createParagraphNode(jsdocTags),
-    createParagraphNode(description),
-    createParagraphNode(remarks),
-    createParagraphNode(example),
-    createTitleNode(translate("construct-signature", { count: 99 }), ...convertedConstructSignatures),
-    createTitleNode(translate("call-signature", { count: 99 }), ...convertedCallSignatures),
-    createTitleNode(translate("property", { count: 99 }), ...convertedProperties),
-    createTitleNode(translate("method", { count: 99 }), ...convertedMethods),
-    createTitleNode(translate("setter", { count: 99 }), ...convertedSetters),
-    createTitleNode(translate("getter", { count: 99 }), ...convertedGetters)
+    convertedPosition,
+    convertedJSDocTags,
+    convertedDescription,
+    convertedRemarks,
+    convertedExample,
+    createTitleNode(translate("construct-signature", { count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
+    createTitleNode(translate("call-signature", { count: convertedCallSignatures.length }), ...convertedCallSignatures),
+    createTitleNode(translate("property", { count: convertedProperties.length }), ...convertedProperties),
+    createTitleNode(translate("method", { count: convertedMethods.length }), ...convertedMethods),
+    createTitleNode(translate("setter", { count: convertedSetters.length }), ...convertedSetters),
+    createTitleNode(translate("getter", { count: convertedGetters.length }), ...convertedGetters)
   );
 
 }

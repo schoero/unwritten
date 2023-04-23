@@ -1,14 +1,11 @@
+import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
+import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { getAnchorIdentifier } from "unwritten:renderer:markup/utils/linker.js";
-import {
-  createLinkNode,
-  createParagraphNode,
-  createSmallNode,
-  createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -26,27 +23,24 @@ export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContext
 
 export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
 
-  const translate = getTranslator(ctx);
-
   const name = variableEntity.name;
-  const description = variableEntity.description ?? "";
-  const example = variableEntity.example ?? "";
-  const remarks = variableEntity.remarks ?? "";
 
-  const position = variableEntity.position ? convertPosition(ctx, variableEntity.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, variableEntity);
-
-  const type = [`${translate("type", { capitalize: true, count: 1 })}: `, convertType(ctx, variableEntity.type)];
+  const convertedJSDocTags = convertJSDocTags(ctx, variableEntity);
+  const convertedPosition = convertPosition(ctx, variableEntity.position);
+  const convertedDescription = convertDescription(ctx, variableEntity.description);
+  const convertedRemarks = convertRemarks(ctx, variableEntity.remarks);
+  const convertedExample = convertExample(ctx, variableEntity.example);
+  const convertedType = convertType(ctx, variableEntity.type);
 
   return createTitleNode(
     name,
     variableEntity.symbolId,
-    createSmallNode(position),
-    createParagraphNode(jsdocTags),
-    createParagraphNode(type),
-    createParagraphNode(description),
-    createParagraphNode(example),
-    createParagraphNode(remarks)
+    convertedPosition,
+    convertedJSDocTags,
+    convertedType,
+    convertedDescription,
+    convertedRemarks,
+    convertedExample
   );
 
 }

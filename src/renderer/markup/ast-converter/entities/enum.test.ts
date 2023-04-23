@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { createEnumEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { isSmallNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import {
   convertEnumEntityForDocumentation,
   convertEnumEntityForTableOfContents
@@ -10,6 +11,7 @@ import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
+import { assert } from "unwritten:utils/general.js";
 
 import type { EnumEntity } from "unwritten:interpreter:type-definitions/entities.js";
 
@@ -63,24 +65,28 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     });
 
     it("should have a position", () => {
-      expect(position).to.not.equal(undefined);
+      expect(position).to.not.equal("");
     });
 
     it("should have matching tags", () => {
+      assert(isSmallNode(tags));
       expect(tags.children[0]).to.include("beta");
       expect(tags.children[0]).to.include("deprecated");
     });
 
     it("should have a matching description", () => {
-      expect(description.children[0]).to.equal("Enum description");
+      assert(isTitleNode(description));
+      expect(description.children[0].children[0]).to.equal("Enum description");
     });
 
     it("should have a matching remarks", () => {
-      expect(remarks.children[0]).to.equal("Enum remarks");
+      assert(isTitleNode(remarks));
+      expect(remarks.children[0].children[0]).to.equal("Enum remarks");
     });
 
     it("should have a matching example", () => {
-      expect(example.children[0]).to.equal("Enum example");
+      assert(isTitleNode(example));
+      expect(example.children[0].children[0]).to.equal("Enum example");
     });
 
     it("should have matching members", () => {

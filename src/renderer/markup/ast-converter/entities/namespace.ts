@@ -1,10 +1,13 @@
+import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
+import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import {
   convertEntityForDocumentation,
   convertEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createParagraphNode, createSmallNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -37,23 +40,22 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
   const name = namespaceEntity.name;
   const id = namespaceEntity.symbolId;
 
-  const description = namespaceEntity.description ?? "";
-  const remarks = namespaceEntity.remarks ?? "";
-  const example = namespaceEntity.example ?? "";
-
-  const position = namespaceEntity.position ? convertPosition(ctx, namespaceEntity.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, namespaceEntity);
+  const convertedPosition = convertPosition(ctx, namespaceEntity.position);
+  const convertedJSDocTags = convertJSDocTags(ctx, namespaceEntity);
+  const convertedDescription = convertDescription(ctx, namespaceEntity.description);
+  const convertedRemarks = convertRemarks(ctx, namespaceEntity.remarks);
+  const convertedExample = convertExample(ctx, namespaceEntity.example);
 
   const children = namespaceEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
 
   return createTitleNode(
     name,
     id,
-    createSmallNode(position),
-    createParagraphNode(jsdocTags),
-    createParagraphNode(description),
-    createParagraphNode(remarks),
-    createParagraphNode(example),
+    convertedPosition,
+    convertedJSDocTags,
+    convertedDescription,
+    convertedRemarks,
+    convertedExample,
     ...children
   );
 

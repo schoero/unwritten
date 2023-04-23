@@ -7,7 +7,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { convertJSDocTags, hasRenderableJSDocTags } from "./jsdoc-tags.js";
 
 
-scope("MarkupRenderer", "HTMLRenderer", () => {
+scope("MarkupRenderer", "Position", () => {
 
   const ctx = createRenderContext();
 

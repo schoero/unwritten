@@ -6,12 +6,12 @@ import {
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { isParagraphNode, isSmallNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isSmallNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
+import { assert } from "unwritten:utils/general.js";
 
 
 scope("MarkupRenderer", TypeKind.Class, () => {
@@ -57,14 +57,12 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     });
 
     it("should have a position", () => {
-      expect(isSmallNode(position)).to.equal(true);
-      expect(position.children).to.not.equal("");
+      assert(isSmallNode(position));
+      expect(position.children[0]).to.not.equal("");
     });
 
     it("should have no tags", () => {
-      expect(isParagraphNode(tags)).to.equal(true);
-      const renderedTags = renderNode(ctx, tags);
-      expect(renderedTags).to.equal("");
+      expect(tags).to.equal("");
     });
 
     it("should have one construct signature", () => {

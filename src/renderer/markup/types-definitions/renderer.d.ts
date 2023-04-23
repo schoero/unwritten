@@ -46,6 +46,37 @@ export type ConvertedCategoryForDocumentation = TitleNode<ConvertedEntitiesForDo
 export type RenderableJSDocTags = Pick<JSDocTags, JSDocTagNames.Alpha | JSDocTagNames.Beta | JSDocTagNames.Deprecated | JSDocTagNames.Internal>;
 
 
+//-- Position
+
+export type ConvertedPosition = SmallNode | "";
+
+
+//-- Tags
+
+export type ConvertedTags = SmallNode | "";
+
+
+//-- Description
+
+export type ConvertedDescription = TitleNode<[
+  ParagraphNode
+]> | "";
+
+
+//-- Remarks
+
+export type ConvertedRemarks = TitleNode<[
+  ParagraphNode
+]> | "";
+
+
+//-- Example
+
+export type ConvertedExample = TitleNode<[
+  ParagraphNode
+]> | "";
+
+
 //-- Types
 
 //-- Types
@@ -115,6 +146,11 @@ export type ConvertedFunctionType =
 //-- Type reference
 
 export type ConvertedTypeReferenceType = ASTNodes;
+
+
+//-- Type reference
+
+export type ConvertedTypeParameterType = ASTNodes;
 
 
 //-- Array type
@@ -222,11 +258,11 @@ export type ConvertedEntitiesForDocumentation =
 
 export type ConvertedNamespaceEntityForTableOfContents = TitleNode<ConvertedEntitiesForTableOfContents[]>;
 export type ConvertedNamespaceEntityForDocumentation = TitleNode<[
-  position: SmallNode,
-  tags: ParagraphNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode,
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample,
   ...exports: ConvertedEntitiesForDocumentation[]
 ]>;
 
@@ -235,11 +271,11 @@ export type ConvertedNamespaceEntityForDocumentation = TitleNode<[
 
 export type ConvertedModuleEntityForTableOfContents = TitleNode<ConvertedEntitiesForTableOfContents[]>;
 export type ConvertedModuleEntityForDocumentation = TitleNode<[
-  position: SmallNode,
-  tags: ParagraphNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode,
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample,
   ...exports: ConvertedEntitiesForDocumentation[]
 ]>;
 
@@ -248,12 +284,12 @@ export type ConvertedModuleEntityForDocumentation = TitleNode<[
 
 export type ConvertedTypeAliasEntityForTableOfContents = LinkNode;
 export type ConvertedTypeAliasEntityForDocumentation = TitleNode<[
-  position: SmallNode,
-  tags: ParagraphNode,
+  position: ConvertedPosition,
+  tags: ConvertedTags,
   typeParametersAndType: ListNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample
 ]>;
 
 
@@ -276,22 +312,26 @@ export type ConvertedFunctionEntityForType = ConvertedFunctionLikeEntityForType;
 export type ConvertedSignatureEntityForTableOfContents = LinkNode;
 
 export type ConvertedSignatureEntityForDocumentation = TitleNode<[
-  position: SmallNode,
-  tags: ParagraphNode,
-  parametersAndReturnType: ListNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
+  parameters: ConvertedParameterEntitiesForDocumentation,
+  returnType: ASTNodes,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample
 ]>;
 
 export type ConvertedSignatureEntityForType = [
   renderedSignature: ASTNodes,
-  position: SmallNode,
-  tags: ParagraphNode,
-  parametersAndReturnType: ListNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  typeParameters: ConvertedTypeParameterEntitiesForType,
+  parameters: ConvertedParameterEntitiesForType,
+  returnType: ASTNodes,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample
 ];
 
 
@@ -299,12 +339,12 @@ export type ConvertedSignatureEntityForType = [
 
 export type ConvertedVariableEntityForTableOfContents = LinkNode;
 export type ConvertedVariableEntityForDocumentation = TitleNode<[
-  position: SmallNode,
-  tags: ParagraphNode,
-  type: ParagraphNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  type: ConvertedTypes,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample
 ]>;
 
 
@@ -312,11 +352,11 @@ export type ConvertedVariableEntityForDocumentation = TitleNode<[
 
 export type ConvertedInterfaceEntityForTableOfContents = LinkNode;
 export type ConvertedInterfaceEntityForDocumentation = TitleNode<[
-  position: SmallNode,
-  tags: ParagraphNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode,
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample,
   constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
   callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
   properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
@@ -330,11 +370,11 @@ export type ConvertedInterfaceEntityForDocumentation = TitleNode<[
 
 export type ConvertedClassEntityForTableOfContents = LinkNode;
 export type ConvertedClassEntityForDocumentation = TitleNode<[
-  position: SmallNode,
-  tags: ParagraphNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode,
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample,
   constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
   properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
   methods: TitleNode<ConvertedMethodEntityForDocumentation[]>,
@@ -347,27 +387,27 @@ export type ConvertedClassEntityForDocumentation = TitleNode<[
 
 export type ConvertedEnumEntityForTableOfContents = LinkNode;
 export type ConvertedEnumEntityForDocumentation = TitleNode<[
-  position: SmallNode,
-  tags: ParagraphNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode,
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample,
   members: ListNode
 ]>;
 
 
 //-- Parameter
 
-export type ConvertedParameterEntityForSignature = ASTNodes[];
-export type ConvertedParameterEntitiesForSignature = ASTNodes[];
-export type ConvertedParameterEntityForDocumentation = ASTNodes[];
+export type ConvertedParameterEntitiesForSignature = ASTNodes[] | "";
+export type ConvertedParameterEntitiesForDocumentation = TitleNode<[ListNode]> | "";
+export type ConvertedParameterEntitiesForType = ListNode | "";
 
 
 //-- Type Parameter
 
-export type ConvertedTypeParameterEntityForSignature = ASTNodes;
 export type ConvertedTypeParameterEntitiesForSignature = ASTNodes[];
-export type ConvertedTypeParameterEntityForDocumentation = ASTNodes[];
+export type ConvertedTypeParameterEntitiesForDocumentation = TitleNode<[ListNode]> | "";
+export type ConvertedTypeParameterEntitiesForType = ListNode | "";
 
 
 //-- Type Argument
@@ -381,19 +421,22 @@ export type ConvertedTypeArgumentEntityForDocumentation = ASTNodes[];
 
 export type ConvertedPropertyEntityForTableOfContents = LinkNode;
 export type ConvertedPropertyEntityForDocumentation = TitleNode<[
-  tags: ParagraphNode,
-  type: ParagraphNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode
+  tags: ConvertedTags,
+  position: ConvertedPosition,
+  type: ConvertedTypes,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample
 ]>;
+
 export type ConvertedPropertyEntityForType = [
   name: ASTNodes,
-  tags: ParagraphNode,
-  type: ParagraphNode,
-  description: ParagraphNode,
-  remarks: ParagraphNode,
-  example: ParagraphNode
+  position: ConvertedPosition,
+  tags: ConvertedTags,
+  type: ConvertedTypes,
+  description: ConvertedDescription,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample
 ];
 
 

@@ -1,13 +1,10 @@
+import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
+import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import {
-  createLinkNode,
-  createListNode,
-  createParagraphNode,
-  createSmallNode,
-  createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { EnumEntity, MergedEnumEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -25,12 +22,12 @@ export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContexts, e
 export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForDocumentation {
 
   const name = enumEntity.name;
-  const description = enumEntity.description ?? "";
-  const example = enumEntity.example ?? "";
-  const remarks = enumEntity.remarks ?? "";
 
-  const position = enumEntity.position ? convertPosition(ctx, enumEntity.position) : "";
-  const jsdocTags = convertJSDocTags(ctx, enumEntity);
+  const convertedDescription = convertDescription(ctx, enumEntity.description);
+  const convertedRemarks = convertRemarks(ctx, enumEntity.remarks);
+  const convertedExample = convertExample(ctx, enumEntity.example);
+  const convertedPosition = convertPosition(ctx, enumEntity.position);
+  const convertedJSDocTags = convertJSDocTags(ctx, enumEntity);
 
   const members = enumEntity.members.map(member => {
 
@@ -49,11 +46,11 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   return createTitleNode(
     name,
     enumEntity.symbolId,
-    createSmallNode(position),
-    createParagraphNode(jsdocTags),
-    createParagraphNode(description),
-    createParagraphNode(remarks),
-    createParagraphNode(example),
+    convertedPosition,
+    convertedJSDocTags,
+    convertedDescription,
+    convertedRemarks,
+    convertedExample,
     createListNode(...members)
   );
 

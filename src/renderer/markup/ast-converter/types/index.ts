@@ -21,6 +21,7 @@ export * from "./symbol.js";
 export * from "./template-literal.js";
 export * from "./tuple.js";
 export * from "./type-literal.js";
+export * from "./type-parameter.js";
 export * from "./type-reference.js";
 export * from "./undefined.js";
 export * from "./union.js";

@@ -54,8 +54,12 @@ export interface MarkupRenderConfig {
     constructor_other?: string;
     default?: string;
     deprecated?: string;
+    description_one?: string;
+    description_other?: string;
     enum_one?: string;
     enum_other?: string;
+    example_one?: string;
+    example_other?: string;
     function_one?: string;
     function_other?: string;
     getter_one?: string;
@@ -70,9 +74,13 @@ export interface MarkupRenderConfig {
     namespace_one?: string;
     namespace_other?: string;
     optional?: string;
+    parameter_one?: string;
+    parameter_other?: string;
     property_one?: string;
     property_other?: string;
     readonly?: string;
+    remarks_one?: string;
+    remarks_other?: string;
     required?: string;
     rest?: string;
     returns?: string;
@@ -83,6 +91,8 @@ export interface MarkupRenderConfig {
     type_other?: string;
     "type-alias_one"?: string;
     "type-alias_other"?: string;
+    "type-parameter_one"?: string;
+    "type-parameter_other"?: string;
     variable_one?: string;
     variable_other?: string;
   };

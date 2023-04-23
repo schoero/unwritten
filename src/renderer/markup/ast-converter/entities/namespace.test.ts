@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { createNamespaceEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { isSmallNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import {
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents
@@ -10,6 +11,7 @@ import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
+import { assert } from "unwritten:utils/general.js";
 
 
 scope("MarkupRenderer", EntityKind.Namespace, () => {
@@ -54,18 +56,22 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     });
 
     it("should have a matching description", () => {
-      expect(description.children[0]).to.equal("Namespace description");
+      assert(isTitleNode(description));
+      expect(description.children[0].children[0]).to.equal("Namespace description");
     });
 
     it("should have a matching remarks", () => {
-      expect(remarks.children[0]).to.equal("Namespace remarks");
+      assert(isTitleNode(remarks));
+      expect(remarks.children[0].children[0]).to.equal("Namespace remarks");
     });
 
     it("should have a matching example", () => {
-      expect(example.children[0]).to.equal("Namespace example");
+      assert(isTitleNode(example));
+      expect(example.children[0].children[0]).to.equal("Namespace example");
     });
 
     it("should have a matching tags", () => {
+      assert(isSmallNode(tags));
       expect(tags.children[0]).to.include("deprecated");
       expect(tags.children[0]).to.include("beta");
     });
