@@ -1,13 +1,13 @@
 import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
+import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
+import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import {
   convertFunctionLikeEntityForDocumentation,
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
@@ -35,7 +35,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const name = classEntity.name;
 
   const convertedPosition = convertPosition(ctx, classEntity.position);
-  const convertedJSDocTags = convertJSDocTags(ctx, classEntity);
+  const convertedTags = convertTags(ctx, classEntity);
   const convertedDescription = convertDescription(ctx, classEntity.description);
   const convertedExample = convertExample(ctx, classEntity.example);
   const convertedRemarks = convertRemarks(ctx, classEntity.remarks);
@@ -56,7 +56,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
     name,
     classEntity.symbolId,
     convertedPosition,
-    convertedJSDocTags,
+    convertedTags,
     convertedDescription,
     convertedRemarks,
     convertedExample,

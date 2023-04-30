@@ -1,7 +1,7 @@
 import {
-  convertFunctionLikeEntityForDocumentation,
-  convertPropertyEntityForDocumentation,
-  convertSignatureEntityForDocumentation
+  convertFunctionLikeEntityForType,
+  convertPropertyEntityForType,
+  convertSignatureEntityForType
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { createListNode } from "unwritten:renderer/markup/utils/nodes.js";
 
@@ -21,7 +21,7 @@ export function convertObjectType(ctx: MarkupRenderContexts, objectLikeType: Cla
 
   const convertedConstructSignatures = objectLikeType.constructSignatures.map(
     constructSignature => {
-      const convertedSignature = convertSignatureEntityForDocumentation(ctx, constructSignature, false);
+      const convertedSignature = convertSignatureEntityForType(ctx, constructSignature);
       (convertedSignature[0] as ASTNodes[]).unshift("new ");
       return convertedSignature;
     }
@@ -29,27 +29,27 @@ export function convertObjectType(ctx: MarkupRenderContexts, objectLikeType: Cla
 
   const convertedCallSignatures = objectLikeType.callSignatures.map(
     callSignature =>
-      convertSignatureEntityForDocumentation(ctx, callSignature, false)
+      convertSignatureEntityForType(ctx, callSignature)
   );
 
   const convertedProperties = objectLikeType.properties.map(
     propertyEntity =>
-      convertPropertyEntityForDocumentation(ctx, propertyEntity, false)
+      convertPropertyEntityForType(ctx, propertyEntity)
   );
 
   const convertedMethods = objectLikeType.methods.flatMap(
     methodEntity =>
-      convertFunctionLikeEntityForDocumentation(ctx, methodEntity, false)
+      convertFunctionLikeEntityForType(ctx, methodEntity)
   );
 
   const convertedSetters = objectLikeType.setters.flatMap(
     setterEntity =>
-      convertFunctionLikeEntityForDocumentation(ctx, setterEntity, false)
+      convertFunctionLikeEntityForType(ctx, setterEntity)
   );
 
   const convertedGetters = objectLikeType.getters.flatMap(
     getterEntity =>
-      convertFunctionLikeEntityForDocumentation(ctx, getterEntity, false)
+      convertFunctionLikeEntityForType(ctx, getterEntity)
   );
 
   return createListNode(

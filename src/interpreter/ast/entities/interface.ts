@@ -151,6 +151,7 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
   assert(name, "Interface name not found");
 
   return {
+    ...jsdocTags,
     callSignatures,
     constructSignatures,
     declarationId,
@@ -163,8 +164,7 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
     properties,
     setterSignatures,
     symbolId,
-    typeParameters,
-    ...jsdocTags
+    typeParameters
   };
 
 }

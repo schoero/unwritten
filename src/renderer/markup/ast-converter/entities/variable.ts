@@ -1,8 +1,8 @@
 import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
-import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
+import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { getAnchorIdentifier } from "unwritten:renderer:markup/utils/linker.js";
 import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
@@ -25,18 +25,18 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
 
   const name = variableEntity.name;
 
-  const convertedJSDocTags = convertJSDocTags(ctx, variableEntity);
+  const convertedTags = convertTags(ctx, variableEntity);
   const convertedPosition = convertPosition(ctx, variableEntity.position);
   const convertedDescription = convertDescription(ctx, variableEntity.description);
   const convertedRemarks = convertRemarks(ctx, variableEntity.remarks);
   const convertedExample = convertExample(ctx, variableEntity.example);
-  const convertedType = convertType(ctx, variableEntity.type);
+  const convertedType = convertTypeInline(ctx, variableEntity.type);
 
   return createTitleNode(
     name,
     variableEntity.symbolId,
     convertedPosition,
-    convertedJSDocTags,
+    convertedTags,
     convertedType,
     convertedDescription,
     convertedRemarks,

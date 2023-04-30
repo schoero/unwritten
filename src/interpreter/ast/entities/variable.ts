@@ -49,10 +49,10 @@ function parseVariableDeclaration(ctx: InterpreterContext, declaration: Variable
   const declarationId = getDeclarationId(ctx, declaration);
 
   return {
+    ...jsdocTags,
     declarationId,
     modifiers,
-    position,
-    ...jsdocTags
+    position
   };
 
 }

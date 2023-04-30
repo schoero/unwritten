@@ -5,8 +5,9 @@ import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
 
+// TODO: Implement this test
 
-scope("MarkupRenderer", "Example", () => {
+scope("MarkupRenderer", "Type", () => {
 
   const ctx = createRenderContext();
 

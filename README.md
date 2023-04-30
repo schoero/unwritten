@@ -33,7 +33,9 @@
 
 A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.
 
-> WARNING: This project is at a really early stage and currently under heavy development. It is not feature complete and it may not or only partially work with your project. You have been warned.
+> **Warning**
+>
+> This project is at a really early stage and currently under heavy development. It is not feature complete and it may not or only partially work with your project. You have been warned.
 
 ## Installation
 

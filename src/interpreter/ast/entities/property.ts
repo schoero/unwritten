@@ -84,6 +84,7 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
   assert(name, "Property name not found");
 
   return {
+    ...jsdocTags,
     declarationId,
     description,
     initializer,
@@ -91,8 +92,7 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
     modifiers,
     name,
     optional,
-    position,
-    ...jsdocTags
+    position
   };
 
 }

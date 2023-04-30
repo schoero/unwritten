@@ -1,5 +1,5 @@
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
+import { convertTypeInline } from "unwritten:renderer:markup/ast-converter/index.js";
 
 import type { TupleMemberEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
@@ -42,7 +42,7 @@ function convertTupleMembers(ctx: MarkupRenderContexts, tupleMemberEntities: Tup
 
 function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleMemberEntity): ConvertedTupleMember {
 
-  const renderedType = convertType(ctx, tupleMemberEntity.type);
+  const renderedType = convertTypeInline(ctx, tupleMemberEntity.type);
 
   const renderedName = tupleMemberEntity.name ? `${tupleMemberEntity.name}: ` : "";
   const renderedOptional = tupleMemberEntity.optional ? "?" : "";

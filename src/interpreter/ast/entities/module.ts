@@ -26,8 +26,8 @@ export function createModuleEntity(ctx: InterpreterContext, symbol: Symbol): Mod
 
   return {
     ...fromSourceFile,
-    description,
     ...jsdocTags,
+    description,
     kind,
     position
   };

@@ -72,8 +72,8 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
 
     it("should have a matching tags", () => {
       assert(isSmallNode(tags));
-      expect(tags.children[0]).to.include("deprecated");
-      expect(tags.children[0]).to.include("beta");
+      expect(tags.children).to.include("deprecated");
+      expect(tags.children).to.include("beta");
     });
 
     it("should have a position", () => {

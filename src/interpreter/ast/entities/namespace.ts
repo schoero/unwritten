@@ -26,12 +26,12 @@ export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): 
 
   return {
     ...fromSourceFile,
+    ...jsdocTags,
     declarationId,
     description,
-    symbolId,
-    ...jsdocTags,
     kind,
-    position
+    position,
+    symbolId
   };
 
 }

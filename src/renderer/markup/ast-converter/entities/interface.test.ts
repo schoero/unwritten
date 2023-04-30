@@ -168,6 +168,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     const [
       propertyTags,
+      propertyPosition,
       propertyType,
       propertyDescription,
       propertyRemarks,
@@ -195,8 +196,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a interface tags", () => {
       assert(isSmallNode(interfaceTags));
-      expect(interfaceTags.children[0]).to.include("beta");
-      expect(interfaceTags.children[0]).to.include("deprecated");
+      expect(interfaceTags.children).to.include("beta");
+      expect(interfaceTags.children).to.include("deprecated");
     });
 
     it("should have a matching call signature description", () => {
@@ -220,8 +221,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a call signature tags", () => {
       assert(isSmallNode(callSignatureTags));
-      expect(callSignatureTags.children[0]).to.include("beta");
-      expect(callSignatureTags.children[0]).to.include("deprecated");
+      expect(callSignatureTags.children).to.include("beta");
+      expect(callSignatureTags.children).to.include("deprecated");
     });
 
     it("should have a matching property description", () => {
@@ -241,8 +242,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a property tags", () => {
       assert(isSmallNode(propertyTags));
-      expect(propertyTags.children[0]).to.include("beta");
-      expect(propertyTags.children[0]).to.include("deprecated");
+      expect(propertyTags.children).to.include("beta");
+      expect(propertyTags.children).to.include("deprecated");
     });
 
   }

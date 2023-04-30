@@ -49,6 +49,7 @@ function parseSignatureDeclaration(ctx: InterpreterContext, declaration: Signatu
   const name = getNameByDeclaration(ctx, declaration);
 
   return {
+    ...jsdocTags,
     declarationId,
     description,
     modifiers,
@@ -56,8 +57,7 @@ function parseSignatureDeclaration(ctx: InterpreterContext, declaration: Signatu
     parameters,
     position,
     symbolId,
-    typeParameters,
-    ...jsdocTags
+    typeParameters
   };
 
 }
@@ -74,8 +74,8 @@ function getReturnTypeBySignature(ctx: InterpreterContext, signature: TSSignatur
   assert(tsReturnType, "Function return type is missing.");
 
   return {
-    description,
-    ...type
+    ...type,
+    description
   };
 
 }

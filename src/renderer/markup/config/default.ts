@@ -78,8 +78,6 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     "type-parameter_one": "type parameter",
     "type-parameter_other": "type parameters",
     "type_one": "type",
-    "type_one": "type",
-    "type_other": "types",
     "type_other": "types",
     "variable_one": "variable",
     "variable_other": "variables"

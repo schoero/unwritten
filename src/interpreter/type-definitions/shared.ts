@@ -21,6 +21,10 @@ export type JSDoc = JSDocTags & {
   remarks?: Remarks;
 };
 
+export type Optional = {
+  optional?: boolean;
+};
+
 export type Modifiers =
   | NativeModifiers
   | "abstract"

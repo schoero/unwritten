@@ -33,7 +33,7 @@ scope("MarkupRenderer", "JSDocTags", () => {
       ))
     );
 
-    expect(renderedJSDocTags).to.equal(Object.values(jsdocTagNames).join(" "));
+    expect(renderedJSDocTags.join("")).to.equal(Object.values(jsdocTagNames).join(" "));
 
   });
 

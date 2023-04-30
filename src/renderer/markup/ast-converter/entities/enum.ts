@@ -1,8 +1,8 @@
 import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
-import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
+import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { createLinkNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
@@ -27,13 +27,13 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const convertedRemarks = convertRemarks(ctx, enumEntity.remarks);
   const convertedExample = convertExample(ctx, enumEntity.example);
   const convertedPosition = convertPosition(ctx, enumEntity.position);
-  const convertedJSDocTags = convertJSDocTags(ctx, enumEntity);
+  const convertedTags = convertTags(ctx, enumEntity);
 
   const members = enumEntity.members.map(member => {
 
     const name = member.name;
     const description = member.description ?? "";
-    const type = convertType(ctx, member.type);
+    const type = convertTypeInline(ctx, member.type);
 
     return [
       name,
@@ -47,7 +47,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
     name,
     enumEntity.symbolId,
     convertedPosition,
-    convertedJSDocTags,
+    convertedTags,
     convertedDescription,
     convertedRemarks,
     convertedExample,

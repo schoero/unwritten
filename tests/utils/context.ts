@@ -19,7 +19,7 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
       propertyEncapsulation: false,
       tagEncapsulation: false,
       typeEncapsulation: false,
-      typeParameterEncapsulation: false
+      typeParameterEncapsulation: ["<", ">"]
     },
     ts: {
       renderEmptyFunctionBody: false

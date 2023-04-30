@@ -1,11 +1,11 @@
 import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
+import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import {
   convertEntityForDocumentation,
   convertEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/index.js";
-import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
@@ -39,7 +39,7 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
   const id = moduleEntity.symbolId;
 
   const convertedPosition = convertPosition(ctx, moduleEntity.position);
-  const convertedJSDocTags = convertJSDocTags(ctx, moduleEntity);
+  const convertedTags = convertTags(ctx, moduleEntity);
   const convertedDescription = convertDescription(ctx, moduleEntity.description);
   const convertedRemarks = convertRemarks(ctx, moduleEntity.remarks);
   const convertedExample = convertExample(ctx, moduleEntity.example);
@@ -52,7 +52,7 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
     name,
     id,
     convertedPosition,
-    convertedJSDocTags,
+    convertedTags,
     convertedDescription,
     convertedRemarks,
     convertedExample,

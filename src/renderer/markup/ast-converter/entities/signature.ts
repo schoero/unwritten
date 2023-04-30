@@ -1,6 +1,8 @@
 import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
+import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
@@ -11,8 +13,6 @@ import {
   convertTypeParameterEntitiesForSignature,
   convertTypeParameterEntitiesForType
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/index.js";
-import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
@@ -46,7 +46,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const renderedSignature = renderSignature(ctx, signatureEntity);
 
   const convertedPosition = convertPosition(ctx, signatureEntity.position);
-  const convertedTags = convertJSDocTags(ctx, signatureEntity);
+  const convertedTags = convertTags(ctx, signatureEntity);
   const convertedTypeParameters = convertTypeParameterEntitiesForDocumentation(ctx, signatureEntity.typeParameters);
   const convertedParameters = convertParameterEntitiesForDocumentation(ctx, signatureEntity.parameters);
   const convertedReturnType = convertReturnType(ctx, signatureEntity);
@@ -74,14 +74,13 @@ export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatu
   const renderedSignature = renderSignature(ctx, signatureEntity);
 
   const convertedPosition = convertPosition(ctx, signatureEntity.position);
-  const convertedTags = convertJSDocTags(ctx, signatureEntity);
+  const convertedTags = convertTags(ctx, signatureEntity);
   const convertedTypeParameters = convertTypeParameterEntitiesForType(ctx, signatureEntity.typeParameters);
   const convertedParameters = convertParameterEntitiesForType(ctx, signatureEntity.parameters);
   const convertedReturnType = convertReturnType(ctx, signatureEntity);
   const convertedDescription = convertDescription(ctx, signatureEntity.description);
   const convertedExample = convertExample(ctx, signatureEntity.example);
   const convertedRemarks = convertRemarks(ctx, signatureEntity.remarks);
-
 
   return [
     renderedSignature,
@@ -131,7 +130,7 @@ function convertReturnType(ctx: MarkupRenderContexts, signatureEntity: Signature
 
   const t = getTranslator(ctx);
 
-  const convertedReturnType = convertType(ctx, signatureEntity.returnType);
+  const convertedReturnType = convertTypeInline(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
   const convertedReturnTypeWithDescription = spaceBetween(
     convertedReturnType,

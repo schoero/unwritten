@@ -9,7 +9,6 @@ import {
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isLinkNode,
-  isListNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -32,6 +31,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
        * @remarks Type alias remarks
        * @example Type alias example
        * @template A - Type parameter description
+       * @beta
        */
       export type TypeAlias<A extends number = 7> = A;
     `;
@@ -51,6 +51,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     const [
       position,
       tags,
+      typeParameters,
       type,
       description,
       example,
@@ -58,35 +59,42 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     ] = convertedTypeAliasForDocumentation.children;
 
     it("should have matching table of contents entry", () => {
-      expect(isLinkNode(convertedTypeAliasForTableOfContents)).to.equal(true);
+      assert(isLinkNode(convertedTypeAliasForTableOfContents));
       expect(renderNode(ctx, convertedTypeAliasForTableOfContents.children)).to.equal("TypeAlias<A>");
     });
 
     it("should have a matching documentation signature", () => {
-      expect(isTitleNode(convertedTypeAliasForDocumentation)).to.equal(true);
+      assert(isTitleNode(convertedTypeAliasForDocumentation));
       expect(renderNode(ctx, convertedTypeAliasForDocumentation.title)).to.equal("TypeAlias<A>");
     });
 
     it("should have a position", () => {
-      expect(isSmallNode(position)).to.equal(true);
+      assert(isSmallNode(position));
       expect(position.children).to.not.equal(undefined);
     });
 
     it("should have a jsdoc tag", () => {
-      expect(isParagraphNode(tags)).to.equal(true);
+      assert(isSmallNode(tags));
       const renderedTags = renderNode(ctx, tags.children);
-      expect(renderedTags).to.equal("");
+      expect(renderedTags).to.equal("beta");
+    });
+
+    it("should have a matching type parameters", () => {
+      assert(isTitleNode(typeParameters));
+      const renderedTypeParameters = renderNode(ctx, typeParameters.children[0].children);
+      expect(renderedTypeParameters).to.match(/A$/);
+      expect(renderedTypeParameters).to.match(/Type parameter description$/);
     });
 
     it("should have a matching type", () => {
-      expect(isListNode(type)).to.equal(true);
-      const renderedType = renderNode(ctx, type.children);
+      assert(isTitleNode(type));
+      const renderedType = renderNode(ctx, type.children[0].children);
       expect(renderedType).to.match(/Type: .*A.*$/);
     });
 
     it("should have a matching description", () => {
-      expect(isParagraphNode(description)).to.equal(true);
-      const renderedDescription = renderNode(ctx, description.children);
+      assert(isTitleNode(description));
+      const renderedDescription = renderNode(ctx, description.children[0]);
       expect(renderedDescription).to.equal("Type alias description");
     });
 

@@ -74,11 +74,11 @@ function parseEnumDeclaration(ctx: InterpreterContext, declaration: EnumDeclarat
   const members = declaration.members.map(member => createEnumMemberByDeclaration(ctx, member));
 
   return {
+    ...jsdocTags,
     declarationId,
     description,
     members,
-    position,
-    ...jsdocTags
+    position
   };
 
 }
@@ -98,14 +98,14 @@ function createEnumMemberByDeclaration(ctx: InterpreterContext, declaration: TSE
   assert(name, "Member name not found");
 
   return {
+    ...jsdocTags,
     declarationId,
     description,
     kind,
     name,
     position,
     symbolId,
-    type,
-    ...jsdocTags
+    type
   };
 
 }

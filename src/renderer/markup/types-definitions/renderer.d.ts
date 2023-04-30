@@ -286,7 +286,8 @@ export type ConvertedTypeAliasEntityForTableOfContents = LinkNode;
 export type ConvertedTypeAliasEntityForDocumentation = TitleNode<[
   position: ConvertedPosition,
   tags: ConvertedTags,
-  typeParametersAndType: ListNode,
+  typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
+  type: ConvertedTypes,
   description: ConvertedDescription,
   remarks: ConvertedRemarks,
   example: ConvertedExample

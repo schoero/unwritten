@@ -7,11 +7,12 @@ import {
   convertPropertyEntityForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { isParagraphNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isParagraphNode, isSmallNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:tests:utils/template.js";
+import { assert } from "unwritten:utils/general.js";
 
 
 scope("MarkupRenderer", EntityKind.Property, () => {
@@ -41,6 +42,7 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
     const [
       tags,
+      position,
       type,
       description,
       remarks,
@@ -53,39 +55,41 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     });
 
     it("should have a matching type", () => {
-      expect(isParagraphNode(type)).to.equal(true);
-      const renderedType = renderNode(ctx, type.children);
-      expect(renderedType).to.equal("string");
+      assert(isTitleNode(type));
+      assert(isParagraphNode(type.children[0]));
+      expect(type.children[0].children[0]).to.equal("string");
+    });
+
+    it("should have a position", () => {
+      assert(isSmallNode(position));
+      expect(position.children[0]).to.not.equal("");
     });
 
     it("should have an optional tag", () => {
-      expect(isParagraphNode(tags)).to.equal(true);
+      assert(isSmallNode(tags));
       const renderedTags = renderNode(ctx, tags.children);
       expect(renderedTags).to.contain("optional");
     });
 
     it("should have a readonly modifier tag", () => {
-      expect(isParagraphNode(tags)).to.equal(true);
+      assert(isSmallNode(tags));
       const renderedTags = renderNode(ctx, tags.children);
       expect(renderedTags).to.contain("readonly");
     });
 
     it("should have a matching description", () => {
-      expect(isParagraphNode(description)).to.equal(true);
-      const renderedDescription = renderNode(ctx, description.children);
-      expect(renderedDescription).to.equal("Property description");
+      assert(isTitleNode(description));
+      expect(description.children[0].children[0]).to.equal("Property description");
     });
 
     it("should have a matching remarks", () => {
-      expect(isParagraphNode(remarks)).to.equal(true);
-      const renderedRemarks = renderNode(ctx, remarks.children);
-      expect(renderedRemarks).to.equal("Property remarks");
+      assert(isTitleNode(remarks));
+      expect(remarks.children[0].children[0]).to.equal("Property remarks");
     });
 
     it("should have a matching example", () => {
-      expect(isParagraphNode(example)).to.equal(true);
-      const renderedExample = renderNode(ctx, example.children);
-      expect(renderedExample).to.equal("Property example");
+      assert(isTitleNode(example));
+      expect(example.children[0].children[0]).to.equal("Property example");
     });
 
   }
@@ -114,8 +118,13 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     );
 
     const modifiers = convertedPropertiesForDocumentation.map(
-      convertedPropertyForDocumentation =>
-        convertedPropertyForDocumentation.children[0].children[1]
+      convertedPropertyForDocumentation => {
+        if(convertedPropertyForDocumentation.children[0]){
+          return renderNode(ctx, convertedPropertyForDocumentation.children[0].children);
+        } else {
+          return "";
+        }
+      }
     );
 
     it("should render the public modifier", () => {

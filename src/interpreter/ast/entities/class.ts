@@ -74,6 +74,7 @@ function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDe
   const kind = EntityKind.Class;
 
   return {
+    ...jsdocTags,
     ctor,
     declarationId,
     description,
@@ -85,8 +86,7 @@ function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDe
     position,
     properties,
     setters,
-    typeParameters,
-    ...jsdocTags
+    typeParameters
   };
 
 }

@@ -2,13 +2,14 @@ import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 
 
-export function renderModifiers(ctx: MarkupRenderContexts, modifiers: string[]) {
+export function convertModifiers(ctx: MarkupRenderContexts, modifiers?: string[]): ASTNodes[] {
 
   const renderConfig = getRenderConfig(ctx);
 
-  const transformedModifiers = modifiers.reduce<string[]>((acc, modifier) => {
+  const transformedModifiers = modifiers?.reduce<string[]>((acc, modifier) => {
     if(modifier === "accessor"){
       acc.push("get");
       acc.push("set");
@@ -20,10 +21,10 @@ export function renderModifiers(ctx: MarkupRenderContexts, modifiers: string[]) 
     return acc;
   }, []);
 
-  const renderedModifiers = transformedModifiers.map(
+  const convertedModifiers = transformedModifiers?.map(
     modifier => encapsulate(modifier, renderConfig.tagEncapsulation)
   );
 
-  return spaceBetween(...renderedModifiers);
+  return spaceBetween(...convertedModifiers ?? []);
 
 }
