@@ -37,6 +37,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
       signature,
       position,
       tags,
+      typeParameters,
       parameters,
       returnType,
       remarks,
@@ -79,6 +80,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
       signature,
       position,
       tags,
+      typeParameters,
       parameters,
       returnType,
       remarks,
@@ -89,13 +91,18 @@ scope("MarkupRenderer", TypeKind.Function, () => {
       expect(renderNode(ctx, signature)).to.equal("(a, b)");
     });
 
+    it("should not have type parameters", () => {
+      expect(typeParameters).to.equal("");
+    });
+
     it("should have two matching parameters", () => {
       assert(isTitleNode(parameters));
-      expect(parameters.children.length).to.equal(2);
-      expect(parameters.children[0]).to.include("a");
-      expect(parameters.children[0]).to.include("string");
-      expect(parameters.children[1]).to.include("b");
-      expect(parameters.children[1]).to.include("number");
+      assert(isListNode(parameters.children[0]));
+      expect(parameters.children[0].children.length).to.equal(2);
+      expect(parameters.children[0].children[0]).to.include("a");
+      expect(parameters.children[0].children[0]).to.include("string");
+      expect(parameters.children[0].children[1]).to.include("b");
+      expect(parameters.children[0].children[1]).to.include("number");
     });
 
     it("should render the return type correctly", () => {
@@ -167,10 +174,15 @@ scope("MarkupRenderer", TypeKind.Function, () => {
       expect(renderNode(ctx, signature2)).to.equal("(a, b, c)");
     });
 
+    it("should not have type parameters", () => {
+      expect(typeParameters).to.equal("");
+      expect(typeParameters2).to.equal("");
+    });
+
     it("should have matching parameters in each signature", () => {
       assert(isTitleNode(parameters));
       assert(isListNode(parameters.children[0]));
-      expect(parameters.children.length).to.equal(2);
+      expect(parameters.children[0].children.length).to.equal(2);
       expect(parameters.children[0].children[0]).to.include("a");
       expect(parameters.children[0].children[0]).to.include("number");
       expect(parameters.children[0].children[1]).to.include("b");
@@ -178,7 +190,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
 
       assert(isTitleNode(parameters2));
       assert(isListNode(parameters2.children[0]));
-      expect(parameters2.children.length).to.equal(3);
+      expect(parameters2.children[0].children.length).to.equal(3);
       expect(parameters2.children[0].children[0]).to.include("a");
       expect(parameters2.children[0].children[0]).to.include("number");
       expect(parameters2.children[0].children[1]).to.include("b");
@@ -189,10 +201,10 @@ scope("MarkupRenderer", TypeKind.Function, () => {
 
     it("should render the return type correctly for each signature", () => {
       assert(isTitleNode(returnType));
-      expect(returnType.children).to.include("number");
+      expect(returnType.children[0]).to.include("number");
 
       assert(isTitleNode(returnType2));
-      expect(returnType2.children).to.include("number");
+      expect(returnType2.children[0]).to.include("number");
     });
 
   }

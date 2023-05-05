@@ -8,8 +8,7 @@ import type { ParameterEntity } from "unwritten:interpreter:type-definitions/ent
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedParameterEntitiesForDocumentation,
-  ConvertedParameterEntitiesForSignature,
-  ConvertedParameterEntitiesForType
+  ConvertedParameterEntitiesForSignature
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -61,25 +60,6 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
     t("parameter", { capitalize: true, count: 99 }),
     convertedParameterList
   );
-
-}
-
-
-export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForType {
-
-  const convertedParameters = parameterEntities?.map(
-    parameter => convertParameterEntityForDocumentation(ctx, parameter)
-  ) ?? [];
-
-  if(convertedParameters.length === 0){
-    return "";
-  }
-
-  const convertedParameterList = createListNode(
-    ...convertedParameters
-  );
-
-  return convertedParameterList;
 
 }
 

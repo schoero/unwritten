@@ -74,9 +74,8 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     });
 
     it("should have a jsdoc tag", () => {
-      assert(isSmallNode(tags));
-      const renderedTags = renderNode(ctx, tags.children);
-      expect(renderedTags).to.equal("beta");
+      assert(isParagraphNode(tags));
+      expect(tags.children).to.equal("beta");
     });
 
     it("should have a matching type parameters", () => {
@@ -88,7 +87,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
     it("should have a matching type", () => {
       assert(isTitleNode(type));
-      const renderedType = renderNode(ctx, type.children[0].children);
+      const renderedType = renderNode(ctx, type.children[0]);
       expect(renderedType).to.match(/Type: .*A.*$/);
     });
 
@@ -99,14 +98,14 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     });
 
     it("should have matching remarks", () => {
-      expect(isParagraphNode(remarks)).to.equal(true);
-      const renderedRemarks = renderNode(ctx, remarks.children);
+      assert(isParagraphNode(remarks));
+      const renderedRemarks = renderNode(ctx, remarks.children[0]);
       expect(renderedRemarks).to.equal("Type alias remarks");
     });
 
     it("should have a matching example", () => {
-      expect(isParagraphNode(example)).to.equal(true);
-      const renderedExample = renderNode(ctx, example.children);
+      assert(isParagraphNode(example));
+      const renderedExample = renderNode(ctx, example.children[0]);
       expect(renderedExample).to.equal("Type alias example");
     });
 

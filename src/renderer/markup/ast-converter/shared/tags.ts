@@ -1,7 +1,7 @@
 import { convertJSDocTags } from "unwritten:renderer/markup/ast-converter/shared/jsdoc-tags.js";
 import { convertModifiers } from "unwritten:renderer/markup/ast-converter/shared/modifiers.js";
 import { convertOptional } from "unwritten:renderer/markup/ast-converter/shared/optional.js";
-import { createSmallNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createParagraphNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 
 import type { Entities } from "unwritten:interpreter/type-definitions/entities.js";
@@ -23,7 +23,7 @@ export function convertTags(ctx: MarkupRenderContexts, entityWithTags: Entities 
   ];
 
   return convertedTags.length > 0
-    ? createSmallNode(...spaceBetween(...convertedTags))
+    ? createParagraphNode(...spaceBetween(...convertedTags))
     : "";
 
 }

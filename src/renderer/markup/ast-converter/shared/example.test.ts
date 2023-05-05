@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { convertExample } from "unwritten:renderer/markup/utils/example.js";
+import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";

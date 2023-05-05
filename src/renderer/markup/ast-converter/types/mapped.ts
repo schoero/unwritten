@@ -1,4 +1,4 @@
-import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/index.js";
+import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
 import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";

@@ -8,8 +8,7 @@ import type { TypeParameterEntity } from "unwritten:interpreter:type-definitions
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedTypeParameterEntitiesForDocumentation,
-  ConvertedTypeParameterEntitiesForSignature,
-  ConvertedTypeParameterEntitiesForType
+  ConvertedTypeParameterEntitiesForSignature
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -47,25 +46,6 @@ export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderCo
     t("type-parameter", { capitalize: true, count: 99 }),
     convertedParameterList
   );
-
-}
-
-
-export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContexts, parameterEntities: TypeParameterEntity[] | undefined): ConvertedTypeParameterEntitiesForType {
-
-  const convertedParameters = parameterEntities?.map(
-    parameter => convertTypeParameterEntityForDocumentation(ctx, parameter)
-  ) ?? [];
-
-  if(convertedParameters.length === 0){
-    return "";
-  }
-
-  const convertedParameterList = createListNode(
-    ...convertedParameters
-  );
-
-  return convertedParameterList;
 
 }
 

@@ -8,10 +8,8 @@ import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
   convertParameterEntitiesForDocumentation,
   convertParameterEntitiesForSignature,
-  convertParameterEntitiesForType,
   convertTypeParameterEntitiesForDocumentation,
-  convertTypeParameterEntitiesForSignature,
-  convertTypeParameterEntitiesForType
+  convertTypeParameterEntitiesForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
@@ -75,8 +73,8 @@ export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatu
 
   const convertedPosition = convertPosition(ctx, signatureEntity.position);
   const convertedTags = convertTags(ctx, signatureEntity);
-  const convertedTypeParameters = convertTypeParameterEntitiesForType(ctx, signatureEntity.typeParameters);
-  const convertedParameters = convertParameterEntitiesForType(ctx, signatureEntity.parameters);
+  const convertedTypeParameters = convertTypeParameterEntitiesForDocumentation(ctx, signatureEntity.typeParameters);
+  const convertedParameters = convertParameterEntitiesForDocumentation(ctx, signatureEntity.parameters);
   const convertedReturnType = convertReturnType(ctx, signatureEntity);
   const convertedDescription = convertDescription(ctx, signatureEntity.description);
   const convertedExample = convertExample(ctx, signatureEntity.example);

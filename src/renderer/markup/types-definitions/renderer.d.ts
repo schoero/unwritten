@@ -53,7 +53,7 @@ export type ConvertedPosition = SmallNode | "";
 
 //-- Tags
 
-export type ConvertedTags = SmallNode | "";
+export type ConvertedTags = ParagraphNode | "";
 
 
 //-- Description
@@ -327,8 +327,8 @@ export type ConvertedSignatureEntityForType = [
   renderedSignature: ASTNodes,
   position: ConvertedPosition,
   tags: ConvertedTags,
-  typeParameters: ConvertedTypeParameterEntitiesForType,
-  parameters: ConvertedParameterEntitiesForType,
+  typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
+  parameters: ConvertedParameterEntitiesForDocumentation,
   returnType: ASTNodes,
   description: ConvertedDescription,
   remarks: ConvertedRemarks,
@@ -401,14 +401,12 @@ export type ConvertedEnumEntityForDocumentation = TitleNode<[
 
 export type ConvertedParameterEntitiesForSignature = ASTNodes[] | "";
 export type ConvertedParameterEntitiesForDocumentation = TitleNode<[ListNode]> | "";
-export type ConvertedParameterEntitiesForType = ListNode | "";
 
 
 //-- Type Parameter
 
 export type ConvertedTypeParameterEntitiesForSignature = ASTNodes[];
 export type ConvertedTypeParameterEntitiesForDocumentation = TitleNode<[ListNode]> | "";
-export type ConvertedTypeParameterEntitiesForType = ListNode | "";
 
 
 //-- Type Argument

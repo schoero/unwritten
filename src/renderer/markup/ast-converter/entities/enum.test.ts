@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createEnumEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { isSmallNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import {
   convertEnumEntityForDocumentation,
   convertEnumEntityForTableOfContents
@@ -69,9 +69,9 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     });
 
     it("should have matching tags", () => {
-      assert(isSmallNode(tags));
-      expect(tags.children[0]).to.include("beta");
-      expect(tags.children[0]).to.include("deprecated");
+      assert(isParagraphNode(tags));
+      expect(tags.children).to.include("beta");
+      expect(tags.children).to.include("deprecated");
     });
 
     it("should have a matching description", () => {

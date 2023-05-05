@@ -7,7 +7,12 @@ import {
   convertSignatureEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { isLinkNode, isSmallNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import {
+  isLinkNode,
+  isParagraphNode,
+  isSmallNode,
+  isTitleNode
+} from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -69,8 +74,8 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     });
 
     it("should have a jsdoc tag", () => {
-      assert(isSmallNode(tags));
-      expect(renderNode(ctx, tags.children)).to.equal("beta");
+      assert(isParagraphNode(tags));
+      expect(tags.children).to.include("beta");
     });
 
     it("should not have type parameters", () => {

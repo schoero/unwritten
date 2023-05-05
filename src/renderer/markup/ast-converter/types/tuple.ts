@@ -1,5 +1,5 @@
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertTypeInline } from "unwritten:renderer:markup/ast-converter/index.js";
+import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 
 import type { TupleMemberEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";

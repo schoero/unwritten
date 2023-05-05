@@ -6,7 +6,6 @@ import {
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isLinkNode,
   isParagraphNode,
@@ -52,8 +51,8 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
       tags,
       type,
       description,
-      example,
-      remarks
+      remarks,
+      example
     ] = convertedVariableForDocumentation.children;
 
     it("should have matching table of contents entry", () => {
@@ -67,38 +66,37 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     });
 
     it("should have a position", () => {
-      expect(isSmallNode(position)).to.equal(true);
+      assert(isSmallNode(position));
       expect(position.children).to.not.equal(undefined);
     });
 
     it("should have a jsdoc tag", () => {
-      expect(isParagraphNode(tags)).to.equal(true);
-      const renderedTags = renderNode(ctx, tags.children);
-      expect(renderedTags).to.equal("beta");
+      assert(isParagraphNode(tags));
+      expect(tags.children).to.include("beta");
     });
 
     it("should have a matching type", () => {
-      expect(isParagraphNode(type)).to.equal(true);
-      const renderedType = renderNode(ctx, type.children);
-      expect(renderedType).to.match(/7$/);
+      assert(isTitleNode(type));
+      assert(isParagraphNode(type.children[0]));
+      expect(type.children[0].children).to.include("7");
     });
 
     it("should have a matching description", () => {
-      expect(isParagraphNode(description)).to.equal(true);
-      const renderedDescription = renderNode(ctx, description.children);
-      expect(renderedDescription).to.equal("Variable description");
+      assert(isTitleNode(description));
+      assert(isParagraphNode(description.children[0]));
+      expect(description.children[0].children[0]).to.equal("Variable description");
     });
 
     it("should have matching remarks", () => {
-      expect(isParagraphNode(remarks)).to.equal(true);
-      const renderedRemarks = renderNode(ctx, remarks.children);
-      expect(renderedRemarks).to.equal("Variable remarks");
+      assert(isTitleNode(remarks));
+      assert(isParagraphNode(remarks.children[0]));
+      expect(remarks.children[0].children[0]).to.equal("Variable remarks");
     });
 
     it("should have a matching example", () => {
-      expect(isParagraphNode(example)).to.equal(true);
-      const renderedExample = renderNode(ctx, example.children);
-      expect(renderedExample).to.equal("Variable example");
+      assert(isTitleNode(example));
+      assert(isParagraphNode(example.children[0]));
+      expect(example.children[0].children[0]).to.equal("Variable example");
     });
 
   }
