@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createNamespaceEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { isSmallNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import {
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents
@@ -71,7 +71,7 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     });
 
     it("should have a matching tags", () => {
-      assert(isSmallNode(tags));
+      assert(isParagraphNode(tags));
       expect(tags.children).to.include("deprecated");
       expect(tags.children).to.include("beta");
     });

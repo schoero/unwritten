@@ -6,7 +6,7 @@ import {
   convertInterfaceEntityForDocumentation,
   convertInterfaceEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { isSmallNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isParagraphNode, isSmallNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -195,7 +195,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a interface tags", () => {
-      assert(isSmallNode(interfaceTags));
+      assert(isParagraphNode(interfaceTags));
       expect(interfaceTags.children).to.include("beta");
       expect(interfaceTags.children).to.include("deprecated");
     });
@@ -220,7 +220,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a call signature tags", () => {
-      assert(isSmallNode(callSignatureTags));
+      assert(isParagraphNode(callSignatureTags));
       expect(callSignatureTags.children).to.include("beta");
       expect(callSignatureTags.children).to.include("deprecated");
     });
@@ -241,7 +241,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a property tags", () => {
-      assert(isSmallNode(propertyTags));
+      assert(isParagraphNode(propertyTags));
       expect(propertyTags.children).to.include("beta");
       expect(propertyTags.children).to.include("deprecated");
     });
