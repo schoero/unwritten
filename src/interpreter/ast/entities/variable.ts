@@ -1,4 +1,4 @@
-import { parseType } from "unwritten:interpreter:ast/index.js";
+import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
@@ -26,7 +26,7 @@ export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): V
   const name = getNameBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
   const fromDeclaration = parseVariableDeclaration(ctx, declaration);
-  const type = parseType(ctx, tsType);
+  const type = interpretType(ctx, tsType);
   const kind = EntityKind.Variable;
 
   return {

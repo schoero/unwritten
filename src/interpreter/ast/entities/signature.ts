@@ -1,5 +1,5 @@
 import { createParameterEntity, createTypeParameterEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { parseType } from "unwritten:interpreter:ast/index.js";
+import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
 import {
   getDescriptionByDeclaration,
@@ -68,7 +68,7 @@ function getReturnTypeBySignature(ctx: InterpreterContext, signature: TSSignatur
   const declaration = signature.getDeclaration() as SignatureDeclaration | undefined;
   const tsReturnType = signature.getReturnType();
 
-  const type = parseType(ctx, tsReturnType);
+  const type = interpretType(ctx, tsReturnType);
   const description = declaration && getReturnTypeDescription(ctx, declaration);
 
   assert(tsReturnType, "Function return type is missing.");

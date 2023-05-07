@@ -8,7 +8,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
-  isLinkNode,
+  isAnchorNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -45,7 +45,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     const convertedTypeAliasForTableOfContents = convertTypeAliasEntityForTableOfContents(ctx, typeAliasEntity);
     const convertedTypeAliasForDocumentation = convertTypeAliasEntityForDocumentation(ctx, typeAliasEntity);
 
-    assert(isLinkNode(convertedTypeAliasForTableOfContents), "Rendered typeAlias for table of contents is not a link");
+    assert(isAnchorNode(convertedTypeAliasForTableOfContents), "Rendered typeAlias for table of contents is not a link");
     assert(isTitleNode(convertedTypeAliasForDocumentation), "Rendered typeAlias for documentation is not a container");
 
     const [
@@ -59,7 +59,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     ] = convertedTypeAliasForDocumentation.children;
 
     it("should have matching table of contents entry", () => {
-      assert(isLinkNode(convertedTypeAliasForTableOfContents));
+      assert(isAnchorNode(convertedTypeAliasForTableOfContents));
       expect(renderNode(ctx, convertedTypeAliasForTableOfContents.children)).to.equal("TypeAlias<A>");
     });
 

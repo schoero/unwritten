@@ -7,7 +7,7 @@ import {
   convertVariableEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import {
-  isLinkNode,
+  isAnchorNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -43,7 +43,7 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     const convertedVariableForTableOfContents = convertVariableEntityForTableOfContents(ctx, variableEntity);
     const convertedVariableForDocumentation = convertVariableEntityForDocumentation(ctx, variableEntity);
 
-    assert(isLinkNode(convertedVariableForTableOfContents), "Rendered variable for table of contents is not a link");
+    assert(isAnchorNode(convertedVariableForTableOfContents), "Rendered variable for table of contents is not a link");
     assert(isTitleNode(convertedVariableForDocumentation), "Rendered variable for documentation is not a container");
 
     const [
@@ -56,7 +56,7 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     ] = convertedVariableForDocumentation.children;
 
     it("should have matching table of contents entry", () => {
-      expect(isLinkNode(convertedVariableForTableOfContents)).to.equal(true);
+      expect(isAnchorNode(convertedVariableForTableOfContents)).to.equal(true);
       expect(convertedVariableForTableOfContents.children).to.equal("numberVariable");
     });
 

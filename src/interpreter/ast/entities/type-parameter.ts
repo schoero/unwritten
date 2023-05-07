@@ -1,4 +1,4 @@
-import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getTypeParameterDescription } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
@@ -26,8 +26,8 @@ export function createTypeParameterEntity(ctx: InterpreterContext, declaration: 
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getTypeParameterDescription(ctx, declaration);
-  const initializer = declaration.default && parseTypeNode(ctx, declaration.default);
-  const constraint = declaration.constraint && parseTypeNode(ctx, declaration.constraint);
+  const initializer = declaration.default && interpretTypeNode(ctx, declaration.default);
+  const constraint = declaration.constraint && interpretTypeNode(ctx, declaration.constraint);
   const kind = EntityKind.TypeParameter;
 
   return {

@@ -1,4 +1,4 @@
-import { parseSymbol } from "unwritten:interpreter:ast/index.js";
+import { interpretSymbol } from "unwritten:interpreter:ast/index.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
@@ -17,7 +17,7 @@ export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol):
   const exports = getExportedSymbols(ctx, symbol)
     .reduce<ExportableEntities[]>((parsedSymbols, exportedSymbol) => {
 
-    const parsedSymbol = parseSymbol(ctx, exportedSymbol);
+    const parsedSymbol = interpretSymbol(ctx, exportedSymbol);
     assert(isExportableEntity(parsedSymbol), "Parsed symbol is not an exportable type");
     parsedSymbols.push(parsedSymbol);
 

@@ -1,8 +1,10 @@
+import { renderNode } from "unwritten:renderer/index.js";
 import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
+import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 import {
   convertTypeParameterEntitiesForDocumentation,
@@ -10,7 +12,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -21,19 +23,22 @@ import type {
 
 
 export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForTableOfContents {
-  const renderedSignature = renderTypeAliasSignature(ctx, typeAliasEntity);
-  return createLinkNode(
+
+  const convertedSignature = convertTypAliasSignature(ctx, typeAliasEntity);
+  const renderedSignature = renderNode(ctx, convertedSignature);
+  const id = typeAliasEntity.symbolId;
+
+  return createAnchorNode(
     renderedSignature,
-    typeAliasEntity.symbolId
+    id
   );
+
 }
 
 
 export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForDocumentation {
 
-  const renderedSignature = renderTypeAliasSignature(ctx, typeAliasEntity);
-  const id = typeAliasEntity.symbolId;
-
+  const convertedSignature = convertTypAliasSignature(ctx, typeAliasEntity);
   const convertedPosition = convertPosition(ctx, typeAliasEntity.position);
   const convertedTags = convertTags(ctx, typeAliasEntity);
   const convertedDescription = convertDescription(ctx, typeAliasEntity.description);
@@ -42,9 +47,13 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const convertedTypeParameterEntities = convertTypeParameterEntitiesForDocumentation(ctx, typeAliasEntity.typeParameters);
   const convertedType = convertType(ctx, typeAliasEntity.type);
 
+  const renderedSignature = renderNode(ctx, convertedSignature);
+  const id = typeAliasEntity.symbolId;
+  const anchor = createAnchor(renderedSignature, id);
+
   return createTitleNode(
     renderedSignature,
-    id,
+    anchor,
     convertedPosition,
     convertedTags,
     convertedTypeParameterEntities,
@@ -57,7 +66,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
 }
 
 
-function renderTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity) {
+function convertTypAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity) {
 
   const renderConfig = getRenderConfig(ctx);
 

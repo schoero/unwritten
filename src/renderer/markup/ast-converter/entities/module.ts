@@ -2,6 +2,7 @@ import { convertDescription } from "unwritten:renderer/markup/ast-converter/shar
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertEntityForDocumentation,
   convertEntityForTableOfContents
@@ -20,13 +21,10 @@ import type {
 export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContexts, moduleEntity: ModuleEntity): ConvertedModuleEntityForTableOfContents {
 
   const name = moduleEntity.name;
-  const id = moduleEntity.symbolId;
-
   const children = moduleEntity.exports.map(exportedEntity => convertEntityForTableOfContents(ctx, exportedEntity));
 
   return createTitleNode(
     name,
-    id,
     children
   );
 
@@ -37,6 +35,8 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
 
   const name = moduleEntity.name;
   const id = moduleEntity.symbolId;
+
+  const anchor = createAnchor(name, id);
 
   const convertedPosition = convertPosition(ctx, moduleEntity.position);
   const convertedTags = convertTags(ctx, moduleEntity);
@@ -50,7 +50,7 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
 
   return createTitleNode(
     name,
-    id,
+    anchor,
     convertedPosition,
     convertedTags,
     convertedDescription,

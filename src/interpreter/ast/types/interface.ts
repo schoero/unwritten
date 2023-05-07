@@ -1,4 +1,4 @@
-import { parseType } from "unwritten:interpreter:ast/index.js";
+import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
 import { createObjectLikeType } from "unwritten:interpreter:ast/types/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
@@ -13,7 +13,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 export const createInterfaceByType = (ctx: InterpreterContext, type: TSInterfaceType): InterfaceType => withLockedType(ctx, type, () => {
 
   const objectType = createObjectLikeType(ctx, type, TypeKind.Interface);
-  const typeParameters = type.typeParameters?.map(type => parseType(ctx, type));
+  const typeParameters = type.typeParameters?.map(type => interpretType(ctx, type));
   const name = getNameByType(ctx, type);
 
   return <InterfaceType>{

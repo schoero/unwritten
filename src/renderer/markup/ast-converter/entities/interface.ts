@@ -2,12 +2,13 @@ import { convertDescription } from "unwritten:renderer/markup/ast-converter/shar
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendInterfaceEntityPropertiesWithHeritage,
@@ -23,7 +24,9 @@ import type {
 
 
 export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForTableOfContents {
-  return createLinkNode(interfaceEntity.name, interfaceEntity.symbolId);
+  const name = interfaceEntity.name;
+  const id = interfaceEntity.symbolId;
+  return createAnchorNode(name, id);
 }
 
 
@@ -32,6 +35,9 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const translate = getTranslator(ctx);
 
   const name = interfaceEntity.name;
+  const id = interfaceEntity.symbolId;
+
+  const anchor = createAnchor(name, id);
 
   const convertedTags = convertTags(ctx, interfaceEntity);
   const convertedDescription = convertDescription(ctx, interfaceEntity.description);
@@ -55,7 +61,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
 
   return createTitleNode(
     name,
-    interfaceEntity.symbolId,
+    anchor,
     convertedPosition,
     convertedTags,
     convertedDescription,

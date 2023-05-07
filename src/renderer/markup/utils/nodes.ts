@@ -1,3 +1,5 @@
+import { isAnchor } from "unwritten:renderer/markup/utils/linker.js";
+
 import { ASTNodeKinds } from "../enums/nodes.js";
 
 import type {
@@ -9,16 +11,21 @@ import type {
   ListNode,
   ParagraphNode,
   SmallNode,
+  SpanNode,
   StrikethroughNode,
   TitleNode
 } from "../types-definitions/nodes.js";
 
+import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
+import type { Anchor } from "unwritten:renderer/markup/utils/linker.js";
 
-export function createAnchorNode(children: string, id: string): AnchorNode {
+
+export function createAnchorNode(name: Name, id: ID): AnchorNode {
   return {
-    children,
+    children: [name],
     id,
-    kind: ASTNodeKinds.Anchor
+    kind: ASTNodeKinds.Anchor,
+    name
   };
 }
 
@@ -40,14 +47,9 @@ export function createItalicNode<Children extends ASTNodes[]>(...children: Child
   };
 }
 
-export function createLinkNode(children: ASTNodes, link: string): LinkNode;
-export function createLinkNode(children: ASTNodes, id: number): LinkNode;
-export function createLinkNode(children: ASTNodes, linkOrId: number | string): LinkNode {
-  const id = typeof linkOrId === "number" ? linkOrId : undefined;
-  const link = typeof linkOrId === "string" ? linkOrId : undefined;
+export function createLinkNode(children: ASTNodes, link: string): LinkNode {
   return {
     children,
-    id,
     kind: ASTNodeKinds.Link,
     link
   };
@@ -80,6 +82,22 @@ export function createSmallNode<Children extends ASTNodes[]>(...children: Childr
   };
 }
 
+export function createSpanNode<Children extends ASTNodes[]>(children?: Children): SpanNode<Children>;
+export function createSpanNode<Children extends ASTNodes[]>(...children: Children): SpanNode<Children>;
+export function createSpanNode<Children extends ASTNodes[]>(anchor: Anchor, children?: Children): SpanNode<Children>;
+export function createSpanNode<Children extends ASTNodes[]>(anchor: Anchor, ...children: Children): SpanNode<Children>;
+export function createSpanNode<Children extends ASTNodes[]>(...anchorOrChildren: Children | [anchor: Anchor, ...children: Children]): SpanNode<Children> {
+
+  const { anchor, children } = separateAnchorAndChildren<Children>(...anchorOrChildren);
+
+  return {
+    ...anchor,
+    children,
+    kind: ASTNodeKinds.Span
+  };
+
+}
+
 export function createStrikethroughNode<Children extends ASTNodes[]>(children: Children): StrikethroughNode<Children>;
 export function createStrikethroughNode<Children extends ASTNodes[]>(...children: Children): StrikethroughNode<Children>;
 export function createStrikethroughNode<Children extends ASTNodes[]>(...children: Children): StrikethroughNode<Children> {
@@ -91,30 +109,43 @@ export function createStrikethroughNode<Children extends ASTNodes[]>(...children
 
 export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, children?: Children): TitleNode<Children>;
 export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, ...children: Children): TitleNode<Children>;
-export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, id: number, children?: Children): TitleNode<Children>;
-export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, id: number, ...children: Children): TitleNode<Children>;
-export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, ...idOrChildren: Children | [id: number, ...children: Children]): TitleNode<Children> {
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, anchor?: Anchor, children?: Children): TitleNode<Children>;
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, anchor?: Anchor, ...children: Children): TitleNode<Children>;
+export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, ...anchorOrChildren: Children | [anchor: Anchor, ...children: Children]): TitleNode<Children> {
 
-  let id: number | undefined;
+  const { anchor, children } = separateAnchorAndChildren<Children>(...anchorOrChildren);
+
+  return {
+    ...anchor,
+    children,
+    kind: ASTNodeKinds.Title,
+    title
+  } as const;
+
+}
+
+
+function separateAnchorAndChildren<Children extends ASTNodes[]>(...anchorOrChildren: Children | [anchor: Anchor, ...children: Children]) {
+
+  let anchor: Anchor = {};
   let children: Children;
 
-  if(typeof idOrChildren === "number" || typeof idOrChildren === "undefined"){
-    id = idOrChildren;
+  if(isAnchor(anchorOrChildren) || typeof anchorOrChildren === "undefined"){
+    anchor = anchorOrChildren;
     children = <ASTNodes>[] as Children;
   } else {
-    if(typeof idOrChildren[0] === "number" || typeof idOrChildren[0] === "undefined"){
-      const [first, ...rest] = idOrChildren;
-      id = first;
+    if(isAnchor(anchorOrChildren[0]) || typeof anchorOrChildren[0] === "undefined"){
+      const [first, ...rest] = anchorOrChildren;
+      anchor = first;
       children = rest as Children;
     } else {
-      children = idOrChildren as Children;
+      children = anchorOrChildren as Children;
     }
   }
 
   return {
-    children,
-    id,
-    kind: ASTNodeKinds.Title,
-    title
-  } as const;
+    anchor,
+    children
+  };
+
 }

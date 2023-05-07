@@ -1,7 +1,7 @@
 import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter:enums/jsdoc.ts";
 import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.ts";
 
-import type { ASTNodes, LinkNode, ListNode, ParagraphNode, SmallNode, TitleNode } from "./nodes.js";
+import type { AnchorNode, ASTNodes, ListNode, ParagraphNode, SmallNode, TitleNode } from "./nodes.js";
 
 
 //-- Categories
@@ -282,7 +282,7 @@ export type ConvertedModuleEntityForDocumentation = TitleNode<[
 
 //-- Type alias
 
-export type ConvertedTypeAliasEntityForTableOfContents = LinkNode;
+export type ConvertedTypeAliasEntityForTableOfContents = AnchorNode;
 export type ConvertedTypeAliasEntityForDocumentation = TitleNode<[
   position: ConvertedPosition,
   tags: ConvertedTags,
@@ -310,7 +310,7 @@ export type ConvertedFunctionEntityForType = ConvertedFunctionLikeEntityForType;
 
 //-- Signature
 
-export type ConvertedSignatureEntityForTableOfContents = LinkNode;
+export type ConvertedSignatureEntityForTableOfContents = AnchorNode;
 
 export type ConvertedSignatureEntityForDocumentation = TitleNode<[
   position: ConvertedPosition,
@@ -338,7 +338,7 @@ export type ConvertedSignatureEntityForType = [
 
 //-- Variable
 
-export type ConvertedVariableEntityForTableOfContents = LinkNode;
+export type ConvertedVariableEntityForTableOfContents = AnchorNode;
 export type ConvertedVariableEntityForDocumentation = TitleNode<[
   position: ConvertedPosition,
   tags: ConvertedTags,
@@ -351,7 +351,7 @@ export type ConvertedVariableEntityForDocumentation = TitleNode<[
 
 //-- Interface
 
-export type ConvertedInterfaceEntityForTableOfContents = LinkNode;
+export type ConvertedInterfaceEntityForTableOfContents = AnchorNode;
 export type ConvertedInterfaceEntityForDocumentation = TitleNode<[
   position: ConvertedPosition,
   tags: ConvertedTags,
@@ -369,7 +369,7 @@ export type ConvertedInterfaceEntityForDocumentation = TitleNode<[
 
 //-- Class
 
-export type ConvertedClassEntityForTableOfContents = LinkNode;
+export type ConvertedClassEntityForTableOfContents = AnchorNode;
 export type ConvertedClassEntityForDocumentation = TitleNode<[
   position: ConvertedPosition,
   tags: ConvertedTags,
@@ -386,7 +386,7 @@ export type ConvertedClassEntityForDocumentation = TitleNode<[
 
 //-- Enum
 
-export type ConvertedEnumEntityForTableOfContents = LinkNode;
+export type ConvertedEnumEntityForTableOfContents = AnchorNode;
 export type ConvertedEnumEntityForDocumentation = TitleNode<[
   position: ConvertedPosition,
   tags: ConvertedTags,
@@ -406,7 +406,10 @@ export type ConvertedParameterEntitiesForDocumentation = TitleNode<[ListNode]> |
 //-- Type Parameter
 
 export type ConvertedTypeParameterEntitiesForSignature = ASTNodes[];
-export type ConvertedTypeParameterEntitiesForDocumentation = TitleNode<[ListNode]> | "";
+export type ConvertedTypeParameterEntitiesForDocumentation = TitleNode<[
+  ListNode<ConvertedTypeParameterEntityForDocumentation[]>
+]> | "";
+export type ConvertedTypeParameterEntityForDocumentation = ASTNodes[];
 
 
 //-- Type Argument
@@ -418,7 +421,7 @@ export type ConvertedTypeArgumentEntityForDocumentation = ASTNodes[];
 
 //-- Property
 
-export type ConvertedPropertyEntityForTableOfContents = LinkNode;
+export type ConvertedPropertyEntityForTableOfContents = AnchorNode;
 export type ConvertedPropertyEntityForDocumentation = TitleNode<[
   tags: ConvertedTags,
   position: ConvertedPosition,

@@ -1,4 +1,4 @@
-import { parseType } from "unwritten:interpreter:ast/index.js";
+import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getSymbolIdByType, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
@@ -13,7 +13,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 export const createTypeParameterType = (ctx: InterpreterContext, type: TypeParameter): TypeParameterType => withLockedType(ctx, type, () => {
 
   const tsConstraint = type.getConstraint();
-  const constraint = tsConstraint && parseType(ctx, tsConstraint);
+  const constraint = tsConstraint && interpretType(ctx, tsConstraint);
   const name = getNameByType(ctx, type);
   const typeId = getTypeId(ctx, type);
   const symbolId = getSymbolIdByType(ctx, type);

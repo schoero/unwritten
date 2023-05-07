@@ -1,3 +1,4 @@
+import { getAnchorLink } from "unwritten:renderer/markup/utils/linker.js";
 import { renderNode } from "unwritten:renderer:html/index.js";
 
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
@@ -6,9 +7,11 @@ import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nod
 
 export function renderAnchorNode(ctx: HTMLRenderContext, anchorNode: AnchorNode): string {
 
-  const anchor = anchorNode.id;
+  const anchorId = anchorNode.id;
   const content = anchorNode.children;
 
-  return `<a href="#${anchor}">${renderNode(ctx, content)}</a>`;
+  const anchorLink = getAnchorLink(ctx, anchorId);
+
+  return `<a href="#${anchorLink}">${renderNode(ctx, content)}</a>`;
 
 }

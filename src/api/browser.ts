@@ -1,6 +1,6 @@
 import { compile } from "unwritten:compiler:browser.js";
 import { createConfig } from "unwritten:config/index.js";
-import { parse } from "unwritten:interpreter:ast/index.js";
+import { interpret } from "unwritten:interpreter:ast/index.js";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
 import { getEntryFileSymbolFromProgram } from "unwritten:interpreter:utils/ts.js";
 import { Logger } from "unwritten:logger/index.js";
@@ -30,7 +30,7 @@ export async function unwritten(code: string, options?: BrowserAPIOptions): Prom
   const config = await createConfig(defaultContext, options?.config);
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
   const entryFileSymbol = getEntryFileSymbolFromProgram(interpreterContext, program);
-  const parsedSymbols = parse(interpreterContext, entryFileSymbol);
+  const parsedSymbols = interpret(interpreterContext, entryFileSymbol);
 
 
   //-- Render

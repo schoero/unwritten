@@ -3,12 +3,13 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertFunctionLikeEntityForDocumentation,
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendClassEntityConstructorsWithHeritage,
@@ -24,7 +25,9 @@ import type {
 
 
 export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
-  return createLinkNode(classEntity.name, classEntity.symbolId);
+  const name = classEntity.name;
+  const id = classEntity.symbolId;
+  return createAnchorNode(name, id);
 }
 
 
@@ -33,6 +36,9 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const t = getTranslator(ctx);
 
   const name = classEntity.name;
+  const id = classEntity.symbolId;
+
+  const anchor = createAnchor(name, id);
 
   const convertedPosition = convertPosition(ctx, classEntity.position);
   const convertedTags = convertTags(ctx, classEntity);
@@ -54,7 +60,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
 
   return createTitleNode(
     name,
-    classEntity.symbolId,
+    anchor,
     convertedPosition,
     convertedTags,
     convertedDescription,

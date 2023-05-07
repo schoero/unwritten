@@ -30,7 +30,6 @@
   * [ ] Create integration test for this. Multiple functions that use the same type should only be rendered once.
 
 * [ ] Link to type parameter possible
-* [ ] Link to type parameter possible
 * [ ] How are type parameters rendered
 * [ ] Introduce `typeId` `symbolId`, `declarationId` and `valueDeclarationId`
   * [ ] Figure out how to link references correctly as in markdown id's are generated automatically

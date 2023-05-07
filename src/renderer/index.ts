@@ -1,5 +1,8 @@
+import { isHTMLRenderContext, renderNode as renderNodeAsHTML } from "unwritten:renderer:markup/html/index.js";
 import { assert } from "unwritten:utils:general.js";
 
+import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.d.js";
 
 
@@ -22,6 +25,13 @@ export async function getRenderer(renderer?: Renderer | string): Promise<Rendere
 
 }
 
+export function renderNode(ctx: MarkupRenderContexts, node: ASTNodes): string {
+  if(isHTMLRenderContext(ctx)){
+    return renderNodeAsHTML(ctx, node);
+  } else {
+    throw new Error("Markdown renderer not yet implemented");
+  }
+}
 
 function validateRenderer(renderer: unknown): asserts renderer is Renderer {
   assert(isObject(renderer), "Renderer must be an object that implements the `Renderer` interface");

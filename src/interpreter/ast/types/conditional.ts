@@ -1,4 +1,4 @@
-import { parseType, parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { interpretType, interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
@@ -11,16 +11,16 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 export function createConditionalTypeByTypeNode(ctx: InterpreterContext, typeNode: ConditionalTypeNode): ConditionalType {
 
   const typeId = getIdByTypeNode(ctx, typeNode);
-  const checkType = parseTypeNode(ctx, typeNode.checkType);
-  const extendsType = parseTypeNode(ctx, typeNode.extendsType);
-  const trueType = parseTypeNode(ctx, typeNode.trueType);
-  const falseType = parseTypeNode(ctx, typeNode.falseType);
+  const checkType = interpretTypeNode(ctx, typeNode.checkType);
+  const extendsType = interpretTypeNode(ctx, typeNode.extendsType);
+  const trueType = interpretTypeNode(ctx, typeNode.trueType);
+  const falseType = interpretTypeNode(ctx, typeNode.falseType);
 
   const type = ctx.checker.getTypeFromTypeNode(typeNode);
 
   const apparentType = ctx.checker.getApparentType(type);
 
-  const parsedType = parseType(ctx, apparentType);
+  const parsedType = interpretType(ctx, apparentType);
 
   const kind = TypeKind.Conditional;
 
@@ -39,10 +39,10 @@ export function createConditionalType(ctx: InterpreterContext, type: TSCondition
 
   const root = type.root;
   const id = getTypeId(ctx, type);
-  const checkType = parseTypeNode(ctx, root.node.checkType);
-  const extendsType = parseTypeNode(ctx, root.node.extendsType);
-  const trueType = parseTypeNode(ctx, root.node.trueType);
-  const falseType = parseTypeNode(ctx, root.node.falseType);
+  const checkType = interpretTypeNode(ctx, root.node.checkType);
+  const extendsType = interpretTypeNode(ctx, root.node.extendsType);
+  const trueType = interpretTypeNode(ctx, root.node.trueType);
+  const falseType = interpretTypeNode(ctx, root.node.falseType);
 
   const kind = TypeKind.Conditional;
 

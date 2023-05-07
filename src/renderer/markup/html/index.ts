@@ -1,4 +1,5 @@
 /* eslint-disable arrow-body-style */
+import { renderSpanNode } from "unwritten:renderer/markup/html/ast/span.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderListNode } from "unwritten:renderer:html/ast/list.js";
 import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index.js";
@@ -17,6 +18,7 @@ import {
   isListNode,
   isParagraphNode,
   isSmallNode,
+  isSpanNode,
   isStrikethroughNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
@@ -30,22 +32,18 @@ import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
-export function isHTMLRenderer(renderer: Renderer): renderer is HTMLRenderer {
-  return renderer.name === BuiltInRenderers.HTML;
+export function isHTMLRenderContext(ctx: RenderContext<Renderer>): ctx is HTMLRenderContext {
+  return ctx.renderer.name === BuiltInRenderers.HTML;
 }
 
-function verifyRenderer(renderer: Renderer): asserts renderer is HTMLRenderer {
-  if(!isHTMLRenderer(renderer)){
-    throw new Error(`Renderer '${renderer.name}' is not a HTML renderer.`);
+function verifyHTMLRenderContext(ctx: RenderContext<Renderer>): asserts ctx is HTMLRenderContext {
+  if(ctx.renderer.name !== BuiltInRenderers.HTML){
+    throw new Error(`Renderer '${ctx.renderer.name}' is not a HTML renderer.`);
   }
 }
 
-function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is HTMLRenderContext {
-  verifyRenderer(ctx.renderer);
-}
-
-function withVerifiedContext(ctx: RenderContext<Renderer>, callback: (ctx: HTMLRenderContext) => string) {
-  verifyContext(ctx);
+function withVerifiedHTMLRenderContext(ctx: RenderContext<Renderer>, callback: (ctx: HTMLRenderContext) => string) {
+  verifyHTMLRenderContext(ctx);
   return callback(ctx);
 }
 
@@ -55,7 +53,7 @@ const htmlRenderer: HTMLRenderer = {
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
 
-  render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedContext(ctx, ctx => {
+  render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
 
     ctx.indentation = 0;
     ctx.size = 1;
@@ -87,6 +85,8 @@ export function renderNode(ctx: HTMLRenderContext, node: ASTNodes): string {
     return renderStrikethroughNode(ctx, node);
   } else if(isTitleNode(node)){
     return renderTitleNode(ctx, node);
+  } else if(isSpanNode(node)){
+    return renderSpanNode(ctx, node);
   } else {
     if(Array.isArray(node)){
       return node.map(n => renderNode(ctx, n)).join("");

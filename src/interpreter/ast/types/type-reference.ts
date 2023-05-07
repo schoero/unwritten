@@ -1,4 +1,4 @@
-import { parseType, parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { interpretType, interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
 import { createExpressionType, createUnresolvedByTypeNode } from "unwritten:interpreter:ast/types/index.js";
@@ -21,13 +21,13 @@ export function createTypeReferenceType(ctx: InterpreterContext, type: TSTypeRef
 export function createTypeReferenceByTypeNode(ctx: InterpreterContext, typeNode: TypeReferenceNode): TypeReferenceType {
 
   const tsType = ctx.checker.getTypeFromTypeNode(typeNode);
-  const typeArguments = typeNode.typeArguments?.map(typeNode => parseTypeNode(ctx, typeNode));
+  const typeArguments = typeNode.typeArguments?.map(typeNode => interpretTypeNode(ctx, typeNode));
   const name = getNameByTypeNode(ctx, typeNode.typeName);
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const type = tsType.symbol && isSymbolExcluded(ctx, tsType.symbol, name)
     ? createUnresolvedByTypeNode(ctx, typeNode)
-    : parseType(ctx, tsType);
+    : interpretType(ctx, tsType);
 
   const typeId = getIdByTypeNode(ctx, typeNode);
   const kind = TypeKind.TypeReference;

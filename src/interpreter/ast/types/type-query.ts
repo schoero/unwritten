@@ -1,4 +1,4 @@
-import { parseType } from "unwritten:interpreter:ast/index.js";
+import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
@@ -12,7 +12,7 @@ export function createTypeQueryType(ctx: InterpreterContext, typeNode: TypeQuery
 
   const typeId = getIdByTypeNode(ctx, typeNode);
   const tsType = ctx.checker.getTypeFromTypeNode(typeNode);
-  const type = parseType(ctx, tsType);
+  const type = interpretType(ctx, tsType);
   const name = typeNode.exprName.getText();
   const kind = TypeKind.TypeQuery;
 

@@ -1,4 +1,4 @@
-import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
 import { getParameterDescription } from "unwritten:interpreter:ast/shared/jsdoc.js";
@@ -26,7 +26,7 @@ export function createParameterEntity(ctx: InterpreterContext, declaration: Para
   const initializer = getInitializerByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getParameterDescription(ctx, declaration);
-  const type = typeNode && parseTypeNode(ctx, typeNode);
+  const type = typeNode && interpretTypeNode(ctx, typeNode);
 
   const optional = declaration.questionToken !== undefined;
   const rest = declaration.dotDotDotToken !== undefined;

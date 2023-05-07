@@ -1,5 +1,6 @@
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { createListNode, createSpanNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
@@ -8,7 +9,8 @@ import type { TypeParameterEntity } from "unwritten:interpreter:type-definitions
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedTypeParameterEntitiesForDocumentation,
-  ConvertedTypeParameterEntitiesForSignature
+  ConvertedTypeParameterEntitiesForSignature,
+  ConvertedTypeParameterEntityForDocumentation
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -28,29 +30,29 @@ export function convertTypeParameterEntitiesForSignature(ctx: MarkupRenderContex
 
 export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderContexts, parameterEntities: TypeParameterEntity[] | undefined): ConvertedTypeParameterEntitiesForDocumentation {
 
-  const t = getTranslator(ctx);
-
-  const convertedParameters = parameterEntities?.map(
-    parameter => convertTypeParameterEntityForDocumentation(ctx, parameter)
-  ) ?? [];
-
-  if(convertedParameters.length === 0){
+  if(parameterEntities === undefined || parameterEntities.length === 0){
     return "";
   }
+
+  const t = getTranslator(ctx);
+
+  const convertedParameters = parameterEntities.map(
+    parameter => convertTypeParameterEntityForDocumentation(ctx, parameter)
+  );
 
   const convertedParameterList = createListNode(
     ...convertedParameters
   );
 
   return createTitleNode(
-    t("type-parameter", { capitalize: true, count: 99 }),
+    t("type-parameter", { capitalize: true, count: convertedParameters.length }),
     convertedParameterList
   );
 
 }
 
 
-export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity) {
+export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity): ConvertedTypeParameterEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
@@ -69,8 +71,10 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
     )
     : "";
 
+  const anchor = createAnchor(typeParameterEntity.name, typeParameterEntity.symbolId);
+
   return spaceBetween(
-    name,
+    createSpanNode(anchor, name),
     constraint,
     description,
     initializer

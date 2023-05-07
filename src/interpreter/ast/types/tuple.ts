@@ -1,6 +1,6 @@
 import ts from "typescript";
 
-import { parseType } from "unwritten:interpreter:ast/index.js";
+import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByDeclaration } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByNode } from "unwritten:interpreter:ast/shared/position.js";
@@ -45,7 +45,7 @@ function getMembers(ctx: InterpreterContext, tupleTypeReference: TupleTypeRefere
 
   const members = typeArguments?.map((typeArgument, index) => {
 
-    const type = parseType(ctx, typeArgument);
+    const type = interpretType(ctx, typeArgument);
 
     const typeId = getTypeId(ctx, typeArgument);
     const elementFlag = tupleTypeReference.target.elementFlags[index];

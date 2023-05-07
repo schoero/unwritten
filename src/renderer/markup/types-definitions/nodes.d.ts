@@ -1,3 +1,4 @@
+import type { Anchor } from "unwritten:renderer/markup/utils/linker.ts";
 import type { ASTNodeKinds } from "unwritten:renderer:markup/enums/nodes.js";
 
 
@@ -10,6 +11,7 @@ export type ASTNodes =
   | ListNode
   | ParagraphNode
   | SmallNode
+  | SpanNode
   | StrikethroughNode
   | TitleNode
   | string;
@@ -19,8 +21,8 @@ interface ASTNode<T extends ASTNodeKinds> {
   kind: T;
 }
 
-export interface AnchorNode extends ASTNode<ASTNodeKinds.Anchor> {
-  id: string;
+export interface AnchorNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Anchor>, Anchor {
+  children: Children;
 }
 
 export interface ListNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.List> {
@@ -31,21 +33,22 @@ export interface ParagraphNode<Children extends ASTNodes[] = ASTNodes[]> extends
   children: Children;
 }
 
-export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title> {
+export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title>, Anchor {
   children: Children;
   title: ASTNodes;
-  /** Internal id of the entity */
-  id?: number;
 }
 
 export interface LinkNode extends ASTNode<ASTNodeKinds.Link> {
-  /** Internal id of the entity */
-  id?: number;
-  link?: string;
+  link: string;
 }
 
 export interface SmallNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Small> {
   children: Children;
+}
+
+export interface SpanNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Span> {
+  children: Children;
+  anchor?: Anchor;
 }
 
 export interface BoldNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Bold> {

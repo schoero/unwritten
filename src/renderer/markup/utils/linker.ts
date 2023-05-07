@@ -1,12 +1,15 @@
 import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
+import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
 
-export type AnchorIdentifier = `${string}-${number}-${number}`;
+
+export interface Anchor {
+  id?: ID;
+  name?: Name;
+}
 
 export type LinkRegistry = {
-  [name: string]: {
-    [id: number]: string[];
-  };
+  [name: Name]: ID[];
 };
 
 function attachRegistry(ctx: MarkupRenderContexts): asserts ctx is MarkupRenderContexts & { renderer: { linkRegistry: LinkRegistry; }; } {
@@ -18,7 +21,6 @@ function getRegistry(ctx: MarkupRenderContexts) {
   return ctx.renderer.linkRegistry;
 }
 
-
 export function convertTextToAnchorId(text: string): string {
   let link = text.toLowerCase();
   link = link.replace(/[^\d\sa-z-]/gi, "");
@@ -26,77 +28,72 @@ export function convertTextToAnchorId(text: string): string {
   return link;
 }
 
+export function createAnchor(name: Name, id: ID): Anchor {
+  return { id, name };
+}
 
-export function createAnchor(ctx: MarkupRenderContexts, name: string, id: number): AnchorIdentifier {
+export function getAnchorLink(ctx: MarkupRenderContexts, anchor: Anchor): string | undefined {
+
+  if(!anchor.name || !anchor.id){
+    return;
+  }
+
+  const registry = getRegistry(ctx);
+
+  if(!(anchor.name in registry)){
+    return;
+  }
+
+  const index = registry[anchor.name].indexOf(anchor.id);
+
+  if(index === -1){
+    return;
+  }
+
+  const anchorText = convertTextToAnchorId(anchor.name);
+  const anchorLink = `${anchorText}${index === 0 ? "" : `-${index}`}`;
+
+  return anchorLink;
+
+}
+
+export function hasAnchor(input: any): input is Anchor {
+  return typeof input === "object" &&
+    "id" in input &&
+    "name" in input;
+}
+
+export function isAnchor(input: any): input is Anchor {
+  return hasAnchor(input) &&
+    Object.keys(input).length === 2;
+}
+
+
+/**
+ * Registers an anchor identifier for a symbol
+ * @param ctx RenderContext
+ * @param anchor Anchor
+ * @modifies ctx.renderer.linkRegistry
+ */
+export function registerAnchorIdentifier(ctx: MarkupRenderContexts, anchor: Anchor): void {
+
+  if(!anchor.name || !anchor.id){
+    return;
+  }
+
+  const { name, id } = anchor;
 
   const registry = getRegistry(ctx);
 
   if(!(name in registry)){
-    registry[name] = {};
+    registry[name] = [id];
+    return;
   }
 
-  if(!(id in registry[name])){
-    registry[name][id] = [];
+  if(registry[name].includes(id)){
+    return;
   }
 
-  const absoluteIndex = Object.values(registry[name]!).reduce((acc, idEntries) => acc + idEntries.length, 0);
-  const relativeIndex = registry[name]![id].length;
-  const anchorText = convertTextToAnchorId(name);
-  const anchorIdentifier: AnchorIdentifier = `${anchorText}-${id}-${relativeIndex}`;
-  const anchorLink = `${anchorText}${absoluteIndex === 0 ? "" : `-${absoluteIndex}`}`;
-
-  registry[name]![id]!.push(anchorLink);
-
-  return anchorIdentifier;
-
-}
-
-
-export function getAnchorIdentifier(ctx: MarkupRenderContexts, name: string, id: number, index: number = 0): AnchorIdentifier {
-  return `${convertTextToAnchorId(name)}-${id}-${index}`;
-}
-
-
-export function getAnchorLink(ctx: MarkupRenderContexts, identifier: AnchorIdentifier): string | undefined {
-
-  const registry = getRegistry(ctx);
-
-  const [_, id, index] = identifier.split("-");
-
-  for(const key of Object.keys(registry)){
-
-    if(!(id in registry[key])){
-      continue;
-    }
-
-    const anchors = Object.values(registry[key][+id]);
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if(anchors[+index] !== undefined){
-      return anchors[+index];
-    }
-
-  }
-
-}
-
-export function getAnchorText(ctx: MarkupRenderContexts, identifier: AnchorIdentifier): string | undefined {
-
-  const registry = getRegistry(ctx);
-
-  const [_, id, index] = identifier.split("-");
-
-  for(const key of Object.keys(registry)){
-
-    if(!(id in registry[key])){
-      continue;
-    }
-
-    const anchors = Object.values(registry[key][+id]);
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if(anchors[+index] !== undefined){
-      return key;
-    }
-
-  }
+  registry[name].push(id);
 
 }

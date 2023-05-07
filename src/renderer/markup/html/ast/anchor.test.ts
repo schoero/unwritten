@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { registerAnchorIdentifier } from "unwritten:renderer/markup/utils/linker.js";
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -13,9 +14,18 @@ scope("MarkupRenderer", "AnchorNode", () => {
   const ctx = createRenderContext();
 
   it("should render a anchor node correctly", () => {
-    const anchorNode = createAnchorNode("Anchor text", "anchor");
+    const anchorId = registerAnchorIdentifier(ctx, "AnchorText", 7);
+    const anchorNode = createAnchorNode(anchorId, "AnchorText");
     expect(renderAnchorNode(ctx, anchorNode)).to.equal(html`
-      <a href="#anchor">Anchor text</a>
+      <a href="#anchortext">AnchorText</a>
+    `);
+  });
+
+  it("should render multiple anchor nodes with the same name correctly", () => {
+    const anchorId = registerAnchorIdentifier(ctx, "AnchorText", 8);
+    const anchorNode = createAnchorNode(anchorId, "AnchorText 2");
+    expect(renderAnchorNode(ctx, anchorNode)).to.equal(html`
+      <a href="#anchortext-1">AnchorText 2</a>
     `);
   });
 

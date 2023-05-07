@@ -3,7 +3,7 @@ import { dirname, resolve } from "node:path";
 
 import { compile } from "unwritten:compiler:node.js";
 import { createConfig } from "unwritten:config/index.js";
-import { parse } from "unwritten:interpreter:ast/index.js";
+import { interpret } from "unwritten:interpreter:ast/index.js";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
 import { getEntryFileSymbolFromProgram } from "unwritten:interpreter:utils/ts.js";
 import { Logger } from "unwritten:logger/index.js";
@@ -30,19 +30,19 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
   const { checker, program } = compile(defaultContext, absoluteEntryFilePath, options?.tsconfig);
 
 
-  //-- Parse
+  //-- Interpret
 
   const config = await createConfig(defaultContext, options?.config);
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
   const entryFileSymbol = getEntryFileSymbolFromProgram(interpreterContext, program);
-  const parsedSymbols = parse(interpreterContext, entryFileSymbol);
+  const interpretedSymbols = interpret(interpreterContext, entryFileSymbol);
 
 
   //-- Render
 
   const renderer = await getRenderer(options?.renderer);
   const renderContext = createRenderContext(defaultContext, renderer, config);
-  const renderedSymbols = renderer.render(renderContext, parsedSymbols);
+  const renderedSymbols = renderer.render(renderContext, interpretedSymbols);
 
 
   //-- Write output to file
@@ -57,6 +57,6 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
 
   writeFileSync(outputPath, renderedSymbols);
 
-  return parsedSymbols;
+  return interpretedSymbols;
 
 }

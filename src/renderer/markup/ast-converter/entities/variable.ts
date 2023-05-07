@@ -3,9 +3,9 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { getAnchorIdentifier } from "unwritten:renderer:markup/utils/linker.js";
-import { createLinkNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -15,15 +15,19 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContexts, variable: VariableEntity): ConvertedVariableEntityForTableOfContents {
-  const anchorIdentifier = getAnchorIdentifier(ctx, variable.name, variable.symbolId);
-  return createLinkNode(variable.name, anchorIdentifier);
+export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForTableOfContents {
+  const name = variableEntity.name;
+  const id = variableEntity.symbolId;
+  return createAnchorNode(name, id);
 }
 
 
 export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
 
   const name = variableEntity.name;
+  const id = variableEntity.symbolId;
+
+  const anchor = createAnchor(name, id);
 
   const convertedTags = convertTags(ctx, variableEntity);
   const convertedPosition = convertPosition(ctx, variableEntity.position);
@@ -34,7 +38,7 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
 
   return createTitleNode(
     name,
-    variableEntity.symbolId,
+    anchor,
     convertedPosition,
     convertedTags,
     convertedType,

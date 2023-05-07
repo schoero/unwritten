@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/array-type */
-import { parseType } from "unwritten:interpreter:ast/index.js";
+import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getPositionByNode } from "unwritten:interpreter:ast/shared/position.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
@@ -17,7 +17,7 @@ export function createArrayType(ctx: InterpreterContext, typeReference: TypeRefe
   const node = typeReference.node;
   const typeId = getTypeId(ctx, typeReference);
   const position = node && getPositionByNode(ctx, node);
-  const type = parseType(ctx, typeReference.typeArguments![0]!);
+  const type = interpretType(ctx, typeReference.typeArguments![0]!);
   const kind = TypeKind.Array;
 
   return {

@@ -8,7 +8,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
-  isLinkNode,
+  isAnchorNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -44,7 +44,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
     const convertedSignatureForDocumentation = convertSignatureEntityForDocumentation(ctx, signatureEntity);
 
-    assert(isLinkNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not a link");
+    assert(isAnchorNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not an anchor");
     assert(isTitleNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a container");
 
     const [
@@ -59,7 +59,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     ] = convertedSignatureForDocumentation.children;
 
     it("should have matching table of contents entry", () => {
-      expect(isLinkNode(convertedSignatureForTableOfContents)).to.equal(true);
+      expect(isAnchorNode(convertedSignatureForTableOfContents)).to.equal(true);
       expect(renderNode(ctx, convertedSignatureForTableOfContents.children)).to.equal("testSignature()");
     });
 
@@ -133,7 +133,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
     const convertedSignatureForDocumentation = convertSignatureEntityForDocumentation(ctx, signatureEntity);
 
-    assert(isLinkNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not a link");
+    assert(isAnchorNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not an anchor");
     assert(isTitleNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a container");
 
     const [
@@ -146,7 +146,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     ] = convertedSignatureForDocumentation.children;
 
     it("should render type parameters in the table of contents entry", () => {
-      expect(isLinkNode(convertedSignatureForTableOfContents)).to.equal(true);
+      expect(isAnchorNode(convertedSignatureForTableOfContents)).to.equal(true);
       expect(renderNode(ctx, convertedSignatureForTableOfContents.children)).to.equal("testSignature<TypeParam>(param)");
     });
 

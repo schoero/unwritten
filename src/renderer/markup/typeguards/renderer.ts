@@ -9,6 +9,7 @@ import type {
   ListNode,
   ParagraphNode,
   SmallNode,
+  SpanNode,
   StrikethroughNode,
   TitleNode
 } from "../types-definitions/nodes.js";
@@ -47,6 +48,11 @@ export function isParagraphNode(node: ASTNodes): node is ParagraphNode {
 export function isSmallNode(node: ASTNodes): node is SmallNode {
   return typeof node === "object" && !Array.isArray(node) &&
      node.kind === ASTNodeKinds.Small;
+}
+
+export function isSpanNode(node: ASTNodes): node is SpanNode {
+  return typeof node === "object" && !Array.isArray(node) &&
+      node.kind === ASTNodeKinds.Span;
 }
 
 export function isStrikethroughNode(node: ASTNodes): node is StrikethroughNode {

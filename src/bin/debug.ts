@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { parse } from "unwritten:interpreter:ast/index.js";
+import { interpret } from "unwritten:interpreter:ast/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { sortKeys } from "unwritten:utils:general.js";
 
@@ -10,7 +10,7 @@ export function debug(inputPath: string, outputDir: string = process.cwd()) {
 
   const code = catchErrors("Reading input file", outputDir, () => readFileSync(inputPath, { encoding: "utf-8" }));
   const { fileSymbol, ctx } = catchErrors("Compiling input file", outputDir, () => compile(code));
-  const parserOutput = catchErrors("Parsing file symbol", outputDir, () => parse(ctx, fileSymbol));
+  const parserOutput = catchErrors("Parsing file symbol", outputDir, () => interpret(ctx, fileSymbol));
 
   writeFileSync(`${resolve(outputDir, "output.json")}`, JSON.stringify(parserOutput, sortKeys, 2));
 

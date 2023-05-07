@@ -1,4 +1,4 @@
-import { parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
@@ -13,7 +13,7 @@ export function createTemplateLiteralType(ctx: InterpreterContext, typeNode: Tem
   const typeId = getIdByTypeNode(ctx, typeNode);
   const head = typeNode.head.text;
   const spans = typeNode.templateSpans.map(span => span.literal.text);
-  const types = typeNode.templateSpans.map(span => parseTypeNode(ctx, span.type));
+  const types = typeNode.templateSpans.map(span => interpretTypeNode(ctx, span.type));
   const kind = TypeKind.TemplateLiteral;
 
   return {

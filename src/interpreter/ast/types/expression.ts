@@ -1,4 +1,4 @@
-import { parseType, parseTypeNode } from "unwritten:interpreter:ast/index.js";
+import { interpretType, interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
@@ -16,9 +16,9 @@ export function createExpressionType(ctx: InterpreterContext, expressionWithType
   const tsStaticType = ctx.checker.getTypeAtLocation(expressionWithTypeArguments.expression);
 
   const name = getNameByTypeNode(ctx, expressionWithTypeArguments);
-  const instanceType = parseType(ctx, tsInstanceType);
-  const staticType = parseType(ctx, tsStaticType);
-  const typeArguments = expressionWithTypeArguments.typeArguments?.map(typeNode => parseTypeNode(ctx, typeNode));
+  const instanceType = interpretType(ctx, tsInstanceType);
+  const staticType = interpretType(ctx, tsStaticType);
+  const typeArguments = expressionWithTypeArguments.typeArguments?.map(typeNode => interpretTypeNode(ctx, typeNode));
   const kind = TypeKind.Expression;
 
   return {

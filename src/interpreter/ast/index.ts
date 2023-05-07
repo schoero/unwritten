@@ -107,13 +107,13 @@ import type { Types } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function parse(ctx: InterpreterContext, sourceFileSymbol: Symbol): ExportableEntities[] {
+export function interpret(ctx: InterpreterContext, sourceFileSymbol: Symbol): ExportableEntities[] {
   assert(isSourceFileSymbol(sourceFileSymbol), "Source file symbol is not a source file symbol");
   return createSourceFileEntity(ctx, sourceFileSymbol).exports;
 }
 
 
-export function parseSymbol(ctx: InterpreterContext, symbol: Symbol): ExportableEntities {
+export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): ExportableEntities {
 
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
 
@@ -140,7 +140,7 @@ export function parseSymbol(ctx: InterpreterContext, symbol: Symbol): Exportable
 }
 
 
-export function parseTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Types {
+export function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Types {
 
   if(isArrayTypeNode(typeNode)){
     return createArrayTypeByArrayTypeNode(ctx, typeNode);
@@ -163,7 +163,7 @@ export function parseTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type
   }
 
   const type = ctx.checker.getTypeFromTypeNode(typeNode);
-  return parseType(ctx, type);
+  return interpretType(ctx, type);
 
 }
 
@@ -174,23 +174,23 @@ export function createTypeBySymbol(ctx: InterpreterContext, symbol: Symbol): Typ
   const type = declaration
     ? ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration)
     : ctx.checker.getTypeOfSymbol(symbol);
-  return parseType(ctx, type);
+  return interpretType(ctx, type);
 }
 
 export function createTypeByDeclaration(ctx: InterpreterContext, declaration: Declaration): Types {
   const type = ctx.checker.getTypeAtLocation(declaration);
-  return parseType(ctx, type);
+  return interpretType(ctx, type);
 }
 
 
-export function parseType(ctx: InterpreterContext, type: Type): Types {
+export function interpretType(ctx: InterpreterContext, type: Type): Types {
 
   if(isTypeLocked(ctx, type)){
     return createLinkToType(ctx, type);
   }
 
   if(isObjectType(type)){
-    return parseObjectType(ctx, type);
+    return interpretObjectType(ctx, type);
   }
 
 
@@ -241,7 +241,7 @@ export function parseType(ctx: InterpreterContext, type: Type): Types {
 }
 
 
-export function parseObjectType(ctx: InterpreterContext, type: TSObjectType): Types {
+export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType): Types {
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);

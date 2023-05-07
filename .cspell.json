@@ -3,12 +3,13 @@
     "@schoero/cspell-config"
   ],
   "words": [
+    "anchortext",
     "renderable",
     "testfunction",
     "testfunctionparam",
     "tsdoc",
     "typeguards",
-    "unwritten",
-    "uncapitalize"
+    "uncapitalize",
+    "unwritten"
   ]
 }

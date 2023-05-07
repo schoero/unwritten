@@ -2,6 +2,7 @@ import { convertDescription } from "unwritten:renderer/markup/ast-converter/shar
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertEntityForDocumentation,
   convertEntityForTableOfContents
@@ -20,15 +21,12 @@ import type {
 export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForTableOfContents {
 
   const name = namespaceEntity.name;
-  const id = namespaceEntity.symbolId;
-
   const children = namespaceEntity.exports.map(
     exportedEntity => convertEntityForTableOfContents(ctx, exportedEntity)
   );
 
   return createTitleNode(
     name,
-    id,
     children
   );
 
@@ -40,6 +38,8 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
   const name = namespaceEntity.name;
   const id = namespaceEntity.symbolId;
 
+  const anchor = createAnchor(name, id);
+
   const convertedPosition = convertPosition(ctx, namespaceEntity.position);
   const convertedTags = convertTags(ctx, namespaceEntity);
   const convertedDescription = convertDescription(ctx, namespaceEntity.description);
@@ -50,7 +50,7 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
 
   return createTitleNode(
     name,
-    id,
+    anchor,
     convertedPosition,
     convertedTags,
     convertedDescription,
