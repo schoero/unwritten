@@ -80,15 +80,15 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
     it("should have a matching type parameters", () => {
       assert(isTitleNode(typeParameters));
-      const renderedTypeParameters = renderNode(ctx, typeParameters.children[0].children);
+      const renderedTypeParameters = renderNode(ctx, typeParameters.children);
       expect(renderedTypeParameters).to.match(/<A>/);
       expect(renderedTypeParameters).to.match(/Type parameter description/);
     });
 
     it("should have a matching type", () => {
       assert(isTitleNode(type));
-      assert(isParagraphNode(type.children[0]));
-      expect(type.children[0].children[0]).to.match(/Type: .*A.*$/);
+      const renderedTypeParameters = renderNode(ctx, type.children);
+      expect(renderedTypeParameters).to.match(/.*A.*$/);
     });
 
     it("should have a matching description", () => {

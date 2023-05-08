@@ -1,6 +1,6 @@
-import { convertTypeInline } from "unwritten:renderer:markup/ast-converter/index.js";
+import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
-import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { TypeReferenceType, Types } from "unwritten:interpreter:type-definitions/types.js";
@@ -13,8 +13,8 @@ export function convertTypeReferenceType(ctx: MarkupRenderContexts, typeReferenc
 
   const name = typeReferenceType.name ?? "";
 
-  const link = typeReferenceType.symbolId
-    ? createLinkNode(name, typeReferenceType.symbolId)
+  const anchor = typeReferenceType.symbolId
+    ? createAnchorNode(name, typeReferenceType.symbolId)
     : undefined;
 
   const typeArguments = typeReferenceType.typeArguments
@@ -22,7 +22,7 @@ export function convertTypeReferenceType(ctx: MarkupRenderContexts, typeReferenc
     : "";
 
   return spaceBetween(
-    link ?? name,
+    anchor ?? name,
     typeArguments
   );
 
