@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import { RenderableJSDocTags } from "unwritten:renderer:markup/enums/jsdoc.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -26,12 +27,13 @@ scope("MarkupRenderer", "Position", () => {
   it("should render jsdoc tags correctly", () => {
 
     const jsdocTagNames = Object.values(RenderableJSDocTags);
-    const renderedJSDocTags = convertJSDocTags(
+    const convertedJSDocTags = convertJSDocTags(
       ctx,
       Object.fromEntries(jsdocTagNames.map(
         jsdocTagName => [jsdocTagName, undefined]
       ))
     );
+    const renderedJSDocTags = renderNode(ctx, convertedJSDocTags);
 
     expect(renderedJSDocTags).to.equal(Object.values(jsdocTagNames).join(" "));
 

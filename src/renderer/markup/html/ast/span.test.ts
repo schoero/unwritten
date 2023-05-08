@@ -26,7 +26,7 @@ scope("MarkupRenderer", "SpanNode", () => {
   });
 
   it("should render an id if available", () => {
-    const anchor = createAnchor("test", 7);
+    const anchor = createAnchor("test", 1);
     registerAnchorIdentifier(ctx, anchor);
     const spanNode = createSpanNode(anchor, "text");
     expect(renderSpanNode(ctx, spanNode)).to.equal(html`

@@ -28,8 +28,8 @@ export function convertTextToAnchorId(text: string): string {
   return link;
 }
 
-export function createAnchor(name: Name, id: ID): Anchor {
-  return { id, name };
+export function createAnchor(name: Name, id: ID) {
+  return { id, name } satisfies Anchor;
 }
 
 export function getAnchorLink(ctx: MarkupRenderContexts, anchor: Anchor): string | undefined {

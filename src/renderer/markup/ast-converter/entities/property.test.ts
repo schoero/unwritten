@@ -7,7 +7,12 @@ import {
   convertPropertyEntityForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { isParagraphNode, isSmallNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import {
+  isAnchorNode,
+  isParagraphNode,
+  isSmallNode,
+  isTitleNode
+} from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -50,7 +55,8 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     ] = convertedPropertyForDocumentation.children;
 
     it("should have a matching name", () => {
-      expect(convertedPropertyForSignature.children).to.equal("prop");
+      assert(isAnchorNode(convertedPropertyForSignature));
+      expect(convertedPropertyForSignature.children[0]).to.equal("prop");
       expect(convertedPropertyForDocumentation.title).to.equal("prop");
     });
 
@@ -66,13 +72,13 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     });
 
     it("should have an optional tag", () => {
-      assert(isSmallNode(tags));
+      assert(isParagraphNode(tags));
       const renderedTags = renderNode(ctx, tags.children);
       expect(renderedTags).to.contain("optional");
     });
 
     it("should have a readonly modifier tag", () => {
-      assert(isSmallNode(tags));
+      assert(isParagraphNode(tags));
       const renderedTags = renderNode(ctx, tags.children);
       expect(renderedTags).to.contain("readonly");
     });

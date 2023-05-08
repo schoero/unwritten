@@ -57,7 +57,7 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
 
     it("should have matching table of contents entry", () => {
       expect(isAnchorNode(convertedVariableForTableOfContents)).to.equal(true);
-      expect(convertedVariableForTableOfContents.children).to.equal("numberVariable");
+      expect(convertedVariableForTableOfContents.children[0]).to.equal("numberVariable");
     });
 
     it("should have a matching documentation title", () => {

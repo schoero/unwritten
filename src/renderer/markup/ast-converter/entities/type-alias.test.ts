@@ -54,8 +54,8 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
       typeParameters,
       type,
       description,
-      example,
-      remarks
+      remarks,
+      example
     ] = convertedTypeAliasForDocumentation.children;
 
     it("should have matching table of contents entry", () => {
@@ -81,32 +81,32 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     it("should have a matching type parameters", () => {
       assert(isTitleNode(typeParameters));
       const renderedTypeParameters = renderNode(ctx, typeParameters.children[0].children);
-      expect(renderedTypeParameters).to.match(/A$/);
-      expect(renderedTypeParameters).to.match(/Type parameter description$/);
+      expect(renderedTypeParameters).to.match(/<A>/);
+      expect(renderedTypeParameters).to.match(/Type parameter description/);
     });
 
     it("should have a matching type", () => {
       assert(isTitleNode(type));
-      const renderedType = renderNode(ctx, type.children[0]);
-      expect(renderedType).to.match(/Type: .*A.*$/);
+      assert(isParagraphNode(type.children[0]));
+      expect(type.children[0].children[0]).to.match(/Type: .*A.*$/);
     });
 
     it("should have a matching description", () => {
       assert(isTitleNode(description));
-      const renderedDescription = renderNode(ctx, description.children[0]);
-      expect(renderedDescription).to.equal("Type alias description");
+      assert(isParagraphNode(description.children[0]));
+      expect(description.children[0].children[0]).to.equal("Type alias description");
     });
 
     it("should have matching remarks", () => {
-      assert(isParagraphNode(remarks));
-      const renderedRemarks = renderNode(ctx, remarks.children[0]);
-      expect(renderedRemarks).to.equal("Type alias remarks");
+      assert(isTitleNode(remarks));
+      assert(isParagraphNode(remarks.children[0]));
+      expect(remarks.children[0].children[0]).to.equal("Type alias remarks");
     });
 
     it("should have a matching example", () => {
-      assert(isParagraphNode(example));
-      const renderedExample = renderNode(ctx, example.children[0]);
-      expect(renderedExample).to.equal("Type alias example");
+      assert(isTitleNode(example));
+      assert(isParagraphNode(example.children[0]));
+      expect(example.children[0].children[0]).to.equal("Type alias example");
     });
 
   }
