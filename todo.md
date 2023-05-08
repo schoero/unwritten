@@ -36,3 +36,6 @@
     * [ ] If for eg. the type of a parameter references an interface with the name `Interface` and a namespace also contains the an interface with the name `Interface` then the link reference the namespace interface because it would be rendered first.  
 * [ ] Use convert function in renderer tests
 * [x] Render Type alias signature
+
+* [ ] Resolve position relative to inptut file
+  * [ ] Add option to use "absoulte" path based of repo

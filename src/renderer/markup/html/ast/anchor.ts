@@ -6,12 +6,6 @@ import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nod
 
 
 export function renderAnchorNode(ctx: HTMLRenderContext, anchorNode: AnchorNode): string {
-
-  const anchorId = anchorNode.id;
-  const content = anchorNode.children;
-
-  const anchorLink = getAnchorLink(ctx, anchorId);
-
-  return `<a href="#${anchorLink}">${renderNode(ctx, content)}</a>`;
-
+  const anchorLink = getAnchorLink(ctx, anchorNode);
+  return `<a href="#${anchorLink}">${renderNode(ctx, anchorNode.name)}</a>`;
 }

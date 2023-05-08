@@ -21,7 +21,7 @@ interface ASTNode<T extends ASTNodeKinds> {
   kind: T;
 }
 
-export interface AnchorNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Anchor>, Anchor {
+export interface AnchorNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Anchor>, Required<Anchor> {
   children: Children;
 }
 

@@ -38,7 +38,6 @@ export interface APIOptions extends Options {
   /**
    * Whether the output should be rendered as HTML, Markdown, JSON or TypeScript.
    * You can also provide a path to a custom renderer that implements the Renderer interface.
-   *
    * @defaultValue "markdown"
    */
   renderer?: BuiltInRenderers | Renderer | string;
@@ -49,7 +48,6 @@ export interface CLIOptions extends Options {
   config?: string;
   /**
    * Whether the output should be rendered as HTML or Markdown.
-   *
    * @defaultValue "markdown"
    */
   renderer?: BuiltInRenderers;

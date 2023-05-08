@@ -44,7 +44,6 @@ export function isTypeLocked(ctx: InterpreterContext, type: Type) {
 //-- Symbol helpers
 /**
  * Resolves symbols from imports to their actual symbols.
- *
  * @param ctx - Interpreter context
  * @param symbol - Symbol to resolve
  * @returns Resolved symbol

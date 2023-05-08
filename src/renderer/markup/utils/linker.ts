@@ -8,12 +8,10 @@ export interface Anchor {
   name?: Name;
 }
 
-export type LinkRegistry = {
-  [name: Name]: ID[];
-};
+export type LinkRegistry = Map<Name, ID[]>;
 
 function attachRegistry(ctx: MarkupRenderContexts): asserts ctx is MarkupRenderContexts & { renderer: { linkRegistry: LinkRegistry; }; } {
-  ctx.renderer.linkRegistry ??= {};
+  ctx.renderer.linkRegistry ??= new Map();
 }
 
 function getRegistry(ctx: MarkupRenderContexts) {
@@ -40,16 +38,12 @@ export function getAnchorLink(ctx: MarkupRenderContexts, anchor: Anchor): string
 
   const registry = getRegistry(ctx);
 
-  if(!(anchor.name in registry)){
+  const ids = registry.get(anchor.name);
+  if(!ids?.includes(anchor.id)){
     return;
   }
 
-  const index = registry[anchor.name].indexOf(anchor.id);
-
-  if(index === -1){
-    return;
-  }
-
+  const index = Array.from(ids).indexOf(anchor.id);
   const anchorText = convertTextToAnchorId(anchor.name);
   const anchorLink = `${anchorText}${index === 0 ? "" : `-${index}`}`;
 
@@ -68,7 +62,6 @@ export function isAnchor(input: any): input is Anchor {
     Object.keys(input).length === 2;
 }
 
-
 /**
  * Registers an anchor identifier for a symbol
  * @param ctx RenderContext
@@ -85,15 +78,16 @@ export function registerAnchorIdentifier(ctx: MarkupRenderContexts, anchor: Anch
 
   const registry = getRegistry(ctx);
 
-  if(!(name in registry)){
-    registry[name] = [id];
+  if(!registry.has(name)){
+    registry.set(name, [id]);
     return;
   }
 
-  if(registry[name].includes(id)){
+  const idArray = registry.get(name) as ID[];
+
+  if(idArray.includes(id)){
     return;
   }
 
-  registry[name].push(id);
-
+  idArray.push(id);
 }

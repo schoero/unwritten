@@ -60,7 +60,7 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     ] = convertedEnumEntityForDocumentation.children;
 
     it("should have a matching name", () => {
-      expect(convertedEnumEntityForTableOfContents.children).to.equal("Enum");
+      expect(convertedEnumEntityForTableOfContents.children[0]).to.equal("Enum");
       expect(convertedEnumEntityForDocumentation.title).to.equal("Enum");
     });
 
