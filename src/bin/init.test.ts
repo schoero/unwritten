@@ -22,14 +22,14 @@ scope("E2E", "init", () => {
 
   {
 
-    it("should create a config file at the current working directory", () => {
-      init();
+    it("should create a config file at the current working directory", async () => {
+      await init();
       expect(writeFileSync).toHaveBeenCalledWith(normalize(`${process.cwd()}/.unwritten.json`), JSON.stringify(getConfigWithSchema(), null, 2));
     });
 
-    it("should create a config file at the provided location", () => {
+    it("should create a config file at the provided location", async () => {
       const path = "some/random/path/.unwritten.json";
-      init(path);
+      await init(path);
       expect(writeFileSync).toHaveBeenCalledWith(`${resolve(path)}`, JSON.stringify(getConfigWithSchema(), null, 2));
     });
 
