@@ -1,5 +1,3 @@
-import { isIndexedAccessTypeNode } from "typescript";
-
 import {
   createClassEntity,
   createEnumEntity,
@@ -67,6 +65,7 @@ import {
   isArrayTypeNode,
   isConditionalTypeNode,
   isExpressionWithTypeArguments,
+  isIndexedAccessTypeNode,
   isMappedTypeNode,
   isTemplateLiteralTypeNode,
   isTupleTypeNode,
