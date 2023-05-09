@@ -2,7 +2,7 @@ import noBundlePlugin from "vite-plugin-no-bundle";
 
 import { config, defineConfig } from "@schoero/vite-config";
 
-import { vitePluginShebang } from "./vite-plugin-shebang.js";
+import { vitePluginShebang } from "./src/utils/vite-plugin-shebang.js";
 
 
 export default defineConfig({
