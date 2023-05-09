@@ -42,7 +42,7 @@ function convertTupleMembers(ctx: MarkupRenderContexts, tupleMemberEntities: Tup
 
 function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleMemberEntity): ConvertedTupleMember {
 
-  const renderedType = convertTypeInline(ctx, tupleMemberEntity.type);
+  const convertedType = convertTypeInline(ctx, tupleMemberEntity.type);
 
   const renderedName = tupleMemberEntity.name ? `${tupleMemberEntity.name}: ` : "";
   const renderedOptional = tupleMemberEntity.optional ? "?" : "";
@@ -59,7 +59,7 @@ function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleM
     renderedName,
     renderedRest,
     restNeedsParentheses ? "(" as const : "" as const,
-    renderedType,
+    convertedType,
     renderedOptional,
     restNeedsParentheses ? ")" as const : "" as const,
     renderedRestBrackets

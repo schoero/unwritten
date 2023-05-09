@@ -1,4 +1,4 @@
-import { interpretType, interpretTypeNode } from "unwritten:interpreter:ast/index.js";
+import { interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
@@ -15,12 +15,6 @@ export function createConditionalTypeByTypeNode(ctx: InterpreterContext, typeNod
   const extendsType = interpretTypeNode(ctx, typeNode.extendsType);
   const trueType = interpretTypeNode(ctx, typeNode.trueType);
   const falseType = interpretTypeNode(ctx, typeNode.falseType);
-
-  const type = ctx.checker.getTypeFromTypeNode(typeNode);
-
-  const apparentType = ctx.checker.getApparentType(type);
-
-  const parsedType = interpretType(ctx, apparentType);
 
   const kind = TypeKind.Conditional;
 

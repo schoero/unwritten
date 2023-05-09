@@ -8,18 +8,18 @@ import type { ConvertedArrayType } from "unwritten:renderer:markup/types-definit
 
 export function convertArrayType(ctx: MarkupRenderContexts, arrayType: ArrayType): ConvertedArrayType {
 
-  const renderedType = convertTypeInline(ctx, arrayType.type);
+  const convertedType = convertTypeInline(ctx, arrayType.type);
   const needsParentheses = arrayType.type.kind === TypeKind.Union || arrayType.type.kind === TypeKind.Intersection;
 
   return needsParentheses
     ? [
       "(" as const,
-      renderedType,
+      convertedType,
       ")" as const,
       "[]" as const
     ]
     : [
-      renderedType,
+      convertedType,
       "[]" as const
     ];
 

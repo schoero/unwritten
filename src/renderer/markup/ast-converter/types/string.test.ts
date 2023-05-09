@@ -26,10 +26,10 @@ scope("MarkupRenderer", TypeKind.String, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const renderedType = convertStringType(ctx, type as StringType);
+    const convertedType = convertStringType(ctx, type as StringType);
 
     it("should render the name of the type", () => {
-      expect(renderedType).to.equal("string");
+      expect(convertedType).to.equal("string");
     });
 
   }

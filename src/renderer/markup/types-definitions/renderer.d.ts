@@ -153,7 +153,7 @@ export type ConvertedTypeReferenceType = ASTNodes;
 export type ConvertedIndexedAccessType = ASTNodes;
 
 
-//-- Type reference
+//-- Type parameter
 
 export type ConvertedTypeParameterType = ASTNodes;
 

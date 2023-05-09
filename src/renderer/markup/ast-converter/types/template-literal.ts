@@ -13,12 +13,12 @@ export function convertTemplateLiteralType(ctx: MarkupRenderContexts, templateLi
   const spans = templateLiteralType.spans;
 
   const renderedTemplateLiteralType = types.reduce<ASTNodes[]>((acc, type, index) => {
-    const renderedType = convertTypeInline(ctx, type);
+    const convertedType = convertTypeInline(ctx, type);
     const span = spans[index] ?? "";
     return [
       ...acc,
       "${",
-      renderedType,
+      convertedType,
       "}",
       span
     ];

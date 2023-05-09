@@ -7,10 +7,17 @@ import type { Complete, TranslationWithoutSuffixes } from "unwritten:type-defini
 
 
 export function encapsulate(node: ASTNodes, encapsulation: Encapsulation | string[] | false | undefined) {
+
   if(encapsulation === undefined || encapsulation === false){
     return node;
   }
-  return [encapsulation[0], node, encapsulation[1]];
+
+  return [
+    encapsulation[0],
+    node,
+    encapsulation[1]
+  ];
+
 }
 
 export function getCategoryName(entityKind: ExportableEntityKinds): keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]> {
