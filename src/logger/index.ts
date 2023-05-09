@@ -24,6 +24,12 @@ export module Logger {
   const _reset = "\x1b[0m";
 
 
+  process.on("uncaughtException", err => {
+    println(`${_bgRed}${_bold} ERROR ${_reset} ${red(err.message + EOL + (err.stack ?? ""))}`);
+    process.exit(1);
+  });
+
+
   export function log(message: string): void {
     println(`${_reset}${message}${_reset}`);
   }
