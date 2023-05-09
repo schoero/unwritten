@@ -25,7 +25,12 @@ export module Logger {
 
 
   process.on("uncaughtException", err => {
-    println(`${_bgRed}${_bold} ERROR ${_reset} ${red(err.message + EOL + (err.stack ?? ""))}`);
+    println(`${_bgRed}${_bold} ERROR ${_reset} ${red([
+      err.message,
+      err.cause,
+      err.stack
+    ].filter(message => !!message)
+      .join(EOL))}`);
     process.exit(1);
   });
 

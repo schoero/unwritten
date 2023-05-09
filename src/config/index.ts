@@ -23,14 +23,14 @@ export async function createConfig(ctx: DefaultContext, configOrPath?: Config | 
   if(typeof configOrPath === "object"){
 
     userConfig = configOrPath;
-    ctx.logger?.log("Using provided config.");
+    ctx.logger?.log("Using provided unwritten config.");
 
   } else if(typeof configOrPath === "string"){
 
     absoluteConfigPath = resolve(configOrPath);
 
     if(existsSync(absoluteConfigPath) === false){
-      throw new Error(`Config file does not exist at ${absoluteConfigPath}`);
+      throw new Error(`unwritten config file does not exist at ${absoluteConfigPath}`);
     }
 
   } else if(typeof configOrPath === "undefined"){
@@ -43,9 +43,9 @@ export async function createConfig(ctx: DefaultContext, configOrPath?: Config | 
     ], configOrPath);
 
     if(absoluteConfigPath === undefined){
-      ctx.logger?.log("Using default config.");
+      ctx.logger?.info("No unwritten.json found, continue using default configuration.");
     } else {
-      ctx.logger?.log(`Using config found at ${absoluteConfigPath}`);
+      ctx.logger?.info(`Using unwritten config found at ${absoluteConfigPath}`);
     }
 
   }
@@ -73,13 +73,13 @@ async function getExtendConfig(config: Config): Promise<Config> {
   }
 
   if(typeof config.extends !== "string"){
-    throw new Error("Config extends property must be a string if it exists.");
+    throw new TypeError("\"extends\" property in unwritten config must of type string if provided.");
   }
 
   let { default: loadedConfig } = await import(config.extends);
 
   if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
-    throw new Error("The extended config is not an object.");
+    throw new TypeError("The extended unwritten config is not an object.");
   }
 
   if(typeof loadedConfig.extends === "string"){

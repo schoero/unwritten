@@ -46,7 +46,7 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
   //-- Use provided compiler options
 
   if(typeof tsConfigOrFilePath === "object"){
-    ctx.logger?.info("Use provided compiler options");
+    ctx.logger?.info("Using provided compiler options");
     const { options, errors } = ts.convertCompilerOptionsFromJson(tsConfigOrFilePath, ".");
     reportCompilerDiagnostics(ctx, errors, EOL);
     return options;
