@@ -20,6 +20,7 @@ cli
 //-- Add commands
 
 cli.command("init [path]", "Create a new config file.")
+  .option("-s, --silent", "Disables any console output.")
   .action(init);
 
 

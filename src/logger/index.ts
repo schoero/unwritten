@@ -2,7 +2,7 @@ import { EOL } from "node:os";
 import { stdout } from "node:process";
 
 
-export module Logger {
+export module logger {
 
   const _fgGreen = "\x1b[32m";
   const _fgYellow = "\x1b[33m";

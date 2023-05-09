@@ -1,14 +1,14 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { Logger } from "unwritten:logger/index.js";
-
 import { getDefaultConfig } from "./index.js";
 
 import type { ConfigWithSchema } from "unwritten:type-definitions/config.js";
 
 
-export function generateConfig(path?: string) {
+export async function generateConfig(path?: string, options?: any) {
+
+  const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/index.js");
 
   const outputName = ".unwritten.json";
   const outputDir = resolve(process.cwd());
@@ -26,7 +26,7 @@ export function generateConfig(path?: string) {
 
   writeFileSync(outputFilePath, JSON.stringify(config, null, 2));
 
-  Logger.log(`Configuration file created at ${outputFilePath}.`);
+  logger?.log(`Configuration file created at ${outputFilePath}.`);
 
 }
 

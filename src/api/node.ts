@@ -6,7 +6,6 @@ import { createConfig } from "unwritten:config/index.js";
 import { interpret } from "unwritten:interpreter:ast/index.js";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
 import { getEntryFileSymbolFromProgram } from "unwritten:interpreter:utils/ts.js";
-import { Logger } from "unwritten:logger/index.js";
 import { getRenderer } from "unwritten:renderer:index.js";
 import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";
 import { createContext as createDefaultContext } from "unwritten:utils:context.js";
@@ -21,7 +20,7 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
 
   //-- Logger
 
-  const logger = options?.silent ? undefined : Logger;
+  const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/index.js");
   const defaultContext = createDefaultContext(logger);
 
 

@@ -1,4 +1,4 @@
-import type { Logger } from "unwritten:logger/index.js";
+import type { logger as Logger } from "unwritten:logger/index.js";
 import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
 
 
