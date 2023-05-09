@@ -23,7 +23,7 @@ cli.command("init [path]", "Create a new config file.")
   .action(init);
 
 
-cli.command("<entryFile>", "Generate documentation")
+cli.command("generate <entryFile>", "Generate documentation")
   .option("-t, --tsconfig <path>", `Provide a tsconfig file used to compile your project. ${name} will try to find the tsconfig by itself if no tsconfig.json is provided.`)
   .option("-e, --exclude <...path>", "Exclude a file or directory from the documentation.")
   .option("-c, --config <path>", `Provide a ${name} config used to render the documentation. ${name} will try to find the .${name}.json config by itself if none is provided or uses the default config.`)
