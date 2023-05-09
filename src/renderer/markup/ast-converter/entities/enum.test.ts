@@ -10,8 +10,8 @@ import {
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:utils/template.js";
 import { assert } from "unwritten:utils/general.js";
+import { ts } from "unwritten:utils/template.js";
 
 import type { EnumEntity } from "unwritten:interpreter:type-definitions/entities.js";
 
