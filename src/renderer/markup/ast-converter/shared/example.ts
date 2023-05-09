@@ -12,7 +12,7 @@ export function convertExample(ctx: MarkupRenderContexts, example: Example): Con
 
   return example
     ? createTitleNode(
-      t("example"),
+      t("example", { capitalize: true, count: 1 }),
       createParagraphNode(example)
     )
     : "";

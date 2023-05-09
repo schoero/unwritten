@@ -9,11 +9,11 @@ import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes
 
 export function convertOptional(ctx: MarkupRenderContexts, entity: Optional): ASTNodes {
 
-  const translate = getTranslator(ctx);
+  const t = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
   return entity.optional === true
-    ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
+    ? encapsulate(t("optional"), renderConfig.tagEncapsulation)
     : "";
 
 }

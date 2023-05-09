@@ -1,4 +1,5 @@
 import { createParagraphNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 
 import type { Description } from "unwritten:interpreter:type-definitions/shared.js";
 import type { ConvertedDescription } from "unwritten:renderer/markup/types-definitions/renderer.js";
@@ -6,9 +7,12 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 
 
 export function convertDescription(ctx: MarkupRenderContexts, description: Description): ConvertedDescription {
+
+  const t = getTranslator(ctx);
+
   return description
     ? createTitleNode(
-      "Description",
+      t("description", { capitalize: true, count: 1 }),
       createParagraphNode(description)
     )
     : "";

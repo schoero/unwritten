@@ -1,42 +1,29 @@
 import { expect, it } from "vitest";
 
-import { renderNode } from "unwritten:renderer/markup/html/index.js";
-import { RenderableJSDocTags } from "unwritten:renderer:markup/enums/jsdoc.js";
+import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
+import { isSmallNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { assert } from "unwritten:utils/general.js";
 
-import { convertJSDocTags, hasRenderableJSDocTags } from "./jsdoc-tags.js";
+import type { Position } from "unwritten:interpreter/type-definitions/shared.js";
 
-// TODO: Implement this test
+
 scope("MarkupRenderer", "Position", () => {
 
   const ctx = createRenderContext();
 
-  it("should detect jsdoc tags correctly", () => {
+  const position: Position = {
+    column: 1,
+    file: "src/renderer/markup/index.ts",
+    line: 7
+  };
 
-    const jsdocTagNames = Object.values(RenderableJSDocTags);
+  const convertedPosition = convertPosition(ctx, position);
 
-    for(const jsdocTagName of jsdocTagNames){
-      expect(hasRenderableJSDocTags({
-        [jsdocTagName]: undefined
-      })).to.equal(true);
-    }
-
-  });
-
-  it("should render jsdoc tags correctly", () => {
-
-    const jsdocTagNames = Object.values(RenderableJSDocTags);
-    const convertedJSDocTags = convertJSDocTags(
-      ctx,
-      Object.fromEntries(jsdocTagNames.map(
-        jsdocTagName => [jsdocTagName, undefined]
-      ))
-    );
-    const renderedJSDocTags = renderNode(ctx, convertedJSDocTags);
-
-    expect(renderedJSDocTags).to.equal(Object.values(jsdocTagNames).join(" "));
-
+  it("should convert the position correctly", () => {
+    assert(isSmallNode(convertedPosition));
+    expect(convertedPosition.children[0]).to.equal("src/renderer/markup/index.ts#L7C1");
   });
 
 });

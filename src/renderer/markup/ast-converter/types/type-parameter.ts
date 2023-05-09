@@ -4,13 +4,5 @@ import type { ConvertedTypeParameterType } from "unwritten:renderer:markup/types
 
 
 export function convertTypeParameterType(ctx: MarkupRenderContexts, typeParameterType: TypeParameterType): ConvertedTypeParameterType {
-
-  const name = typeParameterType.name ?? "";
-
-  // const link = typeParameterType.symbolId
-  //   ? createLinkNode(name, typeParameterType.symbolId)
-  //   : undefined;
-
-  return name;
-
+  return typeParameterType.name;
 }
