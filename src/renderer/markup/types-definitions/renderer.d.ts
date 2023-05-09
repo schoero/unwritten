@@ -1,5 +1,5 @@
-import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter:enums/jsdoc.ts";
-import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.ts";
+import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter:enums/jsdoc.js";
+import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.js";
 
 import type { AnchorNode, ASTNodes, ListNode, ParagraphNode, SmallNode, TitleNode } from "./nodes.js";
 

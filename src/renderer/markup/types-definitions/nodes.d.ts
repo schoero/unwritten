@@ -1,4 +1,4 @@
-import type { Anchor } from "unwritten:renderer/markup/utils/linker.ts";
+import type { Anchor } from "unwritten:renderer/markup/utils/linker.js";
 import type { ASTNodeKinds } from "unwritten:renderer:markup/enums/nodes.js";
 
 

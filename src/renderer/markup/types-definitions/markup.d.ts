@@ -1,4 +1,4 @@
-import type { LinkRegistry } from "unwritten:renderer/markup/utils/linker.ts";
+import type { LinkRegistry } from "unwritten:renderer/markup/utils/linker.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 

@@ -1,4 +1,4 @@
-import type { EntityKind } from "unwritten:interpreter:enums/entities.ts";
+import type { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import type {
   Description,
   ID,
@@ -6,7 +6,7 @@ import type {
   Modifiers,
   Name,
   Position
-} from "unwritten:interpreter:type-definitions/shared.ts";
+} from "unwritten:interpreter:type-definitions/shared.js";
 import type { ExpressionType, LiteralTypes, Types } from "unwritten:interpreter:type-definitions/types.js";
 import type { PartialByKey } from "unwritten:type-definitions/utils.js";
 
