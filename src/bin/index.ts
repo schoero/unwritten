@@ -4,7 +4,6 @@ import { cac } from "cac";
 
 import { name, version } from "unwritten:utils:package-json.js";
 
-import { debug } from "./debug.js";
 import { generate } from "./generate.js";
 import { init } from "./init.js";
 
@@ -32,9 +31,5 @@ cli.command("<entryFile>", "Generate documentation")
   .option("-r, --renderer <md | html | json | pathToCustomRenderer>", "Choose the format of the rendered output.")
   .option("-s, --silent", "Disables any console output.")
   .action(generate);
-
-
-cli.command("debug <entryFile>", "Writes out the parser output to current working directory.")
-  .action(debug);
 
 cli.parse();
