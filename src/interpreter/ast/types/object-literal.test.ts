@@ -4,7 +4,7 @@ import { createVariableEntity } from "unwritten:interpreter:ast/entities/index.j
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:tests:utils/template.js";
+import { ts } from "unwritten:utils/template.js";
 
 
 scope("Interpreter", TypeKind.ObjectLiteral, () => {

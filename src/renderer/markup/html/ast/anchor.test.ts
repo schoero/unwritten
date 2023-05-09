@@ -4,7 +4,7 @@ import { createAnchor, registerAnchorIdentifier } from "unwritten:renderer/marku
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { html } from "unwritten:tests:utils/template.js";
+import { html } from "unwritten:utils/template.js";
 
 import { renderAnchorNode } from "./anchor.js";
 

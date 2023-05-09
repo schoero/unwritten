@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:tests:utils/template.js";
+import { ts } from "unwritten:utils/template.js";
 
 import { convertTextToAnchorId, createAnchor, getAnchorLink, registerAnchorIdentifier } from "./linker.js";
 

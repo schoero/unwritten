@@ -109,8 +109,8 @@ export interface TupleMemberEntity extends Entity<EntityKind.TupleMember>, JSDoc
 
 export interface FunctionLikeEntity<Kind extends FunctionLikeEntityKinds> extends Entity<Kind> {
   signatures: SignatureEntity[];
-  symbolId: ID;
   name?: Name;
+  symbolId?: ID;
 }
 
 export interface FunctionEntity extends FunctionLikeEntity<EntityKind.Function> {

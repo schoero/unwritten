@@ -7,7 +7,7 @@ import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:tests:utils/template.js";
+import { ts } from "unwritten:utils/template.js";
 import { isTypeReferenceType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils/general.js";
 

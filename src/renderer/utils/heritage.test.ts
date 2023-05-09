@@ -10,7 +10,7 @@ import {
 } from "unwritten:renderer:utils/heritage.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:tests:utils/template.js";
+import { ts } from "unwritten:utils/template.js";
 import { assert } from "unwritten:utils/general.js";
 
 import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";

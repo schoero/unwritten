@@ -4,9 +4,9 @@ import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:tests:utils/template.js";
 import { isIndexedAccessType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils/general.js";
+import { ts } from "unwritten:utils/template.js";
 
 
 scope("Interpreter", TypeKind.IndexedAccess, () => {

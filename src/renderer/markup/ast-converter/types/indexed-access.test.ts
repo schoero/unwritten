@@ -6,7 +6,7 @@ import { convertIndexedAccessType } from "unwritten:renderer/markup/ast-converte
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:tests:utils/template.js";
+import { ts } from "unwritten:utils/template.js";
 
 import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/types.js";
 

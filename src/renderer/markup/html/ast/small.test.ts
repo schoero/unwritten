@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { createSmallNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { html } from "unwritten:tests:utils/template.js";
+import { html } from "unwritten:utils/template.js";
 
 import { renderSmallNode } from "./small.js";
 

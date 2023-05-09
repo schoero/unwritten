@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { ts } from "./template.js";
 
 
-describe("Test utils", () => {
+describe("Template utiles", () => {
 
   it("should inject variables correctly", () => {
     const vars = "test";

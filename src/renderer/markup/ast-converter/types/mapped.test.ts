@@ -6,7 +6,7 @@ import { convertMappedType } from "unwritten:renderer/markup/ast-converter/types
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:tests:utils/template.js";
+import { ts } from "unwritten:utils/template.js";
 
 import type { MappedType } from "unwritten:interpreter:type-definitions/types.js";
 import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";

@@ -1,6 +1,6 @@
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { txt } from "unwritten:tests:utils/template.js";
 import { assert } from "unwritten:utils/general.js";
+import { txt } from "unwritten:utils/template.js";
 
 import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
