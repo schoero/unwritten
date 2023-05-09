@@ -10,6 +10,7 @@ export enum TypeKind {
   Conditional = "ConditionalType",
   Expression = "ExpressionType",
   Function = "FunctionType",
+  IndexedAccess = "IndexedAccessType",
   Interface = "InterfaceType",
   Intersection = "IntersectionType",
   Mapped = "MappedType",

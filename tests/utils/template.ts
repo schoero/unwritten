@@ -30,6 +30,10 @@ export function ts(typeScriptCode: TemplateStringsArray, ...values: (boolean | n
   return createTemplateTag(typeScriptCode, ...values);
 }
 
+export function txt(text: TemplateStringsArray, ...values: (boolean | number | string)[]) {
+  return createTemplateTag(text, ...values);
+}
+
 function assembleTemplateString(templateString: TemplateStringsArray, ...values: (boolean | number | string)[]) {
   return templateString.reduce((acc, str, i) => `${acc}${str}${values[i] ?? ""}`, "");
 }

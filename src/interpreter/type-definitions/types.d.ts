@@ -22,6 +22,7 @@ export type Types =
   | ConditionalType
   | ExpressionType
   | FunctionType
+  | IndexedAccessType
   | InterfaceType
   | IntersectionType
   | LiteralTypes
@@ -339,4 +340,13 @@ export interface InterfaceType extends ObjectLikeType<TypeKind.Interface> {
   name: Name;
   properties: PropertyEntity[];
   typeParameters?: TypeParameterEntity[];
+}
+
+
+//-- Indexed Access
+
+export interface IndexedAccessType extends Type<TypeKind.IndexedAccess> {
+  indexType: Types;
+  objectType: Types;
+  type?: Types;
 }

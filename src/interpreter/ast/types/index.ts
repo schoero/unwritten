@@ -9,6 +9,7 @@ export * from "./class.js";
 export * from "./conditional.js";
 export * from "./expression.js";
 export * from "./function.js";
+export * from "./indexed-access.js";
 export * from "./interface.js";
 export * from "./intersection.js";
 export * from "./mapped.js";

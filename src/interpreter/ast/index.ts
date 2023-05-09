@@ -1,3 +1,5 @@
+import { isIndexedAccessTypeNode } from "typescript";
+
 import {
   createClassEntity,
   createEnumEntity,
@@ -22,6 +24,8 @@ import {
   createConditionalTypeByTypeNode,
   createExpressionType,
   createFunctionType,
+  createIndexedAccessType,
+  createIndexedAccessTypeByTypeNode,
   createInterfaceByType,
   createIntersectionType,
   createLinkToType,
@@ -78,6 +82,7 @@ import {
   isClassType,
   isConditionalType,
   isFunctionLikeType,
+  isIndexedAccessType,
   isInterfaceType,
   isIntersectionType,
   isNeverType,
@@ -154,6 +159,8 @@ export function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): 
     return createMappedTypeByTypeNode(ctx, typeNode);
   } else if(isConditionalTypeNode(typeNode)){
     return createConditionalTypeByTypeNode(ctx, typeNode);
+  } else if(isIndexedAccessTypeNode(typeNode)){
+    return createIndexedAccessTypeByTypeNode(ctx, typeNode);
   }
 
   if(isTypeReferenceNode(typeNode)){
@@ -234,6 +241,8 @@ export function interpretType(ctx: InterpreterContext, type: Type): Types {
     return createTypeParameterType(ctx, type);
   } else if(isConditionalType(type)){
     return createConditionalType(ctx, type);
+  } else if(isIndexedAccessType(type)){
+    return createIndexedAccessType(ctx, type);
   } else {
     return createUnresolved(ctx, type);
   }
