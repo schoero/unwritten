@@ -8,7 +8,7 @@ import { html } from "unwritten:utils/template.js";
 import { renderSmallNode } from "./small.js";
 
 
-scope("MarkupRenderer", "SmallNode", () => {
+scope("HTMLRenderer", "SmallNode", () => {
 
   const ctx = createRenderContext();
 

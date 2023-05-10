@@ -1,5 +1,5 @@
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
-import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 
 import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
 import type { JSONRenderContext, JSONRenderer } from "unwritten:renderer:json/type-definitions/renderer.js";

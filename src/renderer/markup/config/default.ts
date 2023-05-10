@@ -82,7 +82,7 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     "variable_one": "variable",
     "variable_other": "variables"
   },
-  typeEncapsulation: ["&lt;", "&gt;"],
+  typeEncapsulation: ["`", "`"],
   typeParameterEncapsulation: ["&lt;", "&gt;"]
 };
 

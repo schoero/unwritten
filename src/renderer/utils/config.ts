@@ -1,5 +1,13 @@
-import type { HTMLRenderConfig, MarkdownRenderConfig, MarkupRenderConfig } from "../types-definitions/config.js";
-import type { HTMLRenderContext, MarkdownRenderContext, MarkupRenderContexts } from "../types-definitions/markup.js";
+import type {
+  HTMLRenderConfig,
+  MarkdownRenderConfig,
+  MarkupRenderConfig
+} from "../markup/types-definitions/config.js";
+import type {
+  HTMLRenderContext,
+  MarkdownRenderContext,
+  MarkupRenderContexts
+} from "../markup/types-definitions/markup.js";
 
 import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config.js";
 import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer.js";

@@ -8,7 +8,7 @@ import { html } from "unwritten:utils/template.js";
 import { renderLinkNode } from "./link.js";
 
 
-scope("MarkupRenderer", "LinkNode", () => {
+scope("HTMLRenderer", "LinkNode", () => {
 
   const ctx = createRenderContext();
 

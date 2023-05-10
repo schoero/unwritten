@@ -1,4 +1,4 @@
-import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { StringLiteralType } from "unwritten:interpreter:type-definitions/types.js";

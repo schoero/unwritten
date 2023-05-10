@@ -1,5 +1,5 @@
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 

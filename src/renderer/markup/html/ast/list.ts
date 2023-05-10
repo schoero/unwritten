@@ -85,7 +85,11 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
     return "";
   }
 
-  return [listStart, ...filteredListItems, listEnd]
+  return [
+    listStart,
+    ...filteredListItems,
+    listEnd
+  ].filter(item => !!item)
     .join(renderNewLine(ctx));
 
 }

@@ -8,7 +8,7 @@ import { html } from "unwritten:utils/template.js";
 import { renderBoldNode } from "./bold.js";
 
 
-scope("MarkupRenderer", "BoldNode", () => {
+scope("HTMLRenderer", "BoldNode", () => {
 
   const ctx = createRenderContext();
 

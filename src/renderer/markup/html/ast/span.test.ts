@@ -9,7 +9,7 @@ import { html } from "unwritten:utils/template.js";
 import { renderSpanNode } from "./span.js";
 
 
-scope("MarkupRenderer", "SpanNode", () => {
+scope("HTMLRenderer", "SpanNode", () => {
 
   const ctx = createRenderContext();
 

@@ -1,4 +1,6 @@
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { isHTMLRenderContext, renderNode as renderNodeAsHTML } from "unwritten:renderer:markup/html/index.js";
+import { renderNode as renderNodeAsMarkdown } from "unwritten:renderer:markup/markdown/index.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
@@ -8,12 +10,15 @@ import type { Renderer } from "unwritten:type-definitions/renderer.d.js";
 
 export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {
 
-  if(renderer === undefined || renderer === "markdown"){
-    // const { default: markdownRenderer } = await import("unwritten:renderer:markup/markdown/index.js");
-    // renderer = markdownRenderer;
-  } else if(renderer === "html"){
+  if(renderer === undefined || renderer === BuiltInRenderers.Markdown){
+    const { default: markdownRenderer } = await import("unwritten:renderer:markup/markdown/index.js");
+    renderer = markdownRenderer;
+  } else if(renderer === BuiltInRenderers.HTML){
     const { default: htmlRenderer } = await import("unwritten:renderer:markup/html/index.js");
     renderer = htmlRenderer;
+  } else if(renderer === BuiltInRenderers.JSON){
+    const { default: jsonRenderer } = await import("unwritten:renderer:json/index.js");
+    renderer = jsonRenderer;
   } else if(typeof renderer === "string"){
     const { default: importedRenderer } = await import(renderer);
     renderer = importedRenderer;
@@ -29,10 +34,15 @@ export function renderNode(ctx: MarkupRenderContexts, node: ASTNodes): string {
   if(isHTMLRenderContext(ctx)){
     return renderNodeAsHTML(ctx, node);
   } else {
-    throw new Error("Markdown renderer not yet implemented");
+    return renderNodeAsMarkdown(ctx, node);
   }
 }
 
+/**
+ * Validates that the given object is a valid renderer object
+ * @param renderer The renderer object to validate
+ * @throws {Error} If the given object is not a valid renderer object
+ */
 function validateRenderer(renderer: unknown): asserts renderer is Renderer {
   assert(isObject(renderer), "Renderer must be an object that implements the `Renderer` interface");
   assert(typeof renderer.name === "string", "Renderer must have a `name` property of type `string`");

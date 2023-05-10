@@ -9,7 +9,7 @@ import { html } from "unwritten:utils/template.js";
 import { renderAnchorNode } from "./anchor.js";
 
 
-scope("MarkupRenderer", "AnchorNode", () => {
+scope("HTMLRenderer", "AnchorNode", () => {
 
   const ctx = createRenderContext();
 

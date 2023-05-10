@@ -4,9 +4,9 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertParameterEntitiesForDocumentation,
   convertParameterEntitiesForSignature,

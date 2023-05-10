@@ -1,5 +1,5 @@
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 

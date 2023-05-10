@@ -9,7 +9,7 @@ import { html } from "unwritten:utils/template.js";
 import { renderTitleNode } from "./title.js";
 
 
-scope("MarkupRenderer", "TitleNode", () => {
+scope("HTMLRenderer", "TitleNode", () => {
 
   const ctx = createRenderContext();
 

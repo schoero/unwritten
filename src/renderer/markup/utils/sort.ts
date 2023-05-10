@@ -8,8 +8,8 @@ export function sortExportableEntities(ctx: MarkupRenderContexts, entities: Expo
   const order = ctx.config.renderConfig[ctx.renderer.name].renderOrder;
 
   return entities.sort((a, b) => {
-    const aIndex = order?.indexOf(a.kind) ?? 0;
-    const bIndex = order?.indexOf(b.kind) ?? 0;
+    const aIndex = order.indexOf(a.kind);
+    const bIndex = order.indexOf(b.kind);
     return aIndex - bIndex;
   });
 

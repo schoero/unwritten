@@ -1,8 +1,8 @@
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
 import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { MappedType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";

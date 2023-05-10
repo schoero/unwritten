@@ -1,6 +1,6 @@
 import { convertObjectType } from "unwritten:renderer/markup/ast-converter/types/index.js";
-import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { ObjectLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";

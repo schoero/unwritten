@@ -8,7 +8,7 @@ import { html } from "unwritten:utils/template.js";
 import { renderParagraphNode } from "./paragraph.js";
 
 
-scope("MarkupRenderer", "ParagraphNode", () => {
+scope("HTMLRenderer", "ParagraphNode", () => {
 
   const ctx = createRenderContext();
 

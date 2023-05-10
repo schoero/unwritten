@@ -1,4 +1,5 @@
 import { getDefaultConfig } from "unwritten:config/index.js";
+import markdownRenderer from "unwritten:renderer/markup/markdown/index.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import jsonRenderer from "unwritten:renderer:json/index.js";
 import htmlRenderer from "unwritten:renderer:markup/html/index.js";
@@ -44,8 +45,12 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
     (ctx as HTMLRenderContext).indentation = 0;
     (ctx as HTMLRenderContext).size = 1;
 
-  // } else if(rendererName === BuiltInRenderers.Markdown){
-  //   renderer = markdownRenderer;
+  } else if(rendererName === BuiltInRenderers.Markdown){
+    ctx.renderer = markdownRenderer;
+
+    (ctx as MarkdownRenderContext).indentation = 0;
+    (ctx as MarkdownRenderContext).size = 1;
+
   } else {
     ctx.renderer = jsonRenderer;
   }
