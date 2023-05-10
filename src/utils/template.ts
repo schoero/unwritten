@@ -42,7 +42,7 @@ function findCommonIndentation(content: string) {
   const lines = content.split("\n");
   const indentations = lines.map(line => line.match(/^\s*/)?.[0].length ?? 0);
   const minIndentation = Math.min(...indentations);
-  return minIndentation;
+  return minIndentation - minIndentation % 2;
 }
 
 function removeCommonIndentation(content: string, minIndentation: number) {
