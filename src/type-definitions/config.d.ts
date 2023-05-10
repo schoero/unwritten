@@ -38,12 +38,12 @@ export interface RenderConfig {
   };
 }
 
-export interface ConfigWithSchema extends Config {
+export interface ConfigWithSchema extends CompleteConfig {
   $schema: string;
 }
 
 export interface InterpreterConfig {
-  /** An array of excluded directories. */
+  /** An array or object of excluded directories. */
   exclude?: string[] | {
     [key: string]: string[] | "*";
   };
