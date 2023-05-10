@@ -79,8 +79,6 @@ export type ConvertedExample = TitleNode<[
 
 //-- Types
 
-//-- Types
-
 export type ConvertedTypes =
   | ConvertedArrayType
   | ConvertedIntersectionType
