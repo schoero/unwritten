@@ -50,5 +50,5 @@ function removeCommonIndentation(content: string, minIndentation: number) {
 }
 
 function removeSurroundingNewLines(content: string) {
-  return content.replace(/^\s*\n|\n\s*$/g, "");
+  return content.replace(/^\n|\n\s*$/g, "");
 }
