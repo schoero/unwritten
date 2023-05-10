@@ -8,5 +8,5 @@ export function renderParagraphNode(ctx: HTMLRenderContext, paragraphNode: Parag
   const renderedNode = renderNode(ctx, paragraphNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `<p>${renderNode(ctx, renderedNode)}</p>`;
+    : `<p>${renderedNode}</p>`;
 }

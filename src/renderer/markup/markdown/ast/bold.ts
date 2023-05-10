@@ -8,5 +8,5 @@ export function renderBoldNode(ctx: MarkdownRenderContext, boldNode: BoldNode): 
   const renderedNode = renderNode(ctx, boldNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `**${renderNode(ctx, renderedNode)}**`;
+    : `**${renderedNode}**`;
 }

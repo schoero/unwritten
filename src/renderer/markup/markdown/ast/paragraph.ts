@@ -6,5 +6,5 @@ import type { ParagraphNode } from "unwritten:renderer:markup/types-definitions/
 
 export function renderParagraphNode(ctx: MarkdownRenderContext, paragraphNode: ParagraphNode): string {
   const renderedNode = renderNode(ctx, paragraphNode.children);
-  return `${renderNode(ctx, renderedNode)}`;
+  return `${renderedNode}`;
 }

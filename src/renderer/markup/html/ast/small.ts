@@ -8,5 +8,5 @@ export function renderSmallNode(ctx: HTMLRenderContext, smallNode: SmallNode): s
   const renderedNode = renderNode(ctx, smallNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `<small>${renderNode(ctx, renderedNode)}</small>`;
+    : `<small>${renderedNode}</small>`;
 }

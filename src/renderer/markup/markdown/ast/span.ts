@@ -11,8 +11,9 @@ export function renderSpanNode(ctx: MarkdownRenderContext, spanNode: SpanNode): 
   const idAttribute = id ? ` id="${id}"` : "";
 
   const renderedNode = renderNode(ctx, spanNode.children);
+
   return renderedNode === ""
     ? renderedNode
-    : `<span${idAttribute}>${renderNode(ctx, renderedNode)}</span>`;
+    : `<span${idAttribute}>${renderedNode}</span>`;
 
 }

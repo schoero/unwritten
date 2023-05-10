@@ -8,6 +8,6 @@ export function renderStrikethroughNode(ctx: HTMLRenderContext, strikethroughNod
   const renderedNode = renderNode(ctx, strikethroughNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `<del>${renderNode(ctx, renderedNode)}</del>`;
+    : `<del>${renderedNode}</del>`;
 
 }

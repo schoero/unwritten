@@ -8,6 +8,6 @@ export function renderStrikethroughNode(ctx: MarkdownRenderContext, strikethroug
   const renderedNode = renderNode(ctx, strikethroughNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `~~${renderNode(ctx, renderedNode)}~~`;
+    : `~~${renderedNode}~~`;
 
 }

@@ -8,5 +8,5 @@ export function renderItalicNode(ctx: MarkdownRenderContext, italicNode: ItalicN
   const renderedNode = renderNode(ctx, italicNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `*${renderNode(ctx, renderedNode)}*`;
+    : `*${renderedNode}*`;
 }

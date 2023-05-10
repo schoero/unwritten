@@ -11,8 +11,9 @@ export function renderSpanNode(ctx: HTMLRenderContext, spanNode: SpanNode): stri
   const idAttribute = id ? ` id="${id}"` : "";
 
   const renderedNode = renderNode(ctx, spanNode.children);
+
   return renderedNode === ""
     ? renderedNode
-    : `<span${idAttribute}>${renderNode(ctx, renderedNode)}</span>`;
+    : `<span${idAttribute}>${renderedNode}</span>`;
 
 }

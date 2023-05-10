@@ -8,5 +8,5 @@ export function renderBoldNode(ctx: HTMLRenderContext, boldNode: BoldNode): stri
   const renderedNode = renderNode(ctx, boldNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `<b>${renderNode(ctx, renderedNode)}</b>`;
+    : `<b>${renderedNode}</b>`;
 }

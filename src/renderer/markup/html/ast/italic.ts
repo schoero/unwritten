@@ -8,5 +8,5 @@ export function renderItalicNode(ctx: HTMLRenderContext, italicNode: ItalicNode)
   const renderedNode = renderNode(ctx, italicNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `<i>${renderNode(ctx, renderedNode)}</i>`;
+    : `<i>${renderedNode}</i>`;
 }
