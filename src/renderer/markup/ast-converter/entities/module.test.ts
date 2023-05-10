@@ -41,6 +41,8 @@ scope("MarkupRenderer", EntityKind.Module, () => {
     const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity);
     const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity);
 
+    const titleNode = renderedModuleForDocumentation.children[0];
+
     const [
       position,
       tags,
@@ -48,11 +50,11 @@ scope("MarkupRenderer", EntityKind.Module, () => {
       remarks,
       example,
       ...children
-    ] = renderedModuleForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have a matching title", () => {
       expect(renderedModuleForTableOfContents.title).to.equal("Module");
-      expect(renderedModuleForDocumentation.title).to.equal("Module");
+      expect(titleNode.title).to.equal("Module");
     });
 
     it("should have a matching description", () => {
@@ -103,6 +105,8 @@ scope("MarkupRenderer", EntityKind.Module, () => {
     const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity);
     const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity);
 
+    const titleNode = renderedModuleForDocumentation.children[0];
+
     const [
       position,
       tags,
@@ -110,11 +114,11 @@ scope("MarkupRenderer", EntityKind.Module, () => {
       remarks,
       example,
       ...children
-    ] = renderedModuleForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have a matching title", () => {
       expect(renderedModuleForTableOfContents.title).to.equal("Module");
-      expect(renderedModuleForDocumentation.title).to.equal("Module");
+      expect(titleNode.title).to.equal("Module");
     });
 
     it("should have on child", () => {

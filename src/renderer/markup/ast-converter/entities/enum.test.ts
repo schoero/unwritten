@@ -50,6 +50,8 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     const convertedEnumEntityForTableOfContents = convertEnumEntityForTableOfContents(ctx, enumEntity as EnumEntity);
     const convertedEnumEntityForDocumentation = convertEnumEntityForDocumentation(ctx, enumEntity as EnumEntity);
 
+    const titleNode = convertedEnumEntityForDocumentation.children[0];
+
     const [
       position,
       tags,
@@ -57,11 +59,11 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
       remarks,
       example,
       members
-    ] = convertedEnumEntityForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have a matching name", () => {
       expect(convertedEnumEntityForTableOfContents.children[0]).to.equal("Enum");
-      expect(convertedEnumEntityForDocumentation.title).to.equal("Enum");
+      expect(titleNode.title).to.equal("Enum");
     });
 
     it("should have a position", () => {
@@ -115,6 +117,8 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
 
     const convertedEnumEntityForDocumentation = convertEnumEntityForDocumentation(ctx, enumEntity);
 
+    const titleNode = convertedEnumEntityForDocumentation.children[0];
+
     const [
       position,
       tags,
@@ -122,7 +126,7 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
       remarks,
       example,
       members
-    ] = convertedEnumEntityForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have string literal enumerated members", () => {
       expect(members.children[0]).to.deep.equal(["A", ['"', "A", '"'], ""]);

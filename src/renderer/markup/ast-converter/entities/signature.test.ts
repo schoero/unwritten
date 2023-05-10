@@ -10,6 +10,7 @@ import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,
   isParagraphNode,
+  isSectionNode,
   isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
@@ -44,8 +45,28 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
     const convertedSignatureForDocumentation = convertSignatureEntityForDocumentation(ctx, signatureEntity);
 
+    it("should have a matching section type", () => {
+      expect(isSectionNode(convertedSignatureForDocumentation)).to.equal(true);
+      expect(convertedSignatureForDocumentation.type).to.equal(EntityKind.Signature);
+    });
+
+    assert(isSectionNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a section");
+
+    const titleNode = convertedSignatureForDocumentation.children[0];
+
+    it("should have matching table of contents entry", () => {
+      expect(isAnchorNode(convertedSignatureForTableOfContents)).to.equal(true);
+      expect(renderNode(ctx, convertedSignatureForTableOfContents.children)).to.equal("testSignature()");
+    });
+
     assert(isAnchorNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not an anchor");
-    assert(isTitleNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a container");
+
+    it("should have a matching documentation title", () => {
+      expect(isTitleNode(titleNode)).to.equal(true);
+      expect(renderNode(ctx, titleNode.title)).to.equal("testSignature()");
+    });
+
+    assert(isTitleNode(titleNode), "Converted signature for documentation is not a title");
 
     const [
       position,
@@ -56,17 +77,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       description,
       remarks,
       example
-    ] = convertedSignatureForDocumentation.children;
-
-    it("should have matching table of contents entry", () => {
-      expect(isAnchorNode(convertedSignatureForTableOfContents)).to.equal(true);
-      expect(renderNode(ctx, convertedSignatureForTableOfContents.children)).to.equal("testSignature()");
-    });
-
-    it("should have a matching documentation title", () => {
-      expect(isTitleNode(convertedSignatureForDocumentation)).to.equal(true);
-      expect(renderNode(ctx, convertedSignatureForDocumentation.title)).to.equal("testSignature()");
-    });
+    ] = titleNode.children;
 
     it("should have a position", () => {
       assert(isSmallNode(position));
@@ -133,8 +144,23 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
     const convertedSignatureForDocumentation = convertSignatureEntityForDocumentation(ctx, signatureEntity);
 
+    assert(isSectionNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a section");
+
+    const titleNode = convertedSignatureForDocumentation.children[0];
+
+    it("should have a matching documentation title", () => {
+      expect(isTitleNode(titleNode)).to.equal(true);
+      expect(renderNode(ctx, titleNode.title)).to.equal("testSignature<TypeParam>(param)");
+    });
+
+    assert(isTitleNode(titleNode), "Converted signature for documentation is not a title");
+
+    it("should render type parameters in the table of contents entry", () => {
+      expect(isAnchorNode(convertedSignatureForTableOfContents)).to.equal(true);
+      expect(renderNode(ctx, convertedSignatureForTableOfContents.children)).to.equal("testSignature<TypeParam>(param)");
+    });
+
     assert(isAnchorNode(convertedSignatureForTableOfContents), "Converted signature for table of contents is not an anchor");
-    assert(isTitleNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a container");
 
     const [
       position,
@@ -143,17 +169,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       description,
       remarks,
       example
-    ] = convertedSignatureForDocumentation.children;
-
-    it("should render type parameters in the table of contents entry", () => {
-      expect(isAnchorNode(convertedSignatureForTableOfContents)).to.equal(true);
-      expect(renderNode(ctx, convertedSignatureForTableOfContents.children)).to.equal("testSignature<TypeParam>(param)");
-    });
-
-    it("should have a matching documentation title", () => {
-      expect(isTitleNode(convertedSignatureForDocumentation)).to.equal(true);
-      expect(renderNode(ctx, convertedSignatureForDocumentation.title)).to.equal("testSignature<TypeParam>(param)");
-    });
+    ] = titleNode.children;
 
   }
 

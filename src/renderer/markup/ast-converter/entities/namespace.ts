@@ -8,7 +8,7 @@ import {
   convertEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -48,15 +48,18 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
 
   const children = namespaceEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
 
-  return createTitleNode(
-    name,
-    anchor,
-    convertedPosition,
-    convertedTags,
-    convertedDescription,
-    convertedRemarks,
-    convertedExample,
-    ...children
+  return createSectionNode(
+    namespaceEntity.kind,
+    createTitleNode(
+      name,
+      anchor,
+      convertedPosition,
+      convertedTags,
+      convertedDescription,
+      convertedRemarks,
+      convertedExample,
+      ...children
+    )
   );
 
 }

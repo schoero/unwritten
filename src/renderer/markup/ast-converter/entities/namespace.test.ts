@@ -41,6 +41,8 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity);
     const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity);
 
+    const titleNode = renderedNamespaceForDocumentation.children[0];
+
     const [
       position,
       tags,
@@ -48,11 +50,11 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
       remarks,
       example,
       ...children
-    ] = renderedNamespaceForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have a matching title", () => {
       expect(renderedNamespaceForTableOfContents.title).to.equal("Namespace");
-      expect(renderedNamespaceForDocumentation.title).to.equal("Namespace");
+      expect(titleNode.title).to.equal("Namespace");
     });
 
     it("should have a matching description", () => {
@@ -104,6 +106,8 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity);
     const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity);
 
+    const titleNode = renderedNamespaceForDocumentation.children[0];
+
     const [
       position,
       tags,
@@ -111,11 +115,11 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
       remarks,
       example,
       ...children
-    ] = renderedNamespaceForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have a matching title", () => {
       expect(renderedNamespaceForTableOfContents.title).to.equal("Namespace");
-      expect(renderedNamespaceForDocumentation.title).to.equal("Namespace");
+      expect(titleNode.title).to.equal("Namespace");
     });
 
     it("should have on child", () => {

@@ -14,7 +14,7 @@ scope("HTMLRenderer", "SectionNode", () => {
   const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
   it("should render a section node correctly", () => {
-    const sectionNode = createSectionNode("Section content");
+    const sectionNode = createSectionNode(undefined, "Section content");
     expect(renderSectionNode(ctx, sectionNode)).to.equal(md`
         
       Section content
@@ -22,7 +22,7 @@ scope("HTMLRenderer", "SectionNode", () => {
   });
 
   it("should not render empty sections", () => {
-    const sectionNode = createSectionNode("");
+    const sectionNode = createSectionNode(undefined, "");
     expect(renderSectionNode(ctx, sectionNode)).to.equal("");
   });
 

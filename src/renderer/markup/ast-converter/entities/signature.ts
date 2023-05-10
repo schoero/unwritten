@@ -14,7 +14,7 @@ import {
   convertTypeParameterEntitiesForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { SignatureEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -58,17 +58,20 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const renderedSignature = renderNode(ctx, convertedSignature);
   const anchor = registerAnchor(ctx, renderedSignature, id);
 
-  return createTitleNode(
-    convertedSignature,
-    anchor,
-    convertedPosition,
-    convertedTags,
-    convertedTypeParameters,
-    convertedParameters,
-    convertedReturnType,
-    convertedDescription,
-    convertedRemarks,
-    convertedExample
+  return createSectionNode(
+    signatureEntity.kind,
+    createTitleNode(
+      convertedSignature,
+      anchor,
+      convertedPosition,
+      convertedTags,
+      convertedTypeParameters,
+      convertedParameters,
+      convertedReturnType,
+      convertedDescription,
+      convertedRemarks,
+      convertedExample
+    )
   );
 }
 

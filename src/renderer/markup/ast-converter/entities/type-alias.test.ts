@@ -10,6 +10,7 @@ import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,
   isParagraphNode,
+  isSectionNode,
   isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
@@ -45,8 +46,23 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     const convertedTypeAliasForTableOfContents = convertTypeAliasEntityForTableOfContents(ctx, typeAliasEntity);
     const convertedTypeAliasForDocumentation = convertTypeAliasEntityForDocumentation(ctx, typeAliasEntity);
 
+
+    it("should have matching table of contents entry", () => {
+      assert(isAnchorNode(convertedTypeAliasForTableOfContents));
+      expect(renderNode(ctx, convertedTypeAliasForTableOfContents.children)).to.equal("TypeAlias<A>");
+    });
+
     assert(isAnchorNode(convertedTypeAliasForTableOfContents), "Rendered typeAlias for table of contents is not a link");
-    assert(isTitleNode(convertedTypeAliasForDocumentation), "Rendered typeAlias for documentation is not a container");
+
+    const titleNode = convertedTypeAliasForDocumentation.children[0];
+
+    it("should have a matching documentation signature", () => {
+      assert(isTitleNode(titleNode));
+      expect(renderNode(ctx, titleNode.title)).to.equal("TypeAlias<A>");
+    });
+
+    assert(isSectionNode(convertedTypeAliasForDocumentation), "Rendered typeAlias for documentation is not a section");
+    assert(isTitleNode(titleNode), "Rendered typeAlias for documentation is not a title");
 
     const [
       position,
@@ -56,17 +72,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
       description,
       remarks,
       example
-    ] = convertedTypeAliasForDocumentation.children;
-
-    it("should have matching table of contents entry", () => {
-      assert(isAnchorNode(convertedTypeAliasForTableOfContents));
-      expect(renderNode(ctx, convertedTypeAliasForTableOfContents.children)).to.equal("TypeAlias<A>");
-    });
-
-    it("should have a matching documentation signature", () => {
-      assert(isTitleNode(convertedTypeAliasForDocumentation));
-      expect(renderNode(ctx, convertedTypeAliasForDocumentation.title)).to.equal("TypeAlias<A>");
-    });
+    ] = titleNode.children;
 
     it("should have a position", () => {
       assert(isSmallNode(position));

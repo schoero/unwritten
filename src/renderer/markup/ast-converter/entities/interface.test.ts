@@ -45,6 +45,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const convertedInterfaceForTableOfContents = convertInterfaceEntityForTableOfContents(ctx, interfaceEntity);
     const convertedInterfaceForDocumentation = convertInterfaceEntityForDocumentation(ctx, interfaceEntity);
 
+    const titleNode = convertedInterfaceForDocumentation.children[0];
+
     const [
       position,
       tags,
@@ -57,12 +59,12 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       methods,
       setters,
       getters
-    ] = convertedInterfaceForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have matching interface name", () => {
       assert(isAnchorNode(convertedInterfaceForTableOfContents));
       expect(convertedInterfaceForTableOfContents.children[0]).to.equal("Interface");
-      expect(convertedInterfaceForDocumentation.title).to.equal("Interface");
+      expect(titleNode.title).to.equal("Interface");
     });
 
     it("should have a position", () => {
@@ -147,6 +149,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     const convertedInterfaceForDocumentation = convertInterfaceEntityForDocumentation(ctx, interfaceEntity);
 
+    const titleNode = convertedInterfaceForDocumentation.children[0];
+
     const [
       interfacePosition,
       interfaceTags,
@@ -159,7 +163,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       methods,
       setters,
       getters
-    ] = convertedInterfaceForDocumentation.children;
+    ] = titleNode.children;
 
     const [
       callSignaturePosition,
@@ -170,7 +174,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       callSignatureDescription,
       callSignatureRemarks,
       callSignatureExample
-    ] = callSignatures.children[0].children;
+    ] = callSignatures.children[0].children[0].children;
 
     const [
       propertyTags,

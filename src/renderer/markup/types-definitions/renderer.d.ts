@@ -1,7 +1,15 @@
 import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter:enums/jsdoc.js";
 import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.js";
 
-import type { AnchorNode, ASTNodes, ListNode, ParagraphNode, SmallNode, TitleNode } from "./nodes.js";
+import type {
+  AnchorNode,
+  ASTNodes,
+  ListNode,
+  ParagraphNode,
+  SectionNode,
+  SmallNode,
+  TitleNode
+} from "./nodes.js";
 
 
 //-- Categories
@@ -260,40 +268,46 @@ export type ConvertedEntitiesForDocumentation =
 //-- Namespace
 
 export type ConvertedNamespaceEntityForTableOfContents = TitleNode<ConvertedEntitiesForTableOfContents[]>;
-export type ConvertedNamespaceEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  tags: ConvertedTags,
-  description: ConvertedDescription,
-  remarks: ConvertedRemarks,
-  example: ConvertedExample,
-  ...exports: ConvertedEntitiesForDocumentation[]
+export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTags,
+    description: ConvertedDescription,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample,
+    ...exports: ConvertedEntitiesForDocumentation[]
+  ]>
 ]>;
 
 
 //-- Module
 
 export type ConvertedModuleEntityForTableOfContents = TitleNode<ConvertedEntitiesForTableOfContents[]>;
-export type ConvertedModuleEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  tags: ConvertedTags,
-  description: ConvertedDescription,
-  remarks: ConvertedRemarks,
-  example: ConvertedExample,
-  ...exports: ConvertedEntitiesForDocumentation[]
+export type ConvertedModuleEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTags,
+    description: ConvertedDescription,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample,
+    ...exports: ConvertedEntitiesForDocumentation[]
+  ]>
 ]>;
 
 
 //-- Type alias
 
 export type ConvertedTypeAliasEntityForTableOfContents = AnchorNode;
-export type ConvertedTypeAliasEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  tags: ConvertedTags,
-  typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
-  type: ConvertedTypes,
-  description: ConvertedDescription,
-  remarks: ConvertedRemarks,
-  example: ConvertedExample
+export type ConvertedTypeAliasEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTags,
+    typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
+    type: ConvertedTypes,
+    description: ConvertedDescription,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample
+  ]>
 ]>;
 
 
@@ -314,16 +328,17 @@ export type ConvertedFunctionEntityForType = ConvertedFunctionLikeEntityForType;
 //-- Signature
 
 export type ConvertedSignatureEntityForTableOfContents = AnchorNode;
-
-export type ConvertedSignatureEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  tags: ConvertedTags,
-  typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
-  parameters: ConvertedParameterEntitiesForDocumentation,
-  returnType: ASTNodes,
-  description: ConvertedDescription,
-  remarks: ConvertedRemarks,
-  example: ConvertedExample
+export type ConvertedSignatureEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTags,
+    typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
+    parameters: ConvertedParameterEntitiesForDocumentation,
+    returnType: ASTNodes,
+    description: ConvertedDescription,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample
+  ]>
 ]>;
 
 export type ConvertedSignatureEntityForType = [
@@ -342,61 +357,69 @@ export type ConvertedSignatureEntityForType = [
 //-- Variable
 
 export type ConvertedVariableEntityForTableOfContents = AnchorNode;
-export type ConvertedVariableEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  tags: ConvertedTags,
-  type: ConvertedTypes,
-  description: ConvertedDescription,
-  remarks: ConvertedRemarks,
-  example: ConvertedExample
+export type ConvertedVariableEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTags,
+    type: ConvertedTypes,
+    description: ConvertedDescription,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample
+  ]>
 ]>;
 
 
 //-- Interface
 
 export type ConvertedInterfaceEntityForTableOfContents = AnchorNode;
-export type ConvertedInterfaceEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  tags: ConvertedTags,
-  description: ConvertedDescription,
-  remarks: ConvertedRemarks,
-  example: ConvertedExample,
-  constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-  callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-  properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-  methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-  setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-  getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
+export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTags,
+    description: ConvertedDescription,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample,
+    constructSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    callSignatures: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+    methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
+  ]>
 ]>;
 
 
 //-- Class
 
 export type ConvertedClassEntityForTableOfContents = AnchorNode;
-export type ConvertedClassEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  tags: ConvertedTags,
-  description: ConvertedDescription,
-  remarks: ConvertedRemarks,
-  example: ConvertedExample,
-  constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-  properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-  methods: TitleNode<ConvertedMethodEntityForDocumentation[]>,
-  setters: TitleNode<ConvertedSetterEntityForDocumentation[]>,
-  getters: TitleNode<ConvertedGetterEntityForDocumentation[]>
+export type ConvertedClassEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTags,
+    description: ConvertedDescription,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample,
+    constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+    methods: TitleNode<ConvertedMethodEntityForDocumentation[]>,
+    setters: TitleNode<ConvertedSetterEntityForDocumentation[]>,
+    getters: TitleNode<ConvertedGetterEntityForDocumentation[]>
+  ]>
 ]>;
 
 
 //-- Enum
 
 export type ConvertedEnumEntityForTableOfContents = AnchorNode;
-export type ConvertedEnumEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  tags: ConvertedTags,
-  description: ConvertedDescription,
-  remarks: ConvertedRemarks,
-  example: ConvertedExample,
-  members: ListNode
+export type ConvertedEnumEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTags,
+    description: ConvertedDescription,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample,
+    members: ListNode
+  ]>
 ]>;
 
 

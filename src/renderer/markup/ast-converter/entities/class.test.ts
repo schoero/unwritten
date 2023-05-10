@@ -38,6 +38,8 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     const convertedClassForTableOfContents = convertClassEntityForTableOfContents(ctx, classEntity);
     const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
 
+    const titleNode = convertedClassForDocumentation.children[0];
+
     const [
       position,
       tags,
@@ -49,12 +51,12 @@ scope("MarkupRenderer", TypeKind.Class, () => {
       methods,
       setters,
       getters
-    ] = convertedClassForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have matching class name", () => {
       assert(isAnchorNode(convertedClassForTableOfContents));
       expect(convertedClassForTableOfContents.children[0]).to.equal("Class");
-      expect(convertedClassForDocumentation.title).to.equal("Class");
+      expect(titleNode.title).to.equal("Class");
     });
 
     it("should have a position", () => {

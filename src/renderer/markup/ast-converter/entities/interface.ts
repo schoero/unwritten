@@ -8,7 +8,7 @@ import {
   convertSignatureEntityForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendInterfaceEntityPropertiesWithHeritage,
@@ -59,20 +59,23 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const convertedGetters = getterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
   const convertedMethods = methodSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
 
-  return createTitleNode(
-    name,
-    anchor,
-    convertedPosition,
-    convertedTags,
-    convertedDescription,
-    convertedRemarks,
-    convertedExample,
-    createTitleNode(translate("construct-signature", { count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
-    createTitleNode(translate("call-signature", { count: convertedCallSignatures.length }), ...convertedCallSignatures),
-    createTitleNode(translate("property", { count: convertedProperties.length }), ...convertedProperties),
-    createTitleNode(translate("method", { count: convertedMethods.length }), ...convertedMethods),
-    createTitleNode(translate("setter", { count: convertedSetters.length }), ...convertedSetters),
-    createTitleNode(translate("getter", { count: convertedGetters.length }), ...convertedGetters)
+  return createSectionNode(
+    interfaceEntity.kind,
+    createTitleNode(
+      name,
+      anchor,
+      convertedPosition,
+      convertedTags,
+      convertedDescription,
+      convertedRemarks,
+      convertedExample,
+      createTitleNode(translate("construct-signature", { count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
+      createTitleNode(translate("call-signature", { count: convertedCallSignatures.length }), ...convertedCallSignatures),
+      createTitleNode(translate("property", { count: convertedProperties.length }), ...convertedProperties),
+      createTitleNode(translate("method", { count: convertedMethods.length }), ...convertedMethods),
+      createTitleNode(translate("setter", { count: convertedSetters.length }), ...convertedSetters),
+      createTitleNode(translate("getter", { count: convertedGetters.length }), ...convertedGetters)
+    )
   );
 
 }

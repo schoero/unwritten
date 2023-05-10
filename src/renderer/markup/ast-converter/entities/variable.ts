@@ -5,7 +5,7 @@ import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -36,15 +36,18 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
   const convertedExample = convertExample(ctx, variableEntity.example);
   const convertedType = convertType(ctx, variableEntity.type);
 
-  return createTitleNode(
-    name,
-    anchor,
-    convertedPosition,
-    convertedTags,
-    convertedType,
-    convertedDescription,
-    convertedRemarks,
-    convertedExample
+  return createSectionNode(
+    variableEntity.kind,
+    createTitleNode(
+      name,
+      anchor,
+      convertedPosition,
+      convertedTags,
+      convertedType,
+      convertedDescription,
+      convertedRemarks,
+      convertedExample
+    )
   );
 
 }

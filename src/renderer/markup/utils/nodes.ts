@@ -1,4 +1,3 @@
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { isAnchor } from "unwritten:renderer/markup/utils/linker.js";
 
 import { ASTNodeKinds } from "../enums/nodes.js";
@@ -18,6 +17,7 @@ import type {
   TitleNode
 } from "../types-definitions/nodes.js";
 
+import type { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
 import type { Anchor } from "unwritten:renderer/markup/utils/linker.js";
 
@@ -75,24 +75,12 @@ export function createParagraphNode<Children extends ASTNodes[]>(...children: Ch
   };
 }
 
-export function createSectionNode<Children extends ASTNodes[]>(children?: Children): SectionNode<Children>;
-export function createSectionNode<Children extends ASTNodes[]>(...children: Children): SectionNode<Children>;
-export function createSectionNode<Children extends ASTNodes[]>(type: EntityKind, children?: Children): SectionNode<Children>;
-export function createSectionNode<Children extends ASTNodes[]>(type: EntityKind, ...children: Children): SectionNode<Children>;
-export function createSectionNode<Children extends ASTNodes[]>(...typeOrChildren: Children | [type: EntityKind, ...children: Children]): SectionNode<Children> {
-
-  const separateTypeAndChildren = (typeOrChildren: Children | [type: EntityKind, ...children: Children]): [EntityKind | undefined, Children] => {
-    if(typeof typeOrChildren[0] === "string" && Object.values(EntityKind).includes(typeOrChildren[0] as EntityKind)){
-      const [type, ...children] = typeOrChildren as [EntityKind, ...Children];
-      return [type, children];
-    } else {
-      const [children] = typeOrChildren;
-      return [undefined, children] as [undefined, Children];
-    }
-  };
-
-  const [type, children] = separateTypeAndChildren(typeOrChildren);
-
+// export function createSectionNode<Children extends ASTNodes[]>(children?: Children): SectionNode<Children>;
+// export function createSectionNode<Children extends ASTNodes[]>(...children: Children): SectionNode<Children>;
+export function createSectionNode<Children extends ASTNodes[]>(type: EntityKind | undefined, children?: Children): SectionNode<Children>;
+export function createSectionNode<Children extends ASTNodes[]>(type: EntityKind | undefined, ...children: Children): SectionNode<Children>;
+// export function createSectionNode<Children extends ASTNodes[]>(...typeOrChildren: Children | [type: EntityKind, ...children: Children]): SectionNode<Children> {
+export function createSectionNode<Children extends ASTNodes[]>(type: EntityKind | undefined, ...children: Children): SectionNode<Children> {
   return {
     children,
     kind: ASTNodeKinds.Section,

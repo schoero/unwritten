@@ -9,7 +9,7 @@ import {
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendClassEntityConstructorsWithHeritage,
@@ -58,19 +58,22 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const convertedSetters = setterEntities.map(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
   const convertedGetters = getterEntities.map(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
 
-  return createTitleNode(
-    name,
-    anchor,
-    convertedPosition,
-    convertedTags,
-    convertedDescription,
-    convertedRemarks,
-    convertedExample,
-    createTitleNode(t("construct-signature", { count: convertedConstructSignatures?.length }), convertedConstructSignatures),
-    createTitleNode(t("property", { count: convertedProperties.length }), convertedProperties),
-    createTitleNode(t("method", { count: convertedMethods.length }), convertedMethods),
-    createTitleNode(t("setter", { count: convertedSetters.length }), convertedSetters),
-    createTitleNode(t("getter", { count: convertedGetters.length }), convertedGetters)
+  return createSectionNode(
+    classEntity.kind,
+    createTitleNode(
+      name,
+      anchor,
+      convertedPosition,
+      convertedTags,
+      convertedDescription,
+      convertedRemarks,
+      convertedExample,
+      createTitleNode(t("construct-signature", { count: convertedConstructSignatures?.length }), convertedConstructSignatures),
+      createTitleNode(t("property", { count: convertedProperties.length }), convertedProperties),
+      createTitleNode(t("method", { count: convertedMethods.length }), convertedMethods),
+      createTitleNode(t("setter", { count: convertedSetters.length }), convertedSetters),
+      createTitleNode(t("getter", { count: convertedGetters.length }), convertedGetters)
+    )
   );
 
 }

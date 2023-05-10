@@ -9,6 +9,7 @@ import {
 import {
   isAnchorNode,
   isParagraphNode,
+  isSectionNode,
   isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
@@ -43,8 +44,22 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     const convertedVariableForTableOfContents = convertVariableEntityForTableOfContents(ctx, variableEntity);
     const convertedVariableForDocumentation = convertVariableEntityForDocumentation(ctx, variableEntity);
 
+    it("should have matching table of contents entry", () => {
+      expect(isAnchorNode(convertedVariableForTableOfContents)).to.equal(true);
+      expect(convertedVariableForTableOfContents.children[0]).to.equal("numberVariable");
+    });
+
     assert(isAnchorNode(convertedVariableForTableOfContents), "Rendered variable for table of contents is not a link");
-    assert(isTitleNode(convertedVariableForDocumentation), "Rendered variable for documentation is not a container");
+
+    const titleNode = convertedVariableForDocumentation.children[0];
+
+    it("should have a matching documentation title", () => {
+      expect(isTitleNode(titleNode)).to.equal(true);
+      expect(titleNode.title).to.equal("numberVariable");
+    });
+
+    assert(isSectionNode(convertedVariableForDocumentation), "Rendered variable for documentation is not a section");
+    assert(isTitleNode(titleNode), "Rendered variable for documentation is not a title");
 
     const [
       position,
@@ -53,17 +68,7 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
       description,
       remarks,
       example
-    ] = convertedVariableForDocumentation.children;
-
-    it("should have matching table of contents entry", () => {
-      expect(isAnchorNode(convertedVariableForTableOfContents)).to.equal(true);
-      expect(convertedVariableForTableOfContents.children[0]).to.equal("numberVariable");
-    });
-
-    it("should have a matching documentation title", () => {
-      expect(isTitleNode(convertedVariableForDocumentation)).to.equal(true);
-      expect(convertedVariableForDocumentation.title).to.equal("numberVariable");
-    });
+    ] = titleNode.children;
 
     it("should have a position", () => {
       assert(isSmallNode(position));

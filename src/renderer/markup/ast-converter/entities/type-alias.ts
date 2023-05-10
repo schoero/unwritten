@@ -12,7 +12,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -51,16 +51,19 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const id = typeAliasEntity.symbolId;
   const anchor = registerAnchor(ctx, renderedSignature, id);
 
-  return createTitleNode(
-    renderedSignature,
-    anchor,
-    convertedPosition,
-    convertedTags,
-    convertedTypeParameterEntities,
-    convertedType,
-    convertedDescription,
-    convertedRemarks,
-    convertedExample
+  return createSectionNode(
+    typeAliasEntity.kind,
+    createTitleNode(
+      renderedSignature,
+      anchor,
+      convertedPosition,
+      convertedTags,
+      convertedTypeParameterEntities,
+      convertedType,
+      convertedDescription,
+      convertedRemarks,
+      convertedExample
+    )
   );
 
 }
