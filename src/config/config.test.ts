@@ -14,13 +14,10 @@ scope("Integration", "Config", async () => {
       ...actual,
       existsSync: vi.fn().mockImplementation((path: string) => {
         if(path.includes(".unwritten.json")){
-          console.log("return true");
           return true;
         } else if(path.includes(".unwritten.js")){
-          console.log("return true");
           return true;
         } else {
-          console.log("return false");
           return false;
         }
       })
