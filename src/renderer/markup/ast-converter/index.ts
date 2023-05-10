@@ -114,19 +114,19 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
   for(const entity of entities){
 
     const categoryName = getCategoryName(entity.kind);
-    const translation = translate(categoryName, { count: entities.length });
-    const existingCategory = tableOfContents.find(category => category.title === categoryName);
+    const categoryTitle = translate(categoryName, { capitalize: true, count: entities.length });
+    const existingCategory = tableOfContents.find(category => category.title === categoryTitle);
 
     if(existingCategory === undefined){
       tableOfContents.push(
         createTitleNode(
-          translation,
+          categoryTitle,
           createListNode([])
         )
       );
     }
 
-    const category = tableOfContents.find(category => category.title === categoryName)!;
+    const category = tableOfContents.find(category => category.title === categoryTitle)!;
     const convertedEntity = convertEntityForTableOfContents(ctx, entity);
 
     category.children[0].children.push(convertedEntity);
@@ -147,16 +147,16 @@ export function createDocumentation(ctx: MarkupRenderContexts, entities: Exporta
   for(const entity of entities){
 
     const categoryName = getCategoryName(entity.kind);
-    const translation = translate(categoryName, { count: entities.length });
-    const existingCategory = documentation.find(category => category.title === categoryName);
+    const categoryTitle = translate(categoryName, { capitalize: true, count: entities.length });
+    const existingCategory = documentation.find(category => category.title === categoryTitle);
 
     if(existingCategory === undefined){
       documentation.push(
-        createTitleNode(translation)
+        createTitleNode(categoryTitle)
       );
     }
 
-    const category = documentation.find(category => category.title === categoryName)!;
+    const category = documentation.find(category => category.title === categoryTitle)!;
     const convertedEntity = convertEntityForDocumentation(ctx, entity);
 
     category.children.push(convertedEntity);
