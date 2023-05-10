@@ -1,3 +1,4 @@
+import { EntityKind } from "unwritten:interpreter/enums/entities.js";
 import { isAnchor } from "unwritten:renderer/markup/utils/linker.js";
 
 import { ASTNodeKinds } from "../enums/nodes.js";
@@ -10,6 +11,7 @@ import type {
   LinkNode,
   ListNode,
   ParagraphNode,
+  SectionNode,
   SmallNode,
   SpanNode,
   StrikethroughNode,
@@ -71,6 +73,32 @@ export function createParagraphNode<Children extends ASTNodes[]>(...children: Ch
     children,
     kind: ASTNodeKinds.Paragraph
   };
+}
+
+export function createSectionNode<Children extends ASTNodes[]>(children?: Children): SectionNode<Children>;
+export function createSectionNode<Children extends ASTNodes[]>(...children: Children): SectionNode<Children>;
+export function createSectionNode<Children extends ASTNodes[]>(type: EntityKind, children?: Children): SectionNode<Children>;
+export function createSectionNode<Children extends ASTNodes[]>(type: EntityKind, ...children: Children): SectionNode<Children>;
+export function createSectionNode<Children extends ASTNodes[]>(...typeOrChildren: Children | [type: EntityKind, ...children: Children]): SectionNode<Children> {
+
+  const separateTypeAndChildren = (typeOrChildren: Children | [type: EntityKind, ...children: Children]): [EntityKind | undefined, Children] => {
+    if(typeof typeOrChildren[0] === "string" && Object.values(EntityKind).includes(typeOrChildren[0] as EntityKind)){
+      const [type, ...children] = typeOrChildren as [EntityKind, ...Children];
+      return [type, children];
+    } else {
+      const [children] = typeOrChildren;
+      return [undefined, children] as [undefined, Children];
+    }
+  };
+
+  const [type, children] = separateTypeAndChildren(typeOrChildren);
+
+  return {
+    children,
+    kind: ASTNodeKinds.Section,
+    type
+  };
+
 }
 
 export function createSmallNode<Children extends ASTNodes[]>(children: Children): SmallNode<Children>;

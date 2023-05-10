@@ -1,3 +1,4 @@
+import type { EntityKind } from "unwritten:interpreter/enums/entities.ts";
 import type { Anchor } from "unwritten:renderer/markup/utils/linker.js";
 import type { ASTNodeKinds } from "unwritten:renderer:markup/enums/nodes.js";
 
@@ -10,6 +11,7 @@ export type ASTNodes =
   | LinkNode
   | ListNode
   | ParagraphNode
+  | SectionNode
   | SmallNode
   | SpanNode
   | StrikethroughNode
@@ -31,6 +33,11 @@ export interface ListNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTN
 
 export interface ParagraphNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Paragraph> {
   children: Children;
+}
+
+export interface SectionNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Section> {
+  children: Children;
+  type?: EntityKind;
 }
 
 export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title>, Anchor {

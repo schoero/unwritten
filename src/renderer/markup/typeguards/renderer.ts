@@ -8,6 +8,7 @@ import type {
   LinkNode,
   ListNode,
   ParagraphNode,
+  SectionNode,
   SmallNode,
   SpanNode,
   StrikethroughNode,
@@ -43,6 +44,11 @@ export function isListNode(node: ASTNodes): node is ListNode {
 export function isParagraphNode(node: ASTNodes): node is ParagraphNode {
   return typeof node === "object" && !Array.isArray(node) &&
      node.kind === ASTNodeKinds.Paragraph;
+}
+
+export function isSectionNode(node: ASTNodes): node is SectionNode {
+  return typeof node === "object" && !Array.isArray(node) &&
+     node.kind === ASTNodeKinds.Section;
 }
 
 export function isSmallNode(node: ASTNodes): node is SmallNode {

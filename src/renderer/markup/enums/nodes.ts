@@ -7,6 +7,7 @@ export enum ASTNodeKinds {
   List = "List",
   ListItem = "ListItem",
   Paragraph = "Paragraph",
+  Section = "Section",
   Small = "Small",
   Span = "Span",
   Strikethrough = "Strikethrough",

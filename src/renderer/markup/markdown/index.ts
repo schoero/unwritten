@@ -1,4 +1,5 @@
 /* eslint-disable arrow-body-style */
+import { renderSectionNode } from "unwritten:renderer/markup/markdown/ast/section.js";
 import { renderSpanNode } from "unwritten:renderer/markup/markdown/ast/span.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderListNode } from "unwritten:renderer:markdown/ast/list.js";
@@ -17,6 +18,7 @@ import {
   isLinkNode,
   isListNode,
   isParagraphNode,
+  isSectionNode,
   isSmallNode,
   isSpanNode,
   isStrikethroughNode,
@@ -88,6 +90,8 @@ export function renderNode(ctx: MarkdownRenderContext, node: ASTNodes): string {
     return renderTitleNode(ctx, node);
   } else if(isSpanNode(node)){
     return renderSpanNode(ctx, node);
+  } else if(isSectionNode(node)){
+    return renderSectionNode(ctx, node);
   } else {
     if(Array.isArray(node)){
       return node.map(n => renderNode(ctx, n)).join("");
