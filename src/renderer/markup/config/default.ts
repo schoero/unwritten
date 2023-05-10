@@ -69,7 +69,7 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     "remarks_other": "remarks",
     "required": "required",
     "rest": "rest",
-    "returns": "returns",
+    "return-type": "return type",
     "setter_one": "setter",
     "setter_other": "setters",
     "static": "static",

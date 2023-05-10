@@ -141,7 +141,7 @@ function convertReturnType(ctx: MarkupRenderContexts, signatureEntity: Signature
   );
 
   return createTitleNode(
-    t("returns"),
+    t("return-type"),
     convertedReturnTypeWithDescription
   );
 

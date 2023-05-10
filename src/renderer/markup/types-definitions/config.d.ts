@@ -83,7 +83,7 @@ export interface MarkupRenderConfig {
     remarks_other?: string;
     required?: string;
     rest?: string;
-    returns?: string;
+    "return-type"?: string;
     setter_one?: string;
     setter_other?: string;
     static?: string;
