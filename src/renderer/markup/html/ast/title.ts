@@ -27,6 +27,8 @@ export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): s
   return [
     renderedTitle,
     ...renderedChildren
-  ].join(renderNewLine(ctx));
+  ]
+    .filter(renderedNode => !!renderedNode)
+    .join(renderNewLine(ctx));
 
 }

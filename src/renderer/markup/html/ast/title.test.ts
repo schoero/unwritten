@@ -64,6 +64,23 @@ scope("MarkupRenderer", "TitleNode", () => {
 
   });
 
+  it("should filter out empty strings", () => {
+
+    const titleNode = createTitleNode(
+      "Title",
+      createParagraphNode("Paragraph"),
+      "",
+      createParagraphNode("Paragraph2")
+    );
+
+    expect(renderTitleNode(ctx, titleNode)).to.equal(html`
+      <h1>Title</h1>
+      <p>Paragraph</p>
+      <p>Paragraph2</p>
+    `);
+
+  });
+
   it("should render an id if the title has an anchor", () => {
 
     const anchor = registerAnchor(ctx, "title", 0);
