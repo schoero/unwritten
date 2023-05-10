@@ -1,3 +1,4 @@
+import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
 import {
   createClassEntity,
   createEnumEntity,
@@ -133,12 +134,21 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Export
     return createTypeAliasEntity(ctx, resolvedSymbol);
   } else if(isEnumSymbol(resolvedSymbol)){
     return createEnumEntity(ctx, resolvedSymbol);
-  } else if(isNamespaceSymbol(symbol)){
+  } else if(isNamespaceSymbol(resolvedSymbol)){
     return createNamespaceEntity(ctx, resolvedSymbol);
-  } else if(isModuleSymbol(symbol)){
+  } else if(isModuleSymbol(resolvedSymbol)){
     return createModuleEntity(ctx, resolvedSymbol);
   } else {
-    throw new RangeError(`Symbol ${getNameBySymbol(ctx, resolvedSymbol)} is not exportable`);
+    const name = getNameBySymbol(ctx, resolvedSymbol);
+    const formattedName = name ? `"${name}"` : "";
+    const position = getPositionBySymbol(ctx, resolvedSymbol);
+    const formattedPosition = position ? `at ${position.file}:${position.line}:${position.column}` : "";
+    throw new RangeError([
+      "Symbol",
+      formattedName,
+      formattedPosition,
+      "is not exportable"
+    ].join(" "));
   }
 
 }
