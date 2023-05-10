@@ -25,13 +25,17 @@ export module logger {
 
 
   process.on("uncaughtException", err => {
-    println(`${_bgRed}${_bold} ERROR ${_reset} ${red([
+
+    const stackOnly = err.stack?.replace(`${err.name}: ${err.message}`, "");
+
+    println(`${EOL}${_bgRed}${_bold} ${err.name} ${_reset} ${red([
       err.message,
       err.cause,
-      err.stack
+      stackOnly
     ].filter(message => !!message)
       .join(EOL))}`);
     process.exit(1);
+
   });
 
 
@@ -46,7 +50,7 @@ export module logger {
 
 
   export function info(message: string): void {
-    println(`${_bgCyan}${_bold} INFO ${_reset} ${cyan(message)}`);
+    println(`${_bgGreen}${_bold} INFO ${_reset} ${white(message)}`);
   }
 
 

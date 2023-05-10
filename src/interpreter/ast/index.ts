@@ -138,7 +138,7 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Export
   } else if(isModuleSymbol(symbol)){
     return createModuleEntity(ctx, resolvedSymbol);
   } else {
-    throw new Error(`Symbol ${getNameBySymbol(ctx, resolvedSymbol)} is not exportable`);
+    throw new RangeError(`Symbol ${getNameBySymbol(ctx, resolvedSymbol)} is not exportable`);
   }
 
 }
