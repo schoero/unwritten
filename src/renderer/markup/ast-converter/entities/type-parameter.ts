@@ -1,5 +1,5 @@
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { createListNode, createSpanNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getRenderConfig } from "unwritten:renderer:markup/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
@@ -71,7 +71,7 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
     )
     : "";
 
-  const anchor = createAnchor(typeParameterEntity.name, typeParameterEntity.symbolId);
+  const anchor = registerAnchor(ctx, typeParameterEntity.name, typeParameterEntity.symbolId);
 
   return spaceBetween(
     createSpanNode(anchor, name),

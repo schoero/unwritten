@@ -4,7 +4,7 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
-import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 import {
   convertTypeParameterEntitiesForDocumentation,
@@ -49,7 +49,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
 
   const renderedSignature = renderNode(ctx, convertedSignature);
   const id = typeAliasEntity.symbolId;
-  const anchor = createAnchor(renderedSignature, id);
+  const anchor = registerAnchor(ctx, renderedSignature, id);
 
   return createTitleNode(
     renderedSignature,

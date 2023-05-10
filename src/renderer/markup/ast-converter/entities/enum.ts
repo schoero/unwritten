@@ -3,7 +3,7 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { createAnchorNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
@@ -27,7 +27,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const name = enumEntity.name;
   const id = enumEntity.symbolId;
 
-  const anchor = createAnchor(name, id);
+  const anchor = registerAnchor(ctx, name, id);
 
   const convertedDescription = convertDescription(ctx, enumEntity.description);
   const convertedRemarks = convertRemarks(ctx, enumEntity.remarks);

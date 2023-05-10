@@ -3,7 +3,7 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertFunctionLikeEntityForDocumentation,
   convertPropertyEntityForDocumentation,
@@ -38,7 +38,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const name = classEntity.name;
   const id = classEntity.symbolId;
 
-  const anchor = createAnchor(name, id);
+  const anchor = registerAnchor(ctx, name, id);
 
   const convertedPosition = convertPosition(ctx, classEntity.position);
   const convertedTags = convertTags(ctx, classEntity);

@@ -2,7 +2,7 @@ import { convertDescription } from "unwritten:renderer/markup/ast-converter/shar
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
@@ -37,7 +37,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const name = interfaceEntity.name;
   const id = interfaceEntity.symbolId;
 
-  const anchor = createAnchor(name, id);
+  const anchor = registerAnchor(ctx, name, id);
 
   const convertedTags = convertTags(ctx, interfaceEntity);
   const convertedDescription = convertDescription(ctx, interfaceEntity.description);

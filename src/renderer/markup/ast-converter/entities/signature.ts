@@ -5,7 +5,7 @@ import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/r
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { getRenderConfig } from "unwritten:renderer/markup/utils/config.js";
-import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
   convertParameterEntitiesForDocumentation,
@@ -56,7 +56,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const convertedRemarks = convertRemarks(ctx, signatureEntity.remarks);
 
   const renderedSignature = renderNode(ctx, convertedSignature);
-  const anchor = createAnchor(renderedSignature, id);
+  const anchor = registerAnchor(ctx, renderedSignature, id);
 
   return createTitleNode(
     convertedSignature,
@@ -141,7 +141,7 @@ function convertReturnType(ctx: MarkupRenderContexts, signatureEntity: Signature
   );
 
   return createTitleNode(
-    t("return-type"),
+    t("return-type", { capitalize: true }),
     convertedReturnTypeWithDescription
   );
 

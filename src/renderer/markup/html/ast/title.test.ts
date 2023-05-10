@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -58,6 +59,18 @@ scope("MarkupRenderer", "TitleNode", () => {
       <h2>Subtitle</h2>
       <p>Paragraph</p>
       <h2>Another Subtitle</h2>
+      <p>Paragraph</p>
+    `);
+
+  });
+
+  it("should render an id if the title has an anchor", () => {
+
+    const anchor = registerAnchor(ctx, "title", 0);
+    const titleNode = createTitleNode("Title", anchor, createParagraphNode("Paragraph"));
+
+    expect(renderTitleNode(ctx, titleNode)).to.equal(html`
+      <h1 id="title">Title</h1>
       <p>Paragraph</p>
     `);
 

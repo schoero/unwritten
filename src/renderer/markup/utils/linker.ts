@@ -32,7 +32,7 @@ export function createAnchor(name: Name, id: ID) {
 
 export function getAnchorLink(ctx: MarkupRenderContexts, anchor: Anchor): string | undefined {
 
-  if(!anchor.name || !anchor.id){
+  if(anchor.name === undefined || anchor.id === undefined){
     return;
   }
 
@@ -43,7 +43,7 @@ export function getAnchorLink(ctx: MarkupRenderContexts, anchor: Anchor): string
     return;
   }
 
-  const index = Array.from(ids).indexOf(anchor.id);
+  const index = ids.indexOf(anchor.id);
   const anchorText = convertTextToAnchorId(anchor.name);
   const anchorLink = `${anchorText}${index === 0 ? "" : `-${index}`}`;
 
@@ -62,32 +62,19 @@ export function isAnchor(input: any): input is Anchor {
     Object.keys(input).length === 2;
 }
 
-/**
- * Registers an anchor identifier for a symbol
- * @param ctx RenderContext
- * @param anchor Anchor
- * @modifies ctx.renderer.linkRegistry
- */
-export function registerAnchorIdentifier(ctx: MarkupRenderContexts, anchor: Anchor): void {
-
-  if(!anchor.name || !anchor.id){
-    return;
-  }
-
-  const { name, id } = anchor;
+export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): Anchor {
 
   const registry = getRegistry(ctx);
 
-  if(!registry.has(name)){
+  if(registry.has(name)){
+    const idArray = registry.get(name)!;
+    if(!idArray.includes(id)){
+      idArray.push(id);
+    }
+  } else {
     registry.set(name, [id]);
-    return;
   }
 
-  const idArray = registry.get(name) as ID[];
+  return createAnchor(name, id);
 
-  if(idArray.includes(id)){
-    return;
-  }
-
-  idArray.push(id);
 }

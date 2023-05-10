@@ -4,7 +4,7 @@ import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:utils/template.js";
 
-import { convertTextToAnchorId, createAnchor, getAnchorLink, registerAnchorIdentifier } from "./linker.js";
+import { convertTextToAnchorId, createAnchor, getAnchorLink, registerAnchor } from "./linker.js";
 
 
 scope("Renderer", "Render abstraction", () => {
@@ -66,7 +66,7 @@ scope("Renderer", "Render abstraction", () => {
           "test",
           1
         );
-        registerAnchorIdentifier(ctx, anchor);
+        registerAnchor(ctx, anchor.name, anchor.id);
         const anchorText = getAnchorLink(ctx, anchor);
         expect(anchorText).to.equal("test");
       });
@@ -76,7 +76,7 @@ scope("Renderer", "Render abstraction", () => {
           "test",
           2
         );
-        registerAnchorIdentifier(ctx, anchor);
+        registerAnchor(ctx, anchor.name, anchor.id);
         const anchorText = getAnchorLink(ctx, anchor);
         expect(anchorText).to.equal("test-1");
       });
@@ -86,7 +86,7 @@ scope("Renderer", "Render abstraction", () => {
           "test",
           2
         );
-        registerAnchorIdentifier(ctx, anchor);
+        registerAnchor(ctx, anchor.name, anchor.id);
         const anchorText = getAnchorLink(ctx, anchor);
         expect(anchorText).to.equal("test-1");
       });

@@ -4,7 +4,7 @@ import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertType, convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { createAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -32,7 +32,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   const name = propertyEntity.name;
   const id = propertyEntity.symbolId;
 
-  const anchor = createAnchor(name, id);
+  const anchor = registerAnchor(ctx, name, id);
 
   const convertedPosition = convertPosition(ctx, propertyEntity.position);
   const convertedTags = convertTags(ctx, propertyEntity);
