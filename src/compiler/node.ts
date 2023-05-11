@@ -128,7 +128,7 @@ function readConfigFile(ctx: DefaultContext, path: string): ts.CompilerOptions |
     return;
   }
 
-  ctx.logger?.info(`Use tsconfig.json found at ${path}`);
+  ctx.logger?.info(`Use tsconfig.json at ${path}`);
 
   const options = ts.parseJsonConfigFileContent(configFile.config, ts.sys, configFileBasePath).options;
   return options;

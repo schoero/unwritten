@@ -99,9 +99,9 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a matching return type", () => {
       assert(isTitleNode(returnType));
-      const renderedReturnType = renderNode(ctx, returnType.children[0]);
-      expect(renderedReturnType).to.match(/^void/);
-      expect(renderedReturnType).to.match(/Return type description$/);
+      assert(isParagraphNode(returnType.children[0]));
+      expect(returnType.children[0].children[0]).to.match(/^void/);
+      expect(returnType.children[0].children[0]).to.match(/Return type description$/);
     });
 
     it("should have a matching description", () => {

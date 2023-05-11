@@ -14,7 +14,12 @@ import {
   convertTypeParameterEntitiesForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import {
+  createAnchorNode,
+  createParagraphNode,
+  createSectionNode,
+  createTitleNode
+} from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { SignatureEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -138,9 +143,11 @@ function convertReturnType(ctx: MarkupRenderContexts, signatureEntity: Signature
 
   const convertedReturnType = convertTypeInline(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
-  const convertedReturnTypeWithDescription = spaceBetween(
-    convertedReturnType,
-    returnDescription
+  const convertedReturnTypeWithDescription = createParagraphNode(
+    spaceBetween(
+      convertedReturnType,
+      returnDescription
+    )
   );
 
   return createTitleNode(
