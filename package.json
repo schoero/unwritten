@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@schoero/cspell-config": "^1.6.14",
-    "@schoero/eslint-config": "^1.38.3",
+    "@schoero/eslint-config": "^1.38.4",
     "@schoero/markdownlint-config": "^1.1.6",
     "@schoero/ts-config": "^0.3.2",
     "@schoero/vite-config": "^0.0.21",
