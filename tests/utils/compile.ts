@@ -60,7 +60,7 @@ export function compile(code: string, compilerOptions?: ts.CompilerOptions, conf
 
   const ctx: InterpreterContext = {
     checker,
-    config: override(config ?? {}, getDefaultConfig())
+    config: override(getDefaultConfig(), config)
   };
 
 

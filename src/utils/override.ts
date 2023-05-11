@@ -3,7 +3,11 @@ type AnyObject = {
 };
 
 
-export function override<Original extends AnyObject, Overrides extends AnyObject>(original: Original, overrides: Overrides): Original & Overrides {
+export function override<Original extends AnyObject, Overrides extends AnyObject>(original: Original, overrides?: Overrides): Original & Overrides {
+
+  if(overrides === undefined){
+    return original as Original & Overrides;
+  }
 
   const result: Original & Overrides = <Original & Overrides>{};
 
