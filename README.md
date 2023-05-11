@@ -25,7 +25,7 @@
     <img alt="Downloads" src="https://img.shields.io/github/stars/schoero/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
   </a>
   <a href="https://github.com/schoero/unwritten/actions?query=workflow%3ACI">
-    <img alt="CI" src="https://img.shields.io/github/workflow/status/schoero/unwritten/CI?labelColor=454c5c&color=00AD51&&style=flat-square">
+    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/schoero/unwritten/ci.yml?branch=main&labelColor=454c5c&color=00AD51&&style=flat-square">
   </a>
 </div>
 
