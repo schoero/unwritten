@@ -51,7 +51,6 @@ export function isExcluded(path: string, name: string = "*", excludedPaths: Inte
           return excludedFromPreviousName;
         }
 
-        // eslint-disable-next-line unicorn/no-useless-undefined
       }, undefined);
 
       if(excludedFromName === undefined){
