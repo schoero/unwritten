@@ -4,6 +4,7 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
@@ -64,7 +65,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const anchor = registerAnchor(ctx, renderedSignature, id);
 
   return createSectionNode(
-    signatureEntity.kind,
+    SECTION_TYPE[signatureEntity.kind],
     createTitleNode(
       convertedSignature,
       anchor,

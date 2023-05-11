@@ -18,7 +18,7 @@ import {
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createListNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
 import {
   isClassEntity,
@@ -96,8 +96,8 @@ export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: Exportab
 
   const ast = createTitleNode(
     "API Documentation",
-    ...tableOfContents,
-    ...documentation
+    createSectionNode("table-of-contents", ...tableOfContents),
+    createSectionNode("documentation", ...documentation)
   );
 
   return ast;

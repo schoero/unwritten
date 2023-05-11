@@ -2,6 +2,7 @@ import { assert, expect, it } from "vitest";
 
 import { createFunctionEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
@@ -47,7 +48,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a matching section type", () => {
       expect(isSectionNode(convertedSignatureForDocumentation)).to.equal(true);
-      expect(convertedSignatureForDocumentation.type).to.equal(EntityKind.Signature);
+      expect(convertedSignatureForDocumentation.type).to.equal(SECTION_TYPE[EntityKind.Signature]);
     });
 
     assert(isSectionNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a section");

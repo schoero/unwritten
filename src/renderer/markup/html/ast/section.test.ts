@@ -1,6 +1,7 @@
 import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { createParagraphNode, createSectionNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -28,9 +29,9 @@ scope("HTMLRenderer", "SectionNode", () => {
   });
 
   it("should add the type as a class name", () => {
-    const sectionNode = createSectionNode(EntityKind.Function, createParagraphNode("Section content"));
+    const sectionNode = createSectionNode(SECTION_TYPE[EntityKind.Function], createParagraphNode("Section content"));
     expect(renderSectionNode(ctx, sectionNode)).to.equal(html`
-      <section class="${EntityKind.Function}">
+      <section class="${SECTION_TYPE[EntityKind.Function]}">
         <p>Section content</p>
       </section>
     `);

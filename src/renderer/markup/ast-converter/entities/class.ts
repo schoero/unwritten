@@ -3,6 +3,7 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertFunctionLikeEntityForDocumentation,
@@ -59,7 +60,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const convertedGetters = getterEntities.map(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
 
   return createSectionNode(
-    classEntity.kind,
+    SECTION_TYPE[classEntity.kind],
     createTitleNode(
       name,
       anchor,

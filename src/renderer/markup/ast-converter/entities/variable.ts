@@ -3,6 +3,7 @@ import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/e
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
@@ -37,7 +38,7 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
   const convertedType = convertType(ctx, variableEntity.type);
 
   return createSectionNode(
-    variableEntity.kind,
+    SECTION_TYPE[variableEntity.kind],
     createTitleNode(
       name,
       anchor,

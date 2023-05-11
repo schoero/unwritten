@@ -3,6 +3,7 @@ import { convertDescription } from "unwritten:renderer/markup/ast-converter/shar
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
@@ -52,7 +53,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const anchor = registerAnchor(ctx, renderedSignature, id);
 
   return createSectionNode(
-    typeAliasEntity.kind,
+    SECTION_TYPE[typeAliasEntity.kind],
     createTitleNode(
       renderedSignature,
       anchor,

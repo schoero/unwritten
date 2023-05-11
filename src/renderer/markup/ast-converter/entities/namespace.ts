@@ -2,6 +2,7 @@ import { convertDescription } from "unwritten:renderer/markup/ast-converter/shar
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertEntityForDocumentation,
@@ -49,7 +50,7 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
   const children = namespaceEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
 
   return createSectionNode(
-    namespaceEntity.kind,
+    SECTION_TYPE[namespaceEntity.kind],
     createTitleNode(
       name,
       anchor,
