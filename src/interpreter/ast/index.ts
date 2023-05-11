@@ -30,6 +30,7 @@ import {
   createIntersectionType,
   createLinkToType,
   createMappedTypeByTypeNode,
+  createMapType,
   createNeverType,
   createNullType,
   createNumberLiteralType,
@@ -88,6 +89,7 @@ import {
   isIndexedAccessType,
   isInterfaceType,
   isIntersectionType,
+  isMapType,
   isNeverType,
   isNullType,
   isNumberLiteralType,
@@ -283,6 +285,8 @@ export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType)
     return createArrayType(ctx, type);
   } else if(isSetType(type)){
     return createSetType(ctx, type);
+  } else if(isMapType(type)){
+    return createMapType(ctx, type);
   }
 
   return createObjectLikeType(ctx, type);

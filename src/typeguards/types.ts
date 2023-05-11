@@ -15,6 +15,7 @@ import type {
   IntersectionType,
   LiteralTypes,
   MappedType,
+  MapType,
   NeverType,
   NullType,
   NumberLiteralType,
@@ -91,6 +92,10 @@ export function isLiteralType(type: Types): type is LiteralTypes {
   isNumberLiteralType(type) ||
   isBooleanLiteralType(type) ||
   isBigIntLiteralType(type);
+}
+
+export function isMapType(type: Types): type is MapType {
+  return type.kind === TypeKind.Map;
 }
 
 export function isMappedType(type: Types): type is MappedType {

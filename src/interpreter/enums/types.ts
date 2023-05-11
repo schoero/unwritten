@@ -13,6 +13,7 @@ export enum TypeKind {
   IndexedAccess = "IndexedAccessType",
   Interface = "InterfaceType",
   Intersection = "IntersectionType",
+  Map = "MapType",
   Mapped = "MappedType",
   Never = "NeverType",
   Null = "NullType",
