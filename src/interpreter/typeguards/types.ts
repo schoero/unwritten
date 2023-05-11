@@ -157,6 +157,10 @@ export function isPrimitiveType(type: Type): boolean {
     isAnyType(type);
 }
 
+export function isSetType(type: Type): type is TypeReference {
+  return isTypeReferenceType(type) && type.symbol.getName() === "Set";
+}
+
 export function isStringLiteralType(type: Type): type is StringLiteralType {
   return (type.flags & ts.TypeFlags.StringLiteral) !== 0;
 }

@@ -29,6 +29,7 @@ export type Types =
   | MappedType
   | ObjectLikeTypes
   | PrimitiveTypes
+  | SetType
   | TemplateLiteralType
   | TupleType
   | TypeParameterType
@@ -221,6 +222,14 @@ export interface TemplateLiteralEntity extends Type<TypeKind.TemplateLiteral> {
   spans: string[];
   types: Types[];
   head?: string;
+}
+
+
+//-- Set
+
+export interface SetType extends Type<TypeKind.Set> {
+  type: Types;
+  position?: Position;
 }
 
 

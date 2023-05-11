@@ -18,6 +18,7 @@ export const defaultInterpreterConfig: Complete<InterpreterConfig> = {
       "Exclude",
       "Extract",
       "Omit",
+      "Set",
       "NonNullable",
       "Parameters",
       "ConstructorParameters",
