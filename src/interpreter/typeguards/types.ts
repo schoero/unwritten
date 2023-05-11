@@ -35,6 +35,11 @@ export function isAnyType(type: Type) {
   return (type.flags & ts.TypeFlags.Any) !== 0;
 }
 
+export function isArrayType(type: Type): type is TypeReference {
+  return isTypeReferenceType(type) &&
+    type.symbol.getName() === "Array" && type.typeArguments?.length === 1;
+}
+
 export function isArrayTypeReferenceType(type: Type): type is TypeReference {
   return isTypeReferenceType(type) && type.target.symbol.getName() === "Array" && type.target.typeParameters?.length === 1;
 }

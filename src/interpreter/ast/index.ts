@@ -13,6 +13,7 @@ import {
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import {
   createAnyType,
+  createArrayType,
   createArrayTypeByArrayTypeNode,
   createBigIntLiteralType,
   createBigIntType,
@@ -75,6 +76,7 @@ import {
 } from "unwritten:interpreter:typeguards/type-nodes.js";
 import {
   isAnyType,
+  isArrayType,
   isBigIntLiteralType,
   isBigIntType,
   isBooleanLiteralType,
@@ -275,6 +277,8 @@ export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType)
     return createInterfaceByType(ctx, type);
   } else if(isClassType(type)){
     return createClassType(ctx, type);
+  } else if(isArrayType(type)){
+    return createArrayType(ctx, type);
   }
 
   return createObjectLikeType(ctx, type);
