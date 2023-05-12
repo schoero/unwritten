@@ -21,8 +21,6 @@ export enum TypeKind {
   Object = "ObjectType",
   ObjectLiteral = "ObjectLiteralType",
   Parameter = "ParameterType",
-  Promise = "PromiseType",
-  Set = "SetType",
   String = "StringType",
   StringLiteral = "StringLiteralType",
   Symbol = "SymbolType",

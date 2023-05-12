@@ -105,6 +105,7 @@ import {
   isVoidType
 } from "unwritten:interpreter:typeguards/types.js";
 import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter:utils/ts.js";
+import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Declaration, ObjectType as TSObjectType, Symbol, Type, TypeNode } from "typescript";
@@ -279,6 +280,10 @@ export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType)
     return createClassType(ctx, type);
   } else if(isArrayType(type)){
     return createArrayType(ctx, type);
+  }
+
+  if(isSymbolExcluded(ctx, (type as TSObjectType).symbol)){
+    return createUnresolved(ctx, type);
   }
 
   return createObjectLikeType(ctx, type);
