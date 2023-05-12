@@ -256,6 +256,7 @@ export interface UnresolvedType extends Type<TypeKind.Unresolved> {
   name?: Name;
   position?: Position;
   symbolId?: ID;
+  typeArguments?: Types[];
 }
 
 

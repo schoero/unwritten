@@ -1,3 +1,5 @@
+import { interpretType } from "unwritten:interpreter/ast/index.js";
+import { isTypeReferenceType } from "unwritten:interpreter/typeguards/types.js";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
@@ -11,17 +13,23 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.d.js
 
 export function createUnresolvedType(ctx: InterpreterContext, type: Type): UnresolvedType {
 
+  const kind = TypeKind.Unresolved;
+
   const symbolId = getSymbolId(ctx, type.symbol);
   const typeId = getTypeId(ctx, type);
   const position = getPositionByType(ctx, type);
   const name = getNameByType(ctx, type);
-  const kind = TypeKind.Unresolved;
+
+  const typeArguments = isTypeReferenceType(type)
+    ? type.typeArguments?.map(typeArgument => interpretType(ctx, typeArgument))
+    : undefined;
 
   return {
     kind,
     name,
     position,
     symbolId,
+    typeArguments,
     typeId
   };
 
