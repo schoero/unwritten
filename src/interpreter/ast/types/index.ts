@@ -12,7 +12,6 @@ export * from "./function.js";
 export * from "./indexed-access.js";
 export * from "./interface.js";
 export * from "./intersection.js";
-export * from "./map.js";
 export * from "./mapped.js";
 export * from "./never.js";
 export * from "./null.js";

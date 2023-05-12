@@ -113,10 +113,6 @@ export function isLiteralType(type: Type): type is LiteralType {
   return (type.flags & (ts.TypeFlags.StringOrNumberLiteral | ts.TypeFlags.BigIntLiteral | ts.TypeFlags.BooleanLiteral)) !== 0;
 }
 
-export function isMapType(type: Type): type is TypeReference {
-  return isTypeReferenceType(type) && type.symbol.getName() === "Map";
-}
-
 export function isMappedType(type: Type): boolean {
   return isObjectType(type) && (type.objectFlags & ts.ObjectFlags.Mapped) !== 0;
 }

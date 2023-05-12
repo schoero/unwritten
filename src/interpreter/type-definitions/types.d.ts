@@ -27,7 +27,6 @@ export type Types =
   | IntersectionType
   | LiteralTypes
   | MappedType
-  | MapType
   | ObjectLikeTypes
   | PrimitiveTypes
   | SetType
@@ -230,15 +229,6 @@ export interface TemplateLiteralEntity extends Type<TypeKind.TemplateLiteral> {
 
 export interface SetType extends Type<TypeKind.Set> {
   type: Types;
-  position?: Position;
-}
-
-
-//-- Map
-
-export interface MapType extends Type<TypeKind.Map> {
-  keyType: Types;
-  valueType: Types;
   position?: Position;
 }
 
