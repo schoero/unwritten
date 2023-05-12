@@ -21,7 +21,6 @@ import type {
   NumberType,
   ObjectLiteralType,
   ObjectType,
-  SetType,
   StringLiteralType,
   StringType,
   SymbolType,
@@ -119,10 +118,6 @@ export function isObjectLiteralType(type: Types): type is ObjectLiteralType {
 
 export function isObjectType(type: Types): type is ObjectType {
   return type.kind === TypeKind.Object;
-}
-
-export function isSetType(type: Types): type is SetType {
-  return type.kind === TypeKind.Set;
 }
 
 export function isStringLiteralType(type: Types): type is StringLiteralType {

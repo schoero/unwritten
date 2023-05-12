@@ -36,7 +36,6 @@ import {
   createNumberType,
   createObjectLikeType,
   createObjectLiteralByType,
-  createSetType,
   createStringLiteralType,
   createStringType,
   createSymbolType,
@@ -94,7 +93,6 @@ import {
   isNumberType,
   isObjectLiteralType,
   isObjectType,
-  isSetType,
   isStringLiteralType,
   isStringType,
   isSymbolType,
@@ -281,8 +279,6 @@ export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType)
     return createClassType(ctx, type);
   } else if(isArrayType(type)){
     return createArrayType(ctx, type);
-  } else if(isSetType(type)){
-    return createSetType(ctx, type);
   }
 
   return createObjectLikeType(ctx, type);
