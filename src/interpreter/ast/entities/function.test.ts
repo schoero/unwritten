@@ -1,9 +1,12 @@
 import { expect, it } from "vitest";
 
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isUnresolvedType } from "unwritten:typeguards/types.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 import { createFunctionEntity } from "./function.js";
@@ -77,7 +80,7 @@ scope("Interpreter", EntityKind.Function, () => {
   {
 
     const testFileContent = ts`
-      export async function functionSymbol(): boolean {
+      export async function functionSymbol() {
         return true;
       }
     `;
@@ -89,6 +92,10 @@ scope("Interpreter", EntityKind.Function, () => {
 
     it("should be able to parse an async function", () => {
       expect(exportedFunction.kind).to.equal(EntityKind.Function);
+      expect(exportedFunction.signatures[0]?.modifiers).to.include("async");
+      assert(isUnresolvedType(exportedFunction.signatures[0]?.returnType));
+      expect(exportedFunction.signatures[0]?.returnType.typeArguments?.length).to.equal(1);
+      expect(exportedFunction.signatures[0]?.returnType.typeArguments?.[0].kind).to.equal(TypeKind.Boolean);
     });
 
   }
