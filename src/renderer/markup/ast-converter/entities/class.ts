@@ -69,11 +69,11 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
       convertedDescription,
       convertedRemarks,
       convertedExample,
-      createTitleNode(t("construct-signature", { count: convertedConstructSignatures?.length }), convertedConstructSignatures),
-      createTitleNode(t("property", { count: convertedProperties.length }), convertedProperties),
-      createTitleNode(t("method", { count: convertedMethods.length }), convertedMethods),
-      createTitleNode(t("setter", { count: convertedSetters.length }), convertedSetters),
-      createTitleNode(t("getter", { count: convertedGetters.length }), convertedGetters)
+      createTitleNode(t("construct-signature", { capitalizeEach: true, count: convertedConstructSignatures?.length }), convertedConstructSignatures),
+      createTitleNode(t("property", { capitalize: true, count: convertedProperties.length }), convertedProperties),
+      createTitleNode(t("method", { capitalize: true, count: convertedMethods.length }), convertedMethods),
+      createTitleNode(t("setter", { capitalize: true, count: convertedSetters.length }), convertedSetters),
+      createTitleNode(t("getter", { capitalize: true, count: convertedGetters.length }), convertedGetters)
     )
   );
 

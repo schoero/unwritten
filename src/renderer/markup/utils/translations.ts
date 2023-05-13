@@ -8,6 +8,7 @@ import type { Complete, TranslationWithoutSuffixes } from "unwritten:type-defini
 
 interface TranslationOptions {
   capitalize?: boolean;
+  capitalizeEach?: boolean;
   count?: number;
 }
 
@@ -34,6 +35,11 @@ function translate(ctx: MarkupRenderContexts, key: keyof TranslationWithoutSuffi
 
   if(options?.capitalize){
     return capitalize(translation);
+  }if(options?.capitalizeEach){
+    return translation
+      .split(" ")
+      .map(capitalize)
+      .join(" ");
   } else {
     return translation;
   }

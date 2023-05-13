@@ -70,12 +70,12 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
       convertedDescription,
       convertedRemarks,
       convertedExample,
-      createTitleNode(translate("construct-signature", { count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
-      createTitleNode(translate("call-signature", { count: convertedCallSignatures.length }), ...convertedCallSignatures),
-      createTitleNode(translate("property", { count: convertedProperties.length }), ...convertedProperties),
-      createTitleNode(translate("method", { count: convertedMethods.length }), ...convertedMethods),
-      createTitleNode(translate("setter", { count: convertedSetters.length }), ...convertedSetters),
-      createTitleNode(translate("getter", { count: convertedGetters.length }), ...convertedGetters)
+      createTitleNode(translate("construct-signature", { capitalizeEach: true, count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
+      createTitleNode(translate("call-signature", { capitalize: true, count: convertedCallSignatures.length }), ...convertedCallSignatures),
+      createTitleNode(translate("property", { capitalize: true, count: convertedProperties.length }), ...convertedProperties),
+      createTitleNode(translate("method", { capitalize: true, count: convertedMethods.length }), ...convertedMethods),
+      createTitleNode(translate("setter", { capitalize: true, count: convertedSetters.length }), ...convertedSetters),
+      createTitleNode(translate("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters)
     )
   );
 
