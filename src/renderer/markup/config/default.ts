@@ -95,5 +95,6 @@ export const defaultMarkdownRenderConfig: Complete<MarkdownRenderConfig> = {
 
 export const defaultHTMLRenderConfig: Complete<HTMLRenderConfig> = {
   ...defaultRenderConfig,
+  sidebar: false,
   typeEncapsulation: ["<code>", "</code>"]
 };

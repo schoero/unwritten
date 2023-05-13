@@ -114,7 +114,8 @@ export interface MarkdownRenderConfig extends MarkupRenderConfig {
 }
 
 export interface HTMLRenderConfig extends MarkupRenderConfig {
-
+  /** Renders the table of contents in an aside element and the documentation in a main element. */
+  sidebar?: boolean;
 }
 
 export type Encapsulation = [prefix: string, suffix: string];
