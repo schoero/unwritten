@@ -1,4 +1,5 @@
 import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line.js";
+import { minMax } from "unwritten:renderer/markup/utils/renderer.js";
 import { renderNode } from "unwritten:renderer:markdown/index.js";
 import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
 
@@ -8,19 +9,19 @@ import type { TitleNode } from "unwritten:renderer:markup/types-definitions/node
 
 export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode): string {
 
-  if(titleNode.children.length === 0){
-    return "";
-  }
-
   const title = renderNode(ctx, titleNode.title);
-  const size = ctx.size;
+  const size = minMax(ctx.nesting, 1, 6);
 
   const renderedEmptyLine = renderEmptyLine(ctx);
   const renderedTitle = `${"#".repeat(size)} ${title}`;
 
-  ctx.size++;
+  ctx.nesting++;
   const renderedChildren = titleNode.children.map(child => renderNode(ctx, child));
-  ctx.size--;
+  ctx.nesting--;
+
+  if(renderedChildren.length === 0){
+    return "";
+  }
 
   const childrenBeginsWithEmptyLine = renderedChildren[0]?.startsWith(renderedEmptyLine);
 

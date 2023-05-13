@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { nodeFilter } from "unwritten:renderer:markup/utils/renderer.js";
+import { minMax, nodeFilter } from "unwritten:renderer:markup/utils/renderer.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
-scope("Renderer", "Render abstraction", () => {
+scope("Renderer", "utils", () => {
 
   describe("nodeFilter", () => {
 
@@ -19,6 +19,22 @@ scope("Renderer", "Render abstraction", () => {
       const filteredNodes = testNodes.filter(nodeFilter);
       expect(filteredNodes).to.have.lengthOf(1);
       expect(filteredNodes[0]).to.equal("element");
+    });
+
+  });
+
+  describe("minMax", () => {
+
+    it("should return the min value if the value is smaller than the min value", () => {
+      expect(minMax(-1, 0, 10)).to.equal(0);
+    });
+
+    it("should return the max value if the value is bigger than the max value", () => {
+      expect(minMax(11, 0, 10)).to.equal(10);
+    });
+
+    it("should return the value if the value is between the min and max value", () => {
+      expect(minMax(7, 0, 10)).to.equal(7);
     });
 
   });

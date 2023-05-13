@@ -41,6 +41,10 @@ export function getCategoryName(entityKind: ExportableEntityKinds): keyof Transl
   }
 }
 
+export function minMax(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
+
 export function nodeFilter(node: ASTNodes) {
   return node !== "";
 }
