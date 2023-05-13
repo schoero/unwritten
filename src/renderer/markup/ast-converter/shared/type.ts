@@ -29,6 +29,7 @@ import {
   convertUndefinedType,
   convertUnionType,
   convertUnknownType,
+  convertUnresolvedType,
   convertVoidType
 } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import {
@@ -60,6 +61,7 @@ import {
   isUndefinedType,
   isUnionType,
   isUnknownType,
+  isUnresolvedType,
   isVoidType
 } from "unwritten:typeguards/types.js";
 
@@ -143,6 +145,8 @@ export function convertTypeInline(ctx: MarkupRenderContexts, type: Types): Conve
     return convertObjectType(ctx, type);
   } else if(isTypeParameterType(type)){
     return convertTypeParameterType(ctx, type);
+  } else if(isUnresolvedType(type)){
+    return convertUnresolvedType(ctx, type);
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);

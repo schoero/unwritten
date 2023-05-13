@@ -27,4 +27,5 @@ export * from "./type-reference.js";
 export * from "./undefined.js";
 export * from "./union.js";
 export * from "./unknown.js";
+export * from "./unresolved.js";
 export * from "./void.js";
