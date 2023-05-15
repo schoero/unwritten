@@ -46,7 +46,7 @@ npm i unwritten
 ## Usage
 
 ```sh
-unwritten generate <path/to/entry-file.ts> [options]
+unwritten <path/to/entry-file.ts> [options]
 ```
 
 ## Options
