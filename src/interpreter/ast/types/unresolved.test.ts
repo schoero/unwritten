@@ -4,6 +4,7 @@ import { createFunctionEntity, createTypeAliasEntity } from "unwritten:interpret
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isNumberLiteralType, isUnionType, isUnresolvedType } from "unwritten:typeguards/types.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -83,11 +84,41 @@ scope("Interpreter", TypeKind.Unresolved, () => {
     const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "UnresolvedPromise")!;
     const exportedReferenceTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
 
-    it("should create an unresolved type reference for a Map with two type arguments", () => {
+    it("should create an unresolved type reference for a Promise", () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReferenceTypeAlias.type.type);
       expect(exportedReferenceTypeAlias.type.typeArguments).to.have.lengthOf(1);
       expect(exportedReferenceTypeAlias.type.type.kind).to.equal(TypeKind.Unresolved);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export function* generatorFunction() {
+        yield 1;
+        yield 2;
+        yield 3;
+      }
+    `;
+
+    const { exportedSymbols, ctx } = compile(testFileContent);
+
+    const exportedFunctionSymbol = exportedSymbols.find(s => s.name === "generatorFunction")!;
+    const exportedFunction = createFunctionEntity(ctx, exportedFunctionSymbol);
+
+    it("should create an unresolved type reference for a generator function", () => {
+      assert(isUnresolvedType(exportedFunction.signatures[0].returnType));
+      expect(exportedFunction.signatures[0].returnType.typeArguments?.length).to.equal(1 + 2);
+      assert(isUnionType(exportedFunction.signatures[0].returnType.typeArguments![0]));
+
+      assert(isNumberLiteralType(exportedFunction.signatures[0].returnType.typeArguments![0].types[0]));
+      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[0].value).to.equal(1);
+      assert(isNumberLiteralType(exportedFunction.signatures[0].returnType.typeArguments![0].types[1]));
+      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[1].value).to.equal(2);
+      assert(isNumberLiteralType(exportedFunction.signatures[0].returnType.typeArguments![0].types[2]));
+      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[2].value).to.equal(3);
     });
 
   }
