@@ -1,8 +1,7 @@
+import shebang from "rollup-plugin-preserve-shebang";
 import noBundlePlugin from "vite-plugin-no-bundle";
 
 import { config, defineConfig } from "@schoero/vite-config";
-
-import { vitePluginShebang } from "./src/utils/vite-plugin-shebang.js";
 
 
 export default defineConfig({
@@ -29,5 +28,5 @@ export default defineConfig({
     },
     target: "es6"
   },
-  plugins: [...config.plugins ?? [], noBundlePlugin(), vitePluginShebang()]
+  plugins: [...config.plugins ?? [], noBundlePlugin(), shebang()]
 });

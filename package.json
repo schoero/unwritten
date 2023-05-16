@@ -51,6 +51,7 @@
     "@types/minimatch": "^5.1.2",
     "@types/node": "^20.1.4",
     "eslint-plugin-sort-exports": "^0.8.0",
+    "rollup-plugin-preserve-shebang": "^1.0.1",
     "ts-json-schema-generator": "^1.2.0",
     "vite-plugin-no-bundle": "^2.0.2"
   },
