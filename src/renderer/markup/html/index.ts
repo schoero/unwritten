@@ -58,7 +58,7 @@ const htmlRenderer: HTMLRenderer = {
   render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
 
     ctx.indentation = 0;
-    ctx.size = 1;
+    ctx.nesting = 1;
 
     const markupAST = convertToMarkupAST(ctx, entities);
     return renderNode(ctx, markupAST);

@@ -13,8 +13,12 @@ export interface MarkupRenderer extends Renderer {
 }
 
 export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> extends RenderContext<CustomMarkupRenderer> {
-  indentation: number;
-  size: number;
+  get indentation(): number;
+  set indentation(value: number);
+  get nesting(): number;
+  set nesting(value: number);
+  _indentation?: number;
+  _nesting?: number;
 }
 
 export type MarkupRenderers = HTMLRenderer | MarkdownRenderer;

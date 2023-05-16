@@ -58,7 +58,7 @@ const markdownRenderer: MarkdownRenderer = {
   render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
 
     ctx.indentation = 0;
-    ctx.size = 1;
+    ctx.nesting = 1;
 
     const markupAST = convertToMarkupAST(ctx, entities);
 
