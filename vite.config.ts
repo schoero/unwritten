@@ -16,17 +16,15 @@ export default defineConfig({
     outDir: "lib",
     rollupOptions: {
       external: [
-        "cac",
-        "typescript",
-        "minimatch",
-        "node:path",
-        "node:fs",
-        "node:url",
-        "node:os",
-        "node:process"
+        /node_modules/,
+        /node:/
       ]
     },
     target: "es6"
   },
-  plugins: [...config.plugins ?? [], noBundlePlugin(), shebang()]
+  plugins: [
+    ...config.plugins ?? [],
+    noBundlePlugin(),
+    shebang()
+  ]
 });
