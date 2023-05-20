@@ -26,7 +26,7 @@ scope("Renderer", "utils", () => {
   describe("minMax", () => {
 
     it("should return the min value if the value is smaller than the min value", () => {
-      expect(minMax(-1, 0, 10)).to.equal(0);
+      expect(minMax(5, 7, 10)).to.equal(7);
     });
 
     it("should return the max value if the value is bigger than the max value", () => {

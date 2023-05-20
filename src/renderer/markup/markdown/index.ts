@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 import { renderSectionNode } from "unwritten:renderer/markup/markdown/ast/section.js";
 import { renderSpanNode } from "unwritten:renderer/markup/markdown/ast/span.js";
+import { minMax } from "unwritten:renderer/markup/utils/renderer.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderListNode } from "unwritten:renderer:markdown/ast/list.js";
 import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index.js";
@@ -56,15 +57,34 @@ const markdownRenderer: MarkdownRenderer = {
   name: BuiltInRenderers.Markdown,
 
   render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
-
-    ctx.indentation = 0;
-    ctx.nesting = 1;
-
+    markdownRenderer.initializeContext(ctx);
     const markupAST = convertToMarkupAST(ctx, entities);
-
     return renderNode(ctx, markupAST);
+  }),
 
-  })
+
+  // eslint-disable-next-line sort-keys/sort-keys-fix
+  initializeContext: (ctx: MarkdownRenderContext) => {
+
+    Object.defineProperty(ctx, "nesting", {
+      get() {
+        return minMax(ctx._nesting ?? 1, 1, 6);
+      },
+      set(level: number) {
+        ctx._nesting = level;
+      }
+    });
+
+    Object.defineProperty(ctx, "indentation", {
+      get() {
+        return minMax(ctx._indentation ?? 0, 0, Infinity);
+      },
+      set(level: number) {
+        ctx._indentation = level;
+      }
+    });
+
+  }
 
 };
 
