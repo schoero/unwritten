@@ -18,7 +18,7 @@
   "bin": "./lib/bin/index.js",
   "scripts": {
     "build": "vite build",
-    "build:ci": "npm run build -- --noEmit",
+    "build:ci": "tsc -- --noEmit",
     "eslint": "eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml,.md ./",
     "eslint:ci": "npm run eslint -- --max-warnings 0",
     "eslint:fix": "npm run eslint -- --fix",
