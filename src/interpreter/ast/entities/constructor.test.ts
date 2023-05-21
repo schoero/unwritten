@@ -4,6 +4,8 @@ import { createClassEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isClassType } from "unwritten:typeguards/types.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -40,6 +42,11 @@ scope("Interpreter", EntityKind.Getter, () => {
 
     it("should have a matching constructor example", () => {
       expect(exportedClass.ctor!.signatures[0]!.example).to.equal("Constructor example");
+    });
+
+    it("should return the instance type of the class", () => {
+      assert(isClassType(exportedClass.ctor!.signatures[0]!.returnType));
+      expect(exportedClass.ctor!.signatures[0]!.returnType.symbolId).to.equal(exportedClass.symbolId);
     });
 
   }

@@ -8,9 +8,10 @@ export function createContext<CustomRenderer extends Renderer>(
   renderer: CustomRenderer,
   config: CompleteConfig
 ): RenderContext<CustomRenderer> {
-  return {
+  const ctx: RenderContext<CustomRenderer> = {
     config,
     renderer,
     ...defaultContext
   };
+  return ctx;
 }

@@ -154,6 +154,11 @@ export type ConvertedFunctionType =
 export type ConvertedTypeReferenceType = ASTNodes;
 
 
+//-- Type reference
+
+export type ConvertedUnresolvedType = ASTNodes;
+
+
 //-- Indexed access type
 
 export type ConvertedIndexedAccessType = ASTNodes;

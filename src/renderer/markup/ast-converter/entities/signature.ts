@@ -79,6 +79,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
       convertedExample
     )
   );
+
 }
 
 
@@ -152,7 +153,7 @@ function convertReturnType(ctx: MarkupRenderContexts, signatureEntity: Signature
   );
 
   return createTitleNode(
-    t("return-type", { capitalize: true }),
+    t("return-type", { capitalizeEach: true }),
     convertedReturnTypeWithDescription
   );
 

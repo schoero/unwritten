@@ -168,6 +168,7 @@ export interface ObjectLikeType<Kind extends ObjectLikeTypeKinds> extends Type<K
   setters: SetterEntity[];
   name?: Name;
   position?: Position;
+  symbolId?: ID;
 }
 
 

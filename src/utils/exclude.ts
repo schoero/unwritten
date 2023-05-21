@@ -70,6 +70,10 @@ function isDeclarationExcluded(ctx: InterpreterContext, declaration: Declaration
   const excludePaths = ctx.config.interpreterConfig.exclude;
   name ??= getNameByDeclaration(ctx, declaration);
 
+  if(name === undefined){
+    return false;
+  }
+
   return isExcluded(position.file, name, excludePaths);
 
 }

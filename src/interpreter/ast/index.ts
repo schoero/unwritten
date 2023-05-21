@@ -266,6 +266,12 @@ export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType)
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);
+  } else if(isArrayType(type)){
+    return createArrayType(ctx, type);
+  }
+
+  if(isSymbolExcluded(ctx, type.symbol)){
+    return createUnresolved(ctx, type);
   }
 
   if(isFunctionLikeType(type)){
@@ -278,12 +284,6 @@ export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType)
     return createInterfaceByType(ctx, type);
   } else if(isClassType(type)){
     return createClassType(ctx, type);
-  } else if(isArrayType(type)){
-    return createArrayType(ctx, type);
-  }
-
-  if(isSymbolExcluded(ctx, (type as TSObjectType).symbol)){
-    return createUnresolved(ctx, type);
   }
 
   return createObjectLikeType(ctx, type);

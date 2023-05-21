@@ -42,7 +42,7 @@ export function getCategoryName(entityKind: ExportableEntityKinds): keyof Transl
 }
 
 export function minMax(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value));
+  return Math.min(Math.max(value, min), max);
 }
 
 export function nodeFilter(node: ASTNodes) {
