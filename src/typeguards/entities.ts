@@ -5,6 +5,7 @@ import type {
   Entities,
   EnumEntity,
   ExportableEntities,
+  ExportAssignmentEntity,
   FunctionEntity,
   GetterEntity,
   InterfaceEntity,
@@ -25,6 +26,10 @@ export function isEnumEntity(entity: Entities): entity is EnumEntity {
   return entity.kind === EntityKind.Enum;
 }
 
+export function isExportAssignmentEntity(entity: Entities): entity is ExportAssignmentEntity {
+  return entity.kind === EntityKind.ExportAssignment;
+}
+
 export function isExportableEntity(entity: Entities): entity is ExportableEntities {
   return isClassEntity(entity) ||
     isEnumEntity(entity) ||
@@ -32,7 +37,8 @@ export function isExportableEntity(entity: Entities): entity is ExportableEntiti
     isInterfaceEntity(entity) ||
     isNamespaceEntity(entity) ||
     isTypeAliasEntity(entity) ||
-    isVariableEntity(entity);
+    isVariableEntity(entity) ||
+    isExportAssignmentEntity(entity);
 }
 
 export function isFunctionEntity(entity: Entities): entity is FunctionEntity {

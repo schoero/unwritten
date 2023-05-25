@@ -28,6 +28,7 @@ export type ExportableEntityKinds =
 export type ExportableEntities =
   | ClassEntity
   | EnumEntity
+  | ExportAssignmentEntity
   | FunctionEntity
   | InterfaceEntity
   | ModuleEntity
@@ -66,6 +67,7 @@ export type Entities =
   | ConstructorEntity
   | EnumEntity
   | EnumMemberEntity
+  | ExportAssignmentEntity
   | FunctionEntity
   | GetterEntity
   | InterfaceEntity
@@ -226,6 +228,14 @@ export interface TypeAliasEntity extends Entity<EntityKind.TypeAlias>, JSDocTags
 export interface MappedTypeMemberEntity extends Entity<EntityKind.MappedTypeMember> {
   keyType: LiteralTypes;
   valueType: Types;
+}
+
+
+//-- Export Assignment
+
+export interface ExportAssignmentEntity extends Entity<EntityKind.ExportAssignment> {
+  symbolId: ID;
+  type: Types;
 }
 
 

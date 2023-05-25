@@ -1,7 +1,10 @@
+import ts from "typescript";
+
 import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
 import {
   createClassEntity,
   createEnumEntity,
+  createExportAssignment,
   createFunctionEntity,
   createInterfaceEntity,
   createModuleEntity,
@@ -55,6 +58,7 @@ import {
 import {
   isClassSymbol,
   isEnumSymbol,
+  isExportAssignmentSymbol,
   isFunctionSymbol,
   isInterfaceSymbol,
   isModuleSymbol,
@@ -105,6 +109,7 @@ import {
   isVoidType
 } from "unwritten:interpreter:typeguards/types.js";
 import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter:utils/ts.js";
+import { getEnumFlagNames } from "unwritten:tests:utils/debug.js";
 import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
@@ -141,11 +146,19 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Export
     return createNamespaceEntity(ctx, resolvedSymbol);
   } else if(isModuleSymbol(resolvedSymbol)){
     return createModuleEntity(ctx, resolvedSymbol);
+  } else if(isExportAssignmentSymbol(resolvedSymbol)){
+    return createExportAssignment(ctx, resolvedSymbol);
   } else {
     const name = getNameBySymbol(ctx, resolvedSymbol);
     const formattedName = name ? `"${name}"` : "";
     const position = getPositionBySymbol(ctx, resolvedSymbol);
     const formattedPosition = position ? `at ${position.file}:${position.line}:${position.column}` : "";
+    console.error([
+      "Symbol",
+      formattedName,
+      formattedPosition,
+      "is not exportable"
+    ].join(" "), getEnumFlagNames(ts.SymbolFlags, resolvedSymbol.flags));
     throw new RangeError([
       "Symbol",
       formattedName,

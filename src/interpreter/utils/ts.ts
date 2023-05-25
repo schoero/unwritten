@@ -1,3 +1,4 @@
+import { getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
 import { isAliasedSymbol } from "unwritten:interpreter:typeguards/symbols.js";
 import * as locker from "unwritten:interpreter:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
@@ -27,10 +28,20 @@ export function getEntryFileSymbolFromProgram(ctx: InterpreterContext, program: 
 }
 
 
-export function getExportedSymbols(ctx: InterpreterContext, moduleSymbol: Symbol, exclude?: string[]) {
+export function getExportedSymbols(ctx: InterpreterContext, moduleSymbol: Symbol) {
   const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, moduleSymbol);
   const exportedSymbols = ctx.checker.getExportsOfModule(resolvedSymbol);
-  return exportedSymbols;
+
+  // Filter out default export if it was exported as a named export
+  const uniqueExportedSymbols = exportedSymbols.filter((symbol, index, symbols) => {
+    const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
+    return exportedSymbols.findIndex(otherSymbol => {
+      const resolvedOtherSymbol = resolveSymbolInCaseOfImport(ctx, otherSymbol);
+      return getSymbolId(ctx, resolvedOtherSymbol) === getSymbolId(ctx, resolvedSymbol);
+    }) === index;
+  });
+
+  return uniqueExportedSymbols;
 }
 
 

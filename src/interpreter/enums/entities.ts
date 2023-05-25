@@ -3,6 +3,7 @@ export enum EntityKind {
   Constructor = "ConstructorEntity",
   Enum = "EnumEntity",
   EnumMember = "EnumMemberEntity",
+  ExportAssignment = "ExportAssignmentEntity",
   Function = "FunctionEntity",
   Getter = "GetterEntity",
   Interface = "InterfaceEntity",

@@ -52,4 +52,51 @@ scope("Interpreter", EntityKind.SourceFile, () => {
 
   }
 
+  {
+
+    const testFileContent = ts`
+      export const test = "test";
+      export default test;
+    `;
+
+    const { fileSymbol, ctx } = compile(testFileContent);
+    const sourceFile = createSourceFileEntity(ctx, fileSymbol);
+
+    it("should filter out default exports if they are exported as named exports", () => {
+      expect(sourceFile.exports.length).to.equal(1);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      const test = "test";
+      export default test;
+    `;
+
+    const { fileSymbol, ctx } = compile(testFileContent);
+    const sourceFile = createSourceFileEntity(ctx, fileSymbol);
+
+    it("should not filter out default exports if they aren't exported as named exports", () => {
+      expect(sourceFile.exports.length).to.equal(1);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export default () => {};
+    `;
+
+    const { fileSymbol, ctx } = compile(testFileContent);
+    const sourceFile = createSourceFileEntity(ctx, fileSymbol);
+
+    it("should not filter out default exports if they aren't exported as named exports", () => {
+      expect(sourceFile.exports.length).to.equal(1);
+    });
+
+  }
+
 });

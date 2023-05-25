@@ -37,6 +37,10 @@ export function isEnumMemberDeclaration(declaration: Declaration): declaration i
   return ts.isEnumMember(declaration);
 }
 
+export function isExportAssignment(declaration: Declaration): declaration is ts.ExportAssignment {
+  return ts.isExportAssignment(declaration);
+}
+
 export function isFunctionDeclaration(declaration: Declaration): declaration is ts.FunctionDeclaration {
   return ts.isFunctionDeclaration(declaration);
 }

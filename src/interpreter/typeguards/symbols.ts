@@ -27,6 +27,11 @@ export function isEnumSymbol(symbol: ts.Symbol): boolean {
   return (symbol.getFlags() & ts.SymbolFlags.Enum) !== 0;
 }
 
+export function isExportAssignmentSymbol(symbol: ts.Symbol): boolean {
+  return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0 &&
+    symbol.valueDeclaration?.kind === ts.SyntaxKind.ExportAssignment;
+}
+
 export function isFunctionLikeSymbol(symbol: ts.Symbol): boolean {
   return isFunctionSymbol(symbol) ||
     isConstructorSymbol(symbol) ||

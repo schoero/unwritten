@@ -1,0 +1,50 @@
+import { expect, it } from "vitest";
+
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
+import { scope } from "unwritten:tests:utils/scope.js";
+import { isExportAssignmentEntity } from "unwritten:typeguards/entities.js";
+import { assert } from "unwritten:utils/general.js";
+import { ts } from "unwritten:utils/template.js";
+
+
+scope("Interpreter", "Export assignment", () => {
+
+  {
+
+    const testFileContent = ts`
+      export default () => {};
+    `;
+
+    const { fileSymbol, ctx } = compile(testFileContent);
+    const sourceFile = createSourceFileEntity(ctx, fileSymbol);
+
+    it("should be able to interpret esm export expressions", () => {
+      expect(sourceFile.exports.length).to.equal(1);
+      assert(isExportAssignmentEntity(sourceFile.exports[0]));
+      expect(sourceFile.exports[0].type.kind).to.equal(TypeKind.Function);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export default {
+        test: "test"
+      };
+    `;
+
+    const { fileSymbol, ctx } = compile(testFileContent);
+    const sourceFile = createSourceFileEntity(ctx, fileSymbol);
+
+    it("should be able to interpret esm export expressions", () => {
+      expect(sourceFile.exports.length).to.equal(1);
+      assert(isExportAssignmentEntity(sourceFile.exports[0]));
+      expect(sourceFile.exports[0].type.kind).to.equal(TypeKind.ObjectLiteral);
+    });
+
+  }
+
+});
