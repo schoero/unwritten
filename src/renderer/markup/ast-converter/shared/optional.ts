@@ -7,13 +7,13 @@ import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-defin
 import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 
 
-export function convertOptional(ctx: MarkupRenderContexts, entity: Optional): ASTNodes {
+export function convertOptional(ctx: MarkupRenderContexts, entity: Optional): ASTNodes[] {
 
   const t = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
   return entity.optional === true
-    ? encapsulate(t("optional"), renderConfig.tagEncapsulation)
-    : "";
+    ? [encapsulate(t("optional"), renderConfig.tagEncapsulation)]
+    : [];
 
 }

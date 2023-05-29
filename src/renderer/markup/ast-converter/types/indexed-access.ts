@@ -1,4 +1,4 @@
-import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { assert } from "unwritten:utils/general.js";
 import { txt } from "unwritten:utils/template.js";
 
@@ -11,5 +11,5 @@ export function convertIndexedAccessType(ctx: MarkupRenderContexts, indexedAcces
   assert(indexedAccessType.type, txt`
     Indexed access type does not have a valid type. Please report an issue with the type.
   `);
-  return convertTypeInline(ctx, indexedAccessType.type);
+  return convertTypeForType(ctx, indexedAccessType.type);
 }

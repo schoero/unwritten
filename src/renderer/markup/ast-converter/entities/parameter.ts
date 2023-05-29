@@ -1,4 +1,4 @@
-import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
@@ -8,7 +8,8 @@ import type { ParameterEntity } from "unwritten:interpreter:type-definitions/ent
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedParameterEntitiesForDocumentation,
-  ConvertedParameterEntitiesForSignature
+  ConvertedParameterEntitiesForSignature,
+  ConvertedParameterEntitiesForType
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -64,6 +65,23 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
 }
 
 
+export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForType {
+
+  const convertedParameters = parameterEntities?.map(
+    parameter => convertParameterEntityForDocumentation(ctx, parameter)
+  ) ?? [];
+
+  if(convertedParameters.length === 0){
+    return "";
+  }
+
+  return createListNode(
+    ...convertedParameters
+  );
+
+}
+
+
 function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity) {
 
   const renderConfig = getRenderConfig(ctx);
@@ -73,7 +91,7 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
 
   const type = parameterEntity.type
-    ? convertTypeInline(ctx, parameterEntity.type)
+    ? convertTypeForType(ctx, parameterEntity.type)
     : "";
 
   const rest = parameterEntity.rest === true
@@ -87,7 +105,7 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
   const initializer = parameterEntity.initializer !== undefined
     ? spaceBetween(
       `${translate("default", { capitalize: true })}:`,
-      convertTypeInline(ctx, parameterEntity.initializer)
+      convertTypeForType(ctx, parameterEntity.initializer)
     )
     : "";
 

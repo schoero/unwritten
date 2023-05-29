@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
-import { convertInterfaceType } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import { convertInterfaceTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -44,72 +44,55 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const type = typeAliasEntity.type.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertInterfaceType(ctx, type as InterfaceType);
+    const convertedType = convertInterfaceTypeMultiline(ctx, type as InterfaceType);
 
     const [
-      typeName,
-      members
-    ] = convertedType;
-
-    const [
-      constructSignature,
-      callSignature,
-      staticProp,
-      protectedProp,
-      prop,
-      funcProp,
-      method,
-      methodOverload,
-      setter,
-      getter
-    ] = members.children;
-
-    it("should have the right amount of members", () => {
-      expect(members.children.length).to.equal(10);
-    });
-
-    it("should have a matching type name", () => {
-      expect(typeName).to.equal("object");
-    });
+      constructSignatures,
+      callSignatures,
+      properties,
+      methods,
+      setters,
+      getters
+    ] = convertedType.children;
 
     it("should have a matching construct signature", () => {
-      expect(renderNode(ctx, constructSignature[0])).to.equal("new ()");
+      expect(constructSignatures.children.length).to.equal(1);
+      expect(renderNode(ctx, constructSignatures.children[0])).to.include("new ()");
     });
 
     it("should have a matching call signature", () => {
-      expect(renderNode(ctx, callSignature[0])).to.equal("()");
+      expect(callSignatures.children.length).to.equal(1);
+      expect(renderNode(ctx, callSignatures.children[0])).to.include("()");
     });
 
-    it("should have a matching static property", () => {
-      expect(renderNode(ctx, staticProp[0])).to.equal("staticProp");
+    it("should have a matching properties with matching modifiers", () => {
+      expect(properties.children.length).to.equal(4);
+      expect(renderNode(ctx, properties.children[0])).to.include("staticProp");
+      expect(renderNode(ctx, properties.children[0])).to.include("public");
+      expect(renderNode(ctx, properties.children[0])).to.include("static");
+      expect(renderNode(ctx, properties.children[1])).to.include("protectedProp");
+      expect(renderNode(ctx, properties.children[1])).to.include("protected");
+      expect(renderNode(ctx, properties.children[2])).to.include("prop");
+      expect(renderNode(ctx, properties.children[3])).to.include("funcProp");
+      expect(renderNode(ctx, properties.children[3])).to.include("function");
     });
 
-    it("should have a matching protected property", () => {
-      expect(renderNode(ctx, protectedProp[0])).to.equal("protectedProp");
-    });
-
-    it("should have a matching property", () => {
-      expect(renderNode(ctx, prop[0])).to.equal("prop");
-    });
-
-    it("should have a matching function property", () => {
-      expect(renderNode(ctx, funcProp[0])).to.equal("funcProp");
-    });
-
-    it("should have a matching method", () => {
-      expect(renderNode(ctx, method[0])).to.equal("method(a)");
-    });
-
-    it("should have a matching method overload", () => {
-      expect(renderNode(ctx, methodOverload[0])).to.equal("method(a)");
+    it("should have a matching method with an overload", () => {
+      expect(methods.children.length).to.equal(2);
+      expect(renderNode(ctx, methods.children[0])).to.include("method(a)");
+      expect(renderNode(ctx, methods.children[0])).to.include("number");
+      expect(renderNode(ctx, methods.children[1])).to.include("method(a)");
+      expect(renderNode(ctx, methods.children[1])).to.include("string");
     });
 
     it("should have a matching setter", () => {
-      expect(renderNode(ctx, setter[0])).to.equal("setter(value)");
+      expect(setters.children.length).to.equal(1);
+      expect(renderNode(ctx, setters.children[0])).to.include("setter(value)");
     });
 
     it("should have a matching getter", () => {
-      expect(renderNode(ctx, getter[0])).to.equal("getter()");
+      expect(getters.children.length).to.equal(1);
+      expect(renderNode(ctx, getters.children[0])).to.include("getter");
     });
 
   }

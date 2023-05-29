@@ -1,4 +1,4 @@
-import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
@@ -34,7 +34,7 @@ function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Types[])
   const renderConfig = getRenderConfig(ctx);
 
   const convertedTypeArguments = typeArguments.map((typeArgument, index) => {
-    const convertedTypeArgument = convertTypeInline(ctx, typeArgument);
+    const convertedTypeArgument = convertTypeForType(ctx, typeArgument);
     if(index === 0){
       return convertedTypeArgument;
     } else {

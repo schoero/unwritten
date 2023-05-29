@@ -59,6 +59,8 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     "module_other": "modules",
     "namespace_one": "namespace",
     "namespace_other": "namespaces",
+    "object_one": "object",
+    "object_other": "objects",
     "optional": "optional",
     "parameter_one": "parameter",
     "parameter_other": "parameters",

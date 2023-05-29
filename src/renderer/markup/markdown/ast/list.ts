@@ -31,10 +31,13 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
             items.push(renderListItem(ctx, buffer));
             buffer = [];
 
-            const renderedNode = renderNode(ctx, [
-              renderNewLine(ctx),
-              renderListNode(ctx, nestedItem)
-            ]);
+            const renderedListNode = renderListNode(ctx, nestedItem);
+            const renderedNode = renderedListNode === ""
+              ? ""
+              : renderNode(ctx, [
+                renderNewLine(ctx),
+                renderedListNode
+              ]);
 
             items.push(renderedNode);
             return [buffer, items];
@@ -100,7 +103,7 @@ function renderListItem(ctx: MarkdownRenderContext, content: ASTNodes): string {
   ctx.indentation--;
   const renderedListItem = renderedNode === ""
     ? renderedNode
-    : `${renderIndentation(ctx)}- ${renderNode(ctx, content)}`;
+    : `${renderIndentation(ctx)}- ${renderedNode}`;
   ctx.indentation++;
 
   return renderedListItem;

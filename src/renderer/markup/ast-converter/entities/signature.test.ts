@@ -1,7 +1,8 @@
 import { assert, expect, it } from "vitest";
 
-import { createFunctionEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { convertObjectTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
 import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import {
   convertSignatureEntityForDocumentation,
@@ -10,6 +11,7 @@ import {
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,
+  isListNode,
   isParagraphNode,
   isSectionNode,
   isSmallNode,
@@ -19,6 +21,8 @@ import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:utils/template.js";
+
+import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types.js";
 
 
 scope("MarkupRenderer", EntityKind.Signature, () => {
@@ -171,6 +175,126 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       remarks,
       example
     ] = titleNode.children;
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export const obj = {
+        /**
+         * Adds two numbers together
+         * @param a The first number
+         * @param b The second number
+         * @returns The sum of the two numbers
+         */
+        add(a: number, b: number): number {
+          return a + b;
+        }
+      };
+    `;
+
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "obj")!;
+    const variableEntity = createVariableEntity(compilerContext, symbol);
+    const type = variableEntity.type;
+    const ctx = createRenderContext();
+
+    const convertedType = convertObjectTypeMultiline(ctx, type as ObjectLiteralType);
+
+    const [
+      constructSignatures,
+      callSignatures,
+      properties,
+      methods,
+      setters,
+      getters
+    ] = convertedType.children;
+
+    it("should have one method", () => {
+      expect(methods.children.length).to.equal(1);
+    });
+
+    it("should have a matching method signature", () => {
+      const renderedSignature = renderNode(ctx, methods.children[0][0]);
+      expect(renderedSignature).to.contain("add(a, b)");
+      expect(renderedSignature).to.contain("Adds two numbers together");
+    });
+
+    it("should not have type parameters", () => {
+      expect(methods.children[0][1]).to.equal("");
+    });
+
+    it("should have matching parameters", () => {
+      const renderedParameter = renderNode(ctx, methods.children[0][2]);
+
+      assert(isListNode(methods.children[0][2]));
+      expect(methods.children[0][2].children.length).to.equal(2);
+
+      expect(renderedParameter).to.contain("a");
+      expect(renderedParameter).to.contain("number");
+      expect(renderedParameter).to.contain("The first number");
+
+      expect(renderedParameter).to.contain("b");
+      expect(renderedParameter).to.contain("number");
+      expect(renderedParameter).to.contain("The second number");
+    });
+
+    it("should have a matching return type", () => {
+      const renderedReturnType = renderNode(ctx, methods.children[0][3]);
+      expect(renderedReturnType).to.contain("number");
+      expect(renderedReturnType).to.contain("The sum of the two numbers");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export const obj = {
+        /**
+         * @template T Type parameter description
+         */
+        test<T extends number>(param: T): T {
+          return param
+        }
+      };
+    `;
+
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "obj")!;
+    const variableEntity = createVariableEntity(compilerContext, symbol);
+    const type = variableEntity.type;
+    const ctx = createRenderContext();
+
+    const convertedType = convertObjectTypeMultiline(ctx, type as ObjectLiteralType);
+
+    const [
+      constructSignatures,
+      callSignatures,
+      properties,
+      methods,
+      setters,
+      getters
+    ] = convertedType.children;
+
+    it("should represent the type parameter in the signature", () => {
+      const renderedSignature = renderNode(ctx, methods.children[0][0]);
+      expect(renderedSignature).to.contain("test<T>(param)");
+    });
+
+    it("should have a matching type parameter", () => {
+      const renderedTypeParameter = renderNode(ctx, methods.children[0][1]);
+
+      assert(isListNode(methods.children[0][1]));
+      expect(methods.children[0][1].children.length).to.equal(1);
+
+      expect(renderedTypeParameter).to.contain("T");
+      expect(renderedTypeParameter).to.contain("number");
+      expect(renderedTypeParameter).to.contain("Type parameter description");
+    });
 
   }
 

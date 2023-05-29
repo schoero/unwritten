@@ -27,13 +27,16 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
 
         const renderedNestedItem = item
           .flat()
-          .map(nestedItem => {
+          .flatMap(nestedItem => {
             if(isListNode(nestedItem)){
               ctx.indentation++;
-              const renderedNode = renderNode(ctx, [
-                renderNewLine(ctx),
-                renderListNode(ctx, nestedItem)
-              ]);
+              const renderedListNode = renderListNode(ctx, nestedItem);
+              const renderedNode = renderedListNode === ""
+                ? ""
+                : [
+                  renderNewLine(ctx),
+                  renderedListNode
+                ];
               ctx.indentation--;
               return renderedNode;
             } else {
@@ -57,9 +60,13 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
           const renderedItems = [
             renderedCurrentItem,
             renderedNextItem
-          ].join(renderNewLine(ctx));
+          ].filter(item => !!item);
 
-          nestedListItems.push(renderMultilineListItem(ctx, renderedItems));
+          const renderedListItem = renderedItems.length > 1
+            ? renderMultilineListItem(ctx, renderedItems.join(renderNewLine(ctx)))
+            : renderListItem(ctx, renderedItems);
+
+          nestedListItems.push(renderedListItem);
 
           i++; // Skip the next item
           continue;
@@ -89,8 +96,7 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
     listStart,
     ...filteredListItems,
     listEnd
-  ].filter(item => !!item)
-    .join(renderNewLine(ctx));
+  ].join(renderNewLine(ctx));
 
 }
 
@@ -105,7 +111,7 @@ function renderListItem(ctx: HTMLRenderContext, content: ASTNodes): string {
   const renderedNode = renderNode(ctx, content);
   return renderedNode === ""
     ? renderedNode
-    : `${renderIndentation(ctx)}<li>${renderNode(ctx, content)}</li>`;
+    : `${renderIndentation(ctx)}<li>${renderedNode}</li>`;
 }
 
 function renderMultilineListItem(ctx: HTMLRenderContext, content: ASTNodes): string {

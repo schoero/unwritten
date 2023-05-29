@@ -1,8 +1,8 @@
-import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertDescriptionForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
-import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { convertTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
@@ -42,8 +42,8 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const anchor = registerAnchor(ctx, name, id);
 
   const convertedPosition = convertPosition(ctx, classEntity.position);
-  const convertedTags = convertTags(ctx, classEntity);
-  const convertedDescription = convertDescription(ctx, classEntity.description);
+  const convertedTags = convertTagsForDocumentation(ctx, classEntity);
+  const convertedDescription = convertDescriptionForDocumentation(ctx, classEntity.description);
   const convertedExample = convertExample(ctx, classEntity.example);
   const convertedRemarks = convertRemarks(ctx, classEntity.remarks);
 

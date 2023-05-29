@@ -39,6 +39,56 @@ scope("HTMLRenderer", "ListNode", () => {
     `);
   });
 
+  it("should not render lists containing only empty lists", () => {
+    const listNode = createListNode(
+      "Item 1",
+      createListNode(
+        [
+          "",
+          createListNode(
+            createListNode(
+              ""
+            )
+          )
+        ]
+      )
+    );
+    expect(renderListNode(ctx, listNode)).to.equal(html`
+      <ul>
+        <li>Item 1</li>
+      </ul>
+    `);
+  });
+
+  it.only("should collapse nested lists without siblings", () => {
+    const listNode = createListNode(
+      "Item 1",
+      createListNode(
+        [
+          createListNode(
+            ""
+          ),
+          createListNode(
+            createListNode(
+              "Item 2"
+            )
+          )
+        ]
+      )
+    );
+    const test = renderListNode(ctx, listNode);
+    expect(renderListNode(ctx, listNode)).to.equal(html`
+      <ul>
+        <li>Item 1</li>
+        <li>
+          <ul>
+            <li>Item 2</li>
+          </ul>
+        </li>
+      </ul>
+    `);
+  });
+
   it("should not render empty lists", () => {
     const listNode = createListNode(
       ""

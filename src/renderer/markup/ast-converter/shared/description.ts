@@ -2,11 +2,14 @@ import { createParagraphNode, createTitleNode } from "unwritten:renderer/markup/
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 
 import type { Description } from "unwritten:interpreter:type-definitions/shared.js";
-import type { ConvertedDescription } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type {
+  ConvertedDescriptionForDocumentation,
+  ConvertedDescriptionForType
+} from "unwritten:renderer/markup/types-definitions/renderer.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 
 
-export function convertDescription(ctx: MarkupRenderContexts, description: Description): ConvertedDescription {
+export function convertDescriptionForDocumentation(ctx: MarkupRenderContexts, description: Description): ConvertedDescriptionForDocumentation {
 
   const t = getTranslator(ctx);
 
@@ -16,4 +19,9 @@ export function convertDescription(ctx: MarkupRenderContexts, description: Descr
       createParagraphNode(description)
     )
     : "";
+}
+
+
+export function convertDescriptionForType(ctx: MarkupRenderContexts, description: Description): ConvertedDescriptionForType {
+  return description ?? "";
 }

@@ -8,8 +8,11 @@ import {
   convertBooleanLiteralType,
   convertBooleanType,
   convertClassType,
+  convertClassTypeMultiline,
   convertFunctionType,
+  convertFunctionTypeMultiline,
   convertInterfaceType,
+  convertInterfaceTypeMultiline,
   convertIntersectionType,
   convertMappedType,
   convertNeverType,
@@ -17,13 +20,16 @@ import {
   convertNumberLiteralType,
   convertNumberType,
   convertObjectLiteralType,
+  convertObjectLiteralTypeMultiline,
   convertObjectType,
+  convertObjectTypeMultiline,
   convertStringLiteralType,
   convertStringType,
   convertSymbolType,
   convertTemplateLiteralType,
   convertTupleType,
   convertTypeLiteralType,
+  convertTypeLiteralTypeMultiline,
   convertTypeParameterType,
   convertTypeReferenceType,
   convertUndefinedType,
@@ -65,16 +71,16 @@ import {
   isVoidType
 } from "unwritten:typeguards/types.js";
 
-import type { Types } from "unwritten:interpreter/type-definitions/types.js";
+import type { MultilineTypes, Types } from "unwritten:interpreter/type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ConvertedTypes } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { ConvertedTypes, ConvertedTypesMultiline } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTypes {
+export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Types): ConvertedTypes {
 
   const t = getTranslator(ctx);
 
-  const convertedType = convertTypeInline(ctx, type);
+  const convertedType = convertTypeForType(ctx, type);
 
   return convertedType
     ? createTitleNode(
@@ -85,7 +91,7 @@ export function convertType(ctx: MarkupRenderContexts, type: Types): ConvertedTy
 }
 
 
-export function convertTypeInline(ctx: MarkupRenderContexts, type: Types): ConvertedTypes {
+export function convertTypeForType(ctx: MarkupRenderContexts, type: Types): ConvertedTypes {
 
   if(isAnyType(type)){
     return convertAnyType(ctx, type);
@@ -150,5 +156,25 @@ export function convertTypeInline(ctx: MarkupRenderContexts, type: Types): Conve
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);
+
+}
+
+export function convertTypeForTypeMultiline(ctx: MarkupRenderContexts, type: MultilineTypes): ConvertedTypesMultiline {
+
+  if(isObjectType(type)){
+    return convertObjectTypeMultiline(ctx, type);
+  } else if(isObjectLiteralType(type)){
+    return convertObjectLiteralTypeMultiline(ctx, type);
+  } else if(isTypeLiteralType(type)){
+    return convertTypeLiteralTypeMultiline(ctx, type);
+  } else if(isInterfaceType(type)){
+    return convertInterfaceTypeMultiline(ctx, type);
+  } else if(isClassType(type)){
+    return convertClassTypeMultiline(ctx, type);
+  } else if(isFunctionType(type)){
+    return convertFunctionTypeMultiline(ctx, type);
+  }
+
+  throw new Error("Type is not yet implemented");
 
 }

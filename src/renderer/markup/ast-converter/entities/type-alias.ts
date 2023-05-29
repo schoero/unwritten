@@ -1,8 +1,8 @@
 import { renderNode } from "unwritten:renderer/index.js";
-import { convertDescription } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertDescriptionForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
-import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { convertTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
@@ -12,7 +12,7 @@ import {
   convertTypeParameterEntitiesForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -41,12 +41,12 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
 
   const convertedSignature = convertTypAliasSignature(ctx, typeAliasEntity);
   const convertedPosition = convertPosition(ctx, typeAliasEntity.position);
-  const convertedTags = convertTags(ctx, typeAliasEntity);
-  const convertedDescription = convertDescription(ctx, typeAliasEntity.description);
+  const convertedTags = convertTagsForDocumentation(ctx, typeAliasEntity);
+  const convertedDescription = convertDescriptionForDocumentation(ctx, typeAliasEntity.description);
   const convertedRemarks = convertRemarks(ctx, typeAliasEntity.remarks);
   const convertedExample = convertExample(ctx, typeAliasEntity.example);
   const convertedTypeParameterEntities = convertTypeParameterEntitiesForDocumentation(ctx, typeAliasEntity.typeParameters);
-  const convertedType = convertType(ctx, typeAliasEntity.type);
+  const convertedType = convertTypeForDocumentation(ctx, typeAliasEntity.type);
 
   const renderedSignature = renderNode(ctx, convertedSignature);
   const id = typeAliasEntity.symbolId;

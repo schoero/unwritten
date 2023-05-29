@@ -1,4 +1,4 @@
-import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { createListNode, createSpanNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
@@ -10,6 +10,7 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 import type {
   ConvertedTypeParameterEntitiesForDocumentation,
   ConvertedTypeParameterEntitiesForSignature,
+  ConvertedTypeParameterEntitiesForType,
   ConvertedTypeParameterEntityForDocumentation
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
@@ -52,6 +53,22 @@ export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderCo
 }
 
 
+export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContexts, typeParameterEntities: TypeParameterEntity[] | undefined): ConvertedTypeParameterEntitiesForType {
+
+  if(typeParameterEntities === undefined){
+    return "";
+  }
+
+  const convertedTypeParameters = typeParameterEntities.map(
+    typeParameter => convertTypeParameterEntityForDocumentation(ctx, typeParameter)
+  );
+
+  return createListNode(
+    ...convertedTypeParameters
+  );
+
+}
+
 export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity): ConvertedTypeParameterEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
@@ -61,13 +78,13 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
   const name = encapsulate(typeParameterEntity.name, renderConfig.typeParameterEncapsulation);
 
   const constraint = typeParameterEntity.constraint
-    ? convertTypeInline(ctx, typeParameterEntity.constraint)
+    ? convertTypeForType(ctx, typeParameterEntity.constraint)
     : "";
 
   const initializer = typeParameterEntity.initializer !== undefined
     ? spaceBetween(
       `${translate("default", { capitalize: true })}:`,
-      convertTypeInline(ctx, typeParameterEntity.initializer)
+      convertTypeForType(ctx, typeParameterEntity.initializer)
     )
     : "";
 

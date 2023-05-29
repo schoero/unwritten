@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { convertTags } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { convertTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
@@ -13,7 +13,7 @@ scope("MarkupRenderer", "Tags", () => {
   const ctx = createRenderContext();
 
   it("should render tags correctly", () => {
-    const convertedTags = convertTags(
+    const convertedTags = convertTagsForDocumentation(
       ctx,
       {
         beta: "",
@@ -31,7 +31,7 @@ scope("MarkupRenderer", "Tags", () => {
   });
 
   it("should not render empty tags", () => {
-    const convertedTags = convertTags(
+    const convertedTags = convertTagsForDocumentation(
       ctx,
       {} as PropertyEntity
     );

@@ -1,7 +1,12 @@
 import { expect, it } from "vitest";
 
-import { createClassEntity, createInterfaceEntity } from "unwritten:interpreter/ast/entities/index.js";
+import {
+  createClassEntity,
+  createInterfaceEntity,
+  createVariableEntity
+} from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { convertObjectLiteralTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
 import {
   convertPropertyEntityForDocumentation,
   convertPropertyEntityForSignature
@@ -18,6 +23,8 @@ import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
+
+import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types.js";
 
 
 scope("MarkupRenderer", EntityKind.Property, () => {
@@ -156,6 +163,49 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
     it("should render the native private modifier", () => {
       expect(modifiers[5]).to.include("private");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export const obj = {
+        /** Property description */
+        property: 7,
+        /** Method description */
+        method() {},
+        /** Function property description */
+        functionProperty: () => {},
+      };
+    `;
+
+    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "obj")!;
+    const variableEntity = createVariableEntity(compilerContext, symbol);
+    const type = variableEntity.type;
+    const ctx = createRenderContext();
+
+    const convertedType = convertObjectLiteralTypeMultiline(ctx, type as ObjectLiteralType);
+
+    const [
+      constructSignatures,
+      callSignatures,
+      properties,
+      methods,
+      setters,
+      getters
+    ] = convertedType.children;
+
+    it("should render the property name, type and description", () => {
+      expect(properties.children[0]).to.include("property");
+      expect(properties.children[0]).to.include("number");
+      expect(properties.children[0]).to.include("Property description");
+
+      expect(properties.children[1]).to.include("functionProperty");
+      expect(properties.children[1]).to.include("function");
+      expect(properties.children[1]).to.include("Function property description");
     });
 
   }

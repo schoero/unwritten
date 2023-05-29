@@ -1,9 +1,13 @@
+import { TypeKind } from "unwritten:interpreter/enums/types.js";
 import {
   convertFunctionLikeEntityForType,
   convertPropertyEntityForType,
   convertSignatureEntityForType
 } from "unwritten:renderer/markup/ast-converter/entities/index.js";
-import { createListNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createLinkNode, createListNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type {
   ClassType,
@@ -14,10 +18,45 @@ import type {
 } from "unwritten:interpreter:type-definitions/types.js";
 import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedObjectType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type {
+  ConvertedObjectType,
+  ConvertedObjectTypeMultiline
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertObjectType(ctx: MarkupRenderContexts, objectLikeType: ClassType | InterfaceType | ObjectLiteralType | ObjectType | TypeLiteralType): ConvertedObjectType {
+export function convertObjectType(
+  ctx: MarkupRenderContexts,
+  objectLikeType:
+  | ClassType
+  | InterfaceType
+  | ObjectLiteralType
+  | ObjectType
+  | TypeLiteralType
+): ConvertedObjectType {
+
+  const t = getTranslator(ctx);
+  const renderConfig = getRenderConfig(ctx);
+
+  const encapsulatedType = encapsulate(
+    t("object", { count: 1 }),
+    renderConfig.typeEncapsulation
+  );
+  return ctx.config.externalTypes[TypeKind.Object]
+    ? createLinkNode(encapsulatedType, ctx.config.externalTypes[TypeKind.Object])
+    : encapsulatedType;
+
+}
+
+
+export function convertObjectTypeMultiline(
+  ctx: MarkupRenderContexts,
+  objectLikeType:
+  | ClassType
+  | InterfaceType
+  | ObjectLiteralType
+  | ObjectType
+  | TypeLiteralType
+): ConvertedObjectTypeMultiline {
 
   const convertedConstructSignatures = objectLikeType.constructSignatures.map(
     constructSignature => {
@@ -53,12 +92,12 @@ export function convertObjectType(ctx: MarkupRenderContexts, objectLikeType: Cla
   );
 
   return createListNode(
-    ...convertedConstructSignatures,
-    ...convertedCallSignatures,
-    ...convertedProperties,
-    ...convertedMethods,
-    ...convertedSetters,
-    ...convertedGetters
+    createListNode(...convertedConstructSignatures),
+    createListNode(...convertedCallSignatures),
+    createListNode(...convertedProperties),
+    createListNode(...convertedMethods),
+    createListNode(...convertedSetters),
+    createListNode(...convertedGetters)
   );
 
 }

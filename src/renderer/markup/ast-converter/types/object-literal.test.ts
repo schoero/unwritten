@@ -2,8 +2,7 @@ import { expect, it } from "vitest";
 
 import { createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertObjectLiteralType } from "unwritten:renderer/markup/ast-converter/types/index.js";
-import { renderNode } from "unwritten:renderer/markup/html/index.js";
+import { convertObjectLiteralTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -33,47 +32,31 @@ scope("MarkupRenderer", TypeKind.ObjectLiteral, () => {
     const type = variableEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertObjectLiteralType(ctx, type as ObjectLiteralType);
+    const convertedType = convertObjectLiteralTypeMultiline(ctx, type as ObjectLiteralType);
 
     const [
-      typeName,
-      members
-    ] = convertedType;
-
-    const [
-      prop,
-      funcProp,
-      method,
+      constructSignatures,
+      callSignatures,
+      properties,
+      methods,
       setters,
-      getter
-    ] = members.children;
+      getters
+    ] = convertedType.children;
 
-    it("should have a matching type name", () => {
-      expect(typeName).to.equal("object");
+    it("should have two properties", () => {
+      expect(properties.children.length).to.equal(2);
     });
 
-    it("should have the right amount of members", () => {
-      expect(members.children).to.have.lengthOf(5);
+    it("should have one method", () => {
+      expect(methods.children.length).to.equal(1);
     });
 
-    it("should have a matching property", () => {
-      expect(renderNode(ctx, prop[0])).to.equal("prop");
+    it("should have one getter", () => {
+      expect(getters.children.length).to.equal(1);
     });
 
-    it("should have a matching function property", () => {
-      expect(renderNode(ctx, funcProp[0])).to.equal("funcProp");
-    });
-
-    it("should have a matching method", () => {
-      expect(renderNode(ctx, method[0])).to.equal("method()");
-    });
-
-    it("should have a matching setter", () => {
-      expect(renderNode(ctx, setters[0])).to.equal("setter(value)");
-    });
-
-    it("should have a matching getter", () => {
-      expect(renderNode(ctx, getter[0])).to.equal("getter()");
+    it("should have one setter", () => {
+      expect(setters.children.length).to.equal(1);
     });
 
   }

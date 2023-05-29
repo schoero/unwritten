@@ -73,6 +73,8 @@ export interface MarkupRenderConfig {
     module_other?: string;
     namespace_one?: string;
     namespace_other?: string;
+    object_one?: string;
+    object_other?: string;
     optional?: string;
     parameter_one?: string;
     parameter_other?: string;

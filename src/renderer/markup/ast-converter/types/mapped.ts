@@ -1,4 +1,4 @@
-import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
@@ -24,7 +24,7 @@ export function convertMappedType(ctx: MarkupRenderContexts, mappedType: MappedT
 
   const convertedProperties = mappedType.properties.map(propertyEntity => {
     const name = propertyEntity.name;
-    const type = convertTypeInline(ctx, propertyEntity.type);
+    const type = convertTypeForType(ctx, propertyEntity.type);
     return spaceBetween(name, type, readonly, optional);
   });
 

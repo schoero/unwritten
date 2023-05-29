@@ -43,6 +43,23 @@ scope("MarkdownRenderer", "ListNode", () => {
     expect(renderListNode(ctx, listNode)).to.equal("");
   });
 
+  it("should not render lists containing only empty lists", () => {
+    const listNode = createListNode(
+      "Item 1",
+      createListNode(
+        [
+          "",
+          createListNode(
+            ""
+          )
+        ]
+      )
+    );
+    expect(renderListNode(ctx, listNode)).to.equal(md`
+      - Item 1
+    `);
+  });
+
   it("should render nested lists correctly", () => {
     const listNode = createListNode(
       "Item 1",

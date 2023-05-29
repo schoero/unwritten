@@ -37,6 +37,13 @@ export type Types =
   | UnionType
   | UnresolvedType;
 
+export type MultilineTypes =
+  | ClassType
+  | FunctionType
+  | InterfaceType
+  | ObjectLiteralType
+  | ObjectType;
+
 
 export type PrimitiveTypeKinds =
   | TypeKind.Any

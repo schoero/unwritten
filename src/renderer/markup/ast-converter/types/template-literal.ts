@@ -1,4 +1,4 @@
-import { convertTypeInline } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 
 import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -13,7 +13,7 @@ export function convertTemplateLiteralType(ctx: MarkupRenderContexts, templateLi
   const spans = templateLiteralType.spans;
 
   const renderedTemplateLiteralType = types.reduce<ASTNodes[]>((acc, type, index) => {
-    const convertedType = convertTypeInline(ctx, type);
+    const convertedType = convertTypeForType(ctx, type);
     const span = spans[index] ?? "";
     return [
       ...acc,
