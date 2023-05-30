@@ -26,7 +26,7 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
 
   const filteredListItems = renderedListItems.filter(item => !!item);
 
-  // Do not render empty lists
+  // Do not render empty list items
   if(filteredListItems.length === 0){
     return "";
   }
@@ -43,70 +43,9 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
 
 }
 
-
 function renderListItems(ctx: HTMLRenderContext, items: ASTNodes[]): string[] {
   return items.map(item => renderListItem(ctx, item));
 }
-
-function flattenNestedArrayItems(items: ASTNodes[]): ASTNodes[] {
-
-  // Flatten deeply nested arrays
-  if(items.some(Array.isArray) && !items.some(isListNode)){
-    return flattenNestedArrayItems(items.flat());
-  }
-
-  return items;
-
-}
-
-
-function renderArrayItems(ctx: HTMLRenderContext, items: ASTNodes[]): string {
-
-  // Render normal array without a list
-  if(!items.some(isListNode)){
-    return renderNode(ctx, items);
-  }
-
-  const renderedArrayItems: string[] = [];
-
-  // render lists in an array on a new line
-  for(let index = 0; index < items.length; index++){
-
-    const currentItem = items[index];
-    const nextItem: ASTNodes | undefined = items[index + 1];
-
-    const renderedItem = renderNode(ctx, currentItem);
-
-    if(!isListNode(nextItem)){
-      renderedArrayItems.push(renderedItem);
-      continue;
-    }
-
-    const renderedNewLine = renderNewLine(ctx);
-
-    const renderedNextItem = renderNode(ctx, nextItem);
-
-    if(renderedNextItem === ""){
-      return renderedItem;
-    }
-
-    renderedArrayItems.push(
-      renderedItem,
-      renderedNewLine,
-      renderedNextItem
-    );
-
-    // Skip next item as it has already been rendered
-    index++;
-
-  }
-
-  return renderedArrayItems
-    .flat()
-    .join("");
-
-}
-
 
 function renderListStart(ctx: HTMLRenderContext): string {
   const renderedListStart = `${renderIndentation(ctx)}<ul>`;
@@ -182,4 +121,62 @@ function renderListItem(ctx: HTMLRenderContext, item: ASTNodes): string {
 function renderListEnd(ctx: HTMLRenderContext): string {
   ctx.indentation--;
   return `${renderIndentation(ctx)}</ul>`;
+}
+
+function flattenNestedArrayItems(items: ASTNodes[]): ASTNodes[] {
+
+  // Flatten deeply nested arrays
+  if(items.some(Array.isArray) && !items.some(isListNode)){
+    return flattenNestedArrayItems(items.flat());
+  }
+
+  return items;
+
+}
+
+function renderArrayItems(ctx: HTMLRenderContext, items: ASTNodes[]): string {
+
+  // Render normal array without a list
+  if(!items.some(isListNode)){
+    return renderNode(ctx, items);
+  }
+
+  const renderedArrayItems: string[] = [];
+
+  // render lists in an array on a new line
+  for(let index = 0; index < items.length; index++){
+
+    const currentItem = items[index];
+    const nextItem: ASTNodes | undefined = items[index + 1];
+
+    const renderedItem = renderNode(ctx, currentItem);
+
+    if(!isListNode(nextItem)){
+      renderedArrayItems.push(renderedItem);
+      continue;
+    }
+
+    const renderedNewLine = renderNewLine(ctx);
+
+    const renderedNextItem = renderNode(ctx, nextItem);
+
+    if(renderedNextItem === ""){
+      return renderedItem;
+    }
+
+    renderedArrayItems.push(
+      renderedItem,
+      renderedNewLine,
+      renderedNextItem
+    );
+
+    // Skip next item as it has already been rendered
+    index++;
+
+  }
+
+  return renderedArrayItems
+    .flat()
+    .join("");
+
 }

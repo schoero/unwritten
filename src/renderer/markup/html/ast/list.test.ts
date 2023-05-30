@@ -1,5 +1,3 @@
-import { writeFileSync } from "node:fs";
-
 import { expect, it } from "vitest";
 
 import { createListNode } from "unwritten:renderer:markup/utils/nodes.js";
@@ -174,7 +172,6 @@ scope("HTMLRenderer", "ListNode", () => {
       [[" "]],
       [[["1"]]]
     ]);
-    writeFileSync("test.html", renderListNode(ctx, listNode));
     expect(renderListNode(ctx, listNode)).to.equal(html`
       <ul>
         <li>Item 1</li>
@@ -194,7 +191,6 @@ scope("HTMLRenderer", "ListNode", () => {
         )
       ]]]]
     ]);
-    writeFileSync("test.html", renderListNode(ctx, listNode));
     expect(renderListNode(ctx, listNode)).to.equal(html`
       <ul>
         <li>
