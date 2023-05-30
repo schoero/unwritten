@@ -180,7 +180,7 @@ scope("HTMLRenderer", "ListNode", () => {
   });
 
 
-  it("should render nested arrays correctly", () => {
+  it("should render nested arrays with lists correctly", () => {
     const listNode = createListNode([
       ["Item"],
       [[" "]],

@@ -1,5 +1,5 @@
 import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
-import { renderIndentation } from "unwritten:renderer:utils/indentation.js";
+import { renderIndentation as renderIndentationOriginal } from "unwritten:renderer:utils/indentation.js";
 
 import { renderNewLine } from "../../../utils/new-line.js";
 import { renderNode } from "../index.js";
@@ -10,84 +10,41 @@ import type { ASTNodes, ListNode } from "unwritten:renderer:markup/types-definit
 
 export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): string {
 
+  // Do not render empty lists
   if(listNode.children.length === 0){
     return "";
   }
 
-  const renderArrayItems = (arrayItems: ASTNodes[]): string[] => {
+  // Collapse nested lists without siblings
+  if(listNode.children.length === 1 && isListNode(listNode.children[0])){
+    return renderListNode(ctx, listNode.children[0]);
+  }
 
-    const nestedListItems: string[] = [];
+  const renderedListStart = renderListStart(ctx);
+  const renderedListItems = renderListItems(ctx, listNode.children);
+  const renderedListEnd = renderListEnd(ctx);
 
-    for(let i = 0; i < arrayItems.length; i++){
-      const item = arrayItems[i];
+  const filteredListItems = renderedListItems.filter(item => !!item);
 
-      if(Array.isArray(item) && item.flat().some(isListNode)){
-
-        const renderedNestedItem = item
-          .flat()
-          .reduce<[buffer: string[], items: string[]]>(([buffer, items], nestedItem) => {
-          if(isListNode(nestedItem)){
-
-            items.push(renderListItem(ctx, buffer));
-            buffer = [];
-
-            const renderedListNode = renderListNode(ctx, nestedItem);
-            const renderedNode = renderedListNode === ""
-              ? ""
-              : renderNode(ctx, [
-                renderNewLine(ctx),
-                renderedListNode
-              ]);
-
-            items.push(renderedNode);
-            return [buffer, items];
-
-          } else {
-            const renderedNode = renderNode(ctx, nestedItem);
-            buffer.push(renderedNode);
-            return [buffer, items];
-          }
-        }, [[], []]);
-
-        const [remainingBuffer, result] = renderedNestedItem;
-        const renderedItemsWithBuffer = [
-          ...result,
-          ...renderListItem(ctx, renderNode(ctx, remainingBuffer))
-        ].join("");
-
-        nestedListItems.push(renderedItemsWithBuffer);
-
-      } else {
-        if(isListNode(item)){
-          nestedListItems.push(renderListNode(ctx, item));
-        } else {
-          nestedListItems.push(renderListItem(ctx, renderNode(ctx, item)));
-        }
-      }
-
-    }
-
-    return nestedListItems;
-
-  };
-
-  const listStart = renderListStart(ctx);
-  const listItems = renderArrayItems(listNode.children);
-  const listEnd = renderListEnd(ctx);
-
-  const filteredListItems = listItems.filter(listItem => !!listItem);
-
+  // Do not render empty list items
   if(filteredListItems.length === 0){
     return "";
   }
 
-  return [
-    listStart,
+  const renderedList = [
+    renderedListStart,
     ...filteredListItems,
-    listEnd
-  ].filter(item => !!item)
+    renderedListEnd
+  ];
+
+  return renderedList
+    .filter(item => !!item)
     .join(renderNewLine(ctx));
 
+}
+
+function renderListItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string[] {
+  return items.map(item => renderListItem(ctx, item));
 }
 
 
@@ -96,20 +53,104 @@ function renderListStart(ctx: MarkdownRenderContext): string {
   return "";
 }
 
-function renderListItem(ctx: MarkdownRenderContext, content: ASTNodes): string {
+function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
 
-  const renderedNode = renderNode(ctx, content);
+  // Flatten deeply nested arrays
+  item = Array.isArray(item) ? flattenNestedArrayItems(item) : item;
 
-  ctx.indentation--;
-  const renderedListItem = renderedNode === ""
-    ? renderedNode
-    : `${renderIndentation(ctx)}- ${renderedNode}`;
-  ctx.indentation++;
+  // Render lists in an array on a new line
+  if(Array.isArray(item) && item.some(isListNode)){
 
-  return renderedListItem;
+    const renderedArrayItems = renderArrayItems(ctx, item);
+
+    if(renderedArrayItems === ""){
+      return "";
+    }
+
+    return `${renderIndentation(ctx)}- ${renderedArrayItems}`;
+
+  }
+
+  // Render lists without wrapping in a list element
+  if(isListNode(item)){
+    return renderListNode(ctx, item);
+  }
+
+  const renderedItem = renderNode(ctx, item);
+
+  return renderedItem === ""
+    ? renderedItem
+    : `${renderIndentation(ctx)}- ${renderedItem}`;
+
 }
+
 
 function renderListEnd(ctx: MarkdownRenderContext): string {
   ctx.indentation--;
   return "";
+}
+
+function flattenNestedArrayItems(items: ASTNodes[]): ASTNodes[] {
+
+  // Flatten deeply nested arrays
+  if(items.some(Array.isArray) && !items.some(isListNode)){
+    return flattenNestedArrayItems(items.flat());
+  }
+
+  return items;
+
+}
+
+function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string {
+
+  // Render normal array without a list
+  if(!items.some(isListNode)){
+    return renderNode(ctx, items);
+  }
+
+  const renderedArrayItems: string[] = [];
+
+  // render lists in an array on a new line
+  for(let index = 0; index < items.length; index++){
+
+    const currentItem = items[index];
+    const nextItem: ASTNodes | undefined = items[index + 1];
+
+    const renderedItem = renderNode(ctx, currentItem);
+
+    if(!isListNode(nextItem)){
+      renderedArrayItems.push(renderedItem);
+      continue;
+    }
+
+    const renderedNewLine = renderNewLine(ctx);
+
+    const renderedNextItem = renderNode(ctx, nextItem);
+
+    if(renderedNextItem === ""){
+      return renderedItem;
+    }
+
+    renderedArrayItems.push(
+      renderedItem,
+      renderedNewLine,
+      renderedNextItem
+    );
+
+    // Skip next item as it has already been rendered
+    index++;
+
+  }
+
+  return renderedArrayItems
+    .flat()
+    .join("");
+
+}
+
+function renderIndentation(ctx: MarkdownRenderContext): string {
+  ctx.indentation--;
+  const indentation = renderIndentationOriginal(ctx);
+  ctx.indentation++;
+  return indentation;
 }

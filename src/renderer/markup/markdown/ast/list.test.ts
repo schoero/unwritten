@@ -24,6 +24,13 @@ scope("MarkdownRenderer", "ListNode", () => {
     `);
   });
 
+  it("should not render empty lists", () => {
+    const listNode = createListNode(
+      ""
+    );
+    expect(renderListNode(ctx, listNode)).to.equal("");
+  });
+
   it("should not render empty list items", () => {
     const listNode = createListNode(
       "Item 1",
@@ -36,27 +43,80 @@ scope("MarkdownRenderer", "ListNode", () => {
     `);
   });
 
-  it("should not render empty lists", () => {
-    const listNode = createListNode(
-      ""
-    );
-    expect(renderListNode(ctx, listNode)).to.equal("");
-  });
-
-  it("should not render lists containing only empty lists", () => {
+  it("should render directly nested lists on a new line", () => {
     const listNode = createListNode(
       "Item 1",
       createListNode(
-        [
-          "",
-          createListNode(
-            ""
-          )
-        ]
+        "Item 2"
       )
     );
     expect(renderListNode(ctx, listNode)).to.equal(md`
       - Item 1
+        - Item 2
+    `);
+  });
+
+  it("should not render lists containing only empty elements", () => {
+    const listNode = createListNode(
+      "Item 1",
+      createListNode(
+        "",
+        "",
+        createListNode(
+          "",
+          ""
+        )
+      )
+    );
+    expect(renderListNode(ctx, listNode)).to.equal(md`
+      - Item 1
+    `);
+  });
+
+  it("should render arrays in a single element", () => {
+    const listNode = createListNode(
+      [
+        "Item",
+        " ",
+        "1"
+      ]
+    );
+    expect(renderListNode(ctx, listNode)).to.equal(md`
+      - Item 1
+    `);
+  });
+
+  it("should render lists in an array on a new line", () => {
+    const listNode = createListNode(
+      [
+        "Item",
+        " ",
+        "1",
+        createListNode(
+          "Item 2"
+        )
+      ]
+    );
+    expect(renderListNode(ctx, listNode)).to.equal(md`
+      - Item 1
+        - Item 2
+    `);
+  });
+
+  it("should collapse nested lists without siblings", () => {
+    const listNode = createListNode(
+      "Item 1",
+      createListNode(
+        createListNode(
+          createListNode(
+            "Item 2"
+          )
+        )
+      )
+    );
+    expect(renderListNode(ctx, listNode)).to.equal(md`
+      - Item 1
+        - Item 2
     `);
   });
 
@@ -75,22 +135,32 @@ scope("MarkdownRenderer", "ListNode", () => {
     `);
   });
 
-  it("should render deeply nested lists correctly", () => {
+  it("should render nested arrays correctly", () => {
     const listNode = createListNode([
-      "Item",
-      " ",
-      "1",
-      [
+      ["Item"],
+      [[" "]],
+      [[["1"]]]
+    ]);
+    expect(renderListNode(ctx, listNode)).to.equal(md`
+      - Item 1
+    `);
+  });
+
+
+  it("should render nested arrays with lists correctly", () => {
+    const listNode = createListNode([
+      ["Item"],
+      [[" "]],
+      [[["1"]]],
+      [[[[
         createListNode(
-          "Item 2",
-          "Item 3"
+          "Item 2"
         )
-      ]
+      ]]]]
     ]);
     expect(renderListNode(ctx, listNode)).to.equal(md`
       - Item 1
         - Item 2
-        - Item 3
     `);
   });
 
