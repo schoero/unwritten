@@ -220,7 +220,7 @@ export type ConvertedIntersectionType = ASTNodes[];
 export type ConvertedObjectTypeMultiline = ListNode<([
   constructSignatures: ListNode<ConvertedSignatureEntityForType[]>,
   callSignatures: ListNode<ConvertedSignatureEntityForType[]>,
-  properties: ListNode,
+  properties: ListNode<ConvertedPropertyEntityForType[]>,
   methods: ListNode<ConvertedSignatureEntityForType[]>,
   setters: ListNode<ConvertedSignatureEntityForType[]>,
   getters: ListNode<ConvertedSignatureEntityForType[]>
@@ -471,8 +471,10 @@ export type ConvertedPropertyEntityForDocumentation = TitleNode<[
   remarks: ConvertedRemarks,
   example: ConvertedExample
 ]>;
-
-export type ConvertedPropertyEntityForType = ASTNodes;
+export type ConvertedPropertyEntityForType = [
+  propertySignature: ASTNodes[],
+  propertyType: ListNode
+];
 
 
 //-- Method

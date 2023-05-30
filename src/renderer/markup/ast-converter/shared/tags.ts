@@ -17,7 +17,7 @@ export function convertTagsForDocumentation(ctx: MarkupRenderContexts, entityWit
 
   const convertedJSDocTags = convertJSDocTags(ctx, entityWithTags);
   const convertedModifiers = "modifiers" in entityWithTags ? convertModifiers(ctx, entityWithTags.modifiers) : [];
-  const convertedOptional = "optional" in entityWithTags ? [convertOptional(ctx, entityWithTags)] : [];
+  const convertedOptional = "optional" in entityWithTags ? convertOptional(ctx, entityWithTags) : [];
 
   const convertedTags = [
     ...convertedJSDocTags,
