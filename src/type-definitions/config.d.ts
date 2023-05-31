@@ -13,6 +13,8 @@ export interface Config {
   externalTypes?: ExternalTypes;
   /** Interpreter configuration. */
   interpreterConfig?: InterpreterConfig;
+  /** Output dir */
+  outputDir?: string;
   /** Render configuration. */
   renderConfig?: RenderConfig;
 }
@@ -20,6 +22,7 @@ export interface Config {
 export interface CompleteConfig extends Config {
   externalTypes: ExternalTypes;
   interpreterConfig: Complete<InterpreterConfig>;
+  outputDir: string;
   renderConfig: CompleteRenderConfig;
 }
 

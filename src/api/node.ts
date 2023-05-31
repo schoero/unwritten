@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import { compile } from "unwritten:compiler:node.js";
 import { createConfig } from "unwritten:config/index.js";
@@ -18,43 +18,37 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
   const absoluteEntryFilePath = resolve(entryFilePath);
 
 
-  //-- Logger
-
+  // Logger
   const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/index.js");
   const defaultContext = createDefaultContext(logger);
 
 
-  //-- Compile
-
+  // Compile
   const { checker, program } = compile(defaultContext, absoluteEntryFilePath, options?.tsconfig);
 
+  // Config
+  const config = await createConfig(defaultContext, options?.config, options?.output);
 
-  //-- Interpret
-
-  const config = await createConfig(defaultContext, options?.config);
+  // Interpret
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
   const entryFileSymbol = getEntryFileSymbolFromProgram(interpreterContext, program);
   const interpretedSymbols = interpret(interpreterContext, entryFileSymbol);
 
 
-  //-- Render
-
+  // Render
   const renderer = await getRenderer(options?.renderer);
   const renderContext = createRenderContext(defaultContext, renderer, config);
   const renderedSymbols = renderer.render(renderContext, interpretedSymbols);
 
 
-  //-- Write output to file
-
+  // Write output to file
   const fileExtension = renderer.fileExtension;
-  const outputPath = options?.output ?? `./docs/api${fileExtension}`;
-  const absoluteOutputDir = resolve(dirname(outputPath));
 
-  if(existsSync(absoluteOutputDir) === false){
-    mkdirSync(absoluteOutputDir, { recursive: true });
+  if(existsSync(config.outputDir) === false){
+    mkdirSync(config.outputDir, { recursive: true });
   }
 
-  writeFileSync(outputPath, renderedSymbols);
+  writeFileSync(`${config.outputDir}/api${fileExtension}`, renderedSymbols);
 
   return interpretedSymbols;
 

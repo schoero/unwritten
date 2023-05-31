@@ -4,6 +4,7 @@ import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.js
 import type {
   AnchorNode,
   ASTNodes,
+  LinkNode,
   ListNode,
   ParagraphNode,
   SectionNode,
@@ -62,7 +63,7 @@ JSDocTags,
 
 //-- Position
 
-export type ConvertedPosition = SmallNode | "";
+export type ConvertedPosition = SmallNode<[LinkNode]> | "";
 
 
 //-- Tags

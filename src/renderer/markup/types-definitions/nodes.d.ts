@@ -45,7 +45,8 @@ export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends AST
   title: ASTNodes;
 }
 
-export interface LinkNode extends ASTNode<ASTNodeKinds.Link> {
+export interface LinkNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Link> {
+  children: Children;
   link: string;
 }
 

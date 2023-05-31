@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default.js";
@@ -7,13 +7,13 @@ import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:
 import { findFile } from "unwritten:utils:finder.js";
 import { override } from "unwritten:utils:override.js";
 
-import { defaultExternalTypes, defaultInterpreterConfig } from "./default.js";
+import { defaultExternalTypes, defaultInterpreterConfig, defaultOutputPath } from "./default.js";
 
 import type { CompleteConfig, Config } from "unwritten:type-definitions/config.d.js";
 import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
 
 
-export async function createConfig(ctx: DefaultContext, configOrPath?: Config | string): Promise<CompleteConfig> {
+export async function createConfig(ctx: DefaultContext, configOrPath: Config | string | undefined, output?: string): Promise<CompleteConfig> {
 
   const defaultConfig = getDefaultConfig();
 
@@ -61,7 +61,13 @@ export async function createConfig(ctx: DefaultContext, configOrPath?: Config | 
 
   const extendedUserConfig = await getExtendConfig(userConfig);
 
-  return override(defaultConfig, extendedUserConfig);
+  const config = override(defaultConfig, extendedUserConfig);
+
+  if(typeof output === "string"){
+    config.outputDir = resolve(dirname(output));
+  }
+
+  return config;
 
 }
 
@@ -96,6 +102,7 @@ export function getDefaultConfig(): CompleteConfig {
   const defaultConfig: CompleteConfig = {
     externalTypes: defaultExternalTypes,
     interpreterConfig: defaultInterpreterConfig,
+    outputDir: defaultOutputPath,
     renderConfig: {
       [BuiltInRenderers.Markdown]: defaultMarkdownRenderConfig,
       [BuiltInRenderers.HTML]: defaultHTMLRenderConfig,

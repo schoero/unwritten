@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
-import { isSmallNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { isLinkNode, isSmallNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
@@ -23,7 +23,9 @@ scope("MarkupRenderer", "Position", () => {
 
   it("should convert the position correctly", () => {
     assert(isSmallNode(convertedPosition));
-    expect(convertedPosition.children[0]).to.equal("src/renderer/markup/index.ts#L7C1");
+    assert(isLinkNode(convertedPosition.children[0]));
+    expect(convertedPosition.children[0].children).to.equal("src/renderer/markup/index.ts");
+    expect(convertedPosition.children[0].link).to.equal("../src/renderer/markup/index.ts#L7C1");
   });
 
 });
