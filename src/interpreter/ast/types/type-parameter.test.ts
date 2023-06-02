@@ -23,7 +23,7 @@ scope("Interpreter", TypeKind.TypeParameter, () => {
     it("should be able to parse type parameter types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedTypeAlias.typeParameters).toHaveLength(1);
-      expect(exportedTypeAlias.type.type).to.not.equal(undefined);
+      expect(exportedTypeAlias.type.type).toBeDefined();
       assert(exportedTypeAlias.type.type!.kind === TypeKind.TypeParameter);
       expect(exportedTypeAlias.type.type.name).toBe("T");
     });

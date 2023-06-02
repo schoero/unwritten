@@ -45,26 +45,26 @@ scope("Interpreter", EntityKind.Class, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should have a constructor", () => {
-      expect(exportedClass.ctor).to.not.equal(undefined);
+      expect(exportedClass.ctor).toBeDefined();
     });
 
     it("should have a property", () => {
-      expect(exportedClass.properties).to.not.equal(undefined);
+      expect(exportedClass.properties).toBeDefined();
       expect(exportedClass.properties).toHaveLength(1);
     });
 
     it("should have a method", () => {
-      expect(exportedClass.methods).to.not.equal(undefined);
+      expect(exportedClass.methods).toBeDefined();
       expect(exportedClass.methods).toHaveLength(1);
     });
 
     it("should have a getter", () => {
-      expect(exportedClass.getters).to.not.equal(undefined);
+      expect(exportedClass.getters).toBeDefined();
       expect(exportedClass.getters).toHaveLength(1);
     });
 
     it("should have a setter", () => {
-      expect(exportedClass.setters).to.not.equal(undefined);
+      expect(exportedClass.setters).toBeDefined();
       expect(exportedClass.setters).toHaveLength(1);
     });
 
@@ -132,7 +132,7 @@ scope("Interpreter", EntityKind.Class, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should support type parameters", () => {
-      expect(exportedClass.typeParameters).to.not.equal(undefined);
+      expect(exportedClass.typeParameters).toBeDefined();
       expect(exportedClass.typeParameters!).toHaveLength(1);
     });
 

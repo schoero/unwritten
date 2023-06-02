@@ -87,7 +87,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     it("should be able to parse generic types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedTypeAlias.typeParameters).toHaveLength(1);
-      expect(exportedTypeAlias.type.type).to.not.equal(undefined);
+      expect(exportedTypeAlias.type.type).toBeDefined();
       expect(exportedTypeAlias.type.type!.kind).toBe(TypeKind.TypeParameter);
     });
 
@@ -105,7 +105,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a type parameter", () => {
-      expect(exportedTypeAlias.typeParameters).to.not.equal(undefined);
+      expect(exportedTypeAlias.typeParameters).toBeDefined();
       expect(exportedTypeAlias.typeParameters).to.have.lengthOf(1);
     });
 
@@ -124,7 +124,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should resolve types", () => {
-      expect(exportedTypeAlias.typeParameters).toBe(undefined);
+      expect(exportedTypeAlias.typeParameters).toBeUndefined();
 
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedTypeAlias.type.type !== undefined);

@@ -27,7 +27,7 @@ scope("Interpreter", EntityKind.Signature, () => {
 
     it("should be able to parse a signature", () => {
       expect(exportedFunction.kind).toBe(EntityKind.Function);
-      expect(exportedFunction.signatures).to.not.equal(undefined);
+      expect(exportedFunction.signatures).toBeDefined();
       expect(exportedFunction.signatures).to.have.lengthOf(1);
     });
 

@@ -27,7 +27,7 @@ scope("JSONRenderer", "JSON", () => {
       const ctx = createRenderContext(BuiltInRenderers.JSON);
       const renderedOutput = ctx.renderer.render(ctx, [functionEntity]);
       const json = JSON.parse(renderedOutput);
-      expect(json[0].symbolId).toBe(undefined);
+      expect(json[0].symbolId).toBeUndefined();
     });
 
     it("should be possible to enable ids", () => {
@@ -35,7 +35,7 @@ scope("JSONRenderer", "JSON", () => {
       ctx.config.renderConfig.json.includeIds = true;
       const renderedOutput = ctx.renderer.render(ctx, [functionEntity]);
       const json = JSON.parse(renderedOutput);
-      expect(json[0].symbolId).to.not.equal(undefined);
+      expect(json[0].symbolId).toBeDefined();
     });
 
   }

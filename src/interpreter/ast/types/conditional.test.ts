@@ -29,9 +29,9 @@ scope("Interpreter", TypeKind.Conditional, () => {
     it("should have a matching checkType", () => {
       assert(conditionalTypeAlias.type.kind === TypeKind.Conditional);
       assert(conditionalTypeAlias.type.checkType.kind === TypeKind.TypeReference);
-      expect(conditionalTypeAlias.type.checkType.type).to.not.equal(undefined);
+      expect(conditionalTypeAlias.type.checkType.type).toBeDefined();
       assert(conditionalTypeAlias.type.checkType.type!.kind === TypeKind.TypeParameter);
-      expect(conditionalTypeAlias.type.checkType.type.constraint).to.not.equal(undefined);
+      expect(conditionalTypeAlias.type.checkType.type.constraint).toBeDefined();
       expect(conditionalTypeAlias.type.checkType.type.constraint!.kind).toBe(TypeKind.Union);
     });
 

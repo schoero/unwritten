@@ -127,8 +127,8 @@ scope("Interpreter", EntityKind.Interface, () => {
     });
 
     it("should differentiate between methods and function properties", () => {
-      expect(interfaceType.methods.find(m => m.name === "method")).to.not.equal(undefined);
-      expect(interfaceType.properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
+      expect(interfaceType.methods.find(m => m.name === "method")).toBeDefined();
+      expect(interfaceType.properties.find(p => p.name === "funcProp")).toBeDefined();
     });
 
     it("should be able to handle getters", () => {

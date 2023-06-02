@@ -79,7 +79,7 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     });
 
     it("should have a position", () => {
-      expect(position).to.not.equal(undefined);
+      expect(position).toBeDefined();
     });
 
     it("should have no children", () => {

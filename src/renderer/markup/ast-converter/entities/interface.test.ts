@@ -201,7 +201,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a interface position", () => {
-      expect(interfacePosition).to.not.equal(undefined);
+      expect(interfacePosition).not.toBeUndefined();
     });
 
     it("should have a interface tags", () => {
@@ -226,7 +226,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a call signature position", () => {
-      expect(callSignaturePosition).to.not.equal(undefined);
+      expect(callSignaturePosition).not.toBeUndefined();
     });
 
     it("should have a call signature tags", () => {

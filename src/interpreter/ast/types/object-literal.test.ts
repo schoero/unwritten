@@ -46,28 +46,28 @@ scope("Interpreter", TypeKind.ObjectLiteral, () => {
 
     it("should be able to handle properties", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.properties.length).toBe(2);
+      expect(exportedVariable.type.properties).toHaveLength(2);
     });
 
     it("should be able to handle methods", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.methods.length).toBe(1);
+      expect(exportedVariable.type.methods).toHaveLength(1);
     });
 
     it("should differentiate between methods and function properties", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.methods.find(m => m.name === "method")).to.not.equal(undefined);
-      expect(exportedVariable.type.properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
+      expect(exportedVariable.type.methods.find(m => m.name === "method")).toBeDefined();
+      expect(exportedVariable.type.properties.find(p => p.name === "funcProp")).toBeDefined();
     });
 
     it("should be able to handle getters", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.getters.length).toBe(1);
+      expect(exportedVariable.type.getters).toHaveLength(1);
     });
 
     it("should be able to handle setters", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.setters.length).toBe(1);
+      expect(exportedVariable.type.setters).toHaveLength(1);
     });
 
   }

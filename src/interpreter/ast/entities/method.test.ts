@@ -27,7 +27,7 @@ scope("Interpreter", EntityKind.Method, () => {
 
     it("should be able to parse a method", () => {
       expect(exportedClass.kind).toBe(EntityKind.Class);
-      expect(exportedClass.methods).to.not.equal(undefined);
+      expect(exportedClass.methods).toBeDefined();
       expect(exportedClass.methods).to.have.lengthOf(1);
     });
 

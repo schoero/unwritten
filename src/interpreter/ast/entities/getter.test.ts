@@ -28,7 +28,7 @@ scope("Interpreter", EntityKind.Getter, () => {
 
     it("should be able to parse a getter", () => {
       expect(exportedClass.kind).toBe(EntityKind.Class);
-      expect(exportedClass.getters).to.not.equal(undefined);
+      expect(exportedClass.getters).toBeDefined();
       expect(exportedClass.getters).to.have.lengthOf(1);
     });
 

@@ -34,7 +34,7 @@ scope("Interpreter", TypeKind.TypeReference, () => {
 
     it("should have a matching type", () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedReferenceTypeAlias.type.type).to.not.equal(undefined);
+      expect(exportedReferenceTypeAlias.type.type).toBeDefined();
       expect(exportedReferenceTypeAlias.type.type!.kind).toBe(TypeKind.String);
     });
 
@@ -77,12 +77,12 @@ scope("Interpreter", TypeKind.TypeReference, () => {
     it("should be able to parse conditional type references", () => {
       assert(truthyConditionalTypeReference.type.kind === TypeKind.TypeReference);
       expect(truthyConditionalTypeReference.type.kind).toBe(TypeKind.TypeReference);
-      expect(truthyConditionalTypeReference.type.type).to.not.equal(undefined);
+      expect(truthyConditionalTypeReference.type.type).toBeDefined();
       expect(truthyConditionalTypeReference.type.type?.kind).toBe(TypeKind.String);
 
       assert(falsyConditionalTypeReference.type.kind === TypeKind.TypeReference);
       expect(falsyConditionalTypeReference.type.kind).toBe(TypeKind.TypeReference);
-      expect(falsyConditionalTypeReference.type.type).to.not.equal(undefined);
+      expect(falsyConditionalTypeReference.type.type).toBeDefined();
       expect(falsyConditionalTypeReference.type.type?.kind).toBe(TypeKind.Number);
     });
 

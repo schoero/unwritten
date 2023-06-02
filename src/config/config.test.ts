@@ -53,10 +53,10 @@ scope("Integration", "Config", async () => {
 
     const config = await createConfig({}, ".unwritten.json");
 
-    expect(config).to.not.equal(undefined);
-    expect(config.interpreterConfig).to.not.equal(undefined);
-    expect(config.renderConfig).to.not.equal(undefined);
-    expect(config.renderConfig.test).to.not.equal(undefined);
+    expect(config).toBeDefined();
+    expect(config.interpreterConfig).toBeDefined();
+    expect(config.renderConfig).toBeDefined();
+    expect(config.renderConfig.test).toBeDefined();
     expect(config.renderConfig.test[".unwritten.json"]).toBe(true);
 
   });
@@ -71,10 +71,10 @@ scope("Integration", "Config", async () => {
       }
     });
 
-    expect(config).to.not.equal(undefined);
-    expect(config.interpreterConfig).to.not.equal(undefined);
-    expect(config.renderConfig).to.not.equal(undefined);
-    expect(config.renderConfig.test).to.not.equal(undefined);
+    expect(config).toBeDefined();
+    expect(config.interpreterConfig).toBeDefined();
+    expect(config.renderConfig).toBeDefined();
+    expect(config.renderConfig.test).toBeDefined();
     expect(config.renderConfig.test.object).toBe(true);
 
   });
@@ -83,10 +83,10 @@ scope("Integration", "Config", async () => {
 
     const config = await createConfig({}, ".unwritten.js");
 
-    expect(config).to.not.equal(undefined);
-    expect(config.interpreterConfig).to.not.equal(undefined);
-    expect(config.renderConfig).to.not.equal(undefined);
-    expect(config.renderConfig.test).to.not.equal(undefined);
+    expect(config).toBeDefined();
+    expect(config.interpreterConfig).toBeDefined();
+    expect(config.renderConfig).toBeDefined();
+    expect(config.renderConfig.test).toBeDefined();
     expect(config.renderConfig.test[".unwritten.js"]).toBe(true);
 
   });
@@ -101,7 +101,7 @@ scope("Integration", "Config", async () => {
       }
     });
 
-    expect(config.renderConfig.markdown).to.not.equal(undefined);
+    expect(config.renderConfig.markdown).toBeDefined();
     expect(config.renderConfig.markdown.removeHyphenAtStartOfTag).toBe(false);
 
   });
@@ -112,7 +112,7 @@ scope("Integration", "Config", async () => {
       extends: `${await getDirectory()}/.unwritten.json`
     });
 
-    expect(config.renderConfig.test).to.not.equal(undefined);
+    expect(config.renderConfig.test).toBeDefined();
     expect(config.renderConfig.test[".unwritten.json"]).toBe(true);
 
   });
@@ -127,7 +127,7 @@ scope("Integration", "Config", async () => {
       }
     });
 
-    expect(config.renderConfig.test).to.not.equal(undefined);
+    expect(config.renderConfig.test).toBeDefined();
     expect(config.renderConfig.test[".unwritten.json"]).toBe("overridden");
 
   });

@@ -29,11 +29,11 @@ scope("Interpreter", EntityKind.Getter, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should have a constructor", () => {
-      expect(exportedClass.ctor).to.not.equal(undefined);
+      expect(exportedClass.ctor).toBeDefined();
     });
 
     it("should have only one signature", () => {
-      expect(exportedClass.ctor!.signatures.length).toBe(1);
+      expect(exportedClass.ctor!.signatures).toHaveLength(1);
     });
 
     it("should have a matching constructor description", () => {
@@ -67,7 +67,7 @@ scope("Interpreter", EntityKind.Getter, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should support multiple signatures", () => {
-      expect(exportedClass.ctor!.signatures.length).toBe(2);
+      expect(exportedClass.ctor!.signatures).toHaveLength(2);
     });
 
   }

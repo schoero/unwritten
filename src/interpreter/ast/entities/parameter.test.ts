@@ -103,7 +103,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
 
     it("should be able to handle initialized types", () => {
       expect(parameter.type!.kind).toBe(TypeKind.String);
-      expect(parameter.initializer).to.not.equal(undefined);
+      expect(parameter.initializer).toBeDefined();
       expect(parameter.initializer!.kind).toBe(TypeKind.StringLiteral);
     });
 

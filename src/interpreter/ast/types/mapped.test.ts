@@ -36,7 +36,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
 
     it("should the correct amount of properties", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
-      expect(exportedTypeAlias.type.properties.length).toBe(2);
+      expect(exportedTypeAlias.type.properties).toHaveLength(2);
     });
 
     it("should have matching properties", () => {
@@ -49,7 +49,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
 
       expect(exportedTypeAlias.type.typeParameter.name).toBe("K");
-      expect(exportedTypeAlias.type.typeParameter.constraint).to.not.equal(undefined);
+      expect(exportedTypeAlias.type.typeParameter.constraint).toBeDefined();
       assert(exportedTypeAlias.type.typeParameter.constraint!.kind === TypeKind.Union);
       expect(exportedTypeAlias.type.typeParameter.constraint.types).to.have.lengthOf(2);
     });
@@ -75,7 +75,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
 
     it("should the correct amount of properties", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
-      expect(exportedTypeAlias.type.properties.length).toBe(2);
+      expect(exportedTypeAlias.type.properties).toHaveLength(2);
     });
 
     it("should have matching properties", () => {
@@ -96,7 +96,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
 
       expect(exportedTypeAlias.type.typeParameter.name).toBe("K");
-      expect(exportedTypeAlias.type.typeParameter.constraint).to.not.equal(undefined);
+      expect(exportedTypeAlias.type.typeParameter.constraint).toBeDefined();
       assert(exportedTypeAlias.type.typeParameter.constraint!.kind === TypeKind.Union);
       expect(exportedTypeAlias.type.typeParameter.constraint.types).to.have.lengthOf(2);
     });

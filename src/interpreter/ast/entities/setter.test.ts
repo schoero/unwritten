@@ -28,7 +28,7 @@ scope("Interpreter", EntityKind.Setter, () => {
 
     it("should be able to parse a setter", () => {
       expect(exportedClass.kind).toBe(EntityKind.Class);
-      expect(exportedClass.setters).to.not.equal(undefined);
+      expect(exportedClass.setters).toBeDefined();
       expect(exportedClass.setters).to.have.lengthOf(1);
     });
 

@@ -56,32 +56,32 @@ scope("Interpreter", TypeKind.TypeLiteral, () => {
 
 
     it("should be able to handle construct signatures", () => {
-      expect(typeLiteral.constructSignatures.length).toBe(1);
+      expect(typeLiteral.constructSignatures).toHaveLength(1);
     });
 
     it("should be able to handle call signatures", () => {
-      expect(typeLiteral.callSignatures.length).toBe(1);
+      expect(typeLiteral.callSignatures).toHaveLength(1);
     });
 
     it("should be able to handle properties", () => {
-      expect(typeLiteral.properties.length).toBe(2);
+      expect(typeLiteral.properties).toHaveLength(2);
     });
 
     it("should be able to handle methods", () => {
-      expect(typeLiteral.methods.length).toBe(1);
+      expect(typeLiteral.methods).toHaveLength(1);
     });
 
     it("should differentiate between methods and function properties", () => {
-      expect(typeLiteral.methods.find(m => m.name === "method")).to.not.equal(undefined);
-      expect(typeLiteral.properties.find(p => p.name === "funcProp")).to.not.equal(undefined);
+      expect(typeLiteral.methods.find(m => m.name === "method")).toBeDefined();
+      expect(typeLiteral.properties.find(p => p.name === "funcProp")).toBeDefined();
     });
 
     it("should be able to handle getters", () => {
-      expect(typeLiteral.getters.length).toBe(1);
+      expect(typeLiteral.getters).toHaveLength(1);
     });
 
     it("should be able to handle setters", () => {
-      expect(typeLiteral.setters.length).toBe(1);
+      expect(typeLiteral.setters).toHaveLength(1);
     });
 
   }

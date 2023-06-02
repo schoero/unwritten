@@ -72,7 +72,7 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
 
     it("should have a position", () => {
       assert(isSmallNode(position));
-      expect(position.children).to.not.equal(undefined);
+      expect(position.children).toBeDefined();
     });
 
     it("should have a jsdoc tag", () => {
