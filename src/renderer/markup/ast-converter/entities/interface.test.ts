@@ -206,8 +206,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a interface tags", () => {
       assert(isParagraphNode(interfaceTags));
-      expect(interfaceTags.children).to.include("beta");
-      expect(interfaceTags.children).to.include("deprecated");
+      expect(interfaceTags.children).toContain("beta");
+      expect(interfaceTags.children).toContain("deprecated");
     });
 
     it("should have a matching call signature description", () => {
@@ -231,8 +231,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a call signature tags", () => {
       assert(isParagraphNode(callSignatureTags));
-      expect(callSignatureTags.children).to.include("beta");
-      expect(callSignatureTags.children).to.include("deprecated");
+      expect(callSignatureTags.children).toContain("beta");
+      expect(callSignatureTags.children).toContain("deprecated");
     });
 
     it("should have a matching property description", () => {
@@ -252,8 +252,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a property tags", () => {
       assert(isParagraphNode(propertyTags));
-      expect(propertyTags.children).to.include("beta");
-      expect(propertyTags.children).to.include("deprecated");
+      expect(propertyTags.children).toContain("beta");
+      expect(propertyTags.children).toContain("deprecated");
     });
 
   }

@@ -72,8 +72,8 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
 
     it("should have matching tags", () => {
       assert(isParagraphNode(tags));
-      expect(tags.children).to.include("beta");
-      expect(tags.children).to.include("deprecated");
+      expect(tags.children).toContain("beta");
+      expect(tags.children).toContain("deprecated");
     });
 
     it("should have a matching description", () => {

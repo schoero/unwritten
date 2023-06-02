@@ -81,7 +81,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
     it("should have a jsdoc tag", () => {
       assert(isParagraphNode(tags));
-      expect(tags.children).to.include("beta");
+      expect(tags.children).toContain("beta");
     });
 
     it("should have a matching type parameters", () => {

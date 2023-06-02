@@ -92,7 +92,7 @@ scope("Interpreter", EntityKind.Function, () => {
 
     it("should be able to parse an async function", () => {
       expect(exportedFunction.kind).to.equal(EntityKind.Function);
-      expect(exportedFunction.signatures[0]?.modifiers).to.include("async");
+      expect(exportedFunction.signatures[0]?.modifiers).toContain("async");
       assert(isUnresolvedType(exportedFunction.signatures[0]?.returnType));
       expect(exportedFunction.signatures[0]?.returnType.typeArguments?.length).to.equal(1);
       expect(exportedFunction.signatures[0]?.returnType.typeArguments?.[0].kind).to.equal(TypeKind.Boolean);

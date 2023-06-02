@@ -20,7 +20,7 @@ scope("Interpreter", "Entities", () => {
       }
 
       const exportName = file.replace(".ts", ".js");
-      expect(indexExports).to.include(`export * from "./${exportName}";`);
+      expect(indexExports).toContain(`export * from "./${exportName}";`);
 
     }
 

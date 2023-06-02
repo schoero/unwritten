@@ -51,19 +51,19 @@ scope("MarkupRenderer", TypeKind.Object, () => {
 
     it("should have one matching property", () => {
       expect(properties.children.length).to.equal(1);
-      expect(renderNode(ctx, properties.children[0])).to.include("instanceProperty");
+      expect(renderNode(ctx, properties.children[0])).toContain("instanceProperty");
     });
 
     it("should have one matching method", () => {
-      expect(renderNode(ctx, methods.children[0])).to.include("method()");
+      expect(renderNode(ctx, methods.children[0])).toContain("method()");
     });
 
     it("should have one matching setter", () => {
-      expect(renderNode(ctx, setters.children[0])).to.include("setter(value)");
+      expect(renderNode(ctx, setters.children[0])).toContain("setter(value)");
     });
 
     it("should have one matching getter", () => {
-      expect(renderNode(ctx, getters.children[0])).to.include("getter()");
+      expect(renderNode(ctx, getters.children[0])).toContain("getter()");
     });
 
   }

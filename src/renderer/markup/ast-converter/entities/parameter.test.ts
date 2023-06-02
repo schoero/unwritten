@@ -73,7 +73,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
     });
 
     it("should render an `optional` tag", () => {
-      expect(renderedParameterForDocumentation).to.include("optional");
+      expect(renderedParameterForDocumentation).toContain("optional");
     });
 
   }
@@ -102,7 +102,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
     });
 
     it("should render an `rest` tag", () => {
-      expect(renderedParameterForDocumentation).to.include("rest");
+      expect(renderedParameterForDocumentation).toContain("rest");
     });
 
   }
@@ -125,7 +125,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
     it("should render default values", () => {
-      expect(renderedParameterForDocumentation).to.include("Default: 7");
+      expect(renderedParameterForDocumentation).toContain("Default: 7");
     });
 
   }

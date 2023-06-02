@@ -141,28 +141,28 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     );
 
     it("should render the public modifier", () => {
-      expect(modifiers[0]).to.include("public");
+      expect(modifiers[0]).toContain("public");
     });
 
     it("should render the private modifier", () => {
-      expect(modifiers[1]).to.include("private");
+      expect(modifiers[1]).toContain("private");
     });
 
     it("should render the static modifier", () => {
-      expect(modifiers[2]).to.include("static");
+      expect(modifiers[2]).toContain("static");
     });
 
     it("should render the readonly modifier", () => {
-      expect(modifiers[3]).to.include("readonly");
+      expect(modifiers[3]).toContain("readonly");
     });
 
     it("should render the accessor as get and set modifiers", () => {
-      expect(modifiers[4]).to.include("get");
-      expect(modifiers[4]).to.include("set");
+      expect(modifiers[4]).toContain("get");
+      expect(modifiers[4]).toContain("set");
     });
 
     it("should render the native private modifier", () => {
-      expect(modifiers[5]).to.include("private");
+      expect(modifiers[5]).toContain("private");
     });
 
   }
@@ -199,13 +199,13 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     ] = convertedType.children;
 
     it("should render the property name, type and description", () => {
-      expect(properties.children[0][0]).to.include("property");
-      expect(properties.children[0][0]).to.include("number");
-      expect(properties.children[0][0]).to.include("Property description");
+      expect(properties.children[0][0]).toContain("property");
+      expect(properties.children[0][0]).toContain("number");
+      expect(properties.children[0][0]).toContain("Property description");
 
-      expect(properties.children[1][0]).to.include("functionProperty");
-      expect(properties.children[1][0]).to.include("function");
-      expect(properties.children[1][0]).to.include("Function property description");
+      expect(properties.children[1][0]).toContain("functionProperty");
+      expect(properties.children[1][0]).toContain("function");
+      expect(properties.children[1][0]).toContain("Function property description");
     });
 
   }

@@ -173,7 +173,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     it.fails("should support readonly mapped type utilities", () => {
       assert(exportedReadonlyTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReadonlyTypeAlias.type.type?.kind === TypeKind.Object);
-      expect(exportedReadonlyTypeAlias.type.type.properties[0].modifiers).to.include("readonly");
+      expect(exportedReadonlyTypeAlias.type.type.properties[0].modifiers).toContain("readonly");
     });
 
   }

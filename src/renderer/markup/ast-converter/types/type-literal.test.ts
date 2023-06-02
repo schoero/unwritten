@@ -42,11 +42,11 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
     ] = convertedType.children;
 
     it("should have a matching construct signature", () => {
-      expect(renderNode(ctx, constructSignatures.children[0])).to.include("new ()");
+      expect(renderNode(ctx, constructSignatures.children[0])).toContain("new ()");
     });
 
     it("should have a matching call signature", () => {
-      expect(renderNode(ctx, callSignatures.children[0])).to.include("()");
+      expect(renderNode(ctx, callSignatures.children[0])).toContain("()");
     });
 
   }

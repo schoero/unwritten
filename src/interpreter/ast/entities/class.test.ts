@@ -115,7 +115,7 @@ scope("Interpreter", EntityKind.Class, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should support the abstract modifier", () => {
-      expect(exportedClass.modifiers).to.include("abstract");
+      expect(exportedClass.modifiers).toContain("abstract");
     });
 
   }

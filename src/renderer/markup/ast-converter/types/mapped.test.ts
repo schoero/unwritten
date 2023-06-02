@@ -37,18 +37,18 @@ scope("MarkupRenderer", TypeKind.Mapped, () => {
     });
 
     it("should support the readonly modifier", () => {
-      expect(properties[0]).to.include("readonly");
-      expect(properties[1]).to.include("readonly");
+      expect(properties[0]).toContain("readonly");
+      expect(properties[1]).toContain("readonly");
     });
 
     it("should support the optional modifier", () => {
-      expect(properties[0]).to.include("optional");
-      expect(properties[1]).to.include("optional");
+      expect(properties[0]).toContain("optional");
+      expect(properties[1]).toContain("optional");
     });
 
     it("should render the resolved types", () => {
-      expect((properties[0] as ASTNodes[])[2]).to.include("a");
-      expect((properties[1] as ASTNodes[])[2]).to.include("b");
+      expect((properties[0] as ASTNodes[])[2]).toContain("a");
+      expect((properties[1] as ASTNodes[])[2]).toContain("b");
     });
 
   }

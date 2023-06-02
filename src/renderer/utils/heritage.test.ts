@@ -123,7 +123,7 @@ scope("Renderer", "utils", () => {
 
         expect(extendedClassProperties[1].name).to.equal("staticProperty");
         expect(extendedClassProperties[1].type.kind).to.equal(TypeKind.Undefined);
-        expect(extendedClassProperties[1].modifiers).to.include("static");
+        expect(extendedClassProperties[1].modifiers).toContain("static");
 
       });
 

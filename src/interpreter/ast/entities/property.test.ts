@@ -205,18 +205,18 @@ scope("Interpreter", EntityKind.Property, () => {
 
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
 
-      expect(exportedTypeAlias.type.properties[0]!.modifiers).to.include("readonly");
+      expect(exportedTypeAlias.type.properties[0]!.modifiers).toContain("readonly");
 
-      expect(exportedClass.properties.find(property => property.name === "publicProperty")!.modifiers).to.include("public");
-      expect(exportedClass.properties.find(property => property.name === "privateProperty")!.modifiers).to.include("private");
-      expect(exportedClass.properties.find(property => property.name === "staticProperty")!.modifiers).to.include("static");
-      expect(exportedClass.properties.find(property => property.name === "readonlyProperty")!.modifiers).to.include("readonly");
-      expect(exportedClass.properties.find(property => property.name === "accessorProperty")!.modifiers).to.include("accessor");
-      expect(exportedClass.properties.find(property => property.name === "#nativePrivateProperty")!.modifiers).to.include("nativePrivate");
+      expect(exportedClass.properties.find(property => property.name === "publicProperty")!.modifiers).toContain("public");
+      expect(exportedClass.properties.find(property => property.name === "privateProperty")!.modifiers).toContain("private");
+      expect(exportedClass.properties.find(property => property.name === "staticProperty")!.modifiers).toContain("static");
+      expect(exportedClass.properties.find(property => property.name === "readonlyProperty")!.modifiers).toContain("readonly");
+      expect(exportedClass.properties.find(property => property.name === "accessorProperty")!.modifiers).toContain("accessor");
+      expect(exportedClass.properties.find(property => property.name === "#nativePrivateProperty")!.modifiers).toContain("nativePrivate");
 
-      expect(exportedAbstractClass.properties[0].modifiers).to.include("abstract");
+      expect(exportedAbstractClass.properties[0].modifiers).toContain("abstract");
 
-      expect(exportedExtendedClass.properties[0].modifiers).to.include("override");
+      expect(exportedExtendedClass.properties[0].modifiers).toContain("override");
 
     });
 

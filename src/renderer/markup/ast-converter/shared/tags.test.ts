@@ -24,9 +24,9 @@ scope("MarkupRenderer", "Tags", () => {
 
     assert(convertedTags, "Converted tags are undefined");
 
-    expect(convertedTags.children).to.include("readonly");
-    expect(convertedTags.children).to.include("optional");
-    expect(convertedTags.children).to.include("beta");
+    expect(convertedTags.children).toContain("readonly");
+    expect(convertedTags.children).toContain("optional");
+    expect(convertedTags.children).toContain("beta");
 
   });
 
