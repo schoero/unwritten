@@ -88,7 +88,7 @@ scope("Interpreter", EntityKind.Enum, () => {
     });
 
     it("should have a matching position", () => {
-      expect(exportedEnum.position).to.deep.equal({
+      expect(exportedEnum.position).toStrictEqual({
         column: 0,
         file: "/file.ts",
         line: 5

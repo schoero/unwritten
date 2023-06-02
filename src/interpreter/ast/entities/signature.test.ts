@@ -67,7 +67,7 @@ scope("Interpreter", EntityKind.Signature, () => {
     });
 
     it("should have a matching position", () => {
-      expect(exportedFunction.signatures[0]!.position).to.deep.equal({
+      expect(exportedFunction.signatures[0]!.position).toStrictEqual({
         column: 0,
         file: "/file.ts",
         line: 5

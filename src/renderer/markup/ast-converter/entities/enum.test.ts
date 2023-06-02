@@ -92,9 +92,9 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     });
 
     it("should have matching members", () => {
-      expect(members.children[0]).to.deep.equal(["A", "0", "A description"]);
-      expect(members.children[1]).to.deep.equal(["B", "1", ""]);
-      expect(members.children[2]).to.deep.equal(["C", "2", ""]);
+      expect(members.children[0]).toStrictEqual(["A", "0", "A description"]);
+      expect(members.children[1]).toStrictEqual(["B", "1", ""]);
+      expect(members.children[2]).toStrictEqual(["C", "2", ""]);
     });
 
   }
@@ -129,9 +129,9 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     ] = titleNode.children;
 
     it("should have string literal enumerated members", () => {
-      expect(members.children[0]).to.deep.equal(["A", ['"', "A", '"'], ""]);
-      expect(members.children[1]).to.deep.equal(["B", ['"', "B", '"'], ""]);
-      expect(members.children[2]).to.deep.equal(["C", ['"', "C", '"'], ""]);
+      expect(members.children[0]).toStrictEqual(["A", ['"', "A", '"'], ""]);
+      expect(members.children[1]).toStrictEqual(["B", ['"', "B", '"'], ""]);
+      expect(members.children[2]).toStrictEqual(["C", ['"', "C", '"'], ""]);
     });
 
   }

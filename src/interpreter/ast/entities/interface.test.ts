@@ -116,7 +116,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     });
 
     it("should have a matching position", () => {
-      expect(exportedInterface.position).to.deep.equal({
+      expect(exportedInterface.position).toStrictEqual({
         column: 0,
         file: "/file.ts",
         line: 5
