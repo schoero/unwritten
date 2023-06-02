@@ -1,4 +1,4 @@
-import { relative } from "node:path";
+import { relative } from "node:path/posix";
 
 import { createLinkNode, createSmallNode } from "unwritten:renderer/markup/utils/nodes.js";
 
