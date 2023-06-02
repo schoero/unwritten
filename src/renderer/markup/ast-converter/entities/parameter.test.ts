@@ -39,12 +39,12 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
       const renderedParameterForSignature = renderNode(ctx, convertedParametersForSignature);
       expect(renderedParameterForSignature).toBe("param");
       const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation.children[0].children[0]);
-      expect(renderedParameterForDocumentation).to.match(/param .*$/);
+      expect(renderedParameterForDocumentation).toMatch(/param .*$/);
     });
 
     it("should have a matching type", () => {
       const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation.children[0].children[0]);
-      expect(renderedParameterForDocumentation).to.match(/^.* number$/);
+      expect(renderedParameterForDocumentation).toMatch(/^.* number$/);
     });
 
   }

@@ -39,19 +39,19 @@ scope("MarkupRenderer", EntityKind.TypeParameter, () => {
 
     it("should have a matching name", () => {
       expect(renderedParametersForSignature).toBe("TypeParameter");
-      expect(renderedParameterForDocumentation).to.match(/.*<TypeParameter>.*$/);
+      expect(renderedParameterForDocumentation).toMatch(/.*<TypeParameter>.*$/);
     });
 
     it("should have a matching description", () => {
-      expect(renderedParameterForDocumentation).to.match(/.* Type parameter description .*/);
+      expect(renderedParameterForDocumentation).toMatch(/.* Type parameter description .*/);
     });
 
     it("should have a matching type", () => {
-      expect(renderedParameterForDocumentation).to.match(/^.* number .*/);
+      expect(renderedParameterForDocumentation).toMatch(/^.* number .*/);
     });
 
     it("should have a matching initializer", () => {
-      expect(renderedParameterForDocumentation).to.match(/.* Default: 7$/);
+      expect(renderedParameterForDocumentation).toMatch(/.* Default: 7$/);
     });
 
   }
