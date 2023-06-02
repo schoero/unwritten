@@ -18,6 +18,7 @@ type Entity<Kind> = {
 export type ExportableEntityKinds =
   | EntityKind.Class
   | EntityKind.Enum
+  | EntityKind.ExportAssignment
   | EntityKind.Function
   | EntityKind.Interface
   | EntityKind.Module

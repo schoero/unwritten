@@ -36,7 +36,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const interfaceEntity = createInterfaceEntity(compilerContext, symbol);
@@ -141,7 +141,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const interfaceEntity = createInterfaceEntity(compilerContext, symbol);

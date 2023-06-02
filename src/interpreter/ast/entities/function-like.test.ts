@@ -17,7 +17,7 @@ scope("Interpreter", EntityKind.Function, () => {
         export function functionSymbol(test: string): void {}
       `;
 
-      const { exportedSymbols, ctx } = compile(testFileContent);
+      const { ctx, exportedSymbols } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
 

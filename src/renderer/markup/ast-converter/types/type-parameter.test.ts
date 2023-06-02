@@ -21,7 +21,7 @@ scope("MarkupRenderer", TypeKind.TypeParameter, () => {
       export type Type<T extends string> = T;
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);

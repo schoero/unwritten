@@ -49,7 +49,7 @@ export function compile(ctx: DefaultContext, code: string, tsconfig?: ts.Compile
 
 function getCompilerOptions(ctx: DefaultContext, tsconfig?: ts.CompilerOptions): ts.CompilerOptions {
 
-  const { options, errors } = ts.convertCompilerOptionsFromJson(tsconfig, ".");
+  const { errors, options } = ts.convertCompilerOptionsFromJson(tsconfig, ".");
 
   reportCompilerDiagnostics(ctx, errors);
 

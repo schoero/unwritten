@@ -9,7 +9,7 @@ import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { convertObjectLiteralTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
 import {
   convertPropertyEntityForDocumentation,
-  convertPropertyEntityForSignature
+  convertPropertyEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
@@ -42,14 +42,14 @@ scope("MarkupRenderer", EntityKind.Property, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const interfaceEntity = createInterfaceEntity(compilerContext, symbol);
     const propertyEntity = interfaceEntity.properties[0];
     const ctx = createRenderContext();
 
-    const convertedPropertyForSignature = convertPropertyEntityForSignature(ctx, propertyEntity);
+    const convertedPropertyForSignature = convertPropertyEntityForTableOfContents(ctx, propertyEntity);
     const convertedPropertyForDocumentation = convertPropertyEntityForDocumentation(ctx, propertyEntity);
 
     const [
@@ -120,7 +120,7 @@ scope("MarkupRenderer", EntityKind.Property, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const classEntity = createClassEntity(compilerContext, symbol);
@@ -180,7 +180,7 @@ scope("MarkupRenderer", EntityKind.Property, () => {
       };
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "obj")!;
     const variableEntity = createVariableEntity(compilerContext, symbol);

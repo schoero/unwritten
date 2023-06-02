@@ -15,7 +15,7 @@ scope("Interpreter", TypeKind.Unknown, () => {
       export type UnknownType = unknown;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "UnknownType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

@@ -21,7 +21,7 @@ scope("Interpreter", EntityKind.Setter, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);

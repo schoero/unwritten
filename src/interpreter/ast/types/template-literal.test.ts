@@ -14,7 +14,7 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
     const testFileContent = "" +
       "export type TemplateLiteralTypeAlias = `${number}px`";
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TemplateLiteralTypeAlias")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -48,7 +48,7 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
     const testFileContent = "" +
       "export type TemplateLiteralTypeAlias = `PREFIX-${number}-MIDDLE-${string}-SUFFIX`";
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TemplateLiteralTypeAlias")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -79,7 +79,7 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
     const testFileContent = "" +
       "export type TemplateLiteralTypeAlias = `border-${'top' | 'bottom' | 'left' | 'right'}-${'width'}: ${number}px`";
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TemplateLiteralTypeAlias")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -113,7 +113,7 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
       "type TemplateLiteralTypeAlias<Min extends number, Max extends number> = `${Min}...${Max}`;" +
       "export type Test = TemplateLiteralTypeAlias<10, 20>;";
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Test")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

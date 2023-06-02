@@ -20,7 +20,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
       export type Type = [string, number];
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
@@ -42,7 +42,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
       export type Type = [first: string, second: number];
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
@@ -64,7 +64,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
       export type Type = [string, number?];
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
@@ -86,7 +86,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
       export type Type = [string, ...number[]];
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
@@ -108,7 +108,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
       export type Type = [string, ...(string | number)[]];
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);

@@ -17,7 +17,7 @@ scope("Interpreter", "Export assignment", () => {
       export default () => {};
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent);
+    const { ctx, fileSymbol } = compile(testFileContent);
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should be able to interpret esm export expressions", () => {
@@ -36,7 +36,7 @@ scope("Interpreter", "Export assignment", () => {
       };
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent);
+    const { ctx, fileSymbol } = compile(testFileContent);
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should be able to interpret esm export expressions", () => {

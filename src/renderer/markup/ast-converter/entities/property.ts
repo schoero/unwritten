@@ -28,7 +28,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertPropertyEntityForSignature(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
+export function convertPropertyEntityForTableOfContents(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
   const name = propertyEntity.name;
   const id = propertyEntity.symbolId;
 

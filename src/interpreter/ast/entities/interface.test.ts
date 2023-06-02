@@ -16,7 +16,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       export interface Interface {};
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceEntity(ctx, symbol);
@@ -42,7 +42,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceEntity(ctx, symbol);
@@ -90,7 +90,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceEntity(ctx, symbol);
@@ -136,7 +136,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceEntity(ctx, symbol);
@@ -161,7 +161,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedInterfaceBSymbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
     const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
@@ -207,7 +207,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedInterfaceCSymbol = exportedSymbols.find(s => s.name === "InterfaceC")!;
     const exportedInterfaceC = createInterfaceEntity(ctx, exportedInterfaceCSymbol);
@@ -239,7 +239,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "GenericInterface")!;
     const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
@@ -264,7 +264,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "GenericInterface")!;
     const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
@@ -287,7 +287,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
     const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);

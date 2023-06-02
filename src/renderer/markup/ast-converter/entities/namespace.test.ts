@@ -32,7 +32,7 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Namespace")!;
     const namespaceEntity = createNamespaceEntity(compilerContext, symbol);
@@ -97,7 +97,7 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Namespace")!;
     const namespaceEntity = createNamespaceEntity(compilerContext, symbol);

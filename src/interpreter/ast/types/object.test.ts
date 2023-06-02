@@ -19,7 +19,7 @@ scope("Interpreter", TypeKind.Object, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "ObjectType")!;
     const tsType = ctx.checker.getTypeAtLocation(symbol.declarations![0]!);

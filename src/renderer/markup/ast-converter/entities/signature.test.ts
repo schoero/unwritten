@@ -40,7 +40,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       export function testSignature(): void;
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "testSignature")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
@@ -139,7 +139,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "testSignature")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
@@ -194,7 +194,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       };
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "obj")!;
     const variableEntity = createVariableEntity(compilerContext, symbol);
@@ -262,7 +262,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       };
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "obj")!;
     const variableEntity = createVariableEntity(compilerContext, symbol);

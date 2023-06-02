@@ -35,7 +35,7 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
       export const numberVariable = 7;
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "numberVariable")!;
     const variableEntity = createVariableEntity(compilerContext, symbol);

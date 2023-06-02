@@ -18,7 +18,7 @@ scope("Interpreter", EntityKind.Function, () => {
       export type FunctionType = () => boolean;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "FunctionType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -36,7 +36,7 @@ scope("Interpreter", EntityKind.Function, () => {
       export type FunctionType = () => boolean;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "FunctionType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -68,7 +68,7 @@ scope("Interpreter", EntityKind.Function, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const objectType1Symbol = exportedSymbols.find(s => s.name === "ObjectType1")!;
     const exportedTypeAlias1 = createTypeAliasEntity(ctx, objectType1Symbol);

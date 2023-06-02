@@ -16,7 +16,7 @@ scope("Interpreter", TypeKind.NumberLiteral, () => {
       export type BigIntLiteralTypeNegative = -7n;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const bigIntLiteralTypeAlias = exportedSymbols.find(s => s.name === "BigIntLiteralType")!;
     const bigIntLIteralTypeAliasNegative = createTypeAliasEntity(ctx, bigIntLiteralTypeAlias);

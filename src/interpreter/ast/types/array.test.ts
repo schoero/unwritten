@@ -19,7 +19,7 @@ scope("Interpreter", TypeKind.Array, () => {
       export type ArrayType = string[];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -37,7 +37,7 @@ scope("Interpreter", TypeKind.Array, () => {
       export type ArrayType = Array<string>;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "ArrayType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -56,7 +56,7 @@ scope("Interpreter", TypeKind.Array, () => {
       export const array = ["a", "b"];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "array")!;
     const exportedVariable = createVariableEntity(ctx, symbol);
@@ -74,7 +74,7 @@ scope("Interpreter", TypeKind.Array, () => {
       export const array = new Array("a", "b")
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "array")!;
     const exportedVariable = createVariableEntity(ctx, symbol);

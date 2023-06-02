@@ -18,7 +18,7 @@ scope("JSONRenderer", "JSON", () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "add")!;
     const functionEntity = createFunctionEntity(ctx, symbol);

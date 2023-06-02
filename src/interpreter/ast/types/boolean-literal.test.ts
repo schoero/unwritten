@@ -15,7 +15,7 @@ scope("Interpreter", TypeKind.BooleanLiteral, () => {
       export type BooleanLiteralType = true;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "BooleanLiteralType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

@@ -405,7 +405,14 @@ export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
 
 //-- Class
 
-export type ConvertedClassEntityForTableOfContents = AnchorNode;
+export type ConvertedClassEntityForTableOfContents = TitleNode<
+(
+  | ConvertedGetterEntityForTableOfContents
+  | ConvertedMethodEntityForTableOfContents
+  | ConvertedPropertyEntityForTableOfContents
+  | ConvertedSetterEntityForTableOfContents
+)[]
+>;
 export type ConvertedClassEntityForDocumentation = SectionNode<[
   children: TitleNode<[
     position: ConvertedPosition,

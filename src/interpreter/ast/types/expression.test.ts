@@ -18,7 +18,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
@@ -39,7 +39,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       export class Class extends Base<"Hello"> { }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
@@ -79,7 +79,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       export class Class extends getBase() {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
@@ -122,7 +122,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       export class Class extends getBase() {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
@@ -152,7 +152,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
@@ -181,7 +181,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
@@ -214,7 +214,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);

@@ -24,7 +24,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
       export type Type = () => boolean;
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
@@ -65,7 +65,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
       export type Type = (a: string, b: number) => boolean;
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
@@ -131,7 +131,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
       };
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "ObjectType")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);

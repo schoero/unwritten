@@ -49,12 +49,19 @@ export function createItalicNode<Children extends ASTNodes[]>(...children: Child
   };
 }
 
-export function createLinkNode(children: ASTNodes, link: string): LinkNode {
+export function createLinkNode<Children extends ASTNodes[]>(children: Children, link: string): LinkNode<Children>;
+export function createLinkNode<Children extends ASTNodes[]>(...childrenAndLink: [...children: Children, link: string]): LinkNode<Children>;
+export function createLinkNode<Children extends ASTNodes[]>(...childrenLink: [...children: Children, link: string]): LinkNode<Children> {
+
+  const link = childrenLink[childrenLink.length - 1] as string;
+  const children = childrenLink.slice(0, -1) as Children;
+
   return {
     children,
     kind: ASTNodeKinds.Link,
     link
   };
+
 }
 
 export function createListNode<Children extends ASTNodes[]>(children: Children): ListNode<Children>;

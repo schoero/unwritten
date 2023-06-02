@@ -16,7 +16,7 @@ scope("Interpreter", TypeKind.ObjectLiteral, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "objectLiteral")!;
     const exportedVariable = createVariableEntity(ctx, symbol);
@@ -39,7 +39,7 @@ scope("Interpreter", TypeKind.ObjectLiteral, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "objectLiteral")!;
     const exportedVariable = createVariableEntity(ctx, symbol);

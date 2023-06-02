@@ -60,6 +60,8 @@ export interface MarkupRenderConfig {
     enum_other?: string;
     example_one?: string;
     example_other?: string;
+    "export-assignment_one"?: string;
+    "export-assignment_other"?: string;
     function_one?: string;
     function_other?: string;
     getter_one?: string;

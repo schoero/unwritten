@@ -17,7 +17,7 @@ scope("Interpreter", TypeKind.Class, () => {
       export type ClassType = InstanceType<typeof Class>;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "ClassType")!;
     const exportedClassType = createTypeAliasEntity(ctx, symbol);
@@ -38,7 +38,7 @@ scope("Interpreter", TypeKind.Class, () => {
       export type ClassType = InstanceType<typeof Class>;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "ClassType")!;
     const exportedClassType = createTypeAliasEntity(ctx, symbol);

@@ -16,7 +16,7 @@ scope("Interpreter", TypeKind.TypeQuery, () => {
       export type TypeQuery = typeof test;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const conditionalTypeAliasSymbol = exportedSymbols.find(s => s.name === "TypeQuery")!;
     const conditionalTypeAlias = createTypeAliasEntity(ctx, conditionalTypeAliasSymbol);

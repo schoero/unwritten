@@ -15,7 +15,7 @@ scope("Interpreter", TypeKind.Any, () => {
       export type AnyType = any;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "AnyType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

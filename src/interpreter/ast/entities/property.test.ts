@@ -28,7 +28,7 @@ scope("Interpreter", EntityKind.Property, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const typeAliasSymbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const objectLiteralSymbol = exportedSymbols.find(s => s.name === "objectLiteral")!;
@@ -81,7 +81,7 @@ scope("Interpreter", EntityKind.Property, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const typeAliasSymbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const objectLiteralSymbol = exportedSymbols.find(s => s.name === "objectLiteral")!;
@@ -146,7 +146,7 @@ scope("Interpreter", EntityKind.Property, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const typeAliasSymbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const classSymbol = exportedSymbols.find(s => s.name === "Class")!;
@@ -189,7 +189,7 @@ scope("Interpreter", EntityKind.Property, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const typeAliasSymbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const classSymbol = exportedSymbols.find(s => s.name === "Class")!;

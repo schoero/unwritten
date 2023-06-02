@@ -20,7 +20,7 @@ scope("Interpreter", EntityKind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
@@ -45,7 +45,7 @@ scope("Interpreter", EntityKind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
@@ -93,7 +93,7 @@ scope("Interpreter", EntityKind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const functionSymbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const interfaceSymbol = exportedSymbols.find(s => s.name === "InterfaceSymbol")!;
@@ -119,7 +119,7 @@ scope("Interpreter", EntityKind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
@@ -141,7 +141,7 @@ scope("Interpreter", EntityKind.Signature, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);

@@ -36,15 +36,15 @@ import type { SignatureEntity } from "unwritten:interpreter:type-definitions/ent
 import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
+  ConvertedPropertyEntityForTableOfContents,
   ConvertedReturnTypeForDocumentation,
   ConvertedReturnTypeForType,
   ConvertedSignatureEntityForDocumentation,
-  ConvertedSignatureEntityForTableOfContents,
   ConvertedSignatureEntityForType
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForTableOfContents {
+export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedPropertyEntityForTableOfContents {
 
   const convertedSignature = convertSignature(ctx, signatureEntity);
   const renderedSignature = renderNode(ctx, convertedSignature);

@@ -15,7 +15,7 @@ scope("Interpreter", TypeKind.Void, () => {
       export type VoidType = void;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "VoidType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

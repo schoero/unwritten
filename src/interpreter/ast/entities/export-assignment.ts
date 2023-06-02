@@ -27,5 +27,4 @@ export function createExportAssignment(ctx: InterpreterContext, symbol: Symbol):
     type
   };
 
-
 }

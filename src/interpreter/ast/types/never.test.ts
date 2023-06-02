@@ -15,7 +15,7 @@ scope("Interpreter", TypeKind.Never, () => {
       export type NeverType = never;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "NeverType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

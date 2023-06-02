@@ -7,10 +7,13 @@ import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import {
   convertFunctionLikeEntityForDocumentation,
+  convertFunctionLikeEntityForTableOfContents,
   convertPropertyEntityForDocumentation,
-  convertSignatureEntityForDocumentation
+  convertPropertyEntityForTableOfContents,
+  convertSignatureEntityForDocumentation,
+  convertSignatureEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendClassEntityConstructorsWithHeritage,
@@ -26,9 +29,30 @@ import type {
 
 
 export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
+
   const name = classEntity.name;
-  const id = classEntity.symbolId;
-  return createAnchorNode(name, id);
+
+  const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
+  const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
+  const methodEntities = extendClassEntityEntitiesWithHeritage(classEntity, "methods");
+  const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
+  const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
+
+  const convertedConstructSignatures = constructorEntity?.signatures.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
+  const convertedProperties = propertyEntities.map(propertyEntity => convertPropertyEntityForTableOfContents(ctx, propertyEntity));
+  const convertedMethods = methodEntities.map(methodEntity => convertFunctionLikeEntityForTableOfContents(ctx, methodEntity));
+  const convertedSetters = setterEntities.map(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
+  const convertedGetters = getterEntities.map(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
+
+  return createTitleNode(
+    name,
+    ...convertedConstructSignatures ?? [],
+    ...convertedProperties,
+    ...convertedMethods,
+    ...convertedSetters,
+    ...convertedGetters
+  );
+
 }
 
 

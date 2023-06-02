@@ -17,7 +17,7 @@ scope("Interpreter", EntityKind.Variable, () => {
       export const variableSymbol = "Hello World";
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "variableSymbol")!;
     const exportedVariable = createVariableEntity(ctx, symbol);
@@ -38,7 +38,7 @@ scope("Interpreter", EntityKind.Variable, () => {
       export const variableSymbol = "Hello World";
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "variableSymbol")!;
     const exportedVariable = createVariableEntity(ctx, symbol);

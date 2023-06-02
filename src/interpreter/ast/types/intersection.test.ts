@@ -16,7 +16,7 @@ scope("Interpreter", TypeKind.Intersection, () => {
       export type IntersectionType = { a: string } & { b: number };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "IntersectionType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -34,7 +34,7 @@ scope("Interpreter", TypeKind.Intersection, () => {
       export type IntersectionType = { a: string } & { b: number };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "IntersectionType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

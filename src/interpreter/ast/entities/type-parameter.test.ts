@@ -16,7 +16,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
       export type GenericTypeAlias<T> = T;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "GenericTypeAlias")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -35,7 +35,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
       export type Generic<T extends string> = T;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Generic")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -53,7 +53,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
       export type Generic<T extends string = "hello"> = T;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Generic")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -73,7 +73,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
       export type Generic<T extends string> = T;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Generic")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

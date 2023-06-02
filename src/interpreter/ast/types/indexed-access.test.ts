@@ -21,7 +21,7 @@ scope("Interpreter", TypeKind.IndexedAccess, () => {
       export type IndexedAccess = TypeLiteral["prop"];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "IndexedAccess")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -55,7 +55,7 @@ scope("Interpreter", TypeKind.IndexedAccess, () => {
       export type Type<T extends { prop: string; }> = T["prop"];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

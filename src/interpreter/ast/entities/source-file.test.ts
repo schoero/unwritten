@@ -16,7 +16,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
       export type SomeTypeAlias = string;
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent);
+    const { ctx, fileSymbol } = compile(testFileContent);
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should be able to parse a source file", () => {
@@ -31,7 +31,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
       export type SomeTypeAlias = string;
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent);
+    const { ctx, fileSymbol } = compile(testFileContent);
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should have a matching kind", () => {
@@ -59,7 +59,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
       export default test;
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent);
+    const { ctx, fileSymbol } = compile(testFileContent);
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should filter out default exports if they are exported as named exports", () => {
@@ -75,7 +75,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
       export default test;
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent);
+    const { ctx, fileSymbol } = compile(testFileContent);
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should not filter out default exports if they aren't exported as named exports", () => {
@@ -90,7 +90,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
       export default () => {};
     `;
 
-    const { fileSymbol, ctx } = compile(testFileContent);
+    const { ctx, fileSymbol } = compile(testFileContent);
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should not filter out default exports if they aren't exported as named exports", () => {

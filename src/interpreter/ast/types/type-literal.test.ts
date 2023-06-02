@@ -20,7 +20,7 @@ scope("Interpreter", TypeKind.TypeLiteral, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TypeLiteral")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -45,7 +45,7 @@ scope("Interpreter", TypeKind.TypeLiteral, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TypeLiteral")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

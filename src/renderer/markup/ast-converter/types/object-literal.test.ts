@@ -25,7 +25,7 @@ scope("MarkupRenderer", TypeKind.ObjectLiteral, () => {
       };
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "objectLiteral")!;
     const variableEntity = createVariableEntity(compilerContext, symbol);

@@ -20,7 +20,7 @@ scope("Interpreter", EntityKind.Enum, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedTypeEnum = createEnumEntity(ctx, symbol);
@@ -37,7 +37,7 @@ scope("Interpreter", EntityKind.Enum, () => {
       export enum Enum {};
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedEnum = createEnumEntity(ctx, symbol);
@@ -62,7 +62,7 @@ scope("Interpreter", EntityKind.Enum, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedEnum = createEnumEntity(ctx, symbol);
@@ -121,7 +121,7 @@ scope("Interpreter", EntityKind.Enum, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedEnum = createEnumEntity(ctx, symbol);

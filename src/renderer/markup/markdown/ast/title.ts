@@ -25,7 +25,7 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
 
   const beginningEmptyLine = childrenBeginsWithEmptyLine ? "" : renderedEmptyLine;
 
-  return [
+  const returnValue = [
     renderedEmptyLine,
     renderedTitle,
     beginningEmptyLine,
@@ -33,5 +33,7 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
   ]
     .filter(renderedNode => !!renderedNode)
     .join(renderNewLine(ctx));
+
+  return returnValue;
 
 }

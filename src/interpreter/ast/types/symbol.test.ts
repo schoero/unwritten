@@ -15,7 +15,7 @@ scope("Interpreter", TypeKind.Symbol, () => {
       export type SymbolType = symbol;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "SymbolType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

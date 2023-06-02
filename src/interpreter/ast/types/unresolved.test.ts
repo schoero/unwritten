@@ -16,7 +16,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       export type Unresolved = Symbol;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent, undefined, {
+    const { ctx, exportedSymbols } = compile(testFileContent, undefined, {
       interpreterConfig: {
         exclude: ["node_modules/**/*"]
       }
@@ -39,7 +39,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       export type UnresolvedSet = Set<string>;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "UnresolvedSet")!;
     const exportedReferenceTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
@@ -59,7 +59,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       export type UnresolvedMap = Map<string, number>;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "UnresolvedMap")!;
     const exportedReferenceTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
@@ -79,7 +79,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       export type UnresolvedPromise = Promise<string>;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "UnresolvedPromise")!;
     const exportedReferenceTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
@@ -103,7 +103,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedFunctionSymbol = exportedSymbols.find(s => s.name === "generatorFunction")!;
     const exportedFunction = createFunctionEntity(ctx, exportedFunctionSymbol);
@@ -131,7 +131,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       }
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedFunctionSymbol = exportedSymbols.find(s => s.name === "test")!;
     const exportedFunctionEntity = createFunctionEntity(ctx, exportedFunctionSymbol);

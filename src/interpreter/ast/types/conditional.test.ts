@@ -17,7 +17,7 @@ scope("Interpreter", TypeKind.Conditional, () => {
       export type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const conditionalTypeAliasSymbol = exportedSymbols.find(s => s.name === "ConditionalTypeAlias")!;
     const conditionalTypeAlias = createTypeAliasEntity(ctx, conditionalTypeAliasSymbol);

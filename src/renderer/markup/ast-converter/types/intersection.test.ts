@@ -20,7 +20,7 @@ scope("MarkupRenderer", TypeKind.Intersection, () => {
       export type Type = { a: string } & { b: number };
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);

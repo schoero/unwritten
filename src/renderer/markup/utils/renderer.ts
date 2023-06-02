@@ -38,6 +38,8 @@ export function getCategoryName(entityKind: ExportableEntityKinds): keyof Transl
       return "type-alias";
     case EntityKind.Variable:
       return "variable";
+    case EntityKind.ExportAssignment:
+      return "export-assignment";
   }
 }
 

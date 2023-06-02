@@ -32,7 +32,7 @@ scope("MarkupRenderer", EntityKind.Module, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Module")!;
     const moduleEntity = createModuleEntity(compilerContext, symbol);
@@ -96,7 +96,7 @@ scope("MarkupRenderer", EntityKind.Module, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Module")!;
     const moduleEntity = createModuleEntity(compilerContext, symbol);

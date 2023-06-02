@@ -16,7 +16,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
       export function functionSymbol(param: string): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
@@ -38,7 +38,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
       export function functionSymbol(param: string): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
@@ -76,7 +76,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
       export function functionSymbol(param?: string): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
@@ -95,7 +95,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
       export function functionSymbol(param: string = "test"): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
@@ -115,7 +115,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
       export function functionSymbol(...param: string[]): void {}
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);

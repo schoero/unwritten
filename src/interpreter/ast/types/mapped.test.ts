@@ -19,7 +19,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "MappedTypeLiteral")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -64,7 +64,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "MappedTypeLiteral")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -135,7 +135,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
       };
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "fn")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);

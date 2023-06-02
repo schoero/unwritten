@@ -23,8 +23,10 @@ import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js"
 import {
   isClassEntity,
   isEnumEntity,
+  isExportAssignmentEntity,
   isFunctionEntity,
   isInterfaceEntity,
+  isModuleEntity,
   isNamespaceEntity,
   isTypeAliasEntity,
   isVariableEntity
@@ -57,9 +59,13 @@ export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entit
     return convertEnumEntityForTableOfContents(ctx, entity);
   } else if(isClassEntity(entity)){
     return convertClassEntityForTableOfContents(ctx, entity);
-  } else {
+  } else if(isExportAssignmentEntity(entity)){
+    // return convertExportAssignment(ctx, entity);
+  } else if(isModuleEntity(entity)){
     return convertModuleEntityForTableOfContents(ctx, entity);
   }
+
+  throw new Error(`Unknown entity kind: ${entity.kind}`);
 
 }
 
@@ -80,9 +86,13 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
     return convertEnumEntityForDocumentation(ctx, entity);
   } else if(isClassEntity(entity)){
     return convertClassEntityForDocumentation(ctx, entity);
-  } else {
+  } else if(isExportAssignmentEntity(entity)){
+    // return convertExportAssignment(ctx, entity);
+  } else if(isModuleEntity(entity)){
     return convertModuleEntityForDocumentation(ctx, entity);
   }
+
+  throw new Error(`Unknown entity kind: ${entity.kind}`);
 
 }
 

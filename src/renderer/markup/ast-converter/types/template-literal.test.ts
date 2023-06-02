@@ -17,7 +17,7 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
 
     const testFileContent = "export type Type = `${number}px`";
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
@@ -37,7 +37,7 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
 
     const testFileContent = "export type Type = `PREFIX-${number}-MIDDLE-${string}-SUFFIX`";
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
@@ -57,7 +57,7 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
 
     const testFileContent = "export type Type = `border-${\"top\" | \"bottom\" | \"left\" | \"right\"}-${\"width\"}: ${number}px`";
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);

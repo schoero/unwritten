@@ -16,7 +16,7 @@ scope("Interpreter", TypeKind.Tuple, () => {
       export type TupleType = [string, number];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TupleType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -34,7 +34,7 @@ scope("Interpreter", TypeKind.Tuple, () => {
       export type TupleType = [string, number];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TupleType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -54,7 +54,7 @@ scope("Interpreter", TypeKind.Tuple, () => {
       export type TupleTypeWithRestInTheMiddle = [ string, ...number[], string];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const tupleTypeAliasWithRestAtTheEndSymbol = exportedSymbols.find(s => s.name === "TupleTypeWithRestAtTheEnd")!;
     const tupleTypeAliasWithRestAtTheBeginningSymbol = exportedSymbols.find(s => s.name === "TupleTypeWithRestAtTheBeginning")!;
@@ -93,7 +93,7 @@ scope("Interpreter", TypeKind.Tuple, () => {
       export type TupleTypeWithOptional = [string, number?];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TupleTypeWithOptional")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -113,7 +113,7 @@ scope("Interpreter", TypeKind.Tuple, () => {
       export type NamedTupleType = [prefix: string, suffix: string];
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "NamedTupleType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

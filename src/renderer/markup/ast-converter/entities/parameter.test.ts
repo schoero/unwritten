@@ -23,7 +23,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
       export function test(param: number) {}
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "test")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
@@ -55,7 +55,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
       export function test(a: number, b?: number) {}
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "test")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
@@ -84,7 +84,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
       export function test(a: number, ...b: number[]) {}
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "test")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
@@ -113,7 +113,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
       export function test(a: number = 7) {}
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "test")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);

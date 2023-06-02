@@ -46,6 +46,8 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     "enum_other": "enums",
     "example_one": "example",
     "example_other": "examples",
+    "export-assignment_one": "export assignment",
+    "export-assignment_other": "export assignments",
     "function_one": "function",
     "function_other": "functions",
     "getter_one": "getter",

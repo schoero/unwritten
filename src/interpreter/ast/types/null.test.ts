@@ -15,7 +15,7 @@ scope("Interpreter", TypeKind.Null, () => {
       export type NullType = null;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "NullType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

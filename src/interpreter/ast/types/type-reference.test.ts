@@ -17,7 +17,7 @@ scope("Interpreter", TypeKind.TypeReference, () => {
       export type Reference = A;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "Reference")!;
     const exportedReferenceTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
@@ -47,7 +47,7 @@ scope("Interpreter", TypeKind.TypeReference, () => {
       export type Resolved = Generic<"test">;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Resolved")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -67,7 +67,7 @@ scope("Interpreter", TypeKind.TypeReference, () => {
       export type FalsyConditionalTypeReference = ConditionalTypeAlias<"number">;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const truthyConditionalTypeReferenceSymbol = exportedSymbols.find(s => s.name === "TruthyConditionalTypeReference")!;
     const truthyConditionalTypeReference = createTypeAliasEntity(ctx, truthyConditionalTypeReferenceSymbol);

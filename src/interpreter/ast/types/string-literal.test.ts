@@ -15,7 +15,7 @@ scope("Interpreter", TypeKind.StringLiteral, () => {
       export type StringLiteralType = "Hello world";
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "StringLiteralType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

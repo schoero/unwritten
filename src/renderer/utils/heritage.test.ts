@@ -33,7 +33,7 @@ scope("Renderer", "utils", () => {
         }
       `;
 
-      const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+      const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
       const interfaceEntity = createInterfaceEntity(compilerContext, symbol);
@@ -67,7 +67,7 @@ scope("Renderer", "utils", () => {
         }
       `;
 
-      const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+      const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "InterfaceB")!;
       const interfaceEntity = createInterfaceEntity(compilerContext, symbol);
@@ -106,7 +106,7 @@ scope("Renderer", "utils", () => {
         }
       `;
 
-      const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+      const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "Class")!;
       const classEntity = createClassEntity(compilerContext, symbol);
@@ -140,7 +140,7 @@ scope("Renderer", "utils", () => {
         }
       `;
 
-      const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+      const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "Class")!;
       const classEntity = createClassEntity(compilerContext, symbol);
@@ -164,7 +164,7 @@ scope("Renderer", "utils", () => {
         }
       `;
 
-      const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+      const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "Class")!;
       const classEntity = createClassEntity(compilerContext, symbol);
@@ -190,7 +190,7 @@ scope("Renderer", "utils", () => {
         }
       `;
 
-      const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+      const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
       const symbol = exportedSymbols.find(s => s.name === "Class")!;
       const classEntity = createClassEntity(compilerContext, symbol);

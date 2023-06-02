@@ -16,7 +16,7 @@ scope("Interpreter", TypeKind.Union, () => {
       export type UnionType = string | number;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "UnionType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -38,7 +38,7 @@ scope("Interpreter", TypeKind.Union, () => {
       export type UnionType = string | number;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "UnionType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);

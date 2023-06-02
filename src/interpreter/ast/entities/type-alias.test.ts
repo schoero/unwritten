@@ -17,7 +17,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
       export type TypeAlias = string;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -38,7 +38,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
       export type TypeAlias = string;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "TypeAlias")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -79,7 +79,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
       export type GenericTypeAlias<T> = T;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "GenericTypeAlias")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -99,7 +99,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
       export type Generic<T extends string> = T;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Generic")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -118,7 +118,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
       export type Resolved = Generic<"hello">;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Resolved")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
@@ -147,7 +147,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
       }>;
     `;
 
-    const { exportedSymbols, ctx } = compile(testFileContent);
+    const { ctx, exportedSymbols } = compile(testFileContent);
 
     const uppercaseSymbol = exportedSymbols.find(s => s.name === "UpperCasedType")!;
     const exportedUppercaseTypeAlias = createTypeAliasEntity(ctx, uppercaseSymbol);

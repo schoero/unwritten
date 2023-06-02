@@ -18,8 +18,8 @@ scope("MarkupRenderer", "Example", () => {
   assert(convertedExample, "Converted example is undefined");
 
   const {
-    title,
-    children
+    children,
+    title
   } = convertedExample;
 
   it("should have a matching title", () => {

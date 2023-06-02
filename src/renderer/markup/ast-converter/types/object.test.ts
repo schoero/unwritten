@@ -31,7 +31,7 @@ scope("MarkupRenderer", TypeKind.Object, () => {
       }
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const typeAliasEntity = createClassEntity(compilerContext, symbol);
@@ -82,7 +82,7 @@ scope("MarkupRenderer", TypeKind.Object, () => {
       };
     `;
 
-    const { exportedSymbols, ctx: compilerContext } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "Type")!;
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
