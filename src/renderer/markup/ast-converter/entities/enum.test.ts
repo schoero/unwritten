@@ -67,7 +67,7 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     });
 
     it("should have a position", () => {
-      expect(position).to.not.equal("");
+      expect(position).not.toBe("");
     });
 
     it("should have matching tags", () => {

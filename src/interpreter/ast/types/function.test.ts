@@ -86,7 +86,7 @@ scope("Interpreter", EntityKind.Function, () => {
 
     it("should not parse object types with anything else as functions", () => {
       expect(exportedTypeAlias3.kind).toBe(EntityKind.TypeAlias);
-      expect(exportedTypeAlias3.type.kind).to.not.equal(TypeKind.Function);
+      expect(exportedTypeAlias3.type.kind).not.toBe(TypeKind.Function);
     });
 
     it("should have matching signatures", () => {

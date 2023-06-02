@@ -69,7 +69,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a position", () => {
       assert(isSmallNode(position));
-      expect(position.children[0]).to.not.equal("");
+      expect(position.children[0]).not.toBe("");
     });
 
     it("should have no tags", () => {
@@ -201,7 +201,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a interface position", () => {
-      expect(interfacePosition).not.toBeUndefined();
+      expect(interfacePosition).toBeDefined();
     });
 
     it("should have a interface tags", () => {
@@ -226,7 +226,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a call signature position", () => {
-      expect(callSignaturePosition).not.toBeUndefined();
+      expect(callSignaturePosition).toBeDefined();
     });
 
     it("should have a call signature tags", () => {
