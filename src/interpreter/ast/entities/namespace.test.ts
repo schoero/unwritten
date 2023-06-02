@@ -44,11 +44,11 @@ scope("Interpreter", EntityKind.Namespace, () => {
   });
 
   it("should be deprecated", () => {
-    expect(exportedNamespace).to.haveOwnProperty("deprecated");
+    expect(exportedNamespace).toHaveProperty("deprecated");
   });
 
   it("should be beta", () => {
-    expect(exportedNamespace).to.haveOwnProperty("beta");
+    expect(exportedNamespace).toHaveProperty("beta");
   });
 
   it("should have parsed exports", () => {
