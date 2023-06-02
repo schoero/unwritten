@@ -52,7 +52,7 @@ scope("Interpreter", EntityKind.Module, () => {
   });
 
   it("should have parsed exports", () => {
-    expect(exportedModule.exports.length).toBe(1);
+    expect(exportedModule.exports).toHaveLength(1);
   });
 
 });

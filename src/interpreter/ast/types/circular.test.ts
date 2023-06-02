@@ -26,7 +26,7 @@ scope("Interpreter", TypeKind.Circular, () => {
     const exportedInterfaceA = createInterfaceEntity(ctx, exportedInterfaceASymbol);
 
     it("should not create a circular type if the targeted symbol is not exported and not circular", () => {
-      expect(exportedInterfaceA.properties.length).toBe(1);
+      expect(exportedInterfaceA.properties).toHaveLength(1);
       expect(exportedInterfaceA.properties[0]!.type.kind).toBe(TypeKind.Interface);
     });
 
@@ -53,18 +53,18 @@ scope("Interpreter", TypeKind.Circular, () => {
 
     it("should create a circular type if the targeted symbol circular, even if it is not exported", () => {
 
-      expect(exportedInterfaceA.properties.length).toBe(1);
+      expect(exportedInterfaceA.properties).toHaveLength(1);
       assert(exportedInterfaceA.properties[0]!.type.kind === TypeKind.Interface);
 
       const interfaceB = exportedInterfaceA.properties[0]!.type;
 
-      expect(interfaceB.properties.length).toBe(1);
+      expect(interfaceB.properties).toHaveLength(1);
       expect(exportedInterfaceA.properties[0]!.type.kind).toBe(TypeKind.Interface);
       assert(interfaceB.properties[0]!.type.kind === TypeKind.Interface);
 
       const interfaceC = interfaceB.properties[0]!.type;
 
-      expect(interfaceC.properties.length).toBe(1);
+      expect(interfaceC.properties).toHaveLength(1);
       expect(interfaceC.properties[0]!.type.kind).toBe(TypeKind.Circular);
 
     });

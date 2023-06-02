@@ -47,7 +47,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     });
 
     it("should have the right amount of types", () => {
-      expect(sourceFile.exports.length).toBe(1);
+      expect(sourceFile.exports).toHaveLength(1);
     });
 
   }
@@ -63,7 +63,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should filter out default exports if they are exported as named exports", () => {
-      expect(sourceFile.exports.length).toBe(1);
+      expect(sourceFile.exports).toHaveLength(1);
     });
 
   }
@@ -79,7 +79,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should not filter out default exports if they aren't exported as named exports", () => {
-      expect(sourceFile.exports.length).toBe(1);
+      expect(sourceFile.exports).toHaveLength(1);
     });
 
   }
@@ -94,7 +94,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should not filter out default exports if they aren't exported as named exports", () => {
-      expect(sourceFile.exports.length).toBe(1);
+      expect(sourceFile.exports).toHaveLength(1);
     });
 
   }

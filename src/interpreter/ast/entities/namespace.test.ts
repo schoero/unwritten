@@ -52,7 +52,7 @@ scope("Interpreter", EntityKind.Namespace, () => {
   });
 
   it("should have parsed exports", () => {
-    expect(exportedNamespace.exports.length).toBe(1);
+    expect(exportedNamespace.exports).toHaveLength(1);
   });
 
 });
