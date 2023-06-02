@@ -75,7 +75,7 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
     it("should have a position", () => {
       assert(isSmallNode(position));
-      expect(position.children[0]).to.not.equal("");
+      expect(position.children[0]).not.toBe("");
     });
 
     it("should have an optional tag", () => {
