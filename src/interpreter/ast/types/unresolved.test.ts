@@ -137,7 +137,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
     const exportedFunctionEntity = createFunctionEntity(ctx, exportedFunctionSymbol);
 
     it("should create an unresolved type reference for a Map with two type arguments", () => {
-      assert(exportedFunctionEntity.signatures[0].returnType.kind === TypeKind.Unresolved);
+      expect(exportedFunctionEntity.signatures[0].returnType.kind).toBe(TypeKind.Unresolved);
     });
 
   }
