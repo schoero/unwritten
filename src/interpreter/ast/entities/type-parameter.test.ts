@@ -24,7 +24,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
     it("should be able to parse type parameters", () => {
       expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
       expect(exportedTypeAlias.typeParameters).toBeDefined();
-      expect(exportedTypeAlias.typeParameters).to.have.lengthOf(1);
+      expect(exportedTypeAlias.typeParameters).toHaveLength(1);
     });
 
   }

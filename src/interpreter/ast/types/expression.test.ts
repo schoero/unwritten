@@ -47,7 +47,7 @@ scope("Interpreter", TypeKind.Expression, () => {
     it("should support type arguments", () => {
       expect(exportedClass.heritage).toBeDefined();
       expect(exportedClass.heritage!.typeArguments).toBeDefined();
-      expect(exportedClass.heritage!.typeArguments).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.typeArguments).toHaveLength(1);
       expect(exportedClass.heritage!.typeArguments![0]!.kind).toBe(TypeKind.StringLiteral);
     });
 
@@ -55,7 +55,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedClass.heritage).toBeDefined();
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).toBeDefined();
-      expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.instanceType.properties).toHaveLength(1);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.StringLiteral);
     });
 
@@ -90,8 +90,8 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedClass.heritage!.kind).toBe(TypeKind.Expression);
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Union);
       assert(exportedClass.heritage!.staticType.kind === TypeKind.Union);
-      expect(exportedClass.heritage!.instanceType.types).to.have.lengthOf(2);
-      expect(exportedClass.heritage!.staticType.types).to.have.lengthOf(2);
+      expect(exportedClass.heritage!.instanceType.types).toHaveLength(2);
+      expect(exportedClass.heritage!.staticType.types).toHaveLength(2);
     });
 
   }
@@ -132,8 +132,8 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedClass.heritage!.kind).toBe(TypeKind.Expression);
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Interface);
       assert(exportedClass.heritage!.staticType.kind === TypeKind.Interface);
-      expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(0);
+      expect(exportedClass.heritage!.instanceType.properties).toHaveLength(1);
+      expect(exportedClass.heritage!.staticType.properties).toHaveLength(0);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.Union);
     });
 
@@ -161,7 +161,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedClass.heritage).toBeDefined();
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).toBeDefined();
-      expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.instanceType.properties).toHaveLength(1);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.StringLiteral);
     });
 
@@ -191,13 +191,13 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedClass.heritage!.staticType).toBeDefined();
       assert(exportedClass.heritage!.staticType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.staticType.properties).toBeDefined();
-      expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.staticType.properties).toHaveLength(1);
       expect(exportedClass.heritage!.staticType.properties[0].type.kind).toBe(TypeKind.String);
 
       expect(exportedClass.heritage!.instanceType).toBeDefined();
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).toBeDefined();
-      expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.instanceType.properties).toHaveLength(1);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.String);
     });
 
@@ -224,13 +224,13 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedClass.heritage!.staticType).toBeDefined();
       assert(exportedClass.heritage!.staticType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.staticType.properties).toBeDefined();
-      expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.staticType.properties).toHaveLength(1);
       expect(exportedClass.heritage!.staticType.properties[0].type.kind).toBe(TypeKind.String);
 
       expect(exportedClass.heritage!.instanceType).toBeDefined();
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).toBeDefined();
-      expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
+      expect(exportedClass.heritage!.instanceType.properties).toHaveLength(1);
       expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.String);
     });
 

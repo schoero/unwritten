@@ -77,27 +77,27 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have one construct signature", () => {
-      expect(constructSignatures.children).to.have.lengthOf(1);
+      expect(constructSignatures.children).toHaveLength(1);
     });
 
     it("should have one call signature", () => {
-      expect(callSignatures.children).to.have.lengthOf(1);
+      expect(callSignatures.children).toHaveLength(1);
     });
 
     it("should have two properties", () => {
-      expect(properties.children).to.have.lengthOf(2);
+      expect(properties.children).toHaveLength(2);
     });
 
     it("should have one method signature", () => {
-      expect(methods.children).to.have.lengthOf(2);
+      expect(methods.children).toHaveLength(2);
     });
 
     it("should have one setter signature", () => {
-      expect(setters.children).to.have.lengthOf(1);
+      expect(setters.children).toHaveLength(1);
     });
 
     it("should have one getter signature", () => {
-      expect(getters.children).to.have.lengthOf(1);
+      expect(getters.children).toHaveLength(1);
     });
 
   }

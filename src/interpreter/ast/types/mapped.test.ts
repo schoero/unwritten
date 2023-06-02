@@ -51,7 +51,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
       expect(exportedTypeAlias.type.typeParameter.name).toBe("K");
       expect(exportedTypeAlias.type.typeParameter.constraint).toBeDefined();
       assert(exportedTypeAlias.type.typeParameter.constraint!.kind === TypeKind.Union);
-      expect(exportedTypeAlias.type.typeParameter.constraint.types).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.typeParameter.constraint.types).toHaveLength(2);
     });
 
   }
@@ -98,7 +98,7 @@ scope("Interpreter", TypeKind.Mapped, () => {
       expect(exportedTypeAlias.type.typeParameter.name).toBe("K");
       expect(exportedTypeAlias.type.typeParameter.constraint).toBeDefined();
       assert(exportedTypeAlias.type.typeParameter.constraint!.kind === TypeKind.Union);
-      expect(exportedTypeAlias.type.typeParameter.constraint.types).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.typeParameter.constraint.types).toHaveLength(2);
     });
 
     it("should have a correct valueType", () => {

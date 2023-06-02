@@ -106,7 +106,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
 
     it("should have a type parameter", () => {
       expect(exportedTypeAlias.typeParameters).toBeDefined();
-      expect(exportedTypeAlias.typeParameters).to.have.lengthOf(1);
+      expect(exportedTypeAlias.typeParameters).toHaveLength(1);
     });
 
   }

@@ -50,7 +50,7 @@ scope("Interpreter", TypeKind.Union, () => {
 
     it("should have the correct amount of types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Union);
-      expect(exportedTypeAlias.type.types).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.types).toHaveLength(2);
     });
 
     it("should have the correct types", () => {

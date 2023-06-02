@@ -47,7 +47,7 @@ scope("Interpreter", EntityKind.Function, () => {
     });
 
     it("should have one signature", () => {
-      expect((exportedTypeAlias.type as FunctionType).signatures).to.have.lengthOf(1);
+      expect((exportedTypeAlias.type as FunctionType).signatures).toHaveLength(1);
     });
 
   }
@@ -91,10 +91,10 @@ scope("Interpreter", EntityKind.Function, () => {
 
     it("should have matching signatures", () => {
       assert(exportedTypeAlias1.type.kind === TypeKind.Function);
-      expect(exportedTypeAlias1.type.signatures).to.have.lengthOf(1);
+      expect(exportedTypeAlias1.type.signatures).toHaveLength(1);
 
       assert(exportedTypeAlias2.type.kind === TypeKind.Function);
-      expect(exportedTypeAlias2.type.signatures).to.have.lengthOf(2);
+      expect(exportedTypeAlias2.type.signatures).toHaveLength(2);
     });
 
     it("should have a matching return type", () => {

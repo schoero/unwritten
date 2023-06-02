@@ -45,7 +45,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
     });
 
     it("should not have type arguments", () => {
-      expect(convertedTypeReferenceType).to.have.lengthOf(1);
+      expect(convertedTypeReferenceType).toHaveLength(1);
     });
 
   }
@@ -72,7 +72,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
 
     it("should have one type argument", () => {
       assert(Array.isArray(convertedTypeReferenceType));
-      expect(convertedTypeReferenceType).to.have.lengthOf(2 + 1);
+      expect(convertedTypeReferenceType).toHaveLength(2 + 1);
     });
 
   }

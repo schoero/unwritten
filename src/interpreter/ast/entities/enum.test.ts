@@ -44,7 +44,7 @@ scope("Interpreter", EntityKind.Enum, () => {
 
     it("should be able to handle empty enums", () => {
       expect(exportedEnum.kind).toBe(EntityKind.Enum);
-      expect(exportedEnum.members.length).toBe(0);
+      expect(exportedEnum.members).toHaveLength(0);
     });
 
   }
@@ -96,7 +96,7 @@ scope("Interpreter", EntityKind.Enum, () => {
     });
 
     it("should have the right amount of members", () => {
-      expect(exportedEnum.members).to.have.lengthOf(2);
+      expect(exportedEnum.members).toHaveLength(2);
     });
 
     it("should have a matching member types with values", () => {
@@ -127,7 +127,7 @@ scope("Interpreter", EntityKind.Enum, () => {
     const exportedEnum = createEnumEntity(ctx, symbol);
 
     it("should be able to merge multiple enums with the same name", () => {
-      expect(exportedEnum.members.length).toBe(2);
+      expect(exportedEnum.members).toHaveLength(2);
       expect(exportedEnum.members[0]!.name).toBe("A");
       assert(exportedEnum.members[0]!.type.kind === TypeKind.NumberLiteral);
       expect(exportedEnum.members[0]!.type.value).toBe(0);

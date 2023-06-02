@@ -17,7 +17,7 @@ scope("Renderer", "utils", () => {
         ""
       ];
       const filteredNodes = testNodes.filter(nodeFilter);
-      expect(filteredNodes).to.have.lengthOf(1);
+      expect(filteredNodes).toHaveLength(1);
       expect(filteredNodes[0]).toBe("element");
     });
 

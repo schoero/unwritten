@@ -40,14 +40,14 @@ scope("Renderer", "utils", () => {
 
       it("should inherit properties from parent interface", () => {
         const extendedInterfaceProperties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity as InterfaceEntity);
-        expect(extendedInterfaceProperties).to.have.lengthOf(2);
+        expect(extendedInterfaceProperties).toHaveLength(2);
         expect(extendedInterfaceProperties[0].name).toBe("propA");
         expect(extendedInterfaceProperties[1].name).toBe("propB");
       });
 
       it("should inherit signatures from parent interface", () => {
         const extendedInterfaceProperties = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity as InterfaceEntity, "methodSignatures");
-        expect(extendedInterfaceProperties).to.have.lengthOf(2);
+        expect(extendedInterfaceProperties).toHaveLength(2);
         expect(extendedInterfaceProperties[0].name).toBe("methodA");
         expect(extendedInterfaceProperties[1].name).toBe("methodB");
       });
@@ -74,14 +74,14 @@ scope("Renderer", "utils", () => {
 
       it("should override properties from parent interface", () => {
         const extendedInterfaceProperties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity as InterfaceEntity);
-        expect(extendedInterfaceProperties).to.have.lengthOf(1);
+        expect(extendedInterfaceProperties).toHaveLength(1);
         expect(extendedInterfaceProperties[0].name).toBe("prop");
         expect(extendedInterfaceProperties[0].type.kind).toBe(TypeKind.String);
       });
 
       it("should override signatures from parent interface", () => {
         const extendedInterfaceProperties = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity as InterfaceEntity, "methodSignatures");
-        expect(extendedInterfaceProperties).to.have.lengthOf(1);
+        expect(extendedInterfaceProperties).toHaveLength(1);
         expect(extendedInterfaceProperties[0].name).toBe("method");
         expect(extendedInterfaceProperties[0].returnType.kind).toBe(TypeKind.String);
       });
@@ -115,7 +115,7 @@ scope("Renderer", "utils", () => {
 
       it("should inherit properties from parent interface", () => {
 
-        expect(extendedClassProperties).to.have.lengthOf(2);
+        expect(extendedClassProperties).toHaveLength(2);
 
         expect(extendedClassProperties[0].name).toBe("instanceProperty");
         expect(extendedClassProperties[0].type.kind).toBe(TypeKind.Undefined);
@@ -149,8 +149,8 @@ scope("Renderer", "utils", () => {
 
       it("should inherit the constructor from parent class", () => {
         assert(extendedClassConstructor);
-        expect(extendedClassConstructor.signatures).to.have.lengthOf(1);
-        expect(extendedClassConstructor.signatures[0].parameters).to.have.lengthOf(1);
+        expect(extendedClassConstructor.signatures).toHaveLength(1);
+        expect(extendedClassConstructor.signatures[0].parameters).toHaveLength(1);
       });
 
     }
@@ -172,7 +172,7 @@ scope("Renderer", "utils", () => {
       const extendedClassConstructor = extendClassEntityConstructorsWithHeritage(classEntity);
 
       it("should not extend automatically generated empty constructor", () => {
-        expect(extendedClassConstructor).toBe(undefined);
+        expect(extendedClassConstructor).toBeUndefined();
       });
 
     }
@@ -200,11 +200,11 @@ scope("Renderer", "utils", () => {
       it("should be able to override the parent constructor", () => {
 
         assert(extendedClassConstructor);
-        expect(extendedClassConstructor.signatures).to.have.lengthOf(1);
+        expect(extendedClassConstructor.signatures).toHaveLength(1);
 
         assert(extendedClassConstructor.signatures[0].parameters);
 
-        expect(extendedClassConstructor.signatures[0].parameters).to.have.lengthOf(1);
+        expect(extendedClassConstructor.signatures[0].parameters).toHaveLength(1);
         expect(extendedClassConstructor.signatures[0].parameters[0].type?.kind).toBe(TypeKind.String);
 
       });

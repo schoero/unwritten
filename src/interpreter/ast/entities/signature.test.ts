@@ -28,7 +28,7 @@ scope("Interpreter", EntityKind.Signature, () => {
     it("should be able to parse a signature", () => {
       expect(exportedFunction.kind).toBe(EntityKind.Function);
       expect(exportedFunction.signatures).toBeDefined();
-      expect(exportedFunction.signatures).to.have.lengthOf(1);
+      expect(exportedFunction.signatures).toHaveLength(1);
     });
 
   }
@@ -51,7 +51,7 @@ scope("Interpreter", EntityKind.Signature, () => {
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should have one signature", () => {
-      expect(exportedFunction.signatures).to.have.lengthOf(1);
+      expect(exportedFunction.signatures).toHaveLength(1);
     });
 
     it("should have a matching kind", () => {
@@ -101,12 +101,12 @@ scope("Interpreter", EntityKind.Signature, () => {
     const exportedInterface = createInterfaceEntity(ctx, interfaceSymbol);
 
     it("should be able to handle all kinds of signatures", () => {
-      expect(exportedFunction.signatures).to.have.lengthOf(1);
-      expect(exportedInterface.callSignatures).to.have.lengthOf(1);
-      expect(exportedInterface.constructSignatures).to.have.lengthOf(1);
-      expect(exportedInterface.methodSignatures).to.have.lengthOf(1);
-      expect(exportedInterface.getterSignatures).to.have.lengthOf(1);
-      expect(exportedInterface.setterSignatures).to.have.lengthOf(1);
+      expect(exportedFunction.signatures).toHaveLength(1);
+      expect(exportedInterface.callSignatures).toHaveLength(1);
+      expect(exportedInterface.constructSignatures).toHaveLength(1);
+      expect(exportedInterface.methodSignatures).toHaveLength(1);
+      expect(exportedInterface.getterSignatures).toHaveLength(1);
+      expect(exportedInterface.setterSignatures).toHaveLength(1);
     });
 
   }
@@ -125,7 +125,7 @@ scope("Interpreter", EntityKind.Signature, () => {
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should be able to handle type parameters", () => {
-      expect(exportedFunction.signatures[0]!.typeParameters).to.have.lengthOf(1);
+      expect(exportedFunction.signatures[0]!.typeParameters).toHaveLength(1);
     });
 
   }

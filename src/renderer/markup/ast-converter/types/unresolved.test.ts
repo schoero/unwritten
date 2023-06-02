@@ -45,7 +45,7 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
     });
 
     it("should not have type arguments", () => {
-      expect(convertedUnresolvedType).to.have.lengthOf(1);
+      expect(convertedUnresolvedType).toHaveLength(1);
     });
 
   }
@@ -72,7 +72,7 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
 
     it("should have one type argument", () => {
       assert(Array.isArray(convertedUnresolvedType));
-      expect(convertedUnresolvedType).to.have.lengthOf(2 + 1);
+      expect(convertedUnresolvedType).toHaveLength(2 + 1);
     });
 
   }

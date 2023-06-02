@@ -46,7 +46,7 @@ scope("Interpreter", TypeKind.Class, () => {
     it("should have one property", () => {
       assert(exportedClassType.type.kind === TypeKind.TypeReference);
       assert(exportedClassType.type.type!.kind === TypeKind.Class);
-      expect(exportedClassType.type.type.properties).to.have.lengthOf(1);
+      expect(exportedClassType.type.type.properties).toHaveLength(1);
     });
 
   }

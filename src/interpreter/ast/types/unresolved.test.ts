@@ -47,7 +47,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
     it("should create an unresolved type reference for a Set with one type argument", () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReferenceTypeAlias.type.type);
-      expect(exportedReferenceTypeAlias.type.typeArguments).to.have.lengthOf(1);
+      expect(exportedReferenceTypeAlias.type.typeArguments).toHaveLength(1);
       expect(exportedReferenceTypeAlias.type.type.kind).toBe(TypeKind.Unresolved);
     });
 
@@ -67,7 +67,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
     it("should create an unresolved type reference for a Map with two type arguments", () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReferenceTypeAlias.type.type);
-      expect(exportedReferenceTypeAlias.type.typeArguments).to.have.lengthOf(2);
+      expect(exportedReferenceTypeAlias.type.typeArguments).toHaveLength(2);
       expect(exportedReferenceTypeAlias.type.type.kind).toBe(TypeKind.Unresolved);
     });
 
@@ -87,7 +87,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
     it("should create an unresolved type reference for a Promise", () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReferenceTypeAlias.type.type);
-      expect(exportedReferenceTypeAlias.type.typeArguments).to.have.lengthOf(1);
+      expect(exportedReferenceTypeAlias.type.typeArguments).toHaveLength(1);
       expect(exportedReferenceTypeAlias.type.type.kind).toBe(TypeKind.Unresolved);
     });
 

@@ -28,7 +28,7 @@ scope("Interpreter", EntityKind.Method, () => {
     it("should be able to parse a method", () => {
       expect(exportedClass.kind).toBe(EntityKind.Class);
       expect(exportedClass.methods).toBeDefined();
-      expect(exportedClass.methods).to.have.lengthOf(1);
+      expect(exportedClass.methods).toHaveLength(1);
     });
 
     it("should have a matching kind", () => {
@@ -40,7 +40,7 @@ scope("Interpreter", EntityKind.Method, () => {
     });
 
     it("should have one signature", () => {
-      expect(exportedClass.methods[0]!.signatures).to.have.lengthOf(1);
+      expect(exportedClass.methods[0]!.signatures).toHaveLength(1);
     });
 
     it("should have a matching description", () => {

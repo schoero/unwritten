@@ -58,7 +58,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     });
 
     it("should have the correct amount of members", () => {
-      expect(interfaceType.properties).to.have.lengthOf(1);
+      expect(interfaceType.properties).toHaveLength(1);
     });
 
     it("should have a matching position", () => {
@@ -100,30 +100,30 @@ scope("Interpreter", EntityKind.Interface, () => {
     const interfaceType = exportedTypeAlias.type.type;
 
     it("should be able to handle construct signatures", () => {
-      expect(interfaceType.constructSignatures).to.have.lengthOf(1);
+      expect(interfaceType.constructSignatures).toHaveLength(1);
     });
 
     it("should be able to handle call signatures", () => {
-      expect(interfaceType.callSignatures).to.have.lengthOf(1);
+      expect(interfaceType.callSignatures).toHaveLength(1);
     });
 
     it("should be able to handle properties", () => {
-      expect(interfaceType.properties).to.have.lengthOf(4);
+      expect(interfaceType.properties).toHaveLength(4);
     });
 
     it("should be able to handle static properties", () => {
       expect(interfaceType.properties.filter(prop =>
-        prop.modifiers.includes("static"))).to.have.lengthOf(1);
+        prop.modifiers.includes("static"))).toHaveLength(1);
     });
 
     it("should be able to handle instance properties", () => {
       expect(interfaceType.properties.filter(prop =>
-        prop.modifiers.includes("protected"))).to.have.lengthOf(1);
+        prop.modifiers.includes("protected"))).toHaveLength(1);
     });
 
     it("should be able to handle overloaded methods", () => {
-      expect(interfaceType.methods).to.have.lengthOf(1);
-      expect(interfaceType.methods[0].signatures).to.have.lengthOf(2);
+      expect(interfaceType.methods).toHaveLength(1);
+      expect(interfaceType.methods[0].signatures).toHaveLength(2);
     });
 
     it("should differentiate between methods and function properties", () => {
@@ -132,11 +132,11 @@ scope("Interpreter", EntityKind.Interface, () => {
     });
 
     it("should be able to handle getters", () => {
-      expect(interfaceType.getters).to.have.lengthOf(1);
+      expect(interfaceType.getters).toHaveLength(1);
     });
 
     it("should be able to handle setters", () => {
-      expect(interfaceType.setters).to.have.lengthOf(1);
+      expect(interfaceType.setters).toHaveLength(1);
     });
 
   }
@@ -164,7 +164,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     const interfaceType = exportedTypeAlias.type.type;
 
     it("should merge multiple interfaces with the same name", () => {
-      expect(interfaceType.properties).to.have.lengthOf(2);
+      expect(interfaceType.properties).toHaveLength(2);
     });
 
   }
@@ -202,11 +202,11 @@ scope("Interpreter", EntityKind.Interface, () => {
 
     it("should be able to parse inheritance", () => {
 
-      expect(interfaceTypeB.properties).to.have.lengthOf(2);
+      expect(interfaceTypeB.properties).toHaveLength(2);
       expect(interfaceTypeB.properties[0]!.name).toBe("b");
       expect(interfaceTypeB.properties[1]!.name).toBe("a");
 
-      expect(interfaceTypeC.properties).to.have.lengthOf(3);
+      expect(interfaceTypeC.properties).toHaveLength(3);
       expect(interfaceTypeC.properties[0]!.name).toBe("c");
       expect(interfaceTypeC.properties[1]!.name).toBe("b");
       expect(interfaceTypeC.properties[2]!.name).toBe("a");
@@ -241,7 +241,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     const interfaceTypeC = exportedTypeAliasC.type.type;
 
     it("should be able to handle multiple extended interfaces at the same time", () => {
-      expect(interfaceTypeC.properties).to.have.lengthOf(3);
+      expect(interfaceTypeC.properties).toHaveLength(3);
       expect(interfaceTypeC.properties[0]!.name).toBe("c");
       expect(interfaceTypeC.properties[1]!.name).toBe("a");
       expect(interfaceTypeC.properties[2]!.name).toBe("b");
@@ -269,7 +269,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     const interfaceType = exportedTypeAlias.type.type;
 
     it("should support generics in interfaces", () => {
-      expect(interfaceType.properties).to.have.lengthOf(1);
+      expect(interfaceType.properties).toHaveLength(1);
       expect(interfaceType.properties[0]!.type.kind).toBe(TypeKind.TypeParameter);
 
     });
@@ -296,7 +296,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     const objectType = exportedTypeAlias.type.type;
 
     it("should support type arguments", () => {
-      expect(objectType.properties).to.have.lengthOf(1);
+      expect(objectType.properties).toHaveLength(1);
       expect(objectType.properties[0]!.type.kind).toBe(TypeKind.StringLiteral);
     });
 

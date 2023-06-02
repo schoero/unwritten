@@ -44,7 +44,7 @@ scope("Interpreter", TypeKind.Array, () => {
 
     it("should create a type reference for the generic syntax", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedTypeAlias.type.typeArguments).to.have.lengthOf(1);
+      expect(exportedTypeAlias.type.typeArguments).toHaveLength(1);
       expect(exportedTypeAlias.type.typeArguments![0].kind).toBe(TypeKind.String);
     });
 

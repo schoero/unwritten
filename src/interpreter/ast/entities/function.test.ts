@@ -44,7 +44,7 @@ scope("Interpreter", EntityKind.Function, () => {
     });
 
     it("should have only one signature", () => {
-      expect(exportedFunction.signatures).to.have.lengthOf(1);
+      expect(exportedFunction.signatures).toHaveLength(1);
     });
 
     it("should have a matching description", () => {

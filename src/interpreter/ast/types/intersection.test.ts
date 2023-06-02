@@ -46,7 +46,7 @@ scope("Interpreter", TypeKind.Intersection, () => {
 
     it("should have the right amount of types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Intersection);
-      expect(exportedTypeAlias.type.types).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.types).toHaveLength(2);
     });
 
   }

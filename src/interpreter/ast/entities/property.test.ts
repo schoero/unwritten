@@ -40,17 +40,17 @@ scope("Interpreter", EntityKind.Property, () => {
 
     it("should be able to parse a property from a TypeLiteral", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties).to.have.lengthOf(1);
+      expect(exportedTypeAlias.type.properties).toHaveLength(1);
     });
 
     it("should be able to parse a property from an ObjectLiteral", () => {
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties).to.have.lengthOf(1);
+      expect(exportedObjectLiteral.type.properties).toHaveLength(1);
     });
 
     it("should be able to parse a property from a Class", () => {
       expect(exportedClass.kind).toBe(EntityKind.Class);
-      expect(exportedClass.properties).to.have.lengthOf(1);
+      expect(exportedClass.properties).toHaveLength(1);
     });
 
   }

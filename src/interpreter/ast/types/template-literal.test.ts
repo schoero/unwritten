@@ -31,13 +31,13 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
 
     it("should have one matching type", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.types).to.have.lengthOf(1);
+      expect(exportedTypeAlias.type.types).toHaveLength(1);
       expect(exportedTypeAlias.type.types[0]!.kind).toBe(TypeKind.Number);
     });
 
     it("should have one matching span", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.spans).to.have.lengthOf(1);
+      expect(exportedTypeAlias.type.spans).toHaveLength(1);
       expect(exportedTypeAlias.type.spans[0]!).toBe("px");
     });
 
@@ -60,14 +60,14 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
 
     it("should have two matching types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.types).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.types).toHaveLength(2);
       expect(exportedTypeAlias.type.types[0]!.kind).toBe(TypeKind.Number);
       expect(exportedTypeAlias.type.types[1]!.kind).toBe(TypeKind.String);
     });
 
     it("should have two matching spans", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.spans).to.have.lengthOf(2);
+      expect(exportedTypeAlias.type.spans).toHaveLength(2);
       expect(exportedTypeAlias.type.spans[0]!).toBe("-MIDDLE-");
       expect(exportedTypeAlias.type.spans[1]!).toBe("-SUFFIX");
     });
@@ -91,7 +91,7 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
 
     it("should have three matching types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.types).to.have.lengthOf(3);
+      expect(exportedTypeAlias.type.types).toHaveLength(3);
       expect(exportedTypeAlias.type.types[0]!.kind).toBe(TypeKind.Union);
       expect(exportedTypeAlias.type.types[1]!.kind).toBe(TypeKind.StringLiteral);
       expect(exportedTypeAlias.type.types[2]!.kind).toBe(TypeKind.Number);
@@ -99,7 +99,7 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
 
     it("should have three matching spans", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.spans).to.have.lengthOf(3);
+      expect(exportedTypeAlias.type.spans).toHaveLength(3);
       expect(exportedTypeAlias.type.spans[0]!).toBe("-");
       expect(exportedTypeAlias.type.spans[1]!).toBe(": ");
       expect(exportedTypeAlias.type.spans[2]!).toBe("px");

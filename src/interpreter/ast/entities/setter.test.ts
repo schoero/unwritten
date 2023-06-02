@@ -29,7 +29,7 @@ scope("Interpreter", EntityKind.Setter, () => {
     it("should be able to parse a setter", () => {
       expect(exportedClass.kind).toBe(EntityKind.Class);
       expect(exportedClass.setters).toBeDefined();
-      expect(exportedClass.setters).to.have.lengthOf(1);
+      expect(exportedClass.setters).toHaveLength(1);
     });
 
     it("should have a matching kind", () => {
@@ -41,7 +41,7 @@ scope("Interpreter", EntityKind.Setter, () => {
     });
 
     it("should have one signature", () => {
-      expect(exportedClass.setters[0]!.signatures).to.have.lengthOf(1);
+      expect(exportedClass.setters[0]!.signatures).toHaveLength(1);
     });
 
     it("should have a matching description", () => {
