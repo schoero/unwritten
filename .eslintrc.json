@@ -31,7 +31,8 @@
               }
             ]
           }
-        ]
+        ],
+        "vitest/no-identical-title": "off"
       }
     },
     {
@@ -47,7 +48,7 @@
     },
     {
       "files": [
-        "**/renderrer/markup/html/*.ts"
+        "**/renderer/markup/html/*.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {
@@ -62,7 +63,7 @@
     },
     {
       "files": [
-        "**/renderrer/markup/markdown/*.ts"
+        "**/renderer/markup/markdown/*.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {
