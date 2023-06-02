@@ -33,20 +33,20 @@ scope("Interpreter", EntityKind.Getter, () => {
     });
 
     it("should have only one signature", () => {
-      expect(exportedClass.ctor!.signatures.length).to.equal(1);
+      expect(exportedClass.ctor!.signatures.length).toBe(1);
     });
 
     it("should have a matching constructor description", () => {
-      expect(exportedClass.ctor!.signatures[0]!.description).to.equal("Constructor description");
+      expect(exportedClass.ctor!.signatures[0]!.description).toBe("Constructor description");
     });
 
     it("should have a matching constructor example", () => {
-      expect(exportedClass.ctor!.signatures[0]!.example).to.equal("Constructor example");
+      expect(exportedClass.ctor!.signatures[0]!.example).toBe("Constructor example");
     });
 
     it("should return the instance type of the class", () => {
       assert(isClassType(exportedClass.ctor!.signatures[0]!.returnType));
-      expect(exportedClass.ctor!.signatures[0]!.returnType.symbolId).to.equal(exportedClass.symbolId);
+      expect(exportedClass.ctor!.signatures[0]!.returnType.symbolId).toBe(exportedClass.symbolId);
     });
 
   }
@@ -67,7 +67,7 @@ scope("Interpreter", EntityKind.Getter, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should support multiple signatures", () => {
-      expect(exportedClass.ctor!.signatures.length).to.equal(2);
+      expect(exportedClass.ctor!.signatures.length).toBe(2);
     });
 
   }

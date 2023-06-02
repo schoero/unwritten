@@ -22,7 +22,7 @@ scope("Interpreter", EntityKind.Class, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should be able to parse a class", () => {
-      expect(exportedClass.kind).to.equal(EntityKind.Class);
+      expect(exportedClass.kind).toBe(EntityKind.Class);
     });
 
   }
@@ -50,22 +50,22 @@ scope("Interpreter", EntityKind.Class, () => {
 
     it("should have a property", () => {
       expect(exportedClass.properties).to.not.equal(undefined);
-      expect(exportedClass.properties.length).to.equal(1);
+      expect(exportedClass.properties).toHaveLength(1);
     });
 
     it("should have a method", () => {
       expect(exportedClass.methods).to.not.equal(undefined);
-      expect(exportedClass.methods.length).to.equal(1);
+      expect(exportedClass.methods).toHaveLength(1);
     });
 
     it("should have a getter", () => {
       expect(exportedClass.getters).to.not.equal(undefined);
-      expect(exportedClass.getters.length).to.equal(1);
+      expect(exportedClass.getters).toHaveLength(1);
     });
 
     it("should have a setter", () => {
       expect(exportedClass.setters).to.not.equal(undefined);
-      expect(exportedClass.setters.length).to.equal(1);
+      expect(exportedClass.setters).toHaveLength(1);
     });
 
   }
@@ -86,19 +86,19 @@ scope("Interpreter", EntityKind.Class, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should have a matching name", () => {
-      expect(exportedClass.name).to.equal("Class");
+      expect(exportedClass.name).toBe("Class");
     });
 
     it("should have a matching id", () => {
-      expect(exportedClass.symbolId).to.equal(getSymbolId(ctx, exportedSymbols[0]!));
+      expect(exportedClass.symbolId).toBe(getSymbolId(ctx, exportedSymbols[0]!));
     });
 
     it("should have a matching description", () => {
-      expect(exportedClass.description).to.equal("Class description");
+      expect(exportedClass.description).toBe("Class description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.example).to.equal("Class example");
+      expect(exportedClass.example).toBe("Class example");
     });
 
   }
@@ -133,7 +133,7 @@ scope("Interpreter", EntityKind.Class, () => {
 
     it("should support type parameters", () => {
       expect(exportedClass.typeParameters).to.not.equal(undefined);
-      expect(exportedClass.typeParameters!.length).to.equal(1);
+      expect(exportedClass.typeParameters!).toHaveLength(1);
     });
 
   }

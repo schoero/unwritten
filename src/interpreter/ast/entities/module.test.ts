@@ -28,19 +28,19 @@ scope("Interpreter", EntityKind.Module, () => {
   const exportedModule = createModuleEntity(ctx, symbol);
 
   it("should export a module", () => {
-    expect(exportedModule.name).to.equal("TestModule");
+    expect(exportedModule.name).toBe("TestModule");
   });
 
   it("should have a matching description", () => {
-    expect(exportedModule.description).to.equal("Module description");
+    expect(exportedModule.description).toBe("Module description");
   });
 
   it("should have a matching remarks", () => {
-    expect(exportedModule.remarks).to.equal("Module remarks");
+    expect(exportedModule.remarks).toBe("Module remarks");
   });
 
   it("should have a matching example", () => {
-    expect(exportedModule.example).to.equal("Module example");
+    expect(exportedModule.example).toBe("Module example");
   });
 
   it("should be deprecated", () => {
@@ -52,7 +52,7 @@ scope("Interpreter", EntityKind.Module, () => {
   });
 
   it("should have parsed exports", () => {
-    expect(exportedModule.exports.length).to.equal(1);
+    expect(exportedModule.exports.length).toBe(1);
   });
 
 });

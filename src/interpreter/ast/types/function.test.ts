@@ -24,8 +24,8 @@ scope("Interpreter", EntityKind.Function, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse a function type", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Function);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.Function);
     });
 
   }
@@ -42,8 +42,8 @@ scope("Interpreter", EntityKind.Function, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Function);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.Function);
     });
 
     it("should have one signature", () => {
@@ -78,14 +78,14 @@ scope("Interpreter", EntityKind.Function, () => {
     const exportedTypeAlias3 = createTypeAliasEntity(ctx, objectType3Symbol);
 
     it("should parse object types with only call signatures as functions", () => {
-      expect(exportedTypeAlias1.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias1.type.kind).to.equal(TypeKind.Function);
-      expect(exportedTypeAlias2.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias2.type.kind).to.equal(TypeKind.Function);
+      expect(exportedTypeAlias1.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias1.type.kind).toBe(TypeKind.Function);
+      expect(exportedTypeAlias2.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias2.type.kind).toBe(TypeKind.Function);
     });
 
     it("should not parse object types with anything else as functions", () => {
-      expect(exportedTypeAlias3.kind).to.equal(EntityKind.TypeAlias);
+      expect(exportedTypeAlias3.kind).toBe(EntityKind.TypeAlias);
       expect(exportedTypeAlias3.type.kind).to.not.equal(TypeKind.Function);
     });
 
@@ -99,7 +99,7 @@ scope("Interpreter", EntityKind.Function, () => {
 
     it("should have a matching return type", () => {
       assert(exportedTypeAlias1.type.kind === TypeKind.Function);
-      expect(exportedTypeAlias1.type.signatures[0]!.returnType.kind).to.equal(TypeKind.Boolean);
+      expect(exportedTypeAlias1.type.signatures[0]!.returnType.kind).toBe(TypeKind.Boolean);
     });
 
   }

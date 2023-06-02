@@ -14,36 +14,36 @@ scope("Interpreter", "Utils", () => {
     const path = "node_modules/typescript/lib/lib.esnext.d.ts";
 
     it("should exclude matching glob star directory excludes", () => {
-      expect(isExcluded(path, undefined, ["node_modules/**/*"])).to.equal(true);
-      expect(isExcluded(path, undefined, ["node_modules/**"])).to.equal(true);
-      expect(isExcluded(path, undefined, ["node_modules/**/*.d.ts"])).to.equal(true);
-      expect(isExcluded(path, undefined, ["node_modules/**/*.test.ts"])).to.equal(false);
+      expect(isExcluded(path, undefined, ["node_modules/**/*"])).toBe(true);
+      expect(isExcluded(path, undefined, ["node_modules/**"])).toBe(true);
+      expect(isExcluded(path, undefined, ["node_modules/**/*.d.ts"])).toBe(true);
+      expect(isExcluded(path, undefined, ["node_modules/**/*.test.ts"])).toBe(false);
     });
 
     it("should exclude exactly matching paths", () => {
-      expect(isExcluded(path, undefined, [path])).to.equal(true);
-      expect(isExcluded("node_modules/typescript/lib/lib.es2015.d.ts", undefined, [path])).to.equal(false);
+      expect(isExcluded(path, undefined, [path])).toBe(true);
+      expect(isExcluded("node_modules/typescript/lib/lib.es2015.d.ts", undefined, [path])).toBe(false);
     });
 
     it("should exclude wildcard matching paths", () => {
-      expect(isExcluded(path, undefined, ["node_modules/*"])).to.equal(false);
-      expect(isExcluded(path, undefined, ["node_modules/typescript/lib/*"])).to.equal(true);
-      expect(isExcluded(path, undefined, ["node_modules/typescript/lib/*.d.ts"])).to.equal(true);
-      expect(isExcluded(path, undefined, ["node_modules/typescript/lib/*.test.d.ts"])).to.equal(false);
+      expect(isExcluded(path, undefined, ["node_modules/*"])).toBe(false);
+      expect(isExcluded(path, undefined, ["node_modules/typescript/lib/*"])).toBe(true);
+      expect(isExcluded(path, undefined, ["node_modules/typescript/lib/*.d.ts"])).toBe(true);
+      expect(isExcluded(path, undefined, ["node_modules/typescript/lib/*.test.d.ts"])).toBe(false);
     });
 
     it("should not exclude inverted excludes", () => {
-      expect(isExcluded(path, undefined, ["node_modules/**/*", "!node_modules/typescript/lib/lib.esnext.d.ts"])).to.equal(false);
-      expect(isExcluded(path, undefined, ["node_modules/**/*", "!node_modules/typescript/lib/lib.es2016.d.ts"])).to.equal(true);
+      expect(isExcluded(path, undefined, ["node_modules/**/*", "!node_modules/typescript/lib/lib.esnext.d.ts"])).toBe(false);
+      expect(isExcluded(path, undefined, ["node_modules/**/*", "!node_modules/typescript/lib/lib.es2016.d.ts"])).toBe(true);
     });
 
     it("should override previous entries", () => {
-      expect(isExcluded(path, undefined, ["node_modules/**/*", "!node_modules/**/*"])).to.equal(false);
+      expect(isExcluded(path, undefined, ["node_modules/**/*", "!node_modules/**/*"])).toBe(false);
     });
 
     it("should exclude a name if not specified otherwise", () => {
-      expect(isExcluded(path, "Omit", ["node_modules/**/*"])).to.equal(true);
-      expect(isExcluded(path, "Omit", ["!node_modules/**/*"])).to.equal(false);
+      expect(isExcluded(path, "Omit", ["node_modules/**/*"])).toBe(true);
+      expect(isExcluded(path, "Omit", ["!node_modules/**/*"])).toBe(false);
     });
 
     it("should be possible to exclude certain names only", () => {
@@ -51,12 +51,12 @@ scope("Interpreter", "Utils", () => {
         "node_modules/**/*": [
           "Omit"
         ]
-      })).to.equal(true);
+      })).toBe(true);
       expect(isExcluded(path, "Omit", {
         "node_modules/**/*": [
           "Partial"
         ]
-      })).to.equal(false);
+      })).toBe(false);
     });
 
     it("should be possible to override previous excludes", () => {
@@ -64,31 +64,31 @@ scope("Interpreter", "Utils", () => {
         "node_modules/**/*": [
           "*"
         ]
-      })).to.equal(true);
+      })).toBe(true);
       expect(isExcluded(path, "Omit", {
         "node_modules/**/*": [
           "*",
           "!Omit"
         ]
-      })).to.equal(false);
+      })).toBe(false);
       expect(isExcluded(path, "Omit", {
         "node_modules/**/*": [
           "Omit",
           "!Omit"
         ]
-      })).to.equal(false);
+      })).toBe(false);
       expect(isExcluded(path, "Omit", {
         "node_modules/**/*": "*",
         "!node_modules/typescript/lib/**/*": [
           "Omit"
         ]
-      })).to.equal(false);
+      })).toBe(false);
       expect(isExcluded(path, "Omit", {
         "node_modules/**/*": "*",
         "!node_modules/typescript/lib/**/*": [
           "Partial"
         ]
-      })).to.equal(true);
+      })).toBe(true);
     });
 
     it("should invert the name based result if the file based result is inverted", () => {
@@ -96,18 +96,18 @@ scope("Interpreter", "Utils", () => {
         "!node_modules/**/*": [
           "*"
         ]
-      })).to.equal(false);
+      })).toBe(false);
       expect(isExcluded(path, "Omit", {
         "!node_modules/**/*": [
           "!Omit"
         ]
-      })).to.equal(true);
+      })).toBe(true);
       expect(isExcluded(path, "Omit", {
         "!node_modules/**/*": [
           "*",
           "!Omit"
         ]
-      })).to.equal(true);
+      })).toBe(true);
     });
 
   });

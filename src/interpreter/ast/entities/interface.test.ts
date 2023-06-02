@@ -22,7 +22,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     const exportedInterface = createInterfaceEntity(ctx, symbol);
 
     it("should be able to parse an interface", () => {
-      expect(exportedInterface.kind).to.equal(EntityKind.Interface);
+      expect(exportedInterface.kind).toBe(EntityKind.Interface);
     });
 
   }
@@ -96,11 +96,11 @@ scope("Interpreter", EntityKind.Interface, () => {
     const exportedInterface = createInterfaceEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedInterface.kind).to.equal(EntityKind.Interface);
+      expect(exportedInterface.kind).toBe(EntityKind.Interface);
     });
 
     it("should have a matching name", () => {
-      expect(exportedInterface.name).to.equal("Interface");
+      expect(exportedInterface.name).toBe("Interface");
     });
 
     it("should have the correct amount of members", () => {
@@ -108,11 +108,11 @@ scope("Interpreter", EntityKind.Interface, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedInterface.description).to.equal("Interface description");
+      expect(exportedInterface.description).toBe("Interface description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedInterface.example).to.equal("Interface example");
+      expect(exportedInterface.example).toBe("Interface example");
     });
 
     it("should have a matching position", () => {
@@ -171,23 +171,23 @@ scope("Interpreter", EntityKind.Interface, () => {
     it("should be able to parse inheritance", () => {
 
       expect(exportedInterfaceB.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceB.properties[0]!.name).to.equal("b");
+      expect(exportedInterfaceB.properties[0]!.name).toBe("b");
       expect(exportedInterfaceB.heritage).to.not.equal(undefined);
       expect(exportedInterfaceB.heritage).to.have.lengthOf(1);
 
       assert(exportedInterfaceB.heritage![0]!.instanceType.kind === TypeKind.Interface);
       expect(exportedInterfaceB.heritage![0]!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceB.heritage![0]!.instanceType.properties[0]!.name).to.equal("a");
+      expect(exportedInterfaceB.heritage![0]!.instanceType.properties[0]!.name).toBe("a");
 
       expect(exportedInterfaceC.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceC.properties[0]!.name).to.equal("c");
+      expect(exportedInterfaceC.properties[0]!.name).toBe("c");
       expect(exportedInterfaceC.heritage).to.not.equal(undefined);
       expect(exportedInterfaceC.heritage).to.have.lengthOf(1);
 
       assert(exportedInterfaceC.heritage![0]!.instanceType.kind === TypeKind.Interface);
       expect(exportedInterfaceC.heritage![0]!.instanceType.properties).to.have.lengthOf(2);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[1]!.name).to.equal("a");
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[0]!.name).to.equal("b");
+      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[1]!.name).toBe("a");
+      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[0]!.name).toBe("b");
 
     });
 
@@ -221,11 +221,11 @@ scope("Interpreter", EntityKind.Interface, () => {
 
       assert(exportedInterfaceC.heritage![0]!.instanceType.kind === TypeKind.Interface);
       expect(exportedInterfaceC.heritage![0]!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[0]!.name).to.equal("a");
+      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[0]!.name).toBe("a");
 
       assert(exportedInterfaceC.heritage![1]!.instanceType.kind === TypeKind.Interface);
       expect(exportedInterfaceC.heritage![1]!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedInterfaceC.heritage![1]!.instanceType.properties[0]!.name).to.equal("b");
+      expect(exportedInterfaceC.heritage![1]!.instanceType.properties[0]!.name).toBe("b");
 
     });
 
@@ -248,7 +248,7 @@ scope("Interpreter", EntityKind.Interface, () => {
       expect(exportedInterface.typeParameters).to.not.equal(undefined);
       expect(exportedInterface.typeParameters).to.have.lengthOf(1);
       expect(exportedInterface.properties).to.have.lengthOf(1);
-      expect(exportedInterface.properties[0]!.type.kind).to.equal(TypeKind.TypeParameter);
+      expect(exportedInterface.properties[0]!.type.kind).toBe(TypeKind.TypeParameter);
     });
 
   }
@@ -299,11 +299,11 @@ scope("Interpreter", EntityKind.Interface, () => {
 
       expect(exportedInterface.heritage![0]!.typeArguments).to.not.equal(undefined);
       expect(exportedInterface.heritage![0]!.typeArguments).to.have.lengthOf(1);
-      expect(exportedInterface.heritage![0]!.typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedInterface.heritage![0]!.typeArguments![0]!.kind).toBe(TypeKind.StringLiteral);
 
       assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.Object);
       expect(exportedInterface.heritage![0]!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedInterface.heritage![0]!.instanceType.properties[0]!.type.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedInterface.heritage![0]!.instanceType.properties[0]!.type.kind).toBe(TypeKind.StringLiteral);
 
     });
 

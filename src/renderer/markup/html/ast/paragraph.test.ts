@@ -14,14 +14,14 @@ scope("HTMLRenderer", "ParagraphNode", () => {
 
   it("should render a paragraph node correctly", () => {
     const paragraphNode = createParagraphNode("Paragraph text");
-    expect(renderParagraphNode(ctx, paragraphNode)).to.equal(html`
+    expect(renderParagraphNode(ctx, paragraphNode)).toBe(html`
       <p>Paragraph text</p>
     `);
   });
 
   it("should not render empty paragraphs", () => {
     const paragraphNode = createParagraphNode("");
-    expect(renderParagraphNode(ctx, paragraphNode)).to.equal("");
+    expect(renderParagraphNode(ctx, paragraphNode)).toBe("");
   });
 
 });

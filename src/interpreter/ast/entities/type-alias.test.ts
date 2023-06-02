@@ -23,7 +23,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse a type alias", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
     });
 
   }
@@ -44,23 +44,23 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
     });
 
     it("should have a matching name", () => {
-      expect(exportedTypeAlias.name).to.equal("TypeAlias");
+      expect(exportedTypeAlias.name).toBe("TypeAlias");
     });
 
     it("should have a matching id", () => {
-      expect(exportedTypeAlias.symbolId).to.equal(getSymbolId(ctx, symbol));
+      expect(exportedTypeAlias.symbolId).toBe(getSymbolId(ctx, symbol));
     });
 
     it("should have a matching description", () => {
-      expect(exportedTypeAlias.description).to.equal("Type alias description");
+      expect(exportedTypeAlias.description).toBe("Type alias description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedTypeAlias.example).to.equal("Type alias example");
+      expect(exportedTypeAlias.example).toBe("Type alias example");
     });
 
     it("should have a matching position", () => {
@@ -88,7 +88,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedTypeAlias.typeParameters).toHaveLength(1);
       expect(exportedTypeAlias.type.type).to.not.equal(undefined);
-      expect(exportedTypeAlias.type.type!.kind).to.equal(TypeKind.TypeParameter);
+      expect(exportedTypeAlias.type.type!.kind).toBe(TypeKind.TypeParameter);
     });
 
   }
@@ -124,13 +124,13 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should resolve types", () => {
-      expect(exportedTypeAlias.typeParameters).to.equal(undefined);
+      expect(exportedTypeAlias.typeParameters).toBe(undefined);
 
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedTypeAlias.type.type !== undefined);
       assert(exportedTypeAlias.type.type.kind === TypeKind.StringLiteral);
 
-      expect(exportedTypeAlias.type.type.value).to.equal("hello");
+      expect(exportedTypeAlias.type.type.value).toBe("hello");
     });
 
   }
@@ -161,11 +161,11 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     it("should support typescript utility types", () => {
       assert(exportedUppercaseTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedUppercaseTypeAlias.type.type?.kind === TypeKind.StringLiteral);
-      expect(exportedUppercaseTypeAlias.type.type.value).to.equal("HELLO");
+      expect(exportedUppercaseTypeAlias.type.type.value).toBe("HELLO");
 
       assert(exportedPartialTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedPartialTypeAlias.type.type?.kind === TypeKind.TypeLiteral);
-      expect(exportedPartialTypeAlias.type.type.properties[0].optional).to.equal(true);
+      expect(exportedPartialTypeAlias.type.type.properties[0].optional).toBe(true);
     });
 
     // Readonly is currently not supported by the typescript compiler api

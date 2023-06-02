@@ -30,7 +30,7 @@ scope("MarkupRenderer", TypeKind.IndexedAccess, () => {
     const convertedType = convertIndexedAccessType(ctx, type as IndexedAccessType);
 
     it("should render the resulting type", () => {
-      expect(convertedType).to.equal("string");
+      expect(convertedType).toBe("string");
     });
 
   }

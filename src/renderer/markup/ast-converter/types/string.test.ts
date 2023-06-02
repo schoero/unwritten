@@ -29,7 +29,7 @@ scope("MarkupRenderer", TypeKind.String, () => {
     const convertedType = convertStringType(ctx, type as StringType);
 
     it("should render the name of the type", () => {
-      expect(convertedType).to.equal("string");
+      expect(convertedType).toBe("string");
     });
 
   }

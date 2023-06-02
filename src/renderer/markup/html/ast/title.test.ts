@@ -15,14 +15,14 @@ scope("HTMLRenderer", "TitleNode", () => {
 
   it("should not render empty titles", () => {
     const titleNode = createTitleNode("Title");
-    expect(renderTitleNode(ctx, titleNode)).to.equal("");
+    expect(renderTitleNode(ctx, titleNode)).toBe("");
   });
 
   it("should render a single title correctly", () => {
 
     const titleNode = createTitleNode("Title", createParagraphNode("Paragraph"));
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(html`
+    expect(renderTitleNode(ctx, titleNode)).toBe(html`
       <h1>Title</h1>
       <p>Paragraph</p>
     `);
@@ -36,7 +36,7 @@ scope("HTMLRenderer", "TitleNode", () => {
       createTitleNode("SubTitle", createParagraphNode("Paragraph"))
     );
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(html`
+    expect(renderTitleNode(ctx, titleNode)).toBe(html`
       <h1>Title</h1>
       <h2>SubTitle</h2>
       <p>Paragraph</p>
@@ -54,7 +54,7 @@ scope("HTMLRenderer", "TitleNode", () => {
 
     const renderedTitle = renderTitleNode(ctx, titleNode);
 
-    expect(renderedTitle).to.equal(html`
+    expect(renderedTitle).toBe(html`
       <h1>Title</h1>
       <h2>Subtitle</h2>
       <p>Paragraph</p>
@@ -73,7 +73,7 @@ scope("HTMLRenderer", "TitleNode", () => {
       createParagraphNode("Paragraph2")
     );
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(html`
+    expect(renderTitleNode(ctx, titleNode)).toBe(html`
       <h1>Title</h1>
       <p>Paragraph</p>
       <p>Paragraph2</p>
@@ -86,7 +86,7 @@ scope("HTMLRenderer", "TitleNode", () => {
     const anchor = registerAnchor(ctx, "title", 0);
     const titleNode = createTitleNode("Title", anchor, createParagraphNode("Paragraph"));
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(html`
+    expect(renderTitleNode(ctx, titleNode)).toBe(html`
       <h1 id="title">Title</h1>
       <p>Paragraph</p>
     `);

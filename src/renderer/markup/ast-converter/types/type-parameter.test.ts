@@ -32,7 +32,7 @@ scope("MarkupRenderer", TypeKind.TypeParameter, () => {
     it("should have the correct name", () => {
       assert(Array.isArray(convertedTypeReferenceType));
       assert(isAnchorNode(convertedTypeReferenceType[0]));
-      expect(convertedTypeReferenceType[0].name).to.equal("T");
+      expect(convertedTypeReferenceType[0].name).toBe("T");
     });
 
   }

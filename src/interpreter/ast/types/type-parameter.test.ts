@@ -25,7 +25,7 @@ scope("Interpreter", TypeKind.TypeParameter, () => {
       expect(exportedTypeAlias.typeParameters).toHaveLength(1);
       expect(exportedTypeAlias.type.type).to.not.equal(undefined);
       assert(exportedTypeAlias.type.type!.kind === TypeKind.TypeParameter);
-      expect(exportedTypeAlias.type.type.name).to.equal("T");
+      expect(exportedTypeAlias.type.type.name).toBe("T");
     });
 
   }

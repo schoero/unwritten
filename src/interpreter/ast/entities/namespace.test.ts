@@ -28,19 +28,19 @@ scope("Interpreter", EntityKind.Namespace, () => {
   const exportedNamespace = createNamespaceEntity(ctx, symbol);
 
   it("should export a namespace", () => {
-    expect(exportedNamespace.name).to.equal("TestNamespace");
+    expect(exportedNamespace.name).toBe("TestNamespace");
   });
 
   it("should have a matching description", () => {
-    expect(exportedNamespace.description).to.equal("Namespace description");
+    expect(exportedNamespace.description).toBe("Namespace description");
   });
 
   it("should have a matching remarks", () => {
-    expect(exportedNamespace.remarks).to.equal("Namespace remarks");
+    expect(exportedNamespace.remarks).toBe("Namespace remarks");
   });
 
   it("should have a matching example", () => {
-    expect(exportedNamespace.example).to.equal("Namespace example");
+    expect(exportedNamespace.example).toBe("Namespace example");
   });
 
   it("should be deprecated", () => {
@@ -52,7 +52,7 @@ scope("Interpreter", EntityKind.Namespace, () => {
   });
 
   it("should have parsed exports", () => {
-    expect(exportedNamespace.exports.length).to.equal(1);
+    expect(exportedNamespace.exports.length).toBe(1);
   });
 
 });

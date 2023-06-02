@@ -53,23 +53,23 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     ] = titleNode.children;
 
     it("should have a matching title", () => {
-      expect(renderedNamespaceForTableOfContents.title).to.equal("Namespace");
-      expect(titleNode.title).to.equal("Namespace");
+      expect(renderedNamespaceForTableOfContents.title).toBe("Namespace");
+      expect(titleNode.title).toBe("Namespace");
     });
 
     it("should have a matching description", () => {
       assert(isTitleNode(description));
-      expect(description.children[0].children[0]).to.equal("Namespace description");
+      expect(description.children[0].children[0]).toBe("Namespace description");
     });
 
     it("should have a matching remarks", () => {
       assert(isTitleNode(remarks));
-      expect(remarks.children[0].children[0]).to.equal("Namespace remarks");
+      expect(remarks.children[0].children[0]).toBe("Namespace remarks");
     });
 
     it("should have a matching example", () => {
       assert(isTitleNode(example));
-      expect(example.children[0].children[0]).to.equal("Namespace example");
+      expect(example.children[0].children[0]).toBe("Namespace example");
     });
 
     it("should have a matching tags", () => {
@@ -83,7 +83,7 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     });
 
     it("should have no children", () => {
-      expect(children.length).to.equal(0);
+      expect(children).toHaveLength(0);
     });
 
   }
@@ -118,12 +118,12 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     ] = titleNode.children;
 
     it("should have a matching title", () => {
-      expect(renderedNamespaceForTableOfContents.title).to.equal("Namespace");
-      expect(titleNode.title).to.equal("Namespace");
+      expect(renderedNamespaceForTableOfContents.title).toBe("Namespace");
+      expect(titleNode.title).toBe("Namespace");
     });
 
     it("should have on child", () => {
-      expect(children.length).to.equal(1);
+      expect(children).toHaveLength(1);
     });
 
   }

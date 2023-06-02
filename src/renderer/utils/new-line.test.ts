@@ -10,9 +10,9 @@ scope("Renderer", "utils", () => {
 
   it("should render new lines correctly", () => {
     ctx.config.renderConfig.html.newLine = "\n";
-    expect(ctx.config.renderConfig.html.newLine).to.equal("\n");
+    expect(ctx.config.renderConfig.html.newLine).toBe("\n");
     ctx.config.renderConfig.html.newLine = "\r\n";
-    expect(ctx.config.renderConfig.html.newLine).to.equal("\r\n");
+    expect(ctx.config.renderConfig.html.newLine).toBe("\r\n");
   });
 
 });

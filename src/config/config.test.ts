@@ -57,7 +57,7 @@ scope("Integration", "Config", async () => {
     expect(config.interpreterConfig).to.not.equal(undefined);
     expect(config.renderConfig).to.not.equal(undefined);
     expect(config.renderConfig.test).to.not.equal(undefined);
-    expect(config.renderConfig.test[".unwritten.json"]).to.equal(true);
+    expect(config.renderConfig.test[".unwritten.json"]).toBe(true);
 
   });
 
@@ -75,7 +75,7 @@ scope("Integration", "Config", async () => {
     expect(config.interpreterConfig).to.not.equal(undefined);
     expect(config.renderConfig).to.not.equal(undefined);
     expect(config.renderConfig.test).to.not.equal(undefined);
-    expect(config.renderConfig.test.object).to.equal(true);
+    expect(config.renderConfig.test.object).toBe(true);
 
   });
 
@@ -87,7 +87,7 @@ scope("Integration", "Config", async () => {
     expect(config.interpreterConfig).to.not.equal(undefined);
     expect(config.renderConfig).to.not.equal(undefined);
     expect(config.renderConfig.test).to.not.equal(undefined);
-    expect(config.renderConfig.test[".unwritten.js"]).to.equal(true);
+    expect(config.renderConfig.test[".unwritten.js"]).toBe(true);
 
   });
 
@@ -102,7 +102,7 @@ scope("Integration", "Config", async () => {
     });
 
     expect(config.renderConfig.markdown).to.not.equal(undefined);
-    expect(config.renderConfig.markdown.removeHyphenAtStartOfTag).to.equal(false);
+    expect(config.renderConfig.markdown.removeHyphenAtStartOfTag).toBe(false);
 
   });
 
@@ -113,7 +113,7 @@ scope("Integration", "Config", async () => {
     });
 
     expect(config.renderConfig.test).to.not.equal(undefined);
-    expect(config.renderConfig.test[".unwritten.json"]).to.equal(true);
+    expect(config.renderConfig.test[".unwritten.json"]).toBe(true);
 
   });
 
@@ -128,7 +128,7 @@ scope("Integration", "Config", async () => {
     });
 
     expect(config.renderConfig.test).to.not.equal(undefined);
-    expect(config.renderConfig.test[".unwritten.json"]).to.equal("overridden");
+    expect(config.renderConfig.test[".unwritten.json"]).toBe("overridden");
 
   });
 

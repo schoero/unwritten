@@ -54,8 +54,8 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     ] = titleNode.children;
 
     it("should have matching class name", () => {
-      expect(convertedClassForTableOfContents.title).to.equal("Class");
-      expect(titleNode.title).to.equal("Class");
+      expect(convertedClassForTableOfContents.title).toBe("Class");
+      expect(titleNode.title).toBe("Class");
     });
 
     it("should have a position", () => {
@@ -64,7 +64,7 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     });
 
     it("should have no tags", () => {
-      expect(tags).to.equal("");
+      expect(tags).toBe("");
     });
 
     it("should have one construct signature", () => {

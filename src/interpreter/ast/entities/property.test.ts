@@ -49,7 +49,7 @@ scope("Interpreter", EntityKind.Property, () => {
     });
 
     it("should be able to parse a property from a Class", () => {
-      expect(exportedClass.kind).to.equal(EntityKind.Class);
+      expect(exportedClass.kind).toBe(EntityKind.Class);
       expect(exportedClass.properties).to.have.lengthOf(1);
     });
 
@@ -93,42 +93,42 @@ scope("Interpreter", EntityKind.Property, () => {
 
     it("should have a matching name", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.name).to.equal("property");
+      expect(exportedTypeAlias.type.properties[0]!.name).toBe("property");
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.name).to.equal("property");
+      expect(exportedObjectLiteral.type.properties[0]!.name).toBe("property");
 
-      expect(exportedClass.properties[0].name).to.equal("property");
+      expect(exportedClass.properties[0].name).toBe("property");
     });
 
     it("should have a matching description", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.description).to.equal("Property description");
+      expect(exportedTypeAlias.type.properties[0]!.description).toBe("Property description");
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.description).to.equal("Property description");
+      expect(exportedObjectLiteral.type.properties[0]!.description).toBe("Property description");
 
-      expect(exportedClass.properties[0].description).to.equal("Property description");
+      expect(exportedClass.properties[0].description).toBe("Property description");
     });
 
     it("should have a matching example", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.example).to.equal("Property example");
+      expect(exportedTypeAlias.type.properties[0]!.example).toBe("Property example");
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.example).to.equal("Property example");
+      expect(exportedObjectLiteral.type.properties[0]!.example).toBe("Property example");
 
-      expect(exportedClass.properties[0].example).to.equal("Property example");
+      expect(exportedClass.properties[0].example).toBe("Property example");
     });
 
     it("should have a matching type", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.type.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.type.properties[0]!.type.kind).toBe(TypeKind.String);
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.type.kind).to.equal(TypeKind.String);
+      expect(exportedObjectLiteral.type.properties[0]!.type.kind).toBe(TypeKind.String);
 
-      expect(exportedClass.properties[0].type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.properties[0].type.kind).toBe(TypeKind.String);
     });
 
   }
@@ -156,10 +156,10 @@ scope("Interpreter", EntityKind.Property, () => {
 
     it("should correctly flag optional properties", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0].optional).to.equal(true);
-      expect(exportedTypeAlias.type.properties[1].optional).to.equal(false);
-      expect(exportedClass.properties[0].optional).to.equal(true);
-      expect(exportedClass.properties[1].optional).to.equal(false);
+      expect(exportedTypeAlias.type.properties[0].optional).toBe(true);
+      expect(exportedTypeAlias.type.properties[1].optional).toBe(false);
+      expect(exportedClass.properties[0].optional).toBe(true);
+      expect(exportedClass.properties[1].optional).toBe(false);
     });
 
   }

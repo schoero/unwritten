@@ -20,7 +20,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should be able to parse a source file", () => {
-      expect(sourceFile.kind).to.equal(EntityKind.SourceFile);
+      expect(sourceFile.kind).toBe(EntityKind.SourceFile);
     });
 
   }
@@ -35,19 +35,19 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should have a matching kind", () => {
-      expect(sourceFile.kind).to.equal(EntityKind.SourceFile);
+      expect(sourceFile.kind).toBe(EntityKind.SourceFile);
     });
 
     it("should have a matching id", () => {
-      expect(sourceFile.symbolId).to.equal(getSymbolId(ctx, fileSymbol));
+      expect(sourceFile.symbolId).toBe(getSymbolId(ctx, fileSymbol));
     });
 
     it("should have a matching name", () => {
-      expect(sourceFile.name).to.equal("\"/file\"");
+      expect(sourceFile.name).toBe("\"/file\"");
     });
 
     it("should have the right amount of types", () => {
-      expect(sourceFile.exports.length).to.equal(1);
+      expect(sourceFile.exports.length).toBe(1);
     });
 
   }
@@ -63,7 +63,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should filter out default exports if they are exported as named exports", () => {
-      expect(sourceFile.exports.length).to.equal(1);
+      expect(sourceFile.exports.length).toBe(1);
     });
 
   }
@@ -79,7 +79,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should not filter out default exports if they aren't exported as named exports", () => {
-      expect(sourceFile.exports.length).to.equal(1);
+      expect(sourceFile.exports.length).toBe(1);
     });
 
   }
@@ -94,7 +94,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should not filter out default exports if they aren't exported as named exports", () => {
-      expect(sourceFile.exports.length).to.equal(1);
+      expect(sourceFile.exports.length).toBe(1);
     });
 
   }

@@ -29,12 +29,12 @@ scope("Interpreter", "JSDoc", () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have all matching JSDoc tags", () => {
-      expect(exportedTypeAlias.description).to.equal("Type description");
-      expect(exportedTypeAlias.remarks).to.equal("This is a longer description.");
-      expect(exportedTypeAlias.alpha).to.equal("This type is in alpha.");
-      expect(exportedTypeAlias.beta).to.equal("This type is in beta.");
-      expect(exportedTypeAlias.deprecated).to.equal("This type is deprecated.");
-      expect(exportedTypeAlias.example).to.equal("type example");
+      expect(exportedTypeAlias.description).toBe("Type description");
+      expect(exportedTypeAlias.remarks).toBe("This is a longer description.");
+      expect(exportedTypeAlias.alpha).toBe("This type is in alpha.");
+      expect(exportedTypeAlias.beta).toBe("This type is in beta.");
+      expect(exportedTypeAlias.deprecated).toBe("This type is deprecated.");
+      expect(exportedTypeAlias.example).toBe("type example");
     });
 
   }

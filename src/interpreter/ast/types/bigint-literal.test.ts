@@ -27,10 +27,10 @@ scope("Interpreter", TypeKind.NumberLiteral, () => {
     it("should be able to parse bigint literal types", () => {
 
       assert(bigIntLIteralTypeAliasNegative.type.kind === TypeKind.BigIntLiteral);
-      expect(bigIntLIteralTypeAliasNegative.type.value).to.equal(7n);
+      expect(bigIntLIteralTypeAliasNegative.type.value).toBe(7n);
 
       assert(bigIntLiteralSymbolNegative.type.kind === TypeKind.BigIntLiteral);
-      expect(bigIntLiteralSymbolNegative.type.value).to.equal(-7n);
+      expect(bigIntLiteralSymbolNegative.type.value).toBe(-7n);
 
     });
 

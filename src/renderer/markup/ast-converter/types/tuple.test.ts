@@ -31,7 +31,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render tuple types", () => {
-      expect(renderedType).to.equal("[string, number]");
+      expect(renderedType).toBe("[string, number]");
     });
 
   }
@@ -53,7 +53,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render tuple type members with labels", () => {
-      expect(renderedType).to.equal("[first: string, second: number]");
+      expect(renderedType).toBe("[first: string, second: number]");
     });
 
   }
@@ -75,7 +75,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render optional tuple type members", () => {
-      expect(renderedType).to.equal("[string, number?]");
+      expect(renderedType).toBe("[string, number?]");
     });
 
   }
@@ -97,7 +97,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render rest tuple type members", () => {
-      expect(renderedType).to.equal("[string, ...number[]]");
+      expect(renderedType).toBe("[string, ...number[]]");
     });
 
   }
@@ -119,7 +119,7 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render union rest tuple type members", () => {
-      expect(renderedType).to.equal("[string, ...(string | number)[]]");
+      expect(renderedType).toBe("[string, ...(string | number)[]]");
     });
 
   }

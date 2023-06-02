@@ -20,7 +20,7 @@ scope("Interpreter", TypeKind.Null, () => {
     const symbol = exportedSymbols.find(s => s.name === "NullType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Null);
+    expect(exportedTypeAlias.type.kind).toBe(TypeKind.Null);
 
   });
 

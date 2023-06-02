@@ -15,14 +15,14 @@ scope("MarkdownRenderer", "StrikethroughNode", () => {
 
   it("should render a strikethrough node correctly", () => {
     const strikethroughNode = createStrikethroughNode("Strikethrough text");
-    expect(renderStrikethroughNode(ctx, strikethroughNode)).to.equal(md`
+    expect(renderStrikethroughNode(ctx, strikethroughNode)).toBe(md`
       ~~Strikethrough text~~
     `);
   });
 
   it("should not render empty strikethrough nodes", () => {
     const strikethroughNode = createStrikethroughNode("");
-    expect(renderStrikethroughNode(ctx, strikethroughNode)).to.equal("");
+    expect(renderStrikethroughNode(ctx, strikethroughNode)).toBe("");
   });
 
 });

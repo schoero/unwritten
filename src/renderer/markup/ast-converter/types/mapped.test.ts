@@ -33,7 +33,7 @@ scope("MarkupRenderer", TypeKind.Mapped, () => {
     const properties = convertedType.children[0].children;
 
     it("should have two properties", () => {
-      expect(properties.length).to.equal(2);
+      expect(properties).toHaveLength(2);
     });
 
     it("should support the readonly modifier", () => {

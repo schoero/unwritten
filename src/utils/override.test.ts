@@ -8,29 +8,29 @@ describe("override", () => {
   {
     const result = override({ a: "original" }, { a: "overridden" });
     it("should override existing properties", () => {
-      expect(result.a).to.equal("overridden");
+      expect(result.a).toBe("overridden");
     });
   }
   {
     const result = override({ a: "original", b: "original" }, { b: "overridden" });
     it("should not change untouched entries", () => {
-      expect(result.a).to.equal("original");
-      expect(result.b).to.equal("overridden");
+      expect(result.a).toBe("original");
+      expect(result.b).toBe("overridden");
     });
   }
   {
     const result = override({ a: "original", b: "original" }, { c: "overridden" });
     it("should extend the original object", () => {
-      expect(result.a).to.equal("original");
-      expect(result.b).to.equal("original");
-      expect(result.c).to.equal("overridden");
+      expect(result.a).toBe("original");
+      expect(result.b).toBe("original");
+      expect(result.c).toBe("overridden");
     });
   }
   {
     const result = override({ a: { b: "original", c: "original" } }, { a: { c: "overridden" } });
     it("should override nested properties", () => {
-      expect(result.a.b).to.equal("original");
-      expect(result.a.c).to.equal("overridden");
+      expect(result.a.b).toBe("original");
+      expect(result.a.c).toBe("overridden");
     });
   }
   {

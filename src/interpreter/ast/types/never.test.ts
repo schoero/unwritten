@@ -20,7 +20,7 @@ scope("Interpreter", TypeKind.Never, () => {
     const symbol = exportedSymbols.find(s => s.name === "NeverType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Never);
+    expect(exportedTypeAlias.type.kind).toBe(TypeKind.Never);
 
   });
 

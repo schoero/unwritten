@@ -26,7 +26,7 @@ scope("Interpreter", EntityKind.Signature, () => {
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should be able to parse a signature", () => {
-      expect(exportedFunction.kind).to.equal(EntityKind.Function);
+      expect(exportedFunction.kind).toBe(EntityKind.Function);
       expect(exportedFunction.signatures).to.not.equal(undefined);
       expect(exportedFunction.signatures).to.have.lengthOf(1);
     });
@@ -55,15 +55,15 @@ scope("Interpreter", EntityKind.Signature, () => {
     });
 
     it("should have a matching kind", () => {
-      expect(exportedFunction.signatures[0]!.kind).to.equal(EntityKind.Signature);
+      expect(exportedFunction.signatures[0]!.kind).toBe(EntityKind.Signature);
     });
 
     it("should have a matching description", () => {
-      expect(exportedFunction.signatures[0]!.description).to.equal("Function description");
+      expect(exportedFunction.signatures[0]!.description).toBe("Function description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedFunction.signatures[0]!.example).to.equal("Function example");
+      expect(exportedFunction.signatures[0]!.example).toBe("Function example");
     });
 
     it("should have a matching position", () => {
@@ -75,7 +75,7 @@ scope("Interpreter", EntityKind.Signature, () => {
     });
 
     it("should have a return type which is a boolean", () => {
-      expect(exportedFunction.signatures[0]!.returnType.kind).to.equal(TypeKind.Boolean);
+      expect(exportedFunction.signatures[0]!.returnType.kind).toBe(TypeKind.Boolean);
     });
 
   }

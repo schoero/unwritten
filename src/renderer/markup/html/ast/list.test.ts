@@ -17,7 +17,7 @@ scope("HTMLRenderer", "ListNode", () => {
       "Item 1",
       "Item 2"
     );
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>Item 1</li>
         <li>Item 2</li>
@@ -29,7 +29,7 @@ scope("HTMLRenderer", "ListNode", () => {
     const listNode = createListNode(
       ""
     );
-    expect(renderListNode(ctx, listNode)).to.equal("");
+    expect(renderListNode(ctx, listNode)).toBe("");
   });
 
   it("should not render empty list items", () => {
@@ -38,7 +38,7 @@ scope("HTMLRenderer", "ListNode", () => {
       "",
       "Item 3"
     );
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>Item 1</li>
         <li>Item 3</li>
@@ -53,7 +53,7 @@ scope("HTMLRenderer", "ListNode", () => {
         "Item 2"
       )
     );
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>Item 1</li>
         <li>
@@ -77,7 +77,7 @@ scope("HTMLRenderer", "ListNode", () => {
         )
       )
     );
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>Item 1</li>
       </ul>
@@ -92,7 +92,7 @@ scope("HTMLRenderer", "ListNode", () => {
         "1"
       ]
     );
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>Item 1</li>
       </ul>
@@ -110,7 +110,7 @@ scope("HTMLRenderer", "ListNode", () => {
         )
       ]
     );
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>
           Item 1
@@ -133,7 +133,7 @@ scope("HTMLRenderer", "ListNode", () => {
         )
       )
     );
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>Item 1</li>
         <li>
@@ -153,7 +153,7 @@ scope("HTMLRenderer", "ListNode", () => {
         "Item 3"
       )
     );
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>Item 1</li>
         <li>
@@ -172,7 +172,7 @@ scope("HTMLRenderer", "ListNode", () => {
       [[" "]],
       [[["1"]]]
     ]);
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>Item 1</li>
       </ul>
@@ -191,7 +191,7 @@ scope("HTMLRenderer", "ListNode", () => {
         )
       ]]]]
     ]);
-    expect(renderListNode(ctx, listNode)).to.equal(html`
+    expect(renderListNode(ctx, listNode)).toBe(html`
       <ul>
         <li>
           Item 1

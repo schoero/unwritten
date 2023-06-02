@@ -14,7 +14,7 @@ scope("HTMLRenderer", "LinkNode", () => {
 
   it("should render a simple link correctly", () => {
     const linkNode = createLinkNode("Link name", "#anchor");
-    expect(renderLinkNode(ctx, linkNode)).to.equal(html`
+    expect(renderLinkNode(ctx, linkNode)).toBe(html`
       <a href="#anchor">Link name</a>
     `);
   });

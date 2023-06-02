@@ -24,8 +24,8 @@ scope("MarkupRenderer", "Position", () => {
   it("should convert the position correctly", () => {
     assert(isSmallNode(convertedPosition));
     assert(isLinkNode(convertedPosition.children[0]));
-    expect(convertedPosition.children[0].children[0]).to.equal("src/renderer/markup/index.ts");
-    expect(convertedPosition.children[0].link).to.equal("../src/renderer/markup/index.ts#L7C1");
+    expect(convertedPosition.children[0].children[0]).toBe("src/renderer/markup/index.ts");
+    expect(convertedPosition.children[0].link).toBe("../src/renderer/markup/index.ts#L7C1");
   });
 
 });

@@ -25,8 +25,8 @@ scope("Interpreter", TypeKind.Array, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse an array type declared using the native syntax", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Array);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.Array);
     });
 
   }
@@ -45,7 +45,7 @@ scope("Interpreter", TypeKind.Array, () => {
     it("should create a type reference for the generic syntax", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedTypeAlias.type.typeArguments).to.have.lengthOf(1);
-      expect(exportedTypeAlias.type.typeArguments![0].kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.type.typeArguments![0].kind).toBe(TypeKind.String);
     });
 
   }
@@ -62,8 +62,8 @@ scope("Interpreter", TypeKind.Array, () => {
     const exportedVariable = createVariableEntity(ctx, symbol);
 
     it("should be able to parse an array type that was created using the square bracket notation", () => {
-      expect(exportedVariable.kind).to.equal(EntityKind.Variable);
-      expect(exportedVariable.type.kind).to.equal(TypeKind.Array);
+      expect(exportedVariable.kind).toBe(EntityKind.Variable);
+      expect(exportedVariable.type.kind).toBe(TypeKind.Array);
     });
 
   }
@@ -80,8 +80,8 @@ scope("Interpreter", TypeKind.Array, () => {
     const exportedVariable = createVariableEntity(ctx, symbol);
 
     it("should be able to parse an array type that was created using the Array constructor", () => {
-      expect(exportedVariable.kind).to.equal(EntityKind.Variable);
-      expect(exportedVariable.type.kind).to.equal(TypeKind.Array);
+      expect(exportedVariable.kind).toBe(EntityKind.Variable);
+      expect(exportedVariable.type.kind).toBe(TypeKind.Array);
     });
 
   }

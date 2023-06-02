@@ -45,8 +45,8 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     const convertedVariableForDocumentation = convertVariableEntityForDocumentation(ctx, variableEntity);
 
     it("should have matching table of contents entry", () => {
-      expect(isAnchorNode(convertedVariableForTableOfContents)).to.equal(true);
-      expect(convertedVariableForTableOfContents.children[0]).to.equal("numberVariable");
+      expect(isAnchorNode(convertedVariableForTableOfContents)).toBe(true);
+      expect(convertedVariableForTableOfContents.children[0]).toBe("numberVariable");
     });
 
     assert(isAnchorNode(convertedVariableForTableOfContents), "Rendered variable for table of contents is not a link");
@@ -54,8 +54,8 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     const titleNode = convertedVariableForDocumentation.children[0];
 
     it("should have a matching documentation title", () => {
-      expect(isTitleNode(titleNode)).to.equal(true);
-      expect(titleNode.title).to.equal("numberVariable");
+      expect(isTitleNode(titleNode)).toBe(true);
+      expect(titleNode.title).toBe("numberVariable");
     });
 
     assert(isSectionNode(convertedVariableForDocumentation), "Rendered variable for documentation is not a section");
@@ -89,19 +89,19 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     it("should have a matching description", () => {
       assert(isTitleNode(description));
       assert(isParagraphNode(description.children[0]));
-      expect(description.children[0].children[0]).to.equal("Variable description");
+      expect(description.children[0].children[0]).toBe("Variable description");
     });
 
     it("should have matching remarks", () => {
       assert(isTitleNode(remarks));
       assert(isParagraphNode(remarks.children[0]));
-      expect(remarks.children[0].children[0]).to.equal("Variable remarks");
+      expect(remarks.children[0].children[0]).toBe("Variable remarks");
     });
 
     it("should have a matching example", () => {
       assert(isTitleNode(example));
       assert(isParagraphNode(example.children[0]));
-      expect(example.children[0].children[0]).to.equal("Variable example");
+      expect(example.children[0].children[0]).toBe("Variable example");
     });
 
   }

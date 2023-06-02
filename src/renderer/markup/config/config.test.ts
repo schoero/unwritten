@@ -27,7 +27,7 @@ scope("Renderer", "Config", () => {
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should use the default encapsulation", () => {
-        expect(renderedStringType).to.equal("string");
+        expect(renderedStringType).toBe("string");
       });
 
     }
@@ -40,7 +40,7 @@ scope("Renderer", "Config", () => {
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should be possible to change the encapsulation", () => {
-        expect(renderedStringType).to.equal("`string`");
+        expect(renderedStringType).toBe("`string`");
       });
 
     }
@@ -66,7 +66,7 @@ scope("Renderer", "Config", () => {
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should use the default encapsulation", () => {
-        expect(renderedStringType).to.equal("test");
+        expect(renderedStringType).toBe("test");
       });
 
     }
@@ -80,7 +80,7 @@ scope("Renderer", "Config", () => {
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should be possible to change the encapsulation", () => {
-        expect(renderedStringType).to.equal('`"test"`');
+        expect(renderedStringType).toBe('`"test"`');
       });
 
     }
@@ -106,7 +106,7 @@ scope("Renderer", "Config", () => {
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should use the default encapsulation", () => {
-        expect(renderedStringType).to.equal(`<a href="${ctx.config.externalTypes[TypeKind.String]}">string</a>`);
+        expect(renderedStringType).toBe(`<a href="${ctx.config.externalTypes[TypeKind.String]}">string</a>`);
       });
 
     }

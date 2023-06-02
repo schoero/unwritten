@@ -15,21 +15,21 @@ scope("HTMLRenderer", "SpanNode", () => {
 
   it("should render a span node correctly", () => {
     const spanNode = createSpanNode("text");
-    expect(renderSpanNode(ctx, spanNode)).to.equal(html`
+    expect(renderSpanNode(ctx, spanNode)).toBe(html`
       <span>text</span>
     `);
   });
 
   it("should not render empty span nodes", () => {
     const spanNode = createSpanNode("");
-    expect(renderSpanNode(ctx, spanNode)).to.equal("");
+    expect(renderSpanNode(ctx, spanNode)).toBe("");
   });
 
   it("should render an id if available", () => {
     const anchor = createAnchor("test", 1);
     registerAnchor(ctx, anchor.name, anchor.id);
     const spanNode = createSpanNode(anchor, "text");
-    expect(renderSpanNode(ctx, spanNode)).to.equal(html`
+    expect(renderSpanNode(ctx, spanNode)).toBe(html`
       <span id="test">text</span>
     `);
   });

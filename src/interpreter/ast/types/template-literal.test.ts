@@ -20,25 +20,25 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse a template literal type", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.TemplateLiteral);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.TemplateLiteral);
     });
 
     it("should have an empty head", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.head).to.equal("");
+      expect(exportedTypeAlias.type.head).toBe("");
     });
 
     it("should have one matching type", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
       expect(exportedTypeAlias.type.types).to.have.lengthOf(1);
-      expect(exportedTypeAlias.type.types[0]!.kind).to.equal(TypeKind.Number);
+      expect(exportedTypeAlias.type.types[0]!.kind).toBe(TypeKind.Number);
     });
 
     it("should have one matching span", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
       expect(exportedTypeAlias.type.spans).to.have.lengthOf(1);
-      expect(exportedTypeAlias.type.spans[0]!).to.equal("px");
+      expect(exportedTypeAlias.type.spans[0]!).toBe("px");
     });
 
   }
@@ -55,21 +55,21 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
 
     it("should have a matching head", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.head).to.equal("PREFIX-");
+      expect(exportedTypeAlias.type.head).toBe("PREFIX-");
     });
 
     it("should have two matching types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
       expect(exportedTypeAlias.type.types).to.have.lengthOf(2);
-      expect(exportedTypeAlias.type.types[0]!.kind).to.equal(TypeKind.Number);
-      expect(exportedTypeAlias.type.types[1]!.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.type.types[0]!.kind).toBe(TypeKind.Number);
+      expect(exportedTypeAlias.type.types[1]!.kind).toBe(TypeKind.String);
     });
 
     it("should have two matching spans", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
       expect(exportedTypeAlias.type.spans).to.have.lengthOf(2);
-      expect(exportedTypeAlias.type.spans[0]!).to.equal("-MIDDLE-");
-      expect(exportedTypeAlias.type.spans[1]!).to.equal("-SUFFIX");
+      expect(exportedTypeAlias.type.spans[0]!).toBe("-MIDDLE-");
+      expect(exportedTypeAlias.type.spans[1]!).toBe("-SUFFIX");
     });
 
   }
@@ -86,23 +86,23 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
 
     it("should have a matching head", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
-      expect(exportedTypeAlias.type.head).to.equal("border-");
+      expect(exportedTypeAlias.type.head).toBe("border-");
     });
 
     it("should have three matching types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
       expect(exportedTypeAlias.type.types).to.have.lengthOf(3);
-      expect(exportedTypeAlias.type.types[0]!.kind).to.equal(TypeKind.Union);
-      expect(exportedTypeAlias.type.types[1]!.kind).to.equal(TypeKind.StringLiteral);
-      expect(exportedTypeAlias.type.types[2]!.kind).to.equal(TypeKind.Number);
+      expect(exportedTypeAlias.type.types[0]!.kind).toBe(TypeKind.Union);
+      expect(exportedTypeAlias.type.types[1]!.kind).toBe(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.types[2]!.kind).toBe(TypeKind.Number);
     });
 
     it("should have three matching spans", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TemplateLiteral);
       expect(exportedTypeAlias.type.spans).to.have.lengthOf(3);
-      expect(exportedTypeAlias.type.spans[0]!).to.equal("-");
-      expect(exportedTypeAlias.type.spans[1]!).to.equal(": ");
-      expect(exportedTypeAlias.type.spans[2]!).to.equal("px");
+      expect(exportedTypeAlias.type.spans[0]!).toBe("-");
+      expect(exportedTypeAlias.type.spans[1]!).toBe(": ");
+      expect(exportedTypeAlias.type.spans[2]!).toBe("px");
     });
 
   }
@@ -120,7 +120,7 @@ scope("Interpreter", TypeKind.TemplateLiteral, () => {
 
     it("should result in a string literal", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedTypeAlias.type.type?.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.type?.kind).toBe(TypeKind.StringLiteral);
     });
 
   }

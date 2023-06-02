@@ -15,14 +15,14 @@ scope("MarkdownRenderer", "ParagraphNode", () => {
 
   it("should render a paragraph node correctly", () => {
     const paragraphNode = createParagraphNode("Paragraph text");
-    expect(renderParagraphNode(ctx, paragraphNode)).to.equal(md`
+    expect(renderParagraphNode(ctx, paragraphNode)).toBe(md`
       Paragraph text
     `);
   });
 
   it("should not render empty paragraphs", () => {
     const paragraphNode = createParagraphNode("");
-    expect(renderParagraphNode(ctx, paragraphNode)).to.equal("");
+    expect(renderParagraphNode(ctx, paragraphNode)).toBe("");
   });
 
 });

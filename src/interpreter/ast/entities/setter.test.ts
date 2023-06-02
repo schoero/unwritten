@@ -27,17 +27,17 @@ scope("Interpreter", EntityKind.Setter, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should be able to parse a setter", () => {
-      expect(exportedClass.kind).to.equal(EntityKind.Class);
+      expect(exportedClass.kind).toBe(EntityKind.Class);
       expect(exportedClass.setters).to.not.equal(undefined);
       expect(exportedClass.setters).to.have.lengthOf(1);
     });
 
     it("should have a matching kind", () => {
-      expect(exportedClass.setters[0]!.kind).to.equal(EntityKind.Setter);
+      expect(exportedClass.setters[0]!.kind).toBe(EntityKind.Setter);
     });
 
     it("should have a matching name", () => {
-      expect(exportedClass.setters[0]!.name).to.equal("setter");
+      expect(exportedClass.setters[0]!.name).toBe("setter");
     });
 
     it("should have one signature", () => {
@@ -45,11 +45,11 @@ scope("Interpreter", EntityKind.Setter, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedClass.setters[0]!.signatures[0]!.description).to.equal("Setter description");
+      expect(exportedClass.setters[0]!.signatures[0]!.description).toBe("Setter description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.setters[0]!.signatures[0]!.example).to.equal("setter example");
+      expect(exportedClass.setters[0]!.signatures[0]!.example).toBe("setter example");
     });
 
   }

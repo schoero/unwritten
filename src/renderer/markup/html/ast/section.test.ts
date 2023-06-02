@@ -16,7 +16,7 @@ scope("HTMLRenderer", "SectionNode", () => {
 
   it("should render a section node correctly", () => {
     const sectionNode = createSectionNode(undefined, createParagraphNode("Section content"));
-    expect(renderSectionNode(ctx, sectionNode)).to.equal(html`
+    expect(renderSectionNode(ctx, sectionNode)).toBe(html`
       <section>
         <p>Section content</p>
       </section>
@@ -25,12 +25,12 @@ scope("HTMLRenderer", "SectionNode", () => {
 
   it("should not render empty sections", () => {
     const sectionNode = createSectionNode(undefined, "");
-    expect(renderSectionNode(ctx, sectionNode)).to.equal("");
+    expect(renderSectionNode(ctx, sectionNode)).toBe("");
   });
 
   it("should add the type as a class name", () => {
     const sectionNode = createSectionNode(SECTION_TYPE[EntityKind.Function], createParagraphNode("Section content"));
-    expect(renderSectionNode(ctx, sectionNode)).to.equal(html`
+    expect(renderSectionNode(ctx, sectionNode)).toBe(html`
       <section class="${SECTION_TYPE[EntityKind.Function]}">
         <p>Section content</p>
       </section>

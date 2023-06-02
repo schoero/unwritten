@@ -13,9 +13,9 @@ scope("Renderer", "indentation", () => {
   ctx.config.renderConfig.html.indentation = "--";
 
   it("should render indentations correctly", () => {
-    expect(renderIndentation({ ...ctx, indentation: 0 })).to.equal("");
-    expect(renderIndentation({ ...ctx, indentation: 1 })).to.equal("--");
-    expect(renderIndentation({ ...ctx, indentation: 2 })).to.equal("----");
+    expect(renderIndentation({ ...ctx, indentation: 0 })).toBe("");
+    expect(renderIndentation({ ...ctx, indentation: 1 })).toBe("--");
+    expect(renderIndentation({ ...ctx, indentation: 2 })).toBe("----");
   });
 
 });

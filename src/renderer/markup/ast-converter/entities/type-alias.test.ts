@@ -49,7 +49,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
     it("should have matching table of contents entry", () => {
       assert(isAnchorNode(convertedTypeAliasForTableOfContents));
-      expect(renderNode(ctx, convertedTypeAliasForTableOfContents.children)).to.equal("TypeAlias<A>");
+      expect(renderNode(ctx, convertedTypeAliasForTableOfContents.children)).toBe("TypeAlias<A>");
     });
 
     assert(isAnchorNode(convertedTypeAliasForTableOfContents), "Rendered typeAlias for table of contents is not a link");
@@ -58,7 +58,7 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
     it("should have a matching documentation signature", () => {
       assert(isTitleNode(titleNode));
-      expect(renderNode(ctx, titleNode.title)).to.equal("TypeAlias<A>");
+      expect(renderNode(ctx, titleNode.title)).toBe("TypeAlias<A>");
     });
 
     assert(isSectionNode(convertedTypeAliasForDocumentation), "Rendered typeAlias for documentation is not a section");
@@ -100,19 +100,19 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     it("should have a matching description", () => {
       assert(isTitleNode(description));
       assert(isParagraphNode(description.children[0]));
-      expect(description.children[0].children[0]).to.equal("Type alias description");
+      expect(description.children[0].children[0]).toBe("Type alias description");
     });
 
     it("should have matching remarks", () => {
       assert(isTitleNode(remarks));
       assert(isParagraphNode(remarks.children[0]));
-      expect(remarks.children[0].children[0]).to.equal("Type alias remarks");
+      expect(remarks.children[0].children[0]).toBe("Type alias remarks");
     });
 
     it("should have a matching example", () => {
       assert(isTitleNode(example));
       assert(isParagraphNode(example.children[0]));
-      expect(example.children[0].children[0]).to.equal("Type alias example");
+      expect(example.children[0].children[0]).toBe("Type alias example");
     });
 
   }

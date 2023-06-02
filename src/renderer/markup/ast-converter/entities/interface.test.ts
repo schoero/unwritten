@@ -63,8 +63,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have matching interface name", () => {
       assert(isAnchorNode(convertedInterfaceForTableOfContents));
-      expect(convertedInterfaceForTableOfContents.children[0]).to.equal("Interface");
-      expect(titleNode.title).to.equal("Interface");
+      expect(convertedInterfaceForTableOfContents.children[0]).toBe("Interface");
+      expect(titleNode.title).toBe("Interface");
     });
 
     it("should have a position", () => {
@@ -73,7 +73,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have no tags", () => {
-      expect(tags).to.equal("");
+      expect(tags).toBe("");
     });
 
     it("should have one construct signature", () => {
@@ -187,17 +187,17 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a matching interface description", () => {
       assert(isTitleNode(interfaceDescription));
-      expect(interfaceDescription.children[0].children[0]).to.equal("Interface description");
+      expect(interfaceDescription.children[0].children[0]).toBe("Interface description");
     });
 
     it("should have a matching interface remarks", () => {
       assert(isTitleNode(interfaceRemarks));
-      expect(interfaceRemarks.children[0].children[0]).to.equal("Interface remarks");
+      expect(interfaceRemarks.children[0].children[0]).toBe("Interface remarks");
     });
 
     it("should have a matching interface example", () => {
       assert(isTitleNode(interfaceExample));
-      expect(interfaceExample.children[0].children[0]).to.equal("Interface example");
+      expect(interfaceExample.children[0].children[0]).toBe("Interface example");
     });
 
     it("should have a interface position", () => {
@@ -212,17 +212,17 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a matching call signature description", () => {
       assert(isTitleNode(callSignatureDescription));
-      expect(callSignatureDescription.children[0].children[0]).to.equal("Call signature description");
+      expect(callSignatureDescription.children[0].children[0]).toBe("Call signature description");
     });
 
     it("should have a matching call signature remarks", () => {
       assert(isTitleNode(callSignatureRemarks));
-      expect(callSignatureRemarks.children[0].children[0]).to.equal("Call signature remarks");
+      expect(callSignatureRemarks.children[0].children[0]).toBe("Call signature remarks");
     });
 
     it("should have a matching call signature example", () => {
       assert(isTitleNode(callSignatureExample));
-      expect(callSignatureExample.children[0].children[0]).to.equal("Call signature example");
+      expect(callSignatureExample.children[0].children[0]).toBe("Call signature example");
     });
 
     it("should have a call signature position", () => {
@@ -237,17 +237,17 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a matching property description", () => {
       assert(isTitleNode(propertyDescription));
-      expect(propertyDescription.children[0].children[0]).to.equal("Property description");
+      expect(propertyDescription.children[0].children[0]).toBe("Property description");
     });
 
     it("should have a matching property remarks", () => {
       assert(isTitleNode(propertyRemarks));
-      expect(propertyRemarks.children[0].children[0]).to.equal("Property remarks");
+      expect(propertyRemarks.children[0].children[0]).toBe("Property remarks");
     });
 
     it("should have a matching property example", () => {
       assert(isTitleNode(propertyExample));
-      expect(propertyExample.children[0].children[0]).to.equal("Property example");
+      expect(propertyExample.children[0].children[0]).toBe("Property example");
     });
 
     it("should have a property tags", () => {

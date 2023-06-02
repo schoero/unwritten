@@ -37,7 +37,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
 
     it("should have a matching name", () => {
       const renderedParameterForSignature = renderNode(ctx, convertedParametersForSignature);
-      expect(renderedParameterForSignature).to.equal("param");
+      expect(renderedParameterForSignature).toBe("param");
       const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation.children[0].children[0]);
       expect(renderedParameterForDocumentation).to.match(/param .*$/);
     });
@@ -69,7 +69,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
     it("should encapsulate optional parameters in `[]`", () => {
-      expect(renderedParametersForSignature).to.equal("a[, b]");
+      expect(renderedParametersForSignature).toBe("a[, b]");
     });
 
     it("should render an `optional` tag", () => {
@@ -98,7 +98,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
     it("should encapsulate optional parameters in `[]`", () => {
-      expect(renderedParametersForSignature).to.equal("a, ...b");
+      expect(renderedParametersForSignature).toBe("a, ...b");
     });
 
     it("should render an `rest` tag", () => {

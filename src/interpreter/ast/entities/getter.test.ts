@@ -27,17 +27,17 @@ scope("Interpreter", EntityKind.Getter, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should be able to parse a getter", () => {
-      expect(exportedClass.kind).to.equal(EntityKind.Class);
+      expect(exportedClass.kind).toBe(EntityKind.Class);
       expect(exportedClass.getters).to.not.equal(undefined);
       expect(exportedClass.getters).to.have.lengthOf(1);
     });
 
     it("should have a matching kind", () => {
-      expect(exportedClass.getters[0]!.kind).to.equal(EntityKind.Getter);
+      expect(exportedClass.getters[0]!.kind).toBe(EntityKind.Getter);
     });
 
     it("should have a matching name", () => {
-      expect(exportedClass.getters[0]!.name).to.equal("getter");
+      expect(exportedClass.getters[0]!.name).toBe("getter");
     });
 
     it("should have one signature", () => {
@@ -45,11 +45,11 @@ scope("Interpreter", EntityKind.Getter, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedClass.getters[0]!.signatures[0]!.description).to.equal("Getter description");
+      expect(exportedClass.getters[0]!.signatures[0]!.description).toBe("Getter description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.getters[0]!.signatures[0]!.example).to.equal("Getter example");
+      expect(exportedClass.getters[0]!.signatures[0]!.example).toBe("Getter example");
     });
 
   }

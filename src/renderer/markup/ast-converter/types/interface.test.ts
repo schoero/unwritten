@@ -56,17 +56,17 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     ] = convertedType.children;
 
     it("should have a matching construct signature", () => {
-      expect(constructSignatures.children.length).to.equal(1);
+      expect(constructSignatures.children).toHaveLength(1);
       expect(renderNode(ctx, constructSignatures.children[0])).toContain("new ()");
     });
 
     it("should have a matching call signature", () => {
-      expect(callSignatures.children.length).to.equal(1);
+      expect(callSignatures.children).toHaveLength(1);
       expect(renderNode(ctx, callSignatures.children[0])).toContain("()");
     });
 
     it("should have a matching properties with matching modifiers", () => {
-      expect(properties.children.length).to.equal(4);
+      expect(properties.children).toHaveLength(4);
       expect(renderNode(ctx, properties.children[0])).toContain("staticProp");
       expect(renderNode(ctx, properties.children[0])).toContain("public");
       expect(renderNode(ctx, properties.children[0])).toContain("static");
@@ -78,7 +78,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a matching method with an overload", () => {
-      expect(methods.children.length).to.equal(2);
+      expect(methods.children).toHaveLength(2);
       expect(renderNode(ctx, methods.children[0])).toContain("method(a)");
       expect(renderNode(ctx, methods.children[0])).toContain("number");
       expect(renderNode(ctx, methods.children[1])).toContain("method(a)");
@@ -86,12 +86,12 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a matching setter", () => {
-      expect(setters.children.length).to.equal(1);
+      expect(setters.children).toHaveLength(1);
       expect(renderNode(ctx, setters.children[0])).toContain("setter(value)");
     });
 
     it("should have a matching getter", () => {
-      expect(getters.children.length).to.equal(1);
+      expect(getters.children).toHaveLength(1);
       expect(renderNode(ctx, getters.children[0])).toContain("getter");
     });
 

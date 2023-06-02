@@ -22,7 +22,7 @@ scope("Interpreter", TypeKind.ObjectLiteral, () => {
     const exportedVariable = createVariableEntity(ctx, symbol);
 
     it("should be able to parse object literals", () => {
-      expect(exportedVariable.type.kind).to.equal(TypeKind.ObjectLiteral);
+      expect(exportedVariable.type.kind).toBe(TypeKind.ObjectLiteral);
     });
 
   }
@@ -46,12 +46,12 @@ scope("Interpreter", TypeKind.ObjectLiteral, () => {
 
     it("should be able to handle properties", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.properties.length).to.equal(2);
+      expect(exportedVariable.type.properties.length).toBe(2);
     });
 
     it("should be able to handle methods", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.methods.length).to.equal(1);
+      expect(exportedVariable.type.methods.length).toBe(1);
     });
 
     it("should differentiate between methods and function properties", () => {
@@ -62,12 +62,12 @@ scope("Interpreter", TypeKind.ObjectLiteral, () => {
 
     it("should be able to handle getters", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.getters.length).to.equal(1);
+      expect(exportedVariable.type.getters.length).toBe(1);
     });
 
     it("should be able to handle setters", () => {
       assert(exportedVariable.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedVariable.type.setters.length).to.equal(1);
+      expect(exportedVariable.type.setters.length).toBe(1);
     });
 
   }

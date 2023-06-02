@@ -16,14 +16,14 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
   it("should not render empty titles", () => {
     const titleNode = createTitleNode("Title");
-    expect(renderTitleNode(ctx, titleNode)).to.equal("");
+    expect(renderTitleNode(ctx, titleNode)).toBe("");
   });
 
   it("should render a single title correctly", () => {
 
     const titleNode = createTitleNode("Title", createParagraphNode("Paragraph"));
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(md`
+    expect(renderTitleNode(ctx, titleNode)).toBe(md`
         
       # Title
         
@@ -39,7 +39,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
       createTitleNode("SubTitle", createParagraphNode("Paragraph"))
     );
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(md`
+    expect(renderTitleNode(ctx, titleNode)).toBe(md`
         
       # Title
         
@@ -60,7 +60,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
     const renderedTitle = renderTitleNode(ctx, titleNode);
 
-    expect(renderedTitle).to.equal(md`
+    expect(renderedTitle).toBe(md`
         
       # Title
         
@@ -84,7 +84,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
       createParagraphNode("Paragraph2")
     );
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(md`
+    expect(renderTitleNode(ctx, titleNode)).toBe(md`
         
       # Title
         
@@ -99,7 +99,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
     const anchor = registerAnchor(ctx, "title", 0);
     const titleNode = createTitleNode("Title", anchor, createParagraphNode("Paragraph"));
 
-    expect(renderTitleNode(ctx, titleNode)).to.equal(md`
+    expect(renderTitleNode(ctx, titleNode)).toBe(md`
         
       # Title
         

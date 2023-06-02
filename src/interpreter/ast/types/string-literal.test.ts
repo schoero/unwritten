@@ -22,7 +22,7 @@ scope("Interpreter", TypeKind.StringLiteral, () => {
 
     it("should be able to parse string literal types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.StringLiteral);
-      expect(exportedTypeAlias.type.value).to.equal("Hello world");
+      expect(exportedTypeAlias.type.value).toBe("Hello world");
     });
 
   }

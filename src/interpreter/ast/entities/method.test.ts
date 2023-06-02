@@ -26,17 +26,17 @@ scope("Interpreter", EntityKind.Method, () => {
     const exportedClass = createClassEntity(ctx, symbol);
 
     it("should be able to parse a method", () => {
-      expect(exportedClass.kind).to.equal(EntityKind.Class);
+      expect(exportedClass.kind).toBe(EntityKind.Class);
       expect(exportedClass.methods).to.not.equal(undefined);
       expect(exportedClass.methods).to.have.lengthOf(1);
     });
 
     it("should have a matching kind", () => {
-      expect(exportedClass.methods[0]!.kind).to.equal(EntityKind.Method);
+      expect(exportedClass.methods[0]!.kind).toBe(EntityKind.Method);
     });
 
     it("should have a matching name", () => {
-      expect(exportedClass.methods[0]!.name).to.equal("method");
+      expect(exportedClass.methods[0]!.name).toBe("method");
     });
 
     it("should have one signature", () => {
@@ -44,11 +44,11 @@ scope("Interpreter", EntityKind.Method, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedClass.methods[0]!.signatures[0].description).to.equal("Method description");
+      expect(exportedClass.methods[0]!.signatures[0].description).toBe("Method description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.methods[0]!.signatures[0].example).to.equal("Method example");
+      expect(exportedClass.methods[0]!.signatures[0].example).toBe("Method example");
     });
 
   }

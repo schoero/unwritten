@@ -20,7 +20,7 @@ scope("Interpreter", TypeKind.BigInt, () => {
     const symbol = exportedSymbols.find(s => s.name === "BigIntType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.BigInt);
+    expect(exportedTypeAlias.type.kind).toBe(TypeKind.BigInt);
 
   });
 

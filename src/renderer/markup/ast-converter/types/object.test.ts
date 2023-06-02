@@ -50,7 +50,7 @@ scope("MarkupRenderer", TypeKind.Object, () => {
     ] = convertedType.children;
 
     it("should have one matching property", () => {
-      expect(properties.children.length).to.equal(1);
+      expect(properties.children).toHaveLength(1);
       expect(renderNode(ctx, properties.children[0])).toContain("instanceProperty");
     });
 
@@ -101,27 +101,27 @@ scope("MarkupRenderer", TypeKind.Object, () => {
     ] = convertedType.children;
 
     it("should have one construct signature", () => {
-      expect(constructSignatures.children.length).to.equal(1);
+      expect(constructSignatures.children).toHaveLength(1);
     });
 
     it("should have one call signature", () => {
-      expect(callSignatures.children.length).to.equal(1);
+      expect(callSignatures.children).toHaveLength(1);
     });
 
     it("should have two properties", () => {
-      expect(properties.children.length).to.equal(2);
+      expect(properties.children).toHaveLength(2);
     });
 
     it("should have one method", () => {
-      expect(methods.children.length).to.equal(1);
+      expect(methods.children).toHaveLength(1);
     });
 
     it("should have one getter", () => {
-      expect(getters.children.length).to.equal(1);
+      expect(getters.children).toHaveLength(1);
     });
 
     it("should have one setter", () => {
-      expect(setters.children.length).to.equal(1);
+      expect(setters.children).toHaveLength(1);
     });
 
   }

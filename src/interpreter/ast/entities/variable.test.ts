@@ -23,7 +23,7 @@ scope("Interpreter", EntityKind.Variable, () => {
     const exportedVariable = createVariableEntity(ctx, symbol);
 
     it("should be able to parse a variable", () => {
-      expect(exportedVariable.kind).to.equal(EntityKind.Variable);
+      expect(exportedVariable.kind).toBe(EntityKind.Variable);
     });
 
   }
@@ -44,23 +44,23 @@ scope("Interpreter", EntityKind.Variable, () => {
     const exportedVariable = createVariableEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedVariable.kind).to.equal(EntityKind.Variable);
+      expect(exportedVariable.kind).toBe(EntityKind.Variable);
     });
 
     it("should have a matching name", () => {
-      expect(exportedVariable.name).to.equal("variableSymbol");
+      expect(exportedVariable.name).toBe("variableSymbol");
     });
 
     it("should have a matching id", () => {
-      expect(exportedVariable.symbolId).to.equal(getSymbolId(ctx, symbol));
+      expect(exportedVariable.symbolId).toBe(getSymbolId(ctx, symbol));
     });
 
     it("should have a matching description", () => {
-      expect(exportedVariable.description).to.equal("Variable description");
+      expect(exportedVariable.description).toBe("Variable description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedVariable.example).to.equal("Variable example");
+      expect(exportedVariable.example).toBe("Variable example");
     });
 
     it("should have a matching position", () => {
@@ -72,7 +72,7 @@ scope("Interpreter", EntityKind.Variable, () => {
     });
 
     it("should have the correct type", () => {
-      expect(exportedVariable.type.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedVariable.type.kind).toBe(TypeKind.StringLiteral);
     });
 
   }

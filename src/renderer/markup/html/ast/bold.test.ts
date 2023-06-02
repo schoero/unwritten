@@ -14,14 +14,14 @@ scope("HTMLRenderer", "BoldNode", () => {
 
   it("should render a bold node correctly", () => {
     const boldNode = createBoldNode("Bold text");
-    expect(renderBoldNode(ctx, boldNode)).to.equal(html`
+    expect(renderBoldNode(ctx, boldNode)).toBe(html`
       <b>Bold text</b>
     `);
   });
 
   it("should not render empty bold nodes", () => {
     const boldNode = createBoldNode("");
-    expect(renderBoldNode(ctx, boldNode)).to.equal("");
+    expect(renderBoldNode(ctx, boldNode)).toBe("");
   });
 
 });

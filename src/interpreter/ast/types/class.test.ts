@@ -24,7 +24,7 @@ scope("Interpreter", TypeKind.Class, () => {
 
     it("should be able to parse a class type", () => {
       assert(exportedClassType.type.kind === TypeKind.TypeReference);
-      expect(exportedClassType.type.type!.kind).to.equal(TypeKind.Class);
+      expect(exportedClassType.type.type!.kind).toBe(TypeKind.Class);
     });
 
   }

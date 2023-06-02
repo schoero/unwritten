@@ -15,14 +15,14 @@ scope("MarkdownRenderer", "ItalicNode", () => {
 
   it("should render a italic node correctly", () => {
     const italicNode = createItalicNode("Italic text");
-    expect(renderItalicNode(ctx, italicNode)).to.equal(md`
+    expect(renderItalicNode(ctx, italicNode)).toBe(md`
       *Italic text*
     `);
   });
 
   it("should not render empty italic nodes", () => {
     const italicNode = createItalicNode("");
-    expect(renderItalicNode(ctx, italicNode)).to.equal("");
+    expect(renderItalicNode(ctx, italicNode)).toBe("");
   });
 
 });

@@ -22,7 +22,7 @@ scope("Interpreter", TypeKind.NumberLiteral, () => {
 
     it("should be able to parse number literal types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.NumberLiteral);
-      expect(exportedTypeAlias.type.value).to.equal(7);
+      expect(exportedTypeAlias.type.value).toBe(7);
     });
 
   }

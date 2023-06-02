@@ -27,23 +27,23 @@ scope("Interpreter", TypeKind.IndexedAccess, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse indexed access type nodes", () => {
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.IndexedAccess);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.IndexedAccess);
     });
 
     it("should have a correct objectType", () => {
       assert(isIndexedAccessType(exportedTypeAlias.type));
       assert(exportedTypeAlias.type.objectType.kind === TypeKind.TypeReference);
-      expect(exportedTypeAlias.type.objectType.type?.kind).to.equal(TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.objectType.type?.kind).toBe(TypeKind.TypeLiteral);
     });
 
     it("should have a correct indexType", () => {
       assert(isIndexedAccessType(exportedTypeAlias.type));
-      expect(exportedTypeAlias.type.indexType.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.indexType.kind).toBe(TypeKind.StringLiteral);
     });
 
     it("should have a correct type", () => {
       assert(isIndexedAccessType(exportedTypeAlias.type));
-      expect(exportedTypeAlias.type.type?.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.type.type?.kind).toBe(TypeKind.String);
     });
 
   }
@@ -61,23 +61,23 @@ scope("Interpreter", TypeKind.IndexedAccess, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse indexed access types", () => {
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.IndexedAccess);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.IndexedAccess);
     });
 
     it("should have a correct objectType", () => {
       assert(isIndexedAccessType(exportedTypeAlias.type));
       assert(exportedTypeAlias.type.objectType.kind === TypeKind.TypeParameter);
-      expect(exportedTypeAlias.type.objectType.constraint?.kind).to.equal(TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.objectType.constraint?.kind).toBe(TypeKind.TypeLiteral);
     });
 
     it("should have a correct indexType", () => {
       assert(isIndexedAccessType(exportedTypeAlias.type));
-      expect(exportedTypeAlias.type.indexType.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.indexType.kind).toBe(TypeKind.StringLiteral);
     });
 
     it("should have a correct type", () => {
       assert(isIndexedAccessType(exportedTypeAlias.type));
-      expect(exportedTypeAlias.type.type?.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.type.type?.kind).toBe(TypeKind.String);
     });
 
   }

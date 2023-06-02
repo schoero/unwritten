@@ -42,7 +42,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
 
     it("should have a matching constraint", () => {
       expect(exportedTypeAlias.typeParameters![0]!.constraint).to.not.equal(undefined);
-      expect(exportedTypeAlias.typeParameters![0]!.constraint!.kind).to.equal(TypeKind.String);
+      expect(exportedTypeAlias.typeParameters![0]!.constraint!.kind).toBe(TypeKind.String);
     });
 
   }
@@ -59,7 +59,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a matching initializer", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.initializer!.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.typeParameters![0]!.initializer!.kind).toBe(TypeKind.StringLiteral);
     });
 
   }
@@ -80,7 +80,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
 
     it("should have a type parameter description", () => {
       expect(exportedTypeAlias.typeParameters![0]!.description).to.not.equal(undefined);
-      expect(exportedTypeAlias.typeParameters![0]!.description).to.equal("Generic type parameter description");
+      expect(exportedTypeAlias.typeParameters![0]!.description).toBe("Generic type parameter description");
     });
 
   }

@@ -31,7 +31,7 @@ scope("MarkupRenderer", TypeKind.BooleanLiteral, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
-      expect(renderedType).to.equal("true");
+      expect(renderedType).toBe("true");
     });
 
   }
@@ -53,7 +53,7 @@ scope("MarkupRenderer", TypeKind.BooleanLiteral, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
-      expect(renderedType).to.equal("false");
+      expect(renderedType).toBe("false");
     });
 
   }

@@ -18,7 +18,7 @@ scope("MarkdownRenderer", "AnchorNode", () => {
     const anchor = createAnchor("AnchorText", 1);
     registerAnchor(ctx, anchor.name, anchor.id);
     const anchorNode = createAnchorNode(anchor.name, anchor.id);
-    expect(renderAnchorNode(ctx, anchorNode)).to.equal(md`
+    expect(renderAnchorNode(ctx, anchorNode)).toBe(md`
       [AnchorText](#anchortext)
     `);
   });
@@ -27,7 +27,7 @@ scope("MarkdownRenderer", "AnchorNode", () => {
     const anchor = createAnchor("AnchorText", 2);
     registerAnchor(ctx, anchor.name, anchor.id);
     const anchorNode = createAnchorNode(anchor.name, anchor.id);
-    expect(renderAnchorNode(ctx, anchorNode)).to.equal(md`
+    expect(renderAnchorNode(ctx, anchorNode)).toBe(md`
       [AnchorText](#anchortext-1)
     `);
   });

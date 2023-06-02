@@ -31,7 +31,7 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
 
     it("should render the literal value", () => {
       const renderedType = renderNode(ctx, convertedType);
-      expect(renderedType).to.equal("\"test\"");
+      expect(renderedType).toBe("\"test\"");
     });
 
   }

@@ -22,17 +22,17 @@ scope("Interpreter", TypeKind.TypeQuery, () => {
     const conditionalTypeAlias = createTypeAliasEntity(ctx, conditionalTypeAliasSymbol);
 
     it("should be able to parse type queries", () => {
-      expect(conditionalTypeAlias.type.kind).to.equal(TypeKind.TypeQuery);
+      expect(conditionalTypeAlias.type.kind).toBe(TypeKind.TypeQuery);
     });
 
     it("should have a matching name", () => {
       assert(conditionalTypeAlias.type.kind === TypeKind.TypeQuery);
-      expect(conditionalTypeAlias.type.name).to.equal("test");
+      expect(conditionalTypeAlias.type.name).toBe("test");
     });
 
     it("should have a matching type", () => {
       assert(conditionalTypeAlias.type.kind === TypeKind.TypeQuery);
-      expect(conditionalTypeAlias.type.type.kind).to.equal(TypeKind.NumberLiteral);
+      expect(conditionalTypeAlias.type.type.kind).toBe(TypeKind.NumberLiteral);
     });
 
   }

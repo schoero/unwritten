@@ -14,14 +14,14 @@ scope("HTMLRenderer", "ItalicNode", () => {
 
   it("should render a italic node correctly", () => {
     const italicNode = createItalicNode("Italic text");
-    expect(renderItalicNode(ctx, italicNode)).to.equal(html`
+    expect(renderItalicNode(ctx, italicNode)).toBe(html`
       <i>Italic text</i>
     `);
   });
 
   it("should not render empty italic nodes", () => {
     const italicNode = createItalicNode("");
-    expect(renderItalicNode(ctx, italicNode)).to.equal("");
+    expect(renderItalicNode(ctx, italicNode)).toBe("");
   });
 
 });

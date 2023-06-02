@@ -63,14 +63,14 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
     it("should have a matching name", () => {
       assert(isAnchorNode(convertedPropertyForSignature));
-      expect(convertedPropertyForSignature.children[0]).to.equal("prop");
-      expect(convertedPropertyForDocumentation.title).to.equal("prop");
+      expect(convertedPropertyForSignature.children[0]).toBe("prop");
+      expect(convertedPropertyForDocumentation.title).toBe("prop");
     });
 
     it("should have a matching type", () => {
       assert(isTitleNode(type));
       assert(isParagraphNode(type.children[0]));
-      expect(type.children[0].children[0]).to.equal("string");
+      expect(type.children[0].children[0]).toBe("string");
     });
 
     it("should have a position", () => {
@@ -92,17 +92,17 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
     it("should have a matching description", () => {
       assert(isTitleNode(description));
-      expect(description.children[0].children[0]).to.equal("Property description");
+      expect(description.children[0].children[0]).toBe("Property description");
     });
 
     it("should have a matching remarks", () => {
       assert(isTitleNode(remarks));
-      expect(remarks.children[0].children[0]).to.equal("Property remarks");
+      expect(remarks.children[0].children[0]).toBe("Property remarks");
     });
 
     it("should have a matching example", () => {
       assert(isTitleNode(example));
-      expect(example.children[0].children[0]).to.equal("Property example");
+      expect(example.children[0].children[0]).toBe("Property example");
     });
 
   }

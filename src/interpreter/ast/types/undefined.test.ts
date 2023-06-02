@@ -20,7 +20,7 @@ scope("Interpreter", TypeKind.Undefined, () => {
     const symbol = exportedSymbols.find(s => s.name === "UndefinedType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Undefined);
+    expect(exportedTypeAlias.type.kind).toBe(TypeKind.Undefined);
 
   });
 

@@ -22,8 +22,8 @@ scope("Interpreter", TypeKind.Intersection, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse an intersection type", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Intersection);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.Intersection);
     });
 
   }
@@ -40,8 +40,8 @@ scope("Interpreter", TypeKind.Intersection, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Intersection);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.Intersection);
     });
 
     it("should have the right amount of types", () => {

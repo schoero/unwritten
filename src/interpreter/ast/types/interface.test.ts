@@ -23,9 +23,9 @@ scope("Interpreter", EntityKind.Interface, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse an interface type", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedTypeAlias.type.type?.kind).to.equal(TypeKind.Interface);
+      expect(exportedTypeAlias.type.type?.kind).toBe(TypeKind.Interface);
     });
 
   }
@@ -50,11 +50,11 @@ scope("Interpreter", EntityKind.Interface, () => {
     const interfaceType = exportedTypeAlias.type.type;
 
     it("should have a matching kind", () => {
-      expect(interfaceType.kind).to.equal(TypeKind.Interface);
+      expect(interfaceType.kind).toBe(TypeKind.Interface);
     });
 
     it("should have a matching name", () => {
-      expect(interfaceType.name).to.equal("Interface");
+      expect(interfaceType.name).toBe("Interface");
     });
 
     it("should have the correct amount of members", () => {
@@ -203,13 +203,13 @@ scope("Interpreter", EntityKind.Interface, () => {
     it("should be able to parse inheritance", () => {
 
       expect(interfaceTypeB.properties).to.have.lengthOf(2);
-      expect(interfaceTypeB.properties[0]!.name).to.equal("b");
-      expect(interfaceTypeB.properties[1]!.name).to.equal("a");
+      expect(interfaceTypeB.properties[0]!.name).toBe("b");
+      expect(interfaceTypeB.properties[1]!.name).toBe("a");
 
       expect(interfaceTypeC.properties).to.have.lengthOf(3);
-      expect(interfaceTypeC.properties[0]!.name).to.equal("c");
-      expect(interfaceTypeC.properties[1]!.name).to.equal("b");
-      expect(interfaceTypeC.properties[2]!.name).to.equal("a");
+      expect(interfaceTypeC.properties[0]!.name).toBe("c");
+      expect(interfaceTypeC.properties[1]!.name).toBe("b");
+      expect(interfaceTypeC.properties[2]!.name).toBe("a");
 
     });
 
@@ -242,9 +242,9 @@ scope("Interpreter", EntityKind.Interface, () => {
 
     it("should be able to handle multiple extended interfaces at the same time", () => {
       expect(interfaceTypeC.properties).to.have.lengthOf(3);
-      expect(interfaceTypeC.properties[0]!.name).to.equal("c");
-      expect(interfaceTypeC.properties[1]!.name).to.equal("a");
-      expect(interfaceTypeC.properties[2]!.name).to.equal("b");
+      expect(interfaceTypeC.properties[0]!.name).toBe("c");
+      expect(interfaceTypeC.properties[1]!.name).toBe("a");
+      expect(interfaceTypeC.properties[2]!.name).toBe("b");
     });
 
   }
@@ -270,7 +270,7 @@ scope("Interpreter", EntityKind.Interface, () => {
 
     it("should support generics in interfaces", () => {
       expect(interfaceType.properties).to.have.lengthOf(1);
-      expect(interfaceType.properties[0]!.type.kind).to.equal(TypeKind.TypeParameter);
+      expect(interfaceType.properties[0]!.type.kind).toBe(TypeKind.TypeParameter);
 
     });
 
@@ -297,7 +297,7 @@ scope("Interpreter", EntityKind.Interface, () => {
 
     it("should support type arguments", () => {
       expect(objectType.properties).to.have.lengthOf(1);
-      expect(objectType.properties[0]!.type.kind).to.equal(TypeKind.StringLiteral);
+      expect(objectType.properties[0]!.type.kind).toBe(TypeKind.StringLiteral);
     });
 
   }

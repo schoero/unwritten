@@ -23,11 +23,11 @@ scope("MarkupRenderer", "Description", () => {
   } = convertedDescription;
 
   it("should have a matching title", () => {
-    expect(title).to.equal("Description");
+    expect(title).toBe("Description");
   });
 
   it("should have a matching description", () => {
-    expect(children[0].children[0]).to.equal("Description description");
+    expect(children[0].children[0]).toBe("Description description");
   });
 
 });

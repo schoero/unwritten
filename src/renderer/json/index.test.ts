@@ -27,7 +27,7 @@ scope("JSONRenderer", "JSON", () => {
       const ctx = createRenderContext(BuiltInRenderers.JSON);
       const renderedOutput = ctx.renderer.render(ctx, [functionEntity]);
       const json = JSON.parse(renderedOutput);
-      expect(json[0].symbolId).to.equal(undefined);
+      expect(json[0].symbolId).toBe(undefined);
     });
 
     it("should be possible to enable ids", () => {

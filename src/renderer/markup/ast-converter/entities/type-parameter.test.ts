@@ -38,7 +38,7 @@ scope("MarkupRenderer", EntityKind.TypeParameter, () => {
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
     it("should have a matching name", () => {
-      expect(renderedParametersForSignature).to.equal("TypeParameter");
+      expect(renderedParametersForSignature).toBe("TypeParameter");
       expect(renderedParameterForDocumentation).to.match(/.*<TypeParameter>.*$/);
     });
 

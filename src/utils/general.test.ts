@@ -20,7 +20,7 @@ scope("Interpreter", "Utils", () => {
     };
 
     it("should sort keys", () => {
-      expect(JSON.stringify(unsortedObject, sortKeys)).to.equal(JSON.stringify({
+      expect(JSON.stringify(unsortedObject, sortKeys)).toBe(JSON.stringify({
         a: "a",
         b: "b",
         c: {

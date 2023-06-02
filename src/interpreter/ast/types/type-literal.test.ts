@@ -26,7 +26,7 @@ scope("Interpreter", TypeKind.TypeLiteral, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse type literals", () => {
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.TypeLiteral);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.TypeLiteral);
     });
 
   }
@@ -56,19 +56,19 @@ scope("Interpreter", TypeKind.TypeLiteral, () => {
 
 
     it("should be able to handle construct signatures", () => {
-      expect(typeLiteral.constructSignatures.length).to.equal(1);
+      expect(typeLiteral.constructSignatures.length).toBe(1);
     });
 
     it("should be able to handle call signatures", () => {
-      expect(typeLiteral.callSignatures.length).to.equal(1);
+      expect(typeLiteral.callSignatures.length).toBe(1);
     });
 
     it("should be able to handle properties", () => {
-      expect(typeLiteral.properties.length).to.equal(2);
+      expect(typeLiteral.properties.length).toBe(2);
     });
 
     it("should be able to handle methods", () => {
-      expect(typeLiteral.methods.length).to.equal(1);
+      expect(typeLiteral.methods.length).toBe(1);
     });
 
     it("should differentiate between methods and function properties", () => {
@@ -77,11 +77,11 @@ scope("Interpreter", TypeKind.TypeLiteral, () => {
     });
 
     it("should be able to handle getters", () => {
-      expect(typeLiteral.getters.length).to.equal(1);
+      expect(typeLiteral.getters.length).toBe(1);
     });
 
     it("should be able to handle setters", () => {
-      expect(typeLiteral.setters.length).to.equal(1);
+      expect(typeLiteral.setters.length).toBe(1);
     });
 
   }

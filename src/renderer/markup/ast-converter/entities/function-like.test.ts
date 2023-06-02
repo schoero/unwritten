@@ -38,8 +38,8 @@ scope("MarkupRenderer", EntityKind.Function, () => {
     const convertedFunctionForDocumentation = convertFunctionLikeEntityForDocumentation(ctx, functionEntity);
 
     it("should render only one signature", () => {
-      expect(convertedFunctionForTableOfContents.length).to.equal(1);
-      expect(convertedFunctionForDocumentation.length).to.equal(1);
+      expect(convertedFunctionForTableOfContents).toHaveLength(1);
+      expect(convertedFunctionForDocumentation).toHaveLength(1);
     });
 
   }
@@ -64,8 +64,8 @@ scope("MarkupRenderer", EntityKind.Function, () => {
     const renderedFunctionForDocumentation = convertFunctionLikeEntityForDocumentation(ctx, functionEntity);
 
     it("should have multiple signatures", () => {
-      expect(renderedFunctionForTableOfContents.length).to.equal(2);
-      expect(renderedFunctionForDocumentation.length).to.equal(2);
+      expect(renderedFunctionForTableOfContents).toHaveLength(2);
+      expect(renderedFunctionForDocumentation).toHaveLength(2);
     });
 
   }
@@ -104,19 +104,19 @@ scope("MarkupRenderer", EntityKind.Function, () => {
     ] = convertedType.children;
 
     it("should have one method", () => {
-      expect(methods.children.length).to.equal(1);
+      expect(methods.children).toHaveLength(1);
     });
 
     it("should have one getter", () => {
-      expect(getters.children.length).to.equal(1);
+      expect(getters.children).toHaveLength(1);
     });
 
     it("should have one setter", () => {
-      expect(setters.children.length).to.equal(1);
+      expect(setters.children).toHaveLength(1);
     });
 
     it("should have one property", () => {
-      expect(properties.children.length).to.equal(1);
+      expect(properties.children).toHaveLength(1);
     });
 
   }

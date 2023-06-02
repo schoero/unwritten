@@ -28,7 +28,7 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render template literal types", () => {
-      expect(renderedType).to.equal("${number}px");
+      expect(renderedType).toBe("${number}px");
     });
 
   }
@@ -48,7 +48,7 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render template literal types", () => {
-      expect(renderedType).to.equal("PREFIX-${number}-MIDDLE-${string}-SUFFIX");
+      expect(renderedType).toBe("PREFIX-${number}-MIDDLE-${string}-SUFFIX");
     });
 
   }
@@ -68,7 +68,7 @@ scope("MarkupRenderer", TypeKind.StringLiteral, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render template literal types", () => {
-      expect(renderedType).to.equal("border-${\"top\" | \"bottom\" | \"left\" | \"right\"}-${\"width\"}: ${number}px");
+      expect(renderedType).toBe("border-${\"top\" | \"bottom\" | \"left\" | \"right\"}-${\"width\"}: ${number}px");
     });
 
   }

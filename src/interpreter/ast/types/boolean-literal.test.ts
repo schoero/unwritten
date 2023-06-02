@@ -22,7 +22,7 @@ scope("Interpreter", TypeKind.BooleanLiteral, () => {
 
     it("should be able to parse boolean literal types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.BooleanLiteral);
-      expect(exportedTypeAlias.type.value).to.equal(true);
+      expect(exportedTypeAlias.type.value).toBe(true);
     });
 
   }

@@ -14,14 +14,14 @@ scope("HTMLRenderer", "StrikethroughNode", () => {
 
   it("should render a strikethrough node correctly", () => {
     const strikethroughNode = createStrikethroughNode("Strikethrough text");
-    expect(renderStrikethroughNode(ctx, strikethroughNode)).to.equal(html`
+    expect(renderStrikethroughNode(ctx, strikethroughNode)).toBe(html`
       <del>Strikethrough text</del>
     `);
   });
 
   it("should not render empty strikethrough nodes", () => {
     const strikethroughNode = createStrikethroughNode("");
-    expect(renderStrikethroughNode(ctx, strikethroughNode)).to.equal("");
+    expect(renderStrikethroughNode(ctx, strikethroughNode)).toBe("");
   });
 
 });

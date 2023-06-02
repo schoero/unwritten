@@ -22,10 +22,10 @@ scope("Interpreter", EntityKind.Function, () => {
       const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
 
       it("should be able to create function like entities", () => {
-        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Function).kind).to.equal(EntityKind.Function);
-        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Getter).kind).to.equal(EntityKind.Getter);
-        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Method).kind).to.equal(EntityKind.Method);
-        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Setter).kind).to.equal(EntityKind.Setter);
+        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Function).kind).toBe(EntityKind.Function);
+        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Getter).kind).toBe(EntityKind.Getter);
+        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Method).kind).toBe(EntityKind.Method);
+        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Setter).kind).toBe(EntityKind.Setter);
       });
 
     }

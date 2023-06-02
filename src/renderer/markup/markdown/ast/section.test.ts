@@ -15,7 +15,7 @@ scope("HTMLRenderer", "SectionNode", () => {
 
   it("should render a section node correctly", () => {
     const sectionNode = createSectionNode(undefined, createParagraphNode("Section content"));
-    expect(renderSectionNode(ctx, sectionNode)).to.equal(md`
+    expect(renderSectionNode(ctx, sectionNode)).toBe(md`
         
       Section content
     `);
@@ -23,7 +23,7 @@ scope("HTMLRenderer", "SectionNode", () => {
 
   it("should not render empty sections", () => {
     const sectionNode = createSectionNode(undefined, "");
-    expect(renderSectionNode(ctx, sectionNode)).to.equal("");
+    expect(renderSectionNode(ctx, sectionNode)).toBe("");
   });
 
 });

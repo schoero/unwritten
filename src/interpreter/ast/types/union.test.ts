@@ -22,8 +22,8 @@ scope("Interpreter", TypeKind.Union, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse an union type", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Union);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.Union);
     });
 
   }
@@ -44,8 +44,8 @@ scope("Interpreter", TypeKind.Union, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Union);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.Union);
     });
 
     it("should have the correct amount of types", () => {
@@ -55,8 +55,8 @@ scope("Interpreter", TypeKind.Union, () => {
 
     it("should have the correct types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Union);
-      expect(exportedTypeAlias.type.types[0]!.kind).to.equal(TypeKind.String);
-      expect(exportedTypeAlias.type.types[1]!.kind).to.equal(TypeKind.Number);
+      expect(exportedTypeAlias.type.types[0]!.kind).toBe(TypeKind.String);
+      expect(exportedTypeAlias.type.types[1]!.kind).toBe(TypeKind.Number);
     });
 
   }

@@ -20,7 +20,7 @@ scope("Interpreter", TypeKind.Boolean, () => {
     const symbol = exportedSymbols.find(s => s.name === "BooleanType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Boolean);
+    expect(exportedTypeAlias.type.kind).toBe(TypeKind.Boolean);
 
   });
 

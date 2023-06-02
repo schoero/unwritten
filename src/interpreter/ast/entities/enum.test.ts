@@ -26,7 +26,7 @@ scope("Interpreter", EntityKind.Enum, () => {
     const exportedTypeEnum = createEnumEntity(ctx, symbol);
 
     it("should be able to parse an intersection type", () => {
-      expect(exportedTypeEnum.kind).to.equal(EntityKind.Enum);
+      expect(exportedTypeEnum.kind).toBe(EntityKind.Enum);
     });
 
   }
@@ -43,8 +43,8 @@ scope("Interpreter", EntityKind.Enum, () => {
     const exportedEnum = createEnumEntity(ctx, symbol);
 
     it("should be able to handle empty enums", () => {
-      expect(exportedEnum.kind).to.equal(EntityKind.Enum);
-      expect(exportedEnum.members.length).to.equal(0);
+      expect(exportedEnum.kind).toBe(EntityKind.Enum);
+      expect(exportedEnum.members.length).toBe(0);
     });
 
   }
@@ -68,23 +68,23 @@ scope("Interpreter", EntityKind.Enum, () => {
     const exportedEnum = createEnumEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedEnum.kind).to.equal(EntityKind.Enum);
+      expect(exportedEnum.kind).toBe(EntityKind.Enum);
     });
 
     it("should have a matching name", () => {
-      expect(exportedEnum.name).to.equal("Enum");
+      expect(exportedEnum.name).toBe("Enum");
     });
 
     it("should have a matching id", () => {
-      expect(exportedEnum.symbolId).to.equal(getSymbolId(ctx, symbol));
+      expect(exportedEnum.symbolId).toBe(getSymbolId(ctx, symbol));
     });
 
     it("should have a matching description", () => {
-      expect(exportedEnum.description).to.equal("Enum description");
+      expect(exportedEnum.description).toBe("Enum description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedEnum.example).to.equal("Enum example");
+      expect(exportedEnum.example).toBe("Enum example");
     });
 
     it("should have a matching position", () => {
@@ -100,12 +100,12 @@ scope("Interpreter", EntityKind.Enum, () => {
     });
 
     it("should have a matching member types with values", () => {
-      expect(exportedEnum.members[0]!.name).to.equal("A");
+      expect(exportedEnum.members[0]!.name).toBe("A");
       assert(exportedEnum.members[0]!.type.kind === TypeKind.NumberLiteral);
-      expect(exportedEnum.members[0]!.type.value).to.equal(0);
-      expect(exportedEnum.members[1]!.name).to.equal("B");
+      expect(exportedEnum.members[0]!.type.value).toBe(0);
+      expect(exportedEnum.members[1]!.name).toBe("B");
       assert(exportedEnum.members[1]!.type.kind === TypeKind.NumberLiteral);
-      expect(exportedEnum.members[1]!.type.value).to.equal(1);
+      expect(exportedEnum.members[1]!.type.value).toBe(1);
     });
 
   }
@@ -127,13 +127,13 @@ scope("Interpreter", EntityKind.Enum, () => {
     const exportedEnum = createEnumEntity(ctx, symbol);
 
     it("should be able to merge multiple enums with the same name", () => {
-      expect(exportedEnum.members.length).to.equal(2);
-      expect(exportedEnum.members[0]!.name).to.equal("A");
+      expect(exportedEnum.members.length).toBe(2);
+      expect(exportedEnum.members[0]!.name).toBe("A");
       assert(exportedEnum.members[0]!.type.kind === TypeKind.NumberLiteral);
-      expect(exportedEnum.members[0]!.type.value).to.equal(0);
-      expect(exportedEnum.members[1]!.name).to.equal("B");
+      expect(exportedEnum.members[0]!.type.value).toBe(0);
+      expect(exportedEnum.members[1]!.name).toBe("B");
       assert(exportedEnum.members[1]!.type.kind === TypeKind.NumberLiteral);
-      expect(exportedEnum.members[1]!.type.value).to.equal(1);
+      expect(exportedEnum.members[1]!.type.value).toBe(1);
     });
 
   }

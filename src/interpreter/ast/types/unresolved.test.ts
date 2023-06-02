@@ -28,7 +28,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
     it("should create an unresolved type if excluded specifically", () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReferenceTypeAlias.type.type);
-      expect(exportedReferenceTypeAlias.type.type.kind).to.equal(TypeKind.Unresolved);
+      expect(exportedReferenceTypeAlias.type.type.kind).toBe(TypeKind.Unresolved);
     });
 
   }
@@ -48,7 +48,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReferenceTypeAlias.type.type);
       expect(exportedReferenceTypeAlias.type.typeArguments).to.have.lengthOf(1);
-      expect(exportedReferenceTypeAlias.type.type.kind).to.equal(TypeKind.Unresolved);
+      expect(exportedReferenceTypeAlias.type.type.kind).toBe(TypeKind.Unresolved);
     });
 
   }
@@ -68,7 +68,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReferenceTypeAlias.type.type);
       expect(exportedReferenceTypeAlias.type.typeArguments).to.have.lengthOf(2);
-      expect(exportedReferenceTypeAlias.type.type.kind).to.equal(TypeKind.Unresolved);
+      expect(exportedReferenceTypeAlias.type.type.kind).toBe(TypeKind.Unresolved);
     });
 
   }
@@ -88,7 +88,7 @@ scope("Interpreter", TypeKind.Unresolved, () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedReferenceTypeAlias.type.type);
       expect(exportedReferenceTypeAlias.type.typeArguments).to.have.lengthOf(1);
-      expect(exportedReferenceTypeAlias.type.type.kind).to.equal(TypeKind.Unresolved);
+      expect(exportedReferenceTypeAlias.type.type.kind).toBe(TypeKind.Unresolved);
     });
 
   }
@@ -110,15 +110,15 @@ scope("Interpreter", TypeKind.Unresolved, () => {
 
     it("should create an unresolved type reference for a generator function", () => {
       assert(isUnresolvedType(exportedFunction.signatures[0].returnType));
-      expect(exportedFunction.signatures[0].returnType.typeArguments?.length).to.equal(1 + 2);
+      expect(exportedFunction.signatures[0].returnType.typeArguments?.length).toBe(1 + 2);
       assert(isUnionType(exportedFunction.signatures[0].returnType.typeArguments![0]));
 
       assert(isNumberLiteralType(exportedFunction.signatures[0].returnType.typeArguments![0].types[0]));
-      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[0].value).to.equal(1);
+      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[0].value).toBe(1);
       assert(isNumberLiteralType(exportedFunction.signatures[0].returnType.typeArguments![0].types[1]));
-      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[1].value).to.equal(2);
+      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[1].value).toBe(2);
       assert(isNumberLiteralType(exportedFunction.signatures[0].returnType.typeArguments![0].types[2]));
-      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[2].value).to.equal(3);
+      expect(exportedFunction.signatures[0].returnType.typeArguments![0].types[2].value).toBe(3);
     });
 
   }

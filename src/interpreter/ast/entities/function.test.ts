@@ -32,15 +32,15 @@ scope("Interpreter", EntityKind.Function, () => {
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should have a matching kind", () => {
-      expect(exportedFunction.kind).to.equal(EntityKind.Function);
+      expect(exportedFunction.kind).toBe(EntityKind.Function);
     });
 
     it("should have a matching name", () => {
-      expect(exportedFunction.name).to.equal("functionSymbol");
+      expect(exportedFunction.name).toBe("functionSymbol");
     });
 
     it("should have a matching id", () => {
-      expect(exportedFunction.symbolId).to.equal(getSymbolId(ctx, symbol));
+      expect(exportedFunction.symbolId).toBe(getSymbolId(ctx, symbol));
     });
 
     it("should have only one signature", () => {
@@ -48,11 +48,11 @@ scope("Interpreter", EntityKind.Function, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedFunction.signatures[0]!.description).to.equal("Function description");
+      expect(exportedFunction.signatures[0]!.description).toBe("Function description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedFunction.signatures[0]!.example).to.equal("Function example");
+      expect(exportedFunction.signatures[0]!.example).toBe("Function example");
     });
 
   }
@@ -73,7 +73,7 @@ scope("Interpreter", EntityKind.Function, () => {
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should support multiple signatures", () => {
-      expect(exportedFunction.kind).to.equal(EntityKind.Function);
+      expect(exportedFunction.kind).toBe(EntityKind.Function);
     });
   }
 
@@ -91,11 +91,11 @@ scope("Interpreter", EntityKind.Function, () => {
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should be able to parse an async function", () => {
-      expect(exportedFunction.kind).to.equal(EntityKind.Function);
+      expect(exportedFunction.kind).toBe(EntityKind.Function);
       expect(exportedFunction.signatures[0]?.modifiers).toContain("async");
       assert(isUnresolvedType(exportedFunction.signatures[0]?.returnType));
-      expect(exportedFunction.signatures[0]?.returnType.typeArguments?.length).to.equal(1);
-      expect(exportedFunction.signatures[0]?.returnType.typeArguments?.[0].kind).to.equal(TypeKind.Boolean);
+      expect(exportedFunction.signatures[0]?.returnType.typeArguments?.length).toBe(1);
+      expect(exportedFunction.signatures[0]?.returnType.typeArguments?.[0].kind).toBe(TypeKind.Boolean);
     });
 
   }

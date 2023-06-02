@@ -31,7 +31,7 @@ scope("MarkupRenderer", TypeKind.Array, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should be able to render arrays", () => {
-      expect(renderedType).to.equal("string[]");
+      expect(renderedType).toBe("string[]");
     });
 
   }
@@ -53,7 +53,7 @@ scope("MarkupRenderer", TypeKind.Array, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should add parentheses around union types", () => {
-      expect(renderedType).to.equal("(string | number)[]");
+      expect(renderedType).toBe("(string | number)[]");
     });
 
   }

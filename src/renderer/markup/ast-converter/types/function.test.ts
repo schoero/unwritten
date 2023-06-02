@@ -41,15 +41,15 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     ] = convertedType;
 
     it("should render the function signature correctly", () => {
-      expect(renderNode(ctx, signature)).to.equal("()");
+      expect(renderNode(ctx, signature)).toBe("()");
     });
 
     it("should not have type parameters", () => {
-      expect(typeParameters).to.equal("");
+      expect(typeParameters).toBe("");
     });
 
     it("should not have parameters", () => {
-      expect(parameters).to.equal("");
+      expect(parameters).toBe("");
     });
 
     it("should render the return type correctly", () => {
@@ -84,16 +84,16 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     ] = convertedType;
 
     it("should render the function signature correctly", () => {
-      expect(renderNode(ctx, signature)).to.equal("(a, b)");
+      expect(renderNode(ctx, signature)).toBe("(a, b)");
     });
 
     it("should not have type parameters", () => {
-      expect(typeParameters).to.equal("");
+      expect(typeParameters).toBe("");
     });
 
     it("should have two matching parameters", () => {
       assert(isListNode(parameters), "parameters should be wrapped in a list node");
-      expect(parameters.children.length).to.equal(2);
+      expect(parameters.children).toHaveLength(2);
       expect(parameters.children[0]).toContain("a");
       expect(parameters.children[0]).toContain("string");
       expect(parameters.children[1]).toContain("b");
@@ -167,20 +167,20 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     });
 
     it("should not have type parameters", () => {
-      expect(typeParameters).to.equal("");
-      expect(typeParameters2).to.equal("");
+      expect(typeParameters).toBe("");
+      expect(typeParameters2).toBe("");
     });
 
     it("should have matching parameters in each signature", () => {
       assert(isListNode(parameters));
-      expect(parameters.children.length).to.equal(2);
+      expect(parameters.children).toHaveLength(2);
       expect(parameters.children[0]).toContain("a");
       expect(parameters.children[0]).toContain("number");
       expect(parameters.children[1]).toContain("b");
       expect(parameters.children[1]).toContain("number");
 
       assert(isListNode(parameters2));
-      expect(parameters2.children.length).to.equal(3);
+      expect(parameters2.children).toHaveLength(3);
       expect(parameters2.children[0]).toContain("a");
       expect(parameters2.children[0]).toContain("number");
       expect(parameters2.children[1]).toContain("b");

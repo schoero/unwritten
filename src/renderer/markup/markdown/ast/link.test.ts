@@ -15,7 +15,7 @@ scope("MarkdownRenderer", "LinkNode", () => {
 
   it("should render a simple link correctly", () => {
     const linkNode = createLinkNode("Link name", "#anchor");
-    expect(renderLinkNode(ctx, linkNode)).to.equal(md`
+    expect(renderLinkNode(ctx, linkNode)).toBe(md`
       [Link name](#anchor)
     `);
   });

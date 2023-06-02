@@ -20,7 +20,7 @@ scope("Interpreter", TypeKind.Number, () => {
     const symbol = exportedSymbols.find(s => s.name === "NumberType")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Number);
+    expect(exportedTypeAlias.type.kind).toBe(TypeKind.Number);
 
   });
 

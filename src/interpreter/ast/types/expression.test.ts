@@ -25,7 +25,7 @@ scope("Interpreter", TypeKind.Expression, () => {
 
     it("should be able to parse expressions", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
-      expect(exportedClass.heritage!.name).to.equal("Base");
+      expect(exportedClass.heritage!.name).toBe("Base");
     });
 
   }
@@ -48,7 +48,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
       expect(exportedClass.heritage!.typeArguments).to.not.equal(undefined);
       expect(exportedClass.heritage!.typeArguments).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.typeArguments![0]!.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedClass.heritage!.typeArguments![0]!.kind).toBe(TypeKind.StringLiteral);
     });
 
     it("should resolve type parameters with the supplied type arguments", () => {
@@ -56,7 +56,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.StringLiteral);
     });
 
   }
@@ -87,7 +87,7 @@ scope("Interpreter", TypeKind.Expression, () => {
     // TypeScript doesn't support inferring from a union of classes yet
     it.fails("should be able to parse call expressions", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
-      expect(exportedClass.heritage!.kind).to.equal(TypeKind.Expression);
+      expect(exportedClass.heritage!.kind).toBe(TypeKind.Expression);
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Union);
       assert(exportedClass.heritage!.staticType.kind === TypeKind.Union);
       expect(exportedClass.heritage!.instanceType.types).to.have.lengthOf(2);
@@ -129,12 +129,12 @@ scope("Interpreter", TypeKind.Expression, () => {
 
     it("should be able to parse call expressions", () => {
       expect(exportedClass.heritage).to.not.equal(undefined);
-      expect(exportedClass.heritage!.kind).to.equal(TypeKind.Expression);
+      expect(exportedClass.heritage!.kind).toBe(TypeKind.Expression);
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Interface);
       assert(exportedClass.heritage!.staticType.kind === TypeKind.Interface);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
       expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(0);
-      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.Union);
+      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.Union);
     });
 
   }
@@ -162,7 +162,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.StringLiteral);
+      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.StringLiteral);
     });
 
   }
@@ -192,13 +192,13 @@ scope("Interpreter", TypeKind.Expression, () => {
       assert(exportedClass.heritage!.staticType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.staticType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.staticType.properties[0].type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.heritage!.staticType.properties[0].type.kind).toBe(TypeKind.String);
 
       expect(exportedClass.heritage!.instanceType).to.not.equal(undefined);
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.String);
     });
 
   }
@@ -225,13 +225,13 @@ scope("Interpreter", TypeKind.Expression, () => {
       assert(exportedClass.heritage!.staticType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.staticType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.staticType.properties).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.staticType.properties[0].type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.heritage!.staticType.properties[0].type.kind).toBe(TypeKind.String);
 
       expect(exportedClass.heritage!.instanceType).to.not.equal(undefined);
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).to.not.equal(undefined);
       expect(exportedClass.heritage!.instanceType.properties).to.have.lengthOf(1);
-      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).to.equal(TypeKind.String);
+      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.String);
     });
 
   }

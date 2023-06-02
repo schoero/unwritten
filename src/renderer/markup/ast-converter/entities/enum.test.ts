@@ -62,8 +62,8 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     ] = titleNode.children;
 
     it("should have a matching name", () => {
-      expect(convertedEnumEntityForTableOfContents.children[0]).to.equal("Enum");
-      expect(titleNode.title).to.equal("Enum");
+      expect(convertedEnumEntityForTableOfContents.children[0]).toBe("Enum");
+      expect(titleNode.title).toBe("Enum");
     });
 
     it("should have a position", () => {
@@ -78,17 +78,17 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
 
     it("should have a matching description", () => {
       assert(isTitleNode(description));
-      expect(description.children[0].children[0]).to.equal("Enum description");
+      expect(description.children[0].children[0]).toBe("Enum description");
     });
 
     it("should have a matching remarks", () => {
       assert(isTitleNode(remarks));
-      expect(remarks.children[0].children[0]).to.equal("Enum remarks");
+      expect(remarks.children[0].children[0]).toBe("Enum remarks");
     });
 
     it("should have a matching example", () => {
       assert(isTitleNode(example));
-      expect(example.children[0].children[0]).to.equal("Enum example");
+      expect(example.children[0].children[0]).toBe("Enum example");
     });
 
     it("should have matching members", () => {

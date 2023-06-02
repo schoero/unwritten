@@ -31,7 +31,7 @@ scope("MarkupRenderer", TypeKind.Null, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render the name of the type", () => {
-      expect(renderedType).to.equal("null");
+      expect(renderedType).toBe("null");
     });
 
   }

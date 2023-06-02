@@ -33,7 +33,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
     it("should have the correct name", () => {
       assert(Array.isArray(convertedTypeReferenceType));
       assert(isAnchorNode(convertedTypeReferenceType[0]));
-      expect(convertedTypeReferenceType[0].name).to.equal("StringType");
+      expect(convertedTypeReferenceType[0].name).toBe("StringType");
     });
 
     it("should link to the actual type", () => {
@@ -41,7 +41,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
       const stringTypeAliasEntity = createTypeAliasEntity(compilerContext, stringTypeSymbol);
       assert(Array.isArray(convertedTypeReferenceType));
       assert(isAnchorNode(convertedTypeReferenceType[0]));
-      expect(convertedTypeReferenceType[0].id).to.equal(stringTypeAliasEntity.symbolId);
+      expect(convertedTypeReferenceType[0].id).toBe(stringTypeAliasEntity.symbolId);
     });
 
     it("should not have type arguments", () => {
@@ -67,7 +67,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
     it("should have the correct name", () => {
       assert(Array.isArray(convertedTypeReferenceType));
       assert(isAnchorNode(convertedTypeReferenceType[0]));
-      expect(convertedTypeReferenceType[0].name).to.equal("Array");
+      expect(convertedTypeReferenceType[0].name).toBe("Array");
     });
 
     it("should have one type argument", () => {

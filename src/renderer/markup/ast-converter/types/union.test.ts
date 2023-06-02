@@ -31,7 +31,7 @@ scope("MarkupRenderer", TypeKind.Union, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render join multiple types with a `|`", () => {
-      expect(renderedType).to.equal("string | number");
+      expect(renderedType).toBe("string | number");
     });
 
   }

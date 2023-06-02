@@ -18,7 +18,7 @@ scope("Renderer", "utils", () => {
       ];
       const filteredNodes = testNodes.filter(nodeFilter);
       expect(filteredNodes).to.have.lengthOf(1);
-      expect(filteredNodes[0]).to.equal("element");
+      expect(filteredNodes[0]).toBe("element");
     });
 
   });
@@ -26,15 +26,15 @@ scope("Renderer", "utils", () => {
   describe("minMax", () => {
 
     it("should return the min value if the value is smaller than the min value", () => {
-      expect(minMax(5, 7, 10)).to.equal(7);
+      expect(minMax(5, 7, 10)).toBe(7);
     });
 
     it("should return the max value if the value is bigger than the max value", () => {
-      expect(minMax(11, 0, 10)).to.equal(10);
+      expect(minMax(11, 0, 10)).toBe(10);
     });
 
     it("should return the value if the value is between the min and max value", () => {
-      expect(minMax(7, 0, 10)).to.equal(7);
+      expect(minMax(7, 0, 10)).toBe(7);
     });
 
   });

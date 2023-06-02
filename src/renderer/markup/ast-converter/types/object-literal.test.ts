@@ -44,19 +44,19 @@ scope("MarkupRenderer", TypeKind.ObjectLiteral, () => {
     ] = convertedType.children;
 
     it("should have two properties", () => {
-      expect(properties.children.length).to.equal(2);
+      expect(properties.children).toHaveLength(2);
     });
 
     it("should have one method", () => {
-      expect(methods.children.length).to.equal(1);
+      expect(methods.children).toHaveLength(1);
     });
 
     it("should have one getter", () => {
-      expect(getters.children.length).to.equal(1);
+      expect(getters.children).toHaveLength(1);
     });
 
     it("should have one setter", () => {
-      expect(setters.children.length).to.equal(1);
+      expect(setters.children).toHaveLength(1);
     });
 
   }

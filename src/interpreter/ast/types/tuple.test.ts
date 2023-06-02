@@ -22,8 +22,8 @@ scope("Interpreter", TypeKind.Tuple, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should be able to parse a tuple type", () => {
-      expect(exportedTypeAlias.kind).to.equal(EntityKind.TypeAlias);
-      expect(exportedTypeAlias.type.kind).to.equal(TypeKind.Tuple);
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.Tuple);
     });
 
   }
@@ -66,23 +66,23 @@ scope("Interpreter", TypeKind.Tuple, () => {
     it("should support rest elements at the end", () => {
       assert(exportedTupleTypeAliasWithRestAtTheEnd.type.kind === TypeKind.Tuple);
       expect(exportedTupleTypeAliasWithRestAtTheEnd.type.members).to.have.lengthOf(2);
-      expect(exportedTupleTypeAliasWithRestAtTheEnd.type.members[0]!.rest).to.equal(false);
-      expect(exportedTupleTypeAliasWithRestAtTheEnd.type.members[1]!.rest).to.equal(true);
+      expect(exportedTupleTypeAliasWithRestAtTheEnd.type.members[0]!.rest).toBe(false);
+      expect(exportedTupleTypeAliasWithRestAtTheEnd.type.members[1]!.rest).toBe(true);
     });
 
     it("should support rest elements at the beginning", () => {
       assert(exportedTupleTypeAliasWithRestAtTheBeginning.type.kind === TypeKind.Tuple);
       expect(exportedTupleTypeAliasWithRestAtTheBeginning.type.members).to.have.lengthOf(2);
-      expect(exportedTupleTypeAliasWithRestAtTheBeginning.type.members[0]!.rest).to.equal(true);
-      expect(exportedTupleTypeAliasWithRestAtTheBeginning.type.members[1]!.rest).to.equal(false);
+      expect(exportedTupleTypeAliasWithRestAtTheBeginning.type.members[0]!.rest).toBe(true);
+      expect(exportedTupleTypeAliasWithRestAtTheBeginning.type.members[1]!.rest).toBe(false);
     });
 
     it("should support rest elements at the beginning", () => {
       assert(exportedTupleTypeAliasWithRestInTheMiddle.type.kind === TypeKind.Tuple);
       expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members).to.have.lengthOf(3);
-      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[0]!.rest).to.equal(false);
-      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[1]!.rest).to.equal(true);
-      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[2]!.rest).to.equal(false);
+      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[0]!.rest).toBe(false);
+      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[1]!.rest).toBe(true);
+      expect(exportedTupleTypeAliasWithRestInTheMiddle.type.members[2]!.rest).toBe(false);
     });
 
   }
@@ -101,8 +101,8 @@ scope("Interpreter", TypeKind.Tuple, () => {
     it("should support optional elements", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Tuple);
       expect(exportedTypeAlias.type.members).to.have.lengthOf(2);
-      expect(exportedTypeAlias.type.members[0]!.optional).to.equal(false);
-      expect(exportedTypeAlias.type.members[1]!.optional).to.equal(true);
+      expect(exportedTypeAlias.type.members[0]!.optional).toBe(false);
+      expect(exportedTypeAlias.type.members[1]!.optional).toBe(true);
     });
 
   }
@@ -121,8 +121,8 @@ scope("Interpreter", TypeKind.Tuple, () => {
     it("should support optional elements", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Tuple);
       expect(exportedTypeAlias.type.members).to.have.lengthOf(2);
-      expect(exportedTypeAlias.type.members[0]!.name).to.equal("prefix");
-      expect(exportedTypeAlias.type.members[1]!.name).to.equal("suffix");
+      expect(exportedTypeAlias.type.members[0]!.name).toBe("prefix");
+      expect(exportedTypeAlias.type.members[1]!.name).toBe("suffix");
     });
 
   }

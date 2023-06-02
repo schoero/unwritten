@@ -19,35 +19,35 @@ scope("Renderer", "Render abstraction", () => {
             testFunction()
           `;
           const anchorId = convertTextToAnchorId(testFunctionSignature);
-          expect(anchorId).to.equal("testfunction");
+          expect(anchorId).toBe("testfunction");
         }
         {
           const testFunctionSignature = ts`
             testFunction(param)
           `;
           const anchorId = convertTextToAnchorId(testFunctionSignature);
-          expect(anchorId).to.equal("testfunctionparam");
+          expect(anchorId).toBe("testfunctionparam");
         }
         {
           const testFunctionSignature = ts`
             testFunction(param, param2)
           `;
           const anchorId = convertTextToAnchorId(testFunctionSignature);
-          expect(anchorId).to.equal("testfunctionparam-param2");
+          expect(anchorId).toBe("testfunctionparam-param2");
         }
         {
           const testFunctionSignature = ts`
             testFunction(param[, param2])
           `;
           const anchorId = convertTextToAnchorId(testFunctionSignature);
-          expect(anchorId).to.equal("testfunctionparam-param2");
+          expect(anchorId).toBe("testfunctionparam-param2");
         }
         {
           const testFunctionSignature = ts`
             testFunction<T>(param[, param2])
           `;
           const anchorId = convertTextToAnchorId(testFunctionSignature);
-          expect(anchorId).to.equal("testfunctiontparam-param2");
+          expect(anchorId).toBe("testfunctiontparam-param2");
         }
       });
 
@@ -55,7 +55,7 @@ scope("Renderer", "Render abstraction", () => {
 
   });
 
-  describe("Linker", () => {
+  describe("linker", () => {
 
     {
 
@@ -68,7 +68,7 @@ scope("Renderer", "Render abstraction", () => {
         );
         registerAnchor(ctx, anchor.name, anchor.id);
         const anchorText = getAnchorLink(ctx, anchor);
-        expect(anchorText).to.equal("test");
+        expect(anchorText).toBe("test");
       });
 
       it("should handle multiple anchors with different ids but the same name correctly", () => {
@@ -78,7 +78,7 @@ scope("Renderer", "Render abstraction", () => {
         );
         registerAnchor(ctx, anchor.name, anchor.id);
         const anchorText = getAnchorLink(ctx, anchor);
-        expect(anchorText).to.equal("test-1");
+        expect(anchorText).toBe("test-1");
       });
 
       it("should not register the same anchor twice", () => {
@@ -88,7 +88,7 @@ scope("Renderer", "Render abstraction", () => {
         );
         registerAnchor(ctx, anchor.name, anchor.id);
         const anchorText = getAnchorLink(ctx, anchor);
-        expect(anchorText).to.equal("test-1");
+        expect(anchorText).toBe("test-1");
       });
 
     }

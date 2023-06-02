@@ -18,7 +18,7 @@ scope("MarkdownRenderer", "ListNode", () => {
       "Item 1",
       "Item 2"
     );
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
       - Item 2
     `);
@@ -28,7 +28,7 @@ scope("MarkdownRenderer", "ListNode", () => {
     const listNode = createListNode(
       ""
     );
-    expect(renderListNode(ctx, listNode)).to.equal("");
+    expect(renderListNode(ctx, listNode)).toBe("");
   });
 
   it("should not render empty list items", () => {
@@ -37,7 +37,7 @@ scope("MarkdownRenderer", "ListNode", () => {
       "",
       "Item 3"
     );
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
       - Item 3
     `);
@@ -50,7 +50,7 @@ scope("MarkdownRenderer", "ListNode", () => {
         "Item 2"
       )
     );
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
         - Item 2
     `);
@@ -68,7 +68,7 @@ scope("MarkdownRenderer", "ListNode", () => {
         )
       )
     );
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
     `);
   });
@@ -81,7 +81,7 @@ scope("MarkdownRenderer", "ListNode", () => {
         "1"
       ]
     );
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
     `);
   });
@@ -97,7 +97,7 @@ scope("MarkdownRenderer", "ListNode", () => {
         )
       ]
     );
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
         - Item 2
     `);
@@ -114,7 +114,7 @@ scope("MarkdownRenderer", "ListNode", () => {
         )
       )
     );
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
         - Item 2
     `);
@@ -128,7 +128,7 @@ scope("MarkdownRenderer", "ListNode", () => {
         "Item 3"
       )
     );
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
         - Item 2
         - Item 3
@@ -141,7 +141,7 @@ scope("MarkdownRenderer", "ListNode", () => {
       [[" "]],
       [[["1"]]]
     ]);
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
     `);
   });
@@ -158,7 +158,7 @@ scope("MarkdownRenderer", "ListNode", () => {
         )
       ]]]]
     ]);
-    expect(renderListNode(ctx, listNode)).to.equal(md`
+    expect(renderListNode(ctx, listNode)).toBe(md`
       - Item 1
         - Item 2
     `);

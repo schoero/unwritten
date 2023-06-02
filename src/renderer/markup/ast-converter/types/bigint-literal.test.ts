@@ -31,7 +31,7 @@ scope("MarkupRenderer", TypeKind.BigIntLiteral, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
-      expect(renderedType).to.equal("7");
+      expect(renderedType).toBe("7");
     });
 
   }
@@ -53,7 +53,7 @@ scope("MarkupRenderer", TypeKind.BigIntLiteral, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
-      expect(renderedType).to.equal("-7");
+      expect(renderedType).toBe("-7");
     });
 
   }

@@ -14,14 +14,14 @@ scope("HTMLRenderer", "SmallNode", () => {
 
   it("should render a small node correctly", () => {
     const smallNode = createSmallNode("Small text");
-    expect(renderSmallNode(ctx, smallNode)).to.equal(html`
+    expect(renderSmallNode(ctx, smallNode)).toBe(html`
       <small>Small text</small>
     `);
   });
 
   it("should not render empty small nodes", () => {
     const smallNode = createSmallNode("");
-    expect(renderSmallNode(ctx, smallNode)).to.equal("");
+    expect(renderSmallNode(ctx, smallNode)).toBe("");
   });
 
 });

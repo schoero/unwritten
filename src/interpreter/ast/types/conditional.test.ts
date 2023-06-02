@@ -23,7 +23,7 @@ scope("Interpreter", TypeKind.Conditional, () => {
     const conditionalTypeAlias = createTypeAliasEntity(ctx, conditionalTypeAliasSymbol);
 
     it("should be able to parse conditional types", () => {
-      expect(conditionalTypeAlias.type.kind).to.equal(TypeKind.Conditional);
+      expect(conditionalTypeAlias.type.kind).toBe(TypeKind.Conditional);
     });
 
     it("should have a matching checkType", () => {
@@ -32,22 +32,22 @@ scope("Interpreter", TypeKind.Conditional, () => {
       expect(conditionalTypeAlias.type.checkType.type).to.not.equal(undefined);
       assert(conditionalTypeAlias.type.checkType.type!.kind === TypeKind.TypeParameter);
       expect(conditionalTypeAlias.type.checkType.type.constraint).to.not.equal(undefined);
-      expect(conditionalTypeAlias.type.checkType.type.constraint!.kind).to.equal(TypeKind.Union);
+      expect(conditionalTypeAlias.type.checkType.type.constraint!.kind).toBe(TypeKind.Union);
     });
 
     it("should have a matching extendsType", () => {
       assert(conditionalTypeAlias.type.kind === TypeKind.Conditional);
-      expect(conditionalTypeAlias.type.extendsType.kind).to.equal(TypeKind.StringLiteral);
+      expect(conditionalTypeAlias.type.extendsType.kind).toBe(TypeKind.StringLiteral);
     });
 
     it("should have a matching trueType", () => {
       assert(conditionalTypeAlias.type.kind === TypeKind.Conditional);
-      expect(conditionalTypeAlias.type.trueType.kind).to.equal(TypeKind.String);
+      expect(conditionalTypeAlias.type.trueType.kind).toBe(TypeKind.String);
     });
 
     it("should have a matching falseType", () => {
       assert(conditionalTypeAlias.type.kind === TypeKind.Conditional);
-      expect(conditionalTypeAlias.type.falseType.kind).to.equal(TypeKind.Number);
+      expect(conditionalTypeAlias.type.falseType.kind).toBe(TypeKind.Number);
     });
 
   }

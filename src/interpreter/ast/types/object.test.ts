@@ -27,11 +27,11 @@ scope("Interpreter", TypeKind.Object, () => {
     assert(isObjectType(tsType), "tsType is not an object type");
 
     it("should be able to create object types", () => {
-      expect(createObjectLikeType(ctx, tsType, TypeKind.TypeLiteral).kind).to.equal(TypeKind.TypeLiteral);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.ObjectLiteral).kind).to.equal(TypeKind.ObjectLiteral);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.Object).kind).to.equal(TypeKind.Object);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.Interface).kind).to.equal(TypeKind.Interface);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.Class).kind).to.equal(TypeKind.Class);
+      expect(createObjectLikeType(ctx, tsType, TypeKind.TypeLiteral).kind).toBe(TypeKind.TypeLiteral);
+      expect(createObjectLikeType(ctx, tsType, TypeKind.ObjectLiteral).kind).toBe(TypeKind.ObjectLiteral);
+      expect(createObjectLikeType(ctx, tsType, TypeKind.Object).kind).toBe(TypeKind.Object);
+      expect(createObjectLikeType(ctx, tsType, TypeKind.Interface).kind).toBe(TypeKind.Interface);
+      expect(createObjectLikeType(ctx, tsType, TypeKind.Class).kind).toBe(TypeKind.Class);
     });
 
   }

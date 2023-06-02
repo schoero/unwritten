@@ -8,14 +8,14 @@ describe("template utils", () => {
   it("should inject variables correctly", () => {
     const vars = "test";
     const test = ts`const test = "${vars}";`;
-    expect(test).to.equal("const test = \"test\";");
+    expect(test).toBe("const test = \"test\";");
   });
 
   it("should remove common white spaces from tagged template literals", () => {
     const test = ts`
       const test = "test";
     `;
-    expect(test).to.equal("const test = \"test\";");
+    expect(test).toBe("const test = \"test\";");
   });
 
 });

@@ -21,9 +21,9 @@ scope("Interpreter", "Export assignment", () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should be able to interpret esm export expressions", () => {
-      expect(sourceFile.exports.length).to.equal(1);
+      expect(sourceFile.exports.length).toBe(1);
       assert(isExportAssignmentEntity(sourceFile.exports[0]));
-      expect(sourceFile.exports[0].type.kind).to.equal(TypeKind.Function);
+      expect(sourceFile.exports[0].type.kind).toBe(TypeKind.Function);
     });
 
   }
@@ -40,9 +40,9 @@ scope("Interpreter", "Export assignment", () => {
     const sourceFile = createSourceFileEntity(ctx, fileSymbol);
 
     it("should be able to interpret esm export expressions", () => {
-      expect(sourceFile.exports.length).to.equal(1);
+      expect(sourceFile.exports.length).toBe(1);
       assert(isExportAssignmentEntity(sourceFile.exports[0]));
-      expect(sourceFile.exports[0].type.kind).to.equal(TypeKind.ObjectLiteral);
+      expect(sourceFile.exports[0].type.kind).toBe(TypeKind.ObjectLiteral);
     });
 
   }

@@ -53,23 +53,23 @@ scope("MarkupRenderer", EntityKind.Module, () => {
     ] = titleNode.children;
 
     it("should have a matching title", () => {
-      expect(renderedModuleForTableOfContents.title).to.equal("Module");
-      expect(titleNode.title).to.equal("Module");
+      expect(renderedModuleForTableOfContents.title).toBe("Module");
+      expect(titleNode.title).toBe("Module");
     });
 
     it("should have a matching description", () => {
       assert(isTitleNode(description));
-      expect(description.children[0].children[0]).to.equal("Module description");
+      expect(description.children[0].children[0]).toBe("Module description");
     });
 
     it("should have a matching remarks", () => {
       assert(isTitleNode(remarks));
-      expect(remarks.children[0].children[0]).to.equal("Module remarks");
+      expect(remarks.children[0].children[0]).toBe("Module remarks");
     });
 
     it("should have a matching example", () => {
       assert(isTitleNode(example));
-      expect(example.children[0].children[0]).to.equal("Module example");
+      expect(example.children[0].children[0]).toBe("Module example");
     });
 
     it("should have a matching tags", () => {
@@ -83,7 +83,7 @@ scope("MarkupRenderer", EntityKind.Module, () => {
     });
 
     it("should have no children", () => {
-      expect(children.length).to.equal(0);
+      expect(children).toHaveLength(0);
     });
 
   }
@@ -117,12 +117,12 @@ scope("MarkupRenderer", EntityKind.Module, () => {
     ] = titleNode.children;
 
     it("should have a matching title", () => {
-      expect(renderedModuleForTableOfContents.title).to.equal("Module");
-      expect(titleNode.title).to.equal("Module");
+      expect(renderedModuleForTableOfContents.title).toBe("Module");
+      expect(titleNode.title).toBe("Module");
     });
 
     it("should have on child", () => {
-      expect(children.length).to.equal(1);
+      expect(children).toHaveLength(1);
     });
 
   }

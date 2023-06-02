@@ -18,7 +18,7 @@ scope("MarkupRenderer", "JSDocTags", () => {
     for(const jsdocTagName of jsdocTagNames){
       expect(hasRenderableJSDocTags({
         [jsdocTagName]: undefined
-      })).to.equal(true);
+      })).toBe(true);
     }
 
   });
@@ -33,7 +33,7 @@ scope("MarkupRenderer", "JSDocTags", () => {
       ))
     );
 
-    expect(renderedJSDocTags.join("")).to.equal(Object.values(jsdocTagNames).join(" "));
+    expect(renderedJSDocTags.join("")).toBe(Object.values(jsdocTagNames).join(" "));
 
   });
 

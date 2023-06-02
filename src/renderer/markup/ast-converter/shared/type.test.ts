@@ -24,11 +24,11 @@ scope("MarkupRenderer", "Type", () => {
   } = convertedExample;
 
   it("should have a matching title", () => {
-    expect(title).to.equal("Example");
+    expect(title).toBe("Example");
   });
 
   it("should have a matching description", () => {
-    expect(children[0].children[0]).to.equal("Example description");
+    expect(children[0].children[0]).toBe("Example description");
   });
 
 });

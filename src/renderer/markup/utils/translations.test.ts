@@ -11,24 +11,24 @@ scope("Renderer", "translations", () => {
   const translate = getTranslator(ctx);
 
   it("should singularize properly", () => {
-    expect(translate("function", { count: 1 })).to.equal("function");
+    expect(translate("function", { count: 1 })).toBe("function");
   });
 
   it("should pluralize properly", () => {
-    expect(translate("function", { count: 2 })).to.equal("functions");
+    expect(translate("function", { count: 2 })).toBe("functions");
   });
 
   it("should capitalize properly", () => {
-    expect(translate("function", { capitalize: true, count: 1 })).to.equal("Function");
+    expect(translate("function", { capitalize: true, count: 1 })).toBe("Function");
   });
 
   it("should not pluralize if not specified", () => {
-    expect(translate("beta")).to.equal("beta");
+    expect(translate("beta")).toBe("beta");
   });
 
   it("should fallback to the translation key if not found", () => {
     // @ts-expect-error - Purposefully testing an invalid key
-    expect(translate("not-found")).to.equal("not-found");
+    expect(translate("not-found")).toBe("not-found");
   });
 
 });

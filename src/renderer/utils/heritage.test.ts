@@ -41,15 +41,15 @@ scope("Renderer", "utils", () => {
       it("should inherit properties from parent interface", () => {
         const extendedInterfaceProperties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity as InterfaceEntity);
         expect(extendedInterfaceProperties).to.have.lengthOf(2);
-        expect(extendedInterfaceProperties[0].name).to.equal("propA");
-        expect(extendedInterfaceProperties[1].name).to.equal("propB");
+        expect(extendedInterfaceProperties[0].name).toBe("propA");
+        expect(extendedInterfaceProperties[1].name).toBe("propB");
       });
 
       it("should inherit signatures from parent interface", () => {
         const extendedInterfaceProperties = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity as InterfaceEntity, "methodSignatures");
         expect(extendedInterfaceProperties).to.have.lengthOf(2);
-        expect(extendedInterfaceProperties[0].name).to.equal("methodA");
-        expect(extendedInterfaceProperties[1].name).to.equal("methodB");
+        expect(extendedInterfaceProperties[0].name).toBe("methodA");
+        expect(extendedInterfaceProperties[1].name).toBe("methodB");
       });
 
     }
@@ -75,15 +75,15 @@ scope("Renderer", "utils", () => {
       it("should override properties from parent interface", () => {
         const extendedInterfaceProperties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity as InterfaceEntity);
         expect(extendedInterfaceProperties).to.have.lengthOf(1);
-        expect(extendedInterfaceProperties[0].name).to.equal("prop");
-        expect(extendedInterfaceProperties[0].type.kind).to.equal(TypeKind.String);
+        expect(extendedInterfaceProperties[0].name).toBe("prop");
+        expect(extendedInterfaceProperties[0].type.kind).toBe(TypeKind.String);
       });
 
       it("should override signatures from parent interface", () => {
         const extendedInterfaceProperties = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity as InterfaceEntity, "methodSignatures");
         expect(extendedInterfaceProperties).to.have.lengthOf(1);
-        expect(extendedInterfaceProperties[0].name).to.equal("method");
-        expect(extendedInterfaceProperties[0].returnType.kind).to.equal(TypeKind.String);
+        expect(extendedInterfaceProperties[0].name).toBe("method");
+        expect(extendedInterfaceProperties[0].returnType.kind).toBe(TypeKind.String);
       });
 
     }
@@ -117,12 +117,12 @@ scope("Renderer", "utils", () => {
 
         expect(extendedClassProperties).to.have.lengthOf(2);
 
-        expect(extendedClassProperties[0].name).to.equal("instanceProperty");
-        expect(extendedClassProperties[0].type.kind).to.equal(TypeKind.Undefined);
+        expect(extendedClassProperties[0].name).toBe("instanceProperty");
+        expect(extendedClassProperties[0].type.kind).toBe(TypeKind.Undefined);
         expect(extendedClassProperties[0].modifiers).to.not.include("static");
 
-        expect(extendedClassProperties[1].name).to.equal("staticProperty");
-        expect(extendedClassProperties[1].type.kind).to.equal(TypeKind.Undefined);
+        expect(extendedClassProperties[1].name).toBe("staticProperty");
+        expect(extendedClassProperties[1].type.kind).toBe(TypeKind.Undefined);
         expect(extendedClassProperties[1].modifiers).toContain("static");
 
       });
@@ -172,7 +172,7 @@ scope("Renderer", "utils", () => {
       const extendedClassConstructor = extendClassEntityConstructorsWithHeritage(classEntity);
 
       it("should not extend automatically generated empty constructor", () => {
-        expect(extendedClassConstructor).to.equal(undefined);
+        expect(extendedClassConstructor).toBe(undefined);
       });
 
     }
@@ -205,7 +205,7 @@ scope("Renderer", "utils", () => {
         assert(extendedClassConstructor.signatures[0].parameters);
 
         expect(extendedClassConstructor.signatures[0].parameters).to.have.lengthOf(1);
-        expect(extendedClassConstructor.signatures[0].parameters[0].type?.kind).to.equal(TypeKind.String);
+        expect(extendedClassConstructor.signatures[0].parameters[0].type?.kind).toBe(TypeKind.String);
 
       });
 
