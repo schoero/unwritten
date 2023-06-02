@@ -15,7 +15,7 @@ export async function unwritten(code: string, options?: BrowserAPIOptions): Prom
 
   //-- Logger
 
-  const logger = options?.silent ? undefined : logger;
+  const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/index.js");
   const defaultContext = createDefaultContext(logger);
 
 

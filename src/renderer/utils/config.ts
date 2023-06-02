@@ -19,7 +19,7 @@ export function getRenderConfig(ctx: HTMLRenderContext): Complete<HTMLRenderConf
 export function getRenderConfig(ctx: MarkupRenderContexts): Complete<MarkupRenderConfig>;
 export function getRenderConfig(ctx: JSONRenderContext): Complete<JSONRenderConfig>;
 export function getRenderConfig(ctx: JSONRenderContext | MarkupRenderContexts): Complete<JSONRenderConfig | MarkupRenderConfig>;
-export function getRenderConfig(ctx: JSONRenderContext | MarkupRenderContexts) {
+export function getRenderConfig(ctx: JSONRenderContext | MarkupRenderContexts): Complete<JSONRenderConfig | MarkupRenderConfig> {
   const name = ctx.renderer.name;
   return ctx.config.renderConfig[name];
 }
