@@ -81,13 +81,13 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     it("should have an optional tag", () => {
       assert(isParagraphNode(tags));
       const renderedTags = renderNode(ctx, tags.children);
-      expect(renderedTags).to.contain("optional");
+      expect(renderedTags).toContain("optional");
     });
 
     it("should have a readonly modifier tag", () => {
       assert(isParagraphNode(tags));
       const renderedTags = renderNode(ctx, tags.children);
-      expect(renderedTags).to.contain("readonly");
+      expect(renderedTags).toContain("readonly");
     });
 
     it("should have a matching description", () => {

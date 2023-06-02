@@ -152,11 +152,11 @@ scope("Interpreter", EntityKind.Signature, () => {
     const privateStaticMethod = exportedClass.methods.find(m => m.name === "privateStaticMethod")!;
 
     it("should support modifiers", () => {
-      expect(publicMethod.signatures.find(signature => signature.name === "publicMethod")!.modifiers).to.contain("public");
-      expect(privateMethod.signatures.find(signature => signature.name === "privateMethod")!.modifiers).to.contain("private");
-      expect(staticMethod.signatures.find(signature => signature.name === "staticMethod")!.modifiers).to.contain("static");
-      expect(privateStaticMethod.signatures.find(signature => signature.name === "privateStaticMethod")!.modifiers).to.contain("private");
-      expect(privateStaticMethod.signatures.find(signature => signature.name === "privateStaticMethod")!.modifiers).to.contain("static");
+      expect(publicMethod.signatures.find(signature => signature.name === "publicMethod")!.modifiers).toContain("public");
+      expect(privateMethod.signatures.find(signature => signature.name === "privateMethod")!.modifiers).toContain("private");
+      expect(staticMethod.signatures.find(signature => signature.name === "staticMethod")!.modifiers).toContain("static");
+      expect(privateStaticMethod.signatures.find(signature => signature.name === "privateStaticMethod")!.modifiers).toContain("private");
+      expect(privateStaticMethod.signatures.find(signature => signature.name === "privateStaticMethod")!.modifiers).toContain("static");
     });
 
   }

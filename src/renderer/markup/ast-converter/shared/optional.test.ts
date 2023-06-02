@@ -22,7 +22,7 @@ scope("MarkupRenderer", "Optional", () => {
   assert(convertedOptional, "Converted optional undefined");
 
   it("should render the optional tag correctly", () => {
-    expect(convertedOptional).to.contain("optional");
+    expect(convertedOptional).toContain("optional");
   });
 
 });

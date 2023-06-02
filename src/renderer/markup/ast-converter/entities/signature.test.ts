@@ -86,7 +86,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a position", () => {
       assert(isSmallNode(position));
-      expect(position.children).not.toBeUndefined();
+      expect(position.children).toBeDefined();
     });
 
     it("should have a jsdoc tag", () => {
@@ -218,8 +218,8 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a matching method signature", () => {
       const renderedSignature = renderNode(ctx, methods.children[0][0]);
-      expect(renderedSignature).to.contain("add(a, b)");
-      expect(renderedSignature).to.contain("Adds two numbers together");
+      expect(renderedSignature).toContain("add(a, b)");
+      expect(renderedSignature).toContain("Adds two numbers together");
     });
 
     it("should not have type parameters", () => {
@@ -232,19 +232,19 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       assert(isListNode(methods.children[0][2]));
       expect(methods.children[0][2].children).toHaveLength(2);
 
-      expect(renderedParameter).to.contain("a");
-      expect(renderedParameter).to.contain("number");
-      expect(renderedParameter).to.contain("The first number");
+      expect(renderedParameter).toContain("a");
+      expect(renderedParameter).toContain("number");
+      expect(renderedParameter).toContain("The first number");
 
-      expect(renderedParameter).to.contain("b");
-      expect(renderedParameter).to.contain("number");
-      expect(renderedParameter).to.contain("The second number");
+      expect(renderedParameter).toContain("b");
+      expect(renderedParameter).toContain("number");
+      expect(renderedParameter).toContain("The second number");
     });
 
     it("should have a matching return type", () => {
       const renderedReturnType = renderNode(ctx, methods.children[0][3]);
-      expect(renderedReturnType).to.contain("number");
-      expect(renderedReturnType).to.contain("The sum of the two numbers");
+      expect(renderedReturnType).toContain("number");
+      expect(renderedReturnType).toContain("The sum of the two numbers");
     });
 
   }
@@ -282,7 +282,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should represent the type parameter in the signature", () => {
       const renderedSignature = renderNode(ctx, methods.children[0][0]);
-      expect(renderedSignature).to.contain("test<T>(param)");
+      expect(renderedSignature).toContain("test<T>(param)");
     });
 
     it("should have a matching type parameter", () => {
@@ -291,9 +291,9 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       assert(isListNode(methods.children[0][1]));
       expect(methods.children[0][1].children).toHaveLength(1);
 
-      expect(renderedTypeParameter).to.contain("T");
-      expect(renderedTypeParameter).to.contain("number");
-      expect(renderedTypeParameter).to.contain("Type parameter description");
+      expect(renderedTypeParameter).toContain("T");
+      expect(renderedTypeParameter).toContain("number");
+      expect(renderedTypeParameter).toContain("Type parameter description");
     });
 
   }

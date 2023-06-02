@@ -31,9 +31,9 @@ scope("MarkupRenderer", TypeKind.Intersection, () => {
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render join multiple types with a `&`", () => {
-      expect(renderedType).to.contain("string");
-      expect(renderedType).to.contain("&");
-      expect(renderedType).to.contain("number");
+      expect(renderedType).toContain("string");
+      expect(renderedType).toContain("&");
+      expect(renderedType).toContain("number");
     });
 
   }

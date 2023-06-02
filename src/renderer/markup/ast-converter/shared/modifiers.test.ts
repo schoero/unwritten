@@ -20,8 +20,8 @@ scope("MarkupRenderer", "Modifiers", () => {
   assert(convertedModifiers, "Converted modifiers are undefined");
 
   it("should have a matching title", () => {
-    expect(convertedModifiers).to.contain("readonly");
-    expect(convertedModifiers).to.contain("optional");
+    expect(convertedModifiers).toContain("readonly");
+    expect(convertedModifiers).toContain("optional");
   });
 
 });
