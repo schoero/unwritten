@@ -79,7 +79,7 @@ scope("Interpreter", TypeKind.Array, () => {
     const symbol = exportedSymbols.find(s => s.name === "array")!;
     const exportedVariable = createVariableEntity(ctx, symbol);
 
-    it("should be able to parse an array type that was created using the Array constructor ", () => {
+    it("should be able to parse an array type that was created using the Array constructor", () => {
       expect(exportedVariable.kind).to.equal(EntityKind.Variable);
       expect(exportedVariable.type.kind).to.equal(TypeKind.Array);
     });

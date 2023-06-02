@@ -18,7 +18,7 @@ import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/ent
 
 scope("Renderer", "utils", () => {
 
-  describe("Interface heritage", () => {
+  describe("interface heritage", () => {
 
     {
 
@@ -90,7 +90,7 @@ scope("Renderer", "utils", () => {
 
   });
 
-  describe("Class heritage", () => {
+  describe("class heritage", () => {
 
     {
 

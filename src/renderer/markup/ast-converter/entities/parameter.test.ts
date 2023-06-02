@@ -124,7 +124,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
 
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
-    it("Should render default values", () => {
+    it("should render default values", () => {
       expect(renderedParameterForDocumentation).to.include("Default: 7");
     });
 

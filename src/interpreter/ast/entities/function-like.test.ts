@@ -9,7 +9,7 @@ import { ts } from "unwritten:utils/template.js";
 
 scope("Interpreter", EntityKind.Function, () => {
 
-  describe("Function symbol", () => {
+  describe("function symbol", () => {
 
     {
 
