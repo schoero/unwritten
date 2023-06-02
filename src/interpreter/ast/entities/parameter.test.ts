@@ -23,8 +23,8 @@ scope("Interpreter", EntityKind.Parameter, () => {
 
     it("should be able to parse a parameter", () => {
       expect(exportedFunction.kind).toBe(EntityKind.Function);
-      expect(exportedFunction.signatures).to.have.length(1);
-      expect(exportedFunction.signatures[0]!.parameters).to.have.length(1);
+      expect(exportedFunction.signatures).toHaveLength(1);
+      expect(exportedFunction.signatures[0]!.parameters).toHaveLength(1);
     });
 
   }
