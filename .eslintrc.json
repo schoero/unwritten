@@ -48,14 +48,21 @@
     },
     {
       "files": [
-        "**/renderer/markup/html/*.ts"
+        "**/renderer/markup/html/**/*.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {
         "no-restricted-imports": [
           "error", {
             "patterns": [
-              "unwritten:renderer:markdown*"
+              {
+                "group": [
+                  "unwritten:renderer:markdown*",
+                  "unwritten:renderer/markup/html*",
+                  "unwritten:renderer/markup/markdown*",
+                  "!unwritten:renderer:html*"
+                ]
+              }
             ]
           }
         ]
@@ -63,14 +70,21 @@
     },
     {
       "files": [
-        "**/renderer/markup/markdown/*.ts"
+        "**/renderer/markup/markdown/**/*.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {
         "no-restricted-imports": [
           "error", {
             "patterns": [
-              "unwritten:renderer:html*"
+              {
+                "group": [
+                  "unwritten:renderer:html*",
+                  "unwritten:renderer/markup/html*",
+                  "unwritten:renderer/markup/markdown*",
+                  "!unwritten:renderer:markdown*"
+                ]
+              }
             ]
           }
         ]

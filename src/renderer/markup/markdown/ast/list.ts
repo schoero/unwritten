@@ -1,7 +1,7 @@
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { renderIndentation as renderIndentationOriginal } from "unwritten:renderer:utils/indentation.js";
 
-import { renderNewLine } from "../../../utils/new-line.js";
 import { renderNode } from "../index.js";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
