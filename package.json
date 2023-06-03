@@ -42,11 +42,12 @@
     "typescript": "^5.1.3"
   },
   "devDependencies": {
+    "@schoero/changelog-config": "^0.0.1",
     "@schoero/cspell-config": "^1.6.14",
-    "@schoero/eslint-config": "^1.41.3",
+    "@schoero/eslint-config": "^1.41.4",
     "@schoero/markdownlint-config": "^1.1.6",
     "@schoero/ts-config": "^0.3.2",
-    "@schoero/vite-config": "^0.0.21",
+    "@schoero/vite-config": "^0.0.22",
     "@types/minimatch": "^5.1.2",
     "@types/node": "^20.2.5",
     "eslint-plugin-sort-exports": "^0.8.0",
