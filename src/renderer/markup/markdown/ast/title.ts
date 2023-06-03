@@ -1,6 +1,6 @@
-import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderNode } from "unwritten:renderer:markdown/index.js";
-import { renderNewLine } from "unwritten:renderer:utils/new-line.js";
+import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line.js";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
@@ -25,15 +25,21 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
 
   const beginningEmptyLine = childrenBeginsWithEmptyLine ? "" : renderedEmptyLine;
 
-  const returnValue = [
+  const renderedTitleWithWhitespace = [
     renderedEmptyLine,
     renderedTitle,
-    beginningEmptyLine,
-    ...renderedChildren
+    beginningEmptyLine
   ]
     .filter(renderedNode => !!renderedNode)
     .join(renderNewLine(ctx));
 
-  return returnValue;
+  const renderedChildrenWithNewLines = renderedChildren
+    .filter(renderedNode => !!renderedNode)
+    .join(`  ${renderNewLine(ctx)}`);
+
+  return [
+    renderedTitleWithWhitespace,
+    renderedChildrenWithNewLines
+  ].join(renderNewLine(ctx));
 
 }

@@ -66,7 +66,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
         
       ## Subtitle
         
-      Paragraph
+      Paragraph  
         
       ## Another Subtitle
         
@@ -88,7 +88,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
         
       # Title
         
-      Paragraph
+      Paragraph  
       Paragraph2
     `);
 
