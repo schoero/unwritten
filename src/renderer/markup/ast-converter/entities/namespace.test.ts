@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createNamespaceEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import {
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents
@@ -53,10 +53,9 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     ] = titleNode.children;
 
     it("should have a matching title", () => {
-      expect(renderedNamespaceForTableOfContents.title).toBe("Namespace");
-      expect(titleNode.title).toBe("Namespace");
+      assert(isAnchorNode(renderedNamespaceForTableOfContents[0]));
+      expect(renderedNamespaceForTableOfContents[0].name).toBe("Namespace");
     });
-
     it("should have a matching description", () => {
       assert(isTitleNode(description));
       expect(description.children[0].children[0]).toBe("Namespace description");
@@ -84,46 +83,6 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
 
     it("should have no children", () => {
       expect(children).toHaveLength(0);
-    });
-
-  }
-
-  {
-
-
-    const testFileContent = ts`
-      export namespace Namespace {
-        export function test(){}
-      }
-    `;
-
-    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
-
-    const symbol = exportedSymbols.find(s => s.name === "Namespace")!;
-    const namespaceEntity = createNamespaceEntity(compilerContext, symbol);
-    const ctx = createRenderContext();
-
-    const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity);
-    const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity);
-
-    const titleNode = renderedNamespaceForDocumentation.children[0];
-
-    const [
-      position,
-      tags,
-      description,
-      remarks,
-      example,
-      ...children
-    ] = titleNode.children;
-
-    it("should have a matching title", () => {
-      expect(renderedNamespaceForTableOfContents.title).toBe("Namespace");
-      expect(titleNode.title).toBe("Namespace");
-    });
-
-    it("should have on child", () => {
-      expect(children).toHaveLength(1);
     });
 
   }

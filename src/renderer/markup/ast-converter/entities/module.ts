@@ -9,7 +9,12 @@ import {
   convertEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import {
+  createAnchorNode,
+  createListNode,
+  createSectionNode,
+  createTitleNode
+} from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { ModuleEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -22,12 +27,22 @@ import type {
 export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContexts, moduleEntity: ModuleEntity): ConvertedModuleEntityForTableOfContents {
 
   const name = moduleEntity.name;
-  const children = moduleEntity.exports.map(exportedEntity => convertEntityForTableOfContents(ctx, exportedEntity));
+  const id = moduleEntity.symbolId;
 
-  return createTitleNode(
+  const anchor = createAnchorNode(
     name,
-    children
+    id
   );
+
+  const moduleExports = moduleEntity.exports.map(
+    exportedEntity =>
+      convertEntityForTableOfContents(ctx, exportedEntity)
+  );
+
+  return [
+    anchor,
+    createListNode(moduleExports)
+  ];
 
 }
 

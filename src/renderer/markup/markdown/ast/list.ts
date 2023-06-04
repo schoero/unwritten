@@ -20,24 +20,11 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
     return renderListNode(ctx, listNode.children[0]);
   }
 
-  const renderedListStart = renderListStart(ctx);
+  ctx.indentation++;
   const renderedListItems = renderListItems(ctx, listNode.children);
-  const renderedListEnd = renderListEnd(ctx);
+  ctx.indentation--;
 
-  const filteredListItems = renderedListItems.filter(item => !!item);
-
-  // Do not render empty list items
-  if(filteredListItems.length === 0){
-    return "";
-  }
-
-  const renderedList = [
-    renderedListStart,
-    ...filteredListItems,
-    renderedListEnd
-  ];
-
-  return renderedList
+  return renderedListItems
     .filter(item => !!item)
     .join(renderNewLine(ctx));
 
@@ -45,12 +32,6 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
 
 function renderListItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string[] {
   return items.map(item => renderListItem(ctx, item));
-}
-
-
-function renderListStart(ctx: MarkdownRenderContext): string {
-  ctx.indentation++;
-  return "";
 }
 
 function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
@@ -82,12 +63,6 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
     ? renderedItem
     : `${renderIndentation(ctx)}- ${renderedItem}`;
 
-}
-
-
-function renderListEnd(ctx: MarkdownRenderContext): string {
-  ctx.indentation--;
-  return "";
 }
 
 function flattenNestedArrayItems(items: ASTNodes[]): ASTNodes[] {

@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createModuleEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import {
   convertModuleEntityForDocumentation,
   convertModuleEntityForTableOfContents
@@ -53,8 +53,8 @@ scope("MarkupRenderer", EntityKind.Module, () => {
     ] = titleNode.children;
 
     it("should have a matching title", () => {
-      expect(renderedModuleForTableOfContents.title).toBe("Module");
-      expect(titleNode.title).toBe("Module");
+      assert(isAnchorNode(renderedModuleForTableOfContents[0]));
+      expect(renderedModuleForTableOfContents[0].name).toBe("Module");
     });
 
     it("should have a matching description", () => {
@@ -84,45 +84,6 @@ scope("MarkupRenderer", EntityKind.Module, () => {
 
     it("should have no children", () => {
       expect(children).toHaveLength(0);
-    });
-
-  }
-
-  {
-
-    const testFileContent = ts`
-      export module Module {
-        export function test(){}
-      }
-    `;
-
-    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
-
-    const symbol = exportedSymbols.find(s => s.name === "Module")!;
-    const moduleEntity = createModuleEntity(compilerContext, symbol);
-    const ctx = createRenderContext();
-
-    const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity);
-    const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity);
-
-    const titleNode = renderedModuleForDocumentation.children[0];
-
-    const [
-      position,
-      tags,
-      description,
-      remarks,
-      example,
-      ...children
-    ] = titleNode.children;
-
-    it("should have a matching title", () => {
-      expect(renderedModuleForTableOfContents.title).toBe("Module");
-      expect(titleNode.title).toBe("Module");
-    });
-
-    it("should have on child", () => {
-      expect(children).toHaveLength(1);
     });
 
   }

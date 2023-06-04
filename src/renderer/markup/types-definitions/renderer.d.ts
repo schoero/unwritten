@@ -286,7 +286,10 @@ export type ConvertedEntitiesForDocumentation =
 
 //-- Namespace
 
-export type ConvertedNamespaceEntityForTableOfContents = TitleNode<ConvertedEntitiesForTableOfContents[]>;
+export type ConvertedNamespaceEntityForTableOfContents = [
+  name: ASTNodes,
+  exports: ListNode<ConvertedEntitiesForTableOfContents[]>
+];
 export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
   children: TitleNode<[
     position: ConvertedPosition,
@@ -301,7 +304,10 @@ export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
 
 //-- Module
 
-export type ConvertedModuleEntityForTableOfContents = TitleNode<ConvertedEntitiesForTableOfContents[]>;
+export type ConvertedModuleEntityForTableOfContents = [
+  name: ASTNodes,
+  exports: ListNode<ConvertedEntitiesForTableOfContents[]>
+];
 export type ConvertedModuleEntityForDocumentation = SectionNode<[
   children: TitleNode<[
     position: ConvertedPosition,
@@ -405,14 +411,14 @@ export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
 
 //-- Class
 
-export type ConvertedClassEntityForTableOfContents = TitleNode<
-(
-  | ConvertedGetterEntityForTableOfContents
-  | ConvertedMethodEntityForTableOfContents
-  | ConvertedPropertyEntityForTableOfContents
-  | ConvertedSetterEntityForTableOfContents
-)[]
->;
+export type ConvertedClassEntityForTableOfContents = [
+  title: ASTNodes,
+  constructor: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
+  properties: ListNode<ConvertedPropertyEntityForTableOfContents[]>,
+  methods: ListNode<ConvertedMethodEntityForTableOfContents[]>,
+  setters: ListNode<ConvertedSetterEntityForTableOfContents[]>,
+  getters: ListNode<ConvertedGetterEntityForTableOfContents[]>
+];
 export type ConvertedClassEntityForDocumentation = SectionNode<[
   children: TitleNode<[
     position: ConvertedPosition,

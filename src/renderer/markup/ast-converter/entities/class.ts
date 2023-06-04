@@ -13,7 +13,12 @@ import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import {
+  createAnchorNode,
+  createListNode,
+  createSectionNode,
+  createTitleNode
+} from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   extendClassEntityConstructorsWithHeritage,
@@ -31,6 +36,12 @@ import type {
 export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
 
   const name = classEntity.name;
+  const id = classEntity.symbolId;
+
+  const anchor = createAnchorNode(
+    name,
+    id
+  );
 
   const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
   const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
@@ -44,14 +55,14 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
   const convertedSetters = setterEntities.map(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
   const convertedGetters = getterEntities.map(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
 
-  return createTitleNode(
-    name,
-    ...convertedConstructSignatures ?? [],
-    ...convertedProperties,
-    ...convertedMethods,
-    ...convertedSetters,
-    ...convertedGetters
-  );
+  return [
+    anchor,
+    createListNode(...convertedConstructSignatures ?? []),
+    createListNode(...convertedProperties),
+    createListNode(...convertedMethods),
+    createListNode(...convertedSetters),
+    createListNode(...convertedGetters)
+  ];
 
 }
 
