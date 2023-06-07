@@ -17,7 +17,7 @@ export default defineConfig({
     rollupOptions: {
       external: [
         /node_modules/,
-        /node:/
+        /^node:.*/
       ]
     },
     target: "es6"
