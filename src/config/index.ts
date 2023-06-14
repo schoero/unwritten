@@ -55,11 +55,7 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
     userConfig = importedConfig;
   }
 
-  if(userConfig === undefined){
-    return defaultConfig;
-  }
-
-  const extendedUserConfig = await getExtendConfig(userConfig);
+  const extendedUserConfig = userConfig && await getExtendConfig(userConfig);
 
   const config = override(defaultConfig, extendedUserConfig);
 

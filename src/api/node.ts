@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { basename, extname, resolve } from "node:path";
 
 import { compile } from "unwritten:compiler:node.js";
 import { createConfig } from "unwritten:config/index.js";
@@ -17,11 +17,9 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
 
   const absoluteEntryFilePath = resolve(entryFilePath);
 
-
-  // Logger
+  // Attach logger
   const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/index.js");
   const defaultContext = createDefaultContext(logger);
-
 
   // Compile
   const { checker, program } = compile(defaultContext, absoluteEntryFilePath, options?.tsconfig);
@@ -34,21 +32,20 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
   const entryFileSymbol = getEntryFileSymbolFromProgram(interpreterContext, program);
   const interpretedSymbols = interpret(interpreterContext, entryFileSymbol);
 
-
   // Render
   const renderer = await getRenderer(options?.renderer);
   const renderContext = createRenderContext(defaultContext, renderer, config);
   const renderedSymbols = renderer.render(renderContext, interpretedSymbols);
 
-
   // Write output to file
-  const fileExtension = renderer.fileExtension;
+  const fileExtension = options?.output ? extname(options.output) : renderer.fileExtension;
+  const fileName = options?.output ? basename(options.output, fileExtension) : "api";
 
   if(existsSync(config.outputDir) === false){
     mkdirSync(config.outputDir, { recursive: true });
   }
 
-  writeFileSync(`${config.outputDir}/api${fileExtension}`, renderedSymbols);
+  writeFileSync(`${config.outputDir}/${fileName}${fileExtension}`, renderedSymbols);
 
   return interpretedSymbols;
 
