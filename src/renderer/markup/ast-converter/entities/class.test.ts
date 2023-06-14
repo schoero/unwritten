@@ -54,8 +54,8 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     ] = titleNode.children;
 
     it("should have a matching title", () => {
-      assert(isAnchorNode(convertedClassForTableOfContents[0]));
-      expect(convertedClassForTableOfContents[0].name).toBe("Class");
+      assert(isAnchorNode(convertedClassForTableOfContents.children[0]));
+      expect(convertedClassForTableOfContents.children[0].name).toBe("Class");
     });
 
     it("should have a position", () => {
