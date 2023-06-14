@@ -13,7 +13,7 @@ import { createContext as createDefaultContext } from "unwritten:utils:context.j
 import type { APIOptions } from "unwritten:type-definitions/options.d.js";
 
 
-export async function unwritten(entryFilePath: string, options?: APIOptions) {
+export async function unwritten(entryFilePath: string, options?: APIOptions): Promise<string> {
 
   const absoluteEntryFilePath = resolve(entryFilePath);
 
@@ -38,15 +38,23 @@ export async function unwritten(entryFilePath: string, options?: APIOptions) {
   const renderedSymbols = renderer.render(renderContext, interpretedSymbols);
 
   // Write output to file
-  const fileExtension = options?.output ? extname(options.output) : renderer.fileExtension;
-  const fileName = options?.output ? basename(options.output, fileExtension) : "api";
+  const fileExtension = (
+    options?.output
+      ? extname(options.output)
+      : renderer.fileExtension
+  ) || renderer.fileExtension;
+
+  const fileName = options?.output
+    ? basename(options.output, fileExtension)
+    : "api";
 
   if(existsSync(config.outputDir) === false){
     mkdirSync(config.outputDir, { recursive: true });
   }
 
-  writeFileSync(`${config.outputDir}/${fileName}${fileExtension}`, renderedSymbols);
+  const outputPath = `${config.outputDir}/${fileName}${fileExtension}`;
+  writeFileSync(outputPath, renderedSymbols);
 
-  return interpretedSymbols;
+  return outputPath;
 
 }
