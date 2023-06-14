@@ -20,7 +20,7 @@ scope("MarkdownRenderer", "LinkNode", () => {
     `);
   });
 
-  it("should escape nested squarebrackets", () => {
+  it("should escape nested square brackets", () => {
     const linkNode = createLinkNode("[Link name]", "#anchor");
     expect(renderLinkNode(ctx, linkNode)).toBe(md`
       [\\[Link name\\]](#anchor)
