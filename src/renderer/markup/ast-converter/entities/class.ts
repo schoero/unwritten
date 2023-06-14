@@ -55,14 +55,14 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
   const convertedSetters = setterEntities.map(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
   const convertedGetters = getterEntities.map(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
 
-  return [
+  return createListNode(
     anchor,
     createListNode(...convertedConstructSignatures ?? []),
     createListNode(...convertedProperties),
     createListNode(...convertedMethods),
     createListNode(...convertedSetters),
     createListNode(...convertedGetters)
-  ];
+  );
 
 }
 

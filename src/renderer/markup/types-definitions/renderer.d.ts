@@ -411,14 +411,14 @@ export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
 
 //-- Class
 
-export type ConvertedClassEntityForTableOfContents = [
+export type ConvertedClassEntityForTableOfContents = ListNode<[
   title: ASTNodes,
   constructor: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
   properties: ListNode<ConvertedPropertyEntityForTableOfContents[]>,
   methods: ListNode<ConvertedMethodEntityForTableOfContents[]>,
   setters: ListNode<ConvertedSetterEntityForTableOfContents[]>,
   getters: ListNode<ConvertedGetterEntityForTableOfContents[]>
-];
+]>;
 export type ConvertedClassEntityForDocumentation = SectionNode<[
   children: TitleNode<[
     position: ConvertedPosition,

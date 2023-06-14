@@ -131,7 +131,7 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
       tableOfContents.push(
         createTitleNode(
           categoryTitle,
-          createListNode([])
+          createListNode()
         )
       );
     }
