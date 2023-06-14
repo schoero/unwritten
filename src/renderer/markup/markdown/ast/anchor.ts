@@ -1,5 +1,6 @@
 import { getAnchorLink } from "unwritten:renderer/markup/utils/linker.js";
-import { renderNode } from "unwritten:renderer:markdown/index.js";
+import { createLinkNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { renderLinkNode } from "unwritten:renderer:markdown/ast/link.js";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
@@ -7,5 +8,5 @@ import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nod
 
 export function renderAnchorNode(ctx: MarkdownRenderContext, anchorNode: AnchorNode): string {
   const anchorLink = getAnchorLink(ctx, anchorNode);
-  return `[${renderNode(ctx, anchorNode.name)}](#${anchorLink})`;
+  return renderLinkNode(ctx, createLinkNode(anchorNode.name, `#${anchorLink}`));
 }
