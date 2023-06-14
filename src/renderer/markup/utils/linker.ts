@@ -21,6 +21,7 @@ function getRegistry(ctx: MarkupRenderContexts) {
 
 export function convertTextToAnchorId(text: string): string {
   let link = text.toLowerCase();
+  link = link.replace(/&(?:[A-Za-z]+|#\d+|#x[\dA-Fa-f]+);/g, "");
   link = link.replace(/[^\s\w-]/gi, "");
   link = link.replace(/\s/g, "-");
   return link;

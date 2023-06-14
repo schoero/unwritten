@@ -56,6 +56,13 @@ scope("Renderer", "Render abstraction", () => {
           const anchorId = convertTextToAnchorId(testFunctionSignature);
           expect(anchorId).toBe("_privatefunction");
         }
+        {
+          const testFunctionSignature = ts`
+            test&lt;T&gt;()
+          `;
+          const anchorId = convertTextToAnchorId(testFunctionSignature);
+          expect(anchorId).toBe("testt");
+        }
       });
 
     }
