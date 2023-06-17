@@ -8,22 +8,12 @@ scope("Interpreter", "Entities", () => {
 
   const importUrl = import.meta.url;
 
-  const exportedFiles = getFilesInDirectory(importUrl);
+  const exportedFiles = getFilesInDirectory(importUrl).filter(file => !file.includes(".test.ts"));
   const indexExports = getExportsFromIndexFile(importUrl);
 
-  it("should export from all files of the current directory", () => {
-
-    for(const file of exportedFiles){
-
-      if(file.includes(".test.ts")){
-        continue;
-      }
-
-      const exportName = file.replace(".ts", ".js");
-      expect(indexExports).toContain(`export * from "./${exportName}";`);
-
-    }
-
+  it.each(exportedFiles)("should export from all files of the current directory", file => {
+    const exportName = file.replace(".ts", ".js");
+    expect(indexExports).toContain(`export * from "./${exportName}";`);
   });
 
   it("should not export from itself", () => {
