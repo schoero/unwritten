@@ -17,6 +17,7 @@ import {
 } from "unwritten:interpreter:typeguards/symbols.js";
 import { isThisType } from "unwritten:interpreter:typeguards/types.js";
 import { withLockedType } from "unwritten:interpreter:utils/ts.js";
+import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 
 import type { ObjectType as TSObjectType } from "typescript";
 
@@ -30,10 +31,10 @@ export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKi
   const tsCallSignatures = type.getCallSignatures();
   const tsProperties = type.getProperties();
 
-  const getterProperties = tsProperties.filter(isGetterSymbol);
-  const setterProperties = tsProperties.filter(isSetterSymbol);
-  const propertyProperties = tsProperties.filter(isPropertySymbol);
-  const methodProperties = tsProperties.filter(isMethodSymbol);
+  const getterProperties = tsProperties.filter(isGetterSymbol).filter(getter => !isSymbolExcluded(ctx, getter));
+  const setterProperties = tsProperties.filter(isSetterSymbol).filter(setter => !isSymbolExcluded(ctx, setter));
+  const propertyProperties = tsProperties.filter(isPropertySymbol).filter(property => !isSymbolExcluded(ctx, property));
+  const methodProperties = tsProperties.filter(isMethodSymbol).filter(method => !isSymbolExcluded(ctx, method));
 
   const constructSignatures = tsConstructSignatures.map(signature => createSignatureEntity(ctx, signature));
   const callSignatures = tsCallSignatures.map(signature => createSignatureEntity(ctx, signature));
