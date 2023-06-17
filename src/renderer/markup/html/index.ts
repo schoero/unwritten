@@ -55,6 +55,8 @@ const htmlRenderer: HTMLRenderer = {
 
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
+  // eslint-disable-next-line sort-keys/sort-keys-fix
+  linkRegistry: new Map(),
 
   render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
     htmlRenderer.initializeContext(ctx);

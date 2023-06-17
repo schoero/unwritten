@@ -55,6 +55,8 @@ const markdownRenderer: MarkdownRenderer = {
 
   fileExtension: ".md",
   name: BuiltInRenderers.Markdown,
+  // eslint-disable-next-line sort-keys/sort-keys-fix
+  linkRegistry: new Map(),
 
   render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
     markdownRenderer.initializeContext(ctx);

@@ -9,8 +9,8 @@ import type { Renderer } from "unwritten:type-definitions/renderer.js";
 export interface MarkupRenderer extends Renderer {
   fileExtension: ".html" | ".md";
   initializeContext(ctx: MarkupRenderContexts): void;
+  linkRegistry: LinkRegistry;
   name: BuiltInRenderers.HTML | BuiltInRenderers.Markdown;
-  linkRegistry?: LinkRegistry;
 }
 
 export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> extends RenderContext<CustomMarkupRenderer> {

@@ -10,15 +10,6 @@ export interface Anchor {
 
 export type LinkRegistry = Map<Name, ID[]>;
 
-function attachRegistry(ctx: MarkupRenderContexts): asserts ctx is MarkupRenderContexts & { renderer: { linkRegistry: LinkRegistry; }; } {
-  ctx.renderer.linkRegistry ??= new Map();
-}
-
-function getRegistry(ctx: MarkupRenderContexts) {
-  attachRegistry(ctx);
-  return ctx.renderer.linkRegistry;
-}
-
 export function convertTextToAnchorId(text: string): string {
   let link = text.toLowerCase();
   link = link.replace(/&(?:[A-Za-z]+|#\d+|#x[\dA-Fa-f]+);/g, "");
@@ -38,9 +29,7 @@ export function getAnchorLink(ctx: MarkupRenderContexts, anchor: Anchor): string
     return;
   }
 
-  const registry = getRegistry(ctx);
-
-  const ids = registry.get(anchor.name);
+  const ids = ctx.renderer.linkRegistry.get(anchor.name);
   if(!ids?.includes(anchor.id)){
     return;
   }
@@ -66,15 +55,13 @@ export function isAnchor(input: any): input is Anchor {
 
 export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): Anchor {
 
-  const registry = getRegistry(ctx);
-
-  if(registry.has(name)){
-    const idArray = registry.get(name)!;
+  if(ctx.renderer.linkRegistry.has(name)){
+    const idArray = ctx.renderer.linkRegistry.get(name)!;
     if(!idArray.includes(id)){
       idArray.push(id);
     }
   } else {
-    registry.set(name, [id]);
+    ctx.renderer.linkRegistry.set(name, [id]);
   }
 
   return createAnchor(name, id);
