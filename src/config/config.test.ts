@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { expect, it, vi } from "vitest";
+import { expect, it, vitest } from "vitest";
 
 import { createConfig } from "unwritten:config/index.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -7,12 +7,12 @@ import { scope } from "unwritten:tests:utils/scope.js";
 
 scope("Integration", "Config", async () => {
 
-  vi.mock("node:fs", async () => {
+  vitest.mock("node:fs", async () => {
     // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-    const actual = await vi.importActual<typeof import("node:fs")>("node:fs");
+    const actual = await vitest.importActual<typeof import("node:fs")>("node:fs");
     return {
       ...actual,
-      existsSync: vi.fn().mockImplementation((path: string) => {
+      existsSync: vitest.fn().mockImplementation((path: string) => {
         if(path.includes(".unwritten.json")){
           return true;
         } else if(path.includes(".unwritten.js")){
@@ -24,7 +24,7 @@ scope("Integration", "Config", async () => {
     };
   });
 
-  vi.mock(`${await getDirectory()}/.unwritten.json`, () => {
+  vitest.mock(`${await getDirectory()}/.unwritten.json`, () => {
     return {
       default: {
         renderConfig: {
@@ -36,7 +36,7 @@ scope("Integration", "Config", async () => {
     };
   });
 
-  vi.mock(`${await getDirectory()}/.unwritten.js`, () => {
+  vitest.mock(`${await getDirectory()}/.unwritten.js`, () => {
     return {
       default: {
         renderConfig: {
