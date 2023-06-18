@@ -1,6 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { renderNode } from "unwritten:renderer/index.js";
 import { createListNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -205,4 +206,20 @@ scope("MarkdownRenderer", "ListNode", () => {
       Line 4
     `);
   });
+
+  it("should render list nodes in an array on new lines", () => {
+    const listNodeArray = [
+      createListNode(
+        "Item 1"
+      ),
+      createListNode(
+        "Item 1"
+      )
+    ];
+    expect(renderNode(ctx, listNodeArray)).toBe(md`
+      - Item 1
+      - Item 1
+    `);
+  });
+
 });

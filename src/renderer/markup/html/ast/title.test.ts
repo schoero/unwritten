@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { renderNode } from "unwritten:renderer/index.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -91,6 +92,25 @@ scope("HTMLRenderer", "TitleNode", () => {
       <p>Paragraph</p>
     `);
 
+  });
+
+  it("should render title nodes in an array on new lines", () => {
+    const titleNodeArray = [
+      createTitleNode(
+        "Title 1",
+        createParagraphNode("Paragraph 1")
+      ),
+      createTitleNode(
+        "Title 2",
+        createParagraphNode("Paragraph 2")
+      )
+    ];
+    expect(renderNode(ctx, titleNodeArray)).toBe(html`
+      <h1>Title 1</h1>
+      <p>Paragraph 1</p>
+      <h1>Title 2</h1>
+      <p>Paragraph 2</p>
+    `);
   });
 
 });

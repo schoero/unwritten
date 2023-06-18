@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { renderNode } from "unwritten:renderer/index.js";
 import { createListNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -179,7 +180,6 @@ scope("HTMLRenderer", "ListNode", () => {
     `);
   });
 
-
   it("should render nested arrays with lists correctly", () => {
     const listNode = createListNode([
       ["Item"],
@@ -199,6 +199,25 @@ scope("HTMLRenderer", "ListNode", () => {
             <li>Item 2</li>
           </ul>
         </li>
+      </ul>
+    `);
+  });
+
+  it("should render list nodes in an array on new lines", () => {
+    const listNodeArray = [
+      createListNode(
+        "Item 1"
+      ),
+      createListNode(
+        "Item 1"
+      )
+    ];
+    expect(renderNode(ctx, listNodeArray)).toBe(html`
+      <ul>
+        <li>Item 1</li>
+      </ul>
+      <ul>
+        <li>Item 1</li>
       </ul>
     `);
   });

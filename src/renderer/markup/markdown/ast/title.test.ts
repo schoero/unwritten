@@ -1,6 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { renderNode } from "unwritten:renderer/index.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -106,6 +107,30 @@ scope("MarkdownRenderer", "TitleNode", () => {
       Paragraph
     `);
 
+  });
+
+  it("should render title nodes in an array on new lines", () => {
+    const titleNodeArray = [
+      createTitleNode(
+        "Title 1",
+        createParagraphNode("Paragraph 1")
+      ),
+      createTitleNode(
+        "Title 2",
+        createParagraphNode("Paragraph 2")
+      )
+    ];
+    expect(renderNode(ctx, titleNodeArray)).toBe(md`
+        
+      # Title 1
+        
+      Paragraph 1
+        
+      # Title 2
+        
+      Paragraph 2
+        
+    `);
   });
 
 });

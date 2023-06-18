@@ -1,5 +1,7 @@
 /* eslint-disable arrow-body-style */
+import { createExportRegistry } from "unwritten:renderer/markup/utils/exports.js";
 import { minMax } from "unwritten:renderer/markup/utils/renderer.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { renderListNode } from "unwritten:renderer:html/ast/list.js";
 import { renderSectionNode } from "unwritten:renderer:html/ast/section.js";
@@ -56,12 +58,18 @@ const htmlRenderer: HTMLRenderer = {
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
   // eslint-disable-next-line sort-keys/sort-keys-fix
+  exportRegistry: new Set(),
   linkRegistry: new Map(),
 
   render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
+
     htmlRenderer.initializeContext(ctx);
+    htmlRenderer.initializeExportRegistry(ctx, entities);
+
     const markupAST = convertToMarkupAST(ctx, entities);
+
     return renderNode(ctx, markupAST);
+
   }),
 
 
@@ -86,7 +94,12 @@ const htmlRenderer: HTMLRenderer = {
       }
     });
 
+  },
+
+  initializeExportRegistry: (ctx: HTMLRenderContext, entities: ExportableEntities[]) => {
+    createExportRegistry(ctx, entities);
   }
+
 
 };
 
@@ -116,7 +129,19 @@ export function renderNode(ctx: HTMLRenderContext, node: ASTNodes): string {
     return renderSectionNode(ctx, node);
   } else {
     if(Array.isArray(node)){
-      return node.map(n => renderNode(ctx, n)).join("");
+      return node.map((n, index) => {
+
+        const renderedNode = renderNode(ctx, n);
+
+        if(renderedNode === ""){
+          return "";
+        }
+
+        return index > 0 && (isListNode(n) || isTitleNode(n) || isParagraphNode(n))
+          ? `${renderNewLine(ctx)}${renderedNode}`
+          : renderedNode;
+
+      }).join("");
     } else {
       return node;
     }
