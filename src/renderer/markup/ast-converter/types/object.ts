@@ -91,13 +91,13 @@ export function convertObjectTypeMultiline(
       convertFunctionLikeEntityForType(ctx, getterEntity)
   );
 
-  return createListNode(
+  return [
     createListNode(...convertedConstructSignatures),
     createListNode(...convertedCallSignatures),
     createListNode(...convertedProperties),
     createListNode(...convertedMethods),
     createListNode(...convertedSetters),
     createListNode(...convertedGetters)
-  );
+  ];
 
 }

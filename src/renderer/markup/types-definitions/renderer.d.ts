@@ -218,14 +218,14 @@ export type ConvertedIntersectionType = ASTNodes[];
 
 //-- Object type
 
-export type ConvertedObjectTypeMultiline = ListNode<([
+export type ConvertedObjectTypeMultiline = [
   constructSignatures: ListNode<ConvertedSignatureEntityForType[]>,
   callSignatures: ListNode<ConvertedSignatureEntityForType[]>,
   properties: ListNode<ConvertedPropertyEntityForType[]>,
   methods: ListNode<ConvertedSignatureEntityForType[]>,
   setters: ListNode<ConvertedSignatureEntityForType[]>,
   getters: ListNode<ConvertedSignatureEntityForType[]>
-])>;
+];
 export type ConvertedObjectType = ASTNodes;
 
 

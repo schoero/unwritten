@@ -41,7 +41,7 @@ scope("MarkupRenderer", TypeKind.ObjectLiteral, () => {
       methods,
       setters,
       getters
-    ] = convertedType.children;
+    ] = convertedType;
 
     it("should have two properties", () => {
       expect(properties.children).toHaveLength(2);

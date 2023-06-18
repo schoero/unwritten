@@ -101,7 +101,7 @@ scope("MarkupRenderer", EntityKind.Function, () => {
       methods,
       setters,
       getters
-    ] = convertedType.children;
+    ] = convertedType;
 
     it("should have one method", () => {
       expect(methods.children).toHaveLength(1);

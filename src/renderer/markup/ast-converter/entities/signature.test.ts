@@ -210,7 +210,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       methods,
       setters,
       getters
-    ] = convertedType.children;
+    ] = convertedType;
 
     it("should have one method", () => {
       expect(methods.children).toHaveLength(1);
@@ -278,7 +278,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       methods,
       setters,
       getters
-    ] = convertedType.children;
+    ] = convertedType;
 
     it("should represent the type parameter in the signature", () => {
       const renderedSignature = renderNode(ctx, methods.children[0][0]);
