@@ -487,7 +487,7 @@ export type ConvertedPropertyEntityForDocumentation = TitleNode<[
 ]>;
 export type ConvertedPropertyEntityForType = [
   propertySignature: ASTNodes[],
-  propertyType: ListNode
+  propertyType: ConvertedTypesMultiline | ""
 ];
 
 

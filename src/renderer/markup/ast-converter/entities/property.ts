@@ -17,7 +17,7 @@ import {
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
-import { createAnchorNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
@@ -84,7 +84,7 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
       convertedType,
       convertedDescription
     ),
-    createListNode(convertedTypeMultiline)
+    convertedTypeMultiline
   ];
 
 }
