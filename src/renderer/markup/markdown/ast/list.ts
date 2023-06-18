@@ -99,10 +99,10 @@ function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string
     const currentItem = items[index];
     const nextItem: ASTNodes | undefined = items[index + 1];
 
-    const renderedItem = renderNode(ctx, currentItem);
+    const renderedCurrentItem = renderNode(ctx, currentItem);
 
     if(!isListNode(nextItem)){
-      renderedArrayItems.push(renderedItem);
+      renderedArrayItems.push(renderedCurrentItem);
       continue;
     }
 
@@ -111,11 +111,11 @@ function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string
 
     if(renderedNextItem === ""){
       renderedArrayItems.push(
-        renderedItem
+        renderedCurrentItem
       );
     } else {
       renderedArrayItems.push(
-        renderedItem,
+        renderedCurrentItem,
         renderedNewLine,
         renderedNextItem
       );
