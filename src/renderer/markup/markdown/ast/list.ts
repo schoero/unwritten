@@ -107,18 +107,19 @@ function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string
     }
 
     const renderedNewLine = renderNewLine(ctx);
-
     const renderedNextItem = renderNode(ctx, nextItem);
 
     if(renderedNextItem === ""){
-      return renderedItem;
+      renderedArrayItems.push(
+        renderedItem
+      );
+    } else {
+      renderedArrayItems.push(
+        renderedItem,
+        renderedNewLine,
+        renderedNextItem
+      );
     }
-
-    renderedArrayItems.push(
-      renderedItem,
-      renderedNewLine,
-      renderedNextItem
-    );
 
     // Skip next item as it has already been rendered
     index++;
