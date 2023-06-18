@@ -48,7 +48,10 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
       return "";
     }
 
-    return `${renderIndentation(ctx)}- ${renderedArrayItems}`;
+    // Collapse multiple new lines into one
+    const collapsedRenderedItem = renderedArrayItems.replace(/\n\n+/gm, "\n");
+
+    return `${renderIndentation(ctx)}- ${collapsedRenderedItem}`;
 
   }
 
@@ -59,9 +62,14 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
 
   const renderedItem = renderNode(ctx, item);
 
-  return renderedItem === ""
-    ? renderedItem
-    : `${renderIndentation(ctx)}- ${renderedItem}`;
+  if(renderedItem === ""){
+    return "";
+  }
+
+  // Collapse multiple new lines into one
+  const collapsedRenderedItem = renderedItem.replace(/\n\n+/gm, "\n");
+
+  return `${renderIndentation(ctx)}- ${collapsedRenderedItem}`;
 
 }
 

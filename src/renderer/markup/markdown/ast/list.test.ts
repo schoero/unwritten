@@ -146,7 +146,6 @@ scope("MarkdownRenderer", "ListNode", () => {
     `);
   });
 
-
   it("should render nested arrays with lists correctly", () => {
     const listNode = createListNode([
       ["Item"],
@@ -164,4 +163,46 @@ scope("MarkdownRenderer", "ListNode", () => {
     `);
   });
 
+  it("should collapse multiple newlines to a single new line", () => {
+
+    const simpleListNode = createListNode([
+      "Line 1\nLine 2\n\nLine 3\n\n\nLine 4"
+    ]);
+    expect(renderListNode(ctx, simpleListNode)).toBe(md`
+      - Line 1
+      Line 2
+      Line 3
+      Line 4
+    `);
+
+    const listNodeWithArray = createListNode([
+      [
+        "Line 1",
+        ["\nLine 2"],
+        "\n\nLine 3\n\n\nLine 4"
+      ]
+    ]);
+    expect(renderListNode(ctx, listNodeWithArray)).toBe(md`
+      - Line 1
+      Line 2
+      Line 3
+      Line 4
+    `);
+
+    const listNodeWithNestedList = createListNode([
+      [
+        "Line 1",
+        "\n\nLine 2",
+        createListNode([
+          "Line 3\n\n\nLine 4"
+        ])
+      ]
+    ]);
+    expect(renderListNode(ctx, listNodeWithNestedList)).toBe(md`
+      - Line 1
+      Line 2
+        - Line 3
+      Line 4
+    `);
+  });
 });
