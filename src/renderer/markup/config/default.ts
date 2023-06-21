@@ -25,6 +25,7 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     EntityKind.TypeAlias,
     EntityKind.Interface
   ],
+  renderPrivateMembers: false,
   stringLiteralEncapsulation: ["\"", "\""],
   tagEncapsulation: ["`", "`"],
   translations: {

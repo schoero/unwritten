@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 
+import { createClassEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { convertClassEntityForDocumentation } from "unwritten:renderer/markup/ast-converter/entities/index.js";
 import { convertStringLiteralType, convertStringType } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { ts } from "unwritten:utils/template.js";
 
 import type { StringLiteralType, StringType } from "unwritten:interpreter:type-definitions/types.js";
 import type { Testable } from "unwritten:type-definitions/utils.js";
@@ -108,6 +112,83 @@ scope("Renderer", "Config", () => {
       it("should use the default encapsulation", () => {
         expect(renderedStringType).toBe(`<a href="${ctx.config.externalTypes[TypeKind.String]}">string</a>`);
       });
+
+    }
+
+  });
+
+  describe("renderPrivateMembers", async () => {
+
+    {
+
+      const testFileContent = ts`
+        export class Class {
+          private constructor() {}
+          private property: number = 1;
+          private method(): void {}
+        }
+      `;
+
+      const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+
+      const symbol = exportedSymbols.find(s => s.name === "Class")!;
+      const classEntity = createClassEntity(compilerContext, symbol);
+
+      const ctx = createRenderContext();
+
+      {
+        const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
+
+        const titleNode = convertedClassForDocumentation.children[0];
+
+        const [
+          position,
+          tags,
+          description,
+          remarks,
+          example,
+          constructSignatures,
+          properties,
+          methods,
+          setters,
+          getters
+        ] = titleNode.children;
+
+        it("should not have any private members when disabled", () => {
+          expect(constructSignatures.children).toHaveLength(0);
+          expect(properties.children.flat()).toHaveLength(0);
+          expect(methods.children.flat()).toHaveLength(0);
+        });
+
+      }
+
+      ctx.config.renderConfig.html.renderPrivateMembers = true;
+
+      {
+        const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
+
+        const titleNode = convertedClassForDocumentation.children[0];
+
+        const [
+          position,
+          tags,
+          description,
+          remarks,
+          example,
+          constructSignatures,
+          properties,
+          methods,
+          setters,
+          getters
+        ] = titleNode.children;
+
+        it("should have private members when enabled", () => {
+          expect(constructSignatures.children).toHaveLength(1);
+          expect(properties.children.flat()).toHaveLength(1);
+          expect(methods.children.flat()).toHaveLength(1);
+        });
+
+      }
 
     }
 

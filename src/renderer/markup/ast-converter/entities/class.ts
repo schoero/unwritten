@@ -5,6 +5,8 @@ import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/r
 import { convertTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { filterPrivateMembers } from "unwritten:renderer/utils/private-members.js";
 import {
   convertFunctionLikeEntityForDocumentation,
   convertFunctionLikeEntityForTableOfContents,
@@ -35,6 +37,8 @@ import type {
 
 export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
 
+  const renderConfig = getRenderConfig(ctx);
+
   const name = classEntity.name;
   const id = classEntity.symbolId;
 
@@ -49,11 +53,17 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
   const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
   const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
 
-  const convertedConstructSignatures = constructorEntity?.signatures.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
-  const convertedProperties = propertyEntities.map(propertyEntity => convertPropertyEntityForTableOfContents(ctx, propertyEntity));
-  const convertedMethods = methodEntities.map(methodEntity => convertFunctionLikeEntityForTableOfContents(ctx, methodEntity));
-  const convertedSetters = setterEntities.map(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
-  const convertedGetters = getterEntities.map(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
+  const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterPrivateMembers([constructorEntity])[0];
+  const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterPrivateMembers(propertyEntities);
+  const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterPrivateMembers(methodEntities);
+  const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterPrivateMembers(setterEntities);
+  const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterPrivateMembers(getterEntities);
+
+  const convertedConstructSignatures = publicConstructorEntity?.signatures.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
+  const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForTableOfContents(ctx, propertyEntity));
+  const convertedMethods = publicMethodEntities.map(methodEntity => convertFunctionLikeEntityForTableOfContents(ctx, methodEntity));
+  const convertedSetters = publicSetterEntities.map(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
+  const convertedGetters = publicGetterEntities.map(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
 
   return createListNode(
     anchor,
@@ -69,6 +79,7 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
 
 export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForDocumentation {
 
+  const renderConfig = getRenderConfig(ctx);
   const t = getTranslator(ctx);
 
   const name = classEntity.name;
@@ -88,11 +99,17 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
   const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
 
-  const convertedConstructSignatures = constructorEntity?.signatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedProperties = propertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
-  const convertedMethods = methodEntities.map(methodEntity => convertFunctionLikeEntityForDocumentation(ctx, methodEntity));
-  const convertedSetters = setterEntities.map(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
-  const convertedGetters = getterEntities.map(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
+  const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterPrivateMembers([constructorEntity])[0];
+  const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterPrivateMembers(propertyEntities);
+  const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterPrivateMembers(methodEntities);
+  const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterPrivateMembers(setterEntities);
+  const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterPrivateMembers(getterEntities);
+
+  const convertedConstructSignatures = publicConstructorEntity?.signatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
+  const convertedMethods = publicMethodEntities.map(methodEntity => convertFunctionLikeEntityForDocumentation(ctx, methodEntity));
+  const convertedSetters = publicSetterEntities.map(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
+  const convertedGetters = publicGetterEntities.map(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
 
   return createSectionNode(
     SECTION_TYPE[classEntity.kind],
