@@ -141,10 +141,10 @@ export interface ParameterEntity extends Entity<EntityKind.Parameter>, JSDocTags
   optional: boolean;
   rest: boolean;
   symbolId: ID;
+  type: Types;
   description?: Description;
   initializer?: Types;
   position?: Position;
-  type?: Types;
 }
 
 

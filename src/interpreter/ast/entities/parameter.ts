@@ -1,4 +1,4 @@
-import { interpretTypeNode } from "unwritten:interpreter:ast/index.js";
+import { interpretType, interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
 import { getParameterDescription } from "unwritten:interpreter:ast/shared/jsdoc.js";
@@ -17,6 +17,7 @@ export function createParameterEntity(ctx: InterpreterContext, declaration: Para
 
   const symbol = ctx.checker.getSymbolAtLocation(declaration.name);
   const typeNode = declaration.type;
+  const tsType = ctx.checker.getTypeAtLocation(declaration);
 
   assert(symbol, "Symbol is not found");
 
@@ -26,7 +27,10 @@ export function createParameterEntity(ctx: InterpreterContext, declaration: Para
   const initializer = getInitializerByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getParameterDescription(ctx, declaration);
-  const type = typeNode && interpretTypeNode(ctx, typeNode);
+
+  const type = typeNode
+    ? interpretTypeNode(ctx, typeNode)
+    : interpretType(ctx, tsType);
 
   const optional = declaration.questionToken !== undefined;
   const rest = declaration.dotDotDotToken !== undefined;
