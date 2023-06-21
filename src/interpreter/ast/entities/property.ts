@@ -12,7 +12,8 @@ import {
   isParameterDeclaration,
   isPropertyAssignment,
   isPropertyDeclaration,
-  isPropertySignatureDeclaration
+  isPropertySignatureDeclaration,
+  isShorthandPropertyAssignment
 } from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
 
@@ -21,6 +22,7 @@ import type {
   PropertyAssignment,
   PropertyDeclaration,
   PropertySignature,
+  ShorthandPropertyAssignment,
   Symbol
 } from "typescript";
 
@@ -38,6 +40,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
       isPropertySignatureDeclaration(declaration) ||
       isPropertyDeclaration(declaration) ||
       isPropertyAssignment(declaration) ||
+      isShorthandPropertyAssignment(declaration) ||
       isParameterDeclaration(declaration)
     ),
     `Property signature not found ${declaration?.kind}`
@@ -69,7 +72,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
 }
 
 
-function parsePropertyDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature) { // ParameterDeclaration can also be a property when defined in a constructor
+function parsePropertyDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature | ShorthandPropertyAssignment) { // ParameterDeclaration can also be a property when defined in a constructor
 
   const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
@@ -78,7 +81,9 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const initializer = getInitializerByDeclaration(ctx, declaration);
-  const optional = isPropertyAssignment(declaration) ? undefined : !!declaration.questionToken;
+  const optional = isPropertyAssignment(declaration) || isShorthandPropertyAssignment(declaration)
+    ? undefined
+    : !!declaration.questionToken;
   const kind = EntityKind.Property;
 
   assert(name, "Property name not found");

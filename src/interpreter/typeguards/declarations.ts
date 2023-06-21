@@ -109,6 +109,10 @@ export function isSetterDeclaration(declaration: Declaration): declaration is ts
   return ts.isSetAccessorDeclaration(declaration);
 }
 
+export function isShorthandPropertyAssignment(declaration: Declaration): declaration is ts.ShorthandPropertyAssignment {
+  return ts.isShorthandPropertyAssignment(declaration);
+}
+
 export function isSourceFileDeclaration(declaration: ts.Declaration): declaration is ts.SourceFile {
   return ts.isSourceFile(declaration);
 }
