@@ -73,7 +73,7 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
   const convertedTags = convertTagsForType(ctx, propertyEntity);
   const convertedDescription = convertDescriptionForType(ctx, propertyEntity.description);
   const convertedType = convertTypeForType(ctx, propertyEntity.type);
-  const convertedTypeMultiline = isMultilineType(propertyEntity.type)
+  const convertedTypeMultiline = isMultilineType(ctx, propertyEntity.type)
     ? convertTypeForTypeMultiline(ctx, propertyEntity.type)
     : "";
 

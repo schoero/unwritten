@@ -13,7 +13,7 @@ import type { ConvertedIntersectionType } from "unwritten:renderer:markup/types-
 export function convertIntersectionType(ctx: MarkupRenderContexts, intersectionType: IntersectionType): ConvertedIntersectionType {
   return intersectionType.types.reduce<ASTNodes[]>((astNodes, type, index) => {
 
-    const convertedType = isMultilineType(type)
+    const convertedType = isMultilineType(ctx, type)
       ? convertTypeForTypeMultiline(ctx, type)
       : convertTypeForType(ctx, type);
 

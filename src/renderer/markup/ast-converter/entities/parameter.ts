@@ -1,5 +1,9 @@
-import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import {
+  convertTypeForType,
+  convertTypeForTypeMultiline
+} from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
@@ -90,8 +94,9 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
   const description = parameterEntity.description ?? "";
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
 
-  const type = parameterEntity.type
-    ? convertTypeForType(ctx, parameterEntity.type)
+  const type = convertTypeForType(ctx, parameterEntity.type);
+  const multilineType = isMultilineType(ctx, parameterEntity.type)
+    ? convertTypeForTypeMultiline(ctx, parameterEntity.type)
     : "";
 
   const rest = parameterEntity.rest === true
@@ -109,15 +114,17 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
     )
     : "";
 
-  return spaceBetween(
-    name,
-    type,
-    description,
-    optional,
-    rest,
-    initializer
-  );
-
+  return [
+    spaceBetween(
+      name,
+      optional,
+      rest,
+      type,
+      description,
+      initializer
+    ),
+    multilineType
+  ];
 }
 
 

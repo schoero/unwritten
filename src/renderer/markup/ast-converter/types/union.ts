@@ -13,7 +13,7 @@ import type { ConvertedUnionType } from "unwritten:renderer:markup/types-definit
 export function convertUnionType(ctx: MarkupRenderContexts, unionType: UnionType): ConvertedUnionType {
   return unionType.types.reduce<ASTNodes[]>((astNodes, type, index) => {
 
-    const convertedType = isMultilineType(type)
+    const convertedType = isMultilineType(ctx, type)
       ? convertTypeForTypeMultiline(ctx, type)
       : convertTypeForType(ctx, type);
 
