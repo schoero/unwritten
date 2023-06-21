@@ -45,6 +45,7 @@ export type FunctionLikeEntityKinds =
   | EntityKind.Setter;
 
 export type FunctionLikeEntities =
+  | ConstructorEntity
   | FunctionEntity
   | GetterEntity
   | MethodEntity
