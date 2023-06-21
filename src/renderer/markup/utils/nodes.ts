@@ -124,7 +124,7 @@ export function createSpanNode<Children extends ASTNodes[]>(anchor: Anchor, chil
 export function createSpanNode<Children extends ASTNodes[]>(anchor: Anchor, ...children: Children): SpanNode<Children>;
 export function createSpanNode<Children extends ASTNodes[]>(...anchorOrChildren: Children | [anchor: Anchor, ...children: Children]): SpanNode<Children> {
 
-  const { anchor, children } = separateAnchorAndChildren<Children>(...anchorOrChildren);
+  const { anchor, children } = separateAnchorAndChildren<Children>(anchorOrChildren);
 
   return {
     ...anchor,
@@ -149,7 +149,7 @@ export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, an
 export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, anchor?: Anchor, ...children: Children): TitleNode<Children>;
 export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, ...anchorOrChildren: Children | [anchor: Anchor, ...children: Children]): TitleNode<Children> {
 
-  const { anchor, children } = separateAnchorAndChildren<Children>(...anchorOrChildren);
+  const { anchor, children } = separateAnchorAndChildren<Children>(anchorOrChildren);
 
   return {
     ...anchor,
@@ -161,7 +161,7 @@ export function createTitleNode<Children extends ASTNodes[]>(title: ASTNodes, ..
 }
 
 
-function separateAnchorAndChildren<Children extends ASTNodes[]>(...anchorOrChildren: Children | [anchor: Anchor, ...children: Children]) {
+function separateAnchorAndChildren<Children extends ASTNodes[]>(anchorOrChildren: Children | [anchor: Anchor, ...children: Children]) {
 
   let anchor: Anchor = {};
   let children: Children;
