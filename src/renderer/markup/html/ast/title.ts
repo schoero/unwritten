@@ -21,7 +21,7 @@ export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): s
   const renderedChildren = titleNode.children.map(child => renderNode(ctx, child));
   ctx.nesting--;
 
-  if(renderedChildren.length === 0){
+  if(renderedChildren.every(renderedChild => renderedChild === "")){
     return "";
   }
 

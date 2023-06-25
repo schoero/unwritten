@@ -17,7 +17,7 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
   const renderedChildren = titleNode.children.map(child => renderNode(ctx, child));
   ctx.nesting--;
 
-  if(renderedChildren.length === 0){
+  if(renderedChildren.every(renderedChild => renderedChild === "")){
     return "";
   }
 
