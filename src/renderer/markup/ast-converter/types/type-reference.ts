@@ -44,15 +44,17 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 }
 
 
-export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedMultilineTypes | undefined {
+export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedMultilineTypes {
 
-  if(typeReferenceType.symbolId && isSymbolExported(ctx, typeReferenceType.symbolId)){
-    return;
+  if(typeReferenceType.type !== undefined &&
+    isMultilineType(ctx, typeReferenceType.type) &&
+    "symbolId" in typeReferenceType.type &&
+    typeReferenceType.type.symbolId &&
+    !isSymbolExported(ctx, typeReferenceType.type.symbolId)){
+    return convertType(ctx, typeReferenceType.type).multilineType!;
   }
 
-  if(typeReferenceType.type && isMultilineType(ctx, typeReferenceType.type)){
-    return convertType(ctx, typeReferenceType.type).multilineType;
-  }
+  return "";
 
 }
 

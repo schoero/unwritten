@@ -33,6 +33,7 @@ import {
   convertTypeLiteralTypeMultiline,
   convertTypeParameterTypeInline,
   convertTypeReferenceTypeInline,
+  convertTypeReferenceTypeMultiline,
   convertUndefinedTypeInline,
   convertUnionTypeInline,
   convertUnknownTypeInline,
@@ -190,6 +191,8 @@ function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineT
     return convertClassTypeMultiline(ctx, type);
   } else if(isFunctionType(type)){
     return convertFunctionTypeMultiline(ctx, type);
+  } else if(isTypeReferenceType(type)){
+    return convertTypeReferenceTypeMultiline(ctx, type);
   }
 
   throw new Error("Type is not yet implemented");

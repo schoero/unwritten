@@ -114,7 +114,8 @@ export type ConvertedMultilineTypes =
   | ConvertedFunctionTypeMultiline
   | ConvertedInterfaceTypeMultiline
   | ConvertedObjectLiteralTypeMultiline
-  | ConvertedTypeLiteralTypeMultiline;
+  | ConvertedTypeLiteralTypeMultiline
+  | "";
 
 
 //-- Primitive types

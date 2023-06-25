@@ -1,4 +1,3 @@
-import { isSymbolExported } from "unwritten:renderer/markup/utils/exports.js";
 import {
   isClassType,
   isFunctionType,
@@ -20,9 +19,5 @@ export function isMultilineType(ctx: MarkupRenderContexts, type: Types): type is
   isTypeLiteralType(type) ||
   isClassType(type) ||
   isInterfaceType(type) ||
-  isTypeReferenceType(type) &&
-  type.type !== undefined &&
-  type.symbolId !== undefined &&
-  isSymbolExported(ctx, type.symbolId) &&
-  isMultilineType(ctx, type.type);
+  isTypeReferenceType(type);
 }
