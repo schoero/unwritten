@@ -8,6 +8,7 @@ import { createLinkNode, createListNode } from "unwritten:renderer/markup/utils/
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { filterPrivateMembers, filterPrivateSignatures } from "unwritten:renderer/utils/private-members.js";
 
 import type {
   ClassType,
@@ -59,7 +60,16 @@ export function convertObjectTypeMultiline(
   | TypeLiteralType
 ): ConvertedObjectTypeMultiline {
 
-  const convertedConstructSignatures = objectLikeType.constructSignatures.map(
+  const renderConfig = getRenderConfig(ctx);
+
+  const constructSignatures = renderConfig.renderPrivateMembers ? objectLikeType.constructSignatures : filterPrivateSignatures(objectLikeType.constructSignatures);
+  const callSignatures = renderConfig.renderPrivateMembers ? objectLikeType.callSignatures : filterPrivateSignatures(objectLikeType.callSignatures);
+  const properties = renderConfig.renderPrivateMembers ? objectLikeType.properties : filterPrivateMembers(objectLikeType.properties);
+  const methods = renderConfig.renderPrivateMembers ? objectLikeType.methods : filterPrivateMembers(objectLikeType.methods);
+  const setters = renderConfig.renderPrivateMembers ? objectLikeType.setters : filterPrivateMembers(objectLikeType.setters);
+  const getters = renderConfig.renderPrivateMembers ? objectLikeType.getters : filterPrivateMembers(objectLikeType.getters);
+
+  const convertedConstructSignatures = constructSignatures.map(
     constructSignature => {
       const convertedSignature = convertSignatureEntityForType(ctx, constructSignature);
       (convertedSignature[0] as ASTNodes[]).unshift("new ");
@@ -67,27 +77,27 @@ export function convertObjectTypeMultiline(
     }
   );
 
-  const convertedCallSignatures = objectLikeType.callSignatures.map(
+  const convertedCallSignatures = callSignatures.map(
     callSignature =>
       convertSignatureEntityForType(ctx, callSignature)
   );
 
-  const convertedProperties = objectLikeType.properties.map(
+  const convertedProperties = properties.map(
     propertyEntity =>
       convertPropertyEntityForType(ctx, propertyEntity)
   );
 
-  const convertedMethods = objectLikeType.methods.flatMap(
+  const convertedMethods = methods.flatMap(
     methodEntity =>
       convertFunctionLikeEntityForType(ctx, methodEntity)
   );
 
-  const convertedSetters = objectLikeType.setters.flatMap(
+  const convertedSetters = setters.flatMap(
     setterEntity =>
       convertFunctionLikeEntityForType(ctx, setterEntity)
   );
 
-  const convertedGetters = objectLikeType.getters.flatMap(
+  const convertedGetters = getters.flatMap(
     getterEntity =>
       convertFunctionLikeEntityForType(ctx, getterEntity)
   );
