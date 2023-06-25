@@ -3,10 +3,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { BigIntLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedBigIntLiteralType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedBigIntLiteralTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertBigIntLiteralType(ctx: MarkupRenderContexts, bigIntType: BigIntLiteralType): ConvertedBigIntLiteralType {
+export function convertBigIntLiteralTypeInline(ctx: MarkupRenderContexts, bigIntType: BigIntLiteralType): ConvertedBigIntLiteralTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

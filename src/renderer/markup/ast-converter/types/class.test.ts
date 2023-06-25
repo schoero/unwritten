@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertClassType } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import { convertClassTypeInline } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -34,7 +34,7 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     const type = typeAliasEntity.type.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertClassType(ctx, type as ClassType);
+    const convertedType = convertClassTypeInline(ctx, type as ClassType);
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render the name of the type", () => {

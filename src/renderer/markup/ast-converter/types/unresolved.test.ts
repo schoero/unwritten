@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertUnresolvedType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { convertUnresolvedTypeInline } from "unwritten:renderer/markup/ast-converter/types/index.js";
 import { isAnchorNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -28,7 +28,7 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
 
     const ctx = createRenderContext();
-    const convertedUnresolvedType = convertUnresolvedType(ctx, typeAliasEntity.type as UnresolvedType);
+    const convertedUnresolvedType = convertUnresolvedTypeInline(ctx, typeAliasEntity.type as UnresolvedType);
 
     it("should have the correct name", () => {
       assert(Array.isArray(convertedUnresolvedType));
@@ -62,7 +62,7 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
     const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
 
     const ctx = createRenderContext();
-    const convertedUnresolvedType = convertUnresolvedType(ctx, typeAliasEntity.type as UnresolvedType);
+    const convertedUnresolvedType = convertUnresolvedTypeInline(ctx, typeAliasEntity.type as UnresolvedType);
 
     it("should have the correct name", () => {
       assert(Array.isArray(convertedUnresolvedType));

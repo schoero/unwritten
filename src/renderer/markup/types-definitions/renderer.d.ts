@@ -96,18 +96,20 @@ export type ConvertedExample = TitleNode<[
 
 //-- Types
 
-export type ConvertedTypes =
-  | ConvertedArrayType
-  | ConvertedIntersectionType
-  | ConvertedLiteralTypes
-  | ConvertedPrimitiveTypes
-  | ConvertedTupleType
-  | ConvertedUnionType;
+export interface ConvertedType {
+  inline: ConvertedInlineTypes;
+  multiline?: ConvertedMultilineTypes;
+}
 
+export type ConvertedInlineTypes =
+  | ConvertedArrayTypeInline
+  | ConvertedIntersectionTypeInline
+  | ConvertedLiteralTypesInline
+  | ConvertedPrimitiveTypesInline
+  | ConvertedTupleTypeInline
+  | ConvertedUnionTypeInline;
 
-//-- Multiline types
-
-export type ConvertedTypesMultiline =
+export type ConvertedMultilineTypes =
   | ConvertedClassTypeMultiline
   | ConvertedFunctionTypeMultiline
   | ConvertedInterfaceTypeMultiline
@@ -117,54 +119,54 @@ export type ConvertedTypesMultiline =
 
 //-- Primitive types
 
-export type ConvertedPrimitiveTypes =
-  | ConvertedAnyType
-  | ConvertedBigIntType
-  | ConvertedBooleanType
-  | ConvertedNeverType
-  | ConvertedNullType
-  | ConvertedNumberType
-  | ConvertedStringType
-  | ConvertedSymbolType
-  | ConvertedUndefinedType
-  | ConvertedUnknownType
-  | ConvertedVoidType;
+export type ConvertedPrimitiveTypesInline =
+  | ConvertedAnyTypeInline
+  | ConvertedBigIntTypeInline
+  | ConvertedBooleanTypeInline
+  | ConvertedNeverTypeInline
+  | ConvertedNullTypeInline
+  | ConvertedNumberTypeInline
+  | ConvertedStringTypeInline
+  | ConvertedSymbolTypeInline
+  | ConvertedUndefinedTypeInline
+  | ConvertedUnknownTypeInline
+  | ConvertedVoidTypeInline;
 
 
-export type ConvertedStringType = ASTNodes;
-export type ConvertedNumberType = ASTNodes;
-export type ConvertedBooleanType = ASTNodes;
-export type ConvertedBigIntType = ASTNodes;
-export type ConvertedSymbolType = ASTNodes;
-export type ConvertedVoidType = ASTNodes;
-export type ConvertedUndefinedType = ASTNodes;
-export type ConvertedNullType = ASTNodes;
-export type ConvertedNeverType = ASTNodes;
-export type ConvertedUnknownType = ASTNodes;
-export type ConvertedAnyType = ASTNodes;
+export type ConvertedStringTypeInline = ASTNodes;
+export type ConvertedNumberTypeInline = ASTNodes;
+export type ConvertedBooleanTypeInline = ASTNodes;
+export type ConvertedBigIntTypeInline = ASTNodes;
+export type ConvertedSymbolTypeInline = ASTNodes;
+export type ConvertedVoidTypeInline = ASTNodes;
+export type ConvertedUndefinedTypeInline = ASTNodes;
+export type ConvertedNullTypeInline = ASTNodes;
+export type ConvertedNeverTypeInline = ASTNodes;
+export type ConvertedUnknownTypeInline = ASTNodes;
+export type ConvertedAnyTypeInline = ASTNodes;
 
 
 //-- Literal types
 
-export type ConvertedLiteralTypes =
-  | ConvertedBigIntLiteralType
-  | ConvertedBooleanLiteralType
-  | ConvertedNumberLiteralType
-  | ConvertedStringLiteralType;
+export type ConvertedLiteralTypesInline =
+  | ConvertedBigIntLiteralTypeInline
+  | ConvertedBooleanLiteralTypeInline
+  | ConvertedNumberLiteralTypeInline
+  | ConvertedStringLiteralTypeInline;
 
 
-export type ConvertedStringLiteralType = ASTNodes;
-export type ConvertedNumberLiteralType = ASTNodes;
-export type ConvertedBooleanLiteralType = ASTNodes;
-export type ConvertedBigIntLiteralType = ASTNodes;
+export type ConvertedStringLiteralTypeInline = ASTNodes;
+export type ConvertedNumberLiteralTypeInline = ASTNodes;
+export type ConvertedBooleanLiteralTypeInline = ASTNodes;
+export type ConvertedBigIntLiteralTypeInline = ASTNodes;
 
-export type ConvertedTemplateLiteralType = ASTNodes[];
+export type ConvertedTemplateLiteralTypeInline = ASTNodes[];
 
 
 //-- Function type
 
 export type ConvertedFunctionTypeMultiline = ConvertedSignatureEntityForType | ListNode<ConvertedSignatureEntityForType[]>;
-export type ConvertedFunctionType = ASTNodes;
+export type ConvertedFunctionTypeInline = ASTNodes;
 
 
 //-- Return type
@@ -172,48 +174,48 @@ export type ConvertedFunctionType = ASTNodes;
 export type ConvertedReturnTypeForDocumentation = TitleNode<[
   ASTNodes
 ]>;
-export type ConvertedReturnTypeForType = ListNode | "";
+export type ConvertedReturnTypeInline = ListNode | "";
 
 
 //-- Type reference
 
-export type ConvertedTypeReferenceType = ASTNodes;
+export type ConvertedTypeReferenceTypeInline = ASTNodes;
 
 
 //-- Type reference
 
-export type ConvertedUnresolvedType = ASTNodes;
+export type ConvertedUnresolvedTypeInline = ASTNodes;
 
 
 //-- Indexed access type
 
-export type ConvertedIndexedAccessType = ASTNodes;
+export type ConvertedIndexedAccessTypeInline = ASTNodes;
 
 
 //-- Type parameter
 
-export type ConvertedTypeParameterType = ASTNodes;
+export type ConvertedTypeParameterTypeInline = ASTNodes;
 
 
 //-- Array type
 
-export type ConvertedArrayType = ["(", ConvertedTypes, ")", "[]"] | [ConvertedTypes, "[]"];
+export type ConvertedArrayTypeInline = ["(", ConvertedInlineTypes, ")", "[]"] | [ConvertedInlineTypes, "[]"];
 
 
 //-- Tuple type
 
-export type ConvertedTupleType = ["[", ...ConvertedTupleMember[], "]"];
+export type ConvertedTupleTypeInline = ["[", ...ConvertedTupleMember[], "]"];
 export type ConvertedTupleMember = ASTNodes[];
 
 
 //-- Union type
 
-export type ConvertedUnionType = ASTNodes[];
+export type ConvertedUnionTypeInline = ASTNodes[];
 
 
 //-- Intersection type
 
-export type ConvertedIntersectionType = ASTNodes[];
+export type ConvertedIntersectionTypeInline = ASTNodes[];
 
 
 //-- Object type
@@ -328,7 +330,7 @@ export type ConvertedTypeAliasEntityForDocumentation = SectionNode<[
     position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
     typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
-    type: ConvertedTypes,
+    type: ConvertedInlineTypes,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarks,
     example: ConvertedExample
@@ -381,7 +383,7 @@ export type ConvertedVariableEntityForDocumentation = SectionNode<[
   children: TitleNode<[
     position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
-    type: ConvertedTypes,
+    type: ConvertedInlineTypes,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarks,
     example: ConvertedExample
@@ -480,14 +482,14 @@ export type ConvertedPropertyEntityForTableOfContents = AnchorNode;
 export type ConvertedPropertyEntityForDocumentation = TitleNode<[
   tags: ConvertedTagsForDocumentation,
   position: ConvertedPosition,
-  type: ConvertedTypes,
+  type: ConvertedInlineTypes,
   description: ConvertedDescriptionForDocumentation,
   remarks: ConvertedRemarks,
   example: ConvertedExample
 ]>;
 export type ConvertedPropertyEntityForType = [
   propertySignature: ASTNodes[],
-  propertyType: ConvertedTypesMultiline | ""
+  propertyType: ConvertedMultilineTypes | ""
 ];
 
 

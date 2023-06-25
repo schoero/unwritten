@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { BigIntType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedBigIntType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedBigIntTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertBigIntType(ctx: MarkupRenderContexts, bigIntType: BigIntType): ConvertedBigIntType {
+export function convertBigIntTypeInline(ctx: MarkupRenderContexts, bigIntType: BigIntType): ConvertedBigIntTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

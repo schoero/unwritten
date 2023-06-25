@@ -1,4 +1,6 @@
-import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { isSymbolExported } from "unwritten:renderer/markup/utils/exports.js";
+import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
@@ -6,25 +8,51 @@ import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/rende
 import type { TypeReferenceType, Types } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
-import type { ConvertedTypeReferenceType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type {
+  ConvertedMultilineTypes,
+  ConvertedTypeReferenceTypeInline
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertTypeReferenceType(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceType {
+export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeInline {
 
   const name = typeReferenceType.name ?? "";
 
-  const anchor = typeReferenceType.symbolId
-    ? createAnchorNode(name, typeReferenceType.symbolId)
-    : undefined;
+  if(typeReferenceType.symbolId && isSymbolExported(ctx, typeReferenceType.symbolId)){
 
-  const typeArguments = typeReferenceType.typeArguments
-    ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
-    : "";
+    const anchor = typeReferenceType.symbolId
+      ? createAnchorNode(name, typeReferenceType.symbolId)
+      : undefined;
 
-  return spaceBetween(
-    anchor ?? name,
-    typeArguments
-  );
+    const typeArguments = typeReferenceType.typeArguments
+      ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
+      : "";
+
+    return spaceBetween(
+      anchor ?? name,
+      typeArguments
+    );
+
+  }
+
+  if(typeReferenceType.type){
+    return convertType(ctx, typeReferenceType.type).inlineType;
+  }
+
+  return name;
+
+}
+
+
+export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedMultilineTypes | undefined {
+
+  if(typeReferenceType.symbolId && isSymbolExported(ctx, typeReferenceType.symbolId)){
+    return;
+  }
+
+  if(typeReferenceType.type && isMultilineType(ctx, typeReferenceType.type)){
+    return convertType(ctx, typeReferenceType.type).multilineType;
+  }
 
 }
 
@@ -34,11 +62,11 @@ function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Types[])
   const renderConfig = getRenderConfig(ctx);
 
   const convertedTypeArguments = typeArguments.map((typeArgument, index) => {
-    const convertedTypeArgument = convertTypeForType(ctx, typeArgument);
+    const { inlineType } = convertType(ctx, typeArgument);
     if(index === 0){
-      return convertedTypeArgument;
+      return inlineType;
     } else {
-      return [", ", convertedTypeArgument];
+      return [", ", inlineType];
     }
   }, []);
 

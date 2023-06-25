@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { UnknownType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedUnknownType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedUnknownTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertUnknownType(ctx: MarkupRenderContexts, unknownType: UnknownType): ConvertedUnknownType {
+export function convertUnknownTypeInline(ctx: MarkupRenderContexts, unknownType: UnknownType): ConvertedUnknownTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

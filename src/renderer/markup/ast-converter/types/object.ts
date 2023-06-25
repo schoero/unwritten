@@ -24,7 +24,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertObjectType(
+export function convertObjectTypeInline(
   ctx: MarkupRenderContexts,
   objectLikeType:
   | ClassType
@@ -41,6 +41,7 @@ export function convertObjectType(
     t("object", { count: 1 }),
     renderConfig.typeEncapsulation
   );
+
   return ctx.config.externalTypes[TypeKind.Object]
     ? createLinkNode(encapsulatedType, ctx.config.externalTypes[TypeKind.Object])
     : encapsulatedType;

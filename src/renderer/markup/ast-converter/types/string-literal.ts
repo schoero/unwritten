@@ -3,10 +3,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { StringLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedStringLiteralType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedStringLiteralTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertStringLiteralType(ctx: MarkupRenderContexts, stringType: StringLiteralType): ConvertedStringLiteralType {
+export function convertStringLiteralTypeInline(ctx: MarkupRenderContexts, stringType: StringLiteralType): ConvertedStringLiteralTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

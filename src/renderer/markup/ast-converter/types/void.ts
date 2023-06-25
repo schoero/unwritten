@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { VoidType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedVoidType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedVoidTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertVoidType(ctx: MarkupRenderContexts, voidType: VoidType): ConvertedVoidType {
+export function convertVoidTypeInline(ctx: MarkupRenderContexts, voidType: VoidType): ConvertedVoidTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

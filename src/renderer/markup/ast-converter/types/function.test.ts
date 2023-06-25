@@ -94,10 +94,12 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     it("should have two matching parameters", () => {
       assert(isListNode(parameters), "parameters should be wrapped in a list node");
       expect(parameters.children).toHaveLength(2);
-      expect(parameters.children[0]).toContain("a");
-      expect(parameters.children[0]).toContain("string");
-      expect(parameters.children[1]).toContain("b");
-      expect(parameters.children[1]).toContain("number");
+      assert(Array.isArray(parameters.children[0]));
+      expect(parameters.children[0][0]).toContain("a");
+      expect(parameters.children[0][0]).toContain("string");
+      assert(Array.isArray(parameters.children[1]));
+      expect(parameters.children[1][0]).toContain("b");
+      expect(parameters.children[1][0]).toContain("number");
     });
 
     it("should render the return type correctly", () => {
@@ -174,19 +176,24 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     it("should have matching parameters in each signature", () => {
       assert(isListNode(parameters));
       expect(parameters.children).toHaveLength(2);
-      expect(parameters.children[0]).toContain("a");
-      expect(parameters.children[0]).toContain("number");
-      expect(parameters.children[1]).toContain("b");
-      expect(parameters.children[1]).toContain("number");
+      assert(Array.isArray(parameters.children[0]));
+      expect(parameters.children[0][0]).toContain("a");
+      expect(parameters.children[0][0]).toContain("number");
+      assert(Array.isArray(parameters.children[1]));
+      expect(parameters.children[1][0]).toContain("b");
+      expect(parameters.children[1][0]).toContain("number");
 
       assert(isListNode(parameters2));
       expect(parameters2.children).toHaveLength(3);
-      expect(parameters2.children[0]).toContain("a");
-      expect(parameters2.children[0]).toContain("number");
-      expect(parameters2.children[1]).toContain("b");
-      expect(parameters2.children[1]).toContain("number");
-      expect(parameters2.children[2]).toContain("c");
-      expect(parameters2.children[2]).toContain("number");
+      assert(Array.isArray(parameters2.children[0]));
+      expect(parameters2.children[0][0]).toContain("a");
+      expect(parameters2.children[0][0]).toContain("number");
+      assert(Array.isArray(parameters2.children[1]));
+      expect(parameters2.children[1][0]).toContain("b");
+      expect(parameters2.children[1][0]).toContain("number");
+      assert(Array.isArray(parameters2.children[2]));
+      expect(parameters2.children[2][0]).toContain("c");
+      expect(parameters2.children[2][0]).toContain("number");
     });
 
     it("should render the return type correctly for each signature", () => {

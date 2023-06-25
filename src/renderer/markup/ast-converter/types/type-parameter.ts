@@ -1,8 +1,8 @@
 import type { TypeParameterType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedTypeParameterType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedTypeParameterTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertTypeParameterType(ctx: MarkupRenderContexts, typeParameterType: TypeParameterType): ConvertedTypeParameterType {
+export function convertTypeParameterTypeInline(ctx: MarkupRenderContexts, typeParameterType: TypeParameterType): ConvertedTypeParameterTypeInline {
   return typeParameterType.name;
 }

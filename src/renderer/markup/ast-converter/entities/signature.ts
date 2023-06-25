@@ -9,7 +9,7 @@ import {
   convertTagsForDocumentation,
   convertTagsForType
 } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
@@ -38,7 +38,7 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 import type {
   ConvertedPropertyEntityForTableOfContents,
   ConvertedReturnTypeForDocumentation,
-  ConvertedReturnTypeForType,
+  ConvertedReturnTypeInline,
   ConvertedSignatureEntityForDocumentation,
   ConvertedSignatureEntityForType
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
@@ -152,13 +152,17 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
 
   const t = getTranslator(ctx);
 
-  const convertedReturnType = convertTypeForType(ctx, signatureEntity.returnType);
+  const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
+
   const convertedReturnTypeWithDescription = createParagraphNode(
-    spaceBetween(
-      convertedReturnType,
-      returnDescription
-    )
+    [
+      spaceBetween(
+        inlineType,
+        returnDescription
+      ),
+      multilineType ?? ""
+    ]
   );
 
   return createTitleNode(
@@ -168,17 +172,17 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
 
 }
 
-function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeForType {
+function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeInline {
 
   const t = getTranslator(ctx);
 
-  const convertedReturnType = convertTypeForType(ctx, signatureEntity.returnType);
+  const { inlineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
 
   return createListNode(
     spaceBetween(
       t("return-type", { capitalizeEach: true }),
-      convertedReturnType,
+      inlineType,
       returnDescription
     )
   );

@@ -1,4 +1,4 @@
-import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
@@ -6,10 +6,10 @@ import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/rende
 import type { Types, UnresolvedType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
-import type { ConvertedTypeReferenceType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedTypeReferenceTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertUnresolvedType(ctx: MarkupRenderContexts, unresolvedType: UnresolvedType): ConvertedTypeReferenceType {
+export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolvedType: UnresolvedType): ConvertedTypeReferenceTypeInline {
 
   const name = unresolvedType.name ?? "";
 
@@ -34,11 +34,11 @@ function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Types[])
   const renderConfig = getRenderConfig(ctx);
 
   const convertedTypeArguments = typeArguments.map((typeArgument, index) => {
-    const convertedTypeArgument = convertTypeForType(ctx, typeArgument);
+    const { inlineType } = convertType(ctx, typeArgument);
     if(index === 0){
-      return convertedTypeArgument;
+      return inlineType;
     } else {
-      return [", ", convertedTypeArgument];
+      return [", ", inlineType];
     }
   }, []);
 

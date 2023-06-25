@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { NullType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedNullType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedNullTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertNullType(ctx: MarkupRenderContexts, nullType: NullType): ConvertedNullType {
+export function convertNullTypeInline(ctx: MarkupRenderContexts, nullType: NullType): ConvertedNullTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

@@ -1,42 +1,43 @@
 import { createParagraphNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
 import {
-  convertAnyType,
-  convertArrayType,
-  convertBigIntLiteralType,
-  convertBigIntType,
-  convertBooleanLiteralType,
-  convertBooleanType,
-  convertClassType,
+  convertAnyTypeInline,
+  convertArrayTypeInline,
+  convertBigIntLiteralTypeInline,
+  convertBigIntTypeInline,
+  convertBooleanLiteralTypeInline,
+  convertBooleanTypeInline,
+  convertClassTypeInline,
   convertClassTypeMultiline,
-  convertFunctionType,
+  convertFunctionTypeInline,
   convertFunctionTypeMultiline,
-  convertInterfaceType,
+  convertInterfaceTypeInline,
   convertInterfaceTypeMultiline,
-  convertIntersectionType,
-  convertMappedType,
-  convertNeverType,
-  convertNullType,
-  convertNumberLiteralType,
-  convertNumberType,
-  convertObjectLiteralType,
+  convertIntersectionTypeInline,
+  convertMappedTypeInline,
+  convertNeverTypeInline,
+  convertNullTypeInline,
+  convertNumberLiteralTypeInline,
+  convertNumberTypeInline,
+  convertObjectLiteralTypeInline,
   convertObjectLiteralTypeMultiline,
-  convertObjectType,
+  convertObjectTypeInline,
   convertObjectTypeMultiline,
-  convertStringLiteralType,
-  convertStringType,
-  convertSymbolType,
-  convertTemplateLiteralType,
-  convertTupleType,
-  convertTypeLiteralType,
+  convertStringLiteralTypeInline,
+  convertStringTypeInline,
+  convertSymbolTypeInline,
+  convertTemplateLiteralTypeInline,
+  convertTupleTypeInline,
+  convertTypeLiteralTypeInline,
   convertTypeLiteralTypeMultiline,
-  convertTypeParameterType,
-  convertTypeReferenceType,
-  convertUndefinedType,
-  convertUnionType,
-  convertUnknownType,
-  convertUnresolvedType,
-  convertVoidType
+  convertTypeParameterTypeInline,
+  convertTypeReferenceTypeInline,
+  convertUndefinedTypeInline,
+  convertUnionTypeInline,
+  convertUnknownTypeInline,
+  convertUnresolvedTypeInline,
+  convertVoidTypeInline
 } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import {
   isAnyType,
@@ -73,14 +74,17 @@ import {
 
 import type { MultilineTypes, Types } from "unwritten:interpreter/type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ConvertedTypes, ConvertedTypesMultiline } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type {
+  ConvertedInlineTypes,
+  ConvertedMultilineTypes
+} from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Types): ConvertedTypes {
+export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Types): ConvertedInlineTypes {
 
   const t = getTranslator(ctx);
 
-  const convertedType = convertTypeForType(ctx, type);
+  const convertedType = convertTypeForInlineType(ctx, type);
 
   return convertedType
     ? createTitleNode(
@@ -90,76 +94,89 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
     : "";
 }
 
+export function convertType(ctx: MarkupRenderContexts, type: Types) {
 
-export function convertTypeForType(ctx: MarkupRenderContexts, type: Types): ConvertedTypes {
+  const inlineType = convertTypeForInlineType(ctx, type);
+  const multilineType = isMultilineType(ctx, type)
+    ? convertTypeForMultilineType(ctx, type)
+    : undefined;
+
+  return {
+    inlineType,
+    multilineType
+  };
+
+}
+
+function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Types): ConvertedInlineTypes {
 
   if(isAnyType(type)){
-    return convertAnyType(ctx, type);
+    return convertAnyTypeInline(ctx, type);
   } else if(isArrayType(type)){
-    return convertArrayType(ctx, type);
+    return convertArrayTypeInline(ctx, type);
   } else if(isBigIntLiteralType(type)){
-    return convertBigIntLiteralType(ctx, type);
+    return convertBigIntLiteralTypeInline(ctx, type);
   } else if(isBigIntType(type)){
-    return convertBigIntType(ctx, type);
+    return convertBigIntTypeInline(ctx, type);
   } else if(isBooleanLiteralType(type)){
-    return convertBooleanLiteralType(ctx, type);
+    return convertBooleanLiteralTypeInline(ctx, type);
   } else if(isBooleanType(type)){
-    return convertBooleanType(ctx, type);
+    return convertBooleanTypeInline(ctx, type);
   } else if(isNeverType(type)){
-    return convertNeverType(ctx, type);
+    return convertNeverTypeInline(ctx, type);
   } else if(isNullType(type)){
-    return convertNullType(ctx, type);
+    return convertNullTypeInline(ctx, type);
   } else if(isNumberLiteralType(type)){
-    return convertNumberLiteralType(ctx, type);
+    return convertNumberLiteralTypeInline(ctx, type);
   } else if(isNumberType(type)){
-    return convertNumberType(ctx, type);
+    return convertNumberTypeInline(ctx, type);
   } else if(isStringLiteralType(type)){
-    return convertStringLiteralType(ctx, type);
+    return convertStringLiteralTypeInline(ctx, type);
   } else if(isStringType(type)){
-    return convertStringType(ctx, type);
+    return convertStringTypeInline(ctx, type);
   } else if(isSymbolType(type)){
-    return convertSymbolType(ctx, type);
+    return convertSymbolTypeInline(ctx, type);
   } else if(isTemplateLiteralType(type)){
-    return convertTemplateLiteralType(ctx, type);
+    return convertTemplateLiteralTypeInline(ctx, type);
   } else if(isTupleType(type)){
-    return convertTupleType(ctx, type);
+    return convertTupleTypeInline(ctx, type);
   } else if(isUndefinedType(type)){
-    return convertUndefinedType(ctx, type);
+    return convertUndefinedTypeInline(ctx, type);
   } else if(isUnionType(type)){
-    return convertUnionType(ctx, type);
+    return convertUnionTypeInline(ctx, type);
   } else if(isIntersectionType(type)){
-    return convertIntersectionType(ctx, type);
+    return convertIntersectionTypeInline(ctx, type);
   } else if(isUnknownType(type)){
-    return convertUnknownType(ctx, type);
+    return convertUnknownTypeInline(ctx, type);
   } else if(isVoidType(type)){
-    return convertVoidType(ctx, type);
+    return convertVoidTypeInline(ctx, type);
   } else if(isFunctionType(type)){
-    return convertFunctionType(ctx, type);
+    return convertFunctionTypeInline(ctx, type);
   } else if(isTypeReferenceType(type)){
-    return convertTypeReferenceType(ctx, type);
+    return convertTypeReferenceTypeInline(ctx, type);
   } else if(isInterfaceType(type)){
-    return convertInterfaceType(ctx, type);
+    return convertInterfaceTypeInline(ctx, type);
   } else if(isClassType(type)){
-    return convertClassType(ctx, type);
+    return convertClassTypeInline(ctx, type);
   } else if(isTypeLiteralType(type)){
-    return convertTypeLiteralType(ctx, type);
+    return convertTypeLiteralTypeInline(ctx, type);
   } else if(isMappedType(type)){
-    return convertMappedType(ctx, type);
+    return convertMappedTypeInline(ctx, type);
   } else if(isObjectLiteralType(type)){
-    return convertObjectLiteralType(ctx, type);
+    return convertObjectLiteralTypeInline(ctx, type);
   } else if(isObjectType(type)){
-    return convertObjectType(ctx, type);
+    return convertObjectTypeInline(ctx, type);
   } else if(isTypeParameterType(type)){
-    return convertTypeParameterType(ctx, type);
+    return convertTypeParameterTypeInline(ctx, type);
   } else if(isUnresolvedType(type)){
-    return convertUnresolvedType(ctx, type);
+    return convertUnresolvedTypeInline(ctx, type);
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);
 
 }
 
-export function convertTypeForTypeMultiline(ctx: MarkupRenderContexts, type: MultilineTypes): ConvertedTypesMultiline {
+function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineTypes): ConvertedMultilineTypes {
 
   if(isObjectType(type)){
     return convertObjectTypeMultiline(ctx, type);

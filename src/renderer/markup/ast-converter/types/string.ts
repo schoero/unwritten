@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { StringType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedStringType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedStringTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertStringType(ctx: MarkupRenderContexts, stringType: StringType): ConvertedStringType {
+export function convertStringTypeInline(ctx: MarkupRenderContexts, stringType: StringType): ConvertedStringTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

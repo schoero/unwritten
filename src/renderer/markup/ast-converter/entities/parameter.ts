@@ -1,9 +1,5 @@
-import {
-  convertTypeForType,
-  convertTypeForTypeMultiline
-} from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
@@ -94,10 +90,7 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
   const description = parameterEntity.description ?? "";
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
 
-  const type = convertTypeForType(ctx, parameterEntity.type);
-  const multilineType = isMultilineType(ctx, parameterEntity.type)
-    ? convertTypeForTypeMultiline(ctx, parameterEntity.type)
-    : "";
+  const { inlineType, multilineType } = convertType(ctx, parameterEntity.type);
 
   const rest = parameterEntity.rest === true
     ? encapsulate(translate("rest"), renderConfig.tagEncapsulation)
@@ -107,10 +100,15 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
     ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
     : "";
 
-  const initializer = parameterEntity.initializer !== undefined
+  const initializerTypes = parameterEntity.initializer !== undefined
+    ? convertType(ctx, parameterEntity.initializer)
+    : undefined;
+
+  const initializer = initializerTypes !== undefined
     ? spaceBetween(
       `${translate("default", { capitalize: true })}:`,
-      convertTypeForType(ctx, parameterEntity.initializer)
+      initializerTypes.multilineType ??
+      initializerTypes.inlineType
     )
     : "";
 
@@ -119,11 +117,11 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
       name,
       optional,
       rest,
-      type,
+      inlineType,
       description,
       initializer
     ),
-    multilineType
+    multilineType ?? ""
   ];
 }
 

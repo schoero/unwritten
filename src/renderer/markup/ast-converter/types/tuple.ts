@@ -1,16 +1,16 @@
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 
 import type { TupleMemberEntity } from "unwritten:interpreter:type-definitions/entities.js";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedTupleMember,
-  ConvertedTupleType
+  ConvertedTupleTypeInline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertTupleType(ctx: MarkupRenderContexts, tupleType: TupleType): ConvertedTupleType {
+export function convertTupleTypeInline(ctx: MarkupRenderContexts, tupleType: TupleType): ConvertedTupleTypeInline {
 
   const convertedMembers = convertTupleMembers(ctx, tupleType.members);
 
@@ -42,7 +42,7 @@ function convertTupleMembers(ctx: MarkupRenderContexts, tupleMemberEntities: Tup
 
 function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleMemberEntity): ConvertedTupleMember {
 
-  const convertedType = convertTypeForType(ctx, tupleMemberEntity.type);
+  const { inlineType } = convertType(ctx, tupleMemberEntity.type);
 
   const renderedName = tupleMemberEntity.name ? `${tupleMemberEntity.name}: ` : "";
   const renderedOptional = tupleMemberEntity.optional ? "?" : "";
@@ -59,7 +59,7 @@ function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleM
     renderedName,
     renderedRest,
     restNeedsParentheses ? "(" as const : "" as const,
-    convertedType,
+    inlineType,
     renderedOptional,
     restNeedsParentheses ? ")" as const : "" as const,
     renderedRestBrackets

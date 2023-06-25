@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { BooleanType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedBooleanType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedBooleanTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertBooleanType(ctx: MarkupRenderContexts, booleanType: BooleanType): ConvertedBooleanType {
+export function convertBooleanTypeInline(ctx: MarkupRenderContexts, booleanType: BooleanType): ConvertedBooleanTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

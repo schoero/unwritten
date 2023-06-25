@@ -1,4 +1,7 @@
-import { convertObjectType, convertObjectTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import {
+  convertObjectTypeInline,
+  convertObjectTypeMultiline
+} from "unwritten:renderer/markup/ast-converter/types/index.js";
 
 import type { ObjectLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
@@ -8,8 +11,8 @@ import type {
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertObjectLiteralType(ctx: MarkupRenderContexts, objectLiteralType: ObjectLiteralType): ConvertedObjectLiteralType {
-  return convertObjectType(ctx, objectLiteralType);
+export function convertObjectLiteralTypeInline(ctx: MarkupRenderContexts, objectLiteralType: ObjectLiteralType): ConvertedObjectLiteralType {
+  return convertObjectTypeInline(ctx, objectLiteralType);
 }
 
 export function convertObjectLiteralTypeMultiline(ctx: MarkupRenderContexts, objectLiteralType: ObjectLiteralType): ConvertedObjectLiteralTypeMultiline {

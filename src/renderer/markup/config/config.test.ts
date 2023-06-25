@@ -3,7 +3,10 @@ import { describe, expect, it } from "vitest";
 import { createClassEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { convertClassEntityForDocumentation } from "unwritten:renderer/markup/ast-converter/entities/index.js";
-import { convertStringLiteralType, convertStringType } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import {
+  convertStringLiteralTypeInline,
+  convertStringTypeInline
+} from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -27,7 +30,7 @@ scope("Renderer", "Config", () => {
 
     {
 
-      const convertedStringType = convertStringType(ctx, stringType as StringType);
+      const convertedStringType = convertStringTypeInline(ctx, stringType as StringType);
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should use the default encapsulation", () => {
@@ -40,7 +43,7 @@ scope("Renderer", "Config", () => {
 
       ctx.config.renderConfig.html.typeEncapsulation = ["`", "`"];
 
-      const convertedStringType = convertStringType(ctx, stringType as StringType);
+      const convertedStringType = convertStringTypeInline(ctx, stringType as StringType);
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should be possible to change the encapsulation", () => {
@@ -66,7 +69,7 @@ scope("Renderer", "Config", () => {
 
     {
 
-      const convertedStringType = convertStringLiteralType(ctx, stringLiteralType as StringLiteralType);
+      const convertedStringType = convertStringLiteralTypeInline(ctx, stringLiteralType as StringLiteralType);
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should use the default encapsulation", () => {
@@ -80,7 +83,7 @@ scope("Renderer", "Config", () => {
       ctx.config.renderConfig.html.typeEncapsulation = ["`", "`"];
       ctx.config.renderConfig.html.stringLiteralEncapsulation = ['"', '"'];
 
-      const convertedStringType = convertStringLiteralType(ctx, stringLiteralType as StringLiteralType);
+      const convertedStringType = convertStringLiteralTypeInline(ctx, stringLiteralType as StringLiteralType);
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should be possible to change the encapsulation", () => {
@@ -106,7 +109,7 @@ scope("Renderer", "Config", () => {
 
     {
 
-      const convertedStringType = convertStringType(ctx, stringType as StringType);
+      const convertedStringType = convertStringTypeInline(ctx, stringType as StringType);
       const renderedStringType = renderNode(ctx, convertedStringType);
 
       it("should use the default encapsulation", () => {

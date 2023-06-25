@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertMappedType } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { convertMappedTypeInline } from "unwritten:renderer/markup/ast-converter/types/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -29,7 +29,7 @@ scope("MarkupRenderer", TypeKind.Mapped, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertMappedType(ctx, type as MappedType);
+    const convertedType = convertMappedTypeInline(ctx, type as MappedType);
     const properties = convertedType.children[0].children;
 
     it("should have two properties", () => {

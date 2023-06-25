@@ -8,7 +8,7 @@ import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import type { FunctionType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
-  ConvertedFunctionType,
+  ConvertedFunctionTypeInline,
   ConvertedFunctionTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
@@ -25,10 +25,10 @@ export function convertFunctionTypeMultiline(ctx: MarkupRenderContexts, function
 
 }
 
-export function convertFunctionType(
+export function convertFunctionTypeInline(
   ctx: MarkupRenderContexts,
   functionType: FunctionType
-): ConvertedFunctionType {
+): ConvertedFunctionTypeInline {
 
   const t = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);

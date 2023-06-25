@@ -1,4 +1,4 @@
-import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { createListNode, createSpanNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
@@ -77,14 +77,23 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
   const description = typeParameterEntity.description ?? "";
   const name = encapsulate(typeParameterEntity.name, renderConfig.typeParameterEncapsulation);
 
-  const constraint = typeParameterEntity.constraint
-    ? convertTypeForType(ctx, typeParameterEntity.constraint)
+  const constrainTypes = typeParameterEntity.constraint
+    ? convertType(ctx, typeParameterEntity.constraint)
+    : undefined;
+
+  const constraint = constrainTypes
+    ? constrainTypes.multilineType ?? constrainTypes.inlineType
     : "";
 
-  const initializer = typeParameterEntity.initializer !== undefined
+  const initializerTypes = typeParameterEntity.initializer !== undefined
+    ? convertType(ctx, typeParameterEntity.initializer)
+    : undefined;
+
+  const initializer = initializerTypes !== undefined
     ? spaceBetween(
       `${translate("default", { capitalize: true })}:`,
-      convertTypeForType(ctx, typeParameterEntity.initializer)
+      initializerTypes.multilineType ??
+      initializerTypes.inlineType
     )
     : "";
 

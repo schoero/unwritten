@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { NumberType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedNumberType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedNumberTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertNumberType(ctx: MarkupRenderContexts, numberType: NumberType): ConvertedNumberType {
+export function convertNumberTypeInline(ctx: MarkupRenderContexts, numberType: NumberType): ConvertedNumberTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

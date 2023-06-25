@@ -13,7 +13,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertClassType(ctx: MarkupRenderContexts, classType: ClassType): ConvertedClassType {
+export function convertClassTypeInline(ctx: MarkupRenderContexts, classType: ClassType): ConvertedClassType {
 
   const t = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);

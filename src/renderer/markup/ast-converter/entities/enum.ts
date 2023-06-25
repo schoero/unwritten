@@ -2,7 +2,7 @@ import { convertDescriptionForDocumentation } from "unwritten:renderer/markup/as
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import { convertTypeForType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
@@ -45,7 +45,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
 
     const name = member.name;
     const description = member.description ?? "";
-    const type = convertTypeForType(ctx, member.type);
+    const { inlineType: type } = convertType(ctx, member.type);
 
     return [
       name,

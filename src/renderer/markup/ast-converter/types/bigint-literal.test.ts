@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertBigIntLiteralType } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import { convertBigIntLiteralTypeInline } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -27,7 +27,7 @@ scope("MarkupRenderer", TypeKind.BigIntLiteral, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertBigIntLiteralType(ctx, type as BigIntLiteralType);
+    const convertedType = convertBigIntLiteralTypeInline(ctx, type as BigIntLiteralType);
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {
@@ -49,7 +49,7 @@ scope("MarkupRenderer", TypeKind.BigIntLiteral, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertBigIntLiteralType(ctx, type as BigIntLiteralType);
+    const convertedType = convertBigIntLiteralTypeInline(ctx, type as BigIntLiteralType);
     const renderedType = renderNode(ctx, convertedType);
 
     it("should render the literal value", () => {

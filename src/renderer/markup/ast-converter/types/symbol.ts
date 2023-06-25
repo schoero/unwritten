@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { SymbolType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedSymbolType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedSymbolTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertSymbolType(ctx: MarkupRenderContexts, symbolType: SymbolType): ConvertedSymbolType {
+export function convertSymbolTypeInline(ctx: MarkupRenderContexts, symbolType: SymbolType): ConvertedSymbolTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

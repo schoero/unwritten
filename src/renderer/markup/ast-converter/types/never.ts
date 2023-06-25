@@ -5,10 +5,10 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { NeverType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
-import type { ConvertedNeverType } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedNeverTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertNeverType(ctx: MarkupRenderContexts, neverType: NeverType): ConvertedNeverType {
+export function convertNeverTypeInline(ctx: MarkupRenderContexts, neverType: NeverType): ConvertedNeverTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

@@ -9,14 +9,9 @@ import {
   convertTagsForDocumentation,
   convertTagsForType
 } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import {
-  convertTypeForDocumentation,
-  convertTypeForType,
-  convertTypeForTypeMultiline
-} from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType, convertTypeForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
-import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
 import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -72,19 +67,17 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
 
   const convertedTags = convertTagsForType(ctx, propertyEntity);
   const convertedDescription = convertDescriptionForType(ctx, propertyEntity.description);
-  const convertedType = convertTypeForType(ctx, propertyEntity.type);
-  const convertedTypeMultiline = isMultilineType(ctx, propertyEntity.type)
-    ? convertTypeForTypeMultiline(ctx, propertyEntity.type)
-    : "";
+
+  const { inlineType, multilineType } = convertType(ctx, propertyEntity.type);
 
   return [
     spaceBetween(
       name,
       convertedTags,
-      convertedType,
+      inlineType,
       convertedDescription
     ),
-    convertedTypeMultiline
+    multilineType ?? ""
   ];
 
 }
