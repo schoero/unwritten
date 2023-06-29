@@ -28,7 +28,7 @@ export function compile(ctx: DefaultContext, entryFilePath: string, tsConfigOrFi
 
   //-- Report any compiler messages
 
-  reportCompilerDiagnostics(ctx, program.getSemanticDiagnostics());
+  void reportCompilerDiagnostics(ctx, program.getSemanticDiagnostics());
 
   return { checker, program };
 
@@ -48,7 +48,7 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
   if(typeof tsConfigOrFilePath === "object"){
     ctx.logger?.info("Using provided compiler options");
     const { errors, options } = ts.convertCompilerOptionsFromJson(tsConfigOrFilePath, ".");
-    reportCompilerDiagnostics(ctx, errors, EOL);
+    void reportCompilerDiagnostics(ctx, errors, EOL);
     return options;
   }
 

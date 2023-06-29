@@ -41,7 +41,7 @@ export function compile(ctx: DefaultContext, code: string, tsconfig?: ts.Compile
 
   //-- Report any compiler messages
 
-  reportCompilerDiagnostics(ctx, program.getSemanticDiagnostics());
+  void reportCompilerDiagnostics(ctx, program.getSemanticDiagnostics());
 
   return { checker, program };
 
@@ -51,7 +51,7 @@ function getCompilerOptions(ctx: DefaultContext, tsconfig?: ts.CompilerOptions):
 
   const { errors, options } = ts.convertCompilerOptionsFromJson(tsconfig, ".");
 
-  reportCompilerDiagnostics(ctx, errors);
+  void reportCompilerDiagnostics(ctx, errors);
 
   return options;// ?? getDefaultCompilerOptions();
 

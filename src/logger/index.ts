@@ -44,13 +44,37 @@ export module logger {
   }
 
 
-  export function warn(message: string): void {
-    println(`${_bgYellow}${_bold} WARN ${_reset} ${yellow(message)}`);
+  export function warn(message: string): void;
+  export function warn(title: string, body: string[]): void;
+  export function warn(title: string, badge: string, body: string[]): void;
+  export function warn(titleOrMessage: string, badgeOrBody?: string[] | string, bodyOrUndefined?: string[]): void {
+
+    const badge = typeof badgeOrBody === "string" ? badgeOrBody : "WARN";
+    const body = typeof badgeOrBody === "object" ? badgeOrBody : bodyOrUndefined;
+    const bodyMessages = body ? ["", ...body.map(message => `    ${message}`), ""] : [];
+
+    println([
+      `${_bgYellow}${_bold} ${badge} ${_reset} ${titleOrMessage}`,
+      ...bodyMessages
+    ].join(EOL));
+
   }
 
 
-  export function info(message: string): void {
-    println(`${_bgGreen}${_bold} INFO ${_reset} ${white(message)}`);
+  export function info(message: string): void;
+  export function info(title: string, body: string[]): void;
+  export function info(title: string, badge: string, body: string[]): void;
+  export function info(titleOrMessage: string, badgeOrBody?: string[] | string, bodyOrUndefined?: string[]): void {
+
+    const badge = typeof badgeOrBody === "string" ? badgeOrBody : "INFO";
+    const body = typeof badgeOrBody === "object" ? badgeOrBody : bodyOrUndefined;
+    const bodyMessages = body ? ["", ...body.map(message => `    ${message}`), ""] : [];
+
+    println([
+      `${_bgGreen}${_bold} ${badge} ${_reset} ${titleOrMessage}`,
+      ...bodyMessages
+    ].join(EOL));
+
   }
 
 
