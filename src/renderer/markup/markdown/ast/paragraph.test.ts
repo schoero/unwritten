@@ -17,7 +17,7 @@ scope("MarkdownRenderer", "ParagraphNode", () => {
   it("should render a paragraph node correctly", () => {
     const paragraphNode = createParagraphNode("Paragraph text");
     expect(renderParagraphNode(ctx, paragraphNode)).toBe(md`
-      Paragraph text
+      Paragraph text  
     `);
   });
 
@@ -36,8 +36,8 @@ scope("MarkdownRenderer", "ParagraphNode", () => {
       )
     ];
     expect(renderNode(ctx, paragraphNodeArray)).toBe(md`
-      Paragraph 1
-      Paragraph 2
+      Paragraph 1  
+      Paragraph 2  
     `);
   });
 

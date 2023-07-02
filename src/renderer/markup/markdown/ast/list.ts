@@ -116,13 +116,9 @@ function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string
     } else {
       renderedArrayItems.push(
         renderedCurrentItem,
-        renderedNewLine,
-        renderedNextItem
+        renderedNewLine
       );
     }
-
-    // Skip next item as it has already been rendered
-    index++;
 
   }
 

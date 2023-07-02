@@ -28,7 +28,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
         
       # Title
         
-      Paragraph
+      Paragraph  
     `);
 
   });
@@ -46,7 +46,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
         
       ## SubTitle
         
-      Paragraph
+      Paragraph  
     `);
 
   });
@@ -71,7 +71,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
         
       ## Another Subtitle
         
-      Paragraph
+      Paragraph  
     `);
 
   });
@@ -90,7 +90,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
       # Title
         
       Paragraph  
-      Paragraph2
+      Paragraph2  
     `);
 
   });
@@ -104,7 +104,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
         
       # Title
         
-      Paragraph
+      Paragraph  
     `);
 
   });
@@ -124,11 +124,11 @@ scope("MarkdownRenderer", "TitleNode", () => {
         
       # Title 1
         
-      Paragraph 1
+      Paragraph 1  
         
       # Title 2
         
-      Paragraph 2
+      Paragraph 2  
         
     `);
   });

@@ -11,15 +11,27 @@ export function renderSectionNode(ctx: MarkdownRenderContext, sectionNode: Secti
 
   const renderConfig = getRenderConfig(ctx);
 
-  const renderedNode = renderNode(ctx, sectionNode.children);
+  const renderedChildren = renderNode(ctx, sectionNode.children);
   const renderedEmptyLine = renderEmptyLine(ctx);
   const renderedNewLine = renderNewLine(ctx);
 
-  const renderedSeparator = renderConfig.sectionSeparator && ctx.nesting > 2
-    ? `${renderConfig.sectionSeparator}${renderedNewLine}${renderedEmptyLine}${renderedNewLine}`
-    : "";
+  const childrenBeginsWithEmptyLine = renderedChildren.startsWith(renderedEmptyLine);
+  const beginningEmptyLine = childrenBeginsWithEmptyLine
+    ? ""
+    : `${renderedEmptyLine}${renderedNewLine}`;
 
-  return renderedNode === ""
-    ? renderedNode
-    : `${renderedEmptyLine}${renderedNewLine}${renderedSeparator}${renderedNode}`;
+  const renderedSeparator = renderConfig.sectionSeparator && ctx.nesting > 2
+    ? [
+      renderedEmptyLine,
+      renderedNewLine,
+      renderConfig.sectionSeparator,
+      renderedNewLine,
+      beginningEmptyLine
+    ]
+      .join("")
+    : beginningEmptyLine;
+
+  return renderedChildren === ""
+    ? renderedChildren
+    : `${renderedSeparator}${renderedChildren}`;
 }

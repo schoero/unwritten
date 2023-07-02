@@ -22,24 +22,19 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
   }
 
   const childrenBeginsWithEmptyLine = renderedChildren[0]?.startsWith(renderedEmptyLine);
-
   const beginningEmptyLine = childrenBeginsWithEmptyLine ? "" : renderedEmptyLine;
 
   const renderedTitleWithWhitespace = [
     renderedEmptyLine,
     renderedTitle,
     beginningEmptyLine
+  ];
+
+  return [
+    ...renderedTitleWithWhitespace,
+    ...renderedChildren
   ]
     .filter(renderedNode => !!renderedNode)
     .join(renderNewLine(ctx));
-
-  const renderedChildrenWithNewLines = renderedChildren
-    .filter(renderedNode => !!renderedNode)
-    .join(`  ${renderNewLine(ctx)}`);
-
-  return [
-    renderedTitleWithWhitespace,
-    renderedChildrenWithNewLines
-  ].join(renderNewLine(ctx));
 
 }

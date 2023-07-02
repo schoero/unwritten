@@ -9,7 +9,7 @@ import { md } from "unwritten:utils/template.js";
 import { renderSectionNode } from "./section.js";
 
 
-scope("HTMLRenderer", "SectionNode", () => {
+scope("MarkdownRenderer", "SectionNode", () => {
 
   const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
@@ -17,7 +17,7 @@ scope("HTMLRenderer", "SectionNode", () => {
     const sectionNode = createSectionNode(undefined, createParagraphNode("Section content"));
     expect(renderSectionNode(ctx, sectionNode)).toBe(md`
         
-      Section content
+      Section content  
     `);
   });
 
@@ -34,7 +34,7 @@ scope("HTMLRenderer", "SectionNode", () => {
         
       ---
         
-      Section content
+      Section content  
     `);
   });
 
@@ -47,7 +47,7 @@ scope("HTMLRenderer", "SectionNode", () => {
     const renderedSectionNode = renderSectionNode(ctx, sectionNode);
     expect(renderedSectionNode).toBe(md`
         
-      Section content
+      Section content  
     `);
   });
 
@@ -62,7 +62,7 @@ scope("HTMLRenderer", "SectionNode", () => {
         
       ___
         
-      Section content
+      Section content  
     `);
   });
 
