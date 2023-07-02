@@ -267,6 +267,7 @@ export type ConvertedMappedType = TitleNode<[
 export type ConvertedEntitiesForTableOfContents =
   | ConvertedClassEntityForTableOfContents
   | ConvertedEnumEntityForTableOfContents
+  | ConvertedExportAssignmentEntityForTableOfContents
   | ConvertedFunctionEntityForTableOfContents
   | ConvertedInterfaceEntityForTableOfContents
   | ConvertedModuleEntityForTableOfContents
@@ -278,6 +279,7 @@ export type ConvertedEntitiesForTableOfContents =
 export type ConvertedEntitiesForDocumentation =
   | ConvertedClassEntityForDocumentation
   | ConvertedEnumEntityForDocumentation
+  | ConvertedExportAssignmentEntityForDocumentation
   | ConvertedFunctionEntityForDocumentation
   | ConvertedInterfaceEntityForDocumentation
   | ConvertedModuleEntityForDocumentation

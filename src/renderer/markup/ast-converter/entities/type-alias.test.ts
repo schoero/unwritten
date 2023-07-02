@@ -46,7 +46,6 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     const convertedTypeAliasForTableOfContents = convertTypeAliasEntityForTableOfContents(ctx, typeAliasEntity);
     const convertedTypeAliasForDocumentation = convertTypeAliasEntityForDocumentation(ctx, typeAliasEntity);
 
-
     it("should have matching table of contents entry", () => {
       assert(isAnchorNode(convertedTypeAliasForTableOfContents));
       expect(renderNode(ctx, convertedTypeAliasForTableOfContents.children)).toBe("TypeAlias<A>");

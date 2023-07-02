@@ -16,7 +16,7 @@ export function renderSectionNode(ctx: MarkdownRenderContext, sectionNode: Secti
   const renderedNewLine = renderNewLine(ctx);
 
   const renderedSeparator = renderConfig.sectionSeparator && ctx.nesting > 2
-    ? `${renderConfig.sectionSeparator}${renderedNewLine}`
+    ? `${renderConfig.sectionSeparator}${renderedNewLine}${renderedEmptyLine}${renderedNewLine}`
     : "";
 
   return renderedNode === ""

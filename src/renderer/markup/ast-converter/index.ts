@@ -34,7 +34,7 @@ import {
   isVariableEntity
 } from "unwritten:typeguards/entities.js";
 
-import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
+import type { Entities, ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
 import type { TitleNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
@@ -67,7 +67,7 @@ export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entit
     return convertModuleEntityForTableOfContents(ctx, entity);
   }
 
-  throw new Error(`Unknown entity kind: ${entity.kind}`);
+  throw new RangeError(`Unknown entity kind: ${(<Entities>entity).kind}`);
 
 }
 
@@ -94,7 +94,7 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
     return convertModuleEntityForDocumentation(ctx, entity);
   }
 
-  throw new Error(`Unknown entity kind: ${entity.kind}`);
+  throw new RangeError(`Unknown entity kind: ${(<Entities>entity).kind}`);
 
 }
 
