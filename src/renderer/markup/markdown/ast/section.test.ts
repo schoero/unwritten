@@ -26,4 +26,44 @@ scope("HTMLRenderer", "SectionNode", () => {
     expect(renderSectionNode(ctx, sectionNode)).toBe("");
   });
 
+  it("should render the section separator if the nesting level is big enough", () => {
+    const sectionNode = createSectionNode(undefined, createParagraphNode("Section content"));
+    ctx.nesting = 3;
+    const renderedSectionNode = renderSectionNode(ctx, sectionNode);
+    expect(renderedSectionNode).toBe(md`
+        
+      ---
+        
+      Section content
+    `);
+  });
+
+  it("should be possible to disable the section separator", () => {
+    const sectionNode = createSectionNode(undefined, createParagraphNode("Section content"));
+
+    ctx.nesting = 3;
+    ctx.config.renderConfig.md.sectionSeparator = false;
+
+    const renderedSectionNode = renderSectionNode(ctx, sectionNode);
+    expect(renderedSectionNode).toBe(md`
+        
+      Section content
+    `);
+  });
+
+  it("should be possible to change the section separator", () => {
+    const sectionNode = createSectionNode(undefined, createParagraphNode("Section content"));
+
+    ctx.nesting = 3;
+    ctx.config.renderConfig.md.sectionSeparator = "___";
+
+    const renderedSectionNode = renderSectionNode(ctx, sectionNode);
+    expect(renderedSectionNode).toBe(md`
+        
+      ___
+        
+      Section content
+    `);
+  });
+
 });
