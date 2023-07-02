@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { RenderableJSDocTags } from "unwritten:renderer:markup/enums/jsdoc.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -9,7 +10,7 @@ import { convertJSDocTags, hasRenderableJSDocTags } from "./jsdoc-tags.js";
 
 scope("MarkupRenderer", "JSDocTags", () => {
 
-  const ctx = createRenderContext();
+  const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
   it("should detect jsdoc tags correctly", () => {
 

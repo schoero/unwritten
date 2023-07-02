@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -9,7 +10,7 @@ import { assert } from "unwritten:utils/general.js";
 
 scope("MarkupRenderer", "Type", () => {
 
-  const ctx = createRenderContext();
+  const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
   const convertedExample = convertExample(
     ctx,

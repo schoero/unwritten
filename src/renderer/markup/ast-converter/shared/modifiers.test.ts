@@ -1,16 +1,15 @@
 import { expect, it } from "vitest";
 
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { convertModifiers } from "unwritten:renderer/markup/ast-converter/shared/modifiers.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
 
 
-// TODO: Implement this test
-
 scope("MarkupRenderer", "Modifiers", () => {
 
-  const ctx = createRenderContext();
+  const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
   const convertedModifiers = convertModifiers(
     ctx,
