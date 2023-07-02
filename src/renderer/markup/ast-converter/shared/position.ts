@@ -1,6 +1,7 @@
 import { relative } from "node:path/posix";
 
 import { createLinkNode, createSmallNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 
 import type { Position } from "unwritten:interpreter:type-definitions/shared.js";
 import type { ConvertedPosition } from "unwritten:renderer/markup/types-definitions/renderer.js";
@@ -13,12 +14,25 @@ export function convertPosition(ctx: MarkupRenderContexts, position?: Position):
     return "";
   }
 
+  const t = getTranslator(ctx);
+
   const relativePosition = relative(ctx.config.outputDir, position.file);
   const link = `${relativePosition}#L${position.line}C${position.column}`;
-  const label = relativePosition.replaceAll("../", "");
+
+  const linkLabel = relativePosition.replaceAll("../", "");
+
+  const definedInTranslation = t("defined-in", { capitalize: true });
+  const definedInLabel = definedInTranslation && `${definedInTranslation}: ` || "";
+
+  const linkNode = createLinkNode(linkLabel, link);
 
   return createSmallNode(
-    createLinkNode(label, link)
+    ...definedInLabel
+      ? [
+        definedInLabel,
+        linkNode
+      ]
+      : [linkNode]
   );
 
 }

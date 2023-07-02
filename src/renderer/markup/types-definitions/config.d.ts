@@ -63,6 +63,7 @@ export interface MarkupRenderConfig {
     constructor_one?: string;
     constructor_other?: string;
     default?: string;
+    "defined-in"?: string;
     deprecated?: string;
     description_one?: string;
     description_other?: string;

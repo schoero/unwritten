@@ -63,7 +63,7 @@ JSDocTags,
 
 //-- Position
 
-export type ConvertedPosition = SmallNode<[LinkNode]> | "";
+export type ConvertedPosition = SmallNode<[LinkNode] | [string, LinkNode]> | "";
 
 
 //-- Tags

@@ -41,6 +41,7 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     "constructor_one": "constructor",
     "constructor_other": "constructors",
     "default": "default",
+    "defined-in": "defined in",
     "deprecated": "deprecated",
     "description_one": "description",
     "description_other": "descriptions",

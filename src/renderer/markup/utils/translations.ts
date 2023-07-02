@@ -75,5 +75,7 @@ function getTranslationKey(key: keyof TranslationWithoutSuffixes<Complete<Markup
 }
 
 function capitalize(text: string): string {
-  return text[0].toUpperCase() + text.slice(1);
+  return text.length <= 0
+    ? ""
+    : text[0].toUpperCase() + text.slice(1);
 }
