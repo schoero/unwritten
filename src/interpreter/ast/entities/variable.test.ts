@@ -66,7 +66,7 @@ scope("Interpreter", EntityKind.Variable, () => {
     it("should have a matching position", () => {
       expect(exportedVariable.position).toStrictEqual({
         column: 13,
-        file: "/file.ts",
+        file: "/index.ts",
         line: 5
       });
     });

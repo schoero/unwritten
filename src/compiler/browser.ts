@@ -10,7 +10,7 @@ export function compile(ctx: DefaultContext, code: string, tsconfig?: ts.Compile
   ctx.logger?.info("Invoking the TypeScript compiler to compile the provided code...");
 
   const compilerOptions = getCompilerOptions(ctx, tsconfig);
-  const dummyFilePath = "/file.ts";
+  const dummyFilePath = "/index.ts";
   const sourceFile = ts.createSourceFile(dummyFilePath, code.trim(), ts.ScriptTarget.Latest);
 
   const compilerHost: ts.CompilerHost = {

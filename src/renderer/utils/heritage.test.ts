@@ -205,7 +205,7 @@ scope("Renderer", "utils", () => {
         assert(extendedClassConstructor.signatures[0].parameters);
 
         expect(extendedClassConstructor.signatures[0].parameters).toHaveLength(1);
-        expect(extendedClassConstructor.signatures[0].parameters[0].type?.kind).toBe(TypeKind.String);
+        expect(extendedClassConstructor.signatures[0].parameters[0].type.kind).toBe(TypeKind.String);
 
       });
 

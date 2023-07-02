@@ -64,7 +64,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     it("should have a matching position", () => {
       expect(interfaceType.position).toStrictEqual({
         column: 0,
-        file: "/file.ts",
+        file: "/index.ts",
         line: 1
       });
     });

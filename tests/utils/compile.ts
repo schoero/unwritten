@@ -1,9 +1,10 @@
 import { readFileSync } from "node:fs";
 
-import ts from "typescript";
+import ts, { ModuleResolutionKind } from "typescript";
 
-import { reportCompilerDiagnostics } from "unwritten:compiler:shared.js";
+import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler:shared.js";
 import { getDefaultConfig } from "unwritten:config/index.js";
+import { getExportedSymbols } from "unwritten:interpreter/utils/ts.js";
 import { override } from "unwritten:utils/override.js";
 import { assert } from "unwritten:utils:general.js";
 
@@ -11,45 +12,60 @@ import type { Config } from "unwritten:type-definitions/config.d.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
 
 
-export function compile(code: string, compilerOptions?: ts.CompilerOptions, config?: Config) {
+type CompilerInput = {
+  [filePath: string]: string;
+};
 
-  const dummyFilePath = "/file.ts";
-  const sourceFile = ts.createSourceFile(dummyFilePath, code.trim(), ts.ScriptTarget.Latest);
+export function compile(code: CompilerInput | string, compilerOptions?: ts.CompilerOptions, config?: Config) {
+
+  const entryFilePath = "/index.ts";
+  const inputFiles = typeof code === "string" ? { [entryFilePath]: code } : code;
+  const sourceFiles = Object.entries(inputFiles).reduce<{ [fileName: string]: ts.SourceFile; }>((acc, [fileName, code]) => {
+    acc[fileName] = ts.createSourceFile(fileName, code.trim(), ts.ScriptTarget.Latest);
+    return acc;
+  }, {});
 
   const compilerHost: ts.CompilerHost = {
     directoryExists: dirPath => dirPath === "/",
-    fileExists: filePath => filePath === dummyFilePath,
+    fileExists: filePath => Object.keys(sourceFiles).includes(filePath),
     getCanonicalFileName: fileName => fileName,
     getCurrentDirectory: () => "/",
     getDefaultLibFileName: () => "node_modules/typescript/lib/lib.esnext.d.ts",
     getDirectories: () => [],
     getNewLine: () => "\n",
     getSourceFile: filePath =>
-      filePath === dummyFilePath
-        ? sourceFile
+      filePath in sourceFiles
+        ? sourceFiles[filePath]
         : ts.createSourceFile(filePath, readFileSync(filePath, { encoding: "utf-8" }), ts.ScriptTarget.Latest),
-    readFile: filePath => filePath === dummyFilePath ? code : undefined,
+    readFile: filePath =>
+      filePath in sourceFiles
+        ? sourceFiles[filePath].text
+        : readFileSync(filePath, { encoding: "utf-8" }),
     useCaseSensitiveFileNames: () => true,
     writeFile: () => {}
   };
 
   const program = ts.createProgram({
     host: compilerHost,
-    options: compilerOptions ?? { target: ts.ScriptTarget.ES2016 },
-    rootNames: [dummyFilePath]
+    options: compilerOptions ?? {
+      ...getDefaultCompilerOptions(),
+      moduleResolution: ModuleResolutionKind.Bundler,
+      target: ts.ScriptTarget.ESNext
+    },
+    rootNames: Object.keys(sourceFiles)
   });
 
 
   //-- Report any compiler messages
 
-  reportCompilerDiagnostics({}, program.getSemanticDiagnostics());
+  void reportCompilerDiagnostics({}, program.getSemanticDiagnostics());
 
   const checker = program.getTypeChecker();
 
 
   //-- Get file
 
-  const file = program.getSourceFiles().find(file => file.fileName === dummyFilePath);
+  const file = program.getSourceFiles().find(file => file.fileName === entryFilePath);
   assert(file, "file is not defined");
 
   const fileSymbol = checker.getSymbolAtLocation(file);
@@ -66,7 +82,7 @@ export function compile(code: string, compilerOptions?: ts.CompilerOptions, conf
 
   //-- Get exported Symbols
 
-  const exportedSymbols = checker.getExportsOfModule(fileSymbol);
+  const exportedSymbols = getExportedSymbols(ctx, fileSymbol);
 
   return { ctx, exportedSymbols, fileSymbol };
 

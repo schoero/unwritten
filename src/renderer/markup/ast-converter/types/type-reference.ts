@@ -44,7 +44,7 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 }
 
 
-export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedMultilineTypes {
+export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedMultilineTypes | undefined {
 
   if(typeReferenceType.type !== undefined &&
     isMultilineType(ctx, typeReferenceType.type) &&
@@ -53,8 +53,6 @@ export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typ
     !isSymbolExported(ctx, typeReferenceType.type.symbolId)){
     return convertType(ctx, typeReferenceType.type).multilineType!;
   }
-
-  return "";
 
 }
 

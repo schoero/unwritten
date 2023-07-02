@@ -5,6 +5,8 @@ import {
   convertClassEntityForTableOfContents,
   convertEnumEntityForDocumentation,
   convertEnumEntityForTableOfContents,
+  convertExportAssignmentEntityForDocumentation,
+  convertExportAssignmentEntityForTableOfContents,
   convertFunctionLikeEntityForDocumentation,
   convertFunctionLikeEntityForTableOfContents,
   convertInterfaceEntityForDocumentation,
@@ -60,7 +62,7 @@ export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entit
   } else if(isClassEntity(entity)){
     return convertClassEntityForTableOfContents(ctx, entity);
   } else if(isExportAssignmentEntity(entity)){
-    // return convertExportAssignment(ctx, entity);
+    return convertExportAssignmentEntityForTableOfContents(ctx, entity);
   } else if(isModuleEntity(entity)){
     return convertModuleEntityForTableOfContents(ctx, entity);
   }
@@ -87,7 +89,7 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
   } else if(isClassEntity(entity)){
     return convertClassEntityForDocumentation(ctx, entity);
   } else if(isExportAssignmentEntity(entity)){
-    // return convertExportAssignment(ctx, entity);
+    return convertExportAssignmentEntityForDocumentation(ctx, entity);
   } else if(isModuleEntity(entity)){
     return convertModuleEntityForDocumentation(ctx, entity);
   }

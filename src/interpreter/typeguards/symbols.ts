@@ -29,7 +29,14 @@ export function isEnumSymbol(symbol: ts.Symbol): boolean {
 
 export function isExportAssignmentSymbol(symbol: ts.Symbol): boolean {
   return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0 &&
-    symbol.valueDeclaration?.kind === ts.SyntaxKind.ExportAssignment;
+    symbol.valueDeclaration?.kind === ts.SyntaxKind.ExportAssignment ||
+    symbol.declarations?.[0]?.kind === ts.SyntaxKind.ExportAssignment;
+}
+
+export function isExportSpecifierSymbol(symbol: ts.Symbol): boolean {
+  return (symbol.getFlags() & ts.SymbolFlags.ModuleMember) !== 0 &&
+    symbol.valueDeclaration?.kind === ts.SyntaxKind.ExportSpecifier ||
+    symbol.declarations?.[0]?.kind === ts.SyntaxKind.ExportSpecifier;
 }
 
 export function isFunctionLikeSymbol(symbol: ts.Symbol): boolean {
@@ -57,6 +64,12 @@ export function isMethodSymbol(symbol: ts.Symbol): boolean {
 
 export function isModuleSymbol(symbol: ts.Symbol): boolean {
   return (symbol.getFlags() & ts.SymbolFlags.Module) !== 0;
+}
+
+export function isNamespaceExportSymbol(symbol: ts.Symbol): boolean {
+  return (symbol.getFlags() & ts.SymbolFlags.ModuleMember) !== 0 &&
+    symbol.valueDeclaration?.kind === ts.SyntaxKind.NamespaceExport ||
+    symbol.declarations?.[0]?.kind === ts.SyntaxKind.NamespaceExport;
 }
 
 export function isNamespaceSymbol(symbol: ts.Symbol): boolean {

@@ -1,5 +1,5 @@
 import { getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
-import { isAliasedSymbol } from "unwritten:interpreter:typeguards/symbols.js";
+import { isAliasedSymbol } from "unwritten:interpreter/typeguards/symbols.js";
 import * as locker from "unwritten:interpreter:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
 
@@ -33,6 +33,7 @@ export function getExportedSymbols(ctx: InterpreterContext, moduleSymbol: Symbol
   const exportedSymbols = ctx.checker.getExportsOfModule(resolvedSymbol);
 
   // Filter out default export if it was exported as a named export
+  // TODO: add `default` or `named` modifiers to reveal if a symbol was exported as a default or named export
   const uniqueExportedSymbols = exportedSymbols.filter((symbol, index, symbols) => {
     const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
     return exportedSymbols.findIndex(otherSymbol => {

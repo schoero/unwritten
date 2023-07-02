@@ -4,6 +4,7 @@ export enum EntityKind {
   Enum = "EnumEntity",
   EnumMember = "EnumMemberEntity",
   ExportAssignment = "ExportAssignmentEntity",
+  ExportStar = "ExportDeclarationEntity",
   Function = "FunctionEntity",
   Getter = "GetterEntity",
   Interface = "InterfaceEntity",

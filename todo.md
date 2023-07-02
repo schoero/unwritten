@@ -1,5 +1,6 @@
 * [ ] Define exports
-* [ ] Reintegrate link registry
+* [x] Reintegrate link registry
+* [ ] Allow multiple entry points
 * [ ] Add event property tags
 * [ ] Add support for @throws
 * [ ] Read title from package.json
@@ -8,7 +9,6 @@
 * [ ] Warn if exported functions are not properly documented
 * [ ] Improve mapped type rendering
 * [ ] Improve conditional type rendering
-* [ ] Allow multiple entry points
 * [ ] Add ability to render to multiple files
   * [ ] Per entry point
   * [ ] Per source file
@@ -25,9 +25,7 @@
     * [ ] Path to a tsconfig file
     * [ ] undefined
     * [ ] test various finder algorithms and fallback to default config
-
-* [ ] Add `additionalTypes` to `ctx` and render after each entity.
-  * [ ] Create integration test for this. Multiple functions that use the same type should only be rendered once.
+  * Add jsdoc comments and description to files
 
 * [ ] Link to type parameter possible
 * [ ] How are type parameters rendered
@@ -37,5 +35,5 @@
 * [ ] Use convert function in renderer tests
 * [x] Render Type alias signature
 
-* [ ] Resolve position relative to inptut file
-  * [ ] Add option to use "absoulte" path based of repo
+* [x] Resolve position relative to input file
+  * [ ] Add option to use "absolute" path based of repo

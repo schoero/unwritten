@@ -85,14 +85,13 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
 
   const t = getTranslator(ctx);
 
-  const convertedType = convertTypeForInlineType(ctx, type);
+  const convertedType = convertType(ctx, type);
 
-  return convertedType
-    ? createTitleNode(
-      t("type", { capitalize: true, count: 1 }),
-      createParagraphNode(convertedType)
-    )
-    : "";
+  return createTitleNode(
+    t("type", { capitalize: true, count: 1 }),
+    createParagraphNode(convertedType.multilineType ?? convertedType.inlineType)
+  );
+
 }
 
 export function convertType(ctx: MarkupRenderContexts, type: Types) {
@@ -177,7 +176,7 @@ function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Types): Conve
 
 }
 
-function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineTypes): ConvertedMultilineTypes {
+function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineTypes): ConvertedMultilineTypes | undefined {
 
   if(isObjectType(type)){
     return convertObjectTypeMultiline(ctx, type);

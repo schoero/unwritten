@@ -59,13 +59,13 @@ scope("Interpreter", EntityKind.Parameter, () => {
     it("should have a matching position", () => {
       expect(parameter.position).toStrictEqual({
         column: 31,
-        file: "/file.ts",
+        file: "/index.ts",
         line: 4
       });
     });
 
     it("should have a matching type", () => {
-      expect(parameter.type!.kind).toBe(TypeKind.String);
+      expect(parameter.type.kind).toBe(TypeKind.String);
     });
 
   }
@@ -83,7 +83,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
     const parameter = exportedFunction.signatures[0]!.parameters![0]!;
 
     it("should be able to handle optional types", () => {
-      expect(parameter.type!.kind).toBe(TypeKind.String);
+      expect(parameter.type.kind).toBe(TypeKind.String);
       expect(parameter.optional).toBe(true);
     });
 
@@ -102,7 +102,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
     const parameter = exportedFunction.signatures[0]!.parameters![0]!;
 
     it("should be able to handle initialized types", () => {
-      expect(parameter.type!.kind).toBe(TypeKind.String);
+      expect(parameter.type.kind).toBe(TypeKind.String);
       expect(parameter.initializer).toBeDefined();
       expect(parameter.initializer!.kind).toBe(TypeKind.StringLiteral);
     });
@@ -123,7 +123,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
 
     it("should be able to handle rest types", () => {
       expect(parameter.rest).toBe(true);
-      expect(parameter.type!.kind).toBe(TypeKind.Array);
+      expect(parameter.type.kind).toBe(TypeKind.Array);
     });
 
   }

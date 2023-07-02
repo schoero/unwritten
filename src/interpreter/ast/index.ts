@@ -1,12 +1,21 @@
+import ts, {
+  type Declaration,
+  type ObjectType as TSObjectType,
+  type Symbol,
+  type Type,
+  type TypeNode
+} from "typescript";
+
 import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
 import {
   createClassEntity,
   createEnumEntity,
-  createExportAssignment,
+  createExportAssignmentEntity,
   createFunctionEntity,
   createInterfaceEntity,
   createModuleEntity,
   createNamespaceEntity,
+  createNamespaceEntityFromNamespaceExport,
   createSourceFileEntity,
   createTypeAliasEntity,
   createVariableEntity
@@ -60,6 +69,7 @@ import {
   isFunctionSymbol,
   isInterfaceSymbol,
   isModuleSymbol,
+  isNamespaceExportSymbol,
   isNamespaceSymbol,
   isSourceFileSymbol,
   isTypeAliasSymbol,
@@ -106,11 +116,10 @@ import {
   isUnknownType,
   isVoidType
 } from "unwritten:interpreter:typeguards/types.js";
-import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter:utils/ts.js";
+import { isTypeLocked } from "unwritten:interpreter:utils/ts.js";
+import { getEnumFlagNames } from "unwritten:tests:utils/debug.js";
 import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 import { assert } from "unwritten:utils:general.js";
-
-import type { Declaration, ObjectType as TSObjectType, Symbol, Type, TypeNode } from "typescript";
 
 import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
 import type { Types } from "unwritten:interpreter:type-definitions/types.js";
@@ -125,39 +134,35 @@ export function interpret(ctx: InterpreterContext, sourceFileSymbol: Symbol): Ex
 
 export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): ExportableEntities {
 
-  const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
-
-  if(isVariableSymbol(resolvedSymbol)){
-    return createVariableEntity(ctx, resolvedSymbol);
-  } else if(isFunctionSymbol(resolvedSymbol)){
-    return createFunctionEntity(ctx, resolvedSymbol);
-  } else if(isClassSymbol(resolvedSymbol)){
-    return createClassEntity(ctx, resolvedSymbol);
-  } else if(isInterfaceSymbol(resolvedSymbol)){
-    return createInterfaceEntity(ctx, resolvedSymbol);
-  } else if(isTypeAliasSymbol(resolvedSymbol)){
-    return createTypeAliasEntity(ctx, resolvedSymbol);
-  } else if(isEnumSymbol(resolvedSymbol)){
-    return createEnumEntity(ctx, resolvedSymbol);
-  } else if(isNamespaceSymbol(resolvedSymbol)){
-    return createNamespaceEntity(ctx, resolvedSymbol);
-  } else if(isModuleSymbol(resolvedSymbol)){
-    return createModuleEntity(ctx, resolvedSymbol);
-  } else if(isExportAssignmentSymbol(resolvedSymbol)){
-    return createExportAssignment(ctx, resolvedSymbol);
+  if(isVariableSymbol(symbol)){
+    return createVariableEntity(ctx, symbol);
+  } else if(isFunctionSymbol(symbol)){
+    return createFunctionEntity(ctx, symbol);
+  } else if(isClassSymbol(symbol)){
+    return createClassEntity(ctx, symbol);
+  } else if(isInterfaceSymbol(symbol)){
+    return createInterfaceEntity(ctx, symbol);
+  } else if(isTypeAliasSymbol(symbol)){
+    return createTypeAliasEntity(ctx, symbol);
+  } else if(isEnumSymbol(symbol)){
+    return createEnumEntity(ctx, symbol);
+  } else if(isNamespaceSymbol(symbol)){
+    return createNamespaceEntity(ctx, symbol);
+  } else if(isNamespaceExportSymbol(symbol)){
+    return createNamespaceEntityFromNamespaceExport(ctx, symbol);
+  } else if(isModuleSymbol(symbol)){
+    return createModuleEntity(ctx, symbol);
+  } else if(isExportAssignmentSymbol(symbol)){
+    return createExportAssignmentEntity(ctx, symbol);
   } else {
 
-    const name = getNameBySymbol(ctx, resolvedSymbol);
+    const name = getNameBySymbol(ctx, symbol);
     const formattedName = name ? `"${name}"` : "";
-    const position = getPositionBySymbol(ctx, resolvedSymbol);
+    const position = getPositionBySymbol(ctx, symbol);
     const formattedPosition = position ? `at ${position.file}:${position.line}:${position.column}` : "";
+    const symbolFlags = getEnumFlagNames(ts.SymbolFlags, symbol.flags);
 
-    throw new RangeError([
-      "Symbol",
-      formattedName,
-      formattedPosition,
-      "is not exportable"
-    ].join(" "));
+    throw new RangeError(`Symbol ${formattedName} ${formattedPosition} is not exportable`);
 
   }
 

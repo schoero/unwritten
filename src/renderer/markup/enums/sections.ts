@@ -7,6 +7,7 @@ export const SECTION_TYPE = {
   [EntityKind.Module]: "module",
   [EntityKind.Class]: "class",
   [EntityKind.Enum]: "enum",
+  [EntityKind.ExportAssignment]: "export-assignment",
   [EntityKind.Variable]: "variable",
   [EntityKind.TypeAlias]: "type",
   [EntityKind.Interface]: "interface",

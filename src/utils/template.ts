@@ -1,4 +1,4 @@
-import { EOL } from "node:os";
+import { EOL } from "unwritten:utils/system.js";
 
 
 const TABS_IN_SPACES = 4;  // TypeScript internally uses 4 spaces for a tab

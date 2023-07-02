@@ -66,7 +66,7 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     it("should have a matching position", () => {
       expect(exportedTypeAlias.position).toStrictEqual({
         column: 0,
-        file: "/file.ts",
+        file: "/index.ts",
         line: 5
       });
     });

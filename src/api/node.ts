@@ -18,7 +18,7 @@ export async function unwritten(entryFilePath: string, options?: APIOptions): Pr
   const absoluteEntryFilePath = resolve(entryFilePath);
 
   // Attach logger
-  const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/index.js");
+  const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/node.js");
   const defaultContext = createDefaultContext(logger);
 
   // Compile

@@ -41,6 +41,10 @@ export function isExportAssignment(declaration: Declaration): declaration is ts.
   return ts.isExportAssignment(declaration);
 }
 
+export function isExportDeclaration(declaration: Declaration): declaration is ts.ExportDeclaration {
+  return ts.isExportDeclaration(declaration);
+}
+
 export function isFunctionDeclaration(declaration: Declaration): declaration is ts.FunctionDeclaration {
   return ts.isFunctionDeclaration(declaration);
 }
@@ -76,6 +80,10 @@ export function isModuleDeclaration(declaration: ts.Declaration): declaration is
 }
 
 export function isNamespaceDeclaration(declaration: ts.Declaration): declaration is ts.NamespaceDeclaration {
+  return ts.isNamespaceExport(declaration);
+}
+
+export function isNamespaceExport(declaration: ts.Declaration): declaration is ts.NamespaceExport {
   return ts.isNamespaceExport(declaration);
 }
 

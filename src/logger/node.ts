@@ -1,5 +1,6 @@
-import { EOL } from "node:os";
 import { stdout } from "node:process";
+
+import { EOL } from "unwritten:utils/system.js";
 
 
 export module logger {
@@ -34,6 +35,7 @@ export module logger {
       stackOnly
     ].filter(message => !!message)
       .join(EOL))}`);
+
     process.exit(1);
 
   });
@@ -75,11 +77,6 @@ export module logger {
       ...bodyMessages
     ].join(EOL));
 
-  }
-
-
-  export function success(message: string): void {
-    println(`${_fgGreen}${message}${_reset}`);
   }
 
 

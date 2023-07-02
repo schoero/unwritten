@@ -8,7 +8,7 @@ import type { ConfigWithSchema } from "unwritten:type-definitions/config.js";
 
 export async function generateConfig(path?: string, options?: any) {
 
-  const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/index.js");
+  const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/node.js");
 
   const outputName = ".unwritten.json";
   const outputDir = resolve(process.cwd());

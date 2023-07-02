@@ -114,8 +114,7 @@ export type ConvertedMultilineTypes =
   | ConvertedFunctionTypeMultiline
   | ConvertedInterfaceTypeMultiline
   | ConvertedObjectLiteralTypeMultiline
-  | ConvertedTypeLiteralTypeMultiline
-  | "";
+  | ConvertedTypeLiteralTypeMultiline;
 
 
 //-- Primitive types
@@ -388,6 +387,21 @@ export type ConvertedVariableEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarks,
     example: ConvertedExample
+  ]>
+]>;
+
+
+//-- Export assignment
+
+export type ConvertedExportAssignmentEntityForTableOfContents = AnchorNode;
+export type ConvertedExportAssignmentEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    tags: ConvertedTagsForDocumentation,
+    description: ConvertedDescriptionForDocumentation,
+    remarks: ConvertedRemarks,
+    example: ConvertedExample,
+    type: ConvertedInlineTypes
   ]>
 ]>;
 

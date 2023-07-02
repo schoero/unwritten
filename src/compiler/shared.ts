@@ -1,7 +1,6 @@
-import { EOL } from "node:os";
-
 import ts from "typescript";
 
+import { EOL } from "unwritten:utils/system.js";
 import { findCommonIndentation, removeCommonIndentation } from "unwritten:utils/template.js";
 
 import type { DefaultContext } from "unwritten:type-definitions/context.js";

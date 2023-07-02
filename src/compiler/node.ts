@@ -1,4 +1,3 @@
-import { EOL } from "node:os";
 import { dirname, resolve } from "node:path";
 
 import ts from "typescript";
@@ -48,7 +47,7 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
   if(typeof tsConfigOrFilePath === "object"){
     ctx.logger?.info("Using provided compiler options");
     const { errors, options } = ts.convertCompilerOptionsFromJson(tsConfigOrFilePath, ".");
-    void reportCompilerDiagnostics(ctx, errors, EOL);
+    void reportCompilerDiagnostics(ctx, errors);
     return options;
   }
 

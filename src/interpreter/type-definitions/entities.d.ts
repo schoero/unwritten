@@ -235,9 +235,12 @@ export interface MappedTypeMemberEntity extends Entity<EntityKind.MappedTypeMemb
 
 //-- Export Assignment
 
-export interface ExportAssignmentEntity extends Entity<EntityKind.ExportAssignment> {
+export interface ExportAssignmentEntity extends Entity<EntityKind.ExportAssignment>, JSDocTags {
+  name: Name;
   symbolId: ID;
   type: Types;
+  description?: Description;
+  position?: Position;
 }
 
 
