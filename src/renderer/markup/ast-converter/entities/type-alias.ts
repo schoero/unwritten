@@ -25,7 +25,7 @@ import type {
 
 export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForTableOfContents {
 
-  const convertedSignature = convertTypAliasSignature(ctx, typeAliasEntity);
+  const convertedSignature = convertTypeAliasSignature(ctx, typeAliasEntity);
   const renderedSignature = renderNode(ctx, convertedSignature);
   const id = typeAliasEntity.symbolId;
 
@@ -39,7 +39,7 @@ export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContex
 
 export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForDocumentation {
 
-  const convertedSignature = convertTypAliasSignature(ctx, typeAliasEntity);
+  const convertedSignature = convertTypeAliasSignature(ctx, typeAliasEntity);
   const convertedPosition = convertPosition(ctx, typeAliasEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, typeAliasEntity);
   const convertedDescription = convertDescriptionForDocumentation(ctx, typeAliasEntity.description);
@@ -70,21 +70,23 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
 }
 
 
-function convertTypAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity) {
+function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity) {
 
   const renderConfig = getRenderConfig(ctx);
 
   const typeAliasName = typeAliasEntity.name;
-  const renderedSignatureTypeParameters = typeAliasEntity.typeParameters
+
+  const convertedTypeParameters = typeAliasEntity.typeParameters && typeAliasEntity.typeParameters.length > 0
     ? convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters)
+    : "";
+
+  const encapsulatedTypeParameters = convertedTypeParameters
+    ? encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation)
     : "";
 
   return [
     typeAliasName,
-    encapsulate(
-      renderedSignatureTypeParameters,
-      renderConfig.typeParameterEncapsulation
-    )
+    encapsulatedTypeParameters
   ];
 
 }
