@@ -35,7 +35,7 @@ import {
 } from "unwritten:typeguards/entities.js";
 
 import type { Entities, ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
-import type { TitleNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
+import type { ListNode, TitleNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
 import type {
   ConvertedCategoryForDocumentation,
@@ -108,7 +108,7 @@ export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: Exportab
 
   const ast = createTitleNode(
     "API Documentation",
-    createSectionNode("table-of-contents", ...tableOfContents),
+    createSectionNode("table-of-contents", tableOfContents),
     createSectionNode("documentation", ...documentation)
   );
 
@@ -117,7 +117,7 @@ export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: Exportab
 }
 
 
-export function createTableOfContents(ctx: MarkupRenderContexts, entities: ExportableEntities[]): ConvertedCategoryForTableOfContents[] {
+export function createTableOfContents(ctx: MarkupRenderContexts, entities: ExportableEntities[]): ListNode<ConvertedCategoryForTableOfContents[]> {
 
   const translate = getTranslator(ctx);
 
@@ -127,25 +127,25 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
 
     const categoryName = getCategoryName(entity.kind);
     const categoryTitle = translate(categoryName, { capitalize: true, count: entities.length });
-    const existingCategory = tableOfContents.find(category => category.title === categoryTitle);
+    const existingCategory = tableOfContents.find(category => category[0] === categoryTitle);
 
     if(existingCategory === undefined){
       tableOfContents.push(
-        createTitleNode(
+        [
           categoryTitle,
           createListNode()
-        )
+        ]
       );
     }
 
-    const category = tableOfContents.find(category => category.title === categoryTitle)!;
+    const category = tableOfContents.find(category => category[0] === categoryTitle)!;
     const convertedEntity = convertEntityForTableOfContents(ctx, entity);
 
-    category.children[0].children.push(convertedEntity);
+    category[1].children.push(convertedEntity);
 
   }
 
-  return tableOfContents;
+  return createListNode(...tableOfContents);
 
 }
 

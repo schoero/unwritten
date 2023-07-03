@@ -48,7 +48,10 @@ export type CategoryNames = {
   [key in RenderCategories]: string;
 };
 
-export type ConvertedCategoryForTableOfContents = TitleNode<[ListNode]>;
+export type ConvertedCategoryForTableOfContents = [
+  title: string,
+  content: ListNode
+];
 export type ConvertedCategoryForDocumentation = TitleNode<ConvertedEntitiesForDocumentation[]>;
 
 
@@ -292,7 +295,7 @@ export type ConvertedEntitiesForDocumentation =
 
 export type ConvertedNamespaceEntityForTableOfContents = [
   name: ASTNodes,
-  exports: ListNode<ConvertedEntitiesForTableOfContents[]>
+  exports: ListNode<ConvertedCategoryForTableOfContents[]>
 ];
 export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -310,7 +313,7 @@ export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
 
 export type ConvertedModuleEntityForTableOfContents = [
   name: ASTNodes,
-  exports: ListNode<ConvertedEntitiesForTableOfContents[]>
+  exports: ListNode<ConvertedCategoryForTableOfContents[]>
 ];
 export type ConvertedModuleEntityForDocumentation = SectionNode<[
   children: TitleNode<[
