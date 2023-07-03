@@ -43,7 +43,7 @@ export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, 
 
 export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForDocumentation {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   const convertedParameters = parameterEntities?.map(
     parameter => convertParameterEntityForDocumentation(ctx, parameter)
@@ -58,7 +58,7 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
   );
 
   return createTitleNode(
-    t("parameter", { capitalize: true, count: 99 }),
+    translate("parameter", { capitalize: true, count: 99 }),
     convertedParameterList
   );
 

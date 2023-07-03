@@ -15,11 +15,11 @@ import type {
 
 export function convertClassTypeInline(ctx: MarkupRenderContexts, classType: ClassType): ConvertedClassType {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
   const encapsulatedType = encapsulate(
-    t("class", { count: 1 }),
+    translate("class", { count: 1 }),
     renderConfig.typeEncapsulation
   );
   return ctx.config.externalTypes[TypeKind.Object]

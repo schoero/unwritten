@@ -14,14 +14,14 @@ export function convertPosition(ctx: MarkupRenderContexts, position?: Position):
     return "";
   }
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   const relativePosition = relative(ctx.config.outputDir, position.file);
   const link = `${relativePosition}#L${position.line}C${position.column}`;
 
   const linkLabel = relativePosition.replaceAll("../", "");
 
-  const definedInTranslation = t("defined-in", { capitalize: true });
+  const definedInTranslation = translate("defined-in", { capitalize: true });
   const definedInLabel = definedInTranslation && `${definedInTranslation}: ` || "";
 
   const linkNode = createLinkNode(linkLabel, link);

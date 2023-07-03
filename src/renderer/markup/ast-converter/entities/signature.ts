@@ -150,7 +150,7 @@ function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureE
 
 function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeForDocumentation {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
@@ -166,7 +166,7 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
   );
 
   return createTitleNode(
-    t("return-type", { capitalizeEach: true }),
+    translate("return-type", { capitalizeEach: true }),
     convertedReturnTypeWithDescription
   );
 
@@ -174,14 +174,14 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
 
 function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeInline {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   const { inlineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
 
   return createListNode(
     spaceBetween(
-      t("return-type", { capitalizeEach: true }),
+      translate("return-type", { capitalizeEach: true }),
       inlineType,
       returnDescription
     )

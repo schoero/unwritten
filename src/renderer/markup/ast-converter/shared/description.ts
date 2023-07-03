@@ -11,11 +11,11 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 
 export function convertDescriptionForDocumentation(ctx: MarkupRenderContexts, description: Description): ConvertedDescriptionForDocumentation {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   return description
     ? createTitleNode(
-      t("description", { capitalize: true, count: 1 }),
+      translate("description", { capitalize: true, count: 1 }),
       createParagraphNode(description)
     )
     : "";

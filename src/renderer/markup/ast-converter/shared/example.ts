@@ -8,11 +8,11 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 
 export function convertExample(ctx: MarkupRenderContexts, example: Example): ConvertedExample {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   return example
     ? createTitleNode(
-      t("example", { capitalize: true, count: 1 }),
+      translate("example", { capitalize: true, count: 1 }),
       createParagraphNode(example)
     )
     : "";

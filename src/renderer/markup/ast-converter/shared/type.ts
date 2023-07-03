@@ -83,12 +83,12 @@ import type {
 
 export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Types): ConvertedInlineTypes {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   const convertedType = convertType(ctx, type);
 
   return createTitleNode(
-    t("type", { capitalize: true, count: 1 }),
+    translate("type", { capitalize: true, count: 1 }),
     createParagraphNode(convertedType.multilineType ?? convertedType.inlineType)
   );
 

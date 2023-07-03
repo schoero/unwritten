@@ -35,7 +35,7 @@ export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderCo
     return "";
   }
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   const convertedTypeParameters = parameterEntities.map(
     parameter => convertTypeParameterEntityForDocumentation(ctx, parameter)
@@ -46,7 +46,7 @@ export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderCo
   );
 
   return createTitleNode(
-    t("type-parameter", { capitalize: true, count: convertedTypeParameters.length }),
+    translate("type-parameter", { capitalize: true, count: convertedTypeParameters.length }),
     convertedTypeParameterList
   );
 

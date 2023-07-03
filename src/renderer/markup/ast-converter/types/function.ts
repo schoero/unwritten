@@ -30,11 +30,11 @@ export function convertFunctionTypeInline(
   functionType: FunctionType
 ): ConvertedFunctionTypeInline {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
   const encapsulatedType = encapsulate(
-    t("function", { count: 1 }),
+    translate("function", { count: 1 }),
     renderConfig.typeEncapsulation
   );
   return ctx.config.externalTypes[TypeKind.Function]

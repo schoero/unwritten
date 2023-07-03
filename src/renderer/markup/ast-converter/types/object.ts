@@ -35,11 +35,11 @@ export function convertObjectTypeInline(
   | TypeLiteralType
 ): ConvertedObjectType {
 
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
   const encapsulatedType = encapsulate(
-    t("object", { count: 1 }),
+    translate("object", { count: 1 }),
     renderConfig.typeEncapsulation
   );
 
