@@ -36,6 +36,11 @@ export interface MarkupRenderConfig {
   renderPrivateMembers?: boolean;
 
   /**
+   * Defines whether the undefined type should be rendered in optional types.
+   */
+  renderUndefinedInOptionalTypes?: boolean;
+
+  /**
    * Defines the string that should be used to separate sections in the rendered output.
    */
   sectionSeparator?: string | false;

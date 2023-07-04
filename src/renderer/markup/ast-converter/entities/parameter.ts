@@ -1,5 +1,6 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { removeUndefinedTypeFromOptionalUnionType } from "unwritten:renderer/markup/utils/types.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
@@ -90,7 +91,11 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
   const description = parameterEntity.description ?? "";
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
 
-  const { inlineType, multilineType } = convertType(ctx, parameterEntity.type);
+  const typeWithoutOptionalBasedUndefined = parameterEntity.optional
+    ? removeUndefinedTypeFromOptionalUnionType(ctx, parameterEntity.type)
+    : parameterEntity.type;
+
+  const { inlineType, multilineType } = convertType(ctx, typeWithoutOptionalBasedUndefined);
 
   const rest = parameterEntity.rest === true
     ? encapsulate(translate("rest"), renderConfig.tagEncapsulation)
