@@ -8,5 +8,5 @@ export function renderSmallNode(ctx: MarkdownRenderContext, smallNode: SmallNode
   const renderedNode = renderNode(ctx, smallNode.children);
   return renderedNode === ""
     ? renderedNode
-    : `<small>${renderedNode}</small>`;
+    : `${renderedNode}  `;
 }

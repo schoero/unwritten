@@ -16,7 +16,7 @@ scope("MarkdownRenderer", "SmallNode", () => {
   it("should render a small node correctly", () => {
     const smallNode = createSmallNode("Small text");
     expect(renderSmallNode(ctx, smallNode)).toBe(md`
-      <small>Small text</small>
+      Small text  
     `);
   });
 
