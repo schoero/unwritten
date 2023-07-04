@@ -17,7 +17,7 @@ export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolve
     ? createAnchorNode(name, unresolvedType.symbolId)
     : undefined;
 
-  const typeArguments = unresolvedType.typeArguments
+  const typeArguments = unresolvedType.typeArguments && unresolvedType.typeArguments.length > 0
     ? convertTypeArguments(ctx, unresolvedType.typeArguments)
     : "";
 

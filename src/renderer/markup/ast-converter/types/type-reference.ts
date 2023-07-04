@@ -24,7 +24,7 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
       ? createAnchorNode(name, typeReferenceType.symbolId)
       : undefined;
 
-    const typeArguments = typeReferenceType.typeArguments
+    const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
       ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
       : "";
 
