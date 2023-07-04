@@ -23,7 +23,8 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     EntityKind.Variable,
     EntityKind.Enum,
     EntityKind.TypeAlias,
-    EntityKind.Interface
+    EntityKind.Interface,
+    EntityKind.ExportAssignment
   ],
   renderPrivateMembers: false,
   renderUndefinedInOptionalTypes: false,
