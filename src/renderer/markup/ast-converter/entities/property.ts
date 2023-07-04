@@ -12,7 +12,6 @@ import {
 import { convertType, convertTypeForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
-import { removeUndefinedTypeFromOptionalUnionType } from "unwritten:renderer/markup/utils/types.js";
 import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
@@ -41,12 +40,6 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   const id = propertyEntity.symbolId;
 
   const anchor = registerAnchor(ctx, name, id);
-
-  const typeWithoutOptionalBasedUndefined = propertyEntity.optional
-    ? removeUndefinedTypeFromOptionalUnionType(ctx, propertyEntity.type)
-    : propertyEntity.type;
-
-  const { inlineType, multilineType } = convertType(ctx, typeWithoutOptionalBasedUndefined);
 
   const convertedPosition = convertPosition(ctx, propertyEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, propertyEntity);

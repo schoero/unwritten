@@ -2,7 +2,6 @@ import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type
 import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
-import { removeUndefinedTypeFromOptionalUnionType } from "unwritten:renderer/markup/utils/types.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { MappedType } from "unwritten:interpreter:type-definitions/types.js";
@@ -25,11 +24,7 @@ export function convertMappedTypeInline(ctx: MarkupRenderContexts, mappedType: M
 
   const convertedProperties = mappedType.properties.map(propertyEntity => {
     const name = propertyEntity.name;
-    const typeWithoutOptionalBasedUndefined = propertyEntity.optional
-      ? removeUndefinedTypeFromOptionalUnionType(ctx, propertyEntity.type)
-      : propertyEntity.type;
-
-    const { inlineType } = convertType(ctx, typeWithoutOptionalBasedUndefined);
+    const { inlineType } = convertType(ctx, propertyEntity.type);
     return spaceBetween(name, inlineType, readonly, optional);
   });
 

@@ -27,7 +27,6 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     EntityKind.ExportAssignment
   ],
   renderPrivateMembers: false,
-  renderUndefinedInOptionalTypes: false,
   sectionSeparator: "---",
   stringLiteralEncapsulation: ["\"", "\""],
   tagEncapsulation: ["`", "`"],
