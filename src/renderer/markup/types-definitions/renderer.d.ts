@@ -45,7 +45,7 @@ export enum RenderCategories {
 }
 
 export type CategoryNames = {
-  [key in RenderCategories]: string;
+  [Key in RenderCategories]: string;
 };
 
 export type ConvertedCategoryForTableOfContents = [

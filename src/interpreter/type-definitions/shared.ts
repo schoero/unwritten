@@ -12,7 +12,7 @@ export type Internal = JSDocTags[JSDocTagNames.Internal];
 export type Remarks = JSDocTags[JSDocTagNames.Remarks];
 
 export type JSDocTags = {
-  -readonly [key in keyof typeof JSDocTagNames as typeof JSDocTagNames[key]]?: string | undefined;
+  -readonly [Key in keyof typeof JSDocTagNames as typeof JSDocTagNames[Key]]?: string | undefined;
 };
 
 export type JSDoc = JSDocTags & {
