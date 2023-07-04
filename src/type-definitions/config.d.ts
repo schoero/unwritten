@@ -53,5 +53,5 @@ export interface InterpreterConfig {
 }
 
 export type ExternalTypes = {
-  [key in TypeKind | string]?: string;
+  [Key in TypeKind | (string & {}) ]?: string;
 };
