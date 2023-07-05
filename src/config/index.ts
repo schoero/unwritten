@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { readFile } from "node:fs/promises";
+import { dirname, parse, resolve } from "node:path";
 
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default.js";
@@ -51,8 +52,13 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
   }
 
   if(typeof absoluteConfigPath === "string"){
+    if(parse(absoluteConfigPath).ext === ".json"){
+      const importedConfig = await readFile(absoluteConfigPath, "utf-8");
+      userConfig = JSON.parse(importedConfig);
+    } else {
     const { default: importedConfig } = await import(absoluteConfigPath);
     userConfig = importedConfig;
+  }
   }
 
   const extendedUserConfig = userConfig && await getExtendConfig(userConfig);
