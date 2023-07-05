@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { dirname, parse, resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 
 import { assert } from "./general.js";
 
@@ -28,7 +28,7 @@ export function findFile(fileName: string[] | string, entryPath?: string): strin
     entryPath = process.cwd();
   }
 
-  const absoluteEntryDir = parse(resolve(entryPath)).dir;
+  const absoluteEntryDir = resolve(entryPath);
   if(existsSync(absoluteEntryDir) === false){
     throw new Error(`Entry path does not exist: ${absoluteEntryDir}`);
   }
