@@ -1,5 +1,4 @@
-import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, parse, resolve } from "node:path";
 
 import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
@@ -52,13 +51,7 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
   }
 
   if(typeof absoluteConfigPath === "string"){
-    if(parse(absoluteConfigPath).ext === ".json"){
-      const importedConfig = await readFile(absoluteConfigPath, "utf-8");
-      userConfig = JSON.parse(importedConfig);
-    } else {
-    const { default: importedConfig } = await import(absoluteConfigPath);
-    userConfig = importedConfig;
-  }
+    userConfig = await importFile(absoluteConfigPath);
   }
 
   const extendedUserConfig = userConfig && await getExtendConfig(userConfig);
@@ -73,6 +66,15 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
 
 }
 
+async function importFile(path: string) {
+  if(parse(path).ext === ".json"){
+    const importedConfig = readFileSync(path, "utf-8");
+    return JSON.parse(importedConfig);
+  } else {
+    const { default: importFile } = await import(path);
+    return importFile;
+  }
+}
 
 async function getExtendConfig(config: Config): Promise<Config> {
 
@@ -84,14 +86,14 @@ async function getExtendConfig(config: Config): Promise<Config> {
     throw new TypeError("\"extends\" property in unwritten config must of type string if provided.");
   }
 
-  let { default: loadedConfig } = await import(config.extends);
+  let loadedConfig = await importFile(resolve(config.extends));
 
   if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
     throw new TypeError("The extended unwritten config is not an object.");
   }
 
   if(typeof loadedConfig.extends === "string"){
-    loadedConfig = getExtendConfig(loadedConfig);
+    loadedConfig = await getExtendConfig(loadedConfig);
   }
 
   return override(loadedConfig, config);

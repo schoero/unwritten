@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { expect, it, vitest } from "vitest";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+
+import { afterAll, beforeAll, expect, it, vitest } from "vitest";
 
 import { createConfig } from "unwritten:config/index.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -7,47 +9,35 @@ import { scope } from "unwritten:tests:utils/scope.js";
 
 scope("Integration", "Config", async () => {
 
-  vitest.mock("node:fs", async () => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-    const actual = await vitest.importActual<typeof import("node:fs")>("node:fs");
-    return {
-      ...actual,
-      existsSync: vitest.fn().mockImplementation((path: string) => {
-        if(path.includes(".unwritten.json")){
-          return true;
-        } else if(path.includes(".unwritten.js")){
-          return true;
-        } else {
-          return false;
-        }
-      })
-    };
-  });
+  beforeAll(() => {
+    vitest.mock("node:fs", async () => import("unwritten:utils:virtual-fs.js"));
 
-  vitest.mock(`${await getDirectory()}/.unwritten.json`, () => {
-    return {
-      default: {
-        renderConfig: {
-          test: {
-            ".unwritten.json": true
-          }
+    mkdirSync(process.cwd(), { recursive: true });
+    writeFileSync(`${process.cwd()}/.unwritten.json`, JSON.stringify({
+      renderConfig: {
+        test: {
+          ".unwritten.json": true
         }
       }
-    };
-  });
+    }, null, 2));
 
-  vitest.mock(`${await getDirectory()}/.unwritten.js`, () => {
-    return {
-      default: {
-        renderConfig: {
-          test: {
-            ".unwritten.js": true
-          }
+    writeFileSync(`${process.cwd()}/.unwritten.js`, JSON.stringify({
+      renderConfig: {
+        test: {
+          ".unwritten.js": true
         }
       }
-    };
+    }, null, 2));
+
+    vitest.mock(`${process.cwd()}/.unwritten.js`, () => ({
+      default: JSON.parse(readFileSync(`${process.cwd()}/.unwritten.js`, { encoding: "utf-8" }))
+    }));
+
   });
 
+  afterAll(() => {
+    vitest.resetAllMocks();
+  });
 
   it("should be able to read the config from a relative path", async () => {
 
@@ -109,7 +99,7 @@ scope("Integration", "Config", async () => {
   it("should be able to extend a config", async () => {
 
     const config = await createConfig({}, {
-      extends: `${await getDirectory()}/.unwritten.json`
+      extends: ".unwritten.json"
     });
 
     expect(config.renderConfig.test).toBeDefined();
@@ -133,8 +123,3 @@ scope("Integration", "Config", async () => {
   });
 
 });
-
-async function getDirectory() {
-  const { resolve } = await import("node:path");
-  return resolve("./");
-}

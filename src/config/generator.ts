@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 
 import { getDefaultConfig } from "./index.js";
 
@@ -11,22 +11,23 @@ export async function generateConfig(path?: string, options?: any) {
   const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/node.js");
 
   const outputName = ".unwritten.json";
-  const outputDir = resolve(process.cwd());
-  const outputFilePath = path ? resolve(path) : resolve(outputDir, outputName);
+  const outputDir = path ? dirname(path) : process.cwd();
+  const resolvedOutputDir = resolve(outputDir);
+  const resolvedOutputFilePath = resolve(resolvedOutputDir, outputName);
 
-  if(existsSync(outputFilePath) === true){
-    throw new Error(`Configuration file already exists at ${outputFilePath}.`);
+  if(existsSync(resolvedOutputFilePath) === true){
+    throw new Error(`Configuration file already exists at ${resolvedOutputFilePath}.`);
   }
 
-  if(existsSync(outputDir) === false){
-    mkdirSync(outputDir, { recursive: true });
+  if(existsSync(resolvedOutputDir) === false){
+    mkdirSync(resolvedOutputDir, { recursive: true });
   }
 
   const config = getConfigWithSchema();
 
-  writeFileSync(outputFilePath, JSON.stringify(config, null, 2));
+  writeFileSync(resolvedOutputFilePath, JSON.stringify(config, null, 2));
 
-  logger?.log(`Configuration file created at ${outputFilePath}.`);
+  logger?.log(`Configuration file created at ${resolvedOutputFilePath}.`);
 
 }
 

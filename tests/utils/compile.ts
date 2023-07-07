@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync as readFileSyncOriginal } from "node:fs";
 
 import ts, { ModuleResolutionKind } from "typescript";
 
@@ -6,6 +6,7 @@ import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:
 import { getDefaultConfig } from "unwritten:config/index.js";
 import { getExportedSymbols } from "unwritten:interpreter/utils/ts.js";
 import { override } from "unwritten:utils/override.js";
+import { existsSync, readFileSync, writeFileSync } from "unwritten:utils/virtual-fs.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Config } from "unwritten:type-definitions/config.d.js";
@@ -20,6 +21,15 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
 
   const entryFilePath = "/index.ts";
   const inputFiles = typeof code === "string" ? { [entryFilePath]: code } : code;
+
+  if(typeof code === "string"){
+    writeFileSync(entryFilePath, code);
+  } else {
+    Object.entries(code).forEach(([filePath, code]) => {
+      writeFileSync(filePath, code);
+    });
+  }
+
   const sourceFiles = Object.entries(inputFiles).reduce<{ [fileName: string]: ts.SourceFile; }>((acc, [fileName, code]) => {
     acc[fileName] = ts.createSourceFile(fileName, code.trim(), ts.ScriptTarget.Latest);
     return acc;
@@ -27,7 +37,7 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
 
   const compilerHost: ts.CompilerHost = {
     directoryExists: dirPath => dirPath === "/",
-    fileExists: filePath => Object.keys(sourceFiles).includes(filePath),
+    fileExists: existsSync,
     getCanonicalFileName: fileName => fileName,
     getCurrentDirectory: () => "/",
     getDefaultLibFileName: () => "node_modules/typescript/lib/lib.esnext.d.ts",
@@ -36,13 +46,20 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
     getSourceFile: filePath =>
       filePath in sourceFiles
         ? sourceFiles[filePath]
-        : ts.createSourceFile(filePath, readFileSync(filePath, { encoding: "utf-8" }), ts.ScriptTarget.Latest),
-    readFile: filePath =>
-      filePath in sourceFiles
-        ? sourceFiles[filePath].text
-        : readFileSync(filePath, { encoding: "utf-8" }),
+        : ts.createSourceFile(
+          filePath,
+          existsSync(filePath)
+            ? readFileSync(filePath)
+            : readFileSyncOriginal(filePath, { encoding: "utf-8" }),
+          ts.ScriptTarget.Latest
+        ),
+    readFile: filePath => {
+      return existsSync(filePath)
+        ? readFileSync(filePath)
+        : readFileSyncOriginal(filePath, { encoding: "utf-8" });
+    },
     useCaseSensitiveFileNames: () => true,
-    writeFile: () => {}
+    writeFile: writeFileSync
   };
 
   const program = ts.createProgram({
