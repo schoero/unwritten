@@ -1,6 +1,6 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { createLinkNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { Types, UnresolvedType } from "unwritten:interpreter:type-definitions/types.js";
@@ -13,8 +13,9 @@ export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolve
 
   const name = unresolvedType.name ?? "";
 
-  const anchor = unresolvedType.symbolId
-    ? createAnchorNode(name, unresolvedType.symbolId)
+  const link = name &&
+    name in ctx.config.externalTypes
+    ? createLinkNode(name, ctx.config.externalTypes[name]!)
     : undefined;
 
   const typeArguments = unresolvedType.typeArguments && unresolvedType.typeArguments.length > 0
@@ -22,7 +23,7 @@ export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolve
     : "";
 
   return spaceBetween(
-    anchor ?? name,
+    link ?? name,
     typeArguments
   );
 

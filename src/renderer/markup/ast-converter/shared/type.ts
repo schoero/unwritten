@@ -1,6 +1,7 @@
 import { createParagraphNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import {
   convertAnyTypeInline,
   convertArrayTypeInline,
@@ -75,21 +76,31 @@ import {
 
 import type { MultilineTypes, Types } from "unwritten:interpreter/type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
+import type { ParagraphNode, TitleNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type {
   ConvertedInlineTypes,
   ConvertedMultilineTypes
 } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
-export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Types): ConvertedInlineTypes {
+export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Types): TitleNode<[ParagraphNode]> {
 
   const translate = getTranslator(ctx);
 
+  const renderedNewLine = renderNewLine(ctx);
   const convertedType = convertType(ctx, type);
 
   return createTitleNode(
     translate("type", { capitalize: true, count: 1 }),
-    createParagraphNode(convertedType.multilineType ?? convertedType.inlineType)
+    createParagraphNode(
+      convertedType.inlineType,
+      ...convertedType.multilineType
+        ? [
+          renderedNewLine,
+          convertedType.multilineType
+        ]
+        : []
+    )
   );
 
 }

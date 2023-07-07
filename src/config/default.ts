@@ -10,7 +10,7 @@ export const defaultOutputPath = "./docs";
 
 export const defaultInterpreterConfig: Complete<InterpreterConfig> = {
   exclude: {
-    "node_modules/**/*": "*",
+    "node_modules/typescript/lib/**/*": "*",
     "!node_modules/typescript/lib/**/*": [
       "Partial",
       "Required",
