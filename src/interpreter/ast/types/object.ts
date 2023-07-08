@@ -21,11 +21,11 @@ import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 
 import type { ObjectType as TSObjectType } from "typescript";
 
-import type { InferObjectLikeType, ObjectLikeTypeKinds } from "unwritten:interpreter:type-definitions/types.js";
+import type { InferObjectLikeType, ObjectLikeTypeKind } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export const createObjectLikeType = <ObjectLikeTypeKind extends ObjectLikeTypeKinds>(ctx: InterpreterContext, type: TSObjectType, kind: ObjectLikeTypeKind = TypeKind.Object as ObjectLikeTypeKind): InferObjectLikeType<ObjectLikeTypeKind> => withLockedType(ctx, type, () => {
+export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLikeTypeKind>(ctx: InterpreterContext, type: TSObjectType, kind: SpecificObjectLikeTypeKind = TypeKind.Object as SpecificObjectLikeTypeKind): InferObjectLikeType<SpecificObjectLikeTypeKind> => withLockedType(ctx, type, () => {
 
   const tsConstructSignatures = type.getConstructSignatures();
   const tsCallSignatures = type.getCallSignatures();

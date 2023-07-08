@@ -76,7 +76,7 @@ import {
   isVoidType
 } from "unwritten:typeguards/types.js";
 
-import type { MultilineTypes, Types } from "unwritten:interpreter/type-definitions/types.js";
+import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ParagraphNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
@@ -85,7 +85,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Types): TitleNode<[ParagraphNode]> {
+export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Type): TitleNode<[ParagraphNode]> {
 
   const translate = getTranslator(ctx);
 
@@ -107,7 +107,7 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
 
 }
 
-export function convertType(ctx: MarkupRenderContexts, type: Types) {
+export function convertType(ctx: MarkupRenderContexts, type: Type) {
 
   const inlineType = convertTypeForInlineType(ctx, type);
   const multilineType = isMultilineType(ctx, type)
@@ -121,7 +121,7 @@ export function convertType(ctx: MarkupRenderContexts, type: Types) {
 
 }
 
-function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Types): ConvertedInlineTypes {
+function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type): ConvertedInlineTypes {
 
   if(isAnyType(type)){
     return convertAnyTypeInline(ctx, type);
@@ -191,7 +191,7 @@ function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Types): Conve
 
 }
 
-function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineTypes): ConvertedMultilineTypes | undefined {
+function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineType): ConvertedMultilineTypes | undefined {
 
   if(isObjectType(type)){
     return convertObjectTypeMultiline(ctx, type);

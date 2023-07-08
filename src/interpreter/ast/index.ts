@@ -1,8 +1,8 @@
-import ts, {
+import {
   type Declaration,
   type ObjectType as TSObjectType,
   type Symbol,
-  type Type,
+  type Type as TSType,
   type TypeNode
 } from "typescript";
 
@@ -117,22 +117,21 @@ import {
   isVoidType
 } from "unwritten:interpreter:typeguards/types.js";
 import { isTypeLocked } from "unwritten:interpreter:utils/ts.js";
-import { getEnumFlagNames } from "unwritten:tests:utils/debug.js";
 import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { Type } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function interpret(ctx: InterpreterContext, sourceFileSymbol: Symbol): ExportableEntities[] {
+export function interpret(ctx: InterpreterContext, sourceFileSymbol: Symbol): ExportableEntity[] {
   assert(isSourceFileSymbol(sourceFileSymbol), "Source file symbol is not a source file symbol");
   return createSourceFileEntity(ctx, sourceFileSymbol).exports;
 }
 
 
-export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): ExportableEntities {
+export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): ExportableEntity {
 
   if(isVariableSymbol(symbol)){
     return createVariableEntity(ctx, symbol);
@@ -160,7 +159,6 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Export
     const formattedName = name ? `"${name}"` : "";
     const position = getPositionBySymbol(ctx, symbol);
     const formattedPosition = position ? `at ${position.file}:${position.line}:${position.column}` : "";
-    const symbolFlags = getEnumFlagNames(ts.SymbolFlags, symbol.flags);
 
     throw new RangeError(`Symbol ${formattedName} ${formattedPosition} is not exportable`);
 
@@ -169,7 +167,7 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Export
 }
 
 
-export function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Types {
+export function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
 
   if(isArrayTypeNode(typeNode)){
     return createArrayTypeByArrayTypeNode(ctx, typeNode);
@@ -200,7 +198,7 @@ export function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): 
 
 
 /* Getting the type by symbol (using getTypeOfSymbolAtLocation()) resolves generics */
-export function createTypeBySymbol(ctx: InterpreterContext, symbol: Symbol): Types {
+export function createTypeBySymbol(ctx: InterpreterContext, symbol: Symbol): Type {
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
   const type = declaration
     ? ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration)
@@ -208,13 +206,13 @@ export function createTypeBySymbol(ctx: InterpreterContext, symbol: Symbol): Typ
   return interpretType(ctx, type);
 }
 
-export function createTypeByDeclaration(ctx: InterpreterContext, declaration: Declaration): Types {
+export function createTypeByDeclaration(ctx: InterpreterContext, declaration: Declaration): Type {
   const type = ctx.checker.getTypeAtLocation(declaration);
   return interpretType(ctx, type);
 }
 
 
-export function interpretType(ctx: InterpreterContext, type: Type): Types {
+export function interpretType(ctx: InterpreterContext, type: TSType): Type {
 
   if(isTypeLocked(ctx, type)){
     return createLinkToType(ctx, type);
@@ -274,7 +272,7 @@ export function interpretType(ctx: InterpreterContext, type: Type): Types {
 }
 
 
-export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType): Types {
+export function interpretObjectType(ctx: InterpreterContext, type: TSObjectType): Type {
 
   if(isTupleTypeReferenceType(type)){
     return createTupleTypeByTypeReference(ctx, type);

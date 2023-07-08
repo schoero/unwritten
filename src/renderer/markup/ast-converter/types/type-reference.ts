@@ -5,7 +5,7 @@ import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { isMultilineType } from "unwritten:renderer:markup/utils/types.js";
 
-import type { TypeReferenceType, Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { Type, TypeReferenceType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
@@ -57,7 +57,7 @@ export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typ
 }
 
 
-function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Types[]): ASTNodes {
+function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]): ASTNodes {
 
   const renderConfig = getRenderConfig(ctx);
 

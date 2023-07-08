@@ -3,12 +3,12 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import type {
   ClassEntity,
   ConstructorEntity,
-  Entities,
+  Entity,
   EnumEntity,
-  ExportableEntities,
+  ExportableEntity,
   ExportAssignmentEntity,
   FunctionEntity,
-  FunctionLikeEntities,
+  FunctionLikeEntity,
   GetterEntity,
   InterfaceEntity,
   MethodEntity,
@@ -22,23 +22,23 @@ import type {
 } from "unwritten:interpreter/type-definitions/entities.js";
 
 
-export function isClassEntity(entity: Entities): entity is ClassEntity {
+export function isClassEntity(entity: Entity): entity is ClassEntity {
   return entity.kind === EntityKind.Class;
 }
 
-export function isConstructorEntity(entity: Entities): entity is ConstructorEntity {
+export function isConstructorEntity(entity: Entity): entity is ConstructorEntity {
   return entity.kind === EntityKind.Constructor;
 }
 
-export function isEnumEntity(entity: Entities): entity is EnumEntity {
+export function isEnumEntity(entity: Entity): entity is EnumEntity {
   return entity.kind === EntityKind.Enum;
 }
 
-export function isExportAssignmentEntity(entity: Entities): entity is ExportAssignmentEntity {
+export function isExportAssignmentEntity(entity: Entity): entity is ExportAssignmentEntity {
   return entity.kind === EntityKind.ExportAssignment;
 }
 
-export function isExportableEntity(entity: Entities): entity is ExportableEntities {
+export function isExportableEntity(entity: Entity): entity is ExportableEntity {
   return isClassEntity(entity) ||
     isEnumEntity(entity) ||
     isFunctionEntity(entity) ||
@@ -49,11 +49,11 @@ export function isExportableEntity(entity: Entities): entity is ExportableEntiti
     isExportAssignmentEntity(entity);
 }
 
-export function isFunctionEntity(entity: Entities): entity is FunctionEntity {
+export function isFunctionEntity(entity: Entity): entity is FunctionEntity {
   return entity.kind === EntityKind.Function;
 }
 
-export function isFunctionLikeEntity(entity: Entities): entity is FunctionLikeEntities {
+export function isFunctionLikeEntity(entity: Entity): entity is FunctionLikeEntity {
   return isConstructorEntity(entity) ||
     isFunctionEntity(entity) ||
     isMethodEntity(entity) ||
@@ -61,42 +61,42 @@ export function isFunctionLikeEntity(entity: Entities): entity is FunctionLikeEn
     isSetterEntity(entity);
 }
 
-export function isGetterEntity(entity: Entities): entity is GetterEntity {
+export function isGetterEntity(entity: Entity): entity is GetterEntity {
   return entity.kind === EntityKind.Getter;
 }
 
-export function isInterfaceEntity(entity: Entities): entity is InterfaceEntity {
+export function isInterfaceEntity(entity: Entity): entity is InterfaceEntity {
   return entity.kind === EntityKind.Interface;
 }
 
-export function isMethodEntity(entity: Entities): entity is MethodEntity {
+export function isMethodEntity(entity: Entity): entity is MethodEntity {
   return entity.kind === EntityKind.Method;
 }
 
-export function isModuleEntity(entity: Entities): entity is ModuleEntity {
+export function isModuleEntity(entity: Entity): entity is ModuleEntity {
   return entity.kind === EntityKind.Module;
 }
 
-export function isNamespaceEntity(entity: Entities): entity is NamespaceEntity {
+export function isNamespaceEntity(entity: Entity): entity is NamespaceEntity {
   return entity.kind === EntityKind.Namespace;
 }
 
-export function isPropertyEntity(entity: Entities): entity is PropertyEntity {
+export function isPropertyEntity(entity: Entity): entity is PropertyEntity {
   return entity.kind === EntityKind.Property;
 }
 
-export function isSetterEntity(entity: Entities): entity is SetterEntity {
+export function isSetterEntity(entity: Entity): entity is SetterEntity {
   return entity.kind === EntityKind.Setter;
 }
 
-export function isSignatureEntity(entity: Entities): entity is SignatureEntity {
+export function isSignatureEntity(entity: Entity): entity is SignatureEntity {
   return entity.kind === EntityKind.Signature;
 }
 
-export function isTypeAliasEntity(entity: Entities): entity is TypeAliasEntity {
+export function isTypeAliasEntity(entity: Entity): entity is TypeAliasEntity {
   return entity.kind === EntityKind.TypeAlias;
 }
 
-export function isVariableEntity(entity: Entities): entity is VariableEntity {
+export function isVariableEntity(entity: Entity): entity is VariableEntity {
   return entity.kind === EntityKind.Variable;
 }

@@ -1,15 +1,15 @@
 import { isClassEntity, isModuleEntity, isNamespaceEntity } from "unwritten:typeguards/entities.js";
 
-import type { Entities, ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
+import type { Entity, ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ID } from "unwritten:interpreter/type-definitions/shared.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 
 
 export type ExportRegistry = Set<ID>;
 
-export function createExportRegistry(ctx: MarkupRenderContexts, exportedEntities: ExportableEntities[]): void {
+export function createExportRegistry(ctx: MarkupRenderContexts, exportedEntities: ExportableEntity[]): void {
 
-  const addEntity = (entities: Entities[]): void => {
+  const addEntity = (entities: Entity[]): void => {
 
     for(const entity of entities){
 

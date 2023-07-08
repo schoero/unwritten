@@ -1,6 +1,6 @@
 import type { TypeChecker } from "typescript";
 
-import type { logger as Logger } from "unwritten:logger/node.ts";
+import type { logger as Logger } from "unwritten:logger/node.js";
 
 import type { CompleteConfig } from "./config.js";
 import type { Renderer } from "./renderer.js";

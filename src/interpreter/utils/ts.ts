@@ -3,9 +3,9 @@ import { isAliasedSymbol } from "unwritten:interpreter/typeguards/symbols.js";
 import * as locker from "unwritten:interpreter:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { Program, Symbol, Type } from "typescript";
+import type { Program, Symbol, Type as TSType } from "typescript";
 
-import type { Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { Type } from "unwritten:interpreter/type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
@@ -48,7 +48,7 @@ export function getExportedSymbols(ctx: InterpreterContext, moduleSymbol: Symbol
 
 //-- Locker
 
-export function isTypeLocked(ctx: InterpreterContext, type: Type) {
+export function isTypeLocked(ctx: InterpreterContext, type: TSType) {
   return locker.isTypeLocked(ctx, type);
 }
 
@@ -68,7 +68,7 @@ export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Sym
 }
 
 
-export function withLockedType<T extends Types>(ctx: InterpreterContext, type: Type, callback: (ctx: InterpreterContext, type: Type) => T): T {
+export function withLockedType<T extends Type>(ctx: InterpreterContext, type: TSType, callback: (ctx: InterpreterContext, type: TSType) => T): T {
   locker.lockType(ctx, type);
   const returnType = callback(ctx, type);
   locker.unlockType(ctx, type);

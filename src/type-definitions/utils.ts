@@ -1,5 +1,5 @@
-import type { Entities } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { Entity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { Type } from "unwritten:interpreter:type-definitions/types.js";
 
 
 //-- Mutable
@@ -101,4 +101,4 @@ type DeepRequiredByKeyObject<T, K extends PropertyKey> =
 
 //-- Test
 
-export type Testable<Entity extends Entities | Types> = DeepPartialByKey<Entity, "declarationId" | "modifiers" | "symbolId" | "typeId">;
+export type Testable<EntityOrType extends Entity | Type> = DeepPartialByKey<EntityOrType, "declarationId" | "modifiers" | "symbolId" | "typeId">;

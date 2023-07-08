@@ -30,7 +30,7 @@ import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderTitleNode } from "./ast/title.js";
 
-import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
+import type { ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkdownRenderContext, MarkdownRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
@@ -61,7 +61,7 @@ const markdownRenderer: MarkdownRenderer = {
   exportRegistry: new Set(),
   linkRegistry: new Map(),
 
-  render: (ctx: RenderContext<Renderer>, entities: ExportableEntities[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
+  render: (ctx: RenderContext<Renderer>, entities: ExportableEntity[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
 
     markdownRenderer.initializeContext(ctx);
     markdownRenderer.initializeExportRegistry(ctx, entities);
@@ -96,7 +96,7 @@ const markdownRenderer: MarkdownRenderer = {
 
   },
 
-  initializeExportRegistry: (ctx: MarkdownRenderContext, entities: ExportableEntities[]) => {
+  initializeExportRegistry: (ctx: MarkdownRenderContext, entities: ExportableEntity[]) => {
     createExportRegistry(ctx, entities);
   }
 

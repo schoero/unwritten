@@ -1,13 +1,13 @@
 import { isFunctionLikeEntity } from "unwritten:typeguards/entities.js";
 
 import type {
-  FunctionLikeEntities,
+  FunctionLikeEntity,
   PropertyEntity,
   SignatureEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
 
 
-export function filterPrivateMembers<Entities extends FunctionLikeEntities | PropertyEntity>(entities: Entities[]): Entities[] {
+export function filterPrivateMembers<Entities extends FunctionLikeEntity | PropertyEntity>(entities: Entities[]): Entities[] {
   return entities.filter(entity => {
     if(isFunctionLikeEntity(entity)){
       return entity.signatures.every(signature => !signature.modifiers?.includes("private"));

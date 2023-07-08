@@ -11,12 +11,12 @@ import type {
 import type { ID, Modifiers, Name, Position } from "unwritten:interpreter:type-definitions/shared.js";
 
 
-type Type<Kind extends TypeKind> = {
+type TypeBase<Kind extends TypeKind> = {
   kind: Kind;
   typeId: ID;
 };
 
-export type Types =
+export type Type =
   | ArrayType
   | CircularType
   | ConditionalType
@@ -25,10 +25,10 @@ export type Types =
   | IndexedAccessType
   | InterfaceType
   | IntersectionType
-  | LiteralTypes
+  | LiteralType
   | MappedType
   | ObjectLikeTypes
-  | PrimitiveTypes
+  | PrimitiveType
   | TemplateLiteralType
   | TupleType
   | TypeParameterType
@@ -37,7 +37,7 @@ export type Types =
   | UnionType
   | UnresolvedType;
 
-export type MultilineTypes =
+export type MultilineType =
   | ClassType
   | FunctionType
   | InterfaceType
@@ -45,7 +45,7 @@ export type MultilineTypes =
   | ObjectType;
 
 
-export type PrimitiveTypeKinds =
+export type PrimitiveTypeKind =
   | TypeKind.Any
   | TypeKind.BigInt
   | TypeKind.BigIntLiteral
@@ -62,7 +62,7 @@ export type PrimitiveTypeKinds =
   | TypeKind.Unknown
   | TypeKind.Void;
 
-export type PrimitiveTypes =
+export type PrimitiveType =
   | AnyType
   | BigIntLiteralType
   | BigIntType
@@ -80,20 +80,20 @@ export type PrimitiveTypes =
   | VoidType;
 
 
-export type LiteralTypeKinds =
+export type LiteralTypeKind =
   | TypeKind.BigIntLiteral
   | TypeKind.BooleanLiteral
   | TypeKind.NumberLiteral
   | TypeKind.StringLiteral;
 
-export type LiteralTypes =
+export type LiteralType =
   | BigIntLiteralType
   | BooleanLiteralType
   | NumberLiteralType
   | StringLiteralType;
 
 
-export type ObjectLikeTypeKinds =
+export type ObjectLikeTypeKind =
   | TypeKind.Class
   | TypeKind.Interface
   | TypeKind.Object
@@ -107,7 +107,7 @@ export type ObjectLikeTypes =
   | ObjectType
   | TypeLiteralType;
 
-export type InferObjectLikeType<Kind extends ObjectLikeTypeKinds> =
+export type InferObjectLikeType<Kind extends ObjectLikeTypeKind> =
   Kind extends TypeKind.Class
     ? ClassType
     : Kind extends TypeKind.Interface
@@ -123,49 +123,49 @@ export type InferObjectLikeType<Kind extends ObjectLikeTypeKinds> =
 
 //-- Primitive types
 
-export type PrimitiveType<Kind extends PrimitiveTypeKinds> = Type<Kind> & {
+export type PrimitiveTypeBase<Kind extends PrimitiveTypeKind> = TypeBase<Kind> & {
   name: Name;
 };
 
-export type NumberType = PrimitiveType<TypeKind.Number>;
-export type StringType = PrimitiveType<TypeKind.String>;
-export type BooleanType = PrimitiveType<TypeKind.Boolean>;
-export type BigIntType = PrimitiveType<TypeKind.BigInt>;
-export type SymbolType = PrimitiveType<TypeKind.Symbol>;
-export type VoidType = PrimitiveType<TypeKind.Void>;
-export type UndefinedType = PrimitiveType<TypeKind.Undefined>;
-export type NullType = PrimitiveType<TypeKind.Null>;
-export type NeverType = PrimitiveType<TypeKind.Never>;
-export type UnknownType = PrimitiveType<TypeKind.Unknown>;
-export type AnyType = PrimitiveType<TypeKind.Any>;
+export type NumberType = PrimitiveTypeBase<TypeKind.Number>;
+export type StringType = PrimitiveTypeBase<TypeKind.String>;
+export type BooleanType = PrimitiveTypeBase<TypeKind.Boolean>;
+export type BigIntType = PrimitiveTypeBase<TypeKind.BigInt>;
+export type SymbolType = PrimitiveTypeBase<TypeKind.Symbol>;
+export type VoidType = PrimitiveTypeBase<TypeKind.Void>;
+export type UndefinedType = PrimitiveTypeBase<TypeKind.Undefined>;
+export type NullType = PrimitiveTypeBase<TypeKind.Null>;
+export type NeverType = PrimitiveTypeBase<TypeKind.Never>;
+export type UnknownType = PrimitiveTypeBase<TypeKind.Unknown>;
+export type AnyType = PrimitiveTypeBase<TypeKind.Any>;
 
 
 //-- Literal types
 
-export interface LiteralType<Kind extends LiteralTypeKinds> extends PrimitiveType<Kind> {
+export interface LiteralTypeBase<Kind extends LiteralTypeKind> extends PrimitiveTypeBase<Kind> {
   value: BigInt | boolean | number | string;
 }
 
-export interface StringLiteralType extends LiteralType<TypeKind.StringLiteral> {
+export interface StringLiteralType extends LiteralTypeBase<TypeKind.StringLiteral> {
   value: string;
 }
 
-export interface NumberLiteralType extends LiteralType<TypeKind.NumberLiteral> {
+export interface NumberLiteralType extends LiteralTypeBase<TypeKind.NumberLiteral> {
   value: number;
 }
 
-export interface BooleanLiteralType extends LiteralType<TypeKind.BooleanLiteral> {
+export interface BooleanLiteralType extends LiteralTypeBase<TypeKind.BooleanLiteral> {
   value: boolean;
 }
 
-export interface BigIntLiteralType extends LiteralType<TypeKind.BigIntLiteral> {
+export interface BigIntLiteralType extends LiteralTypeBase<TypeKind.BigIntLiteral> {
   value: BigInt;
 }
 
 
 //-- Object type
 
-export interface ObjectLikeType<Kind extends ObjectLikeTypeKinds> extends Type<Kind> {
+export interface ObjectLikeTypeBase<Kind extends ObjectLikeTypeKind> extends TypeBase<Kind> {
   callSignatures: SignatureEntity[];
   constructSignatures: SignatureEntity[];
   getters: GetterEntity[];
@@ -181,43 +181,43 @@ export interface ObjectLikeType<Kind extends ObjectLikeTypeKinds> extends Type<K
 
 //-- Object type
 
-export interface ObjectType extends ObjectLikeType<TypeKind.Object> {
+export interface ObjectType extends ObjectLikeTypeBase<TypeKind.Object> {
 }
 
 
 //-- Object literal
 
-export interface ObjectLiteralType extends ObjectLikeType<TypeKind.ObjectLiteral> {
+export interface ObjectLiteralType extends ObjectLikeTypeBase<TypeKind.ObjectLiteral> {
 }
 
 
 //-- Type reference
 
-export interface TypeReferenceType extends Type<TypeKind.TypeReference> {
+export interface TypeReferenceType extends TypeBase<TypeKind.TypeReference> {
   name?: Name;
   position?: Position;
   symbolId?: ID;
-  type?: Types;
-  typeArguments?: Types[];
+  type?: Type;
+  typeArguments?: Type[];
 }
 
 
 //-- Expression
 
-export interface ExpressionType extends Type<TypeKind.Expression> {
-  instanceType: Types;
-  staticType: Types;
+export interface ExpressionType extends TypeBase<TypeKind.Expression> {
+  instanceType: Type;
+  staticType: Type;
   /** @deprecated Expressions should render the type instead of rendering the name */
   name?: Name;
   position?: Position;
-  typeArguments?: Types[];
+  typeArguments?: Type[];
 }
 
 
 //-- Type query
 
-export interface TypeQueryType extends Type<TypeKind.TypeQuery> {
-  type: Types;
+export interface TypeQueryType extends TypeBase<TypeKind.TypeQuery> {
+  type: Type;
   name?: Name;
   position?: Position;
 }
@@ -225,24 +225,24 @@ export interface TypeQueryType extends Type<TypeKind.TypeQuery> {
 
 //-- Template literal
 
-export interface TemplateLiteralEntity extends Type<TypeKind.TemplateLiteral> {
+export interface TemplateLiteralEntity extends TypeBase<TypeKind.TemplateLiteral> {
   spans: string[];
-  types: Types[];
+  types: Type[];
   head?: string;
 }
 
 
 //-- Array
 
-export interface ArrayType extends Type<TypeKind.Array> {
-  type: Types;
+export interface ArrayType extends TypeBase<TypeKind.Array> {
+  type: Type;
   position?: Position;
 }
 
 
 //-- Tuple
 
-export interface TupleType extends Type<TypeKind.Tuple> {
+export interface TupleType extends TypeBase<TypeKind.Tuple> {
   members: TupleMemberEntity[];
   position?: Position;
 }
@@ -251,7 +251,7 @@ export interface TupleType extends Type<TypeKind.Tuple> {
 //-- Circular
 
 /** Circular types are used as links to previous symbols for circular references. */
-export interface CircularType extends Type<TypeKind.Circular> {
+export interface CircularType extends TypeBase<TypeKind.Circular> {
   name?: Name;
   position?: Position;
 }
@@ -260,24 +260,24 @@ export interface CircularType extends Type<TypeKind.Circular> {
 //-- Unresolved
 
 /** The unresolved type will be used if a type cannot be parsed, or it is excluded from parsing */
-export interface UnresolvedType extends Type<TypeKind.Unresolved> {
+export interface UnresolvedType extends TypeBase<TypeKind.Unresolved> {
   name?: Name;
   position?: Position;
   symbolId?: ID;
-  typeArguments?: Types[];
+  typeArguments?: Type[];
 }
 
 
 //-- Function
 
-export interface FunctionType extends Type<TypeKind.Function> {
+export interface FunctionType extends TypeBase<TypeKind.Function> {
   signatures: SignatureEntity[];
 }
 
 
 //-- Class
 
-export interface ClassType extends ObjectLikeType<TypeKind.Class> {
+export interface ClassType extends ObjectLikeTypeBase<TypeKind.Class> {
   modifiers: Modifiers[];
   name: Name;
   position: Position;
@@ -286,66 +286,66 @@ export interface ClassType extends ObjectLikeType<TypeKind.Class> {
 
 //-- Union type
 
-export interface UnionType extends Type<TypeKind.Union> {
-  types: Types[];
+export interface UnionType extends TypeBase<TypeKind.Union> {
+  types: Type[];
 }
 
 
 //-- Intersection type
 
-export interface IntersectionType extends Type<TypeKind.Intersection> {
-  types: Types[];
+export interface IntersectionType extends TypeBase<TypeKind.Intersection> {
+  types: Type[];
 }
 
 
 //-- Template literal type
 
-export interface TemplateLiteralType extends Type<TypeKind.TemplateLiteral> {
+export interface TemplateLiteralType extends TypeBase<TypeKind.TemplateLiteral> {
   spans: string[];
-  types: Types[];
+  types: Type[];
   head?: string;
 }
 
 
 //-- Type literal
 
-export interface TypeLiteralType extends ObjectLikeType<TypeKind.TypeLiteral> {
+export interface TypeLiteralType extends ObjectLikeTypeBase<TypeKind.TypeLiteral> {
 }
 
 
 //-- Type parameter
 
-export interface TypeParameterType extends Type<TypeKind.TypeParameter> {
+export interface TypeParameterType extends TypeBase<TypeKind.TypeParameter> {
   name: Name;
-  constraint?: Types;
+  constraint?: Type;
 }
 
 
 //-- Mapped type
 
-export interface MappedType extends Type<TypeKind.Mapped> {
+export interface MappedType extends TypeBase<TypeKind.Mapped> {
   optional: boolean;
   properties: PropertyEntity[];
   readonly: boolean;
   typeParameter: TypeParameterEntity;
   position?: Position;
-  valueType?: Types;
+  valueType?: Type;
 }
 
 
 //-- Conditional type
 
-export interface ConditionalType extends Type<TypeKind.Conditional> {
-  checkType: Types;
-  extendsType: Types;
-  falseType: Types;
-  trueType: Types;
+export interface ConditionalType extends TypeBase<TypeKind.Conditional> {
+  checkType: Type;
+  extendsType: Type;
+  falseType: Type;
+  trueType: Type;
 }
 
 
 //-- Interface
 
-export interface InterfaceType extends ObjectLikeType<TypeKind.Interface> {
+export interface InterfaceType extends ObjectLikeTypeBase<TypeKind.Interface> {
   name: Name;
   properties: PropertyEntity[];
   typeParameters?: TypeParameterEntity[];
@@ -354,8 +354,8 @@ export interface InterfaceType extends ObjectLikeType<TypeKind.Interface> {
 
 //-- Indexed Access
 
-export interface IndexedAccessType extends Type<TypeKind.IndexedAccess> {
-  indexType: Types;
-  objectType: Types;
-  type?: Types;
+export interface IndexedAccessType extends TypeBase<TypeKind.IndexedAccess> {
+  indexType: Type;
+  objectType: Type;
+  type?: Type;
 }

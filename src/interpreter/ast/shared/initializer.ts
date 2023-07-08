@@ -7,14 +7,14 @@ import { interpretType } from "unwritten:interpreter:ast/index.js";
 
 import type { Declaration } from "typescript";
 
-import type { Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { Type } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function getInitializerByDeclaration(
   ctx: InterpreterContext,
   declaration: Declaration
-): Types | undefined {
+): Type | undefined {
   if(!isParameterDeclaration(declaration) &&
     !isPropertyDeclaration(declaration) &&
     !isPropertyAssignment(declaration) ||

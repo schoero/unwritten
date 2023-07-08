@@ -1,7 +1,7 @@
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
-import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
+import type { ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { JSONRenderContext, JSONRenderer } from "unwritten:renderer:json/type-definitions/renderer.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
@@ -25,7 +25,7 @@ const jsonRenderer: JSONRenderer = {
   fileExtension: ".json",
   name: BuiltInRenderers.JSON,
 
-  render(ctx: RenderContext<Renderer>, entities: ExportableEntities[]) {
+  render(ctx: RenderContext<Renderer>, entities: ExportableEntity[]) {
 
 
     //-- Initialize the context

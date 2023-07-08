@@ -7,11 +7,11 @@ import type {
   Name,
   Position
 } from "unwritten:interpreter:type-definitions/shared.js";
-import type { ExpressionType, LiteralTypes, Types } from "unwritten:interpreter:type-definitions/types.js";
+import type { ExpressionType, LiteralType, Type } from "unwritten:interpreter:type-definitions/types.js";
 import type { PartialByKey } from "unwritten:type-definitions/utils.js";
 
 
-type Entity<Kind> = {
+type EntityBase<Kind> = {
   kind: Kind;
 };
 
@@ -26,7 +26,7 @@ export type ExportableEntityKinds =
   | EntityKind.TypeAlias
   | EntityKind.Variable;
 
-export type ExportableEntities =
+export type ExportableEntity =
   | ClassEntity
   | EnumEntity
   | ExportAssignmentEntity
@@ -44,7 +44,7 @@ export type FunctionLikeEntityKinds =
   | EntityKind.Method
   | EntityKind.Setter;
 
-export type FunctionLikeEntities =
+export type FunctionLikeEntity =
   | ConstructorEntity
   | FunctionEntity
   | GetterEntity
@@ -64,7 +64,7 @@ export type InferFunctionLikeEntityKind<Kind extends FunctionLikeEntityKinds> =
             ? SetterEntity
             : never;
 
-export type Entities =
+export type Entity =
   | ClassEntity
   | ConstructorEntity
   | EnumEntity
@@ -87,23 +87,23 @@ export type Entities =
   | TypeParameterEntity
   | VariableEntity;
 
-export interface PropertyEntity extends Entity<EntityKind.Property>, JSDocTags {
+export interface PropertyEntity extends EntityBase<EntityKind.Property>, JSDocTags {
   name: Name;
   symbolId: ID;
-  type: Types;
+  type: Type;
   declarationId?: ID;
   description?: Description;
-  initializer?: Types;
+  initializer?: Type;
   modifiers?: Modifiers[];
   optional?: boolean;
   position?: Position;
 }
 
 
-export interface TupleMemberEntity extends Entity<EntityKind.TupleMember>, JSDocTags {
+export interface TupleMemberEntity extends EntityBase<EntityKind.TupleMember>, JSDocTags {
   optional: boolean;
   rest: boolean;
-  type: Types;
+  type: Type;
   name?: Name;
   position?: Position;
 }
@@ -111,18 +111,18 @@ export interface TupleMemberEntity extends Entity<EntityKind.TupleMember>, JSDoc
 
 //-- Function
 
-export interface FunctionLikeEntity<Kind extends FunctionLikeEntityKinds> extends Entity<Kind> {
+export interface FunctionLikeEntityBase<Kind extends FunctionLikeEntityKinds> extends EntityBase<Kind> {
   signatures: SignatureEntity[];
   name?: Name;
   symbolId?: ID;
 }
 
-export interface FunctionEntity extends FunctionLikeEntity<EntityKind.Function> {
+export interface FunctionEntity extends FunctionLikeEntityBase<EntityKind.Function> {
 }
 
-export interface SignatureEntity extends Entity<EntityKind.Signature>, JSDocTags {
+export interface SignatureEntity extends EntityBase<EntityKind.Signature>, JSDocTags {
   declarationId: ID;
-  returnType: Types & { description?: Description; } ;
+  returnType: Type & { description?: Description; } ;
   description?: Description;
   modifiers?: Modifiers[];
   name?: Name;
@@ -135,22 +135,22 @@ export interface SignatureEntity extends Entity<EntityKind.Signature>, JSDocTags
 
 //-- Parameter
 
-export interface ParameterEntity extends Entity<EntityKind.Parameter>, JSDocTags {
+export interface ParameterEntity extends EntityBase<EntityKind.Parameter>, JSDocTags {
   declarationId: ID;
   name: Name;
   optional: boolean;
   rest: boolean;
   symbolId: ID;
-  type: Types;
+  type: Type;
   description?: Description;
-  initializer?: Types;
+  initializer?: Type;
   position?: Position;
 }
 
 
 //-- Interface
 
-export interface InterfaceEntity extends Entity<EntityKind.Interface>, JSDocTags {
+export interface InterfaceEntity extends EntityBase<EntityKind.Interface>, JSDocTags {
   callSignatures: SignatureEntity[];
   constructSignatures: SignatureEntity[];
   getterSignatures: SignatureEntity[];
@@ -163,7 +163,7 @@ export interface InterfaceEntity extends Entity<EntityKind.Interface>, JSDocTags
   description?: Description;
   heritage?: ExpressionType[];
   position?: Position;
-  typeArguments?: Types[];
+  typeArguments?: Type[];
   typeParameters?: TypeParameterEntity[];
 }
 
@@ -174,7 +174,7 @@ export interface MergedInterfaceEntity extends Omit<InterfaceEntity, "declaratio
 
 //-- Class
 
-export interface ClassEntity extends Entity<EntityKind.Class>, JSDocTags {
+export interface ClassEntity extends EntityBase<EntityKind.Class>, JSDocTags {
   declarationId: ID;
   getters: GetterEntity[];
   methods: MethodEntity[];
@@ -190,23 +190,23 @@ export interface ClassEntity extends Entity<EntityKind.Class>, JSDocTags {
   typeParameters?: TypeParameterEntity[];
 }
 
-export interface ConstructorEntity extends FunctionLikeEntity<EntityKind.Constructor> {}
+export interface ConstructorEntity extends FunctionLikeEntityBase<EntityKind.Constructor> {}
 
-export interface MethodEntity extends FunctionLikeEntity<EntityKind.Method> {}
+export interface MethodEntity extends FunctionLikeEntityBase<EntityKind.Method> {}
 
-export interface SetterEntity extends FunctionLikeEntity<EntityKind.Setter> {}
+export interface SetterEntity extends FunctionLikeEntityBase<EntityKind.Setter> {}
 
-export interface GetterEntity extends FunctionLikeEntity<EntityKind.Getter> {}
+export interface GetterEntity extends FunctionLikeEntityBase<EntityKind.Getter> {}
 
 
 //-- Variable
 
-export interface VariableEntity extends Entity<EntityKind.Variable>, JSDocTags {
+export interface VariableEntity extends EntityBase<EntityKind.Variable>, JSDocTags {
   declarationId: ID;
   modifiers: Modifiers[];
   name: Name;
   symbolId: ID;
-  type: Types;
+  type: Type;
   description?: Description;
   position?: Position;
 }
@@ -214,11 +214,11 @@ export interface VariableEntity extends Entity<EntityKind.Variable>, JSDocTags {
 
 //-- Type alias
 
-export interface TypeAliasEntity extends Entity<EntityKind.TypeAlias>, JSDocTags {
+export interface TypeAliasEntity extends EntityBase<EntityKind.TypeAlias>, JSDocTags {
   declarationId: ID;
   name: Name;
   symbolId: ID;
-  type: Types;
+  type: Type;
   description?: Description;
   position?: Position;
   typeParameters?: TypeParameterEntity[];
@@ -227,18 +227,18 @@ export interface TypeAliasEntity extends Entity<EntityKind.TypeAlias>, JSDocTags
 
 //-- Mapped Type member
 
-export interface MappedTypeMemberEntity extends Entity<EntityKind.MappedTypeMember> {
-  keyType: LiteralTypes;
-  valueType: Types;
+export interface MappedTypeMemberEntity extends EntityBase<EntityKind.MappedTypeMember> {
+  keyType: LiteralType;
+  valueType: Type;
 }
 
 
 //-- Export Assignment
 
-export interface ExportAssignmentEntity extends Entity<EntityKind.ExportAssignment>, JSDocTags {
+export interface ExportAssignmentEntity extends EntityBase<EntityKind.ExportAssignment>, JSDocTags {
   name: Name;
   symbolId: ID;
-  type: Types;
+  type: Type;
   description?: Description;
   position?: Position;
 }
@@ -246,7 +246,7 @@ export interface ExportAssignmentEntity extends Entity<EntityKind.ExportAssignme
 
 //-- Enum
 
-export interface EnumEntity extends Entity<EntityKind.Enum>, JSDocTags {
+export interface EnumEntity extends EntityBase<EntityKind.Enum>, JSDocTags {
   members: EnumMemberEntity[];
   name: Name;
   symbolId: ID;
@@ -260,10 +260,10 @@ export interface MergedEnumEntity extends Omit<EnumEntity, "declarationId"> {
 
 }
 
-export interface EnumMemberEntity extends Entity<EntityKind.EnumMember>, JSDocTags {
+export interface EnumMemberEntity extends EntityBase<EntityKind.EnumMember>, JSDocTags {
   declarationId: ID;
   name: Name;
-  type: Types;
+  type: Type;
   description?: Description;
   position?: Position;
   symbolId?: ID;
@@ -272,20 +272,20 @@ export interface EnumMemberEntity extends Entity<EntityKind.EnumMember>, JSDocTa
 
 //-- Member
 
-export interface MemberEntity extends Entity<EntityKind.Member>, JSDocTags {
+export interface MemberEntity extends EntityBase<EntityKind.Member>, JSDocTags {
   modifiers: Modifiers[];
   optional: boolean;
-  type: Types;
+  type: Type;
   description?: Description;
-  parent?: Types;
+  parent?: Type;
   position?: Position;
 }
 
 
 //-- Module
 
-export interface ModuleEntity extends Entity<EntityKind.Module>, JSDocTags {
-  exports: ExportableEntities[];
+export interface ModuleEntity extends EntityBase<EntityKind.Module>, JSDocTags {
+  exports: ExportableEntity[];
   name: Name;
   symbolId: ID;
   description?: Description;
@@ -295,8 +295,8 @@ export interface ModuleEntity extends Entity<EntityKind.Module>, JSDocTags {
 
 //-- Source file (module)
 
-export interface SourceFileEntity extends Entity<EntityKind.SourceFile> {
-  exports: ExportableEntities[];
+export interface SourceFileEntity extends EntityBase<EntityKind.SourceFile> {
+  exports: ExportableEntity[];
   name: Name;
   symbolId: ID;
 }
@@ -304,8 +304,8 @@ export interface SourceFileEntity extends Entity<EntityKind.SourceFile> {
 
 //-- Namespace
 
-export interface NamespaceEntity extends Entity<EntityKind.Namespace>, JSDocTags {
-  exports: ExportableEntities[];
+export interface NamespaceEntity extends EntityBase<EntityKind.Namespace>, JSDocTags {
+  exports: ExportableEntity[];
   name: Name;
   symbolId: ID;
   declarationId?: ID;
@@ -316,12 +316,12 @@ export interface NamespaceEntity extends Entity<EntityKind.Namespace>, JSDocTags
 
 //-- TypeParameter
 
-export interface TypeParameterEntity extends Entity<EntityKind.TypeParameter> {
+export interface TypeParameterEntity extends EntityBase<EntityKind.TypeParameter> {
   declarationId: ID;
   name: Name;
   symbolId: ID;
-  constraint?: Types;
+  constraint?: Type;
   description?: Description;
-  initializer?: Types;
+  initializer?: Type;
   position?: Position;
 }
