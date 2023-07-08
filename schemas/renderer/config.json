@@ -46,10 +46,6 @@
           "description": "Extend another config",
           "type": "string"
         },
-        "externalModules": {
-          "$ref": "#/definitions/ExternalModules",
-          "description": "Links to the repository of external modules. The key is the name of the module, the value is the url of the repository."
-        },
         "externalTypes": {
           "$ref": "#/definitions/ExternalTypes",
           "description": "Links to external documentation of native types."
@@ -80,18 +76,6 @@
       "type": "string"
     },
     "DeepRequiredByKey<HTMLRenderConfig,string>": {
-      "$ref": "#/definitions/DeepRequiredByKeyObject%3CHTMLRenderConfig%2Cstring%3E"
-    },
-    "DeepRequiredByKey<InterpreterConfig,string>": {
-      "$ref": "#/definitions/DeepRequiredByKeyObject%3CInterpreterConfig%2Cstring%3E"
-    },
-    "DeepRequiredByKey<JSONRenderConfig,string>": {
-      "$ref": "#/definitions/DeepRequiredByKeyObject%3CJSONRenderConfig%2Cstring%3E"
-    },
-    "DeepRequiredByKey<MarkdownRenderConfig,string>": {
-      "$ref": "#/definitions/DeepRequiredByKeyObject%3CMarkdownRenderConfig%2Cstring%3E"
-    },
-    "DeepRequiredByKeyObject<HTMLRenderConfig,string>": {
       "additionalProperties": false,
       "properties": {
         "indentation": {
@@ -188,7 +172,184 @@
           ]
         },
         "translations": {
-          "$ref": "#/definitions/DeepRequiredByKeyObject%3Cstructure-1098597612-1558-3184-1098597612-1487-3185-1098597612-96-3473-1098597612-0-3901%2Cstring%3E"
+          "additionalProperties": false,
+          "properties": {
+            "abstract": {
+              "type": "string"
+            },
+            "beta": {
+              "type": "string"
+            },
+            "call-signature_one": {
+              "type": "string"
+            },
+            "call-signature_other": {
+              "type": "string"
+            },
+            "class_one": {
+              "type": "string"
+            },
+            "class_other": {
+              "type": "string"
+            },
+            "construct-signature_one": {
+              "type": "string"
+            },
+            "construct-signature_other": {
+              "type": "string"
+            },
+            "constructor_one": {
+              "type": "string"
+            },
+            "constructor_other": {
+              "type": "string"
+            },
+            "default": {
+              "type": "string"
+            },
+            "defined-in": {
+              "type": "string"
+            },
+            "deprecated": {
+              "type": "string"
+            },
+            "description_one": {
+              "type": "string"
+            },
+            "description_other": {
+              "type": "string"
+            },
+            "enum_one": {
+              "type": "string"
+            },
+            "enum_other": {
+              "type": "string"
+            },
+            "example_one": {
+              "type": "string"
+            },
+            "example_other": {
+              "type": "string"
+            },
+            "export-assignment_one": {
+              "type": "string"
+            },
+            "export-assignment_other": {
+              "type": "string"
+            },
+            "function_one": {
+              "type": "string"
+            },
+            "function_other": {
+              "type": "string"
+            },
+            "getter_one": {
+              "type": "string"
+            },
+            "getter_other": {
+              "type": "string"
+            },
+            "interface": {
+              "type": "string"
+            },
+            "interface_other": {
+              "type": "string"
+            },
+            "internal": {
+              "type": "string"
+            },
+            "method_one": {
+              "type": "string"
+            },
+            "method_other": {
+              "type": "string"
+            },
+            "module_one": {
+              "type": "string"
+            },
+            "module_other": {
+              "type": "string"
+            },
+            "namespace_one": {
+              "type": "string"
+            },
+            "namespace_other": {
+              "type": "string"
+            },
+            "object_one": {
+              "type": "string"
+            },
+            "object_other": {
+              "type": "string"
+            },
+            "optional": {
+              "type": "string"
+            },
+            "parameter_one": {
+              "type": "string"
+            },
+            "parameter_other": {
+              "type": "string"
+            },
+            "property_one": {
+              "type": "string"
+            },
+            "property_other": {
+              "type": "string"
+            },
+            "readonly": {
+              "type": "string"
+            },
+            "remarks_one": {
+              "type": "string"
+            },
+            "remarks_other": {
+              "type": "string"
+            },
+            "required": {
+              "type": "string"
+            },
+            "rest": {
+              "type": "string"
+            },
+            "return-type": {
+              "type": "string"
+            },
+            "setter_one": {
+              "type": "string"
+            },
+            "setter_other": {
+              "type": "string"
+            },
+            "static": {
+              "type": "string"
+            },
+            "type-alias_one": {
+              "type": "string"
+            },
+            "type-alias_other": {
+              "type": "string"
+            },
+            "type-parameter_one": {
+              "type": "string"
+            },
+            "type-parameter_other": {
+              "type": "string"
+            },
+            "type_one": {
+              "type": "string"
+            },
+            "type_other": {
+              "type": "string"
+            },
+            "variable_one": {
+              "type": "string"
+            },
+            "variable_other": {
+              "type": "string"
+            }
+          },
+          "type": "object"
         },
         "typeEncapsulation": {
           "anyOf": [
@@ -221,7 +382,7 @@
       },
       "type": "object"
     },
-    "DeepRequiredByKeyObject<InterpreterConfig,string>": {
+    "DeepRequiredByKey<InterpreterConfig,string>": {
       "additionalProperties": false,
       "properties": {
         "exclude": {
@@ -233,14 +394,15 @@
               "type": "array"
             },
             {
-              "$ref": "#/definitions/DeepRequiredByKeyObject%3Cstructure-1274455522-1814-1855-1274455522-1803-1855-1274455522-1738-1856-1274455522-1700-1858-1274455522-0-2004%2Cstring%3E"
+              "additionalProperties": false,
+              "type": "object"
             }
           ]
         }
       },
       "type": "object"
     },
-    "DeepRequiredByKeyObject<JSONRenderConfig,string>": {
+    "DeepRequiredByKey<JSONRenderConfig,string>": {
       "additionalProperties": false,
       "properties": {
         "includeIds": {
@@ -252,7 +414,7 @@
       },
       "type": "object"
     },
-    "DeepRequiredByKeyObject<MarkdownRenderConfig,string>": {
+    "DeepRequiredByKey<MarkdownRenderConfig,string>": {
       "additionalProperties": false,
       "properties": {
         "allowedHTMLTags": {
@@ -360,7 +522,184 @@
           ]
         },
         "translations": {
-          "$ref": "#/definitions/DeepRequiredByKeyObject%3Cstructure-1098597612-1558-3184-1098597612-1487-3185-1098597612-96-3473-1098597612-0-3901%2Cstring%3E"
+          "additionalProperties": false,
+          "properties": {
+            "abstract": {
+              "type": "string"
+            },
+            "beta": {
+              "type": "string"
+            },
+            "call-signature_one": {
+              "type": "string"
+            },
+            "call-signature_other": {
+              "type": "string"
+            },
+            "class_one": {
+              "type": "string"
+            },
+            "class_other": {
+              "type": "string"
+            },
+            "construct-signature_one": {
+              "type": "string"
+            },
+            "construct-signature_other": {
+              "type": "string"
+            },
+            "constructor_one": {
+              "type": "string"
+            },
+            "constructor_other": {
+              "type": "string"
+            },
+            "default": {
+              "type": "string"
+            },
+            "defined-in": {
+              "type": "string"
+            },
+            "deprecated": {
+              "type": "string"
+            },
+            "description_one": {
+              "type": "string"
+            },
+            "description_other": {
+              "type": "string"
+            },
+            "enum_one": {
+              "type": "string"
+            },
+            "enum_other": {
+              "type": "string"
+            },
+            "example_one": {
+              "type": "string"
+            },
+            "example_other": {
+              "type": "string"
+            },
+            "export-assignment_one": {
+              "type": "string"
+            },
+            "export-assignment_other": {
+              "type": "string"
+            },
+            "function_one": {
+              "type": "string"
+            },
+            "function_other": {
+              "type": "string"
+            },
+            "getter_one": {
+              "type": "string"
+            },
+            "getter_other": {
+              "type": "string"
+            },
+            "interface": {
+              "type": "string"
+            },
+            "interface_other": {
+              "type": "string"
+            },
+            "internal": {
+              "type": "string"
+            },
+            "method_one": {
+              "type": "string"
+            },
+            "method_other": {
+              "type": "string"
+            },
+            "module_one": {
+              "type": "string"
+            },
+            "module_other": {
+              "type": "string"
+            },
+            "namespace_one": {
+              "type": "string"
+            },
+            "namespace_other": {
+              "type": "string"
+            },
+            "object_one": {
+              "type": "string"
+            },
+            "object_other": {
+              "type": "string"
+            },
+            "optional": {
+              "type": "string"
+            },
+            "parameter_one": {
+              "type": "string"
+            },
+            "parameter_other": {
+              "type": "string"
+            },
+            "property_one": {
+              "type": "string"
+            },
+            "property_other": {
+              "type": "string"
+            },
+            "readonly": {
+              "type": "string"
+            },
+            "remarks_one": {
+              "type": "string"
+            },
+            "remarks_other": {
+              "type": "string"
+            },
+            "required": {
+              "type": "string"
+            },
+            "rest": {
+              "type": "string"
+            },
+            "return-type": {
+              "type": "string"
+            },
+            "setter_one": {
+              "type": "string"
+            },
+            "setter_other": {
+              "type": "string"
+            },
+            "static": {
+              "type": "string"
+            },
+            "type-alias_one": {
+              "type": "string"
+            },
+            "type-alias_other": {
+              "type": "string"
+            },
+            "type-parameter_one": {
+              "type": "string"
+            },
+            "type-parameter_other": {
+              "type": "string"
+            },
+            "type_one": {
+              "type": "string"
+            },
+            "type_other": {
+              "type": "string"
+            },
+            "variable_one": {
+              "type": "string"
+            },
+            "variable_other": {
+              "type": "string"
+            }
+          },
+          "type": "object"
         },
         "typeEncapsulation": {
           "anyOf": [
@@ -393,190 +732,6 @@
       },
       "type": "object"
     },
-    "DeepRequiredByKeyObject<structure-1098597612-1558-3184-1098597612-1487-3185-1098597612-96-3473-1098597612-0-3901,string>": {
-      "additionalProperties": false,
-      "properties": {
-        "abstract": {
-          "type": "string"
-        },
-        "beta": {
-          "type": "string"
-        },
-        "call-signature_one": {
-          "type": "string"
-        },
-        "call-signature_other": {
-          "type": "string"
-        },
-        "class_one": {
-          "type": "string"
-        },
-        "class_other": {
-          "type": "string"
-        },
-        "construct-signature_one": {
-          "type": "string"
-        },
-        "construct-signature_other": {
-          "type": "string"
-        },
-        "constructor_one": {
-          "type": "string"
-        },
-        "constructor_other": {
-          "type": "string"
-        },
-        "default": {
-          "type": "string"
-        },
-        "defined-in": {
-          "type": "string"
-        },
-        "deprecated": {
-          "type": "string"
-        },
-        "description_one": {
-          "type": "string"
-        },
-        "description_other": {
-          "type": "string"
-        },
-        "enum_one": {
-          "type": "string"
-        },
-        "enum_other": {
-          "type": "string"
-        },
-        "example_one": {
-          "type": "string"
-        },
-        "example_other": {
-          "type": "string"
-        },
-        "export-assignment_one": {
-          "type": "string"
-        },
-        "export-assignment_other": {
-          "type": "string"
-        },
-        "function_one": {
-          "type": "string"
-        },
-        "function_other": {
-          "type": "string"
-        },
-        "getter_one": {
-          "type": "string"
-        },
-        "getter_other": {
-          "type": "string"
-        },
-        "interface": {
-          "type": "string"
-        },
-        "interface_other": {
-          "type": "string"
-        },
-        "internal": {
-          "type": "string"
-        },
-        "method_one": {
-          "type": "string"
-        },
-        "method_other": {
-          "type": "string"
-        },
-        "module_one": {
-          "type": "string"
-        },
-        "module_other": {
-          "type": "string"
-        },
-        "namespace_one": {
-          "type": "string"
-        },
-        "namespace_other": {
-          "type": "string"
-        },
-        "object_one": {
-          "type": "string"
-        },
-        "object_other": {
-          "type": "string"
-        },
-        "optional": {
-          "type": "string"
-        },
-        "parameter_one": {
-          "type": "string"
-        },
-        "parameter_other": {
-          "type": "string"
-        },
-        "property_one": {
-          "type": "string"
-        },
-        "property_other": {
-          "type": "string"
-        },
-        "readonly": {
-          "type": "string"
-        },
-        "remarks_one": {
-          "type": "string"
-        },
-        "remarks_other": {
-          "type": "string"
-        },
-        "required": {
-          "type": "string"
-        },
-        "rest": {
-          "type": "string"
-        },
-        "return-type": {
-          "type": "string"
-        },
-        "setter_one": {
-          "type": "string"
-        },
-        "setter_other": {
-          "type": "string"
-        },
-        "static": {
-          "type": "string"
-        },
-        "type_one": {
-          "type": "string"
-        },
-        "type_other": {
-          "type": "string"
-        },
-        "type-alias_one": {
-          "type": "string"
-        },
-        "type-alias_other": {
-          "type": "string"
-        },
-        "type-parameter_one": {
-          "type": "string"
-        },
-        "type-parameter_other": {
-          "type": "string"
-        },
-        "variable_one": {
-          "type": "string"
-        },
-        "variable_other": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DeepRequiredByKeyObject<structure-1274455522-1814-1855-1274455522-1803-1855-1274455522-1738-1856-1274455522-1700-1858-1274455522-0-2004,string>": {
-      "additionalProperties": false,
-      "type": "object"
-    },
     "ExportableEntityKinds": {
       "enum": [
         "ClassEntity",
@@ -590,12 +745,6 @@
         "VariableEntity"
       ],
       "type": "string"
-    },
-    "ExternalModules": {
-      "additionalProperties": {
-        "type": "string"
-      },
-      "type": "object"
     },
     "ExternalTypes": {
       "additionalProperties": {

@@ -2,6 +2,7 @@
   "extends": "@schoero/ts-config",
   "compilerOptions": {
     "baseUrl": ".",
+    "incremental": false,
     "lib": ["ESNext", "DOM"],
     "paths": {
       "unwritten:*": ["src/*"],

@@ -3,7 +3,8 @@
     "@schoero/cspell-config"
   ],
   "ignorePaths": [
-    "schemas"
+    "schemas",
+    "local"
   ],
   "words": [
     "anchortext",
