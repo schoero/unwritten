@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys/sort-keys-fix */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { TypeKind } from "unwritten:interpreter/type-definitions/types.js";
 
 import type { ExternalTypes, InterpreterConfig } from "unwritten:type-definitions/config.js";
 import type { Complete } from "unwritten:type-definitions/utils.js";
@@ -10,7 +10,7 @@ export const defaultOutputPath = "./docs";
 
 export const defaultInterpreterConfig: Complete<InterpreterConfig> = {
   exclude: {
-    "node_modules/typescript/lib/**/*": "*",
+    "node_modules/**/*": "*",
     "!node_modules/typescript/lib/**/*": [
       "Partial",
       "Required",
