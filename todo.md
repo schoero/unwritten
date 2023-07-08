@@ -26,6 +26,8 @@
     * [ ] undefined
     * [ ] test various finder algorithms and fallback to default config
   * Add jsdoc comments and description to files
+* [x] Remove `undefined` from optional types -> Resolved with `strictNullChecks` in tsconfig
+* [ ] Auto detect repositories of external packages for external types and link unresolved type to them
 
 * [ ] Link to type parameter possible
 * [ ] How are type parameters rendered
