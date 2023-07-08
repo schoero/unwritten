@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 import { afterAll, beforeAll, expect, it, vitest } from "vitest";
 
-import { createConfig } from "unwritten:config/index.js";
+import { createConfig } from "unwritten:config/config.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 

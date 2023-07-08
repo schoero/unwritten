@@ -1,17 +1,17 @@
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { isVariableDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Symbol, VariableDeclaration } from "typescript";
 
-import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { VariableEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): VariableEntity {

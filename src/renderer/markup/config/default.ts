@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 
 import type {
   HTMLRenderConfig,

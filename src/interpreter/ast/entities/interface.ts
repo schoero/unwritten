@@ -1,3 +1,4 @@
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import {
   createPropertyEntity,
   createSignatureEntity,
@@ -8,7 +9,6 @@ import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:int
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
@@ -23,10 +23,10 @@ import { assert } from "unwritten:utils:general.js";
 
 import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "typescript";
 
-import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ExpressionType } from "unwritten:interpreter:type-definitions/types.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 import type { PartialByKey } from "unwritten:type-definitions/utils.js";
-import type { InterpreterContext } from "unwritten:types:context.d.js";
 
 
 export function createInterfaceEntity(ctx: InterpreterContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity {

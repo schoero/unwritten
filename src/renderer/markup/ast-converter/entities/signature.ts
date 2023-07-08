@@ -1,18 +1,4 @@
 import { renderNode } from "unwritten:renderer/index.js";
-import {
-  convertDescriptionForDocumentation,
-  convertDescriptionForType
-} from "unwritten:renderer/markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
-import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
-import {
-  convertTagsForDocumentation,
-  convertTagsForType
-} from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
-import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertParameterEntitiesForDocumentation,
@@ -22,7 +8,20 @@ import {
   convertTypeParameterEntitiesForSignature,
   convertTypeParameterEntitiesForType
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import {
+  convertDescriptionForDocumentation,
+  convertDescriptionForType
+} from "unwritten:renderer:markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import {
+  convertTagsForDocumentation,
+  convertTagsForType
+} from "unwritten:renderer:markup/ast-converter/shared/tags.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
+import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
 import {
   createAnchorNode,
   createListNode,
@@ -31,10 +30,11 @@ import {
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
-import type { SignatureEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedPropertyEntityForTableOfContents,
   ConvertedReturnTypeForDocumentation,

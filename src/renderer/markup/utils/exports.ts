@@ -2,7 +2,7 @@ import { isClassEntity, isModuleEntity, isNamespaceEntity } from "unwritten:type
 
 import type { Entities, ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ID } from "unwritten:interpreter/type-definitions/shared.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 
 
 export type ExportRegistry = Set<ID>;

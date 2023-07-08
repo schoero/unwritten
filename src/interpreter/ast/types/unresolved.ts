@@ -1,14 +1,14 @@
 import { interpretType } from "unwritten:interpreter/ast/index.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { isTypeReferenceType } from "unwritten:interpreter/typeguards/types.js";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { Type, TypeNode } from "typescript";
 
 import type { UnresolvedType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createUnresolvedType(ctx: InterpreterContext, type: Type): UnresolvedType {

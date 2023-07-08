@@ -4,8 +4,8 @@ import {
   convertSignatureEntityForType
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 
-import type { FunctionLikeEntities } from "unwritten:interpreter:type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { FunctionLikeEntities } from "unwritten:interpreter/type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedFunctionEntityForDocumentation,
   ConvertedFunctionEntityForTableOfContents,

@@ -1,11 +1,11 @@
 import { relative } from "node:path/posix";
 
-import { createLinkNode, createSmallNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+import { createLinkNode, createSmallNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
 import type { Position } from "unwritten:interpreter:type-definitions/shared.js";
-import type { ConvertedPosition } from "unwritten:renderer/markup/types-definitions/renderer.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ConvertedPosition } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertPosition(ctx: MarkupRenderContexts, position?: Position): ConvertedPosition {

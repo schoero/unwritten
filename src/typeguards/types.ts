@@ -1,4 +1,4 @@
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 
 import type {
   AnyType,
@@ -7,6 +7,7 @@ import type {
   BigIntType,
   BooleanLiteralType,
   BooleanType,
+  CircularType,
   ClassType,
   ExpressionType,
   FunctionType,
@@ -59,6 +60,10 @@ export function isBooleanLiteralType(type: Types): type is BooleanLiteralType {
 
 export function isBooleanType(type: Types): type is BooleanType {
   return type.kind === TypeKind.Boolean;
+}
+
+export function isCircularType(type: Types): type is CircularType {
+  return type.kind === TypeKind.Circular;
 }
 
 export function isClassType(type: Types): type is ClassType {

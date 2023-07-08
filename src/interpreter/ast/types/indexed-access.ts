@@ -1,12 +1,12 @@
 import { interpretType, interpretTypeNode } from "unwritten:interpreter/ast/index.js";
 import { getTypeId } from "unwritten:interpreter/ast/shared/id.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { isIndexedAccessType } from "unwritten:interpreter/typeguards/types.js";
 
 import type { IndexedAccessType as TSIndexedAccessType, IndexedAccessTypeNode } from "typescript";
 
 import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createIndexedAccessType(ctx: InterpreterContext, type: TSIndexedAccessType): IndexedAccessType {

@@ -1,16 +1,16 @@
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
 import { getNameByDeclaration } from "unwritten:interpreter/ast/shared/name.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { isNamespaceExport } from "unwritten:interpreter/typeguards/declarations.js";
 import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { assert } from "unwritten:utils/general.js";
 
 import type { Symbol } from "typescript";
 
-import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): NamespaceEntity {

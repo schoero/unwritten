@@ -3,9 +3,9 @@ import { isHTMLRenderContext, renderNode as renderNodeAsHTML } from "unwritten:r
 import { renderNode as renderNodeAsMarkdown } from "unwritten:renderer:markup/markdown/index.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { Renderer } from "unwritten:type-definitions/renderer.d.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
 export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {

@@ -1,7 +1,7 @@
 import { assert, expect, it } from "vitest";
 
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createFunctionEntity, createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { isNumberLiteralType, isUnionType, isUnresolvedType } from "unwritten:typeguards/types.js";

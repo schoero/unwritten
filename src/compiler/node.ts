@@ -5,13 +5,15 @@ import ts from "typescript";
 import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler/shared.js";
 import { findFile } from "unwritten:utils:finder.js";
 
-import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
+import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 
 export function compile(ctx: DefaultContext, entryFilePath: string, tsConfigOrFilePath?: ts.CompilerOptions | string) {
 
   const absoluteEntryFilePath = resolve(entryFilePath);
-  const tsConfigOrAbsoluteFilePath = typeof tsConfigOrFilePath === "string" ? resolve(tsConfigOrFilePath) : tsConfigOrFilePath;
+  const tsConfigOrAbsoluteFilePath = typeof tsConfigOrFilePath === "string"
+    ? resolve(tsConfigOrFilePath)
+    : tsConfigOrFilePath;
 
 
   //-- Compile

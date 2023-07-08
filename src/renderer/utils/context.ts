@@ -1,5 +1,5 @@
 import type { CompleteConfig } from "unwritten:type-definitions/config.js";
-import type { DefaultContext, RenderContext } from "unwritten:type-definitions/context.d.js";
+import type { DefaultContext, RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 

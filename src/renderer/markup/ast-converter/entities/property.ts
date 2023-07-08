@@ -1,21 +1,21 @@
 import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
-} from "unwritten:renderer/markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer/markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
+} from "unwritten:renderer:markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import {
   convertTagsForDocumentation,
   convertTagsForType
-} from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import { convertType, convertTypeForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
-import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
+} from "unwritten:renderer:markup/ast-converter/shared/tags.js";
+import { convertType, convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
 import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
-import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedPropertyEntityForDocumentation,
   ConvertedPropertyEntityForTableOfContents,

@@ -1,12 +1,12 @@
 import { expect, it } from "vitest";
 
 import { createModuleEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import {
   convertModuleEntityForDocumentation,
   convertModuleEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";

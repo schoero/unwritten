@@ -1,5 +1,6 @@
-import type { TypeKind } from "unwritten:interpreter:enums/types.js";
-import type { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import type { BuiltInRenderers } from "../renderer/enums/renderer.js";
+
+import type { TypeKind } from "unwritten:interpreter/enums/type.js";
 import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config.js";
 import type { HTMLRenderConfig, MarkdownRenderConfig } from "unwritten:renderer:markup/types-definitions/config.js";
 

@@ -5,7 +5,7 @@ import { isConstructorDeclaration } from "unwritten:interpreter:typeguards/decla
 import type { Declaration, Node, Symbol, Type } from "typescript";
 
 import type { Name } from "unwritten:interpreter:type-definitions/shared.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function getNameBySymbol(ctx: InterpreterContext, symbol: Symbol): Name {

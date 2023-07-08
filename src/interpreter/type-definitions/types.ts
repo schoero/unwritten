@@ -1,4 +1,4 @@
-import type { TypeKind } from "unwritten:interpreter:enums/types.js";
+import type { TypeKind } from "unwritten:interpreter/enums/type.js";
 import type {
   GetterEntity,
   MethodEntity,
@@ -7,7 +7,7 @@ import type {
   SignatureEntity,
   TupleMemberEntity,
   TypeParameterEntity
-} from "unwritten:interpreter:type-definitions/entities.js";
+} from "unwritten:interpreter/type-definitions/entities.js";
 import type { ID, Modifiers, Name, Position } from "unwritten:interpreter:type-definitions/shared.js";
 
 

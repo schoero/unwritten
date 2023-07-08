@@ -1,12 +1,12 @@
-import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderNode } from "unwritten:renderer:html/index.js";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
 
-import type { SectionType } from "unwritten:renderer/markup/enums/sections.js";
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
 
 
 export function renderSectionNode(ctx: HTMLRenderContext, sectionNode: SectionNode): string {

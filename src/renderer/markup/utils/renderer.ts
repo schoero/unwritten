@@ -1,4 +1,4 @@
-import { EntityKind } from "unwritten:interpreter/enums/entities.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 
 import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Encapsulation, MarkupRenderConfig } from "unwritten:renderer:markup/types-definitions/config.js";

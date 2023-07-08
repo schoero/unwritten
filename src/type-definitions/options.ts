@@ -1,6 +1,6 @@
+import type { BuiltInRenderers } from "../renderer/enums/renderer.js";
 import type ts from "typescript";
 
-import type { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 import type { Config } from "./config.js";

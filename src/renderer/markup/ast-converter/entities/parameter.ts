@@ -1,11 +1,11 @@
-import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { createListNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
-import type { ParameterEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { ParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedParameterEntitiesForDocumentation,
   ConvertedParameterEntitiesForSignature,

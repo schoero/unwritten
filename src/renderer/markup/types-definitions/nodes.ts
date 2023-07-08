@@ -1,6 +1,7 @@
-import type { SectionType } from "unwritten:renderer/markup/enums/sections.ts";
-import type { Anchor } from "unwritten:renderer/markup/utils/linker.js";
-import type { ASTNodeKinds } from "unwritten:renderer:markup/enums/nodes.js";
+import type { ASTNodeKinds } from "../enums/nodes.js";
+
+import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
+import type { Anchor } from "unwritten:renderer:markup/utils/linker.js";
 
 
 export type ASTNodes =

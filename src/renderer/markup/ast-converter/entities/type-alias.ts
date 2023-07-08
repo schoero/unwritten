@@ -1,22 +1,22 @@
 import { renderNode } from "unwritten:renderer/index.js";
-import { convertDescriptionForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer/markup/ast-converter/shared/example.js";
-import { convertRemarks } from "unwritten:renderer/markup/ast-converter/shared/remarks.js";
-import { convertTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
-import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertTypeParameterEntitiesForDocumentation,
   convertTypeParameterEntitiesForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
+import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
+import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
-import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedTypeAliasEntityForDocumentation,
   ConvertedTypeAliasEntityForTableOfContents

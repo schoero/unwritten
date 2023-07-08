@@ -1,5 +1,3 @@
-import { getCategoryName } from "unwritten:renderer/markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents,
@@ -21,7 +19,9 @@ import {
   convertVariableEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { createListNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   isClassEntity,
   isEnumEntity,
@@ -34,15 +34,15 @@ import {
   isVariableEntity
 } from "unwritten:typeguards/entities.js";
 
-import type { Entities, ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
-import type { ListNode, TitleNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { Entities, ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ListNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedCategoryForDocumentation,
   ConvertedCategoryForTableOfContents,
   ConvertedEntitiesForDocumentation,
   ConvertedEntitiesForTableOfContents
-} from "unwritten:renderer:markup/types-definitions/renderer.d.js";
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entity: ExportableEntities): ConvertedEntitiesForTableOfContents {

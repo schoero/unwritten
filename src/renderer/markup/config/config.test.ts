@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
 import { createClassEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertClassEntityForDocumentation } from "unwritten:renderer/markup/ast-converter/entities/index.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { convertClassEntityForDocumentation } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import {
   convertStringLiteralTypeInline,
   convertStringTypeInline

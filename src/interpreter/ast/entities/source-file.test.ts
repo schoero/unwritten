@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { isNamespaceEntity, isVariableEntity } from "unwritten:typeguards/entities.js";

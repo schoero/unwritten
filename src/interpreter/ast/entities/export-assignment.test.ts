@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createExportAssignmentEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";

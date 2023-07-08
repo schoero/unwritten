@@ -1,6 +1,6 @@
-import { getAnchorLink } from "unwritten:renderer/markup/utils/linker.js";
-import { createLinkNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { renderLinkNode } from "unwritten:renderer:markdown/ast/link.js";
+import { getAnchorLink } from "unwritten:renderer:markup/utils/linker.js";
+import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nodes.js";

@@ -2,7 +2,7 @@ import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { NumberLiteralType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ConvertedNumberLiteralTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 

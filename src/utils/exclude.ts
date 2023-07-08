@@ -6,7 +6,7 @@ import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/posit
 import type { Declaration, Symbol } from "typescript";
 
 import type { InterpreterConfig } from "unwritten:type-definitions/config.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function isExcluded(path: string, name: string = "*", excludedPaths: InterpreterConfig["exclude"]): boolean {

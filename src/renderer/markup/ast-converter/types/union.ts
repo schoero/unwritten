@@ -1,7 +1,7 @@
-import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 
 import type { UnionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { ConvertedUnionTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 

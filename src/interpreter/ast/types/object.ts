@@ -1,3 +1,4 @@
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import {
   createGetterEntity,
   createMethodEntity,
@@ -8,7 +9,6 @@ import {
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import {
   isGetterSymbol,
   isMethodSymbol,

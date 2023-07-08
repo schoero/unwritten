@@ -1,3 +1,4 @@
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import {
   createConstructorEntity,
   createGetterEntity,
@@ -12,7 +13,6 @@ import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modi
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   isClassDeclaration,
   isConstructorDeclaration,
@@ -26,9 +26,9 @@ import { assert } from "unwritten:utils:general.js";
 
 import type { ClassLikeDeclaration, HeritageClause, NodeArray, Symbol } from "typescript";
 
-import type { ClassEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ExpressionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:types:context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createClassEntity(ctx: InterpreterContext, symbol: Symbol): ClassEntity {

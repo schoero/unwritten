@@ -1,7 +1,7 @@
 import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
-import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer.ts";
-import type { ExportRegistry } from "unwritten:renderer/markup/utils/exports.ts";
-import type { LinkRegistry } from "unwritten:renderer/markup/utils/linker.js";
+import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import type { ExportRegistry } from "unwritten:renderer:markup/utils/exports.js";
+import type { LinkRegistry } from "unwritten:renderer:markup/utils/linker.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 

@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { convertDescriptionForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/description.js";
+import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";

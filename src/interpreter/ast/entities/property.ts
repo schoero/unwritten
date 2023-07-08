@@ -1,5 +1,6 @@
 import ts from "typescript";
 
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
@@ -7,7 +8,6 @@ import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritte
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import {
   isParameterDeclaration,
   isPropertyAssignment,
@@ -26,8 +26,8 @@ import type {
   Symbol
 } from "typescript";
 
-import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): PropertyEntity {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { createClassEntity, createInterfaceEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import {
   extendClassEntityConstructorsWithHeritage,
   extendClassEntityEntitiesWithHeritage,
@@ -13,7 +13,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
-import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { InterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
 
 
 scope("Renderer", "utils", () => {

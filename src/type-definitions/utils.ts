@@ -1,4 +1,4 @@
-import type { Entities } from "unwritten:interpreter:type-definitions/entities.js";
+import type { Entities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Types } from "unwritten:interpreter:type-definitions/types.js";
 
 
@@ -36,7 +36,7 @@ type RemoveTranslationsSuffix<T extends object, S extends "_one" | "_other"> = {
   [Key in keyof T as Key extends `${infer KeyWithoutSuffix}${S}` ? KeyWithoutSuffix : Key]: T[Key];
 };
 
-type TranslationWithoutSuffixes<T extends object> = RemoveTranslationsSuffix<RemoveTranslationsSuffix<T, "_one">, "_other">;
+export type TranslationWithoutSuffixes<T extends object> = RemoveTranslationsSuffix<RemoveTranslationsSuffix<T, "_one">, "_other">;
 
 
 //-- DeepOmit

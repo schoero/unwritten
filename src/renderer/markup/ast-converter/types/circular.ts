@@ -3,18 +3,18 @@ import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
-import type { UndefinedType } from "unwritten:interpreter:type-definitions/types.js";
+import type { CircularType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ConvertedUndefinedTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { ConvertedCircularTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertUndefinedTypeInline(ctx: MarkupRenderContexts, undefinedType: UndefinedType): ConvertedUndefinedTypeInline {
+export function convertCircularTypeInline(ctx: MarkupRenderContexts, circularType: CircularType): ConvertedCircularTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 
-  const name = undefinedType.name;
+  const name = circularType.name ?? "";
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
-  const link = ctx.config.externalTypes[TypeKind.Undefined] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Undefined]);
+  const link = ctx.config.externalTypes[TypeKind.Any] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Any]);
 
   return link ?? encapsulatedName;
 

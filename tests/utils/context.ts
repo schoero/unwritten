@@ -1,8 +1,8 @@
-import { getDefaultConfig } from "unwritten:config/index.js";
-import markdownRenderer, { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index.js";
-import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import { getDefaultConfig } from "unwritten:config/config.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import jsonRenderer from "unwritten:renderer:json/index.js";
 import htmlRenderer, { isHTMLRenderContext } from "unwritten:renderer:markup/html/index.js";
+import markdownRenderer, { isMarkdownRenderContext } from "unwritten:renderer:markup/markdown/index.js";
 import { assert } from "unwritten:utils/general.js";
 import { override } from "unwritten:utils:override.js";
 

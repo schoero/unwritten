@@ -1,10 +1,10 @@
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 
 import type { BigIntLiteralType as TSBigIntLiteralType } from "typescript";
 
 import type { BigIntLiteralType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createBigIntLiteralType(ctx: InterpreterContext, type: TSBigIntLiteralType): BigIntLiteralType {

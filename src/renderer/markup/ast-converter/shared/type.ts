@@ -1,6 +1,3 @@
-import { createParagraphNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
-import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import {
   convertAnyTypeInline,
@@ -9,6 +6,7 @@ import {
   convertBigIntTypeInline,
   convertBooleanLiteralTypeInline,
   convertBooleanTypeInline,
+  convertCircularTypeInline,
   convertClassTypeInline,
   convertClassTypeMultiline,
   convertFunctionTypeInline,
@@ -41,6 +39,9 @@ import {
   convertUnresolvedTypeInline,
   convertVoidTypeInline
 } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+import { isMultilineType } from "unwritten:renderer:markup/utils/types.js";
 import {
   isAnyType,
   isArrayType,
@@ -48,6 +49,7 @@ import {
   isBigIntType,
   isBooleanLiteralType,
   isBooleanType,
+  isCircularType,
   isClassType,
   isFunctionType,
   isInterfaceType,
@@ -75,12 +77,12 @@ import {
 } from "unwritten:typeguards/types.js";
 
 import type { MultilineTypes, Types } from "unwritten:interpreter/type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ParagraphNode, TitleNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ParagraphNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedInlineTypes,
   ConvertedMultilineTypes
-} from "unwritten:renderer/markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Types): TitleNode<[ParagraphNode]> {
@@ -181,6 +183,8 @@ function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Types): Conve
     return convertTypeParameterTypeInline(ctx, type);
   } else if(isUnresolvedType(type)){
     return convertUnresolvedTypeInline(ctx, type);
+  } else if(isCircularType(type)){
+    return convertCircularTypeInline(ctx, type);
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);

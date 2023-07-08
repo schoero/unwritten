@@ -1,12 +1,12 @@
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
-import { convertObjectTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
-import { createLinkNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
 import type { ClassType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedClassType,
   ConvertedClassTypeMultiline

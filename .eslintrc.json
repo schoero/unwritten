@@ -58,8 +58,8 @@
               {
                 "group": [
                   "unwritten:renderer:markdown*",
-                  "unwritten:renderer/markup/html*",
-                  "unwritten:renderer/markup/markdown*",
+                  "unwritten:renderer:markup/html*",
+                  "unwritten:renderer:markup/markdown*",
                   "!unwritten:renderer:html*"
                 ]
               }
@@ -80,8 +80,8 @@
               {
                 "group": [
                   "unwritten:renderer:html*",
-                  "unwritten:renderer/markup/html*",
-                  "unwritten:renderer/markup/markdown*",
+                  "unwritten:renderer:markup/html*",
+                  "unwritten:renderer:markup/markdown*",
                   "!unwritten:renderer:markdown*"
                 ]
               }

@@ -1,4 +1,4 @@
-import type { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import type { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import type {
   Description,
   ID,

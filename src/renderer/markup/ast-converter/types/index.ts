@@ -4,6 +4,7 @@ export * from "./bigint.js";
 export * from "./bigint-literal.js";
 export * from "./boolean.js";
 export * from "./boolean-literal.js";
+export * from "./circular.js";
 export * from "./class.js";
 export * from "./function.js";
 export * from "./indexed-access.js";

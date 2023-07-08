@@ -1,4 +1,4 @@
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 
 import type {
   ClassEntity,
@@ -19,7 +19,7 @@ import type {
   SignatureEntity,
   TypeAliasEntity,
   VariableEntity
-} from "unwritten:interpreter:type-definitions/entities.js";
+} from "unwritten:interpreter/type-definitions/entities.js";
 
 
 export function isClassEntity(entity: Entities): entity is ClassEntity {

@@ -8,7 +8,7 @@ import { interpretType } from "unwritten:interpreter:ast/index.js";
 import type { Declaration } from "typescript";
 
 import type { Types } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function getInitializerByDeclaration(

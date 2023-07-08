@@ -1,3 +1,4 @@
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { createTypeByDeclaration } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
 import {
@@ -7,7 +8,6 @@ import {
 } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
 import { isEnumDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
 
@@ -17,8 +17,8 @@ import type {
   EnumEntity,
   EnumMemberEntity,
   MergedEnumEntity
-} from "unwritten:interpreter:type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+} from "unwritten:interpreter/type-definitions/entities.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createEnumEntity(ctx: InterpreterContext, symbol: Symbol): EnumEntity | MergedEnumEntity {

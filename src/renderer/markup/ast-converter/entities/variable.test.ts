@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import {
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents

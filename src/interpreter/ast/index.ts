@@ -121,9 +121,9 @@ import { getEnumFlagNames } from "unwritten:tests:utils/debug.js";
 import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
+import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Types } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function interpret(ctx: InterpreterContext, sourceFileSymbol: Symbol): ExportableEntities[] {

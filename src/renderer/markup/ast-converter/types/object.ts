@@ -1,14 +1,14 @@
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { filterPrivateMembers, filterPrivateSignatures } from "unwritten:renderer/utils/private-members.js";
 import {
   convertFunctionLikeEntityForType,
   convertPropertyEntityForType,
   convertSignatureEntityForType
-} from "unwritten:renderer/markup/ast-converter/entities/index.js";
-import { createLinkNode, createListNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { filterPrivateMembers, filterPrivateSignatures } from "unwritten:renderer/utils/private-members.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
 import type {
   ClassType,
@@ -17,8 +17,8 @@ import type {
   ObjectType,
   TypeLiteralType
 } from "unwritten:interpreter:type-definitions/types.js";
-import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedObjectType,
   ConvertedObjectTypeMultiline

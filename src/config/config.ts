@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, parse, resolve } from "node:path";
 
-import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default.js";
 import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default.js";
 import { findFile } from "unwritten:utils:finder.js";
@@ -9,8 +9,8 @@ import { override } from "unwritten:utils:override.js";
 
 import { defaultExternalTypes, defaultInterpreterConfig, defaultOutputPath } from "./default.js";
 
-import type { CompleteConfig, Config } from "unwritten:type-definitions/config.d.js";
-import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
+import type { CompleteConfig, Config } from "unwritten:type-definitions/config.js";
+import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 
 export async function createConfig(ctx: DefaultContext, configOrPath: Config | string | undefined, output?: string): Promise<CompleteConfig> {

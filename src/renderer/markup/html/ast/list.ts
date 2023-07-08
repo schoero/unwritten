@@ -1,5 +1,5 @@
-import { isListNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
+import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { renderIndentation } from "unwritten:renderer:utils/indentation.js";
 
 import { renderNode } from "../index.js";

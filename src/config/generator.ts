@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-import { getDefaultConfig } from "./index.js";
+import { getDefaultConfig } from "./config.js";
 
 import type { ConfigWithSchema } from "unwritten:type-definitions/config.js";
 

@@ -21,8 +21,8 @@ import type {
 import type {
   FunctionLikeEntityKinds,
   InferFunctionLikeEntityKind
-} from "unwritten:interpreter:type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+} from "unwritten:interpreter/type-definitions/entities.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> {

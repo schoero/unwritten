@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { createExportAssignmentEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { renderNode } from "unwritten:renderer/index.js";
 import {
   convertExportAssignmentEntityForDocumentation,

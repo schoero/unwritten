@@ -5,12 +5,12 @@ import {
   createInterfaceEntity,
   createVariableEntity
 } from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { convertObjectLiteralTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import {
   convertPropertyEntityForDocumentation,
   convertPropertyEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { convertObjectLiteralTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,

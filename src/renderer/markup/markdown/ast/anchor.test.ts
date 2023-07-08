@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { createAnchor, registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { createAnchor, registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";

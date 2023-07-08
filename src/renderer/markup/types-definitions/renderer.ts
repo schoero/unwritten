@@ -1,4 +1,6 @@
-import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter:enums/jsdoc.js";
+import type { RenderCategories } from "../enums/renderer.js";
+
+import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter/enums/jsdoc.js";
 import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.js";
 
 import type {
@@ -12,37 +14,6 @@ import type {
   TitleNode
 } from "./nodes.js";
 
-
-//-- Categories
-
-export enum RenderCategories {
-  Class = "class",
-  Classes = "classes",
-  Constructor = "constructor",
-  Constructors = "constructors",
-  Enum = "enum",
-  Enums = "enums",
-  Function = "function",
-  Functions = "functions",
-  Getter = "getter",
-  Getters = "getters",
-  Interface = "interface",
-  Interfaces = "interfaces",
-  Method = "method",
-  Methods = "methods",
-  Module = "module",
-  Modules = "modules",
-  Namespace = "namespace",
-  Namespaces = "namespaces",
-  Properties = "properties",
-  Property = "property",
-  Setter = "setter",
-  Setters = "setters",
-  TypeAlias = "type",
-  TypeAliases = "types",
-  Variable = "variable",
-  Variables = "variables"
-}
 
 export type CategoryNames = {
   [Key in RenderCategories]: string;
@@ -147,6 +118,7 @@ export type ConvertedNullTypeInline = ASTNodes;
 export type ConvertedNeverTypeInline = ASTNodes;
 export type ConvertedUnknownTypeInline = ASTNodes;
 export type ConvertedAnyTypeInline = ASTNodes;
+export type ConvertedCircularTypeInline = ASTNodes;
 
 
 //-- Literal types

@@ -2,8 +2,8 @@ import { RenderableJSDocTags } from "unwritten:renderer:markup/enums/jsdoc.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.js";
-import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
 export function convertJSDocTags(ctx: MarkupRenderContexts, entityWithTags: JSDocTags): ASTNodes[] {

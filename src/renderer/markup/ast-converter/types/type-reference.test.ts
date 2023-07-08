@@ -1,9 +1,9 @@
 import { expect, it } from "vitest";
 
 import { createInterfaceEntity, createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertTypeForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { isAnchorNode, isParagraphNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { isAnchorNode, isParagraphNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";

@@ -3,14 +3,14 @@ import { readFileSync as readFileSyncOriginal } from "node:fs";
 import ts, { ModuleResolutionKind } from "typescript";
 
 import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler:shared.js";
-import { getDefaultConfig } from "unwritten:config/index.js";
+import { getDefaultConfig } from "unwritten:config/config.js";
 import { getExportedSymbols } from "unwritten:interpreter/utils/ts.js";
 import { override } from "unwritten:utils/override.js";
 import { existsSync, readFileSync, writeFileSync } from "unwritten:utils/virtual-fs.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { Config } from "unwritten:type-definitions/config.d.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { Config } from "unwritten:type-definitions/config.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 type CompilerInput = {

@@ -1,4 +1,4 @@
-import { isAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { isAnchor } from "unwritten:renderer:markup/utils/linker.js";
 
 import { ASTNodeKinds } from "../enums/nodes.js";
 
@@ -18,8 +18,8 @@ import type {
 } from "../types-definitions/nodes.js";
 
 import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
-import type { SectionType } from "unwritten:renderer/markup/enums/sections.js";
-import type { Anchor } from "unwritten:renderer/markup/utils/linker.js";
+import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
+import type { Anchor } from "unwritten:renderer:markup/utils/linker.js";
 
 
 export function createAnchorNode(name: Name, id: ID): AnchorNode {

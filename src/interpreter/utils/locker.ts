@@ -2,7 +2,7 @@ import { ensureTypeHasId, getTypeId } from "unwritten:interpreter:ast/shared/id.
 
 import type { Type } from "typescript";
 
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 function getLocker(ctx: InterpreterContext) {

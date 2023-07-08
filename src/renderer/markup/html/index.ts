@@ -1,19 +1,17 @@
 /* eslint-disable arrow-body-style */
-import { createExportRegistry } from "unwritten:renderer/markup/utils/exports.js";
-import { minMax } from "unwritten:renderer/markup/utils/renderer.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { BuiltInRenderers } from "unwritten:renderer:enums/renderer.js";
+import { renderAnchorNode } from "unwritten:renderer:html/ast/anchor.js";
+import { renderBoldNode } from "unwritten:renderer:html/ast/bold.js";
+import { renderItalicNode } from "unwritten:renderer:html/ast/italic.js";
+import { renderLinkNode } from "unwritten:renderer:html/ast/link.js";
 import { renderListNode } from "unwritten:renderer:html/ast/list.js";
+import { renderParagraphNode } from "unwritten:renderer:html/ast/paragraph.js";
 import { renderSectionNode } from "unwritten:renderer:html/ast/section.js";
+import { renderSmallNode } from "unwritten:renderer:html/ast/small.js";
 import { renderSpanNode } from "unwritten:renderer:html/ast/span.js";
+import { renderStrikethroughNode } from "unwritten:renderer:html/ast/strikethrough.js";
 import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index.js";
-import { renderAnchorNode } from "unwritten:renderer:markup/html/ast/anchor.js";
-import { renderBoldNode } from "unwritten:renderer:markup/html/ast/bold.js";
-import { renderItalicNode } from "unwritten:renderer:markup/html/ast/italic.js";
-import { renderLinkNode } from "unwritten:renderer:markup/html/ast/link.js";
-import { renderParagraphNode } from "unwritten:renderer:markup/html/ast/paragraph.js";
-import { renderSmallNode } from "unwritten:renderer:markup/html/ast/small.js";
-import { renderStrikethroughNode } from "unwritten:renderer:markup/html/ast/strikethrough.js";
 import {
   isAnchorNode,
   isBoldNode,
@@ -27,10 +25,12 @@ import {
   isStrikethroughNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { createExportRegistry } from "unwritten:renderer:markup/utils/exports.js";
+import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderTitleNode } from "./ast/title.js";
 
-import type { ExportableEntities } from "unwritten:interpreter:type-definitions/entities.js";
+import type { ExportableEntities } from "unwritten:interpreter/type-definitions/entities.js";
 import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";

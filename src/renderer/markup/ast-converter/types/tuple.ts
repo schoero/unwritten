@@ -1,9 +1,9 @@
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
-import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 
-import type { TupleMemberEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.d.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedTupleMember,
   ConvertedTupleTypeInline

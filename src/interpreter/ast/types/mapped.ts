@@ -1,5 +1,5 @@
 import { createPropertyEntity, createTypeParameterEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -7,7 +7,7 @@ import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/posit
 import type { MappedTypeNode } from "typescript";
 
 import type { MappedType } from "unwritten:interpreter/type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createMappedTypeByTypeNode(ctx: InterpreterContext, typeNode: MappedTypeNode): MappedType {

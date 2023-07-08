@@ -1,19 +1,19 @@
 import ts from "typescript";
 
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByDeclaration } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByNode } from "unwritten:interpreter:ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
 import { isTupleTypeReferenceType } from "unwritten:interpreter:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { TupleTypeNode, TupleTypeReference, Type } from "typescript";
 
-import type { TupleMemberEntity } from "unwritten:interpreter:type-definitions/entities.js";
+import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeReference: TupleTypeReference): TupleType {

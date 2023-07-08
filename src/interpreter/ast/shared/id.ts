@@ -1,7 +1,7 @@
 import type { Declaration, Symbol, Type, TypeNode } from "typescript";
 
 import type { ID } from "unwritten:interpreter:type-definitions/shared.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.d.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function getSymbolId(ctx: InterpreterContext, symbol: Symbol): ID {

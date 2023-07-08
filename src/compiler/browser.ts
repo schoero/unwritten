@@ -2,7 +2,7 @@ import ts from "typescript";
 
 import { reportCompilerDiagnostics } from "unwritten:compiler/shared.js";
 
-import type { DefaultContext } from "unwritten:type-definitions/context.d.js";
+import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 
 export function compile(ctx: DefaultContext, code: string, tsconfig?: ts.CompilerOptions) {

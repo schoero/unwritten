@@ -1,13 +1,12 @@
 import { assert, expect, it } from "vitest";
 
 import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter:enums/entities.js";
-import { convertObjectTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
-import { SECTION_TYPE } from "unwritten:renderer/markup/enums/sections.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,
@@ -17,6 +16,7 @@ import {
   isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";

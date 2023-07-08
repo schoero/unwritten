@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { renderNode } from "unwritten:renderer/index.js";
-import { registerAnchor } from "unwritten:renderer/markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";

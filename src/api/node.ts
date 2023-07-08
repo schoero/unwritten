@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { basename, extname, resolve } from "node:path";
 
 import { compile } from "unwritten:compiler:node.js";
-import { createConfig } from "unwritten:config/index.js";
+import { createConfig } from "unwritten:config/config.js";
 import { interpret } from "unwritten:interpreter:ast/index.js";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
 import { getEntryFileSymbolFromProgram } from "unwritten:interpreter:utils/ts.js";
@@ -10,7 +10,7 @@ import { getRenderer } from "unwritten:renderer:index.js";
 import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";
 import { createContext as createDefaultContext } from "unwritten:utils:context.js";
 
-import type { APIOptions } from "unwritten:type-definitions/options.d.js";
+import type { APIOptions } from "unwritten:type-definitions/options.js";
 
 
 export async function unwritten(entryFilePath: string, options?: APIOptions): Promise<string> {

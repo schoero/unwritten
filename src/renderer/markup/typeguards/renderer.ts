@@ -1,19 +1,19 @@
-import { ASTNodeKinds } from "../enums/nodes.js";
+import {
+  type AnchorNode,
+  type ASTNodes,
+  type BoldNode,
+  type ItalicNode,
+  type LinkNode,
+  type ListNode,
+  type ParagraphNode,
+  type SectionNode,
+  type SmallNode,
+  type SpanNode,
+  type StrikethroughNode,
+  type TitleNode
+} from "unwritten:renderer:markup/types-definitions/nodes.js";
 
-import type {
-  AnchorNode,
-  ASTNodes,
-  BoldNode,
-  ItalicNode,
-  LinkNode,
-  ListNode,
-  ParagraphNode,
-  SectionNode,
-  SmallNode,
-  SpanNode,
-  StrikethroughNode,
-  TitleNode
-} from "../types-definitions/nodes.js";
+import { ASTNodeKinds } from "../enums/nodes.js";
 
 
 export function isAnchorNode(node: ASTNodes): node is AnchorNode {

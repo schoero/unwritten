@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { createClassEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter:enums/types.js";
+import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import {
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents
