@@ -1,0 +1,607 @@
+{
+  "$ref": "#/definitions/ConfigWithSchema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Complete<HTMLRenderConfig>": {
+      "$ref": "#/definitions/DeepRequiredByKey%3CHTMLRenderConfig%2Cstring%3E"
+    },
+    "Complete<InterpreterConfig>": {
+      "$ref": "#/definitions/DeepRequiredByKey%3CInterpreterConfig%2Cstring%3E"
+    },
+    "Complete<JSONRenderConfig>": {
+      "$ref": "#/definitions/DeepRequiredByKey%3CJSONRenderConfig%2Cstring%3E"
+    },
+    "Complete<MarkdownRenderConfig>": {
+      "$ref": "#/definitions/DeepRequiredByKey%3CMarkdownRenderConfig%2Cstring%3E"
+    },
+    "CompleteRenderConfig": {
+      "additionalProperties": {
+        "type": "object"
+      },
+      "properties": {
+        "html": {
+          "$ref": "#/definitions/Complete%3CHTMLRenderConfig%3E"
+        },
+        "json": {
+          "$ref": "#/definitions/Complete%3CJSONRenderConfig%3E"
+        },
+        "md": {
+          "$ref": "#/definitions/Complete%3CMarkdownRenderConfig%3E"
+        }
+      },
+      "required": [
+        "md",
+        "html",
+        "json"
+      ],
+      "type": "object"
+    },
+    "ConfigWithSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "extends": {
+          "description": "Extend another config",
+          "type": "string"
+        },
+        "externalModules": {
+          "$ref": "#/definitions/ExternalModules",
+          "description": "Links to the repository of external modules. The key is the name of the module, the value is the url of the repository."
+        },
+        "externalTypes": {
+          "$ref": "#/definitions/ExternalTypes",
+          "description": "Links to external documentation of native types."
+        },
+        "interpreterConfig": {
+          "$ref": "#/definitions/Complete%3CInterpreterConfig%3E",
+          "description": "Interpreter configuration."
+        },
+        "outputDir": {
+          "description": "Output dir",
+          "type": "string"
+        },
+        "renderConfig": {
+          "$ref": "#/definitions/CompleteRenderConfig",
+          "description": "Render configuration."
+        }
+      },
+      "required": [
+        "$schema",
+        "externalTypes",
+        "interpreterConfig",
+        "outputDir",
+        "renderConfig"
+      ],
+      "type": "object"
+    },
+    "DeepRequiredByKey<(string1379558387|string2073129684),string>": {
+      "type": "string"
+    },
+    "DeepRequiredByKey<HTMLRenderConfig,string>": {
+      "$ref": "#/definitions/DeepRequiredByKeyObject%3CHTMLRenderConfig%2Cstring%3E"
+    },
+    "DeepRequiredByKey<InterpreterConfig,string>": {
+      "$ref": "#/definitions/DeepRequiredByKeyObject%3CInterpreterConfig%2Cstring%3E"
+    },
+    "DeepRequiredByKey<JSONRenderConfig,string>": {
+      "$ref": "#/definitions/DeepRequiredByKeyObject%3CJSONRenderConfig%2Cstring%3E"
+    },
+    "DeepRequiredByKey<MarkdownRenderConfig,string>": {
+      "$ref": "#/definitions/DeepRequiredByKeyObject%3CMarkdownRenderConfig%2Cstring%3E"
+    },
+    "DeepRequiredByKeyObject<HTMLRenderConfig,string>": {
+      "additionalProperties": false,
+      "properties": {
+        "indentation": {
+          "type": "string"
+        },
+        "newLine": {
+          "enum": [
+            "\n",
+            "\r\n",
+            "os"
+          ],
+          "type": "string"
+        },
+        "parameterEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "propertyEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "removeHyphenAtStartOfTag": {
+          "type": "boolean"
+        },
+        "renderOrder": {
+          "items": {
+            "$ref": "#/definitions/ExportableEntityKinds"
+          },
+          "type": "array"
+        },
+        "renderPrivateMembers": {
+          "type": "boolean"
+        },
+        "sectionSeparator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "sidebar": {
+          "type": "boolean"
+        },
+        "stringLiteralEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "tagEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "translations": {
+          "$ref": "#/definitions/DeepRequiredByKeyObject%3Cstructure-1098597612-1558-3184-1098597612-1487-3185-1098597612-96-3473-1098597612-0-3901%2Cstring%3E"
+        },
+        "typeEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "typeParameterEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DeepRequiredByKeyObject<InterpreterConfig,string>": {
+      "additionalProperties": false,
+      "properties": {
+        "exclude": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "$ref": "#/definitions/DeepRequiredByKeyObject%3Cstructure-1274455522-1814-1855-1274455522-1803-1855-1274455522-1738-1856-1274455522-1700-1858-1274455522-0-2004%2Cstring%3E"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DeepRequiredByKeyObject<JSONRenderConfig,string>": {
+      "additionalProperties": false,
+      "properties": {
+        "includeIds": {
+          "type": "boolean"
+        },
+        "indentation": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeepRequiredByKeyObject<MarkdownRenderConfig,string>": {
+      "additionalProperties": false,
+      "properties": {
+        "allowedHTMLTags": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "indentation": {
+          "type": "string"
+        },
+        "newLine": {
+          "enum": [
+            "\n",
+            "\r\n",
+            "os"
+          ],
+          "type": "string"
+        },
+        "parameterEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "propertyEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "removeHyphenAtStartOfTag": {
+          "type": "boolean"
+        },
+        "renderOrder": {
+          "items": {
+            "$ref": "#/definitions/ExportableEntityKinds"
+          },
+          "type": "array"
+        },
+        "renderPrivateMembers": {
+          "type": "boolean"
+        },
+        "sectionSeparator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "stringLiteralEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "tagEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "translations": {
+          "$ref": "#/definitions/DeepRequiredByKeyObject%3Cstructure-1098597612-1558-3184-1098597612-1487-3185-1098597612-96-3473-1098597612-0-3901%2Cstring%3E"
+        },
+        "typeEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "typeParameterEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DeepRequiredByKeyObject<structure-1098597612-1558-3184-1098597612-1487-3185-1098597612-96-3473-1098597612-0-3901,string>": {
+      "additionalProperties": false,
+      "properties": {
+        "abstract": {
+          "type": "string"
+        },
+        "beta": {
+          "type": "string"
+        },
+        "call-signature_one": {
+          "type": "string"
+        },
+        "call-signature_other": {
+          "type": "string"
+        },
+        "class_one": {
+          "type": "string"
+        },
+        "class_other": {
+          "type": "string"
+        },
+        "construct-signature_one": {
+          "type": "string"
+        },
+        "construct-signature_other": {
+          "type": "string"
+        },
+        "constructor_one": {
+          "type": "string"
+        },
+        "constructor_other": {
+          "type": "string"
+        },
+        "default": {
+          "type": "string"
+        },
+        "defined-in": {
+          "type": "string"
+        },
+        "deprecated": {
+          "type": "string"
+        },
+        "description_one": {
+          "type": "string"
+        },
+        "description_other": {
+          "type": "string"
+        },
+        "enum_one": {
+          "type": "string"
+        },
+        "enum_other": {
+          "type": "string"
+        },
+        "example_one": {
+          "type": "string"
+        },
+        "example_other": {
+          "type": "string"
+        },
+        "export-assignment_one": {
+          "type": "string"
+        },
+        "export-assignment_other": {
+          "type": "string"
+        },
+        "function_one": {
+          "type": "string"
+        },
+        "function_other": {
+          "type": "string"
+        },
+        "getter_one": {
+          "type": "string"
+        },
+        "getter_other": {
+          "type": "string"
+        },
+        "interface": {
+          "type": "string"
+        },
+        "interface_other": {
+          "type": "string"
+        },
+        "internal": {
+          "type": "string"
+        },
+        "method_one": {
+          "type": "string"
+        },
+        "method_other": {
+          "type": "string"
+        },
+        "module_one": {
+          "type": "string"
+        },
+        "module_other": {
+          "type": "string"
+        },
+        "namespace_one": {
+          "type": "string"
+        },
+        "namespace_other": {
+          "type": "string"
+        },
+        "object_one": {
+          "type": "string"
+        },
+        "object_other": {
+          "type": "string"
+        },
+        "optional": {
+          "type": "string"
+        },
+        "parameter_one": {
+          "type": "string"
+        },
+        "parameter_other": {
+          "type": "string"
+        },
+        "property_one": {
+          "type": "string"
+        },
+        "property_other": {
+          "type": "string"
+        },
+        "readonly": {
+          "type": "string"
+        },
+        "remarks_one": {
+          "type": "string"
+        },
+        "remarks_other": {
+          "type": "string"
+        },
+        "required": {
+          "type": "string"
+        },
+        "rest": {
+          "type": "string"
+        },
+        "return-type": {
+          "type": "string"
+        },
+        "setter_one": {
+          "type": "string"
+        },
+        "setter_other": {
+          "type": "string"
+        },
+        "static": {
+          "type": "string"
+        },
+        "type_one": {
+          "type": "string"
+        },
+        "type_other": {
+          "type": "string"
+        },
+        "type-alias_one": {
+          "type": "string"
+        },
+        "type-alias_other": {
+          "type": "string"
+        },
+        "type-parameter_one": {
+          "type": "string"
+        },
+        "type-parameter_other": {
+          "type": "string"
+        },
+        "variable_one": {
+          "type": "string"
+        },
+        "variable_other": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeepRequiredByKeyObject<structure-1274455522-1814-1855-1274455522-1803-1855-1274455522-1738-1856-1274455522-1700-1858-1274455522-0-2004,string>": {
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ExportableEntityKinds": {
+      "enum": [
+        "ClassEntity",
+        "EnumEntity",
+        "ExportAssignmentEntity",
+        "FunctionEntity",
+        "InterfaceEntity",
+        "ModuleEntity",
+        "NamespaceEntity",
+        "TypeAliasEntity",
+        "VariableEntity"
+      ],
+      "type": "string"
+    },
+    "ExternalModules": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "ExternalTypes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    }
+  }
+}
