@@ -66,9 +66,12 @@ const htmlRenderer: HTMLRenderer = {
     htmlRenderer.initializeContext(ctx);
     htmlRenderer.initializeExportRegistry(ctx, entities);
 
-    const markupAST = convertToMarkupAST(ctx, entities);
+    const renderedNewLine = renderNewLine(ctx);
 
-    return renderNode(ctx, markupAST);
+    const markupAST = convertToMarkupAST(ctx, entities);
+    const renderedContent = renderNode(ctx, markupAST);
+
+    return `${renderedContent}${renderedNewLine}`;
 
   }),
 
