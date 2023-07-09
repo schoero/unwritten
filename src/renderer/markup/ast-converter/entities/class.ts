@@ -83,9 +83,10 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const t = getTranslator(ctx);
 
   const name = classEntity.name;
-  const id = classEntity.symbolId;
+  const symbolId = classEntity.symbolId;
+  const typeId = classEntity.typeId;
 
-  const anchor = registerAnchor(ctx, name, id);
+  const anchor = registerAnchor(ctx, name, [symbolId, typeId]);
 
   const convertedPosition = convertPosition(ctx, classEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, classEntity);

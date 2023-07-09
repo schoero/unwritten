@@ -1,4 +1,5 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { withLockedSymbolType } from "unwritten:interpreter/utils/ts.js";
 import {
   createConstructorEntity,
   createGetterEntity,
@@ -7,7 +8,7 @@ import {
   createSetterEntity,
   createTypeParameterEntity
 } from "unwritten:interpreter:ast/entities/index.js";
-import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
+import { getDeclarationId, getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
@@ -31,26 +32,17 @@ import type { ExpressionType } from "unwritten:interpreter:type-definitions/type
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createClassEntity(ctx: InterpreterContext, symbol: Symbol): ClassEntity {
+export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): ClassEntity => withLockedSymbolType(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
   assert(declaration && isClassDeclaration(declaration), "Class declaration is not found");
 
-  const fromDeclaration = parseClassDeclaration(ctx, declaration);
+  const type = ctx.checker.getDeclaredTypeOfSymbol(symbol);
+
+  const typeId = getTypeId(ctx, type);
   const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-
-  return {
-    ...fromDeclaration,
-    name,
-    symbolId
-  };
-
-}
-
-
-function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDeclaration): Omit<ClassEntity, "name" | "symbolId"> {
 
   const constructorDeclarations = getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isConstructorDeclaration);
   const getterDeclarations = getSymbolsByTypeFromClassLikeDeclaration(ctx, declaration, isGetterDeclaration);
@@ -83,13 +75,16 @@ function parseClassDeclaration(ctx: InterpreterContext, declaration: ClassLikeDe
     kind,
     methods,
     modifiers,
+    name,
     position,
     properties,
     setters,
+    symbolId,
+    typeId,
     typeParameters
   };
 
-}
+});
 
 
 function getSymbolsByTypeFromClassLikeDeclaration(

@@ -7,6 +7,6 @@ import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nod
 
 
 export function renderAnchorNode(ctx: MarkdownRenderContext, anchorNode: AnchorNode): string {
-  const anchorLink = getAnchorLink(ctx, anchorNode);
+  const anchorLink = getAnchorLink(ctx, anchorNode.name, anchorNode.id);
   return renderLinkNode(ctx, createLinkNode(anchorNode.name, `#${anchorLink}`));
 }

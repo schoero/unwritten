@@ -4,7 +4,7 @@ import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:utils/template.js";
 
-import { convertTextToAnchorId, createAnchor, getAnchorLink, registerAnchor } from "./linker.js";
+import { convertTextToAnchorId, getAnchorLink, registerAnchor } from "./linker.js";
 
 
 scope("Renderer", "Render abstraction", () => {
@@ -76,32 +76,32 @@ scope("Renderer", "Render abstraction", () => {
       const ctx = createRenderContext();
 
       it("should create a simple anchor correctly", () => {
-        const anchor = createAnchor(
+        const anchor = registerAnchor(
+          ctx,
           "test",
-          1
+          [1]
         );
-        registerAnchor(ctx, anchor.name, anchor.id);
-        const anchorText = getAnchorLink(ctx, anchor);
+        const anchorText = getAnchorLink(ctx, anchor.name, anchor.ids[0]);
         expect(anchorText).toBe("test");
       });
 
       it("should handle multiple anchors with different ids but the same name correctly", () => {
-        const anchor = createAnchor(
+        const anchor = registerAnchor(
+          ctx,
           "test",
-          2
+          [2]
         );
-        registerAnchor(ctx, anchor.name, anchor.id);
-        const anchorText = getAnchorLink(ctx, anchor);
+        const anchorText = getAnchorLink(ctx, anchor.name, anchor.ids[0]);
         expect(anchorText).toBe("test-1");
       });
 
       it("should not register the same anchor twice", () => {
-        const anchor = createAnchor(
+        const anchor = registerAnchor(
+          ctx,
           "test",
-          2
+          [2]
         );
-        registerAnchor(ctx, anchor.name, anchor.id);
-        const anchorText = getAnchorLink(ctx, anchor);
+        const anchorText = getAnchorLink(ctx, anchor.name, anchor.ids[0]);
         expect(anchorText).toBe("test-1");
       });
 

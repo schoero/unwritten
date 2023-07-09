@@ -254,6 +254,7 @@ export interface TupleType extends TypeBase<TypeKind.Tuple> {
 export interface CircularType extends TypeBase<TypeKind.Circular> {
   name?: Name;
   position?: Position;
+  symbolId?: ID;
 }
 
 

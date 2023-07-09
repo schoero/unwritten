@@ -7,8 +7,11 @@ import type { SpanNode } from "unwritten:renderer:markup/types-definitions/nodes
 
 export function renderSpanNode(ctx: HTMLRenderContext, spanNode: SpanNode): string {
 
-  const id = hasAnchor(spanNode) ? getAnchorLink(ctx, spanNode) : undefined;
-  const idAttribute = id ? ` id="${id}"` : "";
+  const anchor = hasAnchor(spanNode)
+    ? getAnchorLink(ctx, spanNode.name, spanNode.ids[0])
+    : undefined;
+
+  const idAttribute = anchor ? ` id="${anchor}"` : "";
 
   const renderedNode = renderNode(ctx, spanNode.children);
 

@@ -76,6 +76,7 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
 
   const description = typeParameterEntity.description ?? "";
   const name = encapsulate(typeParameterEntity.name, renderConfig.typeParameterEncapsulation);
+  const symbolId = typeParameterEntity.symbolId;
 
   const constrainTypes = typeParameterEntity.constraint
     ? convertType(ctx, typeParameterEntity.constraint)
@@ -97,7 +98,7 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
     )
     : "";
 
-  const anchor = registerAnchor(ctx, typeParameterEntity.name, typeParameterEntity.symbolId);
+  const anchor = registerAnchor(ctx, typeParameterEntity.name, [symbolId]);
 
   return spaceBetween(
     createSpanNode(anchor, name),

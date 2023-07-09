@@ -42,9 +42,9 @@ export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContexts,
 export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, moduleEntity: ModuleEntity): ConvertedModuleEntityForDocumentation {
 
   const name = moduleEntity.name;
-  const id = moduleEntity.symbolId;
+  const symbolId = moduleEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, id);
+  const anchor = registerAnchor(ctx, name, [symbolId]);
 
   const convertedPosition = convertPosition(ctx, moduleEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, moduleEntity);

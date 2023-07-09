@@ -1,7 +1,7 @@
 import type { ASTNodeKinds } from "../enums/nodes.js";
 
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
-import type { Anchor } from "unwritten:renderer:markup/utils/linker.js";
+import type { AnchorLink, AnchorTarget } from "unwritten:renderer:markup/utils/linker.js";
 
 
 export type ASTNodes =
@@ -24,7 +24,7 @@ interface ASTNode<T extends ASTNodeKinds> {
   kind: T;
 }
 
-export interface AnchorNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Anchor>, Required<Anchor> {
+export interface AnchorNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Anchor>, Required<AnchorLink> {
   children: Children;
 }
 
@@ -41,7 +41,7 @@ export interface SectionNode<Children extends ASTNodes[] = ASTNodes[]> extends A
   type?: SectionType;
 }
 
-export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title>, Anchor {
+export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title>, Partial<AnchorTarget> {
   children: Children;
   title: ASTNodes;
 }
@@ -55,9 +55,8 @@ export interface SmallNode<Children extends ASTNodes[] = ASTNodes[]> extends AST
   children: Children;
 }
 
-export interface SpanNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Span> {
+export interface SpanNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Span>, Partial<AnchorTarget> {
   children: Children;
-  anchor?: Anchor;
 }
 
 export interface BoldNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Bold> {

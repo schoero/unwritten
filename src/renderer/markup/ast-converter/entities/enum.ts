@@ -31,9 +31,9 @@ export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContexts, e
 export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForDocumentation {
 
   const name = enumEntity.name;
-  const id = enumEntity.symbolId;
+  const symbolId = enumEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, id);
+  const anchor = registerAnchor(ctx, name, [symbolId]);
 
   const convertedDescription = convertDescriptionForDocumentation(ctx, enumEntity.description);
   const convertedRemarks = convertRemarks(ctx, enumEntity.remarks);

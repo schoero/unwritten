@@ -5,6 +5,7 @@ import { assert } from "unwritten:utils:general.js";
 
 import type { Program, Symbol, Type as TSType } from "typescript";
 
+import type { Entity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Type } from "unwritten:interpreter/type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
@@ -67,6 +68,13 @@ export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Sym
   return symbol;
 }
 
+export function withLockedSymbolType<T extends Entity>(ctx: InterpreterContext, symbol: Symbol, callback: (ctx: InterpreterContext, symbol: Symbol) => T): T {
+  const type = ctx.checker.getDeclaredTypeOfSymbol(symbol);
+  locker.lockType(ctx, type);
+  const returnType = callback(ctx, symbol);
+  locker.unlockType(ctx, type);
+  return returnType;
+}
 
 export function withLockedType<T extends Type>(ctx: InterpreterContext, type: TSType, callback: (ctx: InterpreterContext, type: TSType) => T): T {
   locker.lockType(ctx, type);

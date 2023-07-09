@@ -26,9 +26,9 @@ export function convertExportAssignmentEntityForTableOfContents(ctx: MarkupRende
 export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderContexts, exportAssignmentEntity: ExportAssignmentEntity): ConvertedExportAssignmentEntityForDocumentation {
 
   const name = exportAssignmentEntity.name;
-  const id = exportAssignmentEntity.symbolId;
+  const symbolId = exportAssignmentEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, id);
+  const anchor = registerAnchor(ctx, name, [symbolId]);
 
   const convertedTags = convertTagsForDocumentation(ctx, exportAssignmentEntity);
   const convertedPosition = convertPosition(ctx, exportAssignmentEntity.position);

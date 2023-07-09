@@ -84,7 +84,7 @@ scope("HTMLRenderer", "TitleNode", () => {
 
   it("should render an id if the title has an anchor", () => {
 
-    const anchor = registerAnchor(ctx, "title", 0);
+    const anchor = registerAnchor(ctx, "title", [0]);
     const titleNode = createTitleNode("Title", anchor, createParagraphNode("Paragraph"));
 
     expect(renderTitleNode(ctx, titleNode)).toBe(html`

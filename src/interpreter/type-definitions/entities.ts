@@ -159,6 +159,7 @@ export interface InterfaceEntity extends EntityBase<EntityKind.Interface>, JSDoc
   properties: PropertyEntity[];
   setterSignatures: SignatureEntity[];
   symbolId: ID;
+  typeId: ID;
   declarationId?: ID;
   description?: Description;
   heritage?: ExpressionType[];
@@ -183,6 +184,7 @@ export interface ClassEntity extends EntityBase<EntityKind.Class>, JSDocTags {
   properties: PropertyEntity[];
   setters: SetterEntity[];
   symbolId: ID;
+  typeId: ID;
   ctor?: ConstructorEntity;
   description?: Description;
   heritage?: ExpressionType;

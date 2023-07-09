@@ -29,6 +29,7 @@ import {
   createBigIntType,
   createBooleanLiteralType,
   createBooleanType,
+  createCircularType,
   createClassType,
   createConditionalType,
   createConditionalTypeByTypeNode,
@@ -38,7 +39,6 @@ import {
   createIndexedAccessTypeByTypeNode,
   createInterfaceByType,
   createIntersectionType,
-  createLinkToType,
   createMappedTypeByTypeNode,
   createNeverType,
   createNullType,
@@ -215,7 +215,7 @@ export function createTypeByDeclaration(ctx: InterpreterContext, declaration: De
 export function interpretType(ctx: InterpreterContext, type: TSType): Type {
 
   if(isTypeLocked(ctx, type)){
-    return createLinkToType(ctx, type);
+    return createCircularType(ctx, type);
   }
 
   if(isObjectType(type)){

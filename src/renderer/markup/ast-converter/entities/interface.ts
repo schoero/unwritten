@@ -39,9 +39,10 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const translate = getTranslator(ctx);
 
   const name = interfaceEntity.name;
-  const id = interfaceEntity.symbolId;
+  const symbolId = interfaceEntity.symbolId;
+  const typeId = interfaceEntity.typeId;
 
-  const anchor = registerAnchor(ctx, name, id);
+  const anchor = registerAnchor(ctx, name, [symbolId, typeId]);
 
   const convertedTags = convertTagsForDocumentation(ctx, interfaceEntity);
   const convertedDescription = convertDescriptionForDocumentation(ctx, interfaceEntity.description);

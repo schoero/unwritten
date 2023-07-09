@@ -7,7 +7,7 @@ import type { SpanNode } from "unwritten:renderer:markup/types-definitions/nodes
 
 export function renderSpanNode(ctx: MarkdownRenderContext, spanNode: SpanNode): string {
 
-  const id = hasAnchor(spanNode) ? getAnchorLink(ctx, spanNode) : undefined;
+  const id = hasAnchor(spanNode) ? getAnchorLink(ctx, spanNode.name, spanNode.ids[0]) : undefined;
   const idAttribute = id ? ` id="${id}"` : "";
 
   const renderedNode = renderNode(ctx, spanNode.children);

@@ -49,8 +49,9 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const convertedType = convertTypeForDocumentation(ctx, typeAliasEntity.type);
 
   const renderedSignature = renderNode(ctx, convertedSignature);
-  const id = typeAliasEntity.symbolId;
-  const anchor = registerAnchor(ctx, renderedSignature, id);
+
+  const symbolId = typeAliasEntity.symbolId;
+  const anchor = registerAnchor(ctx, renderedSignature, [symbolId]);
 
   return createSectionNode(
     SECTION_TYPE[typeAliasEntity.kind],

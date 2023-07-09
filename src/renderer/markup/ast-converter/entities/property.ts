@@ -37,9 +37,9 @@ export function convertPropertyEntityForTableOfContents(ctx: MarkupRenderContext
 export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
 
   const name = propertyEntity.name;
-  const id = propertyEntity.symbolId;
+  const symbolId = propertyEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, id);
+  const anchor = registerAnchor(ctx, name, [symbolId]);
 
   const convertedPosition = convertPosition(ctx, propertyEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, propertyEntity);

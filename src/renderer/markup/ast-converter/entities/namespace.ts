@@ -42,9 +42,9 @@ export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContex
 export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForDocumentation {
 
   const name = namespaceEntity.name;
-  const id = namespaceEntity.symbolId;
+  const symbolId = namespaceEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, id);
+  const anchor = registerAnchor(ctx, name, [symbolId]);
 
   const convertedPosition = convertPosition(ctx, namespaceEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, namespaceEntity);

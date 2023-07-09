@@ -26,9 +26,9 @@ export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContext
 export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
 
   const name = variableEntity.name;
-  const id = variableEntity.symbolId;
+  const symbolId = variableEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, id);
+  const anchor = registerAnchor(ctx, name, [symbolId]);
 
   const convertedTags = convertTagsForDocumentation(ctx, variableEntity);
   const convertedPosition = convertPosition(ctx, variableEntity.position);
