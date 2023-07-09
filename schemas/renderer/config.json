@@ -324,6 +324,12 @@
             "static": {
               "type": "string"
             },
+            "type_one": {
+              "type": "string"
+            },
+            "type_other": {
+              "type": "string"
+            },
             "type-alias_one": {
               "type": "string"
             },
@@ -334,12 +340,6 @@
               "type": "string"
             },
             "type-parameter_other": {
-              "type": "string"
-            },
-            "type_one": {
-              "type": "string"
-            },
-            "type_other": {
               "type": "string"
             },
             "variable_one": {
@@ -674,6 +674,12 @@
             "static": {
               "type": "string"
             },
+            "type_one": {
+              "type": "string"
+            },
+            "type_other": {
+              "type": "string"
+            },
             "type-alias_one": {
               "type": "string"
             },
@@ -684,12 +690,6 @@
               "type": "string"
             },
             "type-parameter_other": {
-              "type": "string"
-            },
-            "type_one": {
-              "type": "string"
-            },
-            "type_other": {
               "type": "string"
             },
             "variable_one": {
