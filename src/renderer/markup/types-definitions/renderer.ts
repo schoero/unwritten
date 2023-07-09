@@ -409,9 +409,9 @@ export type ConvertedClassEntityForTableOfContents = [
   title: ASTNodes,
   constructor: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
   properties: ListNode<ConvertedPropertyEntityForTableOfContents[]>,
-  methods: ListNode<ConvertedMethodEntityForTableOfContents[]>,
-  setters: ListNode<ConvertedSetterEntityForTableOfContents[]>,
-  getters: ListNode<ConvertedGetterEntityForTableOfContents[]>
+  methods: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
+  setters: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
+  getters: ListNode<ConvertedSignatureEntityForTableOfContents[]>
 ];
 export type ConvertedClassEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -422,9 +422,9 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
     example: ConvertedExample,
     constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
     properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-    methods: TitleNode<ConvertedMethodEntityForDocumentation[]>,
-    setters: TitleNode<ConvertedSetterEntityForDocumentation[]>,
-    getters: TitleNode<ConvertedGetterEntityForDocumentation[]>
+    methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
   ]>
 ]>;
 
@@ -483,21 +483,3 @@ export type ConvertedPropertyEntityForType = [
   propertySignature: ASTNodes[],
   propertyType: ConvertedMultilineTypes | ""
 ];
-
-
-//-- Method
-
-export type ConvertedMethodEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
-export type ConvertedMethodEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
-
-
-//-- Setter
-
-export type ConvertedSetterEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
-export type ConvertedSetterEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
-
-
-//-- Getter
-
-export type ConvertedGetterEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
-export type ConvertedGetterEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
