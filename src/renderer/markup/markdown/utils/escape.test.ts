@@ -65,5 +65,14 @@ scope("Renderer", "Render abstraction", () => {
       `);
     });
 
+    it("should not be possible to double escape", () => {
+      const testString = md`
+        should escape [ and ] only once, even if escaped twice
+      `;
+      expect(escapeMarkdown(escapeMarkdown(testString))).toBe(md`
+        should escape \\[ and \\] only once, even if escaped twice
+      `);
+    });
+
   });
 });

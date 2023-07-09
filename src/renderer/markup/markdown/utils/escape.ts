@@ -1,6 +1,6 @@
 function escapeString(text: string): string {
-  const openingBracketRegex = /(\[)(?!.*]*\([^)]*\))(?!\[*[ Xx]])/g;
-  const closingBracketRegex = /(?<!\[[ Xx])](?!\([^)]*\))/g;
+  const openingBracketRegex = /(?<!\\)(\[)(?!.*]*\([^)]*\))(?!\[*[ Xx]])/g;
+  const closingBracketRegex = /(?<!\[[ Xx])(?<!\\)](?!\([^)]*\))/g;
   const escapedText = text
     .replace(openingBracketRegex, "\\[")
     .replace(closingBracketRegex, "\\]");
