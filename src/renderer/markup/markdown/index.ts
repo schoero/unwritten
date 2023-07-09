@@ -1,5 +1,6 @@
 /* eslint-disable arrow-body-style */
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor.js";
 import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold.js";
@@ -145,7 +146,7 @@ export function renderNode(ctx: MarkdownRenderContext, node: ASTNodes): string {
 
       }).join("");
     } else {
-      return node;
+      return escapeMarkdown(node);
     }
   }
 

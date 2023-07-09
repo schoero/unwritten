@@ -9,11 +9,6 @@ export function renderLinkNode(ctx: MarkdownRenderContext, linkNode: LinkNode): 
   const link = linkNode.link;
   const title = linkNode.children;
 
-  return `[${escapeMarkdownLink(renderNode(ctx, title))}](${link})`;
+  return `[${renderNode(ctx, title)}](${link})`;
 
-}
-
-
-function escapeMarkdownLink(text: string): string {
-  return text.replace(/([[\]])/g, "\\$1");
 }
