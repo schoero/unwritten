@@ -3,7 +3,7 @@ import {
   isPropertyAssignment,
   isPropertyDeclaration
 } from "unwritten:interpreter/typeguards/declarations.js";
-import { interpretType } from "unwritten:interpreter:ast/index.js";
+import { getResolvedTypeByType } from "unwritten:interpreter:ast/index.js";
 
 import type { Declaration } from "typescript";
 
@@ -22,5 +22,5 @@ export function getInitializerByDeclaration(
     return;
   }
   const type = ctx.checker.getTypeAtLocation(declaration.initializer);
-  return interpretType(ctx, type);
+  return getResolvedTypeByType(ctx, type);
 }

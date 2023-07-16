@@ -73,34 +73,41 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
   });
 
 
-  //-- Report any compiler messages
-
+  // Report any compiler messages
   void reportCompilerDiagnostics({}, program.getSemanticDiagnostics());
 
+  // Type checker
   const checker = program.getTypeChecker();
 
+  // Source files
+  const compiledSourceFiles = program.getSourceFiles();
+  const fileSymbols = compiledSourceFiles.map(
+    file => checker.getSymbolAtLocation(file)
+  ).filter(sourceFileSymbol => !!sourceFileSymbol) as ts.Symbol[];
 
-  //-- Get file
-
-  const file = program.getSourceFiles().find(file => file.fileName === entryFilePath);
+  // File
+  const file = compiledSourceFiles.find(file => file.fileName === entryFilePath);
   assert(file, "file is not defined");
 
   const fileSymbol = checker.getSymbolAtLocation(file);
   assert(fileSymbol, "Entry file not found.");
 
 
-  //-- Create context
-
+  // Create context
   const ctx: InterpreterContext = {
     checker,
     config: override(getDefaultConfig(), config)
   };
 
 
-  //-- Get exported Symbols
-
+  // Get exported Symbols
   const exportedSymbols = getExportedSymbols(ctx, fileSymbol);
 
-  return { ctx, exportedSymbols, fileSymbol };
+  return {
+    ctx,
+    exportedSymbols,
+    fileSymbol,
+    fileSymbols
+  };
 
 }

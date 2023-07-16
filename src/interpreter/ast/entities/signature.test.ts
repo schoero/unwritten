@@ -2,9 +2,14 @@ import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createClassEntity, createFunctionEntity } from "unwritten:interpreter:ast/entities/index.js";
+import {
+  createClassEntity,
+  createFunctionEntity,
+  createTypeAliasEntity
+} from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 import { createInterfaceEntity } from "./interface.js";
@@ -157,6 +162,61 @@ scope("Interpreter", EntityKind.Signature, () => {
       expect(staticMethod.signatures.find(signature => signature.name === "staticMethod")!.modifiers).toContain("static");
       expect(privateStaticMethod.signatures.find(signature => signature.name === "privateStaticMethod")!.modifiers).toContain("private");
       expect(privateStaticMethod.signatures.find(signature => signature.name === "privateStaticMethod")!.modifiers).toContain("static");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      type Test = string;
+      export function test(): Test {
+        return "test";
+      }
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "test")!;
+    const exportedFunction = createFunctionEntity(ctx, symbol);
+
+    it("should return the declared type if available", () => {
+      assert(exportedFunction.signatures[0]!.returnType.kind === TypeKind.TypeReference);
+      expect(exportedFunction.signatures[0]!.returnType.name).toBe("Test");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      type Test = string;
+      export function test<T extends string>(param: T, otherParam: Test): void {}
+      export type FunctionType = typeof test<"test">;
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const exportedFunctionSymbol = exportedSymbols.find(s => s.name === "test")!;
+    const exportedFunction = createFunctionEntity(ctx, exportedFunctionSymbol);
+
+    const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "FunctionType")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
+
+    it("should return the resolved type with a resolved parameter", () => {
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeQuery);
+      assert(exportedTypeAlias.type.type.kind === TypeKind.Function);
+      expect(exportedTypeAlias.type.type.signatures[0]!.parameters).toHaveLength(2);
+      expect(exportedTypeAlias.type.type.signatures[0]!.parameters![0]!.type.kind).toBe(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.type.signatures[0]!.parameters![1]!.type.kind).toBe(TypeKind.TypeReference);
+    });
+
+    it("should interpret the signature itself still with type parameters", () => {
+      expect(exportedFunction.signatures[0]!.typeParameters).toHaveLength(1);
+      expect(exportedFunction.signatures[0]!.typeParameters![0]!.name).toBe("T");
+      expect(exportedFunction.signatures[0]!.parameters).toHaveLength(2);
+      expect(exportedFunction.signatures[0]!.parameters![0]!.type.kind).toBe(TypeKind.TypeReference);
+      expect(exportedFunction.signatures[0]!.parameters![1]!.type.kind).toBe(TypeKind.TypeReference);
     });
 
   }

@@ -1,10 +1,9 @@
+import { getResolvedTypeByTypeNode, interpretSymbol } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { interpretType, interpretTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
-import { createExpressionType, createUnresolvedByTypeNode } from "unwritten:interpreter:ast/types/index.js";
+import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
 import { isTypeReferenceNode } from "unwritten:interpreter:typeguards/type-nodes.js";
-import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 
 import type { TypeReferenceNode, TypeReferenceType as TSTypeReferenceType } from "typescript";
 
@@ -20,24 +19,23 @@ export function createTypeReferenceType(ctx: InterpreterContext, type: TSTypeRef
 
 export function createTypeReferenceByTypeNode(ctx: InterpreterContext, typeNode: TypeReferenceNode): TypeReferenceType {
 
-  const tsType = ctx.checker.getTypeFromTypeNode(typeNode);
-  const typeArguments = typeNode.typeArguments?.map(typeNode => interpretTypeNode(ctx, typeNode));
-  const name = getNameByTypeNode(ctx, typeNode.typeName);
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const type = tsType.symbol && isSymbolExcluded(ctx, tsType.symbol, name)
-    ? createUnresolvedByTypeNode(ctx, typeNode)
-    : interpretType(ctx, tsType);
-
-  const typeId = getIdByTypeNode(ctx, typeNode);
-  const kind = TypeKind.TypeReference;
   const symbol = ctx.checker.getSymbolAtLocation(typeNode.typeName);
+  const target = symbol && interpretSymbol(ctx, symbol);
+  const type = getResolvedTypeByTypeNode(ctx, typeNode);
+  const typeId = getIdByTypeNode(ctx, typeNode);
   const symbolId = symbol && getSymbolId(ctx, symbol);
+  const name = getNameByTypeNode(ctx, typeNode.typeName);
+  const kind = TypeKind.TypeReference;
+
+  const typeArguments = typeNode.typeArguments?.map(
+    typeArgumentTypeNode => getResolvedTypeByTypeNode(ctx, typeArgumentTypeNode)
+  );
 
   return {
     kind,
     name,
     symbolId,
+    target,
     type,
     typeArguments,
     typeId

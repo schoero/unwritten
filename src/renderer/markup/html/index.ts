@@ -25,16 +25,16 @@ import {
   isStrikethroughNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
-import { createExportRegistry } from "unwritten:renderer:markup/utils/exports.js";
+import { initializeExportRegistry } from "unwritten:renderer:markup/utils/exports.js";
 import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderTitleNode } from "./ast/title.js";
 
-import type { ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { Renderer } from "unwritten:type-definitions/renderer.js";
+import type { Renderer, RenderOutput } from "unwritten:type-definitions/renderer.js";
 
 
 export function isHTMLRenderContext(ctx: RenderContext<Renderer>): ctx is HTMLRenderContext {
@@ -47,7 +47,7 @@ function verifyHTMLRenderContext(ctx: RenderContext<Renderer>): asserts ctx is H
   }
 }
 
-function withVerifiedHTMLRenderContext(ctx: RenderContext<Renderer>, callback: (ctx: HTMLRenderContext) => string) {
+function withVerifiedHTMLRenderContext(ctx: RenderContext<Renderer>, callback: (ctx: HTMLRenderContext) => any) {
   verifyHTMLRenderContext(ctx);
   return callback(ctx);
 }
@@ -58,49 +58,70 @@ const htmlRenderer: HTMLRenderer = {
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
   // eslint-disable-next-line sort-keys/sort-keys-fix
-  exportRegistry: new Set(),
+  exportRegistry: new Map(),
   linkRegistry: new Map(),
 
-  render: (ctx: RenderContext<Renderer>, entities: ExportableEntity[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
+  render: (ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
 
+    htmlRenderer.initializeExportRegistry(ctx, sourceFileEntities);
     htmlRenderer.initializeContext(ctx);
-    htmlRenderer.initializeExportRegistry(ctx, entities);
 
-    const renderedNewLine = renderNewLine(ctx);
+    return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
 
-    const markupAST = convertToMarkupAST(ctx, entities);
-    const renderedContent = renderNode(ctx, markupAST);
+      htmlRenderer.resetContext(ctx);
 
-    return `${renderedContent}${renderedNewLine}`;
+      const renderedNewLine = renderNewLine(ctx);
+
+      const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
+      const renderedContent = renderNode(ctx, markupAST);
+
+      files[sourceFileEntity.name] = `${renderedContent}${renderedNewLine}`;
+      return files;
+
+    }, {});
 
   }),
+
+
+  resetContext: (ctx: HTMLRenderContext) => {
+    ctx.nesting = 1;
+    ctx.indentation = 0;
+  },
 
 
   // eslint-disable-next-line sort-keys/sort-keys-fix
   initializeContext: (ctx: HTMLRenderContext) => {
 
-    Object.defineProperty(ctx, "nesting", {
-      get() {
-        return minMax(ctx._nesting ?? 1, 1, 6);
-      },
-      set(level: number) {
-        ctx._nesting = level;
-      }
-    });
+    if(Object.hasOwn(ctx, "nesting")){
+      ctx._nesting = ctx.nesting;
+    } else {
+      Object.defineProperty(ctx, "nesting", {
+        get() {
+          return minMax(ctx._nesting ?? 1, 1, 6);
+        },
+        set(level: number) {
+          ctx._nesting = level;
+        }
+      });
+    }
 
-    Object.defineProperty(ctx, "indentation", {
-      get() {
-        return minMax(ctx._indentation ?? 0, 0, Infinity);
-      },
-      set(level: number) {
-        ctx._indentation = level;
-      }
-    });
+    if(Object.hasOwn(ctx, "indentation")){
+      ctx._indentation = ctx.indentation;
+    } else {
+      Object.defineProperty(ctx, "indentation", {
+        get() {
+          return minMax(ctx._indentation ?? 0, 0, Infinity);
+        },
+        set(level: number) {
+          ctx._indentation = level;
+        }
+      });
+    }
 
   },
 
-  initializeExportRegistry: (ctx: HTMLRenderContext, entities: ExportableEntity[]) => {
-    createExportRegistry(ctx, entities);
+  initializeExportRegistry: (ctx: HTMLRenderContext, sourceFileEntities: SourceFileEntity[]) => {
+    initializeExportRegistry(ctx, sourceFileEntities);
   }
 
 

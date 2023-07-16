@@ -1,5 +1,6 @@
 import type { TypeKind } from "unwritten:interpreter/enums/type.js";
 import type {
+  Entity,
   GetterEntity,
   MethodEntity,
   PropertyEntity,
@@ -44,7 +45,6 @@ export type MultilineType =
   | ObjectLiteralType
   | ObjectType;
 
-
 export type PrimitiveTypeKind =
   | TypeKind.Any
   | TypeKind.BigInt
@@ -79,7 +79,6 @@ export type PrimitiveType =
   | UnknownType
   | VoidType;
 
-
 export type LiteralTypeKind =
   | TypeKind.BigIntLiteral
   | TypeKind.BooleanLiteral
@@ -91,7 +90,6 @@ export type LiteralType =
   | BooleanLiteralType
   | NumberLiteralType
   | StringLiteralType;
-
 
 export type ObjectLikeTypeKind =
   | TypeKind.Class
@@ -120,9 +118,6 @@ export type InferObjectLikeType<Kind extends ObjectLikeTypeKind> =
             ? TypeLiteralType
             : never;
 
-
-//-- Primitive types
-
 export type PrimitiveTypeBase<Kind extends PrimitiveTypeKind> = TypeBase<Kind> & {
   name: Name;
 };
@@ -138,9 +133,6 @@ export type NullType = PrimitiveTypeBase<TypeKind.Null>;
 export type NeverType = PrimitiveTypeBase<TypeKind.Never>;
 export type UnknownType = PrimitiveTypeBase<TypeKind.Unknown>;
 export type AnyType = PrimitiveTypeBase<TypeKind.Any>;
-
-
-//-- Literal types
 
 export interface LiteralTypeBase<Kind extends LiteralTypeKind> extends PrimitiveTypeBase<Kind> {
   value: BigInt | boolean | number | string;
@@ -162,9 +154,6 @@ export interface BigIntLiteralType extends LiteralTypeBase<TypeKind.BigIntLitera
   value: BigInt;
 }
 
-
-//-- Object type
-
 export interface ObjectLikeTypeBase<Kind extends ObjectLikeTypeKind> extends TypeBase<Kind> {
   callSignatures: SignatureEntity[];
   constructSignatures: SignatureEntity[];
@@ -178,31 +167,20 @@ export interface ObjectLikeTypeBase<Kind extends ObjectLikeTypeKind> extends Typ
   symbolId?: ID;
 }
 
-
-//-- Object type
-
 export interface ObjectType extends ObjectLikeTypeBase<TypeKind.Object> {
 }
 
-
-//-- Object literal
-
 export interface ObjectLiteralType extends ObjectLikeTypeBase<TypeKind.ObjectLiteral> {
 }
-
-
-//-- Type reference
 
 export interface TypeReferenceType extends TypeBase<TypeKind.TypeReference> {
   name?: Name;
   position?: Position;
   symbolId?: ID;
+  target?: Entity;
   type?: Type;
   typeArguments?: Type[];
 }
-
-
-//-- Expression
 
 export interface ExpressionType extends TypeBase<TypeKind.Expression> {
   instanceType: Type;
@@ -213,17 +191,11 @@ export interface ExpressionType extends TypeBase<TypeKind.Expression> {
   typeArguments?: Type[];
 }
 
-
-//-- Type query
-
 export interface TypeQueryType extends TypeBase<TypeKind.TypeQuery> {
   type: Type;
   name?: Name;
   position?: Position;
 }
-
-
-//-- Template literal
 
 export interface TemplateLiteralEntity extends TypeBase<TypeKind.TemplateLiteral> {
   spans: string[];
@@ -231,24 +203,15 @@ export interface TemplateLiteralEntity extends TypeBase<TypeKind.TemplateLiteral
   head?: string;
 }
 
-
-//-- Array
-
 export interface ArrayType extends TypeBase<TypeKind.Array> {
   type: Type;
   position?: Position;
 }
 
-
-//-- Tuple
-
 export interface TupleType extends TypeBase<TypeKind.Tuple> {
   members: TupleMemberEntity[];
   position?: Position;
 }
-
-
-//-- Circular
 
 /** Circular types are used as links to previous symbols for circular references. */
 export interface CircularType extends TypeBase<TypeKind.Circular> {
@@ -256,9 +219,6 @@ export interface CircularType extends TypeBase<TypeKind.Circular> {
   position?: Position;
   symbolId?: ID;
 }
-
-
-//-- Unresolved
 
 /** The unresolved type will be used if a type cannot be parsed, or it is excluded from parsing */
 export interface UnresolvedType extends TypeBase<TypeKind.Unresolved> {
@@ -268,15 +228,9 @@ export interface UnresolvedType extends TypeBase<TypeKind.Unresolved> {
   typeArguments?: Type[];
 }
 
-
-//-- Function
-
 export interface FunctionType extends TypeBase<TypeKind.Function> {
   signatures: SignatureEntity[];
 }
-
-
-//-- Class
 
 export interface ClassType extends ObjectLikeTypeBase<TypeKind.Class> {
   modifiers: Modifiers[];
@@ -284,22 +238,13 @@ export interface ClassType extends ObjectLikeTypeBase<TypeKind.Class> {
   position: Position;
 }
 
-
-//-- Union type
-
 export interface UnionType extends TypeBase<TypeKind.Union> {
   types: Type[];
 }
 
-
-//-- Intersection type
-
 export interface IntersectionType extends TypeBase<TypeKind.Intersection> {
   types: Type[];
 }
-
-
-//-- Template literal type
 
 export interface TemplateLiteralType extends TypeBase<TypeKind.TemplateLiteral> {
   spans: string[];
@@ -307,34 +252,22 @@ export interface TemplateLiteralType extends TypeBase<TypeKind.TemplateLiteral> 
   head?: string;
 }
 
-
-//-- Type literal
-
 export interface TypeLiteralType extends ObjectLikeTypeBase<TypeKind.TypeLiteral> {
 }
-
-
-//-- Type parameter
 
 export interface TypeParameterType extends TypeBase<TypeKind.TypeParameter> {
   name: Name;
   constraint?: Type;
 }
 
-
-//-- Mapped type
-
 export interface MappedType extends TypeBase<TypeKind.Mapped> {
   optional: boolean;
-  properties: PropertyEntity[];
   readonly: boolean;
+  type: Type;
   typeParameter: TypeParameterEntity;
   position?: Position;
   valueType?: Type;
 }
-
-
-//-- Conditional type
 
 export interface ConditionalType extends TypeBase<TypeKind.Conditional> {
   checkType: Type;
@@ -343,17 +276,11 @@ export interface ConditionalType extends TypeBase<TypeKind.Conditional> {
   trueType: Type;
 }
 
-
-//-- Interface
-
 export interface InterfaceType extends ObjectLikeTypeBase<TypeKind.Interface> {
   name: Name;
   properties: PropertyEntity[];
   typeParameters?: TypeParameterEntity[];
 }
-
-
-//-- Indexed Access
 
 export interface IndexedAccessType extends TypeBase<TypeKind.IndexedAccess> {
   indexType: Type;

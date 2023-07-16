@@ -8,22 +8,28 @@ import { findFile } from "unwritten:utils:finder.js";
 import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 
-export function compile(ctx: DefaultContext, entryFilePath: string, tsConfigOrFilePath?: ts.CompilerOptions | string) {
+export function compile(ctx: DefaultContext, entryFilePaths: string[], tsConfigOrFilePath?: ts.CompilerOptions | string) {
 
-  const absoluteEntryFilePath = resolve(entryFilePath);
-  const tsConfigOrAbsoluteFilePath = typeof tsConfigOrFilePath === "string"
+  const resolvedEntryFilePaths = entryFilePaths.map(entryFilePath => resolve(entryFilePath));
+
+  const tsConfigOrResolvedFilePath = typeof tsConfigOrFilePath === "string"
     ? resolve(tsConfigOrFilePath)
     : tsConfigOrFilePath;
 
 
   //-- Compile
 
-  const compilerOptions = getCompilerOptions(ctx, absoluteEntryFilePath, tsConfigOrAbsoluteFilePath);
+  const compilerOptions = getCompilerOptions(ctx, resolvedEntryFilePaths, tsConfigOrResolvedFilePath);
   const compilerHost = getCompilerHost(compilerOptions);
 
-  ctx.logger?.info(`Invoking the TypeScript compiler to compile ${absoluteEntryFilePath}...`);
+  if(ctx.logger){
+    const formattedFileNames = resolvedEntryFilePaths.map(
+      entryFilePath => `${ctx.logger?.filePath(entryFilePath)}`
+    );
+    ctx.logger.info("Invoking the TypeScript compiler to compile", formattedFileNames);
+  }
 
-  const program = ts.createProgram([absoluteEntryFilePath], compilerOptions, compilerHost);
+  const program = ts.createProgram(resolvedEntryFilePaths, compilerOptions, compilerHost);
   const checker = program.getTypeChecker();
 
 
@@ -41,7 +47,7 @@ function getCompilerHost(compilerOptions: ts.CompilerOptions) {
 }
 
 
-function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfigOrFilePath?: ts.CompilerOptions | string): ts.CompilerOptions {
+function getCompilerOptions(ctx: DefaultContext, entryFilePaths: string[], tsConfigOrFilePath?: ts.CompilerOptions | string): ts.CompilerOptions {
 
 
   //-- Use provided compiler options
@@ -67,7 +73,10 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
   //-- Try to find tsconfig via ts.findConfigFile
 
   {
-    const foundTSConfigFilePath = ts.findConfigFile(entryFilePath, ts.sys.fileExists);
+    const foundTSConfigFilePath = entryFilePaths.map(
+      entryFilePath => ts.findConfigFile(entryFilePath, ts.sys.fileExists)
+    ).filter(tsconfig => !!tsconfig)[0];
+
     if(foundTSConfigFilePath !== undefined){
       const compilerOptions = readConfigFile(ctx, foundTSConfigFilePath);
       if(compilerOptions !== undefined){
@@ -80,7 +89,10 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
   //-- Try to find tsconfig via custom finder
 
   {
-    const foundTSConfigFilePath = findFile("tsconfig.json", entryFilePath);
+    const foundTSConfigFilePath = entryFilePaths.map(
+      entryFilePath => findFile("tsconfig.json", entryFilePath)
+    ).filter(tsconfig => !!tsconfig)[0];
+
     if(foundTSConfigFilePath !== undefined){
       const compilerOptions = readConfigFile(ctx, foundTSConfigFilePath);
       if(compilerOptions !== undefined){
@@ -93,7 +105,10 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePath: string, tsConfig
   //-- Try to find project root by searching package.json via custom finder
 
   {
-    const foundPackageJsonFilePath = findFile("package.json", entryFilePath);
+    const foundPackageJsonFilePath = entryFilePaths.map(
+      entryFilePath => findFile("package.json", entryFilePath)
+    ).filter(tsconfig => !!tsconfig)[0];
+
     if(foundPackageJsonFilePath !== undefined){
       const foundTSConfigFilePath = ts.findConfigFile(foundPackageJsonFilePath, ts.sys.fileExists);
       if(foundTSConfigFilePath !== undefined){
@@ -129,7 +144,7 @@ function readConfigFile(ctx: DefaultContext, path: string): ts.CompilerOptions |
     return;
   }
 
-  ctx.logger?.info(`Use tsconfig.json at ${path}`);
+  ctx.logger?.info(`Using tsconfig.json at ${ctx.logger.filePath(path)}`);
 
   const options = ts.parseJsonConfigFileContent(configFile.config, ts.sys, configFileBasePath).options;
   return options;

@@ -65,6 +65,7 @@ export type InferFunctionLikeEntityKind<Kind extends FunctionLikeEntityKinds> =
             : never;
 
 export type Entity =
+  | CircularEntity
   | ClassEntity
   | ConstructorEntity
   | EnumEntity
@@ -74,7 +75,6 @@ export type Entity =
   | GetterEntity
   | InterfaceEntity
   | MappedTypeMemberEntity
-  | MemberEntity
   | MethodEntity
   | ModuleEntity
   | NamespaceEntity
@@ -85,6 +85,7 @@ export type Entity =
   | SourceFileEntity
   | TypeAliasEntity
   | TypeParameterEntity
+  | UnresolvedEntity
   | VariableEntity;
 
 export interface PropertyEntity extends EntityBase<EntityKind.Property>, JSDocTags {
@@ -99,7 +100,6 @@ export interface PropertyEntity extends EntityBase<EntityKind.Property>, JSDocTa
   position?: Position;
 }
 
-
 export interface TupleMemberEntity extends EntityBase<EntityKind.TupleMember>, JSDocTags {
   optional: boolean;
   rest: boolean;
@@ -107,9 +107,6 @@ export interface TupleMemberEntity extends EntityBase<EntityKind.TupleMember>, J
   name?: Name;
   position?: Position;
 }
-
-
-//-- Function
 
 export interface FunctionLikeEntityBase<Kind extends FunctionLikeEntityKinds> extends EntityBase<Kind> {
   signatures: SignatureEntity[];
@@ -121,8 +118,8 @@ export interface FunctionEntity extends FunctionLikeEntityBase<EntityKind.Functi
 }
 
 export interface SignatureEntity extends EntityBase<EntityKind.Signature>, JSDocTags {
-  declarationId: ID;
   returnType: Type & { description?: Description; } ;
+  declarationId?: ID;
   description?: Description;
   modifiers?: Modifiers[];
   name?: Name;
@@ -131,9 +128,6 @@ export interface SignatureEntity extends EntityBase<EntityKind.Signature>, JSDoc
   symbolId?: ID;
   typeParameters?: TypeParameterEntity[];
 }
-
-
-//-- Parameter
 
 export interface ParameterEntity extends EntityBase<EntityKind.Parameter>, JSDocTags {
   declarationId: ID;
@@ -146,9 +140,6 @@ export interface ParameterEntity extends EntityBase<EntityKind.Parameter>, JSDoc
   initializer?: Type;
   position?: Position;
 }
-
-
-//-- Interface
 
 export interface InterfaceEntity extends EntityBase<EntityKind.Interface>, JSDocTags {
   callSignatures: SignatureEntity[];
@@ -171,9 +162,6 @@ export interface InterfaceEntity extends EntityBase<EntityKind.Interface>, JSDoc
 export interface MergedInterfaceEntity extends Omit<InterfaceEntity, "declarationId"> {
   declarations: PartialByKey<InterfaceEntity, "symbolId">[];
 }
-
-
-//-- Class
 
 export interface ClassEntity extends EntityBase<EntityKind.Class>, JSDocTags {
   declarationId: ID;
@@ -200,9 +188,6 @@ export interface SetterEntity extends FunctionLikeEntityBase<EntityKind.Setter> 
 
 export interface GetterEntity extends FunctionLikeEntityBase<EntityKind.Getter> {}
 
-
-//-- Variable
-
 export interface VariableEntity extends EntityBase<EntityKind.Variable>, JSDocTags {
   declarationId: ID;
   modifiers: Modifiers[];
@@ -212,9 +197,6 @@ export interface VariableEntity extends EntityBase<EntityKind.Variable>, JSDocTa
   description?: Description;
   position?: Position;
 }
-
-
-//-- Type alias
 
 export interface TypeAliasEntity extends EntityBase<EntityKind.TypeAlias>, JSDocTags {
   declarationId: ID;
@@ -226,16 +208,10 @@ export interface TypeAliasEntity extends EntityBase<EntityKind.TypeAlias>, JSDoc
   typeParameters?: TypeParameterEntity[];
 }
 
-
-//-- Mapped Type member
-
 export interface MappedTypeMemberEntity extends EntityBase<EntityKind.MappedTypeMember> {
   keyType: LiteralType;
   valueType: Type;
 }
-
-
-//-- Export Assignment
 
 export interface ExportAssignmentEntity extends EntityBase<EntityKind.ExportAssignment>, JSDocTags {
   name: Name;
@@ -244,9 +220,6 @@ export interface ExportAssignmentEntity extends EntityBase<EntityKind.ExportAssi
   description?: Description;
   position?: Position;
 }
-
-
-//-- Enum
 
 export interface EnumEntity extends EntityBase<EntityKind.Enum>, JSDocTags {
   members: EnumMemberEntity[];
@@ -271,21 +244,6 @@ export interface EnumMemberEntity extends EntityBase<EntityKind.EnumMember>, JSD
   symbolId?: ID;
 }
 
-
-//-- Member
-
-export interface MemberEntity extends EntityBase<EntityKind.Member>, JSDocTags {
-  modifiers: Modifiers[];
-  optional: boolean;
-  type: Type;
-  description?: Description;
-  parent?: Type;
-  position?: Position;
-}
-
-
-//-- Module
-
 export interface ModuleEntity extends EntityBase<EntityKind.Module>, JSDocTags {
   exports: ExportableEntity[];
   name: Name;
@@ -294,17 +252,12 @@ export interface ModuleEntity extends EntityBase<EntityKind.Module>, JSDocTags {
   position?: Position;
 }
 
-
-//-- Source file (module)
-
 export interface SourceFileEntity extends EntityBase<EntityKind.SourceFile> {
   exports: ExportableEntity[];
   name: Name;
+  path: string;
   symbolId: ID;
 }
-
-
-//-- Namespace
 
 export interface NamespaceEntity extends EntityBase<EntityKind.Namespace>, JSDocTags {
   exports: ExportableEntity[];
@@ -315,9 +268,6 @@ export interface NamespaceEntity extends EntityBase<EntityKind.Namespace>, JSDoc
   position?: Position;
 }
 
-
-//-- TypeParameter
-
 export interface TypeParameterEntity extends EntityBase<EntityKind.TypeParameter> {
   declarationId: ID;
   name: Name;
@@ -325,5 +275,17 @@ export interface TypeParameterEntity extends EntityBase<EntityKind.TypeParameter
   constraint?: Type;
   description?: Description;
   initializer?: Type;
+  position?: Position;
+}
+
+export interface UnresolvedEntity extends EntityBase<EntityKind.Unresolved> {
+  name: Name;
+  symbolId: ID;
+  position?: Position;
+}
+
+export interface CircularEntity extends EntityBase<EntityKind.Circular> {
+  name: Name;
+  symbolId: ID;
   position?: Position;
 }

@@ -1,9 +1,9 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { withLockedSymbolType } from "unwritten:interpreter/utils/ts.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import {
   createPropertyEntity,
   createSignatureEntity,
-  createTypeParameterEntity
+  createTypeParameterEntityByDeclaration
 } from "unwritten:interpreter:ast/entities/index.js";
 import { getDeclarationId, getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
@@ -30,11 +30,11 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 import type { PartialByKey } from "unwritten:type-definitions/utils.js";
 
 
-export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity => withLockedSymbolType(ctx, symbol, () => {
+export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity => withLockedSymbol(ctx, symbol, () => {
 
-  const declarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
+  const interfaceDeclarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
 
-  assert(declarations && declarations.length > 0, "Interface declarations not found");
+  assert(interfaceDeclarations && interfaceDeclarations.length > 0, "Interface declarations not found");
 
   const type = ctx.checker.getDeclaredTypeOfSymbol(symbol);
 
@@ -43,12 +43,12 @@ export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
   const name = getNameBySymbol(ctx, symbol);
 
   const description = getDescriptionBySymbol(ctx, symbol);
-  const parsedDeclarations = declarations.map(declaration => parseInterfaceDeclaration(ctx, declaration));
+  const declarations = interfaceDeclarations.map(declaration => parseInterfaceDeclaration(ctx, declaration));
   const kind = EntityKind.Interface;
 
-  if(parsedDeclarations.length === 1){
+  if(declarations.length === 1){
     return <InterfaceEntity>{
-      ...parsedDeclarations[0],
+      ...declarations[0],
       description,
       kind,
       name,
@@ -57,18 +57,18 @@ export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
     };
   } else {
 
-    const properties = mergeMembers(parsedDeclarations, "properties");
-    const callSignatures = mergeMembers(parsedDeclarations, "callSignatures");
-    const constructSignatures = mergeMembers(parsedDeclarations, "constructSignatures");
-    const methodSignatures = mergeMembers(parsedDeclarations, "methodSignatures");
-    const getterSignatures = mergeMembers(parsedDeclarations, "getterSignatures");
-    const setterSignatures = mergeMembers(parsedDeclarations, "setterSignatures");
-    const typeParameters = parsedDeclarations[0].typeParameters; // All declarations must have the same type parameters
+    const properties = mergeMembers(declarations, "properties");
+    const callSignatures = mergeMembers(declarations, "callSignatures");
+    const constructSignatures = mergeMembers(declarations, "constructSignatures");
+    const methodSignatures = mergeMembers(declarations, "methodSignatures");
+    const getterSignatures = mergeMembers(declarations, "getterSignatures");
+    const setterSignatures = mergeMembers(declarations, "setterSignatures");
+    const typeParameters = declarations[0].typeParameters; // All declarations must have the same type parameters
 
     return <MergedInterfaceEntity>{
       callSignatures,
       constructSignatures,
-      declarations: parsedDeclarations,
+      declarations,
       description,
       getterSignatures,
       kind,
@@ -145,7 +145,9 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
   });
 
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
-  const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
+  const typeParameters = declaration.typeParameters?.map(
+    typeParameter => createTypeParameterEntityByDeclaration(ctx, typeParameter)
+  );
 
   const declarationId = getDeclarationId(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
@@ -176,6 +178,8 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
 
 function parseHeritageClauses(ctx: InterpreterContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType[] {
   return heritageClauses
-    .flatMap(heritageClause => heritageClause.types.map(expression => createExpressionType(ctx, expression)))
+    .flatMap(heritageClause => heritageClause.types.map(
+      expression => createExpressionType(ctx, expression)
+    ))
     .filter(isExpressionType);
 }

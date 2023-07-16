@@ -1,6 +1,9 @@
+import { getDeclaredType, getResolvedTypeByType } from "unwritten:interpreter/ast/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { createParameterEntity, createTypeParameterEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { interpretType } from "unwritten:interpreter:ast/index.js";
+import {
+  createParameterEntity,
+  createTypeParameterEntityByTypeParameter
+} from "unwritten:interpreter:ast/entities/index.js";
 import { getDeclarationId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
 import {
   getDescriptionByDeclaration,
@@ -20,42 +23,34 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createSignatureEntity(ctx: InterpreterContext, signature: TSSignature): SignatureEntity {
 
-  const declaration = signature.getDeclaration() as SignatureDeclaration | undefined;
+  const symbolId = signature.declaration && getSymbolIdByDeclaration(ctx, signature.declaration);
+  const declarationId = signature.declaration && getDeclarationId(ctx, signature.declaration);
+  const position = signature.declaration && getPositionByDeclaration(ctx, signature.declaration);
+  const description = signature.declaration && getDescriptionByDeclaration(ctx, signature.declaration);
+  const modifiers = signature.declaration && getModifiersByDeclaration(ctx, signature.declaration);
+  const jsdocTags = signature.declaration && getJSDocTagsByDeclaration(ctx, signature.declaration);
+  const name = signature.declaration && getNameByDeclaration(ctx, signature.declaration);
 
-  const fromDeclaration = declaration && parseSignatureDeclaration(ctx, declaration);
+  const parameters = signature.getParameters().map(
+    parameter => createParameterEntity(ctx, parameter)
+  );
+  const typeParameters = signature.getTypeParameters()?.map(
+    typeParameter => createTypeParameterEntityByTypeParameter(ctx, typeParameter)
+  );
 
   const returnType = getReturnTypeBySignature(ctx, signature);
   const kind = EntityKind.Signature;
-
-  return <SignatureEntity>{
-    ...fromDeclaration,
-    kind,
-    returnType
-  };
-
-}
-
-
-function parseSignatureDeclaration(ctx: InterpreterContext, declaration: SignatureDeclaration): Omit<SignatureEntity, "kind" | "returnType"> {
-
-  const declarationId = getDeclarationId(ctx, declaration);
-  const symbolId = getSymbolIdByDeclaration(ctx, declaration);
-  const position = getPositionByDeclaration(ctx, declaration);
-  const parameters = declaration.parameters.map(declaration => createParameterEntity(ctx, declaration));
-  const typeParameters = declaration.typeParameters?.map(declaration => createTypeParameterEntity(ctx, declaration));
-  const description = getDescriptionByDeclaration(ctx, declaration);
-  const modifiers = getModifiersByDeclaration(ctx, declaration);
-  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
-  const name = getNameByDeclaration(ctx, declaration);
 
   return {
     ...jsdocTags,
     declarationId,
     description,
+    kind,
     modifiers,
     name,
     parameters,
     position,
+    returnType,
     symbolId,
     typeParameters
   };
@@ -68,14 +63,17 @@ function getReturnTypeBySignature(ctx: InterpreterContext, signature: TSSignatur
   const declaration = signature.getDeclaration() as SignatureDeclaration | undefined;
   const tsReturnType = signature.getReturnType();
 
-  const type = interpretType(ctx, tsReturnType);
+  const type = declaration?.type
+    ? getDeclaredType(ctx, declaration.type)
+    : getResolvedTypeByType(ctx, tsReturnType);
+
   const description = declaration && getReturnTypeDescription(ctx, declaration);
 
   assert(tsReturnType, "Function return type is missing.");
 
   return {
-    ...type,
-    description
+    description,
+    ...type
   };
 
 }

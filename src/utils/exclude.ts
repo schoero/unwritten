@@ -70,7 +70,7 @@ function isDeclarationExcluded(ctx: InterpreterContext, declaration: Declaration
   const excludePaths = ctx.config.interpreterConfig.exclude;
   name ??= getNameByDeclaration(ctx, declaration);
 
-  if(name === undefined){
+  if(name === undefined || name.startsWith("__")){
     return false;
   }
 

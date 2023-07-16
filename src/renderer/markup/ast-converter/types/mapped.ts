@@ -22,7 +22,7 @@ export function convertMappedTypeInline(ctx: MarkupRenderContexts, mappedType: M
     ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
     : "";
 
-  const convertedProperties = mappedType.properties.map(propertyEntity => {
+  const convertedProperties = mappedType.type.map(propertyEntity => {
     const name = propertyEntity.name;
     const { inlineType } = convertType(ctx, propertyEntity.type);
     return spaceBetween(name, inlineType, readonly, optional);

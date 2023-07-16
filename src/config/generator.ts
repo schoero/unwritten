@@ -4,9 +4,10 @@ import { dirname, resolve } from "node:path";
 import { getDefaultConfig } from "./config.js";
 
 import type { ConfigWithSchema } from "unwritten:type-definitions/config.js";
+import type { Options } from "unwritten:type-definitions/options.js";
 
 
-export async function generateConfig(path?: string, options?: any) {
+export async function generateConfig(path?: string, options?: Options) {
 
   const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:logger/node.js");
 

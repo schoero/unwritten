@@ -248,7 +248,8 @@ scope("Interpreter", EntityKind.Interface, () => {
       expect(exportedInterface.typeParameters).toBeDefined();
       expect(exportedInterface.typeParameters).toHaveLength(1);
       expect(exportedInterface.properties).toHaveLength(1);
-      expect(exportedInterface.properties[0]!.type.kind).toBe(TypeKind.TypeParameter);
+      assert(exportedInterface.properties[0]!.type.kind === TypeKind.TypeReference);
+      expect(exportedInterface.properties[0]!.type.type!.kind).toBe(TypeKind.TypeParameter);
     });
 
   }
@@ -272,39 +273,6 @@ scope("Interpreter", EntityKind.Interface, () => {
     it("should not have duplicate typeParameters on merged interfaces", () => {
       expect(exportedInterface.typeParameters).toBeDefined();
       expect(exportedInterface.typeParameters).toHaveLength(1);
-    });
-
-  }
-
-  {
-
-    const testFileContent = ts`
-      interface Base<T extends string> {
-        prop: T;
-      }
-      export interface Interface extends Base<"hello"> {
-
-      }
-    `;
-
-    const { ctx, exportedSymbols } = compile(testFileContent);
-
-    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
-    const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
-
-    it("should support type arguments", () => {
-
-      expect(exportedInterface.heritage).toBeDefined();
-      expect(exportedInterface.heritage).toHaveLength(1);
-
-      expect(exportedInterface.heritage![0]!.typeArguments).toBeDefined();
-      expect(exportedInterface.heritage![0]!.typeArguments).toHaveLength(1);
-      expect(exportedInterface.heritage![0]!.typeArguments![0]!.kind).toBe(TypeKind.StringLiteral);
-
-      assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.Object);
-      expect(exportedInterface.heritage![0]!.instanceType.properties).toHaveLength(1);
-      expect(exportedInterface.heritage![0]!.instanceType.properties[0]!.type.kind).toBe(TypeKind.StringLiteral);
-
     });
 
   }

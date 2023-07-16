@@ -1,4 +1,4 @@
-import { interpretType } from "unwritten:interpreter/ast/index.js";
+import { getResolvedTypeByType } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { isTypeReferenceType } from "unwritten:interpreter/typeguards/types.js";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
@@ -22,7 +22,7 @@ export function createUnresolvedType(ctx: InterpreterContext, type: Type): Unres
   const name = getNameByType(ctx, type);
 
   const typeArguments = isTypeReferenceType(type)
-    ? type.typeArguments?.map(typeArgument => interpretType(ctx, typeArgument))
+    ? type.typeArguments?.map(typeArgument => getResolvedTypeByType(ctx, typeArgument))
     : undefined;
 
   return {
@@ -40,7 +40,6 @@ export function createUnresolvedType(ctx: InterpreterContext, type: Type): Unres
 export function createUnresolved(ctx: InterpreterContext, type: Type): UnresolvedType {
   return createUnresolvedType(ctx, type);
 }
-
 
 export function createUnresolvedByTypeNode(ctx: InterpreterContext, typeNode: TypeNode): UnresolvedType {
   const type = ctx.checker.getTypeFromTypeNode(typeNode);

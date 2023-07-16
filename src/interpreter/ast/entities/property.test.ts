@@ -4,6 +4,7 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import {
   createClassEntity,
+  createInterfaceEntity,
   createTypeAliasEntity,
   createVariableEntity
 } from "unwritten:interpreter:ast/entities/index.js";
@@ -218,6 +219,35 @@ scope("Interpreter", EntityKind.Property, () => {
 
       expect(exportedExtendedClass.properties[0].modifiers).toContain("override");
 
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      type Test = string;
+      interface Base<T extends string> {
+        prop: T;
+        test: Test;
+      }
+      export interface Interface extends Base<"hello"> {
+      }
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
+    const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
+
+    it("should resolve instantiated types", () => {
+      assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.Object);
+      expect(exportedInterface.heritage![0]!.instanceType.properties[0]!.type.kind).toBe(TypeKind.StringLiteral);
+    });
+
+    it("should not resolve not instantiated types", () => {
+      assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.Object);
+      expect(exportedInterface.heritage![0]!.instanceType.properties[1]!.type.kind).toBe(TypeKind.TypeReference);
     });
 
   }

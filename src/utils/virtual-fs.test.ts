@@ -1,14 +1,6 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 
-import {
-  afterAll,
-  afterEach,
-  beforeAll,
-  describe,
-  expect,
-  it,
-  vitest
-} from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vitest } from "vitest";
 
 import { clearVirtualFS } from "unwritten:utils/virtual-fs.js";
 
@@ -17,14 +9,11 @@ describe("virtual fs", () => {
 
   beforeAll(() => {
     vitest.mock("node:fs", async () => import("./virtual-fs.js"));
+    return () => vitest.restoreAllMocks();
   });
 
   afterEach(() => {
     clearVirtualFS();
-  });
-
-  afterAll(() => {
-    vitest.restoreAllMocks();
   });
 
   describe("writeFileSync", async () => {

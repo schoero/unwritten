@@ -1,4 +1,5 @@
 export enum EntityKind {
+  Circular = "CircularEntity",
   Class = "ClassEntity",
   Constructor = "ConstructorEntity",
   Enum = "EnumEntity",
@@ -9,7 +10,6 @@ export enum EntityKind {
   Getter = "GetterEntity",
   Interface = "InterfaceEntity",
   MappedTypeMember = "MappedTypeMemberEntity",
-  Member = "MemberEntity",
   Method = "MethodEntity",
   Module = "ModuleEntity",
   Namespace = "NamespaceEntity",
@@ -20,7 +20,6 @@ export enum EntityKind {
   SourceFile = "SourceFileEntity",
   TupleMember = "TupleMemberEntity",
   TypeAlias = "TypeAliasEntity",
-  TypeArgument = "TypeArgumentEntity",
   TypeParameter = "TypeParameterEntity",
   Unresolved = "UnresolvedEntity",
   Variable = "VariableEntity"

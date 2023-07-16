@@ -2,7 +2,7 @@ import ts from "typescript";
 
 import { isTypeNode } from "unwritten:interpreter:typeguards/type-nodes.js";
 
-import type { Declaration, FunctionLikeDeclaration, Type, TypeNode } from "typescript";
+import type { Declaration, FunctionLikeDeclaration, Symbol, Type, TypeNode } from "typescript";
 
 
 export function isArrowFunctionDeclaration(declaration: Declaration): declaration is ts.ArrowFunction {

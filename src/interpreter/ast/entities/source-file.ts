@@ -3,7 +3,6 @@ import { isExportSpecifierSymbol } from "unwritten:interpreter/typeguards/symbol
 import { getExportedSymbols, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import { interpretSymbol } from "unwritten:interpreter:ast/index.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { isExportableEntity } from "unwritten:typeguards/entities.js";
 import { assert } from "unwritten:utils/general.js";
 
@@ -14,6 +13,10 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol): SourceFileEntity {
+
+  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
+
+  assert(declaration, "Source file symbol has no declaration");
 
   const exports = getExportedSymbols(ctx, symbol)
     .reduce<ExportableEntity[]>((parsedSymbols, exportedSymbol) => {
@@ -37,7 +40,7 @@ export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol):
       : exportedSymbol;
 
     const parsedSymbol = interpretSymbol(ctx, resolvedSymbol);
-    assert(isExportableEntity(parsedSymbol), "Parsed symbol is not an exportable type");
+    assert(isExportableEntity(parsedSymbol), "Parsed symbol is not an exportable entity");
     parsedSymbols.push(parsedSymbol);
 
     return parsedSymbols;
@@ -45,13 +48,15 @@ export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol):
   }, []);
 
   const symbolId = getSymbolId(ctx, symbol);
-  const name = getNameBySymbol(ctx, symbol);
+  const path = declaration.getSourceFile().fileName;
+  const name = path.split("/").pop() ?? "";
   const kind = EntityKind.SourceFile;
 
   return {
     exports,
     kind,
     name,
+    path,
     symbolId
   };
 

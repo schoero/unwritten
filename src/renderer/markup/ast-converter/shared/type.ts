@@ -107,7 +107,7 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
 
 }
 
-export function convertType(ctx: MarkupRenderContexts, type: Type) {
+export function convertType(ctx: MarkupRenderContexts, type: Type | Type) {
 
   const inlineType = convertTypeForInlineType(ctx, type);
   const multilineType = isMultilineType(ctx, type)
@@ -121,7 +121,7 @@ export function convertType(ctx: MarkupRenderContexts, type: Type) {
 
 }
 
-function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type): ConvertedInlineTypes {
+function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type | Type): ConvertedInlineTypes {
 
   if(isAnyType(type)){
     return convertAnyTypeInline(ctx, type);

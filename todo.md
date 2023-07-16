@@ -1,6 +1,16 @@
 * [ ] Define exports
 * [x] Reintegrate link registry
+* [ ] Type reference check target types
+  * [ ] Exportable entities
+  * [ ] Type parameters
+  * [ ] Type queries?
+  * [ ] Conditional types?
 * [ ] Allow multiple entry points
+  * [ ] Via CLI
+  * [ ] Via API
+    * [ ] Auto create from namespace exports (`export * from './other-module.js'`)
+    * [ ] Shared types should be able to get linked from the other entry points
+* [ ] Check if instanceType and staticType are really necessary
 * [ ] Add event property tags
 * [ ] Add support for @throws
 * [ ] Read title from package.json
@@ -9,10 +19,7 @@
 * [ ] Warn if exported functions are not properly documented
 * [ ] Improve mapped type rendering
 * [ ] Improve conditional type rendering
-* [ ] Add ability to render to multiple files
-  * [ ] Per entry point
-  * [ ] Per source file
-  * [ ] Per entity
+* [ ] Section separators in markdown are only rendered before the content but not after
 * [ ] Add browser support
 * [ ] Finalize API
   * [ ] Renderers
@@ -28,14 +35,11 @@
   * Add jsdoc comments and description to files
 * [x] Remove `undefined` from optional types -> Resolved with `strictNullChecks` in tsconfig
 * [ ] Auto detect repositories of external packages for external types and link unresolved type to them
-
 * [ ] Link to type parameter possible
-* [ ] How are type parameters rendered
-* [ ] Introduce `typeId` `symbolId`, `declarationId` and `valueDeclarationId`
+* [x] Introduce `typeId` `symbolId`, `declarationId` and `valueDeclarationId`
   * [ ] Figure out how to link references correctly as in markdown id's are generated automatically
     * [ ] If for eg. the type of a parameter references an interface with the name `Interface` and a namespace also contains the an interface with the name `Interface` then the link reference the namespace interface because it would be rendered first.  
-* [ ] Use convert function in renderer tests
+* [x] Use convert function in renderer tests
 * [x] Render Type alias signature
 
 * [x] Resolve position relative to input file
-  * [ ] Add option to use "absolute" path based of repo

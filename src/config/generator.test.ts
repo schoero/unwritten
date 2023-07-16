@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 
-import { afterAll, afterEach, beforeAll, expect, it, vitest } from "vitest";
+import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
 import { generateConfig } from "unwritten:config/generator.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -11,26 +11,23 @@ scope("Integration", "generateConfig", () => {
 
   beforeAll(() => {
     vitest.mock("node:fs", async () => import("unwritten:utils:virtual-fs.js"));
+    return () => vitest.restoreAllMocks();
   });
 
   afterEach(() => {
     clearVirtualFS();
   });
 
-  afterAll(() => {
-    vitest.resetAllMocks();
-  });
-
   {
 
     it("should create a config file at the current working directory", async () => {
-      await generateConfig();
+      await generateConfig(undefined, { silent: true });
       expect(existsSync(`${process.cwd()}/.unwritten.json`)).toBe(true);
     });
 
     it("should create a config file at the provided location", async () => {
       const path = "some/random/path/.unwritten.json";
-      await generateConfig(path);
+      await generateConfig(path, { silent: true });
       expect(existsSync(`${process.cwd()}/${path}`)).toBe(true);
     });
 

@@ -1,5 +1,5 @@
+import { getResolvedTypeByType } from "unwritten:interpreter/ast/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { createTypeByDeclaration } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
 import {
   getDescriptionByDeclaration,
@@ -86,12 +86,13 @@ function parseEnumDeclaration(ctx: InterpreterContext, declaration: EnumDeclarat
 
 function createEnumMemberByDeclaration(ctx: InterpreterContext, declaration: TSEnumMember): EnumMemberEntity {
 
+  const tsType = ctx.checker.getTypeAtLocation(declaration);
   const declarationId = getDeclarationId(ctx, declaration);
   const symbolId = getSymbolIdByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
-  const type = createTypeByDeclaration(ctx, declaration);
+  const type = getResolvedTypeByType(ctx, tsType);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const kind = EntityKind.EnumMember;
 

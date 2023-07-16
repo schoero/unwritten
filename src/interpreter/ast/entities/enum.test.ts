@@ -25,7 +25,7 @@ scope("Interpreter", EntityKind.Enum, () => {
     const symbol = exportedSymbols.find(s => s.name === "Enum")!;
     const exportedTypeEnum = createEnumEntity(ctx, symbol);
 
-    it("should be able to parse an intersection type", () => {
+    it("should be able to parse an enum", () => {
       expect(exportedTypeEnum.kind).toBe(EntityKind.Enum);
     });
 

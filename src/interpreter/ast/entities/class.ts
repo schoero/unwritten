@@ -1,12 +1,12 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { withLockedSymbolType } from "unwritten:interpreter/utils/ts.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import {
   createConstructorEntity,
   createGetterEntity,
   createMethodEntity,
   createPropertyEntity,
   createSetterEntity,
-  createTypeParameterEntity
+  createTypeParameterEntityByDeclaration
 } from "unwritten:interpreter:ast/entities/index.js";
 import { getDeclarationId, getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
@@ -32,7 +32,7 @@ import type { ExpressionType } from "unwritten:interpreter:type-definitions/type
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): ClassEntity => withLockedSymbolType(ctx, symbol, () => {
+export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): ClassEntity => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -57,7 +57,7 @@ export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): Clas
   const properties = propertyDeclarations.map(symbol => createPropertyEntity(ctx, symbol));
 
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
-  const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntity(ctx, typeParameter));
+  const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntityByDeclaration(ctx, typeParameter));
   const position = getPositionByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const description = getDescriptionByDeclaration(ctx, declaration);
@@ -116,6 +116,8 @@ function getSymbolsByTypeFromClassLikeDeclaration(
 
 function parseHeritageClauses(ctx: InterpreterContext, heritageClauses: NodeArray<HeritageClause>): ExpressionType {
   return heritageClauses
-    .flatMap(heritageClause => heritageClause.types.map(expression => createExpressionType(ctx, expression)))
+    .flatMap(heritageClause => heritageClause.types.map(
+      expression => createExpressionType(ctx, expression)
+    ))
     .filter(isExpressionType)[0];
 }

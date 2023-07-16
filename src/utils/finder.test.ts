@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 
-import { afterAll, afterEach, beforeAll, expect, it, vitest } from "vitest";
+import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
 import { scope } from "unwritten:tests:utils/scope.js";
 import { findFile } from "unwritten:utils/finder.js";
@@ -11,14 +11,11 @@ scope("Integration", "finder", async () => {
 
   beforeAll(() => {
     vitest.mock("node:fs", async () => import("./virtual-fs.js"));
+    return () => vitest.restoreAllMocks();
   });
 
   afterEach(() => {
     clearVirtualFS();
-  });
-
-  afterAll(() => {
-    vitest.restoreAllMocks();
   });
 
   it("should find a file in the entry directory", async () => {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
-import { afterAll, beforeAll, expect, it, vitest } from "vitest";
+import { beforeAll, expect, it, vitest } from "vitest";
 
 import { createConfig } from "unwritten:config/config.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -33,10 +33,7 @@ scope("Integration", "Config", async () => {
       default: JSON.parse(readFileSync(`${process.cwd()}/.unwritten.js`, { encoding: "utf-8" }))
     }));
 
-  });
-
-  afterAll(() => {
-    vitest.resetAllMocks();
+    return () => vitest.restoreAllMocks();
   });
 
   it("should be able to read the config from a relative path", async () => {

@@ -58,7 +58,7 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
   );
 
   return createTitleNode(
-    translate("parameter", { capitalize: true, count: 99 }),
+    translate("parameter", { capitalize: true, count: convertedParameters.length }),
     convertedParameterList
   );
 

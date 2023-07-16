@@ -2,7 +2,7 @@ import { assert, expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { createInterfaceEntity, createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:utils/template.js";
@@ -113,12 +113,12 @@ scope("Interpreter", EntityKind.Interface, () => {
 
     it("should be able to handle static properties", () => {
       expect(interfaceType.properties.filter(prop =>
-        prop.modifiers.includes("static"))).toHaveLength(1);
+        prop.modifiers?.includes("static"))).toHaveLength(1);
     });
 
     it("should be able to handle instance properties", () => {
       expect(interfaceType.properties.filter(prop =>
-        prop.modifiers.includes("protected"))).toHaveLength(1);
+        prop.modifiers?.includes("protected"))).toHaveLength(1);
     });
 
     it("should be able to handle overloaded methods", () => {
@@ -252,26 +252,23 @@ scope("Interpreter", EntityKind.Interface, () => {
   {
 
     const testFileContent = ts`
-      interface GenericInterface<T> {
+      export interface GenericInterface<T> {
         b: T;
       }
-      export type GenericInterfaceType<T> = GenericInterface<T>;
     `;
 
     const { ctx, exportedSymbols } = compile(testFileContent);
 
-    const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "GenericInterfaceType")!;
-    const exportedTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
+    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "GenericInterface")!;
+    const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
 
-    assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-    assert(exportedTypeAlias.type.type?.kind === TypeKind.Object);
+    it("should support generics", () => {
+      expect(exportedInterface.typeParameters).toHaveLength(1);
+      expect(exportedInterface.typeParameters![0]!.name).toBe("T");
 
-    const interfaceType = exportedTypeAlias.type.type;
-
-    it("should support generics in interfaces", () => {
-      expect(interfaceType.properties).toHaveLength(1);
-      expect(interfaceType.properties[0]!.type.kind).toBe(TypeKind.TypeParameter);
-
+      expect(exportedInterface.properties).toHaveLength(1);
+      assert(exportedInterface.properties[0]!.type.kind === TypeKind.TypeReference);
+      expect(exportedInterface.properties[0]!.type.type?.kind).toBe(TypeKind.TypeParameter);
     });
 
   }

@@ -47,7 +47,7 @@ scope("Interpreter", EntityKind.SourceFile, () => {
     });
 
     it("should have a matching name", () => {
-      expect(sourceFile.name).toBe("\"/index\"");
+      expect(sourceFile.name).toBe("index.ts");
     });
 
     it("should have the right amount of types", () => {

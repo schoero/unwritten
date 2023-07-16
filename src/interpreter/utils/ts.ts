@@ -10,21 +10,18 @@ import type { Type } from "unwritten:interpreter/type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function getEntryFileSymbolFromProgram(ctx: InterpreterContext, program: Program) {
+export function getEntryFileSymbolsFromProgram(ctx: InterpreterContext, program: Program) {
 
-  const rootFileName = program.getRootFileNames()[0];
+  const rootFileNames = program.getRootFileNames();
+  const entryFiles = rootFileNames.map(rootFileName => program.getSourceFile(rootFileName));
 
-  assert(rootFileName, "Root file not found.");
+  entryFiles.forEach((entryFile, index) => assert(entryFile, `Entry file ${rootFileNames[index]} not found.`));
 
-  const entryFile = program.getSourceFile(rootFileName);
+  const entryFileSymbols = entryFiles.map(entryFile => ctx.checker.getSymbolAtLocation(entryFile!));
 
-  assert(entryFile, `Entry file not found. ${rootFileName}`);
+  entryFileSymbols.forEach((entryFileSymbol, index) => assert(entryFileSymbol, `Entry file symbol ${rootFileNames[index]} not found.`));
 
-  const entryFileSymbol = ctx.checker.getSymbolAtLocation(entryFile);
-
-  assert(entryFileSymbol, "Entry file symbol not found.");
-
-  return entryFileSymbol;
+  return entryFileSymbols as Symbol[];
 
 }
 
@@ -68,11 +65,10 @@ export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Sym
   return symbol;
 }
 
-export function withLockedSymbolType<T extends Entity>(ctx: InterpreterContext, symbol: Symbol, callback: (ctx: InterpreterContext, symbol: Symbol) => T): T {
-  const type = ctx.checker.getDeclaredTypeOfSymbol(symbol);
-  locker.lockType(ctx, type);
+export function withLockedSymbol<T extends Entity>(ctx: InterpreterContext, symbol: Symbol, callback: (ctx: InterpreterContext, symbol: Symbol) => T): T {
+  locker.lockSymbol(ctx, symbol);
   const returnType = callback(ctx, symbol);
-  locker.unlockType(ctx, type);
+  locker.unlockSymbol(ctx, symbol);
   return returnType;
 }
 

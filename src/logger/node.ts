@@ -1,5 +1,6 @@
 import { stdout } from "node:process";
 
+import { name, version } from "unwritten:utils/package-json.js";
 import { EOL } from "unwritten:utils/system.js";
 
 
@@ -10,7 +11,7 @@ export module logger {
   const _fgRed = "\x1b[31m";
   const _fgWhite = "\x1b[37m";
   const _fgCyan = "\x1b[36m";
-  const _fgGray = "\x1b[90m";
+  const _fgGray = "\x1b[2m";
 
   const _bgGreen = "\x1b[42m";
   const _bgYellow = "\x1b[43m";
@@ -28,11 +29,13 @@ export module logger {
   process.on("uncaughtException", err => {
 
     const stackOnly = err.stack?.replace(`${err.name}: ${err.message}`, "");
+    const systemInfo = getSystemInfo();
 
     println(`${EOL}${_bgRed}${_bold} ${err.name} ${_reset} ${red([
       err.message,
       err.cause,
-      stackOnly
+      stackOnly,
+      ...systemInfo
     ].filter(message => !!message)
       .join(EOL))}`);
 
@@ -80,6 +83,13 @@ export module logger {
   }
 
 
+  export function filePath(path: string): string {
+    const cwd = process.cwd();
+    const relativePath = path.replace(cwd, "");
+    return `${_fgGray}${cwd}${_reset}${relativePath}`;
+  }
+
+
   //-- Colors
 
   export function red(message: string): string {
@@ -124,6 +134,15 @@ export module logger {
 
 }
 
+function getSystemInfo(): string[] {
+  const indentation = " ".repeat(4);
+  const systemInfo = `on ${name} v${version}, ${process.release.name} ${process.version}, ${process.platform} ${process.arch}, in ${process.uptime().toFixed(2)}s`;
+  const dash = "-".repeat(systemInfo.length);
+  return [
+    `${indentation}${dash}`,
+    `${indentation}${systemInfo}`
+  ];
+}
 
 function print(message: string): void {
   stdout.write(message);

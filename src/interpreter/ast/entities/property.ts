@@ -1,7 +1,11 @@
 import ts from "typescript";
 
+import {
+  getDeclaredType,
+  getResolvedTypeBySymbol,
+  getTypeByDeclaredOrResolvedType
+} from "unwritten:interpreter/ast/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { interpretType } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
@@ -46,18 +50,23 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
     `Property signature not found ${declaration?.kind}`
   );
 
-  const tsType = ctx.checker.getTypeOfSymbol(symbol);
-
-  assert(tsType, "Property type not found");
 
   const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
-  const fromDeclaration = declaration ? parsePropertyDeclaration(ctx, declaration) : <Record<string, any>>{};
+
+  const fromDeclaration = declaration
+    ? parsePropertyDeclaration(ctx, declaration)
+    : <Record<string, any>>{};
+
+  const resolvedType = getResolvedTypeBySymbol(ctx, symbol, declaration);
+  const declaredType = declaration && !isPropertyAssignment(declaration) && !isShorthandPropertyAssignment(declaration) && declaration.type
+    ? getDeclaredType(ctx, declaration.type)
+    : resolvedType;
+
+  const type = getTypeByDeclaredOrResolvedType(declaredType, resolvedType);
 
   // Partial<{ a: string }> modifiers or custom implementations of that will set the symbol.flags
   const optional = fromDeclaration.optional || isSymbolOptional(symbol);
-
-  const type = interpretType(ctx, tsType);
   const kind = EntityKind.Property;
 
   return {
@@ -81,6 +90,7 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const initializer = getInitializerByDeclaration(ctx, declaration);
+
   const optional = isPropertyAssignment(declaration) || isShorthandPropertyAssignment(declaration)
     ? undefined
     : !!declaration.questionToken;

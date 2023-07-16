@@ -2,7 +2,7 @@ import { compile } from "unwritten:compiler:browser.js";
 import { createConfig } from "unwritten:config/config.js";
 import { interpret } from "unwritten:interpreter:ast/index.js";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
-import { getEntryFileSymbolFromProgram } from "unwritten:interpreter:utils/ts.js";
+import { getEntryFileSymbolsFromProgram } from "unwritten:interpreter:utils/ts.js";
 import { getRenderer } from "unwritten:renderer:index.js";
 import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";
 import { createContext as createDefaultContext } from "unwritten:utils:context.js";
@@ -28,7 +28,7 @@ export async function unwritten(code: string, options?: BrowserAPIOptions): Prom
 
   const config = await createConfig(defaultContext, options?.config);
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
-  const entryFileSymbol = getEntryFileSymbolFromProgram(interpreterContext, program);
+  const entryFileSymbol = getEntryFileSymbolsFromProgram(interpreterContext, program);
   const parsedSymbols = interpret(interpreterContext, entryFileSymbol);
 
 

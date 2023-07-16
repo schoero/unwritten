@@ -25,7 +25,6 @@ export const defaultInterpreterConfig: Complete<InterpreterConfig> = {
       "ConstructorParameters",
       "ReturnType",
       "InstanceType",
-      "Uppercase",
       "Lowercase",
       "Capitalize",
       "Uncapitalize",

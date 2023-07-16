@@ -26,23 +26,11 @@ scope("Interpreter", TypeKind.Tuple, () => {
       expect(exportedTypeAlias.type.kind).toBe(TypeKind.Tuple);
     });
 
-  }
-
-  {
-
-    const testFileContent = ts`
-      export type TupleType = [string, number];
-    `;
-
-    const { ctx, exportedSymbols } = compile(testFileContent);
-
-    const symbol = exportedSymbols.find(s => s.name === "TupleType")!;
-    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
-
     it("should have the correct amount of members", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Tuple);
       expect(exportedTypeAlias.type.members).toHaveLength(2);
     });
+
 
   }
 
@@ -123,6 +111,27 @@ scope("Interpreter", TypeKind.Tuple, () => {
       expect(exportedTypeAlias.type.members).toHaveLength(2);
       expect(exportedTypeAlias.type.members[0]!.name).toBe("prefix");
       expect(exportedTypeAlias.type.members[1]!.name).toBe("suffix");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      type Test = string;
+      export type TupleType = [Test, number];
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "TupleType")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
+
+    it("should resolve types correctly", () => {
+      assert(exportedTypeAlias.type.kind === TypeKind.Tuple);
+      expect(exportedTypeAlias.type.members).toHaveLength(2);
+      expect(exportedTypeAlias.type.members[0]!.type.kind).toBe(TypeKind.TypeReference);
+      expect(exportedTypeAlias.type.members[1]!.type.kind).toBe(TypeKind.Number);
     });
 
   }

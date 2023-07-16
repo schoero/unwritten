@@ -63,6 +63,10 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
       expect(exportedTypeAlias.example).toBe("Type alias example");
     });
 
+    it("should have a matching type", () => {
+      expect(exportedTypeAlias.type.kind).toBe(TypeKind.String);
+    });
+
     it("should have a matching position", () => {
       expect(exportedTypeAlias.position).toStrictEqual({
         column: 0,
@@ -84,11 +88,15 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     const symbol = exportedSymbols.find(s => s.name === "GenericTypeAlias")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    it("should be able to parse generic types", () => {
+    it("should be able to parse type parameters", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedTypeAlias.typeParameters).toHaveLength(1);
-      expect(exportedTypeAlias.type.type).toBeDefined();
-      expect(exportedTypeAlias.type.type!.kind).toBe(TypeKind.TypeParameter);
+    });
+
+    it("should have a matching type", () => {
+      expect(exportedTypeAlias.type).toBeDefined();
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+      expect(exportedTypeAlias.type.type?.kind).toBe(TypeKind.TypeParameter);
     });
 
   }

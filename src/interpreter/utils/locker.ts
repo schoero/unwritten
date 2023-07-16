@@ -1,6 +1,6 @@
-import { ensureTypeHasId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
+import { ensureTypeHasId, getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 
-import type { Type } from "typescript";
+import type { Symbol, Type } from "typescript";
 
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
@@ -10,12 +10,21 @@ function getLocker(ctx: InterpreterContext) {
   return ctx.locker;
 }
 
+export function isSymbolLocked(ctx: InterpreterContext, symbol: Symbol) {
+  const locker = getLocker(ctx);
+  return locker.has(getSymbolId(ctx, symbol));
+}
+
 export function isTypeLocked(ctx: InterpreterContext, type: Type) {
   ensureTypeHasId(ctx, type);
   const locker = getLocker(ctx);
   return locker.has(getTypeId(ctx, type));
 }
 
+export function lockSymbol(ctx: InterpreterContext, symbol: Symbol) {
+  const locker = getLocker(ctx);
+  locker.add(getSymbolId(ctx, symbol));
+}
 
 export function lockType(ctx: InterpreterContext, type: Type) {
   ensureTypeHasId(ctx, type);
@@ -23,6 +32,10 @@ export function lockType(ctx: InterpreterContext, type: Type) {
   locker.add(getTypeId(ctx, type));
 }
 
+export function unlockSymbol(ctx: InterpreterContext, symbol: Symbol) {
+  const locker = getLocker(ctx);
+  locker.delete(getSymbolId(ctx, symbol));
+}
 
 export function unlockType(ctx: InterpreterContext, type: Type) {
   ensureTypeHasId(ctx, type);

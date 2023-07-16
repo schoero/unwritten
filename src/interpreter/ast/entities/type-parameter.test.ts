@@ -27,6 +27,14 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
       expect(exportedTypeAlias.typeParameters).toHaveLength(1);
     });
 
+    it("should have a matching type parameter name", () => {
+      expect(exportedTypeAlias.typeParameters![0]!.name).toBe("T");
+    });
+
+    it("should have a matching type parameter kind", () => {
+      expect(exportedTypeAlias.typeParameters![0]!.kind).toBe(EntityKind.TypeParameter);
+    });
+
   }
 
   {

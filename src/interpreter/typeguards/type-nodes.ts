@@ -7,6 +7,8 @@ import type {
   ExpressionWithTypeArguments,
   IndexedAccessTypeNode,
   MappedTypeNode,
+  OptionalTypeNode,
+  RestTypeNode,
   Symbol,
   TemplateLiteralTypeNode,
   TupleTypeNode,
@@ -38,6 +40,14 @@ export function isIndexedAccessTypeNode(node: TypeNode): node is IndexedAccessTy
 
 export function isMappedTypeNode(typeNode: TypeNode): typeNode is MappedTypeNode {
   return ts.isMappedTypeNode(typeNode);
+}
+
+export function isOptionalTypeNode(node: TypeNode): node is OptionalTypeNode {
+  return ts.isOptionalTypeNode(node);
+}
+
+export function isRestTypeNode(typeNode: TypeNode): typeNode is RestTypeNode {
+  return ts.isRestTypeNode(typeNode);
 }
 
 export function isTemplateLiteralTypeNode(typeNode: TypeNode): typeNode is TemplateLiteralTypeNode {

@@ -45,7 +45,7 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
     if(absoluteConfigPath === undefined){
       ctx.logger?.info("No unwritten.json found, continue using default configuration.");
     } else {
-      ctx.logger?.info(`Using unwritten config found at ${absoluteConfigPath}`);
+      ctx.logger?.info(`Using unwritten config found at ${ctx.logger.filePath(absoluteConfigPath)}`);
     }
 
   }

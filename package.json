@@ -18,7 +18,7 @@
   "bin": "./lib/bin/index.js",
   "scripts": {
     "build": "npm run typecheck && npm run lint && npm run spellcheck && npm run schema && vite build",
-    "build:dev": "npm run build && npm link",
+    "build:dev": "vite build",
     "eslint": "eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml,.md ./",
     "eslint:ci": "npm run eslint -- --max-warnings 0",
     "eslint:fix": "npm run eslint -- --fix",
@@ -32,6 +32,8 @@
     "spellcheck": "cspell lint",
     "spellcheck:ci": "npm run spellcheck -- --no-progress",
     "test": "vitest -c ./vite.config.ts",
+    "test:interpreter": "vitest -c ./vite.config.ts --dir src/interpreter",
+    "test:renderer": "vitest -c ./vite.config.ts --dir src/renderer",
     "typecheck": "tsc --project tsconfig.production.json --noEmit"
   },
   "files": [
@@ -50,7 +52,7 @@
     "@schoero/ts-config": "^0.3.3",
     "@schoero/vite-config": "^0.0.24",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^20.4.1",
+    "@types/node": "^20.4.2",
     "eslint-plugin-sort-exports": "^0.8.0",
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "ts-json-schema-generator": "^1.2.0",

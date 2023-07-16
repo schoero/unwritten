@@ -1,3 +1,4 @@
+export * from "./circular.js";
 export * from "./class.js";
 export * from "./constructor.js";
 export * from "./enum.js";
@@ -16,4 +17,5 @@ export * from "./signature.js";
 export * from "./source-file.js";
 export * from "./type-alias.js";
 export * from "./type-parameter.js";
+export * from "./unresolved.js";
 export * from "./variable.js";

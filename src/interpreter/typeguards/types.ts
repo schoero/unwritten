@@ -17,6 +17,7 @@ import type {
   NumberLiteralType,
   ObjectType,
   StringLiteralType,
+  Symbol,
   TupleType,
   TupleTypeReference,
   Type,
@@ -75,6 +76,11 @@ export function isConditionalType(type: Type): type is ConditionalType {
 
 export function isEnumType(type: Type): boolean {
   return (type.flags & ts.TypeFlags.Enum) !== 0;
+}
+
+export function isErrorType(type: Type): boolean {
+  return (type.flags & ts.TypeFlags.Any) !== 0 &&
+  "intrinsicName" in type && type.intrinsicName === "error";
 }
 
 export function isFunctionLikeType(type: Type): boolean {
@@ -183,7 +189,9 @@ export function isTupleTypeReferenceType(type: Type): type is TupleTypeReference
 }
 
 export function isType(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Type {
-  return !isSymbol(typeNodeOrSymbolOrDeclarationOrType) && !isDeclaration(typeNodeOrSymbolOrDeclarationOrType) && !isTypeNode(typeNodeOrSymbolOrDeclarationOrType);
+  return !isSymbol(typeNodeOrSymbolOrDeclarationOrType) &&
+  !isDeclaration(typeNodeOrSymbolOrDeclarationOrType) &&
+  !isTypeNode(typeNodeOrSymbolOrDeclarationOrType);
 }
 
 export function isTypeLiteralType(type: Type): type is ObjectType {

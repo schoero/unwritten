@@ -1,4 +1,4 @@
-import type { ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import type { ExportRegistry } from "unwritten:renderer:markup/utils/exports.js";
 import type { LinkRegistry } from "unwritten:renderer:markup/utils/linker.js";
@@ -12,9 +12,10 @@ export interface MarkupRenderer extends Renderer {
   exportRegistry: ExportRegistry;
   fileExtension: ".html" | ".md";
   initializeContext(ctx: MarkupRenderContexts): void;
-  initializeExportRegistry(ctx: MarkupRenderContexts, entities: ExportableEntity[]): void;
+  initializeExportRegistry(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity[]): void;
   linkRegistry: LinkRegistry;
   name: BuiltInRenderers.HTML | BuiltInRenderers.Markdown;
+  resetContext(ctx: MarkupRenderContexts): void;
 }
 
 export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> extends RenderContext<CustomMarkupRenderer> {

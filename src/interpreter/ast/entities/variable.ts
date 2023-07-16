@@ -1,5 +1,5 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { interpretType } from "unwritten:interpreter:ast/index.js";
+import { getResolvedTypeBySymbol } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
@@ -8,7 +8,7 @@ import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/posit
 import { isVariableDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
 
-import type { Symbol, VariableDeclaration } from "typescript";
+import type { Symbol } from "typescript";
 
 import type { VariableEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
@@ -20,39 +20,26 @@ export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): V
 
   assert(declaration && isVariableDeclaration(declaration), "Variable declaration is not found");
 
-  const tsType = ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration);
-
   const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
   const description = getDescriptionBySymbol(ctx, symbol);
-  const fromDeclaration = parseVariableDeclaration(ctx, declaration);
-  const type = interpretType(ctx, tsType);
-  const kind = EntityKind.Variable;
-
-  return {
-    ...fromDeclaration,
-    description,
-    kind,
-    name,
-    symbolId,
-    type
-  };
-
-}
-
-
-function parseVariableDeclaration(ctx: InterpreterContext, declaration: VariableDeclaration) {
-
   const position = getPositionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const declarationId = getDeclarationId(ctx, declaration);
+  const type = getResolvedTypeBySymbol(ctx, symbol, declaration);
+  const kind = EntityKind.Variable;
 
   return {
     ...jsdocTags,
     declarationId,
+    description,
+    kind,
     modifiers,
-    position
+    name,
+    position,
+    symbolId,
+    type
   };
 
 }

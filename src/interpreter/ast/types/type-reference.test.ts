@@ -32,7 +32,13 @@ scope("Interpreter", TypeKind.TypeReference, () => {
       expect(exportedReferenceTypeAlias.type.name).toBe("A");
     });
 
-    it("should have a matching type", () => {
+    it("should have a matching target", () => {
+      assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
+      expect(exportedReferenceTypeAlias.type.target).toBeDefined();
+      expect(exportedReferenceTypeAlias.type.target!.kind).toBe(EntityKind.TypeAlias);
+    });
+
+    it("should have a matching resolved type", () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedReferenceTypeAlias.type.type).toBeDefined();
       expect(exportedReferenceTypeAlias.type.type!.kind).toBe(TypeKind.String);
@@ -54,7 +60,15 @@ scope("Interpreter", TypeKind.TypeReference, () => {
 
     it("should resolve to the actual type", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedTypeAlias.type.type!.kind).toBe(TypeKind.StringLiteral);
+      assert(exportedTypeAlias.type.type!.kind === TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.type.value).toBe("test");
+    });
+
+    it("should have one matching type argument", () => {
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+      expect(exportedTypeAlias.type.typeArguments).toHaveLength(1);
+      assert(exportedTypeAlias.type.typeArguments![0]?.kind === TypeKind.StringLiteral);
+      expect(exportedTypeAlias.type.typeArguments![0]?.value).toBe("test");
     });
 
   }
@@ -76,12 +90,10 @@ scope("Interpreter", TypeKind.TypeReference, () => {
 
     it("should be able to parse conditional type references", () => {
       assert(truthyConditionalTypeReference.type.kind === TypeKind.TypeReference);
-      expect(truthyConditionalTypeReference.type.kind).toBe(TypeKind.TypeReference);
       expect(truthyConditionalTypeReference.type.type).toBeDefined();
       expect(truthyConditionalTypeReference.type.type?.kind).toBe(TypeKind.String);
 
       assert(falsyConditionalTypeReference.type.kind === TypeKind.TypeReference);
-      expect(falsyConditionalTypeReference.type.kind).toBe(TypeKind.TypeReference);
       expect(falsyConditionalTypeReference.type.type).toBeDefined();
       expect(falsyConditionalTypeReference.type.type?.kind).toBe(TypeKind.Number);
     });
