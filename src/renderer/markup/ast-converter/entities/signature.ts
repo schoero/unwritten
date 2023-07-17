@@ -42,9 +42,10 @@ import type {
   ConvertedSignatureEntityForDocumentation,
   ConvertedSignatureEntityForType
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { DeepRequiredByKey } from "unwritten:type-definitions/utils.js";
 
 
-export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedPropertyEntityForTableOfContents {
+export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: DeepRequiredByKey<SignatureEntity, "declarationId">): ConvertedPropertyEntityForTableOfContents {
 
   const convertedSignature = convertSignature(ctx, signatureEntity);
   const renderedSignature = renderNode(ctx, convertedSignature);
@@ -58,7 +59,7 @@ export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContex
 }
 
 
-export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForDocumentation {
+export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: DeepRequiredByKey<SignatureEntity, "declarationId">): ConvertedSignatureEntityForDocumentation {
 
   const symbolId = signatureEntity.declarationId;
 

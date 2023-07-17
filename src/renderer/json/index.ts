@@ -1,10 +1,10 @@
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
-import type { ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { JSONRenderContext, JSONRenderer } from "unwritten:renderer:json/type-definitions/renderer.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { Renderer } from "unwritten:type-definitions/renderer.js";
+import type { Renderer, RenderOutput } from "unwritten:type-definitions/renderer.js";
 
 
 export function isJSONRenderer(renderer: Renderer): renderer is JSONRenderer {
@@ -25,26 +25,28 @@ const jsonRenderer: JSONRenderer = {
   fileExtension: ".json",
   name: BuiltInRenderers.JSON,
 
-  render(ctx: RenderContext<Renderer>, entities: ExportableEntity[]) {
+  render(ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) {
 
-
-    //-- Initialize the context
-
+    // Initialize the context
     verifyContext(ctx);
 
-
-    //-- Render
-
+    // Render
     const renderConfig = getRenderConfig(ctx);
 
-    return JSON.stringify(entities, (key: PropertyKey, value: boolean | number | string | undefined) => {
-      if(!renderConfig.includeIds){
-        if(key === "declarationId" || key === "symbolId" || key === "typeId"){
-          return;
+    return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
+      const renderedContent = JSON.stringify(sourceFileEntity, (key: PropertyKey, value: boolean | number | string | undefined) => {
+        if(!renderConfig.includeIds){
+          if(key === "declarationId" || key === "symbolId" || key === "typeId"){
+            return;
+          }
         }
-      }
-      return value;
-    }, renderConfig.indentation);
+        return value;
+      }, renderConfig.indentation);
+
+      files[sourceFileEntity.name] = renderedContent;
+      return files;
+
+    }, {});
 
   }
 

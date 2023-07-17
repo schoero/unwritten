@@ -25,6 +25,10 @@ export type Optional = {
   optional?: boolean;
 };
 
+export type Rest = {
+  rest?: boolean;
+};
+
 export type Modifiers =
   | NativeModifiers
   | "abstract"

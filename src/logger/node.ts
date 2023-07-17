@@ -89,9 +89,7 @@ export module logger {
     return `${_fgGray}${cwd}${_reset}${relativePath}`;
   }
 
-
-  //-- Colors
-
+  // Colors
   export function red(message: string): string {
     return `${_fgRed}${message}${_reset}`;
   }

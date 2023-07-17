@@ -5,7 +5,12 @@ import type {
   PropertyEntity,
   SignatureEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
+import type { DeepRequiredByKey } from "unwritten:type-definitions/utils.js";
 
+
+export function filterImplicitSignatures(signatures: SignatureEntity[]): DeepRequiredByKey<SignatureEntity, "declarationId">[] {
+  return signatures.filter(signature => signature.declarationId !== undefined) as DeepRequiredByKey<SignatureEntity, "declarationId">[];
+}
 
 export function filterPrivateMembers<Entities extends FunctionLikeEntity | PropertyEntity>(entities: Entities[]): Entities[] {
   return entities.filter(entity => {

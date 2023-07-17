@@ -14,7 +14,8 @@ import {
   convertInterfaceTypeInline,
   convertInterfaceTypeMultiline,
   convertIntersectionTypeInline,
-  convertMappedTypeInline,
+  convertIntersectionTypeMultiline,
+  convertMappedTypeMultiline,
   convertNeverTypeInline,
   convertNullTypeInline,
   convertNumberLiteralTypeInline,
@@ -28,6 +29,7 @@ import {
   convertSymbolTypeInline,
   convertTemplateLiteralTypeInline,
   convertTupleTypeInline,
+  convertTupleTypeMultiline,
   convertTypeLiteralTypeInline,
   convertTypeLiteralTypeMultiline,
   convertTypeParameterTypeInline,
@@ -35,13 +37,14 @@ import {
   convertTypeReferenceTypeMultiline,
   convertUndefinedTypeInline,
   convertUnionTypeInline,
+  convertUnionTypeMultiline,
   convertUnknownTypeInline,
   convertUnresolvedTypeInline,
   convertVoidTypeInline
 } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
-import { isMultilineType } from "unwritten:renderer:markup/utils/types.js";
+import { isMultilineType, isMultilineUnionType } from "unwritten:renderer:markup/utils/types.js";
 import {
   isAnyType,
   isArrayType,
@@ -110,7 +113,7 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
 export function convertType(ctx: MarkupRenderContexts, type: Type | Type) {
 
   const inlineType = convertTypeForInlineType(ctx, type);
-  const multilineType = isMultilineType(ctx, type)
+  const multilineType = isMultilineType(type)
     ? convertTypeForMultilineType(ctx, type)
     : undefined;
 
@@ -174,7 +177,7 @@ function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type | Type):
   } else if(isTypeLiteralType(type)){
     return convertTypeLiteralTypeInline(ctx, type);
   } else if(isMappedType(type)){
-    return convertMappedTypeInline(ctx, type);
+    return convertMappedTypeMultiline(ctx, type);
   } else if(isObjectLiteralType(type)){
     return convertObjectLiteralTypeInline(ctx, type);
   } else if(isObjectType(type)){
@@ -207,6 +210,14 @@ function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineT
     return convertFunctionTypeMultiline(ctx, type);
   } else if(isTypeReferenceType(type)){
     return convertTypeReferenceTypeMultiline(ctx, type);
+  } else if(isTupleType(type)){
+    return convertTupleTypeMultiline(ctx, type);
+  } else if(isUnionType(type) && isMultilineUnionType(type)){
+    return convertUnionTypeMultiline(ctx, type);
+  } else if(isIntersectionType(type)){
+    return convertIntersectionTypeMultiline(ctx, type);
+  } else if(isMappedType(type)){
+    return convertMappedTypeMultiline(ctx, type);
   }
 
   throw new Error("Type is not yet implemented");

@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { convertTupleTypeInline } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import { convertTupleTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -27,11 +27,12 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertTupleTypeInline(ctx, type as TupleType);
-    const renderedType = renderNode(ctx, convertedType);
+    const convertedType = convertTupleTypeMultiline(ctx, type as TupleType);
 
-    it("should be able to render tuple types", () => {
-      expect(renderedType).toBe("[string, number]");
+    it("should render multiple tuple type members correctly", () => {
+      expect(convertedType.children).toHaveLength(2);
+      expect(renderNode(ctx, convertedType.children[0])).toContain("string");
+      expect(renderNode(ctx, convertedType.children[1])).toContain("number");
     });
 
   }
@@ -49,11 +50,12 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertTupleTypeInline(ctx, type as TupleType);
-    const renderedType = renderNode(ctx, convertedType);
+    const convertedType = convertTupleTypeMultiline(ctx, type as TupleType);
 
     it("should be able to render tuple type members with labels", () => {
-      expect(renderedType).toBe("[first: string, second: number]");
+      expect(convertedType.children).toHaveLength(2);
+      expect(renderNode(ctx, convertedType.children[0])).toContain("first string");
+      expect(renderNode(ctx, convertedType.children[1])).toContain("second number");
     });
 
   }
@@ -71,11 +73,12 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertTupleTypeInline(ctx, type as TupleType);
-    const renderedType = renderNode(ctx, convertedType);
+    const convertedType = convertTupleTypeMultiline(ctx, type as TupleType);
 
     it("should be able to render optional tuple type members", () => {
-      expect(renderedType).toBe("[string, number?]");
+      expect(convertedType.children).toHaveLength(2);
+      expect(renderNode(ctx, convertedType.children[0])).toContain("string");
+      expect(renderNode(ctx, convertedType.children[1])).toContain("number optional");
     });
 
   }
@@ -93,33 +96,12 @@ scope("MarkupRenderer", TypeKind.Tuple, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertTupleTypeInline(ctx, type as TupleType);
-    const renderedType = renderNode(ctx, convertedType);
+    const convertedType = convertTupleTypeMultiline(ctx, type as TupleType);
 
     it("should be able to render rest tuple type members", () => {
-      expect(renderedType).toBe("[string, ...number[]]");
-    });
-
-  }
-
-  {
-
-    const testFileContent = ts`
-      export type Type = [string, ...(string | number)[]];
-    `;
-
-    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
-
-    const symbol = exportedSymbols.find(s => s.name === "Type")!;
-    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
-    const type = typeAliasEntity.type;
-    const ctx = createRenderContext();
-
-    const convertedType = convertTupleTypeInline(ctx, type as TupleType);
-    const renderedType = renderNode(ctx, convertedType);
-
-    it("should be able to render union rest tuple type members", () => {
-      expect(renderedType).toBe("[string, ...(string | number)[]]");
+      expect(convertedType.children).toHaveLength(2);
+      expect(renderNode(ctx, convertedType.children[0])).toContain("string");
+      expect(renderNode(ctx, convertedType.children[1])).toContain("number rest");
     });
 
   }

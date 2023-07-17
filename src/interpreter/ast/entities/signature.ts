@@ -23,6 +23,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createSignatureEntity(ctx: InterpreterContext, signature: TSSignature): SignatureEntity {
 
+  // Implicit construct signatures have no declaration.
   const symbolId = signature.declaration && getSymbolIdByDeclaration(ctx, signature.declaration);
   const declarationId = signature.declaration && getDeclarationId(ctx, signature.declaration);
   const position = signature.declaration && getPositionByDeclaration(ctx, signature.declaration);

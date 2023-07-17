@@ -47,7 +47,7 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedMultilineTypes | undefined {
 
   if(typeReferenceType.type !== undefined &&
-    isMultilineType(ctx, typeReferenceType.type) &&
+    isMultilineType(typeReferenceType.type) &&
     "symbolId" in typeReferenceType.type &&
     typeReferenceType.type.symbolId &&
     !isSymbolExported(ctx, typeReferenceType.type.symbolId)){

@@ -2,7 +2,10 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { convertIntersectionTypeInline } from "unwritten:renderer:markup/ast-converter/types/index.js";
+import {
+  convertIntersectionTypeInline,
+  convertIntersectionTypeMultiline
+} from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -17,7 +20,7 @@ scope("MarkupRenderer", TypeKind.Intersection, () => {
   {
 
     const testFileContent = ts`
-      export type Type = { a: string } & { b: number };
+      export type Type = string & { prop: number };
     `;
 
     const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
@@ -27,13 +30,17 @@ scope("MarkupRenderer", TypeKind.Intersection, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertIntersectionTypeInline(ctx, type as IntersectionType);
-    const renderedType = renderNode(ctx, convertedType);
+    const convertedInlineType = convertIntersectionTypeInline(ctx, type as IntersectionType);
+    const convertedMultilineType = convertIntersectionTypeMultiline(ctx, type as IntersectionType);
 
-    it("should render join multiple types with a `&`", () => {
-      expect(renderedType).toContain("string");
-      expect(renderedType).toContain("&");
-      expect(renderedType).toContain("number");
+    it("should render all intersection types as a list, because intersection types must always contain a non-primitive type.", () => {
+      expect(renderNode(ctx, convertedInlineType)).toBe("intersection");
+    });
+
+    it("should render intersection types as a list", () => {
+      expect(convertedMultilineType.children).toHaveLength(2);
+      expect(renderNode(ctx, convertedMultilineType.children[0])).toContain("string");
+      expect(renderNode(ctx, convertedMultilineType.children[1])).toContain("object");
     });
 
   }

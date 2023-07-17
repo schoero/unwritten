@@ -83,6 +83,7 @@ export type Entity =
   | SetterEntity
   | SignatureEntity
   | SourceFileEntity
+  | TupleMemberEntity
   | TypeAliasEntity
   | TypeParameterEntity
   | UnresolvedEntity

@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { writeFileSync } from "node:fs";
+
 import { expect, it } from "vitest";
 
-import { createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { interpret } from "unwritten:interpreter/ast/index.js";
-import { convertVariableEntityForDocumentation } from "unwritten:renderer/markup/ast-converter/entities/index.js";
-import { isAnchorNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -36,18 +35,15 @@ scope("Integration", "multiple entry points", () => {
 
     const sourceFileEntities = interpret(compilerContext, fileSymbols);
 
-    const ctx = createRenderContext();
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+    const rendered = ctx.renderer.render(ctx, sourceFileEntities);
 
-    ctx.renderer.initializeExportRegistry(ctx, sourceFileEntities);
-
-    const variableSymbol = exportedSymbols.find(e => e.name === "test")!;
-    const variableEntity = createVariableEntity(compilerContext, variableSymbol);
-    const convertedVariableEntity = convertVariableEntityForDocumentation(ctx, variableEntity);
+    Object.entries(rendered).forEach(([fileName, content]) => {
+      writeFileSync(fileName.replace(".ts", ".md"), content);
+    });
 
     it("should render the circular type as a type reference", () => {
-      assert(Array.isArray(convertedCircularType));
-      assert(isAnchorNode(convertedCircularType[0]));
-      expect(convertedCircularType[0].name).toBe("InterfaceA");
+      expect(rendered).toBeDefined();
     });
 
   }

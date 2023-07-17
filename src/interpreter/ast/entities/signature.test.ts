@@ -114,6 +114,15 @@ scope("Interpreter", EntityKind.Signature, () => {
       expect(exportedInterface.setterSignatures).toHaveLength(1);
     });
 
+    it("should have a 'declarationId' for each signature", () => {
+      expect(exportedFunction.signatures[0]!.declarationId).toBeDefined();
+      expect(exportedInterface.callSignatures[0]!.declarationId).toBeDefined();
+      expect(exportedInterface.constructSignatures[0]!.declarationId).toBeDefined();
+      expect(exportedInterface.methodSignatures[0]!.declarationId).toBeDefined();
+      expect(exportedInterface.getterSignatures[0]!.declarationId).toBeDefined();
+      expect(exportedInterface.setterSignatures[0]!.declarationId).toBeDefined();
+    });
+
   }
 
   {

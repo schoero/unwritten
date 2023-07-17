@@ -49,14 +49,16 @@ export function createTupleByTupleTypeNode(ctx: InterpreterContext, tupleTypeNod
 
 function createTupleTypeMember(ctx: InterpreterContext, typeNode: NamedTupleMember | TypeNode) {
 
+  const name = isNamedTupleMember(typeNode)
+    ? getNameByTypeNode(ctx, typeNode.name)
+    : undefined;
+
   const resolvedType = getResolvedTypeByTypeNode(ctx, typeNode);
   const declaredType = getDeclaredType(ctx, typeNode);
-
   const type = getTypeByDeclaredOrResolvedType(declaredType, resolvedType);
 
   const optional = isOptionalTypeNode(typeNode);
   const rest = isRestTypeNode(typeNode);
-  const name = isNamedTupleMember(typeNode) && getNameByTypeNode(ctx, typeNode.name);
   const kind = EntityKind.TupleMember;
 
   return <TupleMemberEntity>{

@@ -6,8 +6,6 @@ import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
 
 
-// TODO: Implement this test
-
 scope("MarkupRenderer", "Optional", () => {
 
   const ctx = createRenderContext();
@@ -19,7 +17,7 @@ scope("MarkupRenderer", "Optional", () => {
     }
   );
 
-  assert(convertedOptional, "Converted optional undefined");
+  assert(convertedOptional, "Converted optional is undefined.");
 
   it("should render the optional tag correctly", () => {
     expect(convertedOptional).toContain("optional");

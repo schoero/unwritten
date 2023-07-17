@@ -34,42 +34,30 @@ JSDocTags,
 | JSDocTagNames.Internal
 >;
 
-
-//-- Position
-
+// Position
 export type ConvertedPosition = SmallNode<[LinkNode] | [string, LinkNode]> | "";
 
-
-//-- Tags
-
+// Tags
 export type ConvertedTagsForDocumentation = ParagraphNode | "";
 export type ConvertedTagsForType = ASTNodes;
 
-
-//-- Description
-
+// Description
 export type ConvertedDescriptionForDocumentation = TitleNode<[
   ParagraphNode
 ]> | "";
 export type ConvertedDescriptionForType = ASTNodes;
 
-
-//-- Remarks
-
+// Remarks
 export type ConvertedRemarks = TitleNode<[
   ParagraphNode
 ]> | "";
 
-
-//-- Example
-
+// Example
 export type ConvertedExample = TitleNode<[
   ParagraphNode
 ]> | "";
 
-
-//-- Types
-
+// Types
 export interface ConvertedType {
   inline: ConvertedInlineTypes;
   multiline?: ConvertedMultilineTypes;
@@ -79,6 +67,7 @@ export type ConvertedInlineTypes =
   | ConvertedArrayTypeInline
   | ConvertedIntersectionTypeInline
   | ConvertedLiteralTypesInline
+  | ConvertedMappedTypeInline
   | ConvertedPrimitiveTypesInline
   | ConvertedTupleTypeInline
   | ConvertedUnionTypeInline;
@@ -87,12 +76,13 @@ export type ConvertedMultilineTypes =
   | ConvertedClassTypeMultiline
   | ConvertedFunctionTypeMultiline
   | ConvertedInterfaceTypeMultiline
+  | ConvertedMappedTypeMultiline
   | ConvertedObjectLiteralTypeMultiline
-  | ConvertedTypeLiteralTypeMultiline;
+  | ConvertedTupleTypeMultiline
+  | ConvertedTypeLiteralTypeMultiline
+  | ConvertedUnionTypeMultiline;
 
-
-//-- Primitive types
-
+// Primitive types
 export type ConvertedPrimitiveTypesInline =
   | ConvertedAnyTypeInline
   | ConvertedBigIntTypeInline
@@ -120,9 +110,7 @@ export type ConvertedUnknownTypeInline = ASTNodes;
 export type ConvertedAnyTypeInline = ASTNodes;
 export type ConvertedCircularTypeInline = ASTNodes;
 
-
-//-- Literal types
-
+// Literal types
 export type ConvertedLiteralTypesInline =
   | ConvertedBigIntLiteralTypeInline
   | ConvertedBooleanLiteralTypeInline
@@ -137,64 +125,44 @@ export type ConvertedBigIntLiteralTypeInline = ASTNodes;
 
 export type ConvertedTemplateLiteralTypeInline = ASTNodes[];
 
-
-//-- Function type
-
+// Function type
 export type ConvertedFunctionTypeMultiline = ConvertedSignatureEntityForType | ListNode<ConvertedSignatureEntityForType[]>;
 export type ConvertedFunctionTypeInline = ASTNodes;
 
-
-//-- Return type
-
+// Return type
 export type ConvertedReturnTypeForDocumentation = TitleNode<[
   ASTNodes
 ]>;
 export type ConvertedReturnTypeInline = ListNode | "";
 
-
-//-- Type reference
-
+// Type reference
 export type ConvertedTypeReferenceTypeInline = ASTNodes;
 
-
-//-- Type reference
-
+// Type reference
 export type ConvertedUnresolvedTypeInline = ASTNodes;
 
-
-//-- Indexed access type
-
+// Indexed access type
 export type ConvertedIndexedAccessTypeInline = ASTNodes;
 
-
-//-- Type parameter
-
+// Type parameter
 export type ConvertedTypeParameterTypeInline = ASTNodes;
 
-
-//-- Array type
-
+// Array type
 export type ConvertedArrayTypeInline = ["(", ConvertedInlineTypes, ")", "[]"] | [ConvertedInlineTypes, "[]"];
 
+// Tuple type
+export type ConvertedTupleTypeInline = ASTNodes;
+export type ConvertedTupleTypeMultiline = ListNode<ConvertedInlineTypes[][]>;
 
-//-- Tuple type
+// Union type
+export type ConvertedUnionTypeInline = ASTNodes;
+export type ConvertedUnionTypeMultiline = ListNode;
 
-export type ConvertedTupleTypeInline = ["[", ...ConvertedTupleMember[], "]"];
-export type ConvertedTupleMember = ASTNodes[];
+// Intersection type
+export type ConvertedIntersectionTypeInline = ASTNodes;
+export type ConvertedIntersectionTypeMultiline = ListNode;
 
-
-//-- Union type
-
-export type ConvertedUnionTypeInline = ASTNodes[];
-
-
-//-- Intersection type
-
-export type ConvertedIntersectionTypeInline = ASTNodes[];
-
-
-//-- Object type
-
+// Object type
 export type ConvertedObjectTypeMultiline = [
   constructSignatures: ListNode<ConvertedSignatureEntityForType[]>,
   callSignatures: ListNode<ConvertedSignatureEntityForType[]>,
@@ -205,40 +173,27 @@ export type ConvertedObjectTypeMultiline = [
 ];
 export type ConvertedObjectType = ASTNodes;
 
-
-//-- Object literal type
-
-export type ConvertedObjectLiteralType = ConvertedObjectType;
+// Object literal type
+export type ConvertedObjectLiteralTypeInline = ConvertedObjectType;
 export type ConvertedObjectLiteralTypeMultiline = ConvertedObjectTypeMultiline;
 
-
-//-- Type literal type
-
-export type ConvertedTypeLiteralType = ConvertedObjectType;
+// Type literal type
+export type ConvertedTypeLiteralTypeInline = ConvertedObjectType;
 export type ConvertedTypeLiteralTypeMultiline = ConvertedObjectTypeMultiline;
 
-
-//-- Interface type
-
-export type ConvertedInterfaceType = ConvertedObjectType;
+// Interface type
+export type ConvertedInterfaceTypeInline = ConvertedObjectType;
 export type ConvertedInterfaceTypeMultiline = ConvertedObjectTypeMultiline;
 
-
-//-- Class type
-
-export type ConvertedClassType = ConvertedObjectType;
+// Class type
+export type ConvertedClassTypeInline = ConvertedObjectType;
 export type ConvertedClassTypeMultiline = ConvertedObjectTypeMultiline;
 
+// Mapped type
+export type ConvertedMappedTypeInline = ASTNodes;
+export type ConvertedMappedTypeMultiline = ASTNodes[] | ConvertedObjectLiteralTypeMultiline;
 
-//-- Mapped type
-
-export type ConvertedMappedType = TitleNode<[
-  ListNode
-]>;
-
-
-//-- Entities
-
+// Entities
 export type ConvertedEntitiesForTableOfContents =
   | ConvertedClassEntityForTableOfContents
   | ConvertedEnumEntityForTableOfContents
@@ -262,9 +217,7 @@ export type ConvertedEntitiesForDocumentation =
   | ConvertedTypeAliasEntityForDocumentation
   | ConvertedVariableEntityForDocumentation;
 
-
-//-- Namespace
-
+// Namespace
 export type ConvertedNamespaceEntityForTableOfContents = [
   name: ASTNodes,
   exports: ListNode<ConvertedCategoryForTableOfContents[]>
@@ -280,9 +233,7 @@ export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
   ]>
 ]>;
 
-
-//-- Module
-
+// Module
 export type ConvertedModuleEntityForTableOfContents = [
   name: ASTNodes,
   exports: ListNode<ConvertedCategoryForTableOfContents[]>
@@ -298,9 +249,7 @@ export type ConvertedModuleEntityForDocumentation = SectionNode<[
   ]>
 ]>;
 
-
-//-- Type alias
-
+// Type alias
 export type ConvertedTypeAliasEntityForTableOfContents = AnchorNode;
 export type ConvertedTypeAliasEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -314,23 +263,17 @@ export type ConvertedTypeAliasEntityForDocumentation = SectionNode<[
   ]>
 ]>;
 
-
-//-- Function like
-
+// Function like
 export type ConvertedFunctionLikeEntityForTableOfContents = ConvertedSignatureEntityForTableOfContents[];
 export type ConvertedFunctionLikeEntityForDocumentation = ConvertedSignatureEntityForDocumentation[];
 export type ConvertedFunctionLikeEntityForType = ConvertedSignatureEntityForType[];
 
-
-//-- Function
-
+// Function
 export type ConvertedFunctionEntityForTableOfContents = ConvertedFunctionLikeEntityForTableOfContents;
 export type ConvertedFunctionEntityForDocumentation = ConvertedFunctionLikeEntityForDocumentation;
 export type ConvertedFunctionEntityForType = ConvertedFunctionLikeEntityForType;
 
-
-//-- Signature
-
+// Signature
 export type ConvertedSignatureEntityForTableOfContents = AnchorNode;
 export type ConvertedSignatureEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -352,9 +295,7 @@ export type ConvertedSignatureEntityForType = [
   returnType: ASTNodes
 ];
 
-
-//-- Variable
-
+// Variable
 export type ConvertedVariableEntityForTableOfContents = AnchorNode;
 export type ConvertedVariableEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -367,9 +308,7 @@ export type ConvertedVariableEntityForDocumentation = SectionNode<[
   ]>
 ]>;
 
-
-//-- Export assignment
-
+// Export assignment
 export type ConvertedExportAssignmentEntityForTableOfContents = AnchorNode;
 export type ConvertedExportAssignmentEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -382,9 +321,7 @@ export type ConvertedExportAssignmentEntityForDocumentation = SectionNode<[
   ]>
 ]>;
 
-
-//-- Interface
-
+// Interface
 export type ConvertedInterfaceEntityForTableOfContents = AnchorNode;
 export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -402,9 +339,7 @@ export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
   ]>
 ]>;
 
-
-//-- Class
-
+// Class
 export type ConvertedClassEntityForTableOfContents = [
   title: ASTNodes,
   constructor: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
@@ -428,9 +363,7 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
   ]>
 ]>;
 
-
-//-- Enum
-
+// Enum
 export type ConvertedEnumEntityForTableOfContents = AnchorNode;
 export type ConvertedEnumEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -443,16 +376,12 @@ export type ConvertedEnumEntityForDocumentation = SectionNode<[
   ]>
 ]>;
 
-
-//-- Parameter
-
+// Parameter
 export type ConvertedParameterEntitiesForSignature = ASTNodes[] | "";
 export type ConvertedParameterEntitiesForDocumentation = TitleNode<[ListNode]> | "";
 export type ConvertedParameterEntitiesForType = ListNode | "";
 
-
-//-- Type Parameter
-
+// Type Parameter
 export type ConvertedTypeParameterEntitiesForSignature = ASTNodes[];
 export type ConvertedTypeParameterEntitiesForDocumentation = TitleNode<[
   ListNode<ConvertedTypeParameterEntityForDocumentation[]>
@@ -460,16 +389,12 @@ export type ConvertedTypeParameterEntitiesForDocumentation = TitleNode<[
 export type ConvertedTypeParameterEntitiesForType = ListNode | "";
 export type ConvertedTypeParameterEntityForDocumentation = ASTNodes[];
 
-
-//-- Type Argument
-
+// Type Argument
 export type ConvertedTypeArgumentEntityForSignature = ASTNodes;
 export type ConvertedTypeArgumentEntitiesForSignature = ASTNodes[];
 export type ConvertedTypeArgumentEntityForDocumentation = ASTNodes[];
 
-
-//-- Property
-
+// Property
 export type ConvertedPropertyEntityForTableOfContents = AnchorNode;
 export type ConvertedPropertyEntityForDocumentation = TitleNode<[
   tags: ConvertedTagsForDocumentation,

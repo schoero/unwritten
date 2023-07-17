@@ -8,9 +8,10 @@ import { createContext as createRenderContext } from "unwritten:renderer:utils/c
 import { createContext as createDefaultContext } from "unwritten:utils:context.js";
 
 import type { BrowserAPIOptions } from "unwritten:type-definitions/options.js";
+import type { RenderOutput } from "unwritten:type-definitions/renderer.js";
 
 
-export async function unwritten(code: string, options?: BrowserAPIOptions): Promise<string> {
+export async function unwritten(code: string, options?: BrowserAPIOptions): Promise<RenderOutput> {
 
 
   //-- Logger

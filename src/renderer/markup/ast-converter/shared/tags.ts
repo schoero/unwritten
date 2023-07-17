@@ -1,3 +1,4 @@
+import { convertRest } from "unwritten:renderer/markup/ast-converter/shared/rest.js";
 import { convertJSDocTags } from "unwritten:renderer:markup/ast-converter/shared/jsdoc-tags.js";
 import { convertModifiers } from "unwritten:renderer:markup/ast-converter/shared/modifiers.js";
 import { convertOptional } from "unwritten:renderer:markup/ast-converter/shared/optional.js";
@@ -36,11 +37,13 @@ export function convertTagsForType(ctx: MarkupRenderContexts, entityWithTags: En
   const convertedJSDocTags = convertJSDocTags(ctx, entityWithTags);
   const convertedModifiers = "modifiers" in entityWithTags ? convertModifiers(ctx, entityWithTags.modifiers) : [];
   const convertedOptional = "optional" in entityWithTags ? convertOptional(ctx, entityWithTags) : [];
+  const convertedRest = "rest" in entityWithTags ? convertRest(ctx, entityWithTags) : [];
 
   const convertedTags = [
     ...convertedJSDocTags,
     ...convertedModifiers,
-    ...convertedOptional
+    ...convertedOptional,
+    ...convertedRest
   ];
 
   return convertedTags.length > 0

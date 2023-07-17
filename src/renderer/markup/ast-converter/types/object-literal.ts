@@ -6,12 +6,12 @@ import {
 import type { ObjectLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
-  ConvertedObjectLiteralType,
+  ConvertedObjectLiteralTypeInline,
   ConvertedObjectLiteralTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertObjectLiteralTypeInline(ctx: MarkupRenderContexts, objectLiteralType: ObjectLiteralType): ConvertedObjectLiteralType {
+export function convertObjectLiteralTypeInline(ctx: MarkupRenderContexts, objectLiteralType: ObjectLiteralType): ConvertedObjectLiteralTypeInline {
   return convertObjectTypeInline(ctx, objectLiteralType);
 }
 

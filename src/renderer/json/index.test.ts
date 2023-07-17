@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { createFunctionEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -18,23 +18,22 @@ scope("JSONRenderer", "JSON", () => {
       }
     `;
 
-    const { ctx, exportedSymbols } = compile(testFileContent);
+    const { ctx, fileSymbols } = compile(testFileContent);
 
-    const symbol = exportedSymbols.find(s => s.name === "add")!;
-    const functionEntity = createFunctionEntity(ctx, symbol);
+    const fileEntities = fileSymbols.map(fileSymbol => createSourceFileEntity(ctx, fileSymbol));
 
     it("should not export id's by default", () => {
       const ctx = createRenderContext(BuiltInRenderers.JSON);
-      const renderedOutput = ctx.renderer.render(ctx, [functionEntity]);
-      const json = JSON.parse(renderedOutput);
+      const renderedOutput = ctx.renderer.render(ctx, fileEntities);
+      const json = JSON.parse(Object.values(renderedOutput)[0]).exports;
       expect(json[0].symbolId).toBeUndefined();
     });
 
     it("should be possible to enable ids", () => {
       const ctx = createRenderContext(BuiltInRenderers.JSON);
       ctx.config.renderConfig.json.includeIds = true;
-      const renderedOutput = ctx.renderer.render(ctx, [functionEntity]);
-      const json = JSON.parse(renderedOutput);
+      const renderedOutput = ctx.renderer.render(ctx, fileEntities);
+      const json = JSON.parse(Object.values(renderedOutput)[0]).exports;
       expect(json[0].symbolId).toBeDefined();
     });
 

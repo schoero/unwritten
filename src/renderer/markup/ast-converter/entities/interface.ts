@@ -1,5 +1,9 @@
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { filterPrivateMembers, filterPrivateSignatures } from "unwritten:renderer/utils/private-members.js";
+import {
+  filterImplicitSignatures,
+  filterPrivateMembers,
+  filterPrivateSignatures
+} from "unwritten:renderer/utils/private-members.js";
 import {
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
@@ -58,18 +62,24 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "getterSignatures");
 
   const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterPrivateMembers(propertyEntities);
-  const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructSignatures : filterPrivateSignatures(constructSignatures);
+  const publicConstructSignatures = renderConfig.renderPrivateMembers ? constructSignatures : filterPrivateSignatures(constructSignatures);
   const publicCallSignatures = renderConfig.renderPrivateMembers ? callSignatures : filterPrivateSignatures(callSignatures);
   const publicMethodSignatures = renderConfig.renderPrivateMembers ? methodSignatures : filterPrivateSignatures(methodSignatures);
   const publicSetterSignatures = renderConfig.renderPrivateMembers ? setterSignatures : filterPrivateSignatures(setterSignatures);
   const publicGetterSignatures = renderConfig.renderPrivateMembers ? getterSignatures : filterPrivateSignatures(getterSignatures);
 
+  const explicitConstructSignatures = filterImplicitSignatures(publicConstructSignatures);
+  const explicitCallSignatures = filterImplicitSignatures(publicCallSignatures);
+  const explicitMethodSignatures = filterImplicitSignatures(publicMethodSignatures);
+  const explicitSetterSignatures = filterImplicitSignatures(publicSetterSignatures);
+  const explicitGetterSignatures = filterImplicitSignatures(publicGetterSignatures);
+
   const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
-  const convertedConstructSignatures = publicConstructorEntity.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedCallSignatures = publicCallSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedMethods = publicMethodSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedSetters = publicSetterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedGetters = publicGetterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedConstructSignatures = explicitConstructSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedCallSignatures = explicitCallSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedMethods = explicitMethodSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedSetters = explicitSetterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const convertedGetters = explicitGetterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
 
   return createSectionNode(
     SECTION_TYPE[interfaceEntity.kind],

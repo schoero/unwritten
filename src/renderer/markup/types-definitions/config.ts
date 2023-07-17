@@ -80,6 +80,7 @@ export interface MarkupRenderConfig {
     interface?: string;
     interface_other?: string;
     internal?: string;
+    intersection?: string;
     method_one?: string;
     method_other?: string;
     module_one?: string;
@@ -102,12 +103,15 @@ export interface MarkupRenderConfig {
     setter_one?: string;
     setter_other?: string;
     static?: string;
+    tuple_one?: string;
+    tuple_other?: string;
     type_one?: string;
     type_other?: string;
     "type-alias_one"?: string;
     "type-alias_other"?: string;
     "type-parameter_one"?: string;
     "type-parameter_other"?: string;
+    union?: string;
     variable_one?: string;
     variable_other?: string;
   };

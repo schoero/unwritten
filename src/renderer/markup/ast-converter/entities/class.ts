@@ -1,5 +1,5 @@
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { filterPrivateMembers } from "unwritten:renderer/utils/private-members.js";
+import { filterImplicitSignatures, filterPrivateMembers } from "unwritten:renderer/utils/private-members.js";
 import {
   convertFunctionLikeEntityForDocumentation,
   convertFunctionLikeEntityForTableOfContents,
@@ -59,7 +59,8 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
   const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterPrivateMembers(setterEntities);
   const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterPrivateMembers(getterEntities);
 
-  const convertedConstructSignatures = publicConstructorEntity?.signatures.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
+  const explicitConstructSignatures = publicConstructorEntity?.signatures && filterImplicitSignatures(publicConstructorEntity.signatures);
+  const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
   const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForTableOfContents(ctx, propertyEntity));
   const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForTableOfContents(ctx, methodEntity)).flat();
   const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
@@ -80,7 +81,7 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
 export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
-  const t = getTranslator(ctx);
+  const translate = getTranslator(ctx);
 
   const name = classEntity.name;
   const symbolId = classEntity.symbolId;
@@ -106,7 +107,8 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterPrivateMembers(setterEntities);
   const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterPrivateMembers(getterEntities);
 
-  const convertedConstructSignatures = publicConstructorEntity?.signatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity)) ?? [];
+  const explicitConstructSignatures = publicConstructorEntity?.signatures && filterImplicitSignatures(publicConstructorEntity.signatures);
+  const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity)) ?? [];
   const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
   const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForDocumentation(ctx, methodEntity));
   const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
@@ -122,11 +124,11 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
       convertedDescription,
       convertedRemarks,
       convertedExample,
-      createTitleNode(t("construct-signature", { capitalizeEach: true, count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
-      createTitleNode(t("property", { capitalize: true, count: convertedProperties.length }), ...convertedProperties),
-      createTitleNode(t("method", { capitalize: true, count: convertedMethods.length }), ...convertedMethods),
-      createTitleNode(t("setter", { capitalize: true, count: convertedSetters.length }), ...convertedSetters),
-      createTitleNode(t("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters)
+      createTitleNode(translate("construct-signature", { capitalizeEach: true, count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
+      createTitleNode(translate("property", { capitalize: true, count: convertedProperties.length }), ...convertedProperties),
+      createTitleNode(translate("method", { capitalize: true, count: convertedMethods.length }), ...convertedMethods),
+      createTitleNode(translate("setter", { capitalize: true, count: convertedSetters.length }), ...convertedSetters),
+      createTitleNode(translate("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters)
     )
   );
 

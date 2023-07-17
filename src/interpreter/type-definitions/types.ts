@@ -42,8 +42,11 @@ export type MultilineType =
   | ClassType
   | FunctionType
   | InterfaceType
+  | IntersectionType
   | ObjectLiteralType
-  | ObjectType;
+  | ObjectType
+  | TupleType
+  | UnionType;
 
 export type PrimitiveTypeKind =
   | TypeKind.Any

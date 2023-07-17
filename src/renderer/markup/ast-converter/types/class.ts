@@ -8,12 +8,12 @@ import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import type { ClassType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
-  ConvertedClassType,
+  ConvertedClassTypeInline,
   ConvertedClassTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertClassTypeInline(ctx: MarkupRenderContexts, classType: ClassType): ConvertedClassType {
+export function convertClassTypeInline(ctx: MarkupRenderContexts, classType: ClassType): ConvertedClassTypeInline {
 
   const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);

@@ -75,4 +75,8 @@ export module logger {
     return message;
   }
 
+  export function filePath(path: string): string {
+    return path;
+  }
+
 }

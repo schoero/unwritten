@@ -6,12 +6,12 @@ import {
 import type { InterfaceType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
-  ConvertedInterfaceType,
+  ConvertedInterfaceTypeInline,
   ConvertedInterfaceTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertInterfaceTypeInline(ctx: MarkupRenderContexts, interfaceType: InterfaceType): ConvertedInterfaceType {
+export function convertInterfaceTypeInline(ctx: MarkupRenderContexts, interfaceType: InterfaceType): ConvertedInterfaceTypeInline {
   return convertObjectTypeInline(ctx, interfaceType);
 }
 

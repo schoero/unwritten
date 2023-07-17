@@ -1,68 +1,64 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { convertTagsForType } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { createLinkNode, createListNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
-  ConvertedTupleMember,
-  ConvertedTupleTypeInline
+  ConvertedTupleTypeInline,
+  ConvertedTupleTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertTupleTypeInline(ctx: MarkupRenderContexts, tupleType: TupleType): ConvertedTupleTypeInline {
 
-  const convertedMembers = convertTupleMembers(ctx, tupleType.members);
+  const translate = getTranslator(ctx);
+  const renderConfig = getRenderConfig(ctx);
 
-  return [
-    "[" as const,
-    ...convertedMembers,
-    "]" as const
-  ];
+  const encapsulatedType = encapsulate(
+    translate("tuple", { count: 1 }),
+    renderConfig.typeEncapsulation
+  );
+
+  return ctx.config.externalTypes[TypeKind.Tuple]
+    ? createLinkNode(encapsulatedType, ctx.config.externalTypes[TypeKind.Tuple])
+    : encapsulatedType;
+
+}
+
+
+export function convertTupleTypeMultiline(ctx: MarkupRenderContexts, tupleType: TupleType): ConvertedTupleTypeMultiline {
+
+  const members = tupleType.members.map(member => convertTupleMember(ctx, member));
+
+  return createListNode(
+    ...members
+  );
 
 }
 
 
-function convertTupleMembers(ctx: MarkupRenderContexts, tupleMemberEntities: TupleMemberEntity[]): ConvertedTupleMember[] {
+function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleMemberEntity) {
 
-  const convertedMembers = tupleMemberEntities.map((member, index) => {
-    if(index === 0){
-      return convertTupleMember(ctx, member);
-    } else {
-      return [
-        ", ",
-        ...convertTupleMember(ctx, member)
-      ];
-    }
-  });
+  const convertedName = tupleMemberEntity.name ?? "";
+  const convertedDescription = tupleMemberEntity.description ?? "";
+  const convertedTags = convertTagsForType(ctx, tupleMemberEntity);
 
-  return convertedMembers;
-
-}
-
-function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleMemberEntity): ConvertedTupleMember {
-
-  const { inlineType } = convertType(ctx, tupleMemberEntity.type);
-
-  const renderedName = tupleMemberEntity.name ? `${tupleMemberEntity.name}: ` : "";
-  const renderedOptional = tupleMemberEntity.optional ? "?" : "";
-  const renderedRest = tupleMemberEntity.rest ? "..." : "";
-  const renderedRestBrackets = tupleMemberEntity.rest ? "[]" : "";
-  const restNeedsParentheses = tupleMemberEntity.rest &&
-    (
-      tupleMemberEntity.type.kind === TypeKind.Union ||
-      tupleMemberEntity.type.kind === TypeKind.Intersection
-    );
-
+  const { inlineType, multilineType } = convertType(ctx, tupleMemberEntity.type);
 
   return [
-    renderedName,
-    renderedRest,
-    restNeedsParentheses ? "(" as const : "" as const,
-    inlineType,
-    renderedOptional,
-    restNeedsParentheses ? ")" as const : "" as const,
-    renderedRestBrackets
+    spaceBetween(
+      convertedName,
+      inlineType,
+      convertedTags,
+      convertedDescription
+    ),
+    multilineType ?? ""
   ];
 
 }
