@@ -14,7 +14,7 @@ import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/
 import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
-import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {

@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createNullType(ctx: InterpreterContext, type: Type): NullType {
 
-  assert(isNullType(type), "type is not a null type");
+  assert(isNullType(ctx, type), "type is not a null type");
 
   const kind = TypeKind.Null;
   const name = "null";

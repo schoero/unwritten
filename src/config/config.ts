@@ -1,6 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
-import { dirname, parse, resolve } from "node:path";
-
+import { existsSync, readFileSync } from "unwritten:platform/file-system/node.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default.js";
 import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default.js";
@@ -15,6 +13,9 @@ import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 export async function createConfig(ctx: DefaultContext, configOrPath: Config | string | undefined, output?: string): Promise<CompleteConfig> {
 
+  const logger = ctx.dependencies.logger;
+  const { absolute, getDirectory } = ctx.dependencies.path;
+
   const defaultConfig = getDefaultConfig();
 
   let userConfig: Config | undefined;
@@ -23,11 +24,11 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
   if(typeof configOrPath === "object"){
 
     userConfig = configOrPath;
-    ctx.logger?.log("Using provided unwritten config.");
+    logger?.log("Using provided unwritten config.");
 
   } else if(typeof configOrPath === "string"){
 
-    absoluteConfigPath = resolve(configOrPath);
+    absoluteConfigPath = absolute(configOrPath);
 
     if(existsSync(absoluteConfigPath) === false){
       throw new Error(`unwritten config file does not exist at ${absoluteConfigPath}`);
@@ -35,7 +36,7 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
 
   } else if(typeof configOrPath === "undefined"){
 
-    absoluteConfigPath = findFile([
+    absoluteConfigPath = findFile(ctx, [
       ".unwritten.json",
       ".unwritten.js",
       ".unwritten.mjs",
@@ -43,32 +44,34 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
     ], configOrPath);
 
     if(absoluteConfigPath === undefined){
-      ctx.logger?.info("No unwritten.json found, continue using default configuration.");
+      logger?.info("No unwritten.json found, continue using default configuration.");
     } else {
-      ctx.logger?.info(`Using unwritten config found at ${ctx.logger.filePath(absoluteConfigPath)}`);
+      logger?.info(`Using unwritten config found at ${logger.filePath(absoluteConfigPath)}`);
     }
 
   }
 
   if(typeof absoluteConfigPath === "string"){
-    userConfig = await importFile(absoluteConfigPath);
+    userConfig = await importFile(ctx, absoluteConfigPath);
   }
 
-  const extendedUserConfig = userConfig && await getExtendConfig(userConfig);
+  const extendedUserConfig = userConfig && await getExtendConfig(ctx, userConfig);
 
   const config = override(defaultConfig, extendedUserConfig);
 
   if(typeof output === "string"){
-    config.outputDir = resolve(dirname(output));
+    config.outputDir = absolute(getDirectory(output));
   }
 
   return config;
 
 }
 
-async function importFile(path: string) {
-  if(parse(path).ext === ".json"){
-    const importedConfig = readFileSync(path, "utf-8");
+async function importFile(ctx: DefaultContext, path: string) {
+  const { path: { getFileExtension } } = ctx.dependencies;
+
+  if(getFileExtension(path) === ".json"){
+    const importedConfig = readFileSync(path);
     return JSON.parse(importedConfig);
   } else {
     const { default: importFile } = await import(path);
@@ -76,7 +79,13 @@ async function importFile(path: string) {
   }
 }
 
-async function getExtendConfig(config: Config): Promise<Config> {
+async function getExtendConfig(ctx: DefaultContext, config: Config): Promise<Config> {
+
+  const {
+    path: {
+      absolute: resolve
+    }
+  } = ctx.dependencies;
 
   if(config.extends === undefined){
     return config;
@@ -86,14 +95,14 @@ async function getExtendConfig(config: Config): Promise<Config> {
     throw new TypeError("\"extends\" property in unwritten config must of type string if provided.");
   }
 
-  let loadedConfig = await importFile(resolve(config.extends));
+  let loadedConfig = await importFile(ctx, resolve(config.extends));
 
   if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
     throw new TypeError("The extended unwritten config is not an object.");
   }
 
   if(typeof loadedConfig.extends === "string"){
-    loadedConfig = await getExtendConfig(loadedConfig);
+    loadedConfig = await getExtendConfig(ctx, loadedConfig);
   }
 
   return override(loadedConfig, config);

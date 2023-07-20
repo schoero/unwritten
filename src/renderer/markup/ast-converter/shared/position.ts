@@ -1,5 +1,3 @@
-import { relative } from "node:path/posix";
-
 import { createLinkNode, createSmallNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -9,6 +7,8 @@ import type { ConvertedPosition } from "unwritten:renderer:markup/types-definiti
 
 
 export function convertPosition(ctx: MarkupRenderContexts, position?: Position): ConvertedPosition {
+
+  const { path: { relative } } = ctx.dependencies;
 
   if(!position){
     return "";

@@ -1,10 +1,10 @@
 import { stdout } from "node:process";
 
+import { EOL } from "unwritten:platform/os/node.js";
 import { name, version } from "unwritten:utils/package-json.js";
-import { EOL } from "unwritten:utils/system.js";
 
 
-export module logger {
+export namespace logger {
 
   const _fgGreen = "\x1b[32m";
   const _fgYellow = "\x1b[33m";
@@ -150,3 +150,5 @@ function println(message: string): void {
   print(message);
   print(EOL);
 }
+
+export default logger;

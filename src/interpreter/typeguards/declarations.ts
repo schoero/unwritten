@@ -1,146 +1,215 @@
-import ts from "typescript";
-
 import { isTypeNode } from "unwritten:interpreter:typeguards/type-nodes.js";
 
-import type { Declaration, FunctionLikeDeclaration, Symbol, Type, TypeNode } from "typescript";
+import type {
+  ArrowFunction,
+  CallSignatureDeclaration,
+  ClassDeclaration,
+  ConstructorDeclaration,
+  ConstructSignatureDeclaration,
+  Declaration,
+  EnumDeclaration,
+  EnumMember,
+  ExportAssignment,
+  ExportDeclaration,
+  FunctionDeclaration,
+  FunctionLikeDeclaration,
+  GetAccessorDeclaration,
+  InterfaceDeclaration,
+  MethodDeclaration,
+  MethodSignature,
+  ModuleDeclaration,
+  NamespaceDeclaration,
+  NamespaceExport,
+  ObjectLiteralExpression,
+  ObjectTypeDeclaration,
+  ParameterDeclaration,
+  PropertyAssignment,
+  PropertyDeclaration,
+  PropertySignature,
+  SetAccessorDeclaration,
+  ShorthandPropertyAssignment,
+  SourceFile,
+  Symbol,
+  Type,
+  TypeAliasDeclaration,
+  TypeElement,
+  TypeLiteralNode,
+  TypeNode,
+  TypeParameterDeclaration,
+  VariableDeclaration
+} from "typescript";
+
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function isArrowFunctionDeclaration(declaration: Declaration): declaration is ts.ArrowFunction {
+export function isArrowFunctionDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ArrowFunction {
+  const { ts } = ctx.dependencies;
   return ts.isArrowFunction(declaration);
 }
 
-export function isCallSignatureDeclaration(declaration: Declaration): declaration is ts.CallSignatureDeclaration {
+export function isCallSignatureDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is CallSignatureDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isCallSignatureDeclaration(declaration);
 }
 
-export function isClassDeclaration(declaration: Declaration): declaration is ts.ClassDeclaration {
+export function isClassDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ClassDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isClassDeclaration(declaration);
 }
 
-export function isConstructSignatureDeclaration(declaration: Declaration): declaration is ts.ConstructSignatureDeclaration {
+export function isConstructSignatureDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ConstructSignatureDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isConstructSignatureDeclaration(declaration);
 }
 
-export function isConstructorDeclaration(declaration: Declaration): declaration is ts.ConstructorDeclaration {
+export function isConstructorDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ConstructorDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isConstructorDeclaration(declaration);
 }
 
-export function isDeclaration(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Declaration {
-  return "getText" in typeNodeOrSymbolOrDeclarationOrType && !isTypeNode(typeNodeOrSymbolOrDeclarationOrType);
+export function isDeclaration(ctx: InterpreterContext, typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Declaration {
+  return "getText" in typeNodeOrSymbolOrDeclarationOrType && !isTypeNode(ctx, typeNodeOrSymbolOrDeclarationOrType);
 }
 
-export function isEnumDeclaration(declaration: Declaration): declaration is ts.EnumDeclaration {
+export function isEnumDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is EnumDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isEnumDeclaration(declaration);
 }
 
-export function isEnumMemberDeclaration(declaration: Declaration): declaration is ts.EnumMember {
+export function isEnumMemberDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is EnumMember {
+  const { ts } = ctx.dependencies;
   return ts.isEnumMember(declaration);
 }
 
-export function isExportAssignment(declaration: Declaration): declaration is ts.ExportAssignment {
+export function isExportAssignment(ctx: InterpreterContext, declaration: Declaration): declaration is ExportAssignment {
+  const { ts } = ctx.dependencies;
   return ts.isExportAssignment(declaration);
 }
 
-export function isExportDeclaration(declaration: Declaration): declaration is ts.ExportDeclaration {
+export function isExportDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ExportDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isExportDeclaration(declaration);
 }
 
-export function isFunctionDeclaration(declaration: Declaration): declaration is ts.FunctionDeclaration {
+export function isFunctionDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is FunctionDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isFunctionDeclaration(declaration);
 }
 
-export function isFunctionLikeDeclaration(declaration: Declaration): declaration is FunctionLikeDeclaration {
-  return isFunctionDeclaration(declaration) ||
-    isMethodDeclaration(declaration) ||
-    isConstructorDeclaration(declaration) ||
-    isGetterDeclaration(declaration) ||
-    isSetterDeclaration(declaration) ||
-    isArrowFunctionDeclaration(declaration) ||
+export function isFunctionLikeDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is FunctionLikeDeclaration {
+  const { ts } = ctx.dependencies;
+  return isFunctionDeclaration(ctx, declaration) ||
+    isMethodDeclaration(ctx, declaration) ||
+    isConstructorDeclaration(ctx, declaration) ||
+    isGetterDeclaration(ctx, declaration) ||
+    isSetterDeclaration(ctx, declaration) ||
+    isArrowFunctionDeclaration(ctx, declaration) ||
     ts.isFunctionExpression(declaration);
 }
 
-export function isGetterDeclaration(declaration: Declaration): declaration is ts.GetAccessorDeclaration {
+export function isGetterDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is GetAccessorDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isGetAccessorDeclaration(declaration);
 }
 
-export function isInterfaceDeclaration(declaration: Declaration): declaration is ts.InterfaceDeclaration {
+export function isInterfaceDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is InterfaceDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isInterfaceDeclaration(declaration);
 }
 
-export function isMethodDeclaration(declaration: Declaration): declaration is ts.MethodDeclaration {
+export function isMethodDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is MethodDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isMethodDeclaration(declaration);
 }
 
-export function isMethodSignatureDeclaration(declaration: Declaration): declaration is ts.MethodSignature {
+export function isMethodSignatureDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is MethodSignature {
+  const { ts } = ctx.dependencies;
   return ts.isMethodSignature(declaration);
 }
 
-export function isModuleDeclaration(declaration: ts.Declaration): declaration is ts.ModuleDeclaration {
+export function isModuleDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ModuleDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isModuleDeclaration(declaration);
 }
 
-export function isNamespaceDeclaration(declaration: ts.Declaration): declaration is ts.NamespaceDeclaration {
+export function isNamespaceDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is NamespaceDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isNamespaceExport(declaration);
 }
 
-export function isNamespaceExport(declaration: ts.Declaration): declaration is ts.NamespaceExport {
+export function isNamespaceExport(ctx: InterpreterContext, declaration: Declaration): declaration is NamespaceExport {
+  const { ts } = ctx.dependencies;
   return ts.isNamespaceExport(declaration);
 }
 
-export function isObjectLiteralExpression(declaration: ts.Declaration): declaration is ts.ObjectLiteralExpression {
+export function isObjectLiteralExpression(ctx: InterpreterContext, declaration: Declaration): declaration is ObjectLiteralExpression {
+  const { ts } = ctx.dependencies;
   return ts.isObjectLiteralExpression(declaration);
 }
 
-export function isObjectTypeDeclaration(declaration: ts.Declaration): declaration is ts.ObjectTypeDeclaration {
+export function isObjectTypeDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ObjectTypeDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isClassDeclaration(declaration) ||
-    isInterfaceDeclaration(declaration) ||
+    isInterfaceDeclaration(ctx, declaration) ||
     ts.isTypeLiteralNode(declaration);
 }
 
-export function isParameterDeclaration(declaration: ts.Declaration): declaration is ts.ParameterDeclaration {
+export function isParameterDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ParameterDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isParameter(declaration);
 }
 
-export function isPropertyAssignment(declaration: Declaration): declaration is ts.PropertyAssignment {
+export function isPropertyAssignment(ctx: InterpreterContext, declaration: Declaration): declaration is PropertyAssignment {
+  const { ts } = ctx.dependencies;
   return ts.isPropertyAssignment(declaration);
 }
 
-export function isPropertyDeclaration(declaration: Declaration): declaration is ts.PropertyDeclaration {
+export function isPropertyDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is PropertyDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isPropertyDeclaration(declaration);
 }
 
-export function isPropertySignatureDeclaration(declaration: Declaration): declaration is ts.PropertySignature {
+export function isPropertySignatureDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is PropertySignature {
+  const { ts } = ctx.dependencies;
   return ts.isPropertySignature(declaration);
 }
 
-export function isSetterDeclaration(declaration: Declaration): declaration is ts.SetAccessorDeclaration {
+export function isSetterDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is SetAccessorDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isSetAccessorDeclaration(declaration);
 }
 
-export function isShorthandPropertyAssignment(declaration: Declaration): declaration is ts.ShorthandPropertyAssignment {
+export function isShorthandPropertyAssignment(ctx: InterpreterContext, declaration: Declaration): declaration is ShorthandPropertyAssignment {
+  const { ts } = ctx.dependencies;
   return ts.isShorthandPropertyAssignment(declaration);
 }
 
-export function isSourceFileDeclaration(declaration: ts.Declaration): declaration is ts.SourceFile {
+export function isSourceFileDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is SourceFile {
+  const { ts } = ctx.dependencies;
   return ts.isSourceFile(declaration);
 }
 
-export function isTypeAliasDeclaration(declaration: Declaration): declaration is ts.TypeAliasDeclaration {
+export function isTypeAliasDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is TypeAliasDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isTypeAliasDeclaration(declaration);
 }
 
-export function isTypeElement(declaration: Declaration): declaration is ts.TypeElement {
+export function isTypeElement(ctx: InterpreterContext, declaration: Declaration): declaration is TypeElement {
+  const { ts } = ctx.dependencies;
   return ts.isTypeElement(declaration);
 }
 
-export function isTypeLiteralDeclaration(declaration: Declaration): declaration is ts.TypeLiteralNode {
+export function isTypeLiteralDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is TypeLiteralNode {
+  const { ts } = ctx.dependencies;
   return ts.isTypeLiteralNode(declaration);
 }
 
-export function isTypeParameterDeclaration(declaration: Declaration): declaration is ts.TypeParameterDeclaration {
+export function isTypeParameterDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is TypeParameterDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isTypeParameterDeclaration(declaration);
 }
 
-export function isVariableDeclaration(declaration: Declaration): declaration is ts.VariableDeclaration {
+export function isVariableDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is VariableDeclaration {
+  const { ts } = ctx.dependencies;
   return ts.isVariableDeclaration(declaration);
 }

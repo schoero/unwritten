@@ -22,7 +22,7 @@ export function createParameterEntity(ctx: InterpreterContext, symbol: Symbol): 
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration && isParameterDeclaration(declaration), "Parameter declaration is not found");
+  assert(declaration && isParameterDeclaration(ctx, declaration), "Parameter declaration is not found");
 
   const name = getNameBySymbol(ctx, symbol);
 

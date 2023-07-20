@@ -1,5 +1,3 @@
-import { type NamedTupleMember, type TupleTypeNode, type TupleTypeReference, type TypeNode } from "typescript";
-
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { isOptionalTypeNode, isRestTypeNode, isTupleTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
@@ -14,6 +12,8 @@ import { getPositionByNode } from "unwritten:interpreter:ast/shared/position.js"
 import { isNamedTupleMember, isTupleTypeReferenceType } from "unwritten:interpreter:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 
+import type { NamedTupleMember, TupleTypeNode, TupleTypeReference, TypeNode } from "typescript";
+
 import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
@@ -23,7 +23,7 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
 
   const typeNode = typeReference.node as TupleTypeNode;
 
-  assert(isTupleTypeNode(typeNode), "Type node is not a tuple type node");
+  assert(isTupleTypeNode(ctx, typeNode), "Type node is not a tuple type node");
 
   const members = typeNode.elements.map(element => createTupleTypeMember(ctx, element));
   const position = getPositionByNode(ctx, typeNode);
@@ -42,14 +42,14 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
 
 export function createTupleByTupleTypeNode(ctx: InterpreterContext, tupleTypeNode: TupleTypeNode): TupleType {
   const type = ctx.checker.getTypeFromTypeNode(tupleTypeNode);
-  assert(isTupleTypeReferenceType(type), "Type is not a type reference");
+  assert(isTupleTypeReferenceType(ctx, type), "Type is not a type reference");
   return createTupleTypeByTypeReference(ctx, type);
 }
 
 
 function createTupleTypeMember(ctx: InterpreterContext, typeNode: NamedTupleMember | TypeNode) {
 
-  const name = isNamedTupleMember(typeNode)
+  const name = isNamedTupleMember(ctx, typeNode)
     ? getNameByTypeNode(ctx, typeNode.name)
     : undefined;
 
@@ -57,8 +57,8 @@ function createTupleTypeMember(ctx: InterpreterContext, typeNode: NamedTupleMemb
   const declaredType = getDeclaredType(ctx, typeNode);
   const type = getTypeByDeclaredOrResolvedType(declaredType, resolvedType);
 
-  const optional = isOptionalTypeNode(typeNode);
-  const rest = isRestTypeNode(typeNode);
+  const optional = isOptionalTypeNode(ctx, typeNode);
+  const rest = isRestTypeNode(ctx, typeNode);
   const kind = EntityKind.TupleMember;
 
   return <TupleMemberEntity>{

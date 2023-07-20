@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createStringType(ctx: InterpreterContext, type: Type): StringType {
 
-  assert(isStringType(type), "type is not a string type");
+  assert(isStringType(ctx, type), "type is not a string type");
 
   const kind = TypeKind.String;
   const name = "string";

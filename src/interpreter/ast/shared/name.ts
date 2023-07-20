@@ -1,5 +1,3 @@
-import ts from "typescript";
-
 import { isConstructorDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
 
 import type { Declaration, Node, Symbol, Type } from "typescript";
@@ -15,7 +13,9 @@ export function getNameBySymbol(ctx: InterpreterContext, symbol: Symbol): Name {
 
 export function getNameByDeclaration(ctx: InterpreterContext, declaration: Declaration): Name | undefined {
 
-  if(isConstructorDeclaration(declaration)){
+  const { ts } = ctx.dependencies;
+
+  if(isConstructorDeclaration(ctx, declaration)){
     return "constructor";
   }
 

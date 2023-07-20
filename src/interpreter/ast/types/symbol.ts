@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createSymbolType(ctx: InterpreterContext, type: Type): SymbolType {
 
-  assert(isSymbolType(type), "type is not a symbol type");
+  assert(isSymbolType(ctx, type), "type is not a symbol type");
 
   const kind = TypeKind.Symbol;
   const name = "symbol";

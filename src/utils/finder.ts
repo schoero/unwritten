@@ -1,20 +1,24 @@
-import { existsSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { existsSync } from "unwritten:platform/file-system/node.js";
 
 import { assert } from "./general.js";
+
+import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 
 /**
  * Finds a file in a directory or its parent directories.
+ * @param ctx - The render context.
  * @param fileName - Name or array of names of the file to find.
  * @param entryPath - Entry point for the search to begin.
  * @returns The absolute file path of the first file found, otherwise undefined.
  */
-export function findFile(fileName: string[] | string, entryPath?: string): string | undefined {
+export function findFile(ctx: DefaultContext, fileName: string[] | string, entryPath?: string): string | undefined {
+
+  const { path: { absolute, getDirectory } } = ctx.dependencies;
 
   if(typeof fileName === "object" && Array.isArray(fileName) === true){
     for(const name of fileName){
-      const found = findFile(name, entryPath);
+      const found = findFile(ctx, name, entryPath);
       if(found !== undefined){
         return found;
       }
@@ -28,21 +32,21 @@ export function findFile(fileName: string[] | string, entryPath?: string): strin
     entryPath = process.cwd();
   }
 
-  const absoluteEntryDir = resolve(entryPath);
+  const absoluteEntryDir = absolute(entryPath);
   if(existsSync(absoluteEntryDir) === false){
     throw new Error(`Entry path does not exist: ${absoluteEntryDir}`);
   }
 
-  const absoluteFilePath = resolve(absoluteEntryDir, fileName);
+  const absoluteFilePath = `${absoluteEntryDir}/${fileName}`;
   if(existsSync(absoluteFilePath) === true){
     return absoluteFilePath;
   }
 
-  const absoluteParentPath = dirname(absoluteEntryDir);
+  const absoluteParentPath = getDirectory(absoluteEntryDir);
   if(absoluteParentPath === absoluteEntryDir){
     return undefined;
   }
 
-  return findFile(fileName, absoluteParentPath);
+  return findFile(ctx, fileName, absoluteParentPath);
 
 }

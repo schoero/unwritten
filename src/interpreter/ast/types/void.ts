@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createVoidType(ctx: InterpreterContext, type: Type): VoidType {
 
-  assert(isVoidType(type), "type is not a void type");
+  assert(isVoidType(ctx, type), "type is not a void type");
 
   const kind = TypeKind.Void;
   const name = "void";

@@ -1,7 +1,13 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-
 import { afterEach, beforeAll, describe, expect, it, vitest } from "vitest";
 
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync
+} from "unwritten:platform/file-system/node.js";
 import { clearVirtualFS } from "unwritten:utils/virtual-fs.js";
 
 

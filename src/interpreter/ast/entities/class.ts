@@ -36,7 +36,7 @@ export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): Clas
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration && isClassDeclaration(declaration), "Class declaration is not found");
+  assert(declaration && isClassDeclaration(ctx, declaration), "Class declaration is not found");
 
   const type = ctx.checker.getDeclaredTypeOfSymbol(symbol);
 
@@ -98,7 +98,7 @@ function getSymbolsByTypeFromClassLikeDeclaration(
   | typeof isSetterDeclaration
 ) {
 
-  const declarations = classLikeDeclaration.members.filter(filter);
+  const declarations = classLikeDeclaration.members.filter(member => filter(ctx, member));
 
   const symbols = declarations.reduce<Symbol[]>((acc, declaration) => {
     // @ts-expect-error - Internal API

@@ -10,13 +10,7 @@ import {
 import { functionOverloadDeclarationFilter } from "unwritten:interpreter:utils/filter.js";
 import { assert } from "unwritten:utils/general.js";
 
-import type {
-  CallSignatureDeclaration,
-  ConstructSignatureDeclaration,
-  FunctionLikeDeclaration,
-  MethodSignature,
-  Symbol
-} from "typescript";
+import type { Symbol } from "typescript";
 
 import type {
   FunctionLikeEntityKinds,
@@ -27,15 +21,17 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> {
 
-  const declarations = symbol.declarations?.filter(declaration =>
-    isFunctionLikeDeclaration(declaration) ||
-      isCallSignatureDeclaration(declaration) ||
-      isConstructSignatureDeclaration(declaration) ||
-      isMethodSignatureDeclaration(declaration)) as (CallSignatureDeclaration | ConstructSignatureDeclaration | FunctionLikeDeclaration | MethodSignature)[];
+  const declarations = symbol.declarations?.flatMap(declaration =>
+    isFunctionLikeDeclaration(ctx, declaration) ||
+      isCallSignatureDeclaration(ctx, declaration) ||
+      isConstructSignatureDeclaration(ctx, declaration) ||
+      isMethodSignatureDeclaration(ctx, declaration)
+      ? declaration
+      : []);
 
-  const signatureDeclarations = declarations.filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol));
+  const signatureDeclarations = declarations?.filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol));
 
-  const signatures = signatureDeclarations.map(declaration => {
+  const signatures = signatureDeclarations?.map(declaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(declaration);
     assert(signature, "FunctionLike signature is not found");
     return createSignatureEntity(ctx, signature);

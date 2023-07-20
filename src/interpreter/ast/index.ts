@@ -1,15 +1,7 @@
-import {
-  type Declaration,
-  type ObjectType as TSObjectType,
-  type Symbol,
-  type Type as TSType,
-  type TypeNode
-} from "typescript";
-
 import { createCircularEntity, createUnresolvedEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
 import { isSymbolLocked } from "unwritten:interpreter/utils/locker.js";
-import { isTypeLocked } from "unwritten:interpreter/utils/ts.js";
+import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import {
   createClassEntity,
   createEnumEntity,
@@ -64,6 +56,7 @@ import {
   createUnionType,
   createUnionTypeByTypeNode,
   createUnknownType,
+  createUnresolved,
   createUnresolvedType,
   createVoidType
 } from "unwritten:interpreter:ast/types/index.js";
@@ -127,6 +120,8 @@ import { isTypeReferenceType } from "unwritten:typeguards/types.js";
 import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
+import type { Declaration, ObjectType as TSObjectType, Symbol, Type as TSType, TypeNode } from "typescript";
+
 import type { Entity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Type } from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
@@ -134,7 +129,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function interpret(ctx: InterpreterContext, sourceFileSymbols: Symbol[]): SourceFileEntity[] {
   return sourceFileSymbols.map(sourceFileSymbol => {
-    assert(isSourceFileSymbol(sourceFileSymbol), "Source file symbol is not a source file symbol");
+    assert(isSourceFileSymbol(ctx, sourceFileSymbol), "Source file symbol is not a source file symbol");
     return createSourceFileEntity(ctx, sourceFileSymbol);
   });
 }
@@ -142,41 +137,43 @@ export function interpret(ctx: InterpreterContext, sourceFileSymbols: Symbol[]):
 
 export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Entity {
 
-  if(isSymbolExcluded(ctx, symbol)){
-    return createUnresolvedEntity(ctx, symbol);
+  const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
+
+  if(isSymbolExcluded(ctx, resolvedSymbol)){
+    return createUnresolvedEntity(ctx, resolvedSymbol);
   }
 
-  if(isSymbolLocked(ctx, symbol)){
-    return createCircularEntity(ctx, symbol);
+  if(isSymbolLocked(ctx, resolvedSymbol)){
+    return createCircularEntity(ctx, resolvedSymbol);
   }
 
-  if(isVariableSymbol(symbol)){
-    return createVariableEntity(ctx, symbol);
-  } else if(isFunctionSymbol(symbol)){
-    return createFunctionEntity(ctx, symbol);
-  } else if(isClassSymbol(symbol)){
-    return createClassEntity(ctx, symbol);
-  } else if(isInterfaceSymbol(symbol)){
-    return createInterfaceEntity(ctx, symbol);
-  } else if(isTypeAliasSymbol(symbol)){
-    return createTypeAliasEntity(ctx, symbol);
-  } else if(isEnumSymbol(symbol)){
-    return createEnumEntity(ctx, symbol);
-  } else if(isNamespaceSymbol(symbol)){
-    return createNamespaceEntity(ctx, symbol);
-  } else if(isNamespaceExportSymbol(symbol)){
-    return createNamespaceEntityFromNamespaceExport(ctx, symbol);
-  } else if(isModuleSymbol(symbol)){
-    return createModuleEntity(ctx, symbol);
-  } else if(isExportAssignmentSymbol(symbol)){
-    return createExportAssignmentEntity(ctx, symbol);
-  } else if(isTypeParameterSymbol(symbol)){
-    return createTypeParameterEntity(ctx, symbol);
+  if(isVariableSymbol(ctx, resolvedSymbol)){
+    return createVariableEntity(ctx, resolvedSymbol);
+  } else if(isFunctionSymbol(ctx, resolvedSymbol)){
+    return createFunctionEntity(ctx, resolvedSymbol);
+  } else if(isClassSymbol(ctx, resolvedSymbol)){
+    return createClassEntity(ctx, resolvedSymbol);
+  } else if(isInterfaceSymbol(ctx, resolvedSymbol)){
+    return createInterfaceEntity(ctx, resolvedSymbol);
+  } else if(isTypeAliasSymbol(ctx, resolvedSymbol)){
+    return createTypeAliasEntity(ctx, resolvedSymbol);
+  } else if(isEnumSymbol(ctx, resolvedSymbol)){
+    return createEnumEntity(ctx, resolvedSymbol);
+  } else if(isNamespaceSymbol(ctx, resolvedSymbol)){
+    return createNamespaceEntity(ctx, resolvedSymbol);
+  } else if(isNamespaceExportSymbol(ctx, resolvedSymbol)){
+    return createNamespaceEntityFromNamespaceExport(ctx, resolvedSymbol);
+  } else if(isModuleSymbol(ctx, resolvedSymbol)){
+    return createModuleEntity(ctx, resolvedSymbol);
+  } else if(isExportAssignmentSymbol(ctx, resolvedSymbol)){
+    return createExportAssignmentEntity(ctx, resolvedSymbol);
+  } else if(isTypeParameterSymbol(ctx, resolvedSymbol)){
+    return createTypeParameterEntity(ctx, resolvedSymbol);
   }
 
-  const name = getNameBySymbol(ctx, symbol);
+  const name = getNameBySymbol(ctx, resolvedSymbol);
   const formattedName = name ? `"${name}"` : "";
-  const position = getPositionBySymbol(ctx, symbol);
+  const position = getPositionBySymbol(ctx, resolvedSymbol);
   const formattedPosition = position ? `at ${position.file}:${position.line}:${position.column}` : "";
 
   throw new RangeError(`Symbol ${formattedName} ${formattedPosition} is not exportable`);
@@ -228,27 +225,27 @@ export function getTypeByDeclaredOrResolvedType(declaredType: Type, resolvedType
 
 function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
 
-  if(isArrayTypeNode(typeNode)){
+  if(isArrayTypeNode(ctx, typeNode)){
     return createArrayTypeByArrayTypeNode(ctx, typeNode);
-  } else if(isTupleTypeNode(typeNode)){
+  } else if(isTupleTypeNode(ctx, typeNode)){
     return createTupleByTupleTypeNode(ctx, typeNode);
-  } else if(isTypeQueryNode(typeNode)){
+  } else if(isTypeQueryNode(ctx, typeNode)){
     return createTypeQueryType(ctx, typeNode);
-  } else if(isTemplateLiteralTypeNode(typeNode)){
+  } else if(isTemplateLiteralTypeNode(ctx, typeNode)){
     return createTemplateLiteralType(ctx, typeNode);
-  } else if(isMappedTypeNode(typeNode)){
+  } else if(isMappedTypeNode(ctx, typeNode)){
     return createMappedTypeByTypeNode(ctx, typeNode);
-  } else if(isConditionalTypeNode(typeNode)){
+  } else if(isConditionalTypeNode(ctx, typeNode)){
     return createConditionalTypeByTypeNode(ctx, typeNode);
-  } else if(isIndexedAccessTypeNode(typeNode)){
+  } else if(isIndexedAccessTypeNode(ctx, typeNode)){
     return createIndexedAccessTypeByTypeNode(ctx, typeNode);
-  } else if(isUnionTypeNode(typeNode)){
+  } else if(isUnionTypeNode(ctx, typeNode)){
     return createUnionTypeByTypeNode(ctx, typeNode);
   }
 
-  if(isTypeReferenceNode(typeNode)){
+  if(isTypeReferenceNode(ctx, typeNode)){
     return createTypeReferenceType(ctx, typeNode);
-  } else if(isExpressionWithTypeArguments(typeNode)){
+  } else if(isExpressionWithTypeArguments(ctx, typeNode)){
     return createExpressionType(ctx, typeNode);
   }
 
@@ -258,7 +255,7 @@ function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
 
 function interpretType(ctx: InterpreterContext, type: TSType): Type {
 
-  if(isArrayType(type)){
+  if(isArrayType(ctx, type)){
     return createArrayType(ctx, type);
   }
 
@@ -270,49 +267,49 @@ function interpretType(ctx: InterpreterContext, type: TSType): Type {
     return createCircularType(ctx, type);
   }
 
-  if(isObjectType(type)){
+  if(isObjectType(ctx, type)){
     return interpretObjectType(ctx, type);
   }
 
-  if(isStringLiteralType(type)){
+  if(isStringLiteralType(ctx, type)){
     return createStringLiteralType(ctx, type);
-  } else if(isNumberLiteralType(type)){
+  } else if(isNumberLiteralType(ctx, type)){
     return createNumberLiteralType(ctx, type);
-  } else if(isBigIntLiteralType(type)){
+  } else if(isBigIntLiteralType(ctx, type)){
     return createBigIntLiteralType(ctx, type);
-  } else if(isBooleanLiteralType(type)){
+  } else if(isBooleanLiteralType(ctx, type)){
     return createBooleanLiteralType(ctx, type);
-  } else if(isStringType(type)){
+  } else if(isStringType(ctx, type)){
     return createStringType(ctx, type);
-  } else if(isNumberType(type)){
+  } else if(isNumberType(ctx, type)){
     return createNumberType(ctx, type);
-  } else if(isBooleanType(type)){
+  } else if(isBooleanType(ctx, type)){
     return createBooleanType(ctx, type);
-  } else if(isBigIntType(type)){
+  } else if(isBigIntType(ctx, type)){
     return createBigIntType(ctx, type);
-  } else if(isVoidType(type)){
+  } else if(isVoidType(ctx, type)){
     return createVoidType(ctx, type);
-  } else if(isUndefinedType(type)){
+  } else if(isUndefinedType(ctx, type)){
     return createUndefinedType(ctx, type);
-  } else if(isNullType(type)){
+  } else if(isNullType(ctx, type)){
     return createNullType(ctx, type);
-  } else if(isAnyType(type)){
+  } else if(isAnyType(ctx, type)){
     return createAnyType(ctx, type);
-  } else if(isUnknownType(type)){
+  } else if(isUnknownType(ctx, type)){
     return createUnknownType(ctx, type);
-  } else if(isNeverType(type)){
+  } else if(isNeverType(ctx, type)){
     return createNeverType(ctx, type);
-  } else if(isSymbolType(type)){
+  } else if(isSymbolType(ctx, type)){
     return createSymbolType(ctx, type);
-  } else if(isUnionType(type)){
+  } else if(isUnionType(ctx, type)){
     return createUnionType(ctx, type);
-  } else if(isIntersectionType(type)){
+  } else if(isIntersectionType(ctx, type)){
     return createIntersectionType(ctx, type);
-  } else if(isTypeParameterType(type)){
+  } else if(isTypeParameterType(ctx, type)){
     return createTypeParameterType(ctx, type);
-  } else if(isIndexedAccessType(type)){
+  } else if(isIndexedAccessType(ctx, type)){
     return createIndexedAccessType(ctx, type);
-  } else if(isConditionalType(type)){
+  } else if(isConditionalType(ctx, type)){
     return createConditionalType(ctx, type);
   }
 
@@ -322,25 +319,25 @@ function interpretType(ctx: InterpreterContext, type: TSType): Type {
 
 function interpretObjectType(ctx: InterpreterContext, type: TSObjectType) {
 
-  if(isTupleTypeReferenceType(type)){
+  if(isTupleTypeReferenceType(ctx, type)){
     return createTupleTypeByTypeReference(ctx, type);
-  } else if(isArrayType(type)){
+  } else if(isArrayType(ctx, type)){
     return createArrayType(ctx, type);
   }
 
-  // if(isSymbolExcluded(ctx, type.symbol)){
-  //   return createUnresolved(ctx, type);
-  // }
+  if(type.getSymbol() && isSymbolExcluded(ctx, type.symbol)){
+    return createUnresolved(ctx, type);
+  }
 
-  if(isFunctionLikeType(type)){
+  if(isFunctionLikeType(ctx, type)){
     return createFunctionType(ctx, type);
-  } else if(isTypeLiteralType(type)){
+  } else if(isTypeLiteralType(ctx, type)){
     return createTypeLiteralType(ctx, type);
-  } else if(isObjectLiteralType(type)){
+  } else if(isObjectLiteralType(ctx, type)){
     return createObjectLiteralByType(ctx, type);
-  } else if(isInterfaceType(type)){
+  } else if(isInterfaceType(ctx, type)){
     return createInterfaceByType(ctx, type);
-  } else if(isClassType(type)){
+  } else if(isClassType(ctx, type)){
     return createClassType(ctx, type);
   }
 

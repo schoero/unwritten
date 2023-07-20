@@ -1,6 +1,6 @@
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import { createListNode, createSpanNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";

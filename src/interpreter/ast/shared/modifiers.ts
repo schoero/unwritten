@@ -1,5 +1,3 @@
-import ts from "typescript";
-
 import { isPropertyDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
 
 import type { Declaration } from "typescript";
@@ -9,6 +7,8 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 export function getModifiersByDeclaration(ctx: InterpreterContext, declaration: Declaration): Modifiers[] {
+
+  const { ts } = ctx.dependencies;
 
   if(ts.canHaveModifiers(declaration)){
 
@@ -22,7 +22,7 @@ export function getModifiersByDeclaration(ctx: InterpreterContext, declaration: 
 
     const nativeModifiers: NativeModifiers[] = [];
 
-    if(isPropertyDeclaration(declaration) && ts.isPrivateIdentifier(declaration.name)){
+    if(isPropertyDeclaration(ctx, declaration) && ts.isPrivateIdentifier(declaration.name)){
       nativeModifiers.push("nativePrivate");
     }
 

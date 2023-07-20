@@ -1,12 +1,17 @@
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import ts from "typescript";
 
 import { compile } from "unwritten:compiler:node.js";
 import { createConfig } from "unwritten:config/config.js";
 import { interpret } from "unwritten:interpreter:ast/index.js";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
 import { getEntryFileSymbolsFromProgram } from "unwritten:interpreter:utils/ts.js";
+import fs, { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node.js";
+import os from "unwritten:platform/os/node.js";
+import path from "unwritten:platform/path/node.js";
+import process from "unwritten:platform/process/node.js";
 import { getRenderer } from "unwritten:renderer:index.js";
 import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";
+import { getValidFileName } from "unwritten:utils/file.js";
 import { createContext as createDefaultContext } from "unwritten:utils:context.js";
 
 import type { APIOptions } from "unwritten:type-definitions/options.js";
@@ -16,13 +21,16 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
 
   entryFilePaths = Array.isArray(entryFilePaths) ? entryFilePaths : [entryFilePaths];
 
-  // Attach logger
-  const { logger } = options?.silent
-    ? { logger: undefined }
-    : await import("unwritten:logger/node.js");
-
-  // Context
-  const defaultContext = createDefaultContext(logger);
+  // Dependencies
+  const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:platform/logger/node.js");
+  const defaultContext = createDefaultContext({
+    fs,
+    logger,
+    os,
+    path,
+    process,
+    ts
+  });
 
   // Compile
   const { checker, program } = compile(defaultContext, entryFilePaths, options?.tsconfig);
@@ -48,7 +56,7 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
   // Write output to files
   const fileExtension = renderer.fileExtension;
   const outputPaths = Object.entries(renderedFiles).map(([fileName, renderedContent]) => {
-    const outputPath = `${config.outputDir}/${fileName}${fileExtension}`;
+    const outputPath = getValidFileName(renderContext, `${config.outputDir}/${fileName}${fileExtension}`);
     writeFileSync(outputPath, renderedContent);
     return outputPath;
   });

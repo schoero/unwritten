@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
+import { initializeRegistry } from "unwritten:renderer/markup/registry/registry.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor.js";
 import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold.js";
@@ -26,7 +27,6 @@ import {
   isStrikethroughNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
-import { initializeExportRegistry } from "unwritten:renderer:markup/utils/exports.js";
 import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderTitleNode } from "./ast/title.js";
@@ -58,36 +58,6 @@ const markdownRenderer: MarkdownRenderer = {
 
   fileExtension: ".md",
   name: BuiltInRenderers.Markdown,
-  // eslint-disable-next-line sort-keys/sort-keys-fix
-  exportRegistry: new Map(),
-  linkRegistry: new Map(),
-
-  render: (ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
-
-    markdownRenderer.initializeExportRegistry(ctx, sourceFileEntities);
-    markdownRenderer.initializeContext(ctx);
-
-    return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
-
-      markdownRenderer.resetContext(ctx);
-
-      const renderedNewLine = renderNewLine(ctx);
-
-      const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
-      const renderedContent = renderNode(ctx, markupAST);
-
-      files[sourceFileEntity.name] = `${renderedContent}${renderedNewLine}`;
-      return files;
-
-    }, {});
-
-  }),
-
-
-  resetContext: (ctx: MarkdownRenderContext) => {
-    ctx.nesting = 1;
-    ctx.indentation = 0;
-  },
 
 
   // eslint-disable-next-line sort-keys/sort-keys-fix
@@ -121,9 +91,33 @@ const markdownRenderer: MarkdownRenderer = {
 
   },
 
-  initializeExportRegistry: (ctx: MarkdownRenderContext, sourceFileEntities: SourceFileEntity[]) => {
-    initializeExportRegistry(ctx, sourceFileEntities);
-  }
+  initializeRegistry: (ctx: MarkdownRenderContext, sourceFileEntities: SourceFileEntity[]) => {
+    initializeRegistry(ctx, sourceFileEntities);
+  },
+
+  render: (ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
+
+    markdownRenderer.initializeRegistry(ctx, sourceFileEntities);
+    markdownRenderer.initializeContext(ctx);
+
+    return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
+
+      // Reset context
+      ctx.nesting = 1;
+      ctx.indentation = 0;
+      ctx.currentFile = sourceFileEntity.symbolId;
+
+      const renderedNewLine = renderNewLine(ctx);
+
+      const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
+      const renderedContent = renderNode(ctx, markupAST);
+
+      files[sourceFileEntity.name] = `${renderedContent}${renderedNewLine}`;
+      return files;
+
+    }, {});
+
+  })
 
 };
 

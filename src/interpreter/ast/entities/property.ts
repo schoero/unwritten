@@ -1,5 +1,3 @@
-import ts from "typescript";
-
 import {
   getDeclaredType,
   getResolvedTypeBySymbol,
@@ -41,11 +39,11 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
   assert(
     !declaration ||
     (
-      isPropertySignatureDeclaration(declaration) ||
-      isPropertyDeclaration(declaration) ||
-      isPropertyAssignment(declaration) ||
-      isShorthandPropertyAssignment(declaration) ||
-      isParameterDeclaration(declaration)
+      isPropertySignatureDeclaration(ctx, declaration) ||
+      isPropertyDeclaration(ctx, declaration) ||
+      isPropertyAssignment(ctx, declaration) ||
+      isShorthandPropertyAssignment(ctx, declaration) ||
+      isParameterDeclaration(ctx, declaration)
     ),
     `Property signature not found ${declaration?.kind}`
   );
@@ -59,14 +57,17 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
     : <Record<string, any>>{};
 
   const resolvedType = getResolvedTypeBySymbol(ctx, symbol, declaration);
-  const declaredType = declaration && !isPropertyAssignment(declaration) && !isShorthandPropertyAssignment(declaration) && declaration.type
+  const declaredType = declaration &&
+    !isPropertyAssignment(ctx, declaration) &&
+    !isShorthandPropertyAssignment(ctx, declaration) &&
+    declaration.type
     ? getDeclaredType(ctx, declaration.type)
     : resolvedType;
 
   const type = getTypeByDeclaredOrResolvedType(declaredType, resolvedType);
 
   // Partial<{ a: string }> modifiers or custom implementations of that will set the symbol.flags
-  const optional = fromDeclaration.optional || isSymbolOptional(symbol);
+  const optional = fromDeclaration.optional || isSymbolOptional(ctx, symbol);
   const kind = EntityKind.Property;
 
   return {
@@ -91,7 +92,7 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const initializer = getInitializerByDeclaration(ctx, declaration);
 
-  const optional = isPropertyAssignment(declaration) || isShorthandPropertyAssignment(declaration)
+  const optional = isPropertyAssignment(ctx, declaration) || isShorthandPropertyAssignment(ctx, declaration)
     ? undefined
     : !!declaration.questionToken;
   const kind = EntityKind.Property;
@@ -112,6 +113,7 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
 
 }
 
-function isSymbolOptional(symbol: ts.Symbol): boolean {
+function isSymbolOptional(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Optional) !== 0;
 }

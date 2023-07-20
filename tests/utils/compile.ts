@@ -1,16 +1,19 @@
-import { readFileSync as readFileSyncOriginal } from "node:fs";
-
 import ts, { ModuleResolutionKind } from "typescript";
 
 import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler:shared.js";
 import { getDefaultConfig } from "unwritten:config/config.js";
-import { getExportedSymbols } from "unwritten:interpreter/utils/ts.js";
+import { createContext } from "unwritten:interpreter/utils/context.js";
+import { readFileSync as readFileSyncOriginal } from "unwritten:platform/file-system/node.js";
+import { logger } from "unwritten:platform/logger/node.js";
+import os from "unwritten:platform/os/node.js";
+import path from "unwritten:platform/path/node.js";
+import process from "unwritten:platform/process/node.js";
+import { createContext as createDefaultContext } from "unwritten:utils/context.js";
 import { override } from "unwritten:utils/override.js";
-import { existsSync, readFileSync, writeFileSync } from "unwritten:utils/virtual-fs.js";
+import * as fs from "unwritten:utils/virtual-fs.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Config } from "unwritten:type-definitions/config.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
 type CompilerInput = {
@@ -18,6 +21,17 @@ type CompilerInput = {
 };
 
 export function compile(code: CompilerInput | string, compilerOptions?: ts.CompilerOptions, config?: Config) {
+
+  const defaultContext = createDefaultContext({
+    fs,
+    logger,
+    os,
+    path,
+    process,
+    ts
+  });
+
+  const { fs: { existsSync, readFileSync, writeFileSync } } = defaultContext.dependencies;
 
   const entryFilePath = "/index.ts";
   const inputFiles = typeof code === "string" ? { [entryFilePath]: code } : code;
@@ -50,13 +64,13 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
           filePath,
           existsSync(filePath)
             ? readFileSync(filePath)
-            : readFileSyncOriginal(filePath, { encoding: "utf-8" }),
+            : readFileSyncOriginal(filePath),
           ts.ScriptTarget.Latest
         ),
     readFile: filePath => {
       return existsSync(filePath)
         ? readFileSync(filePath)
-        : readFileSyncOriginal(filePath, { encoding: "utf-8" });
+        : readFileSyncOriginal(filePath);
     },
     useCaseSensitiveFileNames: () => true,
     writeFile: writeFileSync
@@ -65,7 +79,7 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
   const program = ts.createProgram({
     host: compilerHost,
     options: compilerOptions ?? {
-      ...getDefaultCompilerOptions(),
+      ...getDefaultCompilerOptions(defaultContext),
       moduleResolution: ModuleResolutionKind.Bundler,
       target: ts.ScriptTarget.ESNext
     },
@@ -74,7 +88,7 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
 
 
   // Report any compiler messages
-  void reportCompilerDiagnostics({}, program.getSemanticDiagnostics());
+  void reportCompilerDiagnostics(defaultContext, program.getSemanticDiagnostics());
 
   // Type checker
   const checker = program.getTypeChecker();
@@ -92,16 +106,11 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
   const fileSymbol = checker.getSymbolAtLocation(file);
   assert(fileSymbol, "Entry file not found.");
 
-
   // Create context
-  const ctx: InterpreterContext = {
-    checker,
-    config: override(getDefaultConfig(), config)
-  };
-
+  const ctx = createContext(defaultContext, checker, override(getDefaultConfig(), config));
 
   // Get exported Symbols
-  const exportedSymbols = getExportedSymbols(ctx, fileSymbol);
+  const exportedSymbols = ctx.checker.getExportsOfModule(fileSymbol);
 
   return {
     ctx,

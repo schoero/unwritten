@@ -1,3 +1,4 @@
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { renderIndentation as renderIndentationOriginal } from "unwritten:renderer:utils/indentation.js";
@@ -36,6 +37,8 @@ function renderListItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string[
 
 function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
 
+  const renderConfig = getRenderConfig(ctx);
+
   // Flatten deeply nested arrays
   item = Array.isArray(item) ? flattenNestedArrayItems(item) : item;
 
@@ -49,7 +52,10 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
     }
 
     // Collapse multiple new lines into one
-    const collapsedRenderedItem = renderedArrayItems.replace(/\n\n+/gm, "\n");
+    const collapsedRenderedItem = renderedArrayItems.replace(
+      `/${renderConfig.newLine}${renderConfig.newLine}+/gm`,
+      renderConfig.newLine
+    );
 
     return `${renderIndentation(ctx)}- ${collapsedRenderedItem}`;
 
@@ -67,7 +73,10 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
   }
 
   // Collapse multiple new lines into one
-  const collapsedRenderedItem = renderedItem.replace(/\n\n+/gm, "\n");
+  const collapsedRenderedItem = renderedItem.replace(
+    `/${renderConfig.newLine}${renderConfig.newLine}+/gm`,
+    renderConfig.newLine
+  );
 
   return `${renderIndentation(ctx)}- ${collapsedRenderedItem}`;
 

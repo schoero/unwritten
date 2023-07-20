@@ -18,7 +18,7 @@ export function createTypeParameterEntityByTypeParameter(ctx: InterpreterContext
   const symbol = typeParameter.symbol;
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration && isTypeParameterDeclaration(declaration), "Type parameter declaration not found");
+  assert(declaration && isTypeParameterDeclaration(ctx, declaration), "Type parameter declaration not found");
 
   const symbolId = getSymbolId(ctx, symbol);
   const declarationId = getDeclarationId(ctx, declaration);
@@ -46,7 +46,7 @@ export function createTypeParameterEntity(ctx: InterpreterContext, symbol: Symbo
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration && isTypeParameterDeclaration(declaration), "Type parameter declaration not found");
+  assert(declaration && isTypeParameterDeclaration(ctx, declaration), "Type parameter declaration not found");
 
   const symbolId = getSymbolId(ctx, symbol);
   const declarationId = getDeclarationId(ctx, declaration);
@@ -73,7 +73,7 @@ export function createTypeParameterEntity(ctx: InterpreterContext, symbol: Symbo
 
 export function createTypeParameterEntityByDeclaration(ctx: InterpreterContext, declaration: TypeParameterDeclaration): TypeParameterEntity {
 
-  assert(isTypeParameterDeclaration(declaration), "Declaration is not found");
+  assert(isTypeParameterDeclaration(ctx, declaration), "Declaration is not found");
 
   const symbol = ctx.checker.getSymbolAtLocation(declaration.name);
 

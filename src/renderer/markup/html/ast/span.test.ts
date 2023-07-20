@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import { createSpanNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";

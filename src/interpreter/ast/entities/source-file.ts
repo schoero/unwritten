@@ -1,6 +1,4 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { isExportSpecifierSymbol } from "unwritten:interpreter/typeguards/symbols.js";
-import { getExportedSymbols, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import { interpretSymbol } from "unwritten:interpreter:ast/index.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { isExportableEntity } from "unwritten:typeguards/entities.js";
@@ -18,28 +16,11 @@ export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol):
 
   assert(declaration, "Source file symbol has no declaration");
 
-  const exports = getExportedSymbols(ctx, symbol)
+  const exports = ctx.checker.getExportsOfModule(symbol)
     .reduce<ExportableEntity[]>((parsedSymbols, exportedSymbol) => {
 
-    /**
-     * Workaround for export specifiers
-     * We need to resolve export specifiers to their actual symbols
-     * ```ts
-     * const test = "test";
-     * export {
-     *   test // Export specifier
-     * }
-     * ```
-     * But not if it creates a namespaced export
-     * ```ts
-     * export * as other from "./other"; // Creates a namespaced export `other`
-     * ```
-     */
-    const resolvedSymbol = isExportSpecifierSymbol(exportedSymbol)
-      ? resolveSymbolInCaseOfImport(ctx, exportedSymbol)
-      : exportedSymbol;
+    const parsedSymbol = interpretSymbol(ctx, exportedSymbol);
 
-    const parsedSymbol = interpretSymbol(ctx, resolvedSymbol);
     assert(isExportableEntity(parsedSymbol), "Parsed symbol is not an exportable entity");
     parsedSymbols.push(parsedSymbol);
 

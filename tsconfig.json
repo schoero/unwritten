@@ -12,7 +12,7 @@
       "unwritten:interpreter:*": ["src/interpreter/*"],
       "unwritten:interpreter:entities": ["src/interpreter/ast/entities/index.js"],
       "unwritten:interpreter:types": ["src/interpreter/ast/types/index.js"],
-      "unwritten:logger:*": ["src/logger/*"],
+      "unwritten:logger:*": ["src/platform/logger/*"],
       "unwritten:renderer:*": ["src/renderer/*"],
       "unwritten:renderer:html*": ["src/renderer/markup/html/*"],
       "unwritten:renderer:json*": ["src/renderer/json/*"],

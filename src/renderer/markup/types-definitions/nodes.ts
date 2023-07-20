@@ -1,7 +1,7 @@
 import type { ASTNodeKinds } from "../enums/nodes.js";
 
+import type { AnchorLink, AnchorTarget } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
-import type { AnchorLink, AnchorTarget } from "unwritten:renderer:markup/utils/linker.js";
 
 
 export type ASTNodes =

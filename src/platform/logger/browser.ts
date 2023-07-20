@@ -1,4 +1,4 @@
-import { EOL } from "unwritten:utils/system.js";
+import { EOL } from "unwritten:platform/os/node.js";
 
 
 export module logger {
@@ -80,3 +80,5 @@ export module logger {
   }
 
 }
+
+export default logger;

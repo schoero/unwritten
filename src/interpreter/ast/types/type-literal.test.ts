@@ -1,14 +1,11 @@
-import { assert } from "node:console";
-
 import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
-
-import type { TypeLiteralType } from "unwritten:interpreter:type-definitions/types.js";
 
 
 scope("Interpreter", TypeKind.TypeLiteral, () => {
@@ -52,7 +49,7 @@ scope("Interpreter", TypeKind.TypeLiteral, () => {
 
     assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
 
-    const typeLiteral = exportedTypeAlias.type as TypeLiteralType;
+    const typeLiteral = exportedTypeAlias.type;
 
 
     it("should be able to handle construct signatures", () => {

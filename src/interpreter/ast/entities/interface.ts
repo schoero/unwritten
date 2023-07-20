@@ -32,7 +32,7 @@ import type { PartialByKey } from "unwritten:type-definitions/utils.js";
 
 export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity => withLockedSymbol(ctx, symbol, () => {
 
-  const interfaceDeclarations = symbol.getDeclarations()?.filter(isInterfaceDeclaration);
+  const interfaceDeclarations = symbol.getDeclarations()?.filter(declaration => isInterfaceDeclaration(ctx, declaration)) as InterfaceDeclaration[] | undefined;
 
   assert(interfaceDeclarations && interfaceDeclarations.length > 0, "Interface declarations not found");
 
@@ -101,12 +101,12 @@ function mergeMembers<Key extends keyof {
 
 function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: InterfaceDeclaration): PartialByKey<InterfaceEntity, "symbolId" | "typeId"> {
 
-  const tsConstructSignatures = declaration.members.filter(isConstructSignatureDeclaration);
-  const tsCallSignatures = declaration.members.filter(isCallSignatureDeclaration);
-  const tsMethods = declaration.members.filter(isMethodSignatureDeclaration);
-  const tsGetters = declaration.members.filter(isGetterDeclaration);
-  const tsSetters = declaration.members.filter(isSetterDeclaration);
-  const tsProperties = declaration.members.filter(isPropertySignatureDeclaration);
+  const tsConstructSignatures = declaration.members.flatMap(member => isConstructSignatureDeclaration(ctx, member) ? member : []);
+  const tsCallSignatures = declaration.members.flatMap(member => isCallSignatureDeclaration(ctx, member) ? member : []);
+  const tsMethods = declaration.members.flatMap(member => isMethodSignatureDeclaration(ctx, member) ? member : []);
+  const tsGetters = declaration.members.flatMap(member => isGetterDeclaration(ctx, member) ? member : []);
+  const tsSetters = declaration.members.flatMap(member => isSetterDeclaration(ctx, member) ? member : []);
+  const tsProperties = declaration.members.flatMap(member => isPropertySignatureDeclaration(ctx, member) ? member : []);
 
   const constructSignatures = tsConstructSignatures.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);

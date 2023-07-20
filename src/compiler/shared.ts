@@ -1,25 +1,29 @@
-import ts from "typescript";
-
-import { EOL } from "unwritten:utils/system.js";
+import { EOL } from "unwritten:platform/os/node.js";
 import { findCommonIndentation, removeCommonIndentation } from "unwritten:utils/template.js";
+
+import type { CompilerOptions, Diagnostic, LineAndCharacter } from "typescript";
 
 import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 
-export function getDefaultCompilerOptions(): ts.CompilerOptions {
+export function getDefaultCompilerOptions(ctx: DefaultContext): CompilerOptions {
+  const { ts } = ctx.dependencies;
   return {
     ...ts.getDefaultCompilerOptions(),
     allowJs: true
   };
 }
 
-export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: readonly ts.Diagnostic[], eol = EOL) {
+export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: readonly Diagnostic[], eol = EOL) {
+
+  const ts = ctx.dependencies.ts;
+  const logger = ctx.dependencies.logger;
 
   if(diagnostics.length <= 0){
     return;
   }
 
-  if(ctx.logger === undefined){
+  if(logger === undefined){
     return;
   }
 
@@ -29,7 +33,7 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
 
     if(diagnostic.file){
 
-      const location: ts.LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
+      const location: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
 
       const sourceFile = diagnostic.file.text.split(eol);
       const minLine = Math.max(location.line - 2, 0);
@@ -49,28 +53,28 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
         const tabCorrectedCharacter = location.character - tabCount + tabCount * 4;
         const tabCorrectedLine = line.replace(/\t/g, "    ");
 
-        acc.push(ctx.logger!.gray(`${lineIndicator}${tabCorrectedLine}`));
+        acc.push(logger.gray(`${lineIndicator}${tabCorrectedLine}`));
 
         if(lineNumber === location.line + 1){
-          acc.push(ctx.logger!.yellow(`${" ".repeat(lineIndicator.length + tabCorrectedCharacter - commonIndentation)}^`));
+          acc.push(logger.yellow(`${" ".repeat(lineIndicator.length + tabCorrectedCharacter - commonIndentation)}^`));
         }
 
         return acc;
 
       }, []);
 
-      ctx.logger?.warn(
+      logger.warn(
         `${diagnostic
           .file.fileName}:${location.line + 1}:${location.character + 1}`,
         "TypeScript",
         [
-          ctx.logger.yellow(message),
+          logger.yellow(message),
           "",
           ...sourceCode
         ]
       );
     } else {
-      ctx.logger?.warn(message, "TypeScript", []);
+      logger.warn(message, "TypeScript", []);
     }
 
   });

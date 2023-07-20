@@ -1,3 +1,4 @@
+import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
@@ -10,7 +11,6 @@ import {
   convertTagsForType
 } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertType, convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
 import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 

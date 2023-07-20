@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createUnknownType(ctx: InterpreterContext, type: Type): UnknownType {
 
-  assert(isUnknownType(type), "type is not a unknown type");
+  assert(isUnknownType(ctx, type), "type is not a unknown type");
 
   const kind = TypeKind.Unknown;
   const name = "unknown";

@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createAnyType(ctx: InterpreterContext, type: Type): AnyType {
 
-  assert(isAnyType(type), "type is not a any type");
+  assert(isAnyType(ctx, type), "type is not a any type");
 
   const kind = TypeKind.Any;
   const name = "any";

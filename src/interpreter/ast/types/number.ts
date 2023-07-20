@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createNumberType(ctx: InterpreterContext, type: Type): NumberType {
 
-  assert(isNumberType(type), "type is not a number type");
+  assert(isNumberType(ctx, type), "type is not a number type");
 
   const kind = TypeKind.Number;
   const name = "number";

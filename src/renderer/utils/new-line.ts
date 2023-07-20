@@ -1,5 +1,5 @@
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { EOL } from "unwritten:utils/system.js";
+import { EOL } from "unwritten:platform/os/node.js";
 
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 

@@ -1,4 +1,5 @@
 import { renderNode } from "unwritten:renderer/index.js";
+import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertTypeParameterEntitiesForDocumentation,
@@ -11,7 +12,6 @@ import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/r
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
-import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 

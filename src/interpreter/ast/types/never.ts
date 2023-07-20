@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createNeverType(ctx: InterpreterContext, type: Type): NeverType {
 
-  assert(isNeverType(type), "type is not a never type");
+  assert(isNeverType(ctx, type), "type is not a never type");
 
   const kind = TypeKind.Never;
   const name = "never";

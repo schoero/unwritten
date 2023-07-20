@@ -63,7 +63,7 @@ const htmlRenderer: HTMLRenderer = {
 
   render: (ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
 
-    htmlRenderer.initializeExportRegistry(ctx, sourceFileEntities);
+    htmlRenderer.initializeRegistry(ctx, sourceFileEntities);
     htmlRenderer.initializeContext(ctx);
 
     return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
@@ -120,7 +120,7 @@ const htmlRenderer: HTMLRenderer = {
 
   },
 
-  initializeExportRegistry: (ctx: HTMLRenderContext, sourceFileEntities: SourceFileEntity[]) => {
+  initializeRegistry: (ctx: HTMLRenderContext, sourceFileEntities: SourceFileEntity[]) => {
     initializeExportRegistry(ctx, sourceFileEntities);
   }
 

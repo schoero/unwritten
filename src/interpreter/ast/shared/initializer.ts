@@ -15,9 +15,9 @@ export function getInitializerByDeclaration(
   ctx: InterpreterContext,
   declaration: Declaration
 ): Type | undefined {
-  if(!isParameterDeclaration(declaration) &&
-    !isPropertyDeclaration(declaration) &&
-    !isPropertyAssignment(declaration) ||
+  if(!isParameterDeclaration(ctx, declaration) &&
+    !isPropertyDeclaration(ctx, declaration) &&
+    !isPropertyAssignment(ctx, declaration) ||
     !declaration.initializer){
     return;
   }

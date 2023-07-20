@@ -34,7 +34,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
     const objectTypeAliasEntity = createTypeAliasEntity(compilerContext, objectTypeSymbol);
 
     const ctx = createRenderContext();
-    ctx.renderer.initializeExportRegistry(ctx, [primitiveTypeAliasEntity, objectTypeAliasEntity]);
+    ctx.renderer.initializeRegistry(ctx, [primitiveTypeAliasEntity, objectTypeAliasEntity]);
 
     const { children: convertedPrimitiveTypeReferenceType } = convertTypeForDocumentation(ctx, primitiveTypeAliasEntity.type as TypeReferenceType);
     const { children: convertedObjectTypeReferenceType } = convertTypeForDocumentation(ctx, objectTypeAliasEntity.type as TypeReferenceType);
@@ -72,7 +72,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
 
     const ctx = createRenderContext();
 
-    ctx.renderer.initializeExportRegistry(ctx, [
+    ctx.renderer.initializeRegistry(ctx, [
       stringTypeAliasEntity,
       interfaceEntity,
       primitiveTypeAliasEntity,

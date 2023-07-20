@@ -1,5 +1,8 @@
-import { getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
-import { isAliasedSymbol } from "unwritten:interpreter/typeguards/symbols.js";
+import {
+  isAliasedSymbol,
+  isExportSpecifierSymbol,
+  isImportSpecifierSymbol
+} from "unwritten:interpreter/typeguards/symbols.js";
 import * as locker from "unwritten:interpreter:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
 
@@ -25,44 +28,22 @@ export function getEntryFileSymbolsFromProgram(ctx: InterpreterContext, program:
 
 }
 
-
-export function getExportedSymbols(ctx: InterpreterContext, moduleSymbol: Symbol) {
-  const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, moduleSymbol);
-  const exportedSymbols = ctx.checker.getExportsOfModule(resolvedSymbol);
-
-  // Filter out default export if it was exported as a named export
-  // TODO: add `default` or `named` modifiers to reveal if a symbol was exported as a default or named export
-  const uniqueExportedSymbols = exportedSymbols.filter((symbol, index, symbols) => {
-    const resolvedSymbol = resolveSymbolInCaseOfImport(ctx, symbol);
-    return exportedSymbols.findIndex(otherSymbol => {
-      const resolvedOtherSymbol = resolveSymbolInCaseOfImport(ctx, otherSymbol);
-      return getSymbolId(ctx, resolvedOtherSymbol) === getSymbolId(ctx, resolvedSymbol);
-    }) === index;
-  });
-
-  return uniqueExportedSymbols;
-}
-
-
-//-- Locker
-
+// Locker
 export function isTypeLocked(ctx: InterpreterContext, type: TSType) {
   return locker.isTypeLocked(ctx, type);
 }
 
-
-//-- Symbol helpers
-/**
- * Resolves symbols from imports to their actual symbols.
- * @param ctx - Interpreter context
- * @param symbol - Symbol to resolve
- * @returns Resolved symbol
- */
+// Symbol helpers
 export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Symbol): Symbol {
-  if(isAliasedSymbol(symbol)){
-    return ctx.checker.getAliasedSymbol(symbol);
+  if(!isAliasedSymbol(ctx, symbol)){
+    return symbol;
   }
-  return symbol;
+
+  if(!isExportSpecifierSymbol(ctx, symbol) && !isImportSpecifierSymbol(ctx, symbol)){
+    return symbol;
+  }
+
+  return ctx.checker.getAliasedSymbol(symbol);
 }
 
 export function withLockedSymbol<T extends Entity>(ctx: InterpreterContext, symbol: Symbol, callback: (ctx: InterpreterContext, symbol: Symbol) => T): T {

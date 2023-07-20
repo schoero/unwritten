@@ -1,26 +1,30 @@
-import ts from "typescript";
-
 import { reportCompilerDiagnostics } from "unwritten:compiler/shared.js";
+
+import type { CompilerHost, CompilerOptions } from "typescript";
 
 import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 
-export function compile(ctx: DefaultContext, code: string, tsconfig?: ts.CompilerOptions) {
+export function compile(ctx: DefaultContext, code: string, tsconfig?: CompilerOptions) {
 
-  ctx.logger?.info("Invoking the TypeScript compiler to compile the provided code...");
+  const ts = ctx.dependencies.ts;
+  const logger = ctx.dependencies.logger;
+  const { EOL } = ctx.dependencies.os;
+
+  logger?.info("Invoking the TypeScript compiler to compile the provided code...");
 
   const compilerOptions = getCompilerOptions(ctx, tsconfig);
   const dummyFilePath = "/index.ts";
   const sourceFile = ts.createSourceFile(dummyFilePath, code.trim(), ts.ScriptTarget.Latest);
 
-  const compilerHost: ts.CompilerHost = {
+  const compilerHost: CompilerHost = {
     directoryExists: dirPath => dirPath === "/",
     fileExists: filePath => filePath === dummyFilePath,
     getCanonicalFileName: fileName => fileName,
     getCurrentDirectory: () => "/",
     getDefaultLibFileName: () => "node_modules/typescript/lib/lib.esnext.d.ts",
     getDirectories: () => [],
-    getNewLine: () => "\n",
+    getNewLine: () => EOL,
     getSourceFile: filePath =>
       filePath === dummyFilePath
         ? sourceFile
@@ -47,8 +51,9 @@ export function compile(ctx: DefaultContext, code: string, tsconfig?: ts.Compile
 
 }
 
-function getCompilerOptions(ctx: DefaultContext, tsconfig?: ts.CompilerOptions): ts.CompilerOptions {
+function getCompilerOptions(ctx: DefaultContext, tsconfig?: CompilerOptions): CompilerOptions {
 
+  const { ts } = ctx.dependencies;
   const { errors, options } = ts.convertCompilerOptionsFromJson(tsconfig, ".");
 
   void reportCompilerDiagnostics(ctx, errors);

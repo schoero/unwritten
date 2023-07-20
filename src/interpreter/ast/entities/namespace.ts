@@ -45,7 +45,7 @@ export function createNamespaceEntityFromNamespaceExport(ctx: InterpreterContext
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
-  assert(declaration && isNamespaceExport(declaration), "Declaration is not a namespace export");
+  assert(declaration && isNamespaceExport(ctx, declaration), "Declaration is not a namespace export");
 
   // export * as declaration from "moduleSpecifier";
 

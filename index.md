@@ -14,6 +14,4 @@ Defined in: [index.ts](../../../../../index.ts#L2C13)
   
 #### Type
   
-object
-
-- a string  
+[Test](#test)  

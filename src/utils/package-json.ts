@@ -1,7 +1,7 @@
-import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { readFileSync } from "unwritten:platform/file-system/node.js";
 import { assert } from "unwritten:utils:general.js";
 
 

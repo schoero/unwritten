@@ -17,7 +17,9 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function functionOverloadDeclarationFilter(ctx: InterpreterContext, declaration: CallSignatureDeclaration | ConstructSignatureDeclaration | FunctionLikeDeclaration | MethodSignature, symbol: Symbol): boolean {
 
-  if(isMethodSignatureDeclaration(declaration) || isCallSignatureDeclaration(declaration) || isConstructSignatureDeclaration(declaration)){
+  if(isMethodSignatureDeclaration(ctx, declaration) ||
+    isCallSignatureDeclaration(ctx, declaration) ||
+    isConstructSignatureDeclaration(ctx, declaration)){
     return true;
   }
 

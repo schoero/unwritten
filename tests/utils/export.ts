@@ -1,6 +1,7 @@
-import { readdirSync, readFileSync } from "node:fs";
 import { basename, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+
+import { readdirSync, readFileSync } from "unwritten:platform/file-system/node.js";
 
 
 export function getExportsFromIndexFile(importURL: string) {
@@ -9,7 +10,7 @@ export function getExportsFromIndexFile(importURL: string) {
 
   const indexTSFilePath = path.replace(".test.ts", ".ts");
 
-  const indexFile = readFileSync(indexTSFilePath, "utf-8");
+  const indexFile = readFileSync(indexTSFilePath);
   const indexExports = indexFile.match(/export \* from "\.\/(.*)";/g);
 
   return indexExports;

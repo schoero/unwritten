@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createBigIntType(ctx: InterpreterContext, type: Type): BigIntType {
 
-  assert(isBigIntType(type), "type is not a string type");
+  assert(isBigIntType(ctx, type), "type is not a string type");
 
   const kind = TypeKind.BigInt;
   const name = "bigint";

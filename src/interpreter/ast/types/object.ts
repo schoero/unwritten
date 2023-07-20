@@ -31,10 +31,17 @@ export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLi
   const tsCallSignatures = type.getCallSignatures();
   const tsProperties = type.getProperties();
 
-  const getterProperties = tsProperties.filter(isGetterSymbol).filter(getter => !isSymbolExcluded(ctx, getter));
-  const setterProperties = tsProperties.filter(isSetterSymbol).filter(setter => !isSymbolExcluded(ctx, setter));
-  const propertyProperties = tsProperties.filter(isPropertySymbol).filter(property => !isSymbolExcluded(ctx, property));
-  const methodProperties = tsProperties.filter(isMethodSymbol).filter(method => !isSymbolExcluded(ctx, method));
+  const getterProperties = tsProperties.filter(property => isGetterSymbol(ctx, property))
+    .filter(getter => !isSymbolExcluded(ctx, getter));
+
+  const setterProperties = tsProperties.filter(property => isSetterSymbol(ctx, property))
+    .filter(setter => !isSymbolExcluded(ctx, setter));
+
+  const propertyProperties = tsProperties.filter(property => isPropertySymbol(ctx, property))
+    .filter(property => !isSymbolExcluded(ctx, property));
+
+  const methodProperties = tsProperties.filter(property => isMethodSymbol(ctx, property))
+    .filter(method => !isSymbolExcluded(ctx, method));
 
   const constructSignatures = tsConstructSignatures.map(signature => createSignatureEntity(ctx, signature));
   const callSignatures = tsCallSignatures.map(signature => createSignatureEntity(ctx, signature));
@@ -48,7 +55,7 @@ export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLi
   const symbolId = getSymbolId(ctx, type.symbol);
   const typeId = getTypeId(ctx, type);
   const position = getPositionByType(ctx, type);
-  const isThis = isThisType(type);
+  const isThis = isThisType(ctx, type);
 
   return <InferObjectLikeType<typeof kind>>{
     callSignatures,

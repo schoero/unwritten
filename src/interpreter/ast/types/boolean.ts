@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createBooleanType(ctx: InterpreterContext, type: Type): BooleanType {
 
-  assert(isBooleanType(type), "type is not a boolean type");
+  assert(isBooleanType(ctx, type), "type is not a boolean type");
 
   const kind = TypeKind.Boolean;
   const name = "boolean";

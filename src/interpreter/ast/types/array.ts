@@ -32,6 +32,6 @@ export function createArrayType(ctx: InterpreterContext, typeReference: TypeRefe
 
 export function createArrayTypeByArrayTypeNode(ctx: InterpreterContext, arrayTypeNode: ArrayTypeNode | TypeReferenceNode): ArrayType {
   const type = ctx.checker.getTypeFromTypeNode(arrayTypeNode);
-  assert(isTypeReferenceType(type), "Type is not a type reference");
+  assert(isTypeReferenceType(ctx, type), "Type is not a type reference");
   return createArrayType(ctx, type);
 }

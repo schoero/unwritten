@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-
 import { beforeAll, expect, it, vitest } from "vitest";
 
 import { createConfig } from "unwritten:config/config.js";
+import { mkdirSync, readFileSync, writeFileSync } from "unwritten:platform/file-system/node.js";
+import { cwd } from "unwritten:platform/process/node.js";
+import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 
@@ -12,8 +13,8 @@ scope("Integration", "Config", async () => {
   beforeAll(() => {
     vitest.mock("node:fs", async () => import("unwritten:utils:virtual-fs.js"));
 
-    mkdirSync(process.cwd(), { recursive: true });
-    writeFileSync(`${process.cwd()}/.unwritten.json`, JSON.stringify({
+    mkdirSync(cwd(), { recursive: true });
+    writeFileSync(`${cwd()}/.unwritten.json`, JSON.stringify({
       renderConfig: {
         test: {
           ".unwritten.json": true
@@ -21,7 +22,7 @@ scope("Integration", "Config", async () => {
       }
     }, null, 2));
 
-    writeFileSync(`${process.cwd()}/.unwritten.js`, JSON.stringify({
+    writeFileSync(`${cwd()}/.unwritten.js`, JSON.stringify({
       renderConfig: {
         test: {
           ".unwritten.js": true
@@ -29,16 +30,18 @@ scope("Integration", "Config", async () => {
       }
     }, null, 2));
 
-    vitest.mock(`${process.cwd()}/.unwritten.js`, () => ({
-      default: JSON.parse(readFileSync(`${process.cwd()}/.unwritten.js`, { encoding: "utf-8" }))
+    vitest.mock(`${cwd()}/.unwritten.js`, () => ({
+      default: JSON.parse(readFileSync(`${cwd()}/.unwritten.js`))
     }));
 
     return () => vitest.restoreAllMocks();
   });
 
+  const ctx = createRenderContext();
+
   it("should be able to read the config from a relative path", async () => {
 
-    const config = await createConfig({}, ".unwritten.json");
+    const config = await createConfig(ctx, ".unwritten.json");
 
     expect(config).toBeDefined();
     expect(config.interpreterConfig).toBeDefined();
@@ -50,7 +53,7 @@ scope("Integration", "Config", async () => {
 
   it("should be able to create a config from an object", async () => {
 
-    const config = await createConfig({}, {
+    const config = await createConfig(ctx, {
       renderConfig: {
         test: {
           object: true
@@ -68,7 +71,7 @@ scope("Integration", "Config", async () => {
 
   it("should be able to read the config from a javascript file", async () => {
 
-    const config = await createConfig({}, ".unwritten.js");
+    const config = await createConfig(ctx, ".unwritten.js");
 
     expect(config).toBeDefined();
     expect(config.interpreterConfig).toBeDefined();
@@ -80,7 +83,7 @@ scope("Integration", "Config", async () => {
 
   it("should be able to override default configurations", async () => {
 
-    const config = await createConfig({}, {
+    const config = await createConfig(ctx, {
       renderConfig: {
         markdown: {
           removeHyphenAtStartOfTag: false
@@ -95,7 +98,7 @@ scope("Integration", "Config", async () => {
 
   it("should be able to extend a config", async () => {
 
-    const config = await createConfig({}, {
+    const config = await createConfig(ctx, {
       extends: ".unwritten.json"
     });
 
@@ -106,7 +109,7 @@ scope("Integration", "Config", async () => {
 
   it("should be able to override extended configurations", async () => {
 
-    const config = await createConfig({}, {
+    const config = await createConfig(ctx, {
       renderConfig: {
         test: {
           ".unwritten.json": "overridden"

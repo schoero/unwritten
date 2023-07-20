@@ -10,24 +10,59 @@
       },
       "rules": {
         "@typescript-eslint/no-duplicate-type-constituents": "off",
-        "no-restricted-imports": [
+        "@typescript-eslint/no-restricted-imports": [
           "error", {
-            "paths": [
-              "node:test",
-              "test"
-            ],
             "patterns": [
               {
+                "allowTypeImports": false,
+                "group": [
+                  "test",
+                  "node:test"
+                ],
+                "message": "Import from vitest instead.",
+                "name": "test"
+              },
+              {
+                "allowTypeImports": false,
                 "group": [
                   "**/entities/*.js",
                   "!**/entities/index.js"
-                ]
+                ],
+                "message": "Import from the index file instead.",
+                "name": "entities"
               },
               {
+                "allowTypeImports": false,
                 "group": [
                   "**/types/*.js",
                   "!**/types/index.js"
-                ]
+                ],
+                "message": "Import from the index file instead.",
+                "name": "types"
+              },
+              {
+                "allowTypeImports": false,
+                "group": [
+                  "node:*"
+                ],
+                "message": "Import from the 'unwritten:platform/module-name/node.js' instead.",
+                "name": "types"
+              },
+              {
+                "allowTypeImports": true,
+                "group": [
+                  "typescript"
+                ],
+                "message": "Use injected dependencies at 'ctx.dependencies' instead.",
+                "name": "typescript"
+              },
+              {
+                "allowTypeImports": false,
+                "group": [
+                  "**/platform/**/*"
+                ],
+                "message": "Use injected dependencies at 'ctx.dependencies' instead.",
+                "name": "platform"
               }
             ]
           }
@@ -48,11 +83,54 @@
     },
     {
       "files": [
+        "**/platform/**/node.ts"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "@typescript-eslint/no-restricted-imports": [
+          "error", {
+            "patterns": [
+              {
+                "allowTypeImports": true,
+                "group": [
+                  "!node:*"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "**/*.entry.ts",
+        "**/*.test.ts",
+        "**/tests/**/*.ts"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "@typescript-eslint/no-restricted-imports": [
+          "error", {
+            "patterns": [
+              {
+                "allowTypeImports": true,
+                "group": [
+                  "!typescript",
+                  "!**/platform/**/*"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "**/renderer/markup/html/**/*.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {
-        "no-restricted-imports": [
+        "@typescript-eslint/no-restricted-imports": [
           "error", {
             "patterns": [
               {
@@ -74,7 +152,7 @@
       ],
       "parser": "@typescript-eslint/parser",
       "rules": {
-        "no-restricted-imports": [
+        "@typescript-eslint/no-restricted-imports": [
           "error", {
             "patterns": [
               {

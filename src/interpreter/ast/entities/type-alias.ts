@@ -18,7 +18,7 @@ export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): 
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration && isTypeAliasDeclaration(declaration), "Type alias declaration is not found");
+  assert(declaration && isTypeAliasDeclaration(ctx, declaration), "Type alias declaration is not found");
 
   const name = getNameBySymbol(ctx, symbol);
   const symbolId = getSymbolId(ctx, symbol);

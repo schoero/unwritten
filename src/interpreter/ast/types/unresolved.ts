@@ -21,7 +21,7 @@ export function createUnresolvedType(ctx: InterpreterContext, type: Type): Unres
   const position = getPositionByType(ctx, type);
   const name = getNameByType(ctx, type);
 
-  const typeArguments = isTypeReferenceType(type)
+  const typeArguments = isTypeReferenceType(ctx, type)
     ? type.typeArguments?.map(typeArgument => getResolvedTypeByType(ctx, typeArgument))
     : undefined;
 

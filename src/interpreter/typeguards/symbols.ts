@@ -1,126 +1,160 @@
-import ts from "typescript";
-
 import type { Declaration, Symbol, Type, TypeNode } from "typescript";
 
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
-export function isAliasExcludesSymbol(symbol: ts.Symbol): boolean {
+
+export function isAliasExcludesSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.AliasExcludes) !== 0;
 }
 
-export function isAliasedSymbol(symbol: ts.Symbol): boolean {
+export function isAliasedSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Alias) !== 0;
 }
 
-export function isClassSymbol(symbol: ts.Symbol): boolean {
+export function isClassSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Class) !== 0;
 }
 
-export function isConstructorSymbol(symbol: ts.Symbol): boolean {
+export function isConstructorSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Constructor) !== 0;
 }
 
-export function isEnumMemberSymbol(symbol: ts.Symbol): boolean {
+export function isEnumMemberSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.EnumMember) !== 0;
 }
 
-export function isEnumSymbol(symbol: ts.Symbol): boolean {
+export function isEnumSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Enum) !== 0;
 }
 
-export function isExportAssignmentSymbol(symbol: ts.Symbol): boolean {
+export function isExportAssignmentSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0 &&
     symbol.valueDeclaration?.kind === ts.SyntaxKind.ExportAssignment ||
     symbol.declarations?.[0]?.kind === ts.SyntaxKind.ExportAssignment;
 }
 
-export function isExportSpecifierSymbol(symbol: ts.Symbol): boolean {
+export function isExportSpecifierSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.ModuleMember) !== 0 &&
     symbol.valueDeclaration?.kind === ts.SyntaxKind.ExportSpecifier ||
     symbol.declarations?.[0]?.kind === ts.SyntaxKind.ExportSpecifier;
 }
 
-export function isFunctionLikeSymbol(symbol: ts.Symbol): boolean {
-  return isFunctionSymbol(symbol) ||
-    isConstructorSymbol(symbol) ||
-    isMethodSymbol(symbol) ||
-    isSetterSymbol(symbol);
+export function isFunctionLikeSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
+  return isFunctionSymbol(ctx, symbol) ||
+    isConstructorSymbol(ctx, symbol) ||
+    isMethodSymbol(ctx, symbol) ||
+    isSetterSymbol(ctx, symbol);
 }
 
-export function isFunctionSymbol(symbol: ts.Symbol): boolean {
+export function isFunctionSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Function) !== 0;
 }
 
-export function isGetterSymbol(symbol: ts.Symbol): boolean {
+export function isGetterSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.GetAccessor) !== 0;
 }
 
-export function isInterfaceSymbol(symbol: ts.Symbol): boolean {
+export function isImportSpecifierSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
+  return (symbol.getFlags() & ts.SymbolFlags.ModuleMember) !== 0 &&
+    symbol.valueDeclaration?.kind === ts.SyntaxKind.ImportSpecifier ||
+    symbol.declarations?.[0]?.kind === ts.SyntaxKind.ImportSpecifier;
+}
+
+export function isInterfaceSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Interface) !== 0;
 }
 
-export function isMethodSymbol(symbol: ts.Symbol): boolean {
+export function isMethodSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Method) !== 0;
 }
 
-export function isModuleSymbol(symbol: ts.Symbol): boolean {
+export function isModuleSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Module) !== 0;
 }
 
-export function isNamespaceExportSymbol(symbol: ts.Symbol): boolean {
+export function isNamespaceExportSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.ModuleMember) !== 0 &&
     symbol.valueDeclaration?.kind === ts.SyntaxKind.NamespaceExport ||
     symbol.declarations?.[0]?.kind === ts.SyntaxKind.NamespaceExport;
 }
 
-export function isNamespaceSymbol(symbol: ts.Symbol): boolean {
+export function isNamespaceSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Namespace) !== 0 ||
     (symbol.getFlags() & ts.SymbolFlags.NamespaceModule) !== 0;
 }
 
-export function isObjectLiteralSymbol(symbol: ts.Symbol): boolean {
+export function isObjectLiteralSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.ObjectLiteral) !== 0;
 }
 
-export function isPropertySymbol(symbol: ts.Symbol): boolean {
+export function isPropertySymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Property) !== 0 &&
-    !isMethodSymbol(symbol) &&
-    !isGetterSymbol(symbol) &&
-    !isSetterSymbol(symbol) &&
-    !isPrototypeSymbol(symbol);
+    !isMethodSymbol(ctx, symbol) &&
+    !isGetterSymbol(ctx, symbol) &&
+    !isSetterSymbol(ctx, symbol) &&
+    !isPrototypeSymbol(ctx, symbol);
 }
 
-export function isPrototypeSymbol(symbol: ts.Symbol): boolean {
+export function isPrototypeSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Prototype) !== 0;
 }
 
-export function isSetterSymbol(symbol: ts.Symbol): boolean {
+export function isSetterSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.SetAccessor) !== 0;
 }
 
-export function isSourceFileSymbol(symbol: ts.Symbol): boolean {
+export function isSourceFileSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.ValueModule) !== 0;
 }
 
-export function isSymbol(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Symbol {
+export function isSymbol(ctx: InterpreterContext, typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Symbol {
+  const { ts } = ctx.dependencies;
   return "getName" in typeNodeOrSymbolOrDeclarationOrType;
 }
 
-export function isTypeAliasSymbol(symbol: ts.Symbol): boolean {
+export function isTypeAliasSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.TypeAlias) !== 0;
 }
 
-export function isTypeLiteralSymbol(symbol: ts.Symbol): boolean {
+export function isTypeLiteralSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.TypeLiteral) !== 0;
 }
 
-export function isTypeParameterSymbol(symbol: ts.Symbol): boolean {
+export function isTypeParameterSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.TypeParameter) !== 0;
 }
 
-export function isTypeSymbol(symbol: ts.Symbol): boolean {
+export function isTypeSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Type) !== 0;
 }
 
-export function isVariableSymbol(symbol: ts.Symbol): boolean {
+export function isVariableSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Variable) !== 0;
 }

@@ -1,5 +1,3 @@
-import ts from "typescript";
-
 import type {
   ArrayTypeNode,
   ConditionalTypeNode,
@@ -7,6 +5,7 @@ import type {
   ExpressionWithTypeArguments,
   IndexedAccessTypeNode,
   MappedTypeNode,
+  Node,
   OptionalTypeNode,
   RestTypeNode,
   Symbol,
@@ -14,66 +13,85 @@ import type {
   TupleTypeNode,
   Type,
   TypeNode,
-  TypeReferenceNode
+  TypeQueryNode,
+  TypeReferenceNode,
+  UnionTypeNode
 } from "typescript";
 
+import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
-export function isArrayTypeNode(typeNode: TypeNode): typeNode is ArrayTypeNode {
+
+export function isArrayTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is ArrayTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isArrayTypeNode(typeNode);
 }
 
-export function isArrayTypeReferenceTypeNode(typeNode: TypeNode): typeNode is TypeReferenceNode {
-  return isTypeReferenceNode(typeNode) && typeNode.typeName.getText() === "Array" && typeNode.typeArguments?.length === 1;
+export function isArrayTypeReferenceTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is TypeReferenceNode {
+  const { ts } = ctx.dependencies;
+  return isTypeReferenceNode(ctx, typeNode) && typeNode.typeName.getText() === "Array" && typeNode.typeArguments?.length === 1;
 }
 
-export function isConditionalTypeNode(typeNode: TypeNode): typeNode is ConditionalTypeNode {
+export function isConditionalTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is ConditionalTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isConditionalTypeNode(typeNode);
 }
 
-export function isExpressionWithTypeArguments(node: TypeNode): node is ExpressionWithTypeArguments {
+export function isExpressionWithTypeArguments(ctx: InterpreterContext, node: TypeNode): node is ExpressionWithTypeArguments {
+  const { ts } = ctx.dependencies;
   return ts.isExpressionWithTypeArguments(node);
 }
 
-export function isIndexedAccessTypeNode(node: TypeNode): node is IndexedAccessTypeNode {
+export function isIndexedAccessTypeNode(ctx: InterpreterContext, node: TypeNode): node is IndexedAccessTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isIndexedAccessTypeNode(node);
 }
 
-export function isMappedTypeNode(typeNode: TypeNode): typeNode is MappedTypeNode {
+export function isMappedTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is MappedTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isMappedTypeNode(typeNode);
 }
 
-export function isOptionalTypeNode(node: TypeNode): node is OptionalTypeNode {
+export function isOptionalTypeNode(ctx: InterpreterContext, node: TypeNode): node is OptionalTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isOptionalTypeNode(node);
 }
 
-export function isRestTypeNode(typeNode: TypeNode): typeNode is RestTypeNode {
+export function isRestTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is RestTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isRestTypeNode(typeNode);
 }
 
-export function isTemplateLiteralTypeNode(typeNode: TypeNode): typeNode is TemplateLiteralTypeNode {
+export function isTemplateLiteralTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is TemplateLiteralTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isTemplateLiteralTypeNode(typeNode);
 }
 
-export function isThisTypeNode(typeNode: TypeNode): boolean {
+export function isThisTypeNode(ctx: InterpreterContext, typeNode: TypeNode): boolean {
+  const { ts } = ctx.dependencies;
   return ts.isThisTypeNode(typeNode);
 }
 
-export function isTupleTypeNode(typeNode: TypeNode): typeNode is TupleTypeNode {
+export function isTupleTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is TupleTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isTupleTypeNode(typeNode);
 }
 
-export function isTypeNode(typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is TypeNode {
+export function isTypeNode(ctx: InterpreterContext, typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is TypeNode {
+  const { ts } = ctx.dependencies;
   return "kind" in typeNodeOrSymbolOrDeclarationOrType && ts.isTypeNode(typeNodeOrSymbolOrDeclarationOrType);
 }
 
-export function isTypeQueryNode(node: ts.Node): node is ts.TypeQueryNode {
+export function isTypeQueryNode(ctx: InterpreterContext, node: Node): node is TypeQueryNode {
+  const { ts } = ctx.dependencies;
   return ts.isTypeQueryNode(node);
 }
 
-export function isTypeReferenceNode(typeNode: TypeNode): typeNode is TypeReferenceNode {
+export function isTypeReferenceNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is TypeReferenceNode {
+  const { ts } = ctx.dependencies;
   return ts.isTypeReferenceNode(typeNode);
 }
 
-export function isUnionTypeNode(node: ts.Node): node is ts.UnionTypeNode {
+export function isUnionTypeNode(ctx: InterpreterContext, node: Node): node is UnionTypeNode {
+  const { ts } = ctx.dependencies;
   return ts.isUnionTypeNode(node);
 }

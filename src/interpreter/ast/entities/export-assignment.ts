@@ -17,7 +17,7 @@ export function createExportAssignmentEntity(ctx: InterpreterContext, symbol: Sy
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
-  assert(declaration && isExportAssignment(declaration), "Export assignment is not found");
+  assert(declaration && isExportAssignment(ctx, declaration), "Export assignment is not found");
 
   const tsType = ctx.checker.getTypeAtLocation(declaration.expression);
   const position = getPositionByDeclaration(ctx, declaration);

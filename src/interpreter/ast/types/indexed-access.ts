@@ -34,7 +34,7 @@ export function createIndexedAccessTypeByTypeNode(ctx: InterpreterContext, typeN
 
   const tsType = ctx.checker.getTypeFromTypeNode(typeNode);
 
-  if(isIndexedAccessType(tsType)){
+  if(isIndexedAccessType(ctx, tsType)){
     return createIndexedAccessType(ctx, tsType);
   }
 

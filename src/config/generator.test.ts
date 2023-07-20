@@ -1,8 +1,7 @@
-import { existsSync } from "node:fs";
-
 import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
-import { generateConfig } from "unwritten:config/generator.js";
+import { generateConfig } from "unwritten:config/generator.entry.js";
+import { existsSync } from "unwritten:platform/file-system/node.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { clearVirtualFS } from "unwritten:utils:virtual-fs.js";
 

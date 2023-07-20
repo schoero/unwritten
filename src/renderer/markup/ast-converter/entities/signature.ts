@@ -21,7 +21,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
-import { registerAnchor } from "unwritten:renderer:markup/utils/linker.js";
+import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import {
   createAnchorNode,
   createListNode,

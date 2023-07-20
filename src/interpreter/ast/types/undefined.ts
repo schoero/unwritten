@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createUndefinedType(ctx: InterpreterContext, type: Type): UndefinedType {
 
-  assert(isUndefinedType(type), "type is not a undefined type");
+  assert(isUndefinedType(ctx, type), "type is not a undefined type");
 
   const kind = TypeKind.Undefined;
   const name = "undefined";

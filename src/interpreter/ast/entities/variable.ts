@@ -1,5 +1,9 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { getResolvedTypeBySymbol } from "unwritten:interpreter:ast/index.js";
+import {
+  getDeclaredType,
+  getResolvedTypeBySymbol,
+  getTypeByDeclaredOrResolvedType
+} from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
@@ -18,7 +22,7 @@ export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): V
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
-  assert(declaration && isVariableDeclaration(declaration), "Variable declaration is not found");
+  assert(declaration && isVariableDeclaration(ctx, declaration), "Variable declaration is not found");
 
   const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
@@ -27,7 +31,13 @@ export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): V
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const declarationId = getDeclarationId(ctx, declaration);
-  const type = getResolvedTypeBySymbol(ctx, symbol, declaration);
+
+  const declaredType = declaration.type && getDeclaredType(ctx, declaration.type);
+  const resolvedType = getResolvedTypeBySymbol(ctx, symbol, declaration);
+  const type = declaredType
+    ? getTypeByDeclaredOrResolvedType(declaredType, resolvedType)
+    : resolvedType;
+
   const kind = EntityKind.Variable;
 
   return {

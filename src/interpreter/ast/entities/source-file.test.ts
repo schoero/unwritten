@@ -59,22 +59,6 @@ scope("Interpreter", EntityKind.SourceFile, () => {
   {
 
     const testFileContent = ts`
-      export const test = "test";
-      export default test;
-    `;
-
-    const { ctx, fileSymbol } = compile(testFileContent);
-    const sourceFile = createSourceFileEntity(ctx, fileSymbol);
-
-    it("should filter out default exports if they are exported as named exports", () => {
-      expect(sourceFile.exports).toHaveLength(1);
-    });
-
-  }
-
-  {
-
-    const testFileContent = ts`
       const test = "test";
       export default test;
     `;

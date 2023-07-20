@@ -4,10 +4,10 @@ import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:utils/template.js";
 
-import { convertTextToAnchorId, getAnchorLink, registerAnchor } from "./linker.js";
+import { convertTextToAnchorId, getAnchorLink, registerAnchor } from "./registry.js";
 
 
-scope("Renderer", "Render abstraction", () => {
+scope("Renderer", "Source registry", () => {
 
   describe("convertTextToAnchorId", () => {
 

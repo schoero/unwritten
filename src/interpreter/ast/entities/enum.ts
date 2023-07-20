@@ -23,7 +23,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createEnumEntity(ctx: InterpreterContext, symbol: Symbol): EnumEntity | MergedEnumEntity {
 
-  const declarations = symbol.getDeclarations()?.filter(isEnumDeclaration);
+  const declarations = symbol.getDeclarations()?.flatMap(declaration => isEnumDeclaration(ctx, declaration) ? declaration : []);
 
   assert(declarations && declarations.length > 0, "Enum declarations not found");
 

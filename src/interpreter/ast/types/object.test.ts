@@ -25,7 +25,7 @@ scope("Interpreter", TypeKind.Object, () => {
     const symbol = exportedSymbols.find(s => s.name === "ObjectType")!;
     const tsType = ctx.checker.getTypeAtLocation(symbol.declarations![0]!);
 
-    assert(isObjectType(tsType), "tsType is not an object type");
+    assert(isObjectType(ctx, tsType), "tsType is not an object type");
 
     it("should be able to create object types", () => {
       expect(createObjectLikeType(ctx, tsType, TypeKind.TypeLiteral).kind).toBe(TypeKind.TypeLiteral);
