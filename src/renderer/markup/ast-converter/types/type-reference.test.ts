@@ -1,6 +1,10 @@
 import { expect, it } from "vitest";
 
-import { createInterfaceEntity, createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
+import {
+  createInterfaceEntity,
+  createSourceFileEntity,
+  createTypeAliasEntity
+} from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { isAnchorNode, isParagraphNode } from "unwritten:renderer:markup/typeguards/renderer.js";
@@ -26,15 +30,19 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
       export type ObjectType = Interface;
     `;
 
-    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols, fileSymbols } = compile(testFileContent);
 
     const primitiveTypeSymbol = exportedSymbols.find(s => s.name === "PrimitiveType")!;
     const objectTypeSymbol = exportedSymbols.find(s => s.name === "ObjectType")!;
     const primitiveTypeAliasEntity = createTypeAliasEntity(compilerContext, primitiveTypeSymbol);
     const objectTypeAliasEntity = createTypeAliasEntity(compilerContext, objectTypeSymbol);
 
+    const sourceFileEntities = fileSymbols.map(fileSymbol => {
+      return createSourceFileEntity(compilerContext, fileSymbol);
+    });
+
     const ctx = createRenderContext();
-    ctx.renderer.initializeRegistry(ctx, [primitiveTypeAliasEntity, objectTypeAliasEntity]);
+    ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
 
     const { children: convertedPrimitiveTypeReferenceType } = convertTypeForDocumentation(ctx, primitiveTypeAliasEntity.type as TypeReferenceType);
     const { children: convertedObjectTypeReferenceType } = convertTypeForDocumentation(ctx, objectTypeAliasEntity.type as TypeReferenceType);
@@ -58,7 +66,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
       export type ObjectType = Interface;
     `;
 
-    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+    const { ctx: compilerContext, exportedSymbols, fileSymbols } = compile(testFileContent);
 
     const stringTypeSymbol = exportedSymbols.find(s => s.name === "StringType")!;
     const interfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
@@ -70,14 +78,13 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
     const primitiveTypeAliasEntity = createTypeAliasEntity(compilerContext, primitiveTypeSymbol);
     const objectTypeAliasEntity = createTypeAliasEntity(compilerContext, objectTypeSymbol);
 
-    const ctx = createRenderContext();
 
-    ctx.renderer.initializeRegistry(ctx, [
-      stringTypeAliasEntity,
-      interfaceEntity,
-      primitiveTypeAliasEntity,
-      objectTypeAliasEntity
-    ]);
+    const sourceFileEntities = fileSymbols.map(fileSymbol => {
+      return createSourceFileEntity(compilerContext, fileSymbol);
+    });
+
+    const ctx = createRenderContext();
+    ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
 
     const { children: convertedPrimitiveTypeReferenceType } = convertTypeForDocumentation(ctx, primitiveTypeAliasEntity.type as TypeReferenceType);
     const { children: convertedObjectTypeReferenceType } = convertTypeForDocumentation(ctx, objectTypeAliasEntity.type as TypeReferenceType);

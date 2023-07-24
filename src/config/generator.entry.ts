@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node.js";
 import { absolute, getDirectory } from "unwritten:platform/path/node.js";
+import { cwd } from "unwritten:platform/process/node.js";
 
 import { getDefaultConfig } from "./config.js";
 
@@ -12,7 +13,7 @@ export async function generateConfig(path?: string, options?: Options) {
   const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:platform/logger/node.js");
 
   const outputName = ".unwritten.json";
-  const outputDir = path ? getDirectory(path) : process.cwd();
+  const outputDir = path ? getDirectory(path) : cwd();
   const resolvedOutputDir = absolute(outputDir);
   const resolvedOutputFilePath = `${resolvedOutputDir}/${outputName}`;
 

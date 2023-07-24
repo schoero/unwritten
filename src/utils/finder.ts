@@ -13,8 +13,8 @@ import type { DefaultContext } from "unwritten:type-definitions/context.js";
 export function findFile(ctx: DefaultContext, fileName: string[] | string, entryPath?: string): string | undefined {
 
   const { existsSync } = ctx.dependencies.fs;
-
-  const { path: { absolute, getDirectory } } = ctx.dependencies;
+  const { absolute, getDirectory, join } = ctx.dependencies.path;
+  const { cwd } = ctx.dependencies.process;
 
   if(typeof fileName === "object" && Array.isArray(fileName) === true){
     for(const name of fileName){
@@ -29,7 +29,7 @@ export function findFile(ctx: DefaultContext, fileName: string[] | string, entry
   assert(typeof fileName === "string", "fileName must be a string or an array of strings.");
 
   if(entryPath === undefined){
-    entryPath = process.cwd();
+    entryPath = cwd();
   }
 
   const absoluteEntryDir = absolute(entryPath);
@@ -37,12 +37,12 @@ export function findFile(ctx: DefaultContext, fileName: string[] | string, entry
     throw new Error(`Entry path does not exist: ${absoluteEntryDir}`);
   }
 
-  const absoluteFilePath = `${absoluteEntryDir}/${fileName}`;
+  const absoluteFilePath = join(absoluteEntryDir, fileName);
   if(existsSync(absoluteFilePath) === true){
     return absoluteFilePath;
   }
 
-  const absoluteParentPath = getDirectory(absoluteEntryDir);
+  const absoluteParentPath = absolute(absoluteEntryDir, "../");
   if(absoluteParentPath === absoluteEntryDir){
     return undefined;
   }

@@ -21,6 +21,7 @@ scope("MarkupRenderer", "Position", () => {
   it("should convert the position correctly", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
+    ctx.config.outputDir = "/some/path/docs";
     const convertedPosition = convertPosition(ctx, position);
 
     assert(isSmallNode(convertedPosition));

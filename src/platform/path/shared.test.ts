@@ -68,6 +68,7 @@ scope("Integration", "path", () => {
     expect(absolute("/some/directory/file.txt", "/some/directory/other-file.txt")).toBe("/some/directory/other-file.txt");
     expect(absolute("/some/directory/file.txt", "./some/directory/other-file.txt")).toBe("/some/directory/some/directory/other-file.txt");
     expect(absolute("/some/directory/file.txt", "../other/directory/")).toBe("/some/other/directory/");
+    expect(absolute("/some/directory/file.txt", "../")).toBe("/some/");
     expect(absolute("file.txt")).toBe("/file.txt");
     expect(absolute("/file.txt")).toBe("/file.txt");
     expect(absolute("./file.txt")).toBe("/file.txt");
@@ -75,11 +76,11 @@ scope("Integration", "path", () => {
 
   it("should join multiple segments", () => {
     expect(join("/some/directory/", "some/file.txt")).toBe("/some/directory/some/file.txt");
-    expect(join("/some/directory/", "/some/file.txt")).toBe("/some/file.txt");
-    expect(join("/some/directory/", "/some/file.txt", "/some/other/file.txt")).toBe("/some/other/file.txt");
+    expect(join("/some/directory/", "some/file.txt")).toBe("/some/directory/some/file.txt");
+    expect(join("/some/directory/", "/some/file.txt")).toBe("/some/directory/some/file.txt");
     expect(join("/some/directory/", "./some/file.txt")).toBe("/some/directory/some/file.txt");
     expect(join("some/directory/", "./some/file.txt")).toBe("some/directory/some/file.txt");
-    expect(join("some/directory/", "./some/file.txt")).toBe("some/directory/some/file.txt");
+    expect(join("./some/directory/", "./some/file.txt")).toBe("some/directory/some/file.txt");
   });
 
 });

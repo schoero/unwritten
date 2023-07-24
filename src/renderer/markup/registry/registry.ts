@@ -23,13 +23,15 @@ export type LinkRegistry = {
   [linkName: Name]: ID[];
 };
 
+export type SourceFile = {
+  exports: ExportRegistry;
+  links: LinkRegistry;
+  name: Name;
+  path: string;
+};
+
 export type SourceRegistry = {
-  [sourceFileId: ID]: {
-    exports: ExportRegistry;
-    links: LinkRegistry;
-    name: Name;
-    path: string;
-  };
+  [sourceFileId: ID]: SourceFile;
 };
 
 
@@ -91,7 +93,6 @@ export const isSymbolExported = (ctx: MarkupRenderContexts, symbolId: ID): boole
   return Object.values(ctx.sourceRegistry).some(sourceFile => sourceFile.exports.has(symbolId));
 });
 
-
 export const registerAnchor = (ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget => withInitializedSourceRegistry(ctx, ctx => {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -135,6 +136,10 @@ export const getAnchorLink = (ctx: MarkupRenderContexts, name: Name, id: ID): st
 
 });
 
+export const getSourceFileById = (ctx: MarkupRenderContexts, id: ID): SourceFile => withInitializedSourceRegistry(ctx, ctx => {
+  return ctx.sourceRegistry[id];
+});
+
 export function convertTextToAnchorId(text: string): string {
   let link = text.toLowerCase();
   link = link.replace(/&(?:[A-Za-z]+|#\d+|#x[\dA-Fa-f]+);/g, "");
@@ -144,13 +149,11 @@ export function convertTextToAnchorId(text: string): string {
   return link;
 }
 
-
 export function hasAnchor(input: any): input is AnchorTarget {
   return typeof input === "object" &&
     "id" in input &&
     "name" in input;
 }
-
 
 export function isAnchor(input: any): input is AnchorTarget {
   return hasAnchor(input) &&

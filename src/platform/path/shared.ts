@@ -70,15 +70,14 @@ const path = {
   },
   join(...segments: string[]): string {
     const normalizedSegments = segments.map(normalize);
-
-    for(let i = normalizedSegments.length - 1; i >= 1; i--){
-      if(normalizedSegments[i].startsWith("/")){
-        return normalizedSegments[i];
-      }
-    }
-
     const root = normalizedSegments[0].startsWith("/") ? "/" : "";
-    const cleanedSegments = normalizedSegments.map(segment => segment.replace(/^\.\/|^\/|\/$/g, ""));
+    const cleanedSegments = normalizedSegments
+      .map(
+        segment => segment.replace(/^\.+\/|^\/|\/$|^\/$/g, "")
+      )
+      .filter(
+        segment => segment !== ""
+      );
 
     return `${root}${cleanedSegments.join("/")}`;
   },

@@ -141,7 +141,9 @@ scope("Renderer", "Config", () => {
         fileSymbol => createSourceFileEntity(compilerContext, fileSymbol)
       );
 
-      const ctx = createRenderContext(sourceFileEntities);
+      const ctx = createRenderContext();
+      ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
+      ctx.currentFile = sourceFileEntities[0].symbolId;
 
       {
         const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);

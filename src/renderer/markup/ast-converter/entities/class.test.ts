@@ -37,7 +37,9 @@ scope("MarkupRenderer", TypeKind.Class, () => {
       fileSymbol => createSourceFileEntity(compilerContext, fileSymbol)
     );
 
-    const ctx = createRenderContext(sourceFileEntities);
+    const ctx = createRenderContext();
+    ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
+    ctx.currentFile = sourceFileEntities[0].symbolId;
 
     const convertedClassForTableOfContents = convertClassEntityForTableOfContents(ctx, classEntity);
     const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);

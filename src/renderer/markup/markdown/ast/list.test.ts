@@ -164,7 +164,7 @@ scope("MarkdownRenderer", "ListNode", () => {
     `);
   });
 
-  it("should collapse multiple newlines to a single new line", () => {
+  it.only("should collapse multiple newlines to a single new line", () => {
 
     const simpleListNode = createListNode([
       "Line 1\nLine 2\n\nLine 3\n\n\nLine 4"

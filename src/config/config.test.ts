@@ -11,6 +11,7 @@ scope("Integration", "Config", async () => {
 
   beforeAll(() => {
     vitest.mock("unwritten:platform/file-system/node.js", async () => import("unwritten:platform/file-system/browser.js"));
+    vitest.mock("unwritten:platform/path/node.js", async () => import("unwritten:platform/path/browser.js"));
 
     writeFileSync(".unwritten.json", JSON.stringify({
       renderConfig: {

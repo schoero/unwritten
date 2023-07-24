@@ -93,7 +93,9 @@ scope("Renderer", "Source registry", () => {
         fileSymbol => createSourceFileEntity(compilerContext, fileSymbol)
       );
 
-      const ctx = createRenderContext(sourceFileEntities);
+      const ctx = createRenderContext();
+      ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
+      ctx.currentFile = sourceFileEntities[0].symbolId;
 
       it("should create a simple anchor correctly", () => {
 
@@ -148,7 +150,9 @@ scope("Renderer", "Source registry", () => {
         fileSymbol => createSourceFileEntity(compilerContext, fileSymbol)
       );
 
-      const ctx = createRenderContext(sourceFileEntities);
+      const ctx = createRenderContext();
+      ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
+      ctx.currentFile = sourceFileEntities[0].symbolId;
 
       const variableAnchor = registerAnchor(
         ctx,
