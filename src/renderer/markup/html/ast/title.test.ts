@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { renderNode } from "unwritten:renderer/index.js";
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -84,7 +84,7 @@ scope("HTMLRenderer", "TitleNode", () => {
 
   it("should render an id if the title has an anchor", () => {
 
-    const anchor = registerAnchor(ctx, "title", [0]);
+    const anchor = registerAnchor(ctx, "title", 0);
     const titleNode = createTitleNode("Title", anchor, createParagraphNode("Paragraph"));
 
     expect(renderTitleNode(ctx, titleNode)).toBe(html`

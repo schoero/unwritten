@@ -1,4 +1,5 @@
 import { isClassEntity, isInterfaceEntity, isModuleEntity, isNamespaceEntity } from "unwritten:typeguards/entities.js";
+import { assert } from "unwritten:utils/general.js";
 
 import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
@@ -33,19 +34,20 @@ export type SourceRegistry = {
 
 
 export function initializeRegistry(ctx: MarkupRenderContexts, sourceFileEntities: SourceFileEntity[]): void {
-  sourceFileEntities.forEach(sourceFileEntity => {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    ctx.sourceRegistry ??= {};
 
-    ctx.sourceRegistry[sourceFileEntity.symbolId] = {
-      exports: new Set<ID>(),
+  ctx.sourceRegistry = {};
+
+  sourceFileEntities.forEach(sourceFileEntity => {
+    ctx.sourceRegistry![sourceFileEntity.symbolId] = {
+      exports: new Set(),
       links: {},
       name: sourceFileEntity.name,
       path: sourceFileEntity.path
     };
 
-    addExports(ctx.sourceRegistry[sourceFileEntity.symbolId].exports, sourceFileEntity.exports);
+    addExports(ctx.sourceRegistry![sourceFileEntity.symbolId].exports, sourceFileEntity.exports);
   });
+
 }
 
 function addExports(set: Set<ID>, entities: Entity[]): void {
@@ -85,12 +87,12 @@ function addExports(set: Set<ID>, entities: Entity[]): void {
 
 }
 
-export function isSymbolExported(ctx: MarkupRenderContexts, symbolId: ID): boolean {
+export const isSymbolExported = (ctx: MarkupRenderContexts, symbolId: ID): boolean => withInitializedSourceRegistry(ctx, ctx => {
   return Object.values(ctx.sourceRegistry).some(sourceFile => sourceFile.exports.has(symbolId));
-}
+});
 
 
-export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget {
+export const registerAnchor = (ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget => withInitializedSourceRegistry(ctx, ctx => {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   ctx.sourceRegistry[ctx.currentFile].links[name] ??= [];
@@ -101,9 +103,11 @@ export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): A
 
   return { id, name };
 
-}
+});
 
-export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined {
+export const getAnchorLink = (ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined => withInitializedSourceRegistry(ctx, ctx => {
+
+  const { relative } = ctx.dependencies.path;
 
   const sourceFile = Object.entries(ctx.sourceRegistry)
     .find(([sourceFileId, sourceFile]) => sourceFile.exports.has(id));
@@ -120,12 +124,16 @@ export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): st
     return;
   }
 
+  const relativeDirectory = ctx.currentFile !== +sourceFileId
+    ? relative(ctx.sourceRegistry[ctx.currentFile].path, sourceFileContent.path)
+    : "";
+
   const anchorText = convertTextToAnchorId(name);
-  const anchorLink = `${anchorText}${index === 0 ? "" : `-${index}`}`;
+  const anchorLink = `${relativeDirectory}${anchorText}${index === 0 ? "" : `-${index}`}`;
 
   return anchorLink;
 
-}
+});
 
 export function convertTextToAnchorId(text: string): string {
   let link = text.toLowerCase();
@@ -139,7 +147,7 @@ export function convertTextToAnchorId(text: string): string {
 
 export function hasAnchor(input: any): input is AnchorTarget {
   return typeof input === "object" &&
-    "ids" in input &&
+    "id" in input &&
     "name" in input;
 }
 
@@ -147,4 +155,14 @@ export function hasAnchor(input: any): input is AnchorTarget {
 export function isAnchor(input: any): input is AnchorTarget {
   return hasAnchor(input) &&
     Object.keys(input).length === 2;
+}
+
+function withInitializedSourceRegistry<T>(ctx: MarkupRenderContexts, callback: (ctx: MarkupRenderContexts & { currentFile: ID; sourceRegistry: SourceRegistry; }) => T): T {
+  sourceRegistryIsInitialized(ctx);
+  return callback(ctx);
+}
+
+function sourceRegistryIsInitialized(ctx: MarkupRenderContexts): asserts ctx is MarkupRenderContexts & { currentFile: ID; sourceRegistry: SourceRegistry; } {
+  assert(ctx.sourceRegistry !== undefined, "Source registry is not initialized");
+  assert(ctx.currentFile !== undefined, "Current file is not set");
 }

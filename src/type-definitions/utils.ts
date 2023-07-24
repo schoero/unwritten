@@ -2,15 +2,13 @@ import type { Entity } from "unwritten:interpreter/type-definitions/entities.js"
 import type { Type } from "unwritten:interpreter:type-definitions/types.js";
 
 
-//-- Mutable
-
+// Mutable
 export type Mutable<T> = {
   -readonly [Key in keyof T]: T[Key];
 };
 
 
-//-- DeepPartial
-
+// DeepPartial
 export type DeepPartial<T> =
   T extends Function
     ? T
@@ -25,13 +23,11 @@ type DeepPartialObject<T> = {
 };
 
 
-//-- Complete
-
+// Complete
 export type Complete<ObjectType extends object> = DeepRequiredByKey<ObjectType, string>;
 
 
-//-- Remove translations suffix
-
+// Remove translations suffix
 type RemoveTranslationsSuffix<T extends object, S extends "_one" | "_other"> = {
   [Key in keyof T as Key extends `${infer KeyWithoutSuffix}${S}` ? KeyWithoutSuffix : Key]: T[Key];
 };
@@ -39,8 +35,7 @@ type RemoveTranslationsSuffix<T extends object, S extends "_one" | "_other"> = {
 export type TranslationWithoutSuffixes<T extends object> = RemoveTranslationsSuffix<RemoveTranslationsSuffix<T, "_one">, "_other">;
 
 
-//-- DeepOmit
-
+// DeepOmit
 export type DeepOmit<T, K extends PropertyKey> =
   T extends Function
     ? T
@@ -56,15 +51,15 @@ type DeepOmitObject<T, K extends PropertyKey> = {
 };
 
 
-//-- PartialByKey
-
+// PartialByKey
 export type PartialByKey<T, K extends keyof T> =
-{ [Key in keyof T as Key extends K ? Key : never]?: T[Key] } &
-{ [Key in keyof T as Key extends K ? never : Key]: T[Key] };
+  { [Key in keyof T as Key extends K ? Key : never]?: T[Key] } &
+  { [Key in keyof T as Key extends K ? never : Key]: T[Key] } extends infer O ? (
+      { [key in keyof O]: O[key] }
+    ) : never;
 
 
-//-- DeepPartialByKey
-
+// DeepPartialByKey
 export type DeepPartialByKey<T, K extends PropertyKey> =
   T extends Function
     ? T
@@ -81,8 +76,7 @@ type DeepPartialByKeyObject<T, K extends PropertyKey> =
     ) : never;
 
 
-//-- DeepRequiredByKey
-
+// DeepRequiredByKey
 export type DeepRequiredByKey<T, K extends PropertyKey> =
   T extends Function
     ? T
@@ -99,6 +93,5 @@ type DeepRequiredByKeyObject<T, K extends PropertyKey> =
     ) : never;
 
 
-//-- Test
-
+// Test
 export type Testable<EntityOrType extends Entity | Type> = DeepPartialByKey<EntityOrType, "declarationId" | "modifiers" | "symbolId" | "typeId">;

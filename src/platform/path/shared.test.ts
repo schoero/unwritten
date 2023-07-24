@@ -1,6 +1,14 @@
 import { expect, it } from "vitest";
 
-import { getDirectory, getFileExtension, getFileName, normalize, relative } from "unwritten:platform/path/shared.js";
+import {
+  absolute,
+  getDirectory,
+  getFileExtension,
+  getFileName,
+  join,
+  normalize,
+  relative
+} from "unwritten:platform/path/browser.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
 
@@ -52,6 +60,26 @@ scope("Integration", "path", () => {
     expect(relative("/some/directory/file.txt", "/some/directory/file.txt")).toBe("./file.txt");
     expect(relative("/some/directory/file.txt", "/some/directory/other-file.txt")).toBe("./other-file.txt");
     expect(relative("./some/directory/file.txt", "./some/directory/other-file.txt")).toBe("./other-file.txt");
+    expect(relative("/some/directory/file.txt", "../other/directory/")).toBe("../other/directory/");
+  });
+
+  it("should resolve the absolute path", () => {
+    expect(absolute("/some/directory/file.txt", "../other/directory/file.txt")).toBe("/some/other/directory/file.txt");
+    expect(absolute("/some/directory/file.txt", "/some/directory/other-file.txt")).toBe("/some/directory/other-file.txt");
+    expect(absolute("/some/directory/file.txt", "./some/directory/other-file.txt")).toBe("/some/directory/some/directory/other-file.txt");
+    expect(absolute("/some/directory/file.txt", "../other/directory/")).toBe("/some/other/directory/");
+    expect(absolute("file.txt")).toBe("/file.txt");
+    expect(absolute("/file.txt")).toBe("/file.txt");
+    expect(absolute("./file.txt")).toBe("/file.txt");
+  });
+
+  it("should join multiple segments", () => {
+    expect(join("/some/directory/", "some/file.txt")).toBe("/some/directory/some/file.txt");
+    expect(join("/some/directory/", "/some/file.txt")).toBe("/some/file.txt");
+    expect(join("/some/directory/", "/some/file.txt", "/some/other/file.txt")).toBe("/some/other/file.txt");
+    expect(join("/some/directory/", "./some/file.txt")).toBe("/some/directory/some/file.txt");
+    expect(join("some/directory/", "./some/file.txt")).toBe("some/directory/some/file.txt");
+    expect(join("some/directory/", "./some/file.txt")).toBe("some/directory/some/file.txt");
   });
 
 });

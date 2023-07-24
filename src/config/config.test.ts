@@ -2,8 +2,7 @@
 import { beforeAll, expect, it, vitest } from "vitest";
 
 import { createConfig } from "unwritten:config/config.js";
-import { mkdirSync, readFileSync, writeFileSync } from "unwritten:platform/file-system/node.js";
-import { cwd } from "unwritten:platform/process/node.js";
+import { readFileSync, writeFileSync } from "unwritten:platform/file-system/node.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -11,10 +10,9 @@ import { scope } from "unwritten:tests:utils/scope.js";
 scope("Integration", "Config", async () => {
 
   beforeAll(() => {
-    vitest.mock("node:fs", async () => import("unwritten:utils:virtual-fs.js"));
+    vitest.mock("unwritten:platform/file-system/node.js", async () => import("unwritten:platform/file-system/browser.js"));
 
-    mkdirSync(cwd(), { recursive: true });
-    writeFileSync(`${cwd()}/.unwritten.json`, JSON.stringify({
+    writeFileSync(".unwritten.json", JSON.stringify({
       renderConfig: {
         test: {
           ".unwritten.json": true
@@ -22,7 +20,7 @@ scope("Integration", "Config", async () => {
       }
     }, null, 2));
 
-    writeFileSync(`${cwd()}/.unwritten.js`, JSON.stringify({
+    writeFileSync(".unwritten.js", JSON.stringify({
       renderConfig: {
         test: {
           ".unwritten.js": true
@@ -30,8 +28,8 @@ scope("Integration", "Config", async () => {
       }
     }, null, 2));
 
-    vitest.mock(`${cwd()}/.unwritten.js`, () => ({
-      default: JSON.parse(readFileSync(`${cwd()}/.unwritten.js`))
+    vitest.mock("/.unwritten.js", () => ({
+      default: JSON.parse(readFileSync(".unwritten.js"))
     }));
 
     return () => vitest.restoreAllMocks();

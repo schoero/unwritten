@@ -1,5 +1,3 @@
-import { existsSync } from "unwritten:platform/file-system/node.js";
-
 import { assert } from "./general.js";
 
 import type { DefaultContext } from "unwritten:type-definitions/context.js";
@@ -13,6 +11,8 @@ import type { DefaultContext } from "unwritten:type-definitions/context.js";
  * @returns The absolute file path of the first file found, otherwise undefined.
  */
 export function findFile(ctx: DefaultContext, fileName: string[] | string, entryPath?: string): string | undefined {
+
+  const { existsSync } = ctx.dependencies.fs;
 
   const { path: { absolute, getDirectory } } = ctx.dependencies;
 

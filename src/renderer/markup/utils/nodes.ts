@@ -1,4 +1,4 @@
-import { isAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { isAnchor } from "unwritten:renderer/markup/registry/registry.js";
 
 import { ASTNodeKinds } from "../enums/nodes.js";
 
@@ -18,7 +18,7 @@ import type {
 } from "../types-definitions/nodes.js";
 
 import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
-import type { AnchorTarget } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry.js";
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
 
 

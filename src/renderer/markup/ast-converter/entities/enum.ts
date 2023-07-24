@@ -1,4 +1,4 @@
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
@@ -33,7 +33,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const name = enumEntity.name;
   const symbolId = enumEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, [symbolId]);
+  const anchor = registerAnchor(ctx, name, symbolId);
 
   const convertedDescription = convertDescriptionForDocumentation(ctx, enumEntity.description);
   const convertedRemarks = convertRemarks(ctx, enumEntity.remarks);

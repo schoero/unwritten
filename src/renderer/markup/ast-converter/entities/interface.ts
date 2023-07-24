@@ -1,3 +1,4 @@
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   filterImplicitSignatures,
@@ -14,7 +15,6 @@ import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/
 import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
@@ -46,7 +46,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const symbolId = interfaceEntity.symbolId;
   const typeId = interfaceEntity.typeId;
 
-  const anchor = registerAnchor(ctx, name, [symbolId, typeId]);
+  const anchor = registerAnchor(ctx, name, symbolId);
 
   const convertedTags = convertTagsForDocumentation(ctx, interfaceEntity);
   const convertedDescription = convertDescriptionForDocumentation(ctx, interfaceEntity.description);

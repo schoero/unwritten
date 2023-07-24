@@ -1,4 +1,5 @@
 import { renderNode } from "unwritten:renderer/index.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertParameterEntitiesForDocumentation,
@@ -21,7 +22,6 @@ import {
 } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
 import {
   createAnchorNode,
   createListNode,
@@ -74,7 +74,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const convertedRemarks = convertRemarks(ctx, signatureEntity.remarks);
 
   const renderedSignature = renderNode(ctx, convertedSignature);
-  const anchor = registerAnchor(ctx, renderedSignature, [symbolId]);
+  const anchor = registerAnchor(ctx, renderedSignature, symbolId);
 
   return createSectionNode(
     SECTION_TYPE[signatureEntity.kind],

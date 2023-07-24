@@ -52,8 +52,10 @@
     "@schoero/ts-config": "^0.3.3",
     "@schoero/vite-config": "^0.0.24",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^20.4.2",
+    "@types/node": "^20.4.4",
+    "@types/path-browserify": "^1.0.0",
     "eslint-plugin-sort-exports": "^0.8.0",
+    "path-browserify": "^1.0.1",
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "ts-json-schema-generator": "^1.2.0",
     "vite-plugin-no-bundle": "^2.0.2"

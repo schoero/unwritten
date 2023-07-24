@@ -1,4 +1,3 @@
-import { existsSync, readFileSync } from "unwritten:platform/file-system/node.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default.js";
 import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default.js";
@@ -15,6 +14,7 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
 
   const logger = ctx.dependencies.logger;
   const { absolute, getDirectory } = ctx.dependencies.path;
+  const { existsSync } = ctx.dependencies.fs;
 
   const defaultConfig = getDefaultConfig();
 
@@ -68,7 +68,9 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
 }
 
 async function importFile(ctx: DefaultContext, path: string) {
-  const { path: { getFileExtension } } = ctx.dependencies;
+
+  const { getFileExtension } = ctx.dependencies.path;
+  const { readFileSync } = ctx.dependencies.fs;
 
   if(getFileExtension(path) === ".json"){
     const importedConfig = readFileSync(path);

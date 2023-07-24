@@ -16,14 +16,14 @@ export interface MarkupRenderer extends Renderer {
 }
 
 export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> extends RenderContext<CustomMarkupRenderer> {
-  currentFile: ID;
   set indentation(value: number);
   get indentation(): number;
-  set nesting(value: number);
   get nesting(): number;
-  sourceRegistry: SourceRegistry;
+  set nesting(value: number);
   _indentation?: number;
   _nesting?: number;
+  currentFile?: ID;
+  sourceRegistry?: SourceRegistry;
 }
 
 export type MarkupRenderers = HTMLRenderer | MarkdownRenderer;

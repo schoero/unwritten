@@ -1,4 +1,4 @@
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
@@ -39,7 +39,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   const name = propertyEntity.name;
   const symbolId = propertyEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, [symbolId]);
+  const anchor = registerAnchor(ctx, name, symbolId);
 
   const convertedPosition = convertPosition(ctx, propertyEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, propertyEntity);

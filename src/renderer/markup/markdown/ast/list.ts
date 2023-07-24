@@ -74,7 +74,7 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
 
   // Collapse multiple new lines into one
   const collapsedRenderedItem = renderedItem.replace(
-    `/${renderConfig.newLine}${renderConfig.newLine}+/gm`,
+    `/${renderConfig.newLine}+/gm`,
     renderConfig.newLine
   );
 

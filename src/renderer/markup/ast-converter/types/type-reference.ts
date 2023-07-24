@@ -1,6 +1,6 @@
+import { isSymbolExported } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { isSymbolExported } from "unwritten:renderer:markup/utils/exports.js";
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { isMultilineType } from "unwritten:renderer:markup/utils/types.js";

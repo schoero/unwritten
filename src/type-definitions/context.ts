@@ -1,8 +1,8 @@
 import type { TypeChecker } from "typescript";
 import type ts from "typescript";
 
-import type { logger as Logger } from "unwritten:platform/logger/node.js";
 import type { FileSystem } from "unwritten:type-definitions/file-system.js";
+import type { Logger } from "unwritten:type-definitions/logger.js";
 import type { OS } from "unwritten:type-definitions/os.js";
 import type { Path } from "unwritten:type-definitions/path.js";
 import type { Process } from "unwritten:type-definitions/process.js";
@@ -18,7 +18,7 @@ export interface DefaultContext {
     path: Path;
     process: Process;
     ts: typeof ts;
-    logger?: typeof Logger;
+    logger?: Logger;
   };
 }
 

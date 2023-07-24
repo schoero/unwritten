@@ -1,12 +1,10 @@
-import { basename, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-
 import { readdirSync, readFileSync } from "unwritten:platform/file-system/node.js";
+import { getDirectory, getFileName, normalize } from "unwritten:platform/path/node.js";
 
 
 export function getExportsFromIndexFile(importURL: string) {
 
-  const path = fileURLToPath(importURL);
+  const path = normalize(importURL);
 
   const indexTSFilePath = path.replace(".test.ts", ".ts");
 
@@ -20,9 +18,9 @@ export function getExportsFromIndexFile(importURL: string) {
 
 export function getFilesInDirectory(importURL: string) {
 
-  const path = fileURLToPath(importURL);
-  const fileName = basename(path);
-  const dirName = dirname(path);
+  const path = normalize(importURL);
+  const fileName = getFileName(path);
+  const dirName = getDirectory(path);
   const files = readdirSync(dirName);
 
   return files.filter(f => f !== fileName.replace(".test.ts", ".ts"))

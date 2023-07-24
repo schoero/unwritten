@@ -14,6 +14,7 @@ import { createContext as createDefaultContext } from "unwritten:utils/context.j
 import { assert } from "unwritten:utils/general.js";
 import { override } from "unwritten:utils:override.js";
 
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer.js";
 import type { HTMLRenderContext, MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { CompleteConfig } from "unwritten:type-definitions/config.js";
@@ -42,10 +43,21 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
 });
 
 
-export function createRenderContext(rendererName?: BuiltInRenderers.HTML): HTMLRenderContext;
-export function createRenderContext(rendererName: BuiltInRenderers.Markdown): MarkdownRenderContext;
+export function createRenderContext(sourceFileEntities?: SourceFileEntity[]): HTMLRenderContext;
+export function createRenderContext(rendererName: BuiltInRenderers.HTML, sourceFileEntities?: SourceFileEntity[]): HTMLRenderContext;
+export function createRenderContext(sourceFileEntities?: SourceFileEntity[]): MarkdownRenderContext;
+export function createRenderContext(rendererName: BuiltInRenderers.Markdown, sourceFileEntities?: SourceFileEntity[]): MarkdownRenderContext;
 export function createRenderContext(rendererName: BuiltInRenderers.JSON): JSONRenderContext;
-export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRenderers.HTML): RenderContext<Renderer> {
+export function createRenderContext(rendererNameOrSourceFileEntities?: BuiltInRenderers | SourceFileEntity[], sourceFileEntitiesOrUndefined?: SourceFileEntity[]): RenderContext<Renderer> {
+
+  const rendererName = typeof rendererNameOrSourceFileEntities === "string"
+    ? rendererNameOrSourceFileEntities
+    : BuiltInRenderers.HTML;
+
+  const sourceFileEntities = typeof rendererNameOrSourceFileEntities === "string"
+    ? sourceFileEntitiesOrUndefined
+    : rendererNameOrSourceFileEntities;
+
 
   const defaultContext = createDefaultContext({
     fs,
@@ -63,16 +75,51 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
   };
 
   if(rendererName === BuiltInRenderers.HTML){
+
     ctx.renderer = htmlRenderer;
     assert(isHTMLRenderContext(ctx));
     ctx.renderer.initializeContext(ctx);
+
+    if(sourceFileEntities){
+      ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
+      ctx.currentFile = sourceFileEntities[0].symbolId;
+    } else {
+      ctx.sourceRegistry = {
+        0: {
+          exports: new Set(),
+          links: {},
+          name: "index",
+          path: "/index.ts"
+        }
+      };
+      ctx.currentFile = 0;
+    }
+
   } else if(rendererName === BuiltInRenderers.Markdown){
+
     ctx.renderer = markdownRenderer;
     assert(isMarkdownRenderContext(ctx));
     ctx.renderer.initializeContext(ctx);
+
+    if(sourceFileEntities){
+      ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
+      ctx.currentFile = sourceFileEntities[0].symbolId;
+    } else {
+      ctx.sourceRegistry = {
+        0: {
+          exports: new Set(),
+          links: {},
+          name: "index",
+          path: "/index.ts"
+        }
+      };
+      ctx.currentFile = 0;
+    }
+
   } else {
     ctx.renderer = jsonRenderer;
   }
+
 
   return ctx;
 

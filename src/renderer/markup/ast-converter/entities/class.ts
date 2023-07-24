@@ -1,4 +1,4 @@
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { filterImplicitSignatures, filterPrivateMembers } from "unwritten:renderer/utils/private-members.js";
 import {
@@ -87,7 +87,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const symbolId = classEntity.symbolId;
   const typeId = classEntity.typeId;
 
-  const anchor = registerAnchor(ctx, name, [symbolId, typeId]);
+  const anchor = registerAnchor(ctx, name, symbolId);
 
   const convertedPosition = convertPosition(ctx, classEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, classEntity);

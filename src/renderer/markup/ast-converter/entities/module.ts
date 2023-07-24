@@ -1,4 +1,4 @@
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import {
   convertEntityForDocumentation,
   createTableOfContents
@@ -44,7 +44,7 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
   const name = moduleEntity.name;
   const symbolId = moduleEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, [symbolId]);
+  const anchor = registerAnchor(ctx, name, symbolId);
 
   const convertedPosition = convertPosition(ctx, moduleEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, moduleEntity);

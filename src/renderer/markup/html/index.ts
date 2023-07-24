@@ -1,5 +1,6 @@
 /* eslint-disable arrow-body-style */
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { initializeRegistry } from "unwritten:renderer/markup/registry/registry.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:html/ast/anchor.js";
 import { renderBoldNode } from "unwritten:renderer:html/ast/bold.js";
@@ -25,7 +26,6 @@ import {
   isStrikethroughNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
-import { initializeExportRegistry } from "unwritten:renderer:markup/utils/exports.js";
 import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderTitleNode } from "./ast/title.js";
@@ -57,37 +57,6 @@ const htmlRenderer: HTMLRenderer = {
 
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
-  // eslint-disable-next-line sort-keys/sort-keys-fix
-  exportRegistry: new Map(),
-  linkRegistry: new Map(),
-
-  render: (ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
-
-    htmlRenderer.initializeRegistry(ctx, sourceFileEntities);
-    htmlRenderer.initializeContext(ctx);
-
-    return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
-
-      htmlRenderer.resetContext(ctx);
-
-      const renderedNewLine = renderNewLine(ctx);
-
-      const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
-      const renderedContent = renderNode(ctx, markupAST);
-
-      files[sourceFileEntity.name] = `${renderedContent}${renderedNewLine}`;
-      return files;
-
-    }, {});
-
-  }),
-
-
-  resetContext: (ctx: HTMLRenderContext) => {
-    ctx.nesting = 1;
-    ctx.indentation = 0;
-  },
-
 
   // eslint-disable-next-line sort-keys/sort-keys-fix
   initializeContext: (ctx: HTMLRenderContext) => {
@@ -121,8 +90,32 @@ const htmlRenderer: HTMLRenderer = {
   },
 
   initializeRegistry: (ctx: HTMLRenderContext, sourceFileEntities: SourceFileEntity[]) => {
-    initializeExportRegistry(ctx, sourceFileEntities);
-  }
+    initializeRegistry(ctx, sourceFileEntities);
+  },
+
+  render: (ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
+
+    htmlRenderer.initializeRegistry(ctx, sourceFileEntities);
+    htmlRenderer.initializeContext(ctx);
+
+    return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
+
+      // Reset context
+      ctx.nesting = 1;
+      ctx.indentation = 0;
+      ctx.currentFile = sourceFileEntity.symbolId;
+
+      const renderedNewLine = renderNewLine(ctx);
+
+      const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
+      const renderedContent = renderNode(ctx, markupAST);
+
+      files[sourceFileEntity.name] = `${renderedContent}${renderedNewLine}`;
+      return files;
+
+    }, {});
+
+  })
 
 
 };

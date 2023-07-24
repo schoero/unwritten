@@ -3,14 +3,14 @@ import ts, { ModuleResolutionKind } from "typescript";
 import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler:shared.js";
 import { getDefaultConfig } from "unwritten:config/config.js";
 import { createContext } from "unwritten:interpreter/utils/context.js";
+import * as fs from "unwritten:platform/file-system/browser.js";
 import { readFileSync as readFileSyncOriginal } from "unwritten:platform/file-system/node.js";
 import { logger } from "unwritten:platform/logger/node.js";
 import os from "unwritten:platform/os/node.js";
-import path from "unwritten:platform/path/node.js";
-import process from "unwritten:platform/process/node.js";
+import path from "unwritten:platform/path/browser.js";
+import process from "unwritten:platform/process/browser.js";
 import { createContext as createDefaultContext } from "unwritten:utils/context.js";
 import { override } from "unwritten:utils/override.js";
-import * as fs from "unwritten:utils/virtual-fs.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Config } from "unwritten:type-definitions/config.js";
@@ -31,7 +31,7 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
     ts
   });
 
-  const { fs: { existsSync, readFileSync, writeFileSync } } = defaultContext.dependencies;
+  const { existsSync, readFileSync, writeFileSync } = defaultContext.dependencies.fs;
 
   const entryFilePath = "/index.ts";
   const inputFiles = typeof code === "string" ? { [entryFilePath]: code } : code;

@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createSpanNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -27,7 +27,7 @@ scope("MarkdownRenderer", "SpanNode", () => {
   });
 
   it("should render an id if available", () => {
-    const anchor = registerAnchor(ctx, "test", [1]);
+    const anchor = registerAnchor(ctx, "test", 1);
     const spanNode = createSpanNode(anchor, "text");
     expect(renderSpanNode(ctx, spanNode)).toBe(md`
       <span id="test">text</span>

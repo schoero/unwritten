@@ -1,17 +1,17 @@
 import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
 import { mkdirSync, writeFileSync } from "unwritten:platform/file-system/node.js";
+import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs.js";
 import { cwd } from "unwritten:platform/process/node.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { findFile } from "unwritten:utils/finder.js";
-import { clearVirtualFS } from "unwritten:utils/virtual-fs.js";
 
 
 scope("Integration", "finder", async () => {
 
   beforeAll(() => {
-    vitest.mock("node:fs", async () => import("./virtual-fs.js"));
+    vitest.mock("node:fs", async () => import("../platform/file-system/virtual-fs.js"));
     return () => vitest.restoreAllMocks();
   });
 

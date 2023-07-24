@@ -1,7 +1,8 @@
 import { stdout } from "node:process";
 
 import { EOL } from "unwritten:platform/os/node.js";
-import { name, version } from "unwritten:utils/package-json.js";
+
+import { name, version } from "unwritten/../package.json";
 
 
 export namespace logger {

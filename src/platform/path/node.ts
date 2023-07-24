@@ -1,14 +1,18 @@
-import { resolve as nodeResolve } from "node:path";
-
 import sharedPath from "unwritten:platform/path/shared.js";
+import { cwd } from "unwritten:platform/process/node.js";
 
 import type { Path } from "unwritten:type-definitions/path.js";
 
 
 const path: Path = {
   ...sharedPath,
-  absolute(path: string): string {
-    return this.normalize(nodeResolve(path));
+  absolute(fromOrTo: string, toOrUndefined?: string): string {
+    const from = toOrUndefined ? fromOrTo : cwd();
+    const to = toOrUndefined ? toOrUndefined : fromOrTo;
+    return sharedPath.absolute(from, to, cwd());
+  },
+  relative(from: string, to: string): string {
+    return sharedPath.relative(from, to, cwd());
   }
 };
 
@@ -17,6 +21,7 @@ export const {
   getDirectory,
   getFileExtension,
   getFileName,
+  join,
   normalize,
   relative
 } = path;

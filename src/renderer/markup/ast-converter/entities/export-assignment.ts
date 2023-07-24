@@ -1,4 +1,4 @@
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
 import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
 import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
@@ -28,7 +28,7 @@ export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderC
   const name = exportAssignmentEntity.name;
   const symbolId = exportAssignmentEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, [symbolId]);
+  const anchor = registerAnchor(ctx, name, symbolId);
 
   const convertedTags = convertTagsForDocumentation(ctx, exportAssignmentEntity);
   const convertedPosition = convertPosition(ctx, exportAssignmentEntity.position);

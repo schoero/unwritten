@@ -10,8 +10,8 @@
   
 ### test
   
-Defined in: [index.ts](../../../../../index.ts#L2C13)  
+Defined in: [index.ts](../../../index.ts#L2C13)  
   
 #### Type
   
-[Test](#test)  
+[Test](#./types.tstest)  

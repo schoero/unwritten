@@ -1,5 +1,5 @@
 import { renderNode } from "unwritten:renderer/index.js";
-import { registerAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertTypeParameterEntitiesForDocumentation,
@@ -51,7 +51,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const renderedSignature = renderNode(ctx, convertedSignature);
 
   const symbolId = typeAliasEntity.symbolId;
-  const anchor = registerAnchor(ctx, renderedSignature, [symbolId]);
+  const anchor = registerAnchor(ctx, renderedSignature, symbolId);
 
   return createSectionNode(
     SECTION_TYPE[typeAliasEntity.kind],

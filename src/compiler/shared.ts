@@ -1,4 +1,3 @@
-import { EOL } from "unwritten:platform/os/node.js";
 import { findCommonIndentation, removeCommonIndentation } from "unwritten:utils/template.js";
 
 import type { CompilerOptions, Diagnostic, LineAndCharacter } from "typescript";
@@ -14,7 +13,9 @@ export function getDefaultCompilerOptions(ctx: DefaultContext): CompilerOptions 
   };
 }
 
-export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: readonly Diagnostic[], eol = EOL) {
+export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: readonly Diagnostic[]) {
+
+  const { EOL } = ctx.dependencies.os;
 
   const ts = ctx.dependencies.ts;
   const logger = ctx.dependencies.logger;
@@ -29,18 +30,18 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
 
   diagnostics.forEach(diagnostic => {
 
-    const message: string = ts.flattenDiagnosticMessageText(diagnostic.messageText, eol);
+    const message: string = ts.flattenDiagnosticMessageText(diagnostic.messageText, EOL);
 
     if(diagnostic.file){
 
       const location: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
 
-      const sourceFile = diagnostic.file.text.split(eol);
+      const sourceFile = diagnostic.file.text.split(EOL);
       const minLine = Math.max(location.line - 2, 0);
       const maxLine = Math.min(location.line + 3, sourceFile.length);
       const maxLineNumberLength = (maxLine + 1).toString().length;
       const linesAround = sourceFile.slice(minLine, maxLine);
-      const commonIndentation = findCommonIndentation(linesAround.join(eol), eol);
+      const commonIndentation = findCommonIndentation(linesAround.join(EOL), EOL);
       const cleanedLinesAround = linesAround.map(line => {
         return removeCommonIndentation(line, commonIndentation);
       });

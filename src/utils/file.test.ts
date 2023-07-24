@@ -1,16 +1,16 @@
 import { afterEach, beforeAll, describe, expect, it, vitest } from "vitest";
 
 import { writeFileSync } from "unwritten:platform/file-system/node.js";
+import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { getValidFileName } from "unwritten:utils/file.js";
-import { clearVirtualFS } from "unwritten:utils:virtual-fs.js";
 
 
 scope("Renderer", "File utilities", () => {
 
   beforeAll(() => {
-    vitest.mock("node:fs", async () => import("unwritten:utils:virtual-fs.js"));
+    vitest.mock("node:fs", async () => import("unwritten:platform/file-system/virtual-fs.js"));
     return () => vitest.restoreAllMocks();
   });
 

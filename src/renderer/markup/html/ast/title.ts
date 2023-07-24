@@ -1,4 +1,4 @@
-import { getAnchorLink, hasAnchor } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { getAnchorLink, hasAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderNode } from "unwritten:renderer:html/index.js";
@@ -12,7 +12,7 @@ export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): s
   const renderedIndentation = renderIndentation(ctx);
   const title = renderNode(ctx, titleNode.title);
 
-  const id = hasAnchor(titleNode) ? getAnchorLink(ctx, titleNode.name, titleNode.ids[0]) : undefined;
+  const id = hasAnchor(titleNode) ? getAnchorLink(ctx, titleNode.name, titleNode.id) : undefined;
   const idAttribute = id ? ` id="${id}"` : "";
 
   const renderedTitle = `${renderedIndentation}<h${ctx.nesting}${idAttribute}>${title}</h${ctx.nesting}>`;

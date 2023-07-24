@@ -1,4 +1,4 @@
-import { getAnchorLink } from "unwritten:renderer/markup/source-registry/link-registry.js";
+import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
 import { renderLinkNode } from "unwritten:renderer:markdown/ast/link.js";
 import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
 
