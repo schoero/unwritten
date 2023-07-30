@@ -65,6 +65,8 @@ export interface ConvertedType {
 
 export type ConvertedInlineTypes =
   | ConvertedArrayTypeInline
+  | ConvertedClassTypeInline
+  | ConvertedConditionalTypeInline
   | ConvertedIntersectionTypeInline
   | ConvertedLiteralTypesInline
   | ConvertedMappedTypeInline
@@ -74,6 +76,7 @@ export type ConvertedInlineTypes =
 
 export type ConvertedMultilineTypes =
   | ConvertedClassTypeMultiline
+  | ConvertedConditionalTypeMultiline
   | ConvertedFunctionTypeMultiline
   | ConvertedInterfaceTypeMultiline
   | ConvertedMappedTypeMultiline
@@ -191,7 +194,37 @@ export type ConvertedClassTypeMultiline = ConvertedObjectTypeMultiline;
 
 // Mapped type
 export type ConvertedMappedTypeInline = ASTNodes;
-export type ConvertedMappedTypeMultiline = ASTNodes[] | ConvertedObjectLiteralTypeMultiline;
+export type ConvertedMappedTypeMultiline = ListNode<[
+  keyType: [
+    ASTNodes[],
+    ConvertedMultilineTypes | ""
+  ],
+  valueType: [
+    ASTNodes[],
+    ConvertedMultilineTypes | ""
+  ]
+]>;
+
+// Conditional type
+export type ConvertedConditionalTypeInline = ASTNodes;
+export type ConvertedConditionalTypeMultiline = ListNode<[
+  checkType: [
+    ASTNodes[],
+    ConvertedMultilineTypes | ""
+  ],
+  extendsType: [
+    ASTNodes[],
+    ConvertedMultilineTypes | ""
+  ],
+  trueType: [
+    ASTNodes[],
+    ConvertedMultilineTypes | ""
+  ],
+  falseType: [
+    ASTNodes[],
+    ConvertedMultilineTypes | ""
+  ]
+]>;
 
 // Entities
 export type ConvertedEntitiesForTableOfContents =

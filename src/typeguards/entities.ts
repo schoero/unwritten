@@ -1,6 +1,7 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 
 import type {
+  CircularEntity,
   ClassEntity,
   ConstructorEntity,
   Entity,
@@ -21,6 +22,10 @@ import type {
   VariableEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
 
+
+export function isCircularEntity(entity: Entity): entity is CircularEntity {
+  return entity.kind === EntityKind.Circular;
+}
 
 export function isClassEntity(entity: Entity): entity is ClassEntity {
   return entity.kind === EntityKind.Class;

@@ -4,7 +4,12 @@ import type { Process } from "unwritten:type-definitions/process.js";
 
 
 const process: Process = {
-  cwd: nodeCWD
+  cwd: () => {
+    const currentWorkingDirectory = nodeCWD();
+    return currentWorkingDirectory.endsWith("/")
+      ? currentWorkingDirectory
+      : `${currentWorkingDirectory}/`;
+  }
 };
 
 export const {

@@ -124,7 +124,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
       convertedDescription,
       convertedRemarks,
       convertedExample,
-      createTitleNode(translate("construct-signature", { capitalizeEach: true, count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
+      createTitleNode(translate("constructSignature", { capitalizeEach: true, count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
       createTitleNode(translate("property", { capitalize: true, count: convertedProperties.length }), ...convertedProperties),
       createTitleNode(translate("method", { capitalize: true, count: convertedMethods.length }), ...convertedMethods),
       createTitleNode(translate("setter", { capitalize: true, count: convertedSetters.length }), ...convertedSetters),

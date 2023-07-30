@@ -52,18 +52,21 @@ export interface MarkupRenderConfig {
 
   /** Translations for otherwise hardcoded labels */
   translations?: {
+    keyType: string;
+    valueType: string;
     abstract?: string;
     beta?: string;
-    "call-signature_one"?: string;
-    "call-signature_other"?: string;
+    callSignature_one?: string;
+    callSignature_other?: string;
+    checkType?: string;
     class_one?: string;
     class_other?: string;
-    "construct-signature_one"?: string;
-    "construct-signature_other"?: string;
+    constructSignature_one?: string;
+    constructSignature_other?: string;
     constructor_one?: string;
     constructor_other?: string;
     default?: string;
-    "defined-in"?: string;
+    definedIn?: string;
     deprecated?: string;
     description_one?: string;
     description_other?: string;
@@ -71,8 +74,10 @@ export interface MarkupRenderConfig {
     enum_other?: string;
     example_one?: string;
     example_other?: string;
-    "export-assignment_one"?: string;
-    "export-assignment_other"?: string;
+    exportAssignment_one?: string;
+    exportAssignment_other?: string;
+    extendsType?: string;
+    falseType?: string;
     function_one?: string;
     function_other?: string;
     getter_one?: string;
@@ -99,18 +104,17 @@ export interface MarkupRenderConfig {
     remarks_other?: string;
     required?: string;
     rest?: string;
-    "return-type"?: string;
+    returnType?: string;
     setter_one?: string;
     setter_other?: string;
     static?: string;
-    tuple_one?: string;
-    tuple_other?: string;
+    trueType?: string;
     type_one?: string;
     type_other?: string;
-    "type-alias_one"?: string;
-    "type-alias_other"?: string;
-    "type-parameter_one"?: string;
-    "type-parameter_other"?: string;
+    typeAlias_one?: string;
+    typeAlias_other?: string;
+    typeParameter_one?: string;
+    typeParameter_other?: string;
     union?: string;
     variable_one?: string;
     variable_other?: string;

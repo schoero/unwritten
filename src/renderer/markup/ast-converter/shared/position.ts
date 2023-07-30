@@ -21,7 +21,7 @@ export function convertPosition(ctx: MarkupRenderContexts, position?: Position):
 
   const linkLabel = relativePosition.replaceAll("../", "");
 
-  const definedInTranslation = translate("defined-in", { capitalize: true });
+  const definedInTranslation = translate("definedIn", { capitalize: true });
   const definedInLabel = definedInTranslation && `${definedInTranslation}: ` || "";
 
   const linkNode = createLinkNode(linkLabel, link);

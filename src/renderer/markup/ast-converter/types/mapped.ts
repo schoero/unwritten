@@ -1,11 +1,9 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { convertTypeLiteralTypeMultiline } from "unwritten:renderer/markup/ast-converter/types/index.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { createLinkNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
-import { isTypeLiteralType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils/general.js";
 
 import type { MappedType } from "unwritten:interpreter:type-definitions/types.js";
@@ -18,11 +16,10 @@ import type {
 
 export function convertMappedTypeInline(ctx: MarkupRenderContexts, mappedType: MappedType): ConvertedMappedTypeInline {
 
-  const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
   const encapsulatedType = encapsulate(
-    translate("tuple", { count: 1 }),
+    "mapped",
     renderConfig.typeEncapsulation
   );
 
@@ -34,10 +31,6 @@ export function convertMappedTypeInline(ctx: MarkupRenderContexts, mappedType: M
 
 
 export function convertMappedTypeMultiline(ctx: MarkupRenderContexts, mappedType: MappedType): ConvertedMappedTypeMultiline {
-
-  if(isTypeLiteralType(mappedType.type)){
-    return convertTypeLiteralTypeMultiline(ctx, mappedType.type);
-  }
 
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
@@ -51,16 +44,29 @@ export function convertMappedTypeMultiline(ctx: MarkupRenderContexts, mappedType
     : "";
 
   assert(mappedType.typeParameter, "Mapped type must have a type parameter");
+  assert(mappedType.typeParameter.constraint, "Mapped type must have a type parameter");
   assert(mappedType.valueType, "Mapped type must have a value type");
 
-  const { inlineType, multilineType } = convertType(ctx, mappedType.valueType);
+  const { inlineType: inlineKeyType, multilineType: multilineKeyType } = convertType(ctx, mappedType.typeParameter.constraint);
+  const { inlineType: inlineValueType, multilineType: multilineValueType } = convertType(ctx, mappedType.valueType);
 
-  return [
-    spaceBetween(
-      inlineType,
-      spaceBetween(readonly, optional)
-    ),
-    multilineType ?? ""
-  ];
+  return createListNode(
+    [
+      spaceBetween(
+        translate("keyType"),
+        inlineKeyType,
+        readonly
+      ),
+      multilineKeyType ?? ""
+    ],
+    [
+      spaceBetween(
+        translate("valueType"),
+        inlineValueType,
+        optional
+      ),
+      multilineValueType ?? ""
+    ]
+  );
 
 }

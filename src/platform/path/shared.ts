@@ -52,8 +52,11 @@ const path = {
     if(normalizedPath === "/" || normalizedPath === "./"){
       return normalizedPath;
     }
-    return normalizedPath.split("/")
+
+    return normalizedPath
+      .split("/")
       .slice(0, -1)
+      .concat("")
       .join("/");
   },
   getFileExtension(path: string): string {

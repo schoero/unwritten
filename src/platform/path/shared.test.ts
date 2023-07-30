@@ -15,14 +15,14 @@ import { scope } from "unwritten:tests:utils/scope.js";
 scope("Integration", "path", () => {
 
   it("should return the directory without a trailing slash", () => {
-    expect(getDirectory("/some/directory/file.txt")).toBe("/some/directory");
-    expect(getDirectory("/some/directory/")).toBe("/some/directory");
-    expect(getDirectory("/some/directory")).toBe("/some");
+    expect(getDirectory("/some/directory/file.txt")).toBe("/some/directory/");
+    expect(getDirectory("/some/directory/")).toBe("/some/directory/");
+    expect(getDirectory("/some/directory")).toBe("/some/");
     expect(getDirectory("/")).toBe("/");
     expect(getDirectory("")).toBe("");
-    expect(getDirectory("./some/directory/file.txt")).toBe("./some/directory");
-    expect(getDirectory("./some/directory/")).toBe("./some/directory");
-    expect(getDirectory("./some/directory")).toBe("./some");
+    expect(getDirectory("./some/directory/file.txt")).toBe("./some/directory/");
+    expect(getDirectory("./some/directory/")).toBe("./some/directory/");
+    expect(getDirectory("./some/directory")).toBe("./some/");
     expect(getDirectory("./")).toBe("./");
   });
 

@@ -167,7 +167,7 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
   );
 
   return createTitleNode(
-    translate("return-type", { capitalizeEach: true }),
+    translate("returnType", { capitalizeEach: true }),
     convertedReturnTypeWithDescription
   );
 
@@ -182,7 +182,7 @@ function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: Si
 
   return createListNode(
     spaceBetween(
-      translate("return-type", { capitalizeEach: true }),
+      translate("returnType", { capitalizeEach: true }),
       inlineType,
       returnDescription
     )

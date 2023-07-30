@@ -1,5 +1,6 @@
 import {
   isClassType,
+  isConditionalType,
   isFunctionType,
   isInterfaceType,
   isIntersectionType,
@@ -20,6 +21,7 @@ export function isMultilineType(type: Type): type is MultilineType {
   isFunctionType(type) ||
   isTypeLiteralType(type) ||
   isClassType(type) ||
+  isConditionalType(type) ||
   isInterfaceType(type) ||
   isTypeReferenceType(type) ||
   isMultilineUnionType(type) ||

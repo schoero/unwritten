@@ -6,6 +6,7 @@ export * from "./boolean.js";
 export * from "./boolean-literal.js";
 export * from "./circular.js";
 export * from "./class.js";
+export * from "./conditional.js";
 export * from "./function.js";
 export * from "./indexed-access.js";
 export * from "./interface.js";

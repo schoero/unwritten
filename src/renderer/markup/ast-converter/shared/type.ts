@@ -9,6 +9,8 @@ import {
   convertCircularTypeInline,
   convertClassTypeInline,
   convertClassTypeMultiline,
+  convertConditionalTypeInline,
+  convertConditionalTypeMultiline,
   convertFunctionTypeInline,
   convertFunctionTypeMultiline,
   convertInterfaceTypeInline,
@@ -54,6 +56,7 @@ import {
   isBooleanType,
   isCircularType,
   isClassType,
+  isConditionalType,
   isFunctionType,
   isInterfaceType,
   isIntersectionType,
@@ -188,6 +191,8 @@ function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type | Type):
     return convertUnresolvedTypeInline(ctx, type);
   } else if(isCircularType(type)){
     return convertCircularTypeInline(ctx, type);
+  } else if(isConditionalType(type)){
+    return convertConditionalTypeInline(ctx, type);
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);
@@ -218,6 +223,8 @@ function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineT
     return convertIntersectionTypeMultiline(ctx, type);
   } else if(isMappedType(type)){
     return convertMappedTypeMultiline(ctx, type);
+  } else if(isConditionalType(type)){
+    return convertConditionalTypeMultiline(ctx, type);
   }
 
   throw new Error("Type is not yet implemented");

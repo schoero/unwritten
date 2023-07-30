@@ -9,6 +9,7 @@ import type {
   BooleanType,
   CircularType,
   ClassType,
+  ConditionalType,
   ExpressionType,
   FunctionType,
   IndexedAccessType,
@@ -68,6 +69,10 @@ export function isCircularType(type: Type): type is CircularType {
 
 export function isClassType(type: Type): type is ClassType {
   return type.kind === TypeKind.Class;
+}
+
+export function isConditionalType(type: Type): type is ConditionalType {
+  return type.kind === TypeKind.Conditional;
 }
 
 export function isExpressionType(type: Type): type is ExpressionType {

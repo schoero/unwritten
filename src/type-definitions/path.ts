@@ -2,7 +2,7 @@ export interface Path {
   /** Resolves the absolute path based on the base path */
   absolute(to: string): string;
   absolute(from: string, to: string): string;
-  /** Returns the directory excluding a trailing slash */
+  /** Returns the directory including a trailing slash */
   getDirectory(path: string): string;
   /** Returns the file extension including the period */
   getFileExtension(path: string): string;

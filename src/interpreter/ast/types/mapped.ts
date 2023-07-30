@@ -19,7 +19,7 @@ export function createMappedTypeByTypeNode(ctx: InterpreterContext, typeNode: Ma
   const readonly = typeNode.readonlyToken !== undefined;
   const type = getResolvedTypeByTypeNode(ctx, typeNode);
   const typeParameter = createTypeParameterEntityByDeclaration(ctx, typeNode.typeParameter);
-  const valueType = typeNode.type && getDeclaredType(ctx, typeNode.type); // TODO: Check if declared type would be correct
+  const valueType = typeNode.type && getDeclaredType(ctx, typeNode.type);
 
   return {
     kind,

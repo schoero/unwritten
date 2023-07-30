@@ -3,11 +3,10 @@
 import { cac } from "cac";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { name, version } from "unwritten:utils/package-json.entry.js";
 
 import { generate } from "./generate.js";
 import { init } from "./init.js";
-
-import { name, version } from "unwritten/../package.json";
 
 
 const cli = cac(name);

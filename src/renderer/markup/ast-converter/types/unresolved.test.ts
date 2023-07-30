@@ -18,7 +18,7 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
   {
 
     const testFileContent = ts`
-      export type Type = Array<string>;
+      export type Type = Promise<string>;
     `;
 
     const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
@@ -32,7 +32,7 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
     it("should have the correct name", () => {
       assert(Array.isArray(convertedTypeReferenceType));
       expect(convertedTypeReferenceType).toHaveLength(3);
-      expect(convertedTypeReferenceType[0]).toBe("Array");
+      expect(convertedTypeReferenceType[0]).toBe("Promise");
     });
 
     it("should have one type argument", () => {
@@ -45,7 +45,7 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
   {
 
     const testFileContent = ts`
-      export type Type = Array<string>;
+      export type Type = Set<string>;
     `;
 
     const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
@@ -56,7 +56,7 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
     const ctx = createRenderContext();
 
     ctx.config.externalTypes = {
-      Array: "array-link"
+      Set: "set-link"
     };
 
     const convertedTypeReferenceType = convertTypeReferenceTypeInline(ctx, typeAliasEntity.type as TypeReferenceType);
@@ -64,8 +64,8 @@ scope("MarkupRenderer", TypeKind.Unresolved, () => {
     it("should render a link if the referenced type is in the external types list", () => {
       assert(Array.isArray(convertedTypeReferenceType));
       assert(isLinkNode(convertedTypeReferenceType[0]));
-      expect(convertedTypeReferenceType[0].children[0]).toBe("Array");
-      expect(convertedTypeReferenceType[0].link).toBe("array-link");
+      expect(convertedTypeReferenceType[0].children[0]).toBe("Set");
+      expect(convertedTypeReferenceType[0].link).toBe("set-link");
     });
 
   }

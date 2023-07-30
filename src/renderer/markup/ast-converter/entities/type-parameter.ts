@@ -46,7 +46,7 @@ export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderCo
   );
 
   return createTitleNode(
-    translate("type-parameter", { capitalize: true, count: convertedTypeParameters.length }),
+    translate("typeParameter", { capitalize: true, count: convertedTypeParameters.length }),
     convertedTypeParameterList
   );
 

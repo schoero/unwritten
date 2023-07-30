@@ -35,11 +35,11 @@ export function getCategoryName(entityKind: ExportableEntityKinds): keyof Transl
     case EntityKind.Namespace:
       return "namespace";
     case EntityKind.TypeAlias:
-      return "type-alias";
+      return "typeAlias";
     case EntityKind.Variable:
       return "variable";
     case EntityKind.ExportAssignment:
-      return "export-assignment";
+      return "exportAssignment";
   }
 }
 

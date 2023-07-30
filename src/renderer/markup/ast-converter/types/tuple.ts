@@ -3,7 +3,6 @@ import { convertTagsForType } from "unwritten:renderer/markup/ast-converter/shar
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { createLinkNode, createListNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
@@ -17,11 +16,10 @@ import type {
 
 export function convertTupleTypeInline(ctx: MarkupRenderContexts, tupleType: TupleType): ConvertedTupleTypeInline {
 
-  const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
   const encapsulatedType = encapsulate(
-    translate("tuple", { count: 1 }),
+    "tuple",
     renderConfig.typeEncapsulation
   );
 
