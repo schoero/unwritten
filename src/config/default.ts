@@ -6,7 +6,7 @@ import type { ExternalTypes, InterpreterConfig } from "unwritten:type-definition
 import type { Complete } from "unwritten:type-definitions/utils.js";
 
 
-export const defaultOutputPath = "./docs";
+export const defaultOutputPath = "./docs/";
 
 export const defaultInterpreterConfig: Complete<InterpreterConfig> = {
   exclude: {

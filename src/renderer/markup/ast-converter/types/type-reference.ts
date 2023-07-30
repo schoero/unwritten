@@ -3,8 +3,9 @@ import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
-import { isMultilineType } from "unwritten:renderer:markup/utils/types.js";
+import { assert } from "unwritten:utils/general.js";
 
+import type { ID } from "unwritten:interpreter/type-definitions/shared.js";
 import type { Type, TypeReferenceType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
@@ -18,21 +19,8 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 
   const name = typeReferenceType.name ?? "";
 
-  if(typeReferenceType.symbolId && isSymbolExported(ctx, typeReferenceType.symbolId)){
-
-    const anchor = typeReferenceType.symbolId
-      ? createAnchorNode(name, typeReferenceType.symbolId)
-      : undefined;
-
-    const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
-      ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
-      : "";
-
-    return spaceBetween(
-      anchor ?? name,
-      typeArguments
-    );
-
+  if(hasExportedTarget(ctx, typeReferenceType)){
+    return convertTarget(ctx, typeReferenceType);
   }
 
   if(typeReferenceType.type){
@@ -46,12 +34,12 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 
 export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedMultilineTypes | undefined {
 
-  if(typeReferenceType.type !== undefined &&
-    isMultilineType(typeReferenceType.type) &&
-    "symbolId" in typeReferenceType.type &&
-    typeReferenceType.type.symbolId &&
-    !isSymbolExported(ctx, typeReferenceType.type.symbolId)){
-    return convertType(ctx, typeReferenceType.type).multilineType!;
+  if(hasExportedTarget(ctx, typeReferenceType)){
+    return;
+  }
+
+  if(typeReferenceType.type !== undefined){
+    return convertType(ctx, typeReferenceType.type).multilineType;
   }
 
 }
@@ -72,4 +60,28 @@ function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]):
 
   return encapsulate(convertedTypeArguments, renderConfig.typeParameterEncapsulation);
 
+}
+
+function convertTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ASTNodes {
+
+  assert(hasExportedTarget(ctx, typeReferenceType));
+
+  const name = typeReferenceType.name ?? typeReferenceType.target.name ?? "";
+  const anchor = createAnchorNode(name, typeReferenceType.target.symbolId);
+  const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
+    ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
+    : "";
+
+  return spaceBetween(
+    anchor,
+    typeArguments
+  );
+
+}
+
+function hasExportedTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): typeReferenceType is TypeReferenceType & { target: TypeReferenceType["target"] & { symbolId: ID; }; } {
+  return typeReferenceType.target !== undefined &&
+    "symbolId" in typeReferenceType.target &&
+    typeReferenceType.symbolId !== undefined &&
+    isSymbolExported(ctx, typeReferenceType.symbolId);
 }

@@ -1,11 +1,11 @@
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { FileExtension } from "unwritten:type-definitions/file-system.js";
+import type { FileExtension, FilePath } from "unwritten:type-definitions/file-system.js";
 
 import type { RenderContext } from "./context.js";
 
 
 export interface RenderOutput {
-  [fileName: string]: string;
+  [filePath: FilePath]: string;
 }
 
 export interface Renderer {
@@ -14,5 +14,5 @@ export interface Renderer {
   /** The name of the render extension */
   name: string;
   /** The render function */
-  render(ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]): RenderOutput;
+  render(ctx: RenderContext, sourceFileEntities: SourceFileEntity[]): RenderOutput;
 }

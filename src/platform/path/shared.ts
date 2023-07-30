@@ -24,10 +24,13 @@ const path = {
     const fromParentDirs = fromParts.filter(part => part === "..").length;
     const toParentDirs = toParts.filter(part => part === "..").length;
 
-    const absoluteStartDir = [
-      ...cwdParts.slice(0, cwdParts.length - fromParentDirs),
-      ...fromParts.slice(fromParentDirs)
-    ];
+    const fromDirIsRelative = !normalizedFrom.startsWith("/");
+    const absoluteStartDir = fromDirIsRelative
+      ? [
+        ...cwdParts.slice(0, cwdParts.length - fromParentDirs),
+        ...fromParts.slice(fromParentDirs)
+      ]
+      : fromParts.slice(fromParentDirs);
 
     const toDirIsRelative = !normalizedTo.startsWith("/");
     const absoluteToDir = toDirIsRelative
@@ -35,10 +38,7 @@ const path = {
         ...absoluteStartDir.slice(0, absoluteStartDir.length - toParentDirs),
         ...toParts.slice(toParentDirs)
       ]
-      : [
-        ...cwdParts.slice(0, cwdParts.length - toParentDirs),
-        ...toParts.slice(toParentDirs)
-      ];
+      : toParts.slice(toParentDirs);
 
     const toFile = path.getFileName(normalizedTo);
 
@@ -64,9 +64,18 @@ const path = {
     const extension = normalizedPath.split(/\./).pop();
     return extension ? `.${extension}` : "";
   },
-  getFileName(path: string): string {
+  getFileName(path: string, includeExtension: boolean = true): string {
+
     const normalizedPath = normalize(path);
-    return normalizedPath.split("/").pop() ?? "";
+    const fileNameWithExtension = normalizedPath.split("/").pop() ?? "";
+
+    if(includeExtension === true){
+      return fileNameWithExtension;
+    }
+
+    const extension = getFileExtension(fileNameWithExtension);
+    return fileNameWithExtension.replace(extension, "");
+
   },
   join(...segments: string[]): string {
     const normalizedSegments = segments.map(normalize);

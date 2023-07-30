@@ -1,5 +1,6 @@
 export type FileExtension = `.${string}`;
 export type FileName = `${string}${FileExtension}`;
+export type FilePath = `${Directory}${FileName}` | `${FileName}`;
 export type Directory = `${string}/`;
 
 export interface FileSystem {

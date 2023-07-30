@@ -31,7 +31,7 @@ export interface InterpreterContext extends DefaultContext {
   locker?: Set<number>;
 }
 
-export interface RenderContext<CustomRenderer extends Renderer> extends DefaultContext {
+export interface RenderContext<CustomRenderer extends Renderer = Renderer> extends DefaultContext {
   config: CompleteConfig;
   renderer: CustomRenderer;
 }

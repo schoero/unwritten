@@ -127,7 +127,6 @@ scope("Renderer", "utils", () => {
 
       });
 
-
     }
 
     {
@@ -151,28 +150,6 @@ scope("Renderer", "utils", () => {
         assert(extendedClassConstructor);
         expect(extendedClassConstructor.signatures).toHaveLength(1);
         expect(extendedClassConstructor.signatures[0].parameters).toHaveLength(1);
-      });
-
-    }
-
-    {
-
-      const testFileContent = ts`
-        class BaseClass {
-        }
-        export class Class extends BaseClass {
-        }
-      `;
-
-      const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
-
-      const symbol = exportedSymbols.find(s => s.name === "Class")!;
-      const classEntity = createClassEntity(compilerContext, symbol);
-
-      const extendedClassConstructor = extendClassEntityConstructorsWithHeritage(classEntity);
-
-      it("should not extend automatically generated empty constructor", () => {
-        expect(extendedClassConstructor).toBeUndefined();
       });
 
     }

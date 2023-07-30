@@ -7,7 +7,7 @@ import type {
   Name,
   Position
 } from "unwritten:interpreter:type-definitions/shared.js";
-import type { ExpressionType, LiteralType, Type } from "unwritten:interpreter:type-definitions/types.js";
+import type { ExpressionType, Type } from "unwritten:interpreter:type-definitions/types.js";
 import type { PartialByKey } from "unwritten:type-definitions/utils.js";
 
 
@@ -74,7 +74,6 @@ export type Entity =
   | FunctionEntity
   | GetterEntity
   | InterfaceEntity
-  | MappedTypeMemberEntity
   | MethodEntity
   | ModuleEntity
   | NamespaceEntity
@@ -207,11 +206,6 @@ export interface TypeAliasEntity extends EntityBase<EntityKind.TypeAlias>, JSDoc
   description?: Description;
   position?: Position;
   typeParameters?: TypeParameterEntity[];
-}
-
-export interface MappedTypeMemberEntity extends EntityBase<EntityKind.MappedTypeMember> {
-  keyType: LiteralType;
-  valueType: Type;
 }
 
 export interface ExportAssignmentEntity extends EntityBase<EntityKind.ExportAssignment>, JSDocTags {

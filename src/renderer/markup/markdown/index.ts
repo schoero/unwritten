@@ -35,20 +35,20 @@ import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/en
 import type { MarkdownRenderContext, MarkdownRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { Renderer, RenderOutput } from "unwritten:type-definitions/renderer.js";
+import type { RenderOutput } from "unwritten:type-definitions/renderer.js";
 
 
-export function isMarkdownRenderContext(ctx: RenderContext<Renderer>): ctx is MarkdownRenderContext {
+export function isMarkdownRenderContext(ctx: RenderContext): ctx is MarkdownRenderContext {
   return ctx.renderer.name === BuiltInRenderers.Markdown;
 }
 
-function verifyMarkdownRenderContext(ctx: RenderContext<Renderer>): asserts ctx is MarkdownRenderContext {
+function verifyMarkdownRenderContext(ctx: RenderContext): asserts ctx is MarkdownRenderContext {
   if(ctx.renderer.name !== BuiltInRenderers.Markdown){
     throw new Error(`Renderer '${ctx.renderer.name}' is not a markdown renderer.`);
   }
 }
 
-function withVerifiedMarkdownRenderContext(ctx: RenderContext<Renderer>, callback: (ctx: MarkdownRenderContext) => any) {
+function withVerifiedMarkdownRenderContext(ctx: RenderContext, callback: (ctx: MarkdownRenderContext) => any) {
   verifyMarkdownRenderContext(ctx);
   return callback(ctx);
 }
@@ -95,7 +95,7 @@ const markdownRenderer: MarkdownRenderer = {
     initializeRegistry(ctx, sourceFileEntities);
   },
 
-  render: (ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
+  render: (ctx: RenderContext, sourceFileEntities: SourceFileEntity[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
 
     markdownRenderer.initializeRegistry(ctx, sourceFileEntities);
     markdownRenderer.initializeContext(ctx);
@@ -112,7 +112,9 @@ const markdownRenderer: MarkdownRenderer = {
       const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
       const renderedContent = renderNode(ctx, markupAST);
 
-      files[sourceFileEntity.name] = `${renderedContent}${renderedNewLine}`;
+      const filePath = ctx.sourceRegistry![ctx.currentFile].dst;
+
+      files[filePath] = `${renderedContent}${renderedNewLine}`;
       return files;
 
     }, {});

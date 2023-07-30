@@ -1,3 +1,4 @@
+import { getOutputFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { isClassEntity, isInterfaceEntity, isModuleEntity, isNamespaceEntity } from "unwritten:typeguards/entities.js";
 import { assert } from "unwritten:utils/general.js";
 
@@ -5,6 +6,7 @@ import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
 import type { Entity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
+import type { FilePath } from "unwritten:type-definitions/file-system.js";
 
 
 export interface AnchorLink {
@@ -24,10 +26,11 @@ export type LinkRegistry = {
 };
 
 export type SourceFile = {
+  dst: FilePath;
   exports: ExportRegistry;
   links: LinkRegistry;
   name: Name;
-  path: string;
+  src: string;
 };
 
 export type SourceRegistry = {
@@ -41,10 +44,11 @@ export function initializeRegistry(ctx: MarkupRenderContexts, sourceFileEntities
 
   sourceFileEntities.forEach(sourceFileEntity => {
     ctx.sourceRegistry![sourceFileEntity.symbolId] = {
+      dst: getOutputFilePath(ctx, sourceFileEntity.path),
       exports: new Set(),
       links: {},
       name: sourceFileEntity.name,
-      path: sourceFileEntity.path
+      src: sourceFileEntity.path
     };
 
     addExports(ctx.sourceRegistry![sourceFileEntity.symbolId].exports, sourceFileEntity.exports);
@@ -126,11 +130,27 @@ export const getAnchorLink = (ctx: MarkupRenderContexts, name: Name, id: ID): st
   }
 
   const relativeDirectory = ctx.currentFile !== +sourceFileId
-    ? relative(ctx.sourceRegistry[ctx.currentFile].path, sourceFileContent.path)
+    ? relative(ctx.sourceRegistry[ctx.currentFile].dst, sourceFileContent.dst)
     : "";
 
   const anchorText = convertTextToAnchorId(name);
-  const anchorLink = `${relativeDirectory}${anchorText}${index === 0 ? "" : `-${index}`}`;
+  const anchorLink = `${relativeDirectory}#${anchorText}${index === 0 ? "" : `-${index}`}`;
+
+  return anchorLink;
+
+});
+
+
+export const getAnchorId = (ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined => withInitializedSourceRegistry(ctx, ctx => {
+
+  const index = ctx.sourceRegistry[ctx.currentFile].links[name].indexOf(id);
+
+  if(index === -1){
+    return;
+  }
+
+  const anchorText = convertTextToAnchorId(name);
+  const anchorLink = `${anchorText}${index === 0 ? "" : `-${index}`}`;
 
   return anchorLink;
 

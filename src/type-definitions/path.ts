@@ -6,8 +6,8 @@ export interface Path {
   getDirectory(path: string): string;
   /** Returns the file extension including the period */
   getFileExtension(path: string): string;
-  /** Returns the file name including the extension */
-  getFileName(path: string): string;
+  /** Returns the file name including the extension by default */
+  getFileName(path: string, includeExtension?: boolean): string;
   /** Joins multiple segments */
   join(...segments: string[]): string;
   /** Strips file protocol prefix and converts windows style paths to posix style paths */

@@ -76,15 +76,13 @@ scope("Interpreter", EntityKind.Interface, () => {
     const testFileContent = ts`
       interface Interface {
         (): void;
-        static staticProp: string;
-        protected protectedProp: string; 
         new (): void;
         method(a: number): void;
         method(a: string): void;
         prop: string;
         funcProp: () => void;
         get getter(): string;
-        set setter(value: string): void;
+        set setter(value: string);
       }
       export type InterfaceType = Interface;
     `;
@@ -108,7 +106,7 @@ scope("Interpreter", EntityKind.Interface, () => {
     });
 
     it("should be able to handle properties", () => {
-      expect(interfaceType.properties).toHaveLength(4);
+      expect(interfaceType.properties).toHaveLength(2);
     });
 
     it("should be able to handle static properties", () => {

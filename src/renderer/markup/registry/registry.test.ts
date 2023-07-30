@@ -106,7 +106,7 @@ scope("Renderer", "Source registry", () => {
         );
 
         const anchorText = getAnchorLink(ctx, anchor.name, anchor.id);
-        expect(anchorText).toBe("test");
+        expect(anchorText).toBe("#test");
 
       });
 
@@ -119,7 +119,7 @@ scope("Renderer", "Source registry", () => {
         );
 
         const anchorText = getAnchorLink(ctx, anchor.name, anchor.id);
-        expect(anchorText).toBe("test");
+        expect(anchorText).toBe("#test");
 
       });
 
@@ -168,8 +168,8 @@ scope("Renderer", "Source registry", () => {
       const variableAnchorText = getAnchorLink(ctx, variableAnchor.name, variableAnchor.id);
       const namespaceAnchorText = getAnchorLink(ctx, namespaceAnchor.name, namespaceAnchor.id);
 
-      expect(variableAnchorText).toBe("test");
-      expect(namespaceAnchorText).toBe("test-1");
+      expect(variableAnchorText).toBe("#test");
+      expect(namespaceAnchorText).toBe("#test-1");
 
     });
 

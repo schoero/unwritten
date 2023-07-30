@@ -14,14 +14,13 @@ scope("MarkupRenderer", "Position", () => {
 
   const position: Position = {
     column: 1,
-    file: "src/renderer/markup/index.ts",
+    file: "/src/some/file.ts",
     line: 7
   };
 
   it("should convert the position correctly", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
-    ctx.config.outputDir = "/some/path/docs";
     const convertedPosition = convertPosition(ctx, position);
 
     assert(isSmallNode(convertedPosition));
@@ -30,8 +29,8 @@ scope("MarkupRenderer", "Position", () => {
     expect(convertedPosition.children[0]).toBe("Defined in: ");
     expect(isLinkNode(convertedPosition.children[1])).toBe(true);
 
-    expect(convertedPosition.children[1].children[0]).toBe("src/renderer/markup/index.ts");
-    expect(convertedPosition.children[1].link).toBe("../src/renderer/markup/index.ts#L7C1");
+    expect(convertedPosition.children[1].children[0]).toBe("src/some/file.ts");
+    expect(convertedPosition.children[1].link).toBe("../src/some/file.ts#L7C1");
 
   });
 
@@ -46,8 +45,8 @@ scope("MarkupRenderer", "Position", () => {
 
     expect(isLinkNode(convertedPosition.children[0])).toBe(true);
 
-    expect(convertedPosition.children[0].children[0]).toBe("src/renderer/markup/index.ts");
-    expect(convertedPosition.children[0].link).toBe("../src/renderer/markup/index.ts#L7C1");
+    expect(convertedPosition.children[0].children[0]).toBe("src/some/file.ts");
+    expect(convertedPosition.children[0].link).toBe("../src/some/file.ts#L7C1");
 
   });
 

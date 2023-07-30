@@ -1,11 +1,11 @@
 import ts from "typescript";
 
 import { getDefaultConfig } from "unwritten:config/config.js";
-import fs from "unwritten:platform/file-system/node.js";
+import fs from "unwritten:platform/file-system/browser.js";
 import { logger } from "unwritten:platform/logger/node.js";
 import os from "unwritten:platform/os/node.js";
-import path from "unwritten:platform/path/node.js";
-import process from "unwritten:platform/process/node.js";
+import path from "unwritten:platform/path/browser.js";
+import process from "unwritten:platform/process/browser.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import jsonRenderer from "unwritten:renderer:json/index.js";
 import htmlRenderer, { isHTMLRenderContext } from "unwritten:renderer:markup/html/index.js";

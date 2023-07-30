@@ -9,7 +9,7 @@ export function createTestRegistry(ctx: MarkupRenderContexts, registry?: Partial
       exports: new Set<ID>(),
       links: {},
       name: "index",
-      path: "/index.ts",
+      src: "/index.ts",
       ...registry ?? {}
     }
   };

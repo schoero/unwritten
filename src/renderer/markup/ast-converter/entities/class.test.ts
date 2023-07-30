@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { createClassEntity, createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import {
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents
@@ -21,10 +22,12 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     const testFileContent = ts`
       export class Class {
         constructor() {}
-        public property: number = 1;
+        public prop: string;
         public method() {}
         public get getter(): string { return ""; }
         public set setter(value: string) {}
+        static staticProp: string;
+        protected protectedProp: string;
       }
     `;
 
@@ -78,7 +81,13 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     });
 
     it("should have two properties", () => {
-      expect(properties.children).toHaveLength(1);
+      expect(properties.children).toHaveLength(3);
+    });
+
+    it("should support all possible modifiers", () => {
+      expect(renderNode(ctx, properties.children[0].children[0])).toContain("public");
+      expect(renderNode(ctx, properties.children[1].children[0])).toContain("static");
+      expect(renderNode(ctx, properties.children[2].children[0])).toContain("protected");
     });
 
     it("should have one method signature", () => {
@@ -91,6 +100,45 @@ scope("MarkupRenderer", TypeKind.Class, () => {
 
     it("should have one getter signature", () => {
       expect(getters.children).toHaveLength(1);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      class BaseClass {
+      }
+      export class Class extends BaseClass {
+      }
+    `;
+
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const classEntity = createClassEntity(compilerContext, symbol);
+
+    const ctx = createRenderContext();
+
+    const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
+
+    const titleNode = convertedClassForDocumentation.children[0];
+
+    const [
+      position,
+      tags,
+      description,
+      remarks,
+      example,
+      constructSignatures,
+      properties,
+      methods,
+      setters,
+      getters
+    ] = titleNode.children;
+
+    it("should not render implicit constructors", () => {
+      expect(constructSignatures.children).toHaveLength(0);
     });
 
   }

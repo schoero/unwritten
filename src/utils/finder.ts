@@ -13,7 +13,7 @@ import type { DefaultContext } from "unwritten:type-definitions/context.js";
 export function findFile(ctx: DefaultContext, fileName: string[] | string, entryPath?: string): string | undefined {
 
   const { existsSync } = ctx.dependencies.fs;
-  const { absolute, getDirectory, join } = ctx.dependencies.path;
+  const { absolute, join } = ctx.dependencies.path;
   const { cwd } = ctx.dependencies.process;
 
   if(typeof fileName === "object" && Array.isArray(fileName) === true){

@@ -34,20 +34,20 @@ import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/en
 import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { Renderer, RenderOutput } from "unwritten:type-definitions/renderer.js";
+import type { RenderOutput } from "unwritten:type-definitions/renderer.js";
 
 
-export function isHTMLRenderContext(ctx: RenderContext<Renderer>): ctx is HTMLRenderContext {
+export function isHTMLRenderContext(ctx: RenderContext): ctx is HTMLRenderContext {
   return ctx.renderer.name === BuiltInRenderers.HTML;
 }
 
-function verifyHTMLRenderContext(ctx: RenderContext<Renderer>): asserts ctx is HTMLRenderContext {
+function verifyHTMLRenderContext(ctx: RenderContext): asserts ctx is HTMLRenderContext {
   if(ctx.renderer.name !== BuiltInRenderers.HTML){
     throw new Error(`Renderer '${ctx.renderer.name}' is not a HTML renderer.`);
   }
 }
 
-function withVerifiedHTMLRenderContext(ctx: RenderContext<Renderer>, callback: (ctx: HTMLRenderContext) => any) {
+function withVerifiedHTMLRenderContext(ctx: RenderContext, callback: (ctx: HTMLRenderContext) => any) {
   verifyHTMLRenderContext(ctx);
   return callback(ctx);
 }
@@ -93,7 +93,7 @@ const htmlRenderer: HTMLRenderer = {
     initializeRegistry(ctx, sourceFileEntities);
   },
 
-  render: (ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
+  render: (ctx: RenderContext, sourceFileEntities: SourceFileEntity[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
 
     htmlRenderer.initializeRegistry(ctx, sourceFileEntities);
     htmlRenderer.initializeContext(ctx);
@@ -110,7 +110,9 @@ const htmlRenderer: HTMLRenderer = {
       const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
       const renderedContent = renderNode(ctx, markupAST);
 
-      files[sourceFileEntity.name] = `${renderedContent}${renderedNewLine}`;
+      const filePath = ctx.sourceRegistry![ctx.currentFile].dst;
+
+      files[filePath] = `${renderedContent}${renderedNewLine}`;
       return files;
 
     }, {});

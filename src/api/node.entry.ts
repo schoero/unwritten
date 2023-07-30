@@ -11,7 +11,6 @@ import path from "unwritten:platform/path/node.js";
 import process from "unwritten:platform/process/node.js";
 import { getRenderer } from "unwritten:renderer:index.js";
 import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";
-import { getValidFileName } from "unwritten:utils/file.js";
 import { createContext as createDefaultContext } from "unwritten:utils:context.js";
 
 import type { APIOptions } from "unwritten:type-definitions/options.js";
@@ -54,11 +53,9 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
   }
 
   // Write output to files
-  const fileExtension = renderer.fileExtension;
-  const outputPaths = Object.entries(renderedFiles).map(([fileName, renderedContent]) => {
-    const outputPath = getValidFileName(renderContext, `${config.outputDir}/${fileName}${fileExtension}`);
-    writeFileSync(outputPath, renderedContent);
-    return outputPath;
+  const outputPaths = Object.entries(renderedFiles).map(([filePath, renderedContent]) => {
+    writeFileSync(filePath, renderedContent);
+    return filePath;
   });
 
   return outputPaths;

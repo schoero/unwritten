@@ -25,7 +25,7 @@ scope("MarkupRenderer", TypeKind.Object, () => {
         public static staticProperty: string | undefined;
         public method(): void {}
         public get getter(): string { return ""; }
-        public set setter(value: string): void {}
+        public set setter(value: string) {}
       }
       export class Class extends BaseClass {
       }

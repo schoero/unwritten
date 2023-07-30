@@ -21,8 +21,6 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const testFileContent = ts`
       interface Interface {
         (): void;
-        public static staticProp: string;
-        protected protectedProp: string;
         new (): void;
         method(a: number): void;
         method(a: string): void;
@@ -66,15 +64,10 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a matching properties with matching modifiers", () => {
-      expect(properties.children).toHaveLength(4);
-      expect(renderNode(ctx, properties.children[0])).toContain("staticProp");
-      expect(renderNode(ctx, properties.children[0])).toContain("public");
-      expect(renderNode(ctx, properties.children[0])).toContain("static");
-      expect(renderNode(ctx, properties.children[1])).toContain("protectedProp");
-      expect(renderNode(ctx, properties.children[1])).toContain("protected");
-      expect(renderNode(ctx, properties.children[2])).toContain("prop");
-      expect(renderNode(ctx, properties.children[3])).toContain("funcProp");
-      expect(renderNode(ctx, properties.children[3])).toContain("function");
+      expect(properties.children).toHaveLength(2);
+      expect(renderNode(ctx, properties.children[0])).toContain("prop");
+      expect(renderNode(ctx, properties.children[1])).toContain("funcProp");
+      expect(renderNode(ctx, properties.children[1])).toContain("function");
     });
 
     it("should have a matching method with an overload", () => {
