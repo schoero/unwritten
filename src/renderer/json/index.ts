@@ -17,7 +17,7 @@ function verifyRenderer(renderer: Renderer): asserts renderer is JSONRenderer {
   }
 }
 
-function verifyContext(ctx: RenderContext<Renderer>): asserts ctx is JSONRenderContext {
+function verifyContext(ctx: RenderContext): asserts ctx is JSONRenderContext {
   verifyRenderer(ctx.renderer);
 }
 
@@ -25,7 +25,7 @@ const jsonRenderer: JSONRenderer = {
   fileExtension: ".json",
   name: BuiltInRenderers.JSON,
 
-  render(ctx: RenderContext<Renderer>, sourceFileEntities: SourceFileEntity[]) {
+  render(ctx: RenderContext, sourceFileEntities: SourceFileEntity[]) {
 
     // Initialize the context
     verifyContext(ctx);

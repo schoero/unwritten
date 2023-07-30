@@ -19,7 +19,6 @@ import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions
 import type { HTMLRenderContext, MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { CompleteConfig } from "unwritten:type-definitions/config.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
 const testConfig: CompleteConfig = override(getDefaultConfig(), {
@@ -46,7 +45,7 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
 export function createRenderContext(rendererName?: BuiltInRenderers.HTML): HTMLRenderContext;
 export function createRenderContext(rendererName?: BuiltInRenderers.Markdown): MarkdownRenderContext;
 export function createRenderContext(rendererName?: BuiltInRenderers.JSON): JSONRenderContext;
-export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRenderers.HTML): RenderContext<Renderer> {
+export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRenderers.HTML): RenderContext {
 
   const defaultContext = createDefaultContext({
     fs,
@@ -57,7 +56,7 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
     ts
   });
 
-  const ctx: RenderContext<Renderer> = {
+  const ctx: RenderContext = {
     ...defaultContext,
     config: JSON.parse(JSON.stringify(testConfig)),
     renderer: htmlRenderer
