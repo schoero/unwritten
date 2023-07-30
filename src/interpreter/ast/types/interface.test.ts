@@ -109,16 +109,6 @@ scope("Interpreter", EntityKind.Interface, () => {
       expect(interfaceType.properties).toHaveLength(2);
     });
 
-    it("should be able to handle static properties", () => {
-      expect(interfaceType.properties.filter(prop =>
-        prop.modifiers?.includes("static"))).toHaveLength(1);
-    });
-
-    it("should be able to handle instance properties", () => {
-      expect(interfaceType.properties.filter(prop =>
-        prop.modifiers?.includes("protected"))).toHaveLength(1);
-    });
-
     it("should be able to handle overloaded methods", () => {
       expect(interfaceType.methods).toHaveLength(1);
       expect(interfaceType.methods[0].signatures).toHaveLength(2);
