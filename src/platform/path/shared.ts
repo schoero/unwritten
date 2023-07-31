@@ -111,7 +111,7 @@ const path = {
     return path
       .replace(/^file:\/\//, "")
       .replace(/\\/g, "/")
-      .replace(/^C:/, "/")
+      .replace(/^\/*C:\//, "/")
       .replace(/\/\//g, "/");
   },
   relative(from: string, to: string, cwd: string): string {
