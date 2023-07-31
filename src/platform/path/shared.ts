@@ -110,8 +110,8 @@ const path = {
   normalize(path: string): string {
     return path
       .replace(/^file:\/\//, "")
+      .replace(/^\/*[A-Za-z]:\\/, "/")
       .replace(/\\/g, "/")
-      .replace(/^\/*C:\//, "/")
       .replace(/\/\//g, "/");
   },
   relative(from: string, to: string, cwd: string): string {
