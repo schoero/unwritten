@@ -72,6 +72,7 @@ scope("Integration", "path", () => {
     expect(absolute("file.txt")).toBe("/file.txt");
     expect(absolute("/file.txt")).toBe("/file.txt");
     expect(absolute("./file.txt")).toBe("/file.txt");
+    expect(absolute("~", "../../../file.txt")).toBe("/file.txt");
   });
 
   it("should join multiple segments", () => {

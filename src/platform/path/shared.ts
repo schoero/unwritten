@@ -24,21 +24,35 @@ const path = {
     const fromParentDirs = fromParts.filter(part => part === "..").length;
     const toParentDirs = toParts.filter(part => part === "..").length;
 
-    const fromDirIsRelative = !normalizedFrom.startsWith("/");
-    const absoluteStartDir = fromDirIsRelative
-      ? [
-        ...cwdParts.slice(0, cwdParts.length - fromParentDirs),
-        ...fromParts.slice(fromParentDirs)
-      ]
-      : fromParts.slice(fromParentDirs);
+    const fromDirIsAbsolute = normalizedFrom.startsWith("/");
+    const toDirIsAbsolute = normalizedTo.startsWith("/");
 
-    const toDirIsRelative = !normalizedTo.startsWith("/");
-    const absoluteToDir = toDirIsRelative
-      ? [
-        ...absoluteStartDir.slice(0, absoluteStartDir.length - toParentDirs),
-        ...toParts.slice(toParentDirs)
-      ]
-      : toParts.slice(toParentDirs);
+    const fromDirIsHome = normalizedFrom.startsWith("~");
+    const toDirIsHome = normalizedTo.startsWith("~");
+
+    const absoluteStartDir = fromDirIsAbsolute
+      ? fromParts.slice(fromParentDirs)
+      : fromDirIsHome
+        ? [
+          ...cwdParts.slice(0, cwdParts.length - fromParentDirs),
+          ...fromParts.slice(fromParentDirs)
+        ]
+        : [
+          ...cwdParts.slice(0, cwdParts.length - fromParentDirs),
+          ...fromParts.slice(fromParentDirs)
+        ];
+
+    const absoluteToDir = toDirIsAbsolute
+      ? toParts.slice(toParentDirs)
+      : toDirIsHome
+        ? [
+          ...cwdParts.slice(0, cwdParts.length - toParentDirs),
+          ...toParts.slice(toParentDirs)
+        ]
+        : [
+          ...absoluteStartDir.slice(0, absoluteStartDir.length - toParentDirs),
+          ...toParts.slice(toParentDirs)
+        ];
 
     const toFile = path.getFileName(normalizedTo);
 
