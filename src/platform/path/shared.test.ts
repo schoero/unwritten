@@ -48,7 +48,7 @@ scope("Integration", "path", () => {
   });
 
   it("should normalize windows style paths to posix style paths", () => {
-    expect(normalize("C:\\some\\directory\\file.txt")).toBe("C:/some/directory/file.txt");
+    expect(normalize("C:\\some\\directory\\file.txt")).toBe("/some/directory/file.txt");
   });
 
   it("should strip file protocol prefix", () => {

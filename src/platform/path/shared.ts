@@ -94,7 +94,9 @@ const path = {
     return `${root}${cleanedSegments.join("/")}`;
   },
   normalize(path: string): string {
-    return path.replace("file://", "")
+    return path
+      .replace(/^C:\\/, "/")
+      .replace(/^file:\/\//, "")
       .replace(/\\/g, "/");
   },
   relative(from: string, to: string, cwd: string): string {
