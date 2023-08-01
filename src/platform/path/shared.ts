@@ -213,9 +213,21 @@ const path = {
 
     const { separator } = deps;
 
-    return path
-      .replace(/^file:\/\//, "")
-      .replace(/\/\//g, "/");
+    const pathWithoutProtocols = path
+      .replace(/^[A-Za-z]*:\/\//, "");
+
+    const root = getAbsoluteRoot(deps, pathWithoutProtocols);
+    const pathWithoutRoot = pathWithoutProtocols.slice(root.length);
+
+    const dosSeparator = "\\";
+    const posixSeparator = "/";
+
+    const pathWithNormalizedSeparators = pathWithoutRoot
+      .replace(new RegExp(`\\${dosSeparator}+`, "g"), separator)
+      .replace(new RegExp(`${posixSeparator}+`, "g"), separator);
+
+    return `${root}${pathWithNormalizedSeparators}`;
+
   },
   relative(deps: Dependencies, from: string, to: string): string {
 

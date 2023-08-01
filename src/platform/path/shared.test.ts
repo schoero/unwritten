@@ -175,6 +175,28 @@ scope("Integration", "path", () => {
 
   });
 
+  describe("normalize", () => {
+
+    it("should remove protocols", () => {
+      expect(normalize(posix, "file:///some/directory/file.txt")).toBe("/some/directory/file.txt");
+      expect(normalize(dos, "file://C:/some/directory/file.txt")).toBe("C:\\some\\directory\\file.txt");
+      expect(normalize(unc, "file://\\\\some\\directory\\file.txt")).toBe("\\\\some\\directory\\file.txt");
+    });
+
+    it("should remove double separators", () => {
+      expect(normalize(posix, "/some//directory/file.txt")).toBe("/some/directory/file.txt");
+      expect(normalize(dos, "C:\\some\\\\directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
+      expect(normalize(unc, "\\\\some\\\\directory\\file.txt")).toBe("\\\\some\\directory\\file.txt");
+    });
+
+    it("should normalize mixed separators", () => {
+      expect(normalize(posix, "/some\\directory/file.txt")).toBe("/some/directory/file.txt");
+      expect(normalize(dos, "C:/some\\directory/file.txt")).toBe("C:\\some\\directory\\file.txt");
+      expect(normalize(unc, "\\\\some\\directory/file.txt")).toBe("\\\\some\\directory\\file.txt");
+    });
+
+  });
+
 
   //
 
@@ -213,7 +235,7 @@ scope("Integration", "path", () => {
   });
 
   it("should keep windows style paths as is", () => {
-    expect(normalize(posix, "C:\\some\\directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
+    expect(normalize(dos, "C:\\some\\directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
   });
 
   it("should strip file protocol prefix", () => {
