@@ -212,6 +212,8 @@ const path = {
   normalize(deps: Dependencies, path: string): string {
 
     const { separator } = deps;
+    const dosSeparator = "\\";
+    const posixSeparator = "/";
 
     const pathWithoutProtocols = path
       .replace(/^[A-Za-z]*:\/\//, "");
@@ -226,16 +228,17 @@ const path = {
     }
 
     const root = getAbsoluteRoot(deps, preparedPath);
-    const pathWithoutRoot = preparedPath.slice(root.length);
+    const correctedRoot = root
+      .replace(new RegExp(`\\${dosSeparator}+`, "g"), separator)
+      .replace(new RegExp(`${posixSeparator}+`, "g"), separator);
 
-    const dosSeparator = "\\";
-    const posixSeparator = "/";
+    const pathWithoutRoot = preparedPath.slice(correctedRoot.length);
 
     const pathWithNormalizedSeparators = pathWithoutRoot
       .replace(new RegExp(`\\${dosSeparator}+`, "g"), separator)
       .replace(new RegExp(`${posixSeparator}+`, "g"), separator);
 
-    return `${root}${pathWithNormalizedSeparators}`;
+    return `${correctedRoot}${pathWithNormalizedSeparators}`;
 
   },
   relative(deps: Dependencies, from: string, to: string): string {

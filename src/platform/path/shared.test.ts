@@ -191,13 +191,20 @@ scope("Integration", "path", () => {
 
     it("should normalize mixed separators", () => {
       expect(normalize(posix, "/some\\directory/file.txt")).toBe("/some/directory/file.txt");
-      expect(normalize(dos, "C:/some\\directory/file.txt")).toBe("C:\\some\\directory\\file.txt");
+      expect(normalize(dos, "C:\\some\\directory/file.txt")).toBe("C:\\some\\directory\\file.txt");
       expect(normalize(unc, "\\\\some\\directory/file.txt")).toBe("\\\\some\\directory\\file.txt");
     });
 
     it("should remove additional leading slashes on windows", () => {
       expect(normalize(dos, "/C:\\some\\directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
       expect(normalize(unc, "/\\\\some\\directory\\file.txt")).toBe("\\\\some\\directory\\file.txt");
+    });
+
+    it("should be able to extract the root with invalid separators", () => {
+      expect(normalize(posix, "\\some\\directory/file.txt")).toBe("/some/directory/file.txt");
+      expect(normalize(dos, "/some/directory\\file.txt")).toBe("\\some\\directory\\file.txt");
+      expect(normalize(dos, "C:/some/directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
+      expect(normalize(unc, "//some/directory\\file.txt")).toBe("\\\\some\\directory\\file.txt");
     });
 
   });
