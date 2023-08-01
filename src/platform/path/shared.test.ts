@@ -195,6 +195,11 @@ scope("Integration", "path", () => {
       expect(normalize(unc, "\\\\some\\directory/file.txt")).toBe("\\\\some\\directory\\file.txt");
     });
 
+    it("should remove additional leading slashes on windows", () => {
+      expect(normalize(dos, "/C:\\some\\directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
+      expect(normalize(unc, "/\\\\some\\directory\\file.txt")).toBe("\\\\some\\directory\\file.txt");
+    });
+
   });
 
 

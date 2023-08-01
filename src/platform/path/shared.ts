@@ -120,8 +120,8 @@ const path = {
   getAbsoluteRoot(deps: Dependencies, path: string): string {
 
     const [dosRoot] = path.match(/^([A-Za-z]:\\|^\\)/) ?? [];
-    const [posixRoot] = path.match(/^(\/+)/) ?? [];
-    const [uncRoot] = path.match(/^(\\\\+)/) ?? [];
+    const [posixRoot] = path.match(/^(\/)/) ?? [];
+    const [uncRoot] = path.match(/^(\\\\)/) ?? [];
 
     return uncRoot ?? dosRoot ?? posixRoot ?? "";
 
@@ -216,8 +216,17 @@ const path = {
     const pathWithoutProtocols = path
       .replace(/^[A-Za-z]*:\/\//, "");
 
-    const root = getAbsoluteRoot(deps, pathWithoutProtocols);
-    const pathWithoutRoot = pathWithoutProtocols.slice(root.length);
+    const pathWithoutLeadingSlashes = pathWithoutProtocols.replace(/^\/+/, "");
+    const windowsRoot = getAbsoluteRoot(deps, pathWithoutLeadingSlashes);
+
+    let preparedPath = pathWithoutProtocols;
+
+    if(windowsRoot !== ""){
+      preparedPath = pathWithoutLeadingSlashes;
+    }
+
+    const root = getAbsoluteRoot(deps, preparedPath);
+    const pathWithoutRoot = preparedPath.slice(root.length);
 
     const dosSeparator = "\\";
     const posixSeparator = "/";
