@@ -4,7 +4,7 @@ import { scope } from "unwritten:tests:utils/scope.js";
 
 import {
   absolute,
-  getAbsoluteRoot,
+  extractRoot,
   getDirectory,
   getFileExtension,
   getFileName,
@@ -41,10 +41,10 @@ scope("Integration", "path", () => {
   describe("getAbsoluteRoot", () => {
 
     it("should return the directory including the trailing slash", () => {
-      expect(getAbsoluteRoot(posix, "/some/directory/file.txt")).toBe("/");
-      expect(getAbsoluteRoot(dos, "\\some\\directory\\file.txt")).toBe("\\");
-      expect(getAbsoluteRoot(dos, "C:\\some\\directory\\file.txt")).toBe("C:\\");
-      expect(getAbsoluteRoot(unc, "\\\\some\\directory\\file.txt")).toBe("\\\\");
+      expect(extractRoot(posix, "/some/directory/file.txt")).toStrictEqual({ pathWithoutRoot: "some/directory/file.txt", root: "/" });
+      expect(extractRoot(dos, "\\some\\directory\\file.txt")).toStrictEqual({ pathWithoutRoot: "some\\directory\\file.txt", root: "\\" });
+      expect(extractRoot(dos, "C:\\some\\directory\\file.txt")).toStrictEqual({ pathWithoutRoot: "some\\directory\\file.txt", root: "C:\\" });
+      expect(extractRoot(unc, "\\\\some\\directory\\file.txt")).toStrictEqual({ pathWithoutRoot: "some\\directory\\file.txt", root: "\\\\" });
     });
 
   });
@@ -196,15 +196,17 @@ scope("Integration", "path", () => {
     });
 
     it("should remove additional leading slashes on windows", () => {
+      expect(normalize(posix, "//some/directory/file.txt")).toBe("/some/directory/file.txt");
+      expect(normalize(dos, "\\C:\\some\\directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
       expect(normalize(dos, "/C:\\some\\directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
       expect(normalize(unc, "/\\\\some\\directory\\file.txt")).toBe("\\\\some\\directory\\file.txt");
+      expect(normalize(unc, "\\\\\\some\\directory\\file.txt")).toBe("\\\\some\\directory\\file.txt");
     });
 
     it("should be able to extract the root with invalid separators", () => {
       expect(normalize(posix, "\\some\\directory/file.txt")).toBe("/some/directory/file.txt");
       expect(normalize(dos, "/some/directory\\file.txt")).toBe("\\some\\directory\\file.txt");
       expect(normalize(dos, "C:/some/directory\\file.txt")).toBe("C:\\some\\directory\\file.txt");
-      expect(normalize(unc, "//some/directory\\file.txt")).toBe("\\\\some\\directory\\file.txt");
     });
 
   });

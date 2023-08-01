@@ -23,15 +23,10 @@ const path = {
     const fromDirIsHome = normalizedFrom.startsWith("~");
     const toDirIsHome = normalizedTo.startsWith("~");
 
-    const fromRoot = getAbsoluteRoot(deps, normalizedFrom);
-    const toRoot = getAbsoluteRoot(deps, normalizedTo);
-    const cwdRoot = getAbsoluteRoot(deps, normalizedCwd);
-    const homeRoot = getAbsoluteRoot(deps, normalizedHome);
-
-    const fromWithoutRoot = normalizedFrom.slice(fromRoot.length);
-    const toWithoutRoot = normalizedTo.slice(toRoot.length);
-    const cwdWithoutRoot = normalizedCwd.slice(cwdRoot.length);
-    const homeWithoutRoot = normalizedHome.slice(homeRoot.length);
+    const { pathWithoutRoot: fromWithoutRoot, root: fromRoot } = extractRoot(deps, normalizedFrom);
+    const { pathWithoutRoot: toWithoutRoot, root: toRoot } = extractRoot(deps, normalizedTo);
+    const { pathWithoutRoot: cwdWithoutRoot, root: cwdRoot } = extractRoot(deps, normalizedCwd);
+    const { pathWithoutRoot: homeWithoutRoot, root: homeRoot } = extractRoot(deps, normalizedHome);
 
     const fromDirectory = getDirectory(deps, fromWithoutRoot);
     const toDirectory = getDirectory(deps, toWithoutRoot);
@@ -117,13 +112,21 @@ const path = {
       : `${root}${toFile}`;
 
   },
-  getAbsoluteRoot(deps: Dependencies, path: string): string {
+  extractRoot(deps: Dependencies, path: string): { pathWithoutRoot: string; root: string; } {
+    const [fullUnc, uncRoot] = path.match(/^\\?(\\\\)/) ?? [];
+    const [fullDos, dosRoot] = path.match(/^\\?([A-Za-z]:\\|^\\)/) ?? [];
+    const [fullPosix, posixRoot] = path.match(/^\/?(\/)/) ?? [];
 
-    const [dosRoot] = path.match(/^([A-Za-z]:\\|^\\)/) ?? [];
-    const [posixRoot] = path.match(/^(\/)/) ?? [];
-    const [uncRoot] = path.match(/^(\\\\)/) ?? [];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const root = uncRoot ?? dosRoot ?? posixRoot ?? "";
+    const fullRoot = fullUnc ?? fullDos ?? fullPosix ?? "";
 
-    return uncRoot ?? dosRoot ?? posixRoot ?? "";
+    const pathWithoutRoot = path.slice(fullRoot.length);
+
+    return {
+      pathWithoutRoot,
+      root
+    };
 
   },
   getDirectory(deps: Dependencies, path: string): string {
@@ -177,8 +180,9 @@ const path = {
     const maxOneAbsoluteSegment = segments.reduce<string[]>((acc, segment) => {
       if(isAbsolute(segment)){
         acc = [];
-        root = getAbsoluteRoot(deps, segment);
-        segment = segment.slice(root.length);
+        const extractedRoot = extractRoot(deps, segment);
+        root = extractedRoot.root;
+        segment = extractedRoot.pathWithoutRoot;
       }
       acc.push(segment);
       return acc;
@@ -218,21 +222,14 @@ const path = {
     const pathWithoutProtocols = path
       .replace(/^[A-Za-z]*:\/\//, "");
 
-    const pathWithoutLeadingSlashes = pathWithoutProtocols.replace(/^\/+/, "");
-    const windowsRoot = getAbsoluteRoot(deps, pathWithoutLeadingSlashes);
+    const pathWithCorrectedSeparators = pathWithoutProtocols
+      .replace(new RegExp(`\\${dosSeparator}`, "g"), separator)
+      .replace(new RegExp(`${posixSeparator}`, "g"), separator);
 
-    let preparedPath = pathWithoutProtocols;
-
-    if(windowsRoot !== ""){
-      preparedPath = pathWithoutLeadingSlashes;
-    }
-
-    const root = getAbsoluteRoot(deps, preparedPath);
+    const { pathWithoutRoot, root } = extractRoot(deps, pathWithCorrectedSeparators);
     const correctedRoot = root
-      .replace(new RegExp(`\\${dosSeparator}+`, "g"), separator)
-      .replace(new RegExp(`${posixSeparator}+`, "g"), separator);
-
-    const pathWithoutRoot = preparedPath.slice(correctedRoot.length);
+      .replace(new RegExp(`\\${dosSeparator}`, "g"), separator)
+      .replace(new RegExp(`${posixSeparator}`, "g"), separator);
 
     const pathWithNormalizedSeparators = pathWithoutRoot
       .replace(new RegExp(`\\${dosSeparator}+`, "g"), separator)
@@ -274,7 +271,7 @@ const path = {
 
 export const {
   absolute,
-  getAbsoluteRoot,
+  extractRoot,
   getDirectory,
   getFileExtension,
   getFileName,
