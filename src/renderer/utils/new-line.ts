@@ -4,7 +4,7 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 
 
 export function renderNewLine(ctx: MarkupRenderContexts): string {
-  const { EOL } = ctx.dependencies.os;
+  const { lineEndings } = ctx.dependencies.os;
   const renderConfig = getRenderConfig(ctx);
-  return renderConfig.newLine === "os" ? EOL : renderConfig.newLine;
+  return renderConfig.newLine === "os" ? lineEndings : renderConfig.newLine;
 }

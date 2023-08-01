@@ -9,7 +9,7 @@ export function compile(ctx: DefaultContext, code: string, tsconfig?: CompilerOp
 
   const ts = ctx.dependencies.ts;
   const logger = ctx.dependencies.logger;
-  const { EOL } = ctx.dependencies.os;
+  const { lineEndings } = ctx.dependencies.os;
 
   logger?.info("Invoking the TypeScript compiler to compile the provided code...");
 
@@ -24,7 +24,7 @@ export function compile(ctx: DefaultContext, code: string, tsconfig?: CompilerOp
     getCurrentDirectory: () => "/",
     getDefaultLibFileName: () => "node_modules/typescript/lib/lib.esnext.d.ts",
     getDirectories: () => [],
-    getNewLine: () => EOL,
+    getNewLine: () => lineEndings,
     getSourceFile: filePath =>
       filePath === dummyFilePath
         ? sourceFile

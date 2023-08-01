@@ -2,17 +2,23 @@ import type { OS } from "unwritten:type-definitions/os.js";
 
 
 function getEOL(): string {
-  const isWindows = window.navigator.userAgent.toLowerCase().includes("win");
-  return isWindows ? "\r\n" : "\n";
+  try {
+    const isWindows = window.navigator.userAgent.toLowerCase().includes("win");
+    return isWindows ? "\r\n" : "\n";
+  } catch {
+    return "\n";
+  }
 }
 
 const os: OS = {
-  EOL: getEOL()
+  homeDirectory: () => "/",
+  lineEndings: getEOL()
 };
 
 
 export const {
-  EOL
+  homeDirectory,
+  lineEndings
 } = os;
 
 export default os;

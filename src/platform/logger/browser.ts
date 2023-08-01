@@ -1,4 +1,4 @@
-import { EOL } from "unwritten:platform/os/node.js";
+import { lineEndings } from "unwritten:platform/os/node.js";
 
 
 export module logger {
@@ -16,7 +16,7 @@ export module logger {
     const bodyMessages = body ?? [];
 
     const title = `${badge}: ${titleOrMessage}`;
-    const messages = [title, ...bodyMessages].join(EOL);
+    const messages = [title, ...bodyMessages].join(lineEndings);
 
     console.warn(messages);
   }
@@ -30,7 +30,7 @@ export module logger {
     const bodyMessages = body ?? [];
 
     const title = `${badge}: ${titleOrMessage}`;
-    const messages = [title, ...bodyMessages].join(EOL);
+    const messages = [title, ...bodyMessages].join(lineEndings);
 
     console.log(messages);
   }

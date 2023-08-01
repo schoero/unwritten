@@ -1,146 +1,256 @@
+interface Dependencies {
+  cwd(): string;
+  homeDirectory(): string;
+  isAbsolute(path: string): boolean;
+  separator: string;
+}
+
 const path = {
-  absolute(from: string, to: string, cwd: string): string {
+  absolute(deps: Dependencies, from: string, to: string): string {
 
-    const normalizedFrom = normalize(from);
-    const normalizedTo = normalize(to);
-    const normalizedCwd = normalize(cwd);
+    const { isAbsolute, separator } = deps;
 
-    const fromDirectory = path.getDirectory(normalizedFrom);
-    const toDirectory = path.getDirectory(normalizedTo);
+    const normalizedFrom = normalize(deps, from);
+    const normalizedTo = normalize(deps, to);
+    const normalizedCwd = normalize(deps, deps.cwd());
+    const normalizedHome = normalize(deps, deps.homeDirectory());
 
-    const fromParts = fromDirectory
-      .split("/")
-      .filter(part => part !== "")
-      .filter(part => part !== ".");
-    const toParts = toDirectory
-      .split("/")
-      .filter(part => part !== "")
-      .filter(part => part !== ".");
-    const cwdParts = normalizedCwd
-      .split("/")
-      .filter(part => part !== "")
-      .filter(part => part !== ".");
+    const toFile = getFileName(deps, normalizedTo);
 
-    const fromParentDirs = fromParts.filter(part => part === "..").length;
-    const toParentDirs = toParts.filter(part => part === "..").length;
-
-    const fromDirIsAbsolute = normalizedFrom.startsWith("/");
-    const toDirIsAbsolute = normalizedTo.startsWith("/");
+    const fromDirIsAbsolute = isAbsolute(normalizedFrom);
+    const toDirIsAbsolute = isAbsolute(normalizedTo);
 
     const fromDirIsHome = normalizedFrom.startsWith("~");
     const toDirIsHome = normalizedTo.startsWith("~");
 
-    const absoluteStartDir = fromDirIsAbsolute
-      ? fromParts.slice(fromParentDirs)
+    const fromRoot = getAbsoluteRoot(deps, normalizedFrom);
+    const toRoot = getAbsoluteRoot(deps, normalizedTo);
+    const cwdRoot = getAbsoluteRoot(deps, normalizedCwd);
+    const homeRoot = getAbsoluteRoot(deps, normalizedHome);
+
+    const fromWithoutRoot = normalizedFrom.slice(fromRoot.length);
+    const toWithoutRoot = normalizedTo.slice(toRoot.length);
+    const cwdWithoutRoot = normalizedCwd.slice(cwdRoot.length);
+    const homeWithoutRoot = normalizedHome.slice(homeRoot.length);
+
+    const fromDirectory = getDirectory(deps, fromWithoutRoot);
+    const toDirectory = getDirectory(deps, toWithoutRoot);
+    const cwdDirectory = getDirectory(deps, cwdWithoutRoot);
+    const homeDirectory = getDirectory(deps, homeWithoutRoot);
+
+    const fromParts = fromDirectory
+      .split(separator)
+      .filter(part => part !== "" && part !== "." && part !== "~");
+    const toParts = toDirectory
+      .split(separator)
+      .filter(part => part !== "" && part !== "." && part !== "~");
+    const cwdParts = cwdDirectory
+      .split(separator)
+      .filter(part => part !== "" && part !== "." && part !== "~");
+    const homeParts = homeDirectory
+      .split(separator)
+      .filter(part => part !== "" && part !== "." && part !== "~");
+
+    const fromPartsWithoutUnnecessaryParentParts = fromParts.reduce<string[]>((acc, part) => {
+      if(part === ".." && acc.length > 0 && acc[0] !== ".."){
+        acc.pop();
+      } else {
+        acc.push(part);
+      }
+      return acc;
+    }, []);
+
+    const toPartsWithoutUnnecessaryParentParts = toParts.reduce<string[]>((acc, part) => {
+      if(part === ".." && acc.length > 0 && acc[0] !== ".."){
+        acc.pop();
+      } else {
+        acc.push(part);
+      }
+      return acc;
+    }, []);
+
+    const commonParts = fromDirIsAbsolute && toDirIsAbsolute || fromDirIsHome && toDirIsHome
+      ? fromPartsWithoutUnnecessaryParentParts.filter((dir, index) => dir === toPartsWithoutUnnecessaryParentParts[index])
+      : [];
+    const commonDirs = commonParts.length;
+
+    const absoluteFromParts = fromDirIsAbsolute
+      ? fromPartsWithoutUnnecessaryParentParts
       : fromDirIsHome
         ? [
-          ...cwdParts.slice(0, cwdParts.length - fromParentDirs),
-          ...fromParts.slice(fromParentDirs)
+          ...homeParts,
+          ...fromPartsWithoutUnnecessaryParentParts
         ]
         : [
-          ...cwdParts.slice(0, cwdParts.length - fromParentDirs),
-          ...fromParts.slice(fromParentDirs)
+          ...cwdParts,
+          ...fromPartsWithoutUnnecessaryParentParts
         ];
 
-    const absoluteToDir = toDirIsAbsolute
-      ? toParts.slice(toParentDirs)
+
+    const absoluteToParts = toDirIsAbsolute
+      ? toPartsWithoutUnnecessaryParentParts
       : toDirIsHome
         ? [
-          ...cwdParts.slice(0, cwdParts.length - toParentDirs),
-          ...toParts.slice(toParentDirs)
+          ...homeParts,
+          ...toPartsWithoutUnnecessaryParentParts
         ]
         : [
-          ...absoluteStartDir.slice(0, absoluteStartDir.length - toParentDirs),
-          ...toParts.slice(toParentDirs)
+          ...absoluteFromParts.slice(0, absoluteFromParts.length - commonDirs),
+          ...toPartsWithoutUnnecessaryParentParts
         ];
 
-    const toFile = path.getFileName(normalizedTo);
+    const absoluteToPartsWithoutUnnecessaryParentParts = absoluteToParts.reduce<string[]>((acc, part) => {
+      if(part === ".."){
+        acc.pop();
+      } else {
+        acc.push(part);
+      }
+      return acc;
+    }, []);
 
-    return absoluteToDir.length > 0
-      ? `/${absoluteToDir.join("/")}/${toFile}`
-      : `/${toFile}`;
+    const absoluteToPath = absoluteToPartsWithoutUnnecessaryParentParts.join(separator);
+
+    const root = toRoot || fromRoot || cwdRoot || homeRoot || separator;
+
+    return absoluteToPath.length > 0
+      ? `${root}${absoluteToPath}${separator}${toFile}`
+      : `${root}${toFile}`;
 
   },
-  getDirectory(path: string): string {
-    const normalizedPath = normalize(path);
-    if(normalizedPath === "/" || normalizedPath === "./"){
+  getAbsoluteRoot(deps: Dependencies, path: string): string {
+
+    const [dosRoot] = path.match(/^([A-Za-z]:\\|^\\)/) ?? [];
+    const [posixRoot] = path.match(/^(\/+)/) ?? [];
+    const [uncRoot] = path.match(/^(\\\\+)/) ?? [];
+
+    return uncRoot ?? dosRoot ?? posixRoot ?? "";
+
+  },
+  getDirectory(deps: Dependencies, path: string): string {
+
+    const { separator } = deps;
+
+    const normalizedPath = normalize(deps, path);
+
+    if(normalizedPath === separator || normalizedPath === `.${separator}`){
       return normalizedPath;
     }
 
     return normalizedPath
-      .split("/")
+      .split(separator)
       .slice(0, -1)
       .concat("")
-      .join("/");
+      .join(separator);
   },
-  getFileExtension(path: string): string {
-    const normalizedPath = normalize(path);
+  getFileExtension(deps: Dependencies, path: string): string {
+
+    const { separator } = deps;
+
+    const normalizedPath = normalize(deps, path);
     if(normalizedPath.includes(".") === false){
       return "";
     }
     const extension = normalizedPath.split(/\./).pop();
     return extension ? `.${extension}` : "";
   },
-  getFileName(path: string, includeExtension: boolean = true): string {
+  getFileName(deps: Dependencies, path: string, includeExtension: boolean = true): string {
 
-    const normalizedPath = normalize(path);
-    const fileNameWithExtension = normalizedPath.split("/").pop() ?? "";
+    const { separator } = deps;
+
+    const normalizedPath = normalize(deps, path);
+    const fileNameWithExtension = normalizedPath.split(separator).pop() ?? "";
 
     if(includeExtension === true){
       return fileNameWithExtension;
     }
 
-    const extension = getFileExtension(fileNameWithExtension);
+    const extension = getFileExtension(deps, fileNameWithExtension);
     return fileNameWithExtension.replace(extension, "");
 
   },
-  join(...segments: string[]): string {
-    const normalizedSegments = segments.map(normalize);
-    const root = normalizedSegments[0].startsWith("/") ? "/" : "";
-    const cleanedSegments = normalizedSegments
-      .map(
-        segment => segment.replace(/^\.+\/|^\/|\/$|^\/$/g, "")
-      )
-      .filter(
-        segment => segment !== ""
-      );
+  join(deps: Dependencies, ...segments: string[]): string {
 
-    return `${root}${cleanedSegments.join("/")}`;
+    const { isAbsolute, separator } = deps;
+
+    let root: string = "";
+
+    const maxOneAbsoluteSegment = segments.reduce<string[]>((acc, segment) => {
+      if(isAbsolute(segment)){
+        acc = [];
+        root = getAbsoluteRoot(deps, segment);
+        segment = segment.slice(root.length);
+      }
+      acc.push(segment);
+      return acc;
+    }, []);
+
+    const directorySegments = maxOneAbsoluteSegment.map((segment, index) => {
+      if(index === maxOneAbsoluteSegment.length - 1){
+        return segment;
+      }
+      return getDirectory(deps, segment);
+    });
+
+    const combinedSegments = directorySegments.join(separator);
+    const normalizedSegments = normalize(deps, combinedSegments);
+    const individualSegments = normalizedSegments.split(separator)
+      .filter(segment => segment !== "" && segment !== "." && segment !== "~");
+
+    const individualSegmentWithoutUnnecessaryParentPaths = individualSegments.reduce<string[]>((acc, part) => {
+      if(part === ".."){
+        acc.pop();
+      } else {
+        acc.push(part);
+      }
+      return acc;
+    }, []);
+
+    const joinedPath = individualSegmentWithoutUnnecessaryParentPaths.join(separator);
+
+    return `${root}${joinedPath}`;
   },
-  normalize(path: string): string {
+  normalize(deps: Dependencies, path: string): string {
+
+    const { separator } = deps;
+
     return path
       .replace(/^file:\/\//, "")
-      .replace(/^\/*[A-Za-z]:\\/, "/")
-      .replace(/\\/g, "/")
       .replace(/\/\//g, "/");
   },
-  relative(from: string, to: string, cwd: string): string {
+  relative(deps: Dependencies, from: string, to: string): string {
 
-    const absoluteStartDir = getDirectory(absolute(cwd, from, cwd)).split("/")
+    const { cwd, separator } = deps;
+
+    const absoluteCwd = cwd();
+
+    const absoluteStartDir = getDirectory(deps, absolute(deps, absoluteCwd, from)).split(separator)
       .filter(part => part !== "");
-    const absoluteToDir = getDirectory(absolute(from, to, cwd)).split("/")
+    const absoluteToDir = getDirectory(deps, absolute(deps, from, to)).split(separator)
       .filter(part => part !== "");
 
-    const commonDirs = absoluteStartDir.filter((dir, index) => dir === absoluteToDir[index]);
-    const relativeToParentDirs = absoluteStartDir.length - commonDirs.length;
+    const commonParts = absoluteStartDir.filter((dir, index) => dir === absoluteToDir[index]);
+    const commonDirs = commonParts.length;
+
+    const relativeToParentDirs = absoluteStartDir.length - commonDirs;
     const relativeToDir = relativeToParentDirs > 0
       ? [
         ...Array(relativeToParentDirs).fill(".."),
-        ...absoluteToDir.slice(commonDirs.length)
+        ...absoluteToDir.slice(commonDirs)
       ]
       : [
         "."
       ];
 
-    const toFile = path.getFileName(to);
+    const toFile = path.getFileName(deps, to);
 
-    return `${relativeToDir.join("/")}/${toFile}`;
+    return `${relativeToDir.join(separator)}${separator}${toFile}`;
 
   }
 };
 
 export const {
   absolute,
+  getAbsoluteRoot,
   getDirectory,
   getFileExtension,
   getFileName,

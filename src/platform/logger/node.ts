@@ -1,6 +1,6 @@
 import { stdout } from "node:process";
 
-import { EOL } from "unwritten:platform/os/node.js";
+import { lineEndings } from "unwritten:platform/os/node.js";
 import { name, version } from "unwritten:utils/package-json.entry.js";
 
 
@@ -31,13 +31,13 @@ export namespace logger {
     const stackOnly = err.stack?.replace(`${err.name}: ${err.message}`, "");
     const systemInfo = getSystemInfo();
 
-    println(`${EOL}${_bgRed}${_bold} ${err.name} ${_reset} ${red([
+    println(`${lineEndings}${_bgRed}${_bold} ${err.name} ${_reset} ${red([
       err.message,
       err.cause,
       stackOnly,
       ...systemInfo
     ].filter(message => !!message)
-      .join(EOL))}`);
+      .join(lineEndings))}`);
 
     process.exit(1);
 
@@ -61,7 +61,7 @@ export namespace logger {
     println([
       `${_bgYellow}${_bold} ${badge} ${_reset} ${titleOrMessage}`,
       ...bodyMessages
-    ].join(EOL));
+    ].join(lineEndings));
 
   }
 
@@ -78,7 +78,7 @@ export namespace logger {
     println([
       `${_bgGreen}${_bold} ${badge} ${_reset} ${titleOrMessage}`,
       ...bodyMessages
-    ].join(EOL));
+    ].join(lineEndings));
 
   }
 
@@ -148,7 +148,7 @@ function print(message: string): void {
 
 function println(message: string): void {
   print(message);
-  print(EOL);
+  print(lineEndings);
 }
 
 export default logger;

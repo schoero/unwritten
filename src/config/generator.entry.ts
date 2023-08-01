@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node.js";
-import { absolute, getDirectory } from "unwritten:platform/path/node.js";
+import { absolute, getDirectory, join } from "unwritten:platform/path/node.js";
 import { cwd } from "unwritten:platform/process/node.js";
 
 import { getDefaultConfig } from "./config.js";
@@ -15,7 +15,7 @@ export async function generateConfig(path?: string, options?: Options) {
   const outputName = ".unwritten.json";
   const outputDir = path ? getDirectory(path) : cwd();
   const resolvedOutputDir = absolute(outputDir);
-  const resolvedOutputFilePath = `${resolvedOutputDir}/${outputName}`;
+  const resolvedOutputFilePath = join(resolvedOutputDir, outputName);
 
   if(existsSync(resolvedOutputFilePath) === true){
     throw new Error(`Configuration file already exists at ${resolvedOutputFilePath}.`);

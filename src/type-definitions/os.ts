@@ -1,3 +1,4 @@
 export interface OS {
-  EOL: string;
+  homeDirectory(): string;
+  lineEndings: string;
 }

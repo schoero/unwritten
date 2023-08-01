@@ -15,7 +15,7 @@ export function getDefaultCompilerOptions(ctx: DefaultContext): CompilerOptions 
 
 export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: readonly Diagnostic[]) {
 
-  const { EOL } = ctx.dependencies.os;
+  const { lineEndings } = ctx.dependencies.os;
 
   const ts = ctx.dependencies.ts;
   const logger = ctx.dependencies.logger;
@@ -30,18 +30,18 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
 
   diagnostics.forEach(diagnostic => {
 
-    const message: string = ts.flattenDiagnosticMessageText(diagnostic.messageText, EOL);
+    const message: string = ts.flattenDiagnosticMessageText(diagnostic.messageText, lineEndings);
 
     if(diagnostic.file){
 
       const location: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
 
-      const sourceFile = diagnostic.file.text.split(EOL);
+      const sourceFile = diagnostic.file.text.split(lineEndings);
       const minLine = Math.max(location.line - 2, 0);
       const maxLine = Math.min(location.line + 3, sourceFile.length);
       const maxLineNumberLength = (maxLine + 1).toString().length;
       const linesAround = sourceFile.slice(minLine, maxLine);
-      const commonIndentation = findCommonIndentation(linesAround.join(EOL), EOL);
+      const commonIndentation = findCommonIndentation(linesAround.join(lineEndings), lineEndings);
       const cleanedLinesAround = linesAround.map(line => {
         return removeCommonIndentation(line, commonIndentation);
       });

@@ -1,14 +1,16 @@
-import { EOL as nodeEOL } from "node:os";
+import { EOL as nodeEOL, homedir } from "node:os";
 
 import type { OS } from "unwritten:type-definitions/os.js";
 
 
 const os: OS = {
-  EOL: nodeEOL
+  homeDirectory: homedir,
+  lineEndings: nodeEOL
 };
 
 export const {
-  EOL
+  homeDirectory,
+  lineEndings
 } = os;
 
 export default os;
