@@ -1,7 +1,7 @@
 import { assert, expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createClassEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { createClassEntity, createInterfaceEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:utils/template.js";
@@ -36,7 +36,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       export class Base<T> {
         prop: T;
       }
-      export class Class extends Base<"Hello"> { }
+      export class Class extends Base<"test"> { }
     `;
 
     const { ctx, exportedSymbols } = compile(testFileContent);
@@ -44,19 +44,54 @@ scope("Interpreter", TypeKind.Expression, () => {
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
 
-    it("should support type arguments", () => {
+    it("should support type arguments in class heritage clauses", () => {
       expect(exportedClass.heritage).toBeDefined();
       expect(exportedClass.heritage!.typeArguments).toBeDefined();
       expect(exportedClass.heritage!.typeArguments).toHaveLength(1);
       expect(exportedClass.heritage!.typeArguments![0]!.kind).toBe(TypeKind.StringLiteral);
     });
 
-    it("should resolve type parameters with the supplied type arguments", () => {
+    it("should resolve properties based on a type argument of a class heritage clause", () => {
       expect(exportedClass.heritage).toBeDefined();
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).toBeDefined();
       expect(exportedClass.heritage!.instanceType.properties).toHaveLength(1);
-      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.StringLiteral);
+      assert(exportedClass.heritage!.instanceType.properties[0].type.kind === TypeKind.TypeReference);
+      expect(exportedClass.heritage!.instanceType.properties[0].type.type?.kind).toBe(TypeKind.StringLiteral);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      interface Base<T> {
+        prop: T;
+      }
+      export interface Interface extends Base<"test"> {
+      }
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
+    const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
+
+    it("should support type arguments in interface heritage clauses", () => {
+      expect(exportedInterface.heritage).toBeDefined();
+      expect(exportedInterface.heritage!).toHaveLength(1);
+      expect(exportedInterface.heritage![0].typeArguments).toHaveLength(1);
+      expect(exportedInterface.heritage![0].typeArguments![0]!.kind).toBe(TypeKind.StringLiteral);
+    });
+
+    it("should resolve properties based on a type argument of a interface heritage clause", () => {
+      expect(exportedInterface.heritage).toBeDefined();
+      expect(exportedInterface.heritage!).toHaveLength(1);
+      assert(exportedInterface.heritage![0].instanceType.kind === TypeKind.Object);
+      expect(exportedInterface.heritage![0].instanceType.properties).toBeDefined();
+      expect(exportedInterface.heritage![0].instanceType.properties).toHaveLength(1);
+      assert(exportedInterface.heritage![0].instanceType.properties[0].type.kind === TypeKind.TypeReference);
+      expect(exportedInterface.heritage![0].instanceType.properties[0].type.type?.kind).toBe(TypeKind.StringLiteral);
     });
 
   }
@@ -162,7 +197,8 @@ scope("Interpreter", TypeKind.Expression, () => {
       assert(exportedClass.heritage!.instanceType.kind === TypeKind.Object);
       expect(exportedClass.heritage!.instanceType.properties).toBeDefined();
       expect(exportedClass.heritage!.instanceType.properties).toHaveLength(1);
-      expect(exportedClass.heritage!.instanceType.properties[0].type.kind).toBe(TypeKind.StringLiteral);
+      assert(exportedClass.heritage!.instanceType.properties[0].type.kind === TypeKind.TypeReference);
+      expect(exportedClass.heritage!.instanceType.properties[0].type.type?.kind).toBe(TypeKind.StringLiteral);
     });
 
   }

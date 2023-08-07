@@ -1,8 +1,4 @@
-import {
-  getDeclaredType,
-  getResolvedTypeBySymbol,
-  getTypeByDeclaredOrResolvedType
-} from "unwritten:interpreter/ast/index.js";
+import { getTypeByDeclaration, getTypeBySymbol } from "unwritten:interpreter/ast/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
@@ -48,26 +44,14 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
     `Property signature not found ${declaration?.kind}`
   );
 
-
   const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
 
-  const fromDeclaration = declaration
-    ? parsePropertyDeclaration(ctx, declaration)
-    : <Record<string, any>>{};
-
-  const resolvedType = getResolvedTypeBySymbol(ctx, symbol, declaration);
-  const declaredType = declaration &&
-    !isPropertyAssignment(ctx, declaration) &&
-    !isShorthandPropertyAssignment(ctx, declaration) &&
-    declaration.type
-    ? getDeclaredType(ctx, declaration.type)
-    : resolvedType;
-
-  const type = getTypeByDeclaredOrResolvedType(declaredType, resolvedType);
+  const fromDeclaration = declaration && interpretPropertyDeclaration(ctx, declaration);
+  const type = getTypeBySymbol(ctx, symbol, declaration);
 
   // Partial<{ a: string }> modifiers or custom implementations of that will set the symbol.flags
-  const optional = fromDeclaration.optional || isSymbolOptional(ctx, symbol);
+  const optional = !!fromDeclaration?.optional || isSymbolOptional(ctx, symbol);
   const kind = EntityKind.Property;
 
   return {
@@ -82,7 +66,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
 }
 
 
-function parsePropertyDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature | ShorthandPropertyAssignment) { // ParameterDeclaration can also be a property when defined in a constructor
+function interpretPropertyDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature | ShorthandPropertyAssignment) { // ParameterDeclaration can also be a property when defined in a constructor
 
   const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
@@ -91,6 +75,7 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const initializer = getInitializerByDeclaration(ctx, declaration);
+  const type = getTypeByDeclaration(ctx, declaration);
 
   const optional = isPropertyAssignment(ctx, declaration) || isShorthandPropertyAssignment(ctx, declaration)
     ? undefined
@@ -108,7 +93,8 @@ function parsePropertyDeclaration(ctx: InterpreterContext, declaration: Paramete
     modifiers,
     name,
     optional,
-    position
+    position,
+    type
   };
 
 }

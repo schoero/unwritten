@@ -1,4 +1,4 @@
-import { getDeclaredType, getResolvedTypeByType } from "unwritten:interpreter/ast/index.js";
+import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 
@@ -11,7 +11,7 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 export function createUnionType(ctx: InterpreterContext, type: TSUnionType): UnionType {
 
   const typeId = getTypeId(ctx, type);
-  const types = type.types.map(type => getResolvedTypeByType(ctx, type));
+  const types = type.types.map(type => getTypeByType(ctx, type));
   const kind = TypeKind.Union;
 
   return {
@@ -26,7 +26,7 @@ export function createUnionTypeByTypeNode(ctx: InterpreterContext, typeNode: Uni
 
   const type = ctx.checker.getTypeFromTypeNode(typeNode) as TSUnionType;
   const typeId = getTypeId(ctx, type);
-  const types = typeNode.types.map(typeNode => getDeclaredType(ctx, typeNode));
+  const types = typeNode.types.map(typeNode => getTypeByTypeNode(ctx, typeNode));
   const kind = TypeKind.Union;
 
   return {

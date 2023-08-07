@@ -4,12 +4,12 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import {
   createClassEntity,
-  createInterfaceEntity,
   createTypeAliasEntity,
   createVariableEntity
 } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isObjectType, isStringLiteralType, isTypeReferenceType } from "unwritten:typeguards/types.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -226,28 +226,25 @@ scope("Interpreter", EntityKind.Property, () => {
   {
 
     const testFileContent = ts`
-      type Test = string;
-      interface Base<T extends string> {
+      interface Interface<T extends string> {
         prop: T;
-        test: Test;
       }
-      export interface Interface extends Base<"hello"> {
-      }
+      export type ResolvedType = Interface<"hello">;
     `;
 
     const { ctx, exportedSymbols } = compile(testFileContent);
 
-    const exportedInterfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
-    const exportedInterface = createInterfaceEntity(ctx, exportedInterfaceSymbol);
+    const symbol = exportedSymbols.find(s => s.name === "ResolvedType")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    it("should resolve instantiated types", () => {
-      assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.Object);
-      expect(exportedInterface.heritage![0]!.instanceType.properties[0]!.type.kind).toBe(TypeKind.StringLiteral);
-    });
-
-    it("should not resolve not instantiated types", () => {
-      assert(exportedInterface.heritage![0]!.instanceType.kind === TypeKind.Object);
-      expect(exportedInterface.heritage![0]!.instanceType.properties[1]!.type.kind).toBe(TypeKind.TypeReference);
+    it("should resolve instantiated property type references", () => {
+      assert(isTypeReferenceType(exportedTypeAlias.type));
+      assert(isObjectType(exportedTypeAlias.type.type!));
+      expect(exportedTypeAlias.type.type.properties).toHaveLength(1);
+      expect(exportedTypeAlias.type.type.properties[0].name).toBe("prop");
+      assert(isTypeReferenceType(exportedTypeAlias.type.type.properties[0].type));
+      assert(isStringLiteralType(exportedTypeAlias.type.type.properties[0].type.type!));
+      expect(exportedTypeAlias.type.type.properties[0].type.type.value).toBe("hello");
     });
 
   }

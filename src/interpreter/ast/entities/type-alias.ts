@@ -1,5 +1,5 @@
 import { createTypeParameterEntityByDeclaration } from "unwritten:interpreter/ast/entities/index.js";
-import { getDeclaredType } from "unwritten:interpreter/ast/index.js";
+import { getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
@@ -26,7 +26,9 @@ export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): 
   const declarationId = getDeclarationId(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
-  const type = getDeclaredType(ctx, declaration.type);
+
+  // Getting the resolved type via symbol or declaration results in an error type
+  const type = getTypeByTypeNode(ctx, declaration.type);
   const kind = EntityKind.TypeAlias;
 
   const typeParameters = declaration.typeParameters?.map(

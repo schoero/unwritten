@@ -1,14 +1,10 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { isOptionalTypeNode, isRestTypeNode, isTupleTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
-import {
-  getDeclaredType,
-  getResolvedTypeByTypeNode,
-  getTypeByDeclaredOrResolvedType
-} from "unwritten:interpreter:ast/index.js";
+import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
+import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionByNode } from "unwritten:interpreter:ast/shared/position.js";
+import { getNameByDeclaration, getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
+import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
 import { isNamedTupleMember, isTupleTypeReferenceType } from "unwritten:interpreter:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
 
@@ -21,42 +17,76 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeReference: TupleTypeReference): TupleType {
 
-  const typeNode = typeReference.node as TupleTypeNode;
+  const { ts } = ctx.dependencies;
 
-  assert(isTupleTypeNode(ctx, typeNode), "Type node is not a tuple type node");
+  const tupleType = typeReference.target;
 
-  const members = typeNode.elements.map(element => createTupleTypeMember(ctx, element));
-  const position = getPositionByNode(ctx, typeNode);
-  const id = getTypeId(ctx, typeReference);
+  const members = typeReference.typeArguments?.map((typeArgument, index) => {
+
+    const type = getTypeByType(ctx, typeArgument);
+
+    const typeId = getTypeId(ctx, typeArgument);
+    const elementFlag = typeReference.target.elementFlags[index];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const optional = (elementFlag && elementFlag & ts.ElementFlags.Optional) !== 0;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const rest = (elementFlag && elementFlag & ts.ElementFlags.Rest) !== 0;
+    const labelDeclaration = typeReference.target.labeledElementDeclarations?.[index];
+    const name = labelDeclaration && getNameByDeclaration(ctx, labelDeclaration);
+    const kind = EntityKind.TupleMember;
+
+    return <TupleMemberEntity>{
+      kind,
+      name,
+      optional,
+      rest,
+      type,
+      typeId
+    };
+
+  }) ?? [];
+
+  const position = getPositionByType(ctx, tupleType);
+  const typeId = getTypeId(ctx, tupleType);
   const kind = TypeKind.Tuple;
 
   return {
     kind,
     members,
     position,
-    typeId: id
+    typeId
   };
 
 }
 
 
-export function createTupleByTupleTypeNode(ctx: InterpreterContext, tupleTypeNode: TupleTypeNode): TupleType {
-  const type = ctx.checker.getTypeFromTypeNode(tupleTypeNode);
+export function createTupleByTupleTypeNode(ctx: InterpreterContext, typeNode: TupleTypeNode): TupleType {
+
+  const type = ctx.checker.getTypeFromTypeNode(typeNode);
   assert(isTupleTypeReferenceType(ctx, type), "Type is not a type reference");
-  return createTupleTypeByTypeReference(ctx, type);
+
+  const members = typeNode.elements.map(element => createTupleTypeMemberByTypeNode(ctx, element));
+  const position = getPositionByNode(ctx, typeNode);
+  const typeId = getTypeId(ctx, type);
+  const kind = TypeKind.Tuple;
+
+  return {
+    kind,
+    members,
+    position,
+    typeId
+  };
+
 }
 
 
-function createTupleTypeMember(ctx: InterpreterContext, typeNode: NamedTupleMember | TypeNode) {
+function createTupleTypeMemberByTypeNode(ctx: InterpreterContext, typeNode: NamedTupleMember | TypeNode) {
 
   const name = isNamedTupleMember(ctx, typeNode)
     ? getNameByTypeNode(ctx, typeNode.name)
     : undefined;
 
-  const resolvedType = getResolvedTypeByTypeNode(ctx, typeNode);
-  const declaredType = getDeclaredType(ctx, typeNode);
-  const type = getTypeByDeclaredOrResolvedType(declaredType, resolvedType);
-
+  const type = getTypeByTypeNode(ctx, typeNode);
   const optional = isOptionalTypeNode(ctx, typeNode);
   const rest = isRestTypeNode(ctx, typeNode);
   const kind = EntityKind.TupleMember;

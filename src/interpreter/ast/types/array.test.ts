@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/array-type */
 
-import { assert, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createTypeAliasEntity, createVariableEntity } from "unwritten:interpreter:ast/entities/index.js";
+import {
+  createInterfaceEntity,
+  createTypeAliasEntity,
+  createVariableEntity
+} from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:utils/template.js";
@@ -85,5 +89,37 @@ scope("Interpreter", TypeKind.Array, () => {
     });
 
   }
+
+  describe("array types", () => {
+
+    const testFileContent = ts`
+      type Resolved<T extends string> = T;
+      export interface Test {
+        native: Resolved<"test">[];
+        generic: Array<Resolved<"test">>;
+      }
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Test")!;
+    const exportedVariable = createInterfaceEntity(ctx, symbol);
+
+    const native = exportedVariable.properties.find(property => property.name === "native")!.type;
+    const generic = exportedVariable.properties.find(property => property.name === "generic")!.type;
+
+    it("should resolve instantiated types in native arrays", () => {
+      assert(native.kind === TypeKind.Array);
+      assert(native.type.kind === TypeKind.TypeReference);
+      expect(native.type.type?.kind).toBe(TypeKind.StringLiteral);
+    });
+
+    it("should resolve instantiated types in generic arrays", () => {
+      assert(generic.kind === TypeKind.TypeReference);
+      assert(generic.typeArguments?.[0]?.kind === TypeKind.TypeReference);
+      expect(generic.typeArguments[0]?.type?.kind).toBe(TypeKind.StringLiteral);
+    });
+
+  });
 
 });

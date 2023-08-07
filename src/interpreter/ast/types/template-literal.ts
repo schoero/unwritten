@@ -1,8 +1,4 @@
-import {
-  getDeclaredType,
-  getResolvedTypeByTypeNode,
-  getTypeByDeclaredOrResolvedType
-} from "unwritten:interpreter/ast/index.js";
+import { getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 
@@ -17,11 +13,7 @@ export function createTemplateLiteralType(ctx: InterpreterContext, typeNode: Tem
   const typeId = getIdByTypeNode(ctx, typeNode);
   const head = typeNode.head.text;
   const spans = typeNode.templateSpans.map(span => span.literal.text);
-  const types = typeNode.templateSpans.map(span => {
-    const declaredType = getDeclaredType(ctx, span.type);
-    const resolvedType = getResolvedTypeByTypeNode(ctx, span.type);
-    return getTypeByDeclaredOrResolvedType(declaredType, resolvedType);
-  });
+  const types = typeNode.templateSpans.map(span => getTypeByTypeNode(ctx, span.type));
   const kind = TypeKind.TemplateLiteral;
 
   return {

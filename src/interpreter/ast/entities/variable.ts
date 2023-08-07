@@ -1,9 +1,5 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import {
-  getDeclaredType,
-  getResolvedTypeBySymbol,
-  getTypeByDeclaredOrResolvedType
-} from "unwritten:interpreter:ast/index.js";
+import { getTypeByDeclaration } from "unwritten:interpreter:ast/index.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
@@ -31,13 +27,7 @@ export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): V
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const declarationId = getDeclarationId(ctx, declaration);
-
-  const declaredType = declaration.type && getDeclaredType(ctx, declaration.type);
-  const resolvedType = getResolvedTypeBySymbol(ctx, symbol, declaration);
-  const type = declaredType
-    ? getTypeByDeclaredOrResolvedType(declaredType, resolvedType)
-    : resolvedType;
-
+  const type = getTypeByDeclaration(ctx, declaration);
   const kind = EntityKind.Variable;
 
   return {

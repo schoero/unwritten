@@ -261,30 +261,4 @@ scope("Interpreter", EntityKind.Interface, () => {
 
   }
 
-  {
-
-    const testFileContent = ts`
-      interface Interface<T extends string> {
-        prop: T;
-      }
-      export type InterfaceType = Interface<"hello">;
-    `;
-
-    const { ctx, exportedSymbols } = compile(testFileContent);
-
-    const symbol = exportedSymbols.find(s => s.name === "InterfaceType")!;
-    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
-
-    assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-    assert(exportedTypeAlias.type.type?.kind === TypeKind.Object);
-
-    const objectType = exportedTypeAlias.type.type;
-
-    it("should support type arguments", () => {
-      expect(objectType.properties).toHaveLength(1);
-      expect(objectType.properties[0]!.type.kind).toBe(TypeKind.StringLiteral);
-    });
-
-  }
-
 });

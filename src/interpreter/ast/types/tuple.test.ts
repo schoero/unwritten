@@ -118,8 +118,8 @@ scope("Interpreter", TypeKind.Tuple, () => {
   {
 
     const testFileContent = ts`
-      type Test = string;
-      export type TupleType = [Test, number];
+      type Generic<T> = T;
+      export type TupleType = [Generic<"test">];
     `;
 
     const { ctx, exportedSymbols } = compile(testFileContent);
@@ -129,9 +129,9 @@ scope("Interpreter", TypeKind.Tuple, () => {
 
     it("should resolve types correctly", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Tuple);
-      expect(exportedTypeAlias.type.members).toHaveLength(2);
-      expect(exportedTypeAlias.type.members[0]!.type.kind).toBe(TypeKind.TypeReference);
-      expect(exportedTypeAlias.type.members[1]!.type.kind).toBe(TypeKind.Number);
+      expect(exportedTypeAlias.type.members).toHaveLength(1);
+      assert(exportedTypeAlias.type.members[0]!.type.kind === TypeKind.TypeReference);
+      expect(exportedTypeAlias.type.members[0]!.type.type?.kind).toBe(TypeKind.StringLiteral);
     });
 
   }

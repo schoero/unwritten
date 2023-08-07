@@ -1,9 +1,9 @@
 import { readFileSync } from "unwritten:platform/file-system/node.js";
-import { absolute, getDirectory, normalize } from "unwritten:platform/path/node.js";
+import { absolute, getDirectory } from "unwritten:platform/path/node.js";
 import { assert } from "unwritten:utils:general.js";
 
 
-const currentDirectoryPath = getDirectory(normalize(import.meta.url));
+const currentDirectoryPath = getDirectory(import.meta.url);
 const packageJsonPath = absolute(currentDirectoryPath, "../../package.json");
 const packageJson = JSON.parse(readFileSync(packageJsonPath));
 

@@ -5,11 +5,11 @@
   * [ ] Type parameters
   * [ ] Type queries?
   * [ ] Conditional types?
-* [ ] Allow multiple entry points
-  * [ ] Via CLI
+* [x] Allow multiple entry points
+  * [x] Via CLI
   * [ ] Via API
     * [ ] Auto create from namespace exports (`export * from './other-module.js'`)
-    * [ ] Shared types should be able to get linked from the other entry points
+    * [x] Shared types should be able to get linked from the other entry points
 * [ ] Check if instanceType and staticType are really necessary
 * [ ] Parse and render type assertions
 * [ ] Add event property tags

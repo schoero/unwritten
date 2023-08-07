@@ -1,5 +1,6 @@
 import { createCircularEntity, createUnresolvedEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
+import { isDeclaration } from "unwritten:interpreter/typeguards/declarations.js";
 import { isSymbolLocked } from "unwritten:interpreter/utils/locker.js";
 import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import {
@@ -70,6 +71,7 @@ import {
   isNamespaceExportSymbol,
   isNamespaceSymbol,
   isSourceFileSymbol,
+  isSymbol,
   isTypeAliasSymbol,
   isTypeParameterSymbol,
   isVariableSymbol
@@ -82,19 +84,21 @@ import {
   isMappedTypeNode,
   isTemplateLiteralTypeNode,
   isTupleTypeNode,
+  isTypeNode,
   isTypeQueryNode,
   isTypeReferenceNode,
   isUnionTypeNode
 } from "unwritten:interpreter:typeguards/type-nodes.js";
 import {
   isAnyType,
-  isArrayType,
+  isArrayTypeReferenceType,
   isBigIntLiteralType,
   isBigIntType,
   isBooleanLiteralType,
   isBooleanType,
   isClassType,
   isConditionalType,
+  isErrorType,
   isFunctionLikeType,
   isIndexedAccessType,
   isInterfaceType,
@@ -109,6 +113,7 @@ import {
   isStringType,
   isSymbolType,
   isTupleTypeReferenceType,
+  isType,
   isTypeLiteralType,
   isTypeParameterType,
   isUndefinedType,
@@ -116,14 +121,19 @@ import {
   isUnknownType,
   isVoidType
 } from "unwritten:interpreter:typeguards/types.js";
-import { isTypeReferenceType } from "unwritten:typeguards/types.js";
+import { isArrayType, isTypeReferenceType } from "unwritten:typeguards/types.js";
 import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
 import type { Declaration, ObjectType as TSObjectType, Symbol, Type as TSType, TypeNode } from "typescript";
 
 import type { Entity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Type } from "unwritten:interpreter:type-definitions/types.js";
+import type {
+  DeclaredType,
+  ResolvedType,
+  Type,
+  TypeReferenceType
+} from "unwritten:interpreter:type-definitions/types.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
@@ -180,46 +190,164 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Entity
 
 }
 
-export function getResolvedTypeBySymbol(ctx: InterpreterContext, symbol: Symbol, declaration?: Declaration): Type {
-  const type = declaration
-    ? ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration)
-    : ctx.checker.getTypeOfSymbol(symbol);
 
-  return getResolvedTypeByType(ctx, type);
+function getSymbolByDeclaration(ctx: InterpreterContext, declaration: Declaration): Symbol | undefined {
+  const symbol = ctx.checker.getSymbolAtLocation(declaration);
+
+  if(symbol){
+    return symbol;
+  }
+
+  if("symbol" in declaration && declaration.symbol){
+    return declaration.symbol as Symbol;
+  }
+
 }
 
-export function getResolvedTypeByType(ctx: InterpreterContext, type: TSType): Type {
-  return interpretType(ctx, type);
+function getTypeNodeByDeclaration(ctx: InterpreterContext, declaration: Declaration): TypeNode | undefined {
+  if("type" in declaration && declaration.type){
+    return declaration.type as TypeNode;
+  }
 }
 
-export function getResolvedTypeByTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
-  const type = ctx.checker.getTypeFromTypeNode(typeNode);
-  return getResolvedTypeByType(ctx, type);
+
+export function getResolvedTypeByDeclaration(ctx: InterpreterContext, declaration: Declaration): ResolvedType {
+  return {
+    ...interpretType(ctx, ctx.checker.getTypeAtLocation(declaration)),
+    brand: "resolved"
+  };
 }
 
-export function getDeclaredType(ctx: InterpreterContext, typeNode: TypeNode): Type {
-  return interpretTypeNode(ctx, typeNode);
+export function getResolvedTypeBySymbol(ctx: InterpreterContext, symbol: Symbol, declaration?: Declaration): ResolvedType {
+  return {
+    ...declaration
+      ? getTypeByType(ctx, ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration))
+      : getTypeByType(ctx, ctx.checker.getTypeOfSymbol(symbol)),
+    brand: "resolved"
+  };
+
 }
 
-export function getTypeByDeclaredOrResolvedType(declaredType: Type, resolvedType: Type): Type {
+export function getResolvedTypeByTypeNode(ctx: InterpreterContext, typeNode: TypeNode): ResolvedType {
+  return {
+    ...interpretType(ctx, ctx.checker.getTypeFromTypeNode(typeNode)),
+    brand: "resolved"
+  };
+}
 
-  if(!isTypeReferenceType(declaredType)){
+export function getResolvedTypeByType(ctx: InterpreterContext, type: TSType): ResolvedType {
+  return {
+    ...interpretType(ctx, type),
+    brand: "resolved"
+  };
+}
+
+export function getDeclaredTypeByTypeNode(ctx: InterpreterContext, typeNode: TypeNode): DeclaredType {
+  return {
+    ...interpretTypeNode(ctx, typeNode),
+    brand: "declared"
+  };
+}
+
+export function getTypeByType(ctx: InterpreterContext, type: TSType): Type {
+  const resolvedType = getResolvedTypeByType(ctx, type);
+  return getTypeByResolvedAndDeclaredType(ctx, resolvedType);
+}
+
+export function getTypeByTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
+  const declaredType = getDeclaredTypeByTypeNode(ctx, typeNode);
+  const resolvedType = getResolvedTypeByTypeNode(ctx, typeNode);
+  return getTypeByResolvedAndDeclaredType(ctx, resolvedType, declaredType);
+}
+
+export function getTypeBySymbol(ctx: InterpreterContext, symbol: Symbol, declaration?: Declaration): Type {
+  const typeNode = declaration && getTypeNodeByDeclaration(ctx, declaration);
+  const declaredType = typeNode && getDeclaredTypeByTypeNode(ctx, typeNode);
+  const resolvedType = getResolvedTypeBySymbol(ctx, symbol, declaration);
+  return getTypeByResolvedAndDeclaredType(ctx, resolvedType, declaredType);
+}
+
+export function getTypeByDeclaration(ctx: InterpreterContext, declaration: Declaration): Type {
+  const typeNode = getTypeNodeByDeclaration(ctx, declaration);
+  const declaredType = typeNode && getDeclaredTypeByTypeNode(ctx, typeNode);
+  const resolvedType = getResolvedTypeByDeclaration(ctx, declaration);
+  return getTypeByResolvedAndDeclaredType(ctx, resolvedType, declaredType);
+}
+
+/**
+ * Overrides the type of a type reference with the resolved type.
+ * @param ctx The interpreter context
+ * @param resolvedType The resolved type
+ * @param declaredType The declared type
+ * @returns The type to use
+ */
+export function getTypeByResolvedAndDeclaredType(ctx: InterpreterContext, resolvedType: ResolvedType, declaredType?: DeclaredType): Type {
+
+  const { brand: _resolvedBrand, ...resolvedTypeWithoutBrand } = resolvedType;
+
+  if(!declaredType){
+    return resolvedTypeWithoutBrand;
+  }
+
+  const { brand: _declaredBrand, ...declaredTypeWithoutBrand } = declaredType;
+
+  if(isTypeReferenceType(declaredType)){
+    return <TypeReferenceType>{
+      ...declaredTypeWithoutBrand,
+      type: resolvedTypeWithoutBrand
+    };
+  }
+
+  return declaredTypeWithoutBrand;
+
+}
+
+
+function _getType(ctx: InterpreterContext, type: TSType): Type;
+function _getType(ctx: InterpreterContext, typeNode: TypeNode): Type;
+function _getType(ctx: InterpreterContext, declaration: Declaration): Type;
+function _getType(ctx: InterpreterContext, symbol: Symbol, declaration?: Declaration): Type;
+function _getType(ctx: InterpreterContext, typeNodeOrSymbolOrDeclaration: Declaration | Symbol | TSType | TypeNode, declarationOrUndefined?: Declaration): Type {
+
+  const declaration = isDeclaration(ctx, typeNodeOrSymbolOrDeclaration) ? typeNodeOrSymbolOrDeclaration : declarationOrUndefined;
+  const symbol = isSymbol(ctx, typeNodeOrSymbolOrDeclaration) ? typeNodeOrSymbolOrDeclaration : declaration && getSymbolByDeclaration(ctx, declaration);
+  const typeNode = isTypeNode(ctx, typeNodeOrSymbolOrDeclaration) ? typeNodeOrSymbolOrDeclaration : declaration && getTypeNodeByDeclaration(ctx, declaration);
+  const type = isType(ctx, typeNodeOrSymbolOrDeclaration) ? typeNodeOrSymbolOrDeclaration : undefined;
+
+  const tsTypeFromTypeNode = typeNode && ctx.checker.getTypeFromTypeNode(typeNode);
+  const tsTypeFromDeclaration = declaration && ctx.checker.getTypeAtLocation(declaration);
+  const tsTypeFromSymbolAndDeclaration = symbol && declaration && ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration);
+  const tsTypeFromSymbol = symbol && ctx.checker.getTypeOfSymbol(symbol);
+
+  /*
+   * Getting the type via symbol or declaration returns an error type on type aliases for some reason.
+   * but it is often times more specific than the type from the type node.
+   */
+  const tsResolvedType = type && !isErrorType(ctx, type)
+    ? type
+    : tsTypeFromSymbolAndDeclaration && !isErrorType(ctx, tsTypeFromSymbolAndDeclaration)
+      ? tsTypeFromSymbolAndDeclaration
+      : tsTypeFromDeclaration && !isErrorType(ctx, tsTypeFromDeclaration)
+        ? tsTypeFromDeclaration
+        : tsTypeFromSymbol && !isErrorType(ctx, tsTypeFromSymbol)
+          ? tsTypeFromSymbol
+          : tsTypeFromTypeNode && !isErrorType(ctx, tsTypeFromTypeNode) ? tsTypeFromTypeNode : undefined;
+
+  const resolvedType = tsResolvedType && interpretType(ctx, tsResolvedType);
+
+  /*
+   * The resolved type from a type reference is not always correct. Sometimes the actual values get lost if the reference
+   * doesn't contain the type argument directly. So we need to override it with the resolved type from the symbol.
+   */
+  if(typeNode){
+    const declaredType = interpretTypeNode(ctx, typeNode);
+    if(isTypeReferenceType(declaredType)){
+      declaredType.type = resolvedType;
+    }
     return declaredType;
   }
 
-  if(!declaredType.type){
-    return declaredType;
-  }
-
-  if(isTypeReferenceType(declaredType.type)){
-    return getTypeByDeclaredOrResolvedType(declaredType.type, resolvedType);
-  }
-
-  if(declaredType.type.typeId === resolvedType.typeId){
-    return declaredType;
-  }
-
-  return resolvedType;
+  return resolvedType!;
 
 }
 
@@ -249,15 +377,12 @@ function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
     return createExpressionType(ctx, typeNode);
   }
 
-  return getResolvedTypeByTypeNode(ctx, typeNode);
+  const type = ctx.checker.getTypeFromTypeNode(typeNode);
+  return interpretType(ctx, type);
 
 }
 
 function interpretType(ctx: InterpreterContext, type: TSType): Type {
-
-  if(isArrayType(ctx, type)){
-    return createArrayType(ctx, type);
-  }
 
   if(type.getSymbol() && isSymbolExcluded(ctx, type.symbol, getNameByType(ctx, type))){
     return createUnresolvedType(ctx, type);
@@ -311,6 +436,8 @@ function interpretType(ctx: InterpreterContext, type: TSType): Type {
     return createIndexedAccessType(ctx, type);
   } else if(isConditionalType(ctx, type)){
     return createConditionalType(ctx, type);
+  } else if(isArrayType(type)){
+    return createArrayType(ctx, type);
   }
 
   return createUnresolvedType(ctx, type);
@@ -321,7 +448,7 @@ function interpretObjectType(ctx: InterpreterContext, type: TSObjectType) {
 
   if(isTupleTypeReferenceType(ctx, type)){
     return createTupleTypeByTypeReference(ctx, type);
-  } else if(isArrayType(ctx, type)){
+  } else if(isArrayTypeReferenceType(ctx, type)){
     return createArrayType(ctx, type);
   }
 

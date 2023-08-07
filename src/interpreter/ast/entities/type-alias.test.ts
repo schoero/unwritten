@@ -131,13 +131,10 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     const symbol = exportedSymbols.find(s => s.name === "Resolved")!;
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
-    it("should resolve types", () => {
-      expect(exportedTypeAlias.typeParameters).toBeUndefined();
-
+    it("should resolve instantiated types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedTypeAlias.type.type !== undefined);
       assert(exportedTypeAlias.type.type.kind === TypeKind.StringLiteral);
-
       expect(exportedTypeAlias.type.type.value).toBe("hello");
     });
 

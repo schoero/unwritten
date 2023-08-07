@@ -12,6 +12,7 @@ export const defaultInterpreterConfig: Complete<InterpreterConfig> = {
   exclude: {
     "node_modules/**/*": "*",
     "!node_modules/typescript/lib/**/*": [
+      "Array",
       "Partial",
       "Required",
       "Readonly",

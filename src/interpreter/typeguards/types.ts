@@ -38,12 +38,6 @@ export function isAnyType(ctx: InterpreterContext, type: Type) {
   return (type.flags & ts.TypeFlags.Any) !== 0;
 }
 
-export function isArrayType(ctx: InterpreterContext, type: Type): type is TypeReference {
-  const { ts } = ctx.dependencies;
-  return isTypeReferenceType(ctx, type) &&
-    type.getSymbol()?.getName() === "Array" && type.typeArguments?.length === 1;
-}
-
 export function isArrayTypeReferenceType(ctx: InterpreterContext, type: Type): type is TypeReference {
   const { ts } = ctx.dependencies;
   return isTypeReferenceType(ctx, type) && type.target.symbol.getName() === "Array" && type.target.typeParameters?.length === 1;

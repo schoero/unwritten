@@ -1,4 +1,9 @@
-import { getDeclaredType, getResolvedTypeByType } from "unwritten:interpreter/ast/index.js";
+import {
+  getDeclaredTypeByTypeNode,
+  getResolvedTypeByType,
+  getResolvedTypeByTypeNode,
+  getTypeByResolvedAndDeclaredType
+} from "unwritten:interpreter/ast/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import {
   createParameterEntity,
@@ -64,10 +69,16 @@ function getReturnTypeBySignature(ctx: InterpreterContext, signature: TSSignatur
   const declaration = signature.getDeclaration() as SignatureDeclaration | undefined;
   const tsReturnType = signature.getReturnType();
 
-  const type = declaration?.type
-    ? getDeclaredType(ctx, declaration.type)
+  /**
+   * The type node of the declaration is the type annotation of a function.
+   * The declaration itself is the signature. Thats why we need to get the resolved type via the type node.
+   */
+  const declaredType = declaration?.type && getDeclaredTypeByTypeNode(ctx, declaration.type);
+  const resolvedType = declaration?.type
+    ? getResolvedTypeByTypeNode(ctx, declaration.type)
     : getResolvedTypeByType(ctx, tsReturnType);
 
+  const type = getTypeByResolvedAndDeclaredType(ctx, resolvedType, declaredType);
   const description = declaration && getReturnTypeDescription(ctx, declaration);
 
   assert(tsReturnType, "Function return type is missing.");

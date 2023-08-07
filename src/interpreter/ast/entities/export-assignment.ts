@@ -1,4 +1,4 @@
-import { getResolvedTypeByType } from "unwritten:interpreter/ast/index.js";
+import { getTypeByType } from "unwritten:interpreter/ast/index.js";
 import { getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
 import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter/ast/shared/jsdoc.js";
 import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
@@ -24,7 +24,7 @@ export function createExportAssignmentEntity(ctx: InterpreterContext, symbol: Sy
   const description = getDescriptionByDeclaration(ctx, declaration);
   const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const name = getNameBySymbol(ctx, symbol);
-  const type = getResolvedTypeByType(ctx, tsType);
+  const type = getTypeByType(ctx, tsType);
   const symbolId = getSymbolId(ctx, symbol);
   const kind = EntityKind.ExportAssignment;
 

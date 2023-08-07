@@ -52,4 +52,31 @@ scope("Interpreter", TypeKind.Conditional, () => {
 
   }
 
+  {
+
+    const testFileContent = ts`
+      type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
+      export type TruthyConditionalTypeReference = ConditionalTypeAlias<"string">;
+      export type FalsyConditionalTypeReference = ConditionalTypeAlias<"number">;
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const truthyConditionalTypeReferenceSymbol = exportedSymbols.find(s => s.name === "TruthyConditionalTypeReference")!;
+    const truthyConditionalTypeReference = createTypeAliasEntity(ctx, truthyConditionalTypeReferenceSymbol);
+    const falsyConditionalTypeReferenceSymbol = exportedSymbols.find(s => s.name === "FalsyConditionalTypeReference")!;
+    const falsyConditionalTypeReference = createTypeAliasEntity(ctx, falsyConditionalTypeReferenceSymbol);
+
+    it("should resolve the type of instantiated type references to a conditional type", () => {
+      assert(truthyConditionalTypeReference.type.kind === TypeKind.TypeReference);
+      expect(truthyConditionalTypeReference.type.type).toBeDefined();
+      expect(truthyConditionalTypeReference.type.type?.kind).toBe(TypeKind.String);
+
+      assert(falsyConditionalTypeReference.type.kind === TypeKind.TypeReference);
+      expect(falsyConditionalTypeReference.type.type).toBeDefined();
+      expect(falsyConditionalTypeReference.type.type?.kind).toBe(TypeKind.Number);
+    });
+
+  }
+
 });

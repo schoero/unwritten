@@ -22,7 +22,7 @@ scope("Interpreter", TypeKind.TypeReference, () => {
     const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "Reference")!;
     const exportedReferenceTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
 
-    it("should be able to parse a type reference", () => {
+    it("should be able to interpret a type reference", () => {
       expect(exportedReferenceTypeAlias.kind).toBe(EntityKind.TypeAlias);
       expect(exportedReferenceTypeAlias.type.kind).toBe(TypeKind.TypeReference);
     });
@@ -36,9 +36,10 @@ scope("Interpreter", TypeKind.TypeReference, () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedReferenceTypeAlias.type.target).toBeDefined();
       expect(exportedReferenceTypeAlias.type.target!.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedReferenceTypeAlias.type.target!.name).toBe("A");
     });
 
-    it("should have a matching resolved type", () => {
+    it("should have a matching type", () => {
       assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
       expect(exportedReferenceTypeAlias.type.type).toBeDefined();
       expect(exportedReferenceTypeAlias.type.type!.kind).toBe(TypeKind.String);
@@ -49,53 +50,34 @@ scope("Interpreter", TypeKind.TypeReference, () => {
   {
 
     const testFileContent = ts`
-      type Generic<T extends string> = T;
-      export type Resolved = Generic<"test">;
+      export type Declared<T extends string> = T;
+      export type Resolved = Declared<"test">;
     `;
 
     const { ctx, exportedSymbols } = compile(testFileContent);
 
-    const symbol = exportedSymbols.find(s => s.name === "Resolved")!;
-    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
+    const declaredSymbol = exportedSymbols.find(s => s.name === "Declared")!;
+    const exportedDeclaredTypeAlias = createTypeAliasEntity(ctx, declaredSymbol);
 
-    it("should resolve to the actual type", () => {
-      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-      assert(exportedTypeAlias.type.type!.kind === TypeKind.StringLiteral);
-      expect(exportedTypeAlias.type.type.value).toBe("test");
+    const resolvedSymbol = exportedSymbols.find(s => s.name === "Resolved")!;
+    const exportedResolvedTypeAlias = createTypeAliasEntity(ctx, resolvedSymbol);
+
+    it("should resolve to the actual type for instantiated types", () => {
+      assert(exportedResolvedTypeAlias.type.kind === TypeKind.TypeReference);
+      assert(exportedResolvedTypeAlias.type.type!.kind === TypeKind.StringLiteral);
+      expect(exportedResolvedTypeAlias.type.type.value).toBe("test");
     });
 
-    it("should have one matching type argument", () => {
-      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedTypeAlias.type.typeArguments).toHaveLength(1);
-      assert(exportedTypeAlias.type.typeArguments![0]?.kind === TypeKind.StringLiteral);
-      expect(exportedTypeAlias.type.typeArguments![0]?.value).toBe("test");
+    it("should not resolve to the actual type for types that are not instantiated", () => {
+      assert(exportedDeclaredTypeAlias.type.kind === TypeKind.TypeReference);
+      expect(exportedDeclaredTypeAlias.type.type?.kind).toBe(TypeKind.TypeParameter);
     });
 
-  }
-
-  {
-
-    const testFileContent = ts`
-      type ConditionalTypeAlias<T extends "string" | "number"> = T extends "string" ? string : number;
-      export type TruthyConditionalTypeReference = ConditionalTypeAlias<"string">;
-      export type FalsyConditionalTypeReference = ConditionalTypeAlias<"number">;
-    `;
-
-    const { ctx, exportedSymbols } = compile(testFileContent);
-
-    const truthyConditionalTypeReferenceSymbol = exportedSymbols.find(s => s.name === "TruthyConditionalTypeReference")!;
-    const truthyConditionalTypeReference = createTypeAliasEntity(ctx, truthyConditionalTypeReferenceSymbol);
-    const falsyConditionalTypeReferenceSymbol = exportedSymbols.find(s => s.name === "FalsyConditionalTypeReference")!;
-    const falsyConditionalTypeReference = createTypeAliasEntity(ctx, falsyConditionalTypeReferenceSymbol);
-
-    it("should be able to parse conditional type references", () => {
-      assert(truthyConditionalTypeReference.type.kind === TypeKind.TypeReference);
-      expect(truthyConditionalTypeReference.type.type).toBeDefined();
-      expect(truthyConditionalTypeReference.type.type?.kind).toBe(TypeKind.String);
-
-      assert(falsyConditionalTypeReference.type.kind === TypeKind.TypeReference);
-      expect(falsyConditionalTypeReference.type.type).toBeDefined();
-      expect(falsyConditionalTypeReference.type.type?.kind).toBe(TypeKind.Number);
+    it("should have a type argument, even though the type gets resolved.", () => {
+      assert(exportedResolvedTypeAlias.type.kind === TypeKind.TypeReference);
+      expect(exportedResolvedTypeAlias.type.typeArguments).toHaveLength(1);
+      assert(exportedResolvedTypeAlias.type.typeArguments![0]?.kind === TypeKind.StringLiteral);
+      expect(exportedResolvedTypeAlias.type.typeArguments![0]?.value).toBe("test");
     });
 
   }

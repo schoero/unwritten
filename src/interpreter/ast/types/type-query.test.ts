@@ -37,4 +37,39 @@ scope("Interpreter", TypeKind.TypeQuery, () => {
 
   }
 
+  {
+
+    const testFileContent = ts`
+      function test<T extends string>(param: T): void {}
+      export type ResolvedTypeQueryType = typeof test<"test">;
+      export type DeclaredTypeQueryType = typeof test;
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const exportedDeclaredTypeQueryTypeAliasSymbol = exportedSymbols.find(s => s.name === "DeclaredTypeQueryType")!;
+    const exportedDeclaredTypeQueryTypeAlias = createTypeAliasEntity(ctx, exportedDeclaredTypeQueryTypeAliasSymbol);
+
+    const exportedResolvedTypeAliasSymbol = exportedSymbols.find(s => s.name === "ResolvedTypeQueryType")!;
+    const exportedResolvedTypeAlias = createTypeAliasEntity(ctx, exportedResolvedTypeAliasSymbol);
+
+
+    it("should return the declared type for type queries that are not instantiated", () => {
+      assert(exportedDeclaredTypeQueryTypeAlias.type.kind === TypeKind.TypeQuery);
+      assert(exportedDeclaredTypeQueryTypeAlias.type.type.kind === TypeKind.Function);
+      expect(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0]!.parameters).toHaveLength(1);
+      assert(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0]!.parameters![0]!.type.kind === TypeKind.TypeReference);
+      expect(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0]!.parameters![0]!.type.type?.kind).toBe(TypeKind.TypeParameter);
+    });
+
+    it("should return the resolved type for instantiated type queries", () => {
+      assert(exportedResolvedTypeAlias.type.kind === TypeKind.TypeQuery);
+      assert(exportedResolvedTypeAlias.type.type.kind === TypeKind.Function);
+      expect(exportedResolvedTypeAlias.type.type.signatures[0]!.parameters).toHaveLength(1);
+      assert(exportedResolvedTypeAlias.type.type.signatures[0]!.parameters![0]!.type.kind === TypeKind.TypeReference);
+      expect(exportedResolvedTypeAlias.type.type.signatures[0]!.parameters![0]!.type.type?.kind).toBe(TypeKind.StringLiteral);
+    });
+
+  }
+
 });

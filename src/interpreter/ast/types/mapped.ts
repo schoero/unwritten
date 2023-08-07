@@ -1,5 +1,9 @@
 import { createTypeParameterEntityByDeclaration } from "unwritten:interpreter/ast/entities/index.js";
-import { getDeclaredType, getResolvedTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
+import {
+  getResolvedTypeByTypeNode,
+  getTypeByResolvedAndDeclaredType,
+  getTypeByTypeNode
+} from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -17,9 +21,10 @@ export function createMappedTypeByTypeNode(ctx: InterpreterContext, typeNode: Ma
   const position = getPositionByDeclaration(ctx, typeNode);
   const optional = typeNode.questionToken !== undefined;
   const readonly = typeNode.readonlyToken !== undefined;
-  const type = getResolvedTypeByTypeNode(ctx, typeNode);
+  const resolvedType = getResolvedTypeByTypeNode(ctx, typeNode);
+  const type = getTypeByResolvedAndDeclaredType(ctx, resolvedType);
   const typeParameter = createTypeParameterEntityByDeclaration(ctx, typeNode.typeParameter);
-  const valueType = typeNode.type && getDeclaredType(ctx, typeNode.type);
+  const valueType = typeNode.type && getTypeByTypeNode(ctx, typeNode.type);
 
   return {
     kind,

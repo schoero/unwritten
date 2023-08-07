@@ -1,4 +1,4 @@
-import { getDeclaredType } from "unwritten:interpreter/ast/index.js";
+import { getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getTypeParameterDescription } from "unwritten:interpreter:ast/shared/jsdoc.js";
@@ -25,8 +25,8 @@ export function createTypeParameterEntityByTypeParameter(ctx: InterpreterContext
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getTypeParameterDescription(ctx, declaration);
-  const initializer = declaration.default && getDeclaredType(ctx, declaration.default);
-  const constraint = declaration.constraint && getDeclaredType(ctx, declaration.constraint);
+  const initializer = declaration.default && getTypeByTypeNode(ctx, declaration.default);
+  const constraint = declaration.constraint && getTypeByTypeNode(ctx, declaration.constraint);
   const kind = EntityKind.TypeParameter;
 
   return {
@@ -53,8 +53,8 @@ export function createTypeParameterEntity(ctx: InterpreterContext, symbol: Symbo
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getTypeParameterDescription(ctx, declaration);
-  const initializer = declaration.default && getDeclaredType(ctx, declaration.default);
-  const constraint = declaration.constraint && getDeclaredType(ctx, declaration.constraint);
+  const initializer = declaration.default && getTypeByTypeNode(ctx, declaration.default);
+  const constraint = declaration.constraint && getTypeByTypeNode(ctx, declaration.constraint);
   const kind = EntityKind.TypeParameter;
 
   return {
@@ -84,8 +84,8 @@ export function createTypeParameterEntityByDeclaration(ctx: InterpreterContext, 
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
   const description = getTypeParameterDescription(ctx, declaration);
-  const initializer = declaration.default && getDeclaredType(ctx, declaration.default);
-  const constraint = declaration.constraint && getDeclaredType(ctx, declaration.constraint);
+  const initializer = declaration.default && getTypeByTypeNode(ctx, declaration.default);
+  const constraint = declaration.constraint && getTypeByTypeNode(ctx, declaration.constraint);
   const kind = EntityKind.TypeParameter;
 
   return {

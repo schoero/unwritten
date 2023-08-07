@@ -17,6 +17,13 @@ type TypeBase<Kind extends TypeKind> = {
   typeId: ID;
 };
 
+export type ResolvedType = Type & {
+  brand: "resolved";
+};
+export type DeclaredType = Type & {
+  brand: "declared";
+};
+
 export type Type =
   | ArrayType
   | CircularType
@@ -195,9 +202,11 @@ export interface ExpressionType extends TypeBase<TypeKind.Expression> {
 }
 
 export interface TypeQueryType extends TypeBase<TypeKind.TypeQuery> {
+  target: Entity;
   type: Type;
   name?: Name;
   position?: Position;
+  typeArguments?: Type[];
 }
 
 export interface TemplateLiteralEntity extends TypeBase<TypeKind.TemplateLiteral> {
