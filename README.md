@@ -31,7 +31,7 @@
 
 ---
 
-A cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.
+unwritten is a cli tool to auto generate documentation from your JavaScript or TypeScript library by utilizing TSDoc or JSDoc comments.
 
 > **Warning**
 >
