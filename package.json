@@ -42,8 +42,7 @@
   "dependencies": {
     "cac": "^6.7.14",
     "minimatch": "^9.0.3",
-    "typescript": "^5.1.6",
-    "vitest": "^0.34.1"
+    "typescript": "^5.1.6"
   },
   "devDependencies": {
     "@schoero/changelog-config": "^0.0.2",
@@ -57,7 +56,8 @@
     "eslint-plugin-sort-exports": "^0.8.0",
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "ts-json-schema-generator": "^1.2.0",
-    "vite-plugin-no-bundle": "^2.0.2"
+    "vite-plugin-no-bundle": "^2.0.2",
+    "vitest": "^0.34.1"
   },
   "keywords": [
     "documentation",
