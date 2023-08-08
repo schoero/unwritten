@@ -1,6 +1,5 @@
 import type { TypeKind } from "unwritten:interpreter/enums/type.js";
 import type {
-  Entity,
   GetterEntity,
   MethodEntity,
   PropertyEntity,
@@ -187,7 +186,7 @@ export interface TypeReferenceType extends TypeBase<TypeKind.TypeReference> {
   name?: Name;
   position?: Position;
   symbolId?: ID;
-  target?: Entity;
+  targetId?: ID;
   type?: Type;
   typeArguments?: Type[];
 }
@@ -202,10 +201,10 @@ export interface ExpressionType extends TypeBase<TypeKind.Expression> {
 }
 
 export interface TypeQueryType extends TypeBase<TypeKind.TypeQuery> {
-  target: Entity;
   type: Type;
   name?: Name;
   position?: Position;
+  symbolId?: ID;
   typeArguments?: Type[];
 }
 

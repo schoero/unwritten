@@ -4,7 +4,7 @@ import {
   getTypeByResolvedAndDeclaredType,
   getTypeByTypeNode
 } from "unwritten:interpreter:ast/index.js";
-import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
+import { getIdByTypeNode, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 
 import type { TypeQueryNode } from "typescript";
 
@@ -16,8 +16,8 @@ export function createTypeQueryType(ctx: InterpreterContext, typeNode: TypeQuery
 
   const typeId = getIdByTypeNode(ctx, typeNode);
 
-  // TODO: Add target. Also add target to object inheritance
   const target = ctx.checker.getSymbolAtLocation(typeNode.exprName);
+  const targetId = target && getSymbolId(ctx, target);
   const resolvedType = getResolvedTypeByTypeNode(ctx, typeNode);
   const type = getTypeByResolvedAndDeclaredType(ctx, resolvedType);
 
@@ -29,6 +29,7 @@ export function createTypeQueryType(ctx: InterpreterContext, typeNode: TypeQuery
   return {
     kind,
     name,
+    symbolId: targetId,
     type,
     typeArguments,
     typeId

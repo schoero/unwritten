@@ -1,4 +1,4 @@
-import { getResolvedTypeByTypeNode, getTypeByTypeNode, interpretSymbol } from "unwritten:interpreter/ast/index.js";
+import { getResolvedTypeByTypeNode, getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import { getIdByTypeNode, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
@@ -23,20 +23,7 @@ export function createTypeReferenceByTypeNode(ctx: InterpreterContext, typeNode:
   const symbol = ctx.checker.getSymbolAtLocation(typeNode.typeName);
   const resolvedSymbol = symbol && resolveSymbolInCaseOfImport(ctx, symbol);
   const symbolId = resolvedSymbol && getSymbolId(ctx, resolvedSymbol);
-  const target = resolvedSymbol && interpretSymbol(ctx, resolvedSymbol);
-
-  // const targetTypeNode = isTypeNode(typeNode.typeName) ? typeNode.typeName : undefined;
-  // const declaredType1 = getDeclaredType(ctx, typeNode.typeName);
-
-  // const tsDeclaredType = symbol && ctx.checker.getDeclaredTypeOfSymbol(symbol);
-  // const tsResolvedType = ctx.checker.getTypeFromTypeNode(typeNode);
-  // const declaredType = tsDeclaredType && getType(ctx, tsDeclaredType);
-  // const resolvedType = getType(ctx, tsResolvedType);
-  // const type = getTypeByDeclaredOrResolvedType(declaredType, resolvedType);
-  // const type = declaredType;
-
   const type = getResolvedTypeByTypeNode(ctx, typeNode);
-
   const typeId = getIdByTypeNode(ctx, typeNode);
   const name = getNameByTypeNode(ctx, typeNode.typeName);
   const kind = TypeKind.TypeReference;
@@ -49,7 +36,6 @@ export function createTypeReferenceByTypeNode(ctx: InterpreterContext, typeNode:
     kind,
     name,
     symbolId,
-    target,
     type,
     typeArguments,
     typeId

@@ -66,8 +66,8 @@ function convertTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferen
 
   assert(hasExportedTarget(ctx, typeReferenceType));
 
-  const name = typeReferenceType.name ?? typeReferenceType.target.name ?? "";
-  const anchor = createAnchorNode(name, typeReferenceType.target.symbolId);
+  const name = typeReferenceType.name ?? "";
+  const anchor = createAnchorNode(name, typeReferenceType.symbolId);
   const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
     ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
     : "";
@@ -79,9 +79,7 @@ function convertTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferen
 
 }
 
-function hasExportedTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): typeReferenceType is TypeReferenceType & { target: TypeReferenceType["target"] & { symbolId: ID; }; } {
-  return typeReferenceType.target !== undefined &&
-    "symbolId" in typeReferenceType.target &&
-    typeReferenceType.symbolId !== undefined &&
+function hasExportedTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): typeReferenceType is TypeReferenceType & { symbolId: ID; } {
+  return typeReferenceType.symbolId !== undefined &&
     isSymbolExported(ctx, typeReferenceType.symbolId);
 }

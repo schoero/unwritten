@@ -1,7 +1,7 @@
 import { assert, expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { createTypeAliasEntity, createVariableEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { ts } from "unwritten:utils/template.js";
@@ -33,6 +33,28 @@ scope("Interpreter", TypeKind.TypeQuery, () => {
     it("should have a matching type", () => {
       assert(conditionalTypeAlias.type.kind === TypeKind.TypeQuery);
       expect(conditionalTypeAlias.type.type.kind).toBe(TypeKind.NumberLiteral);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export const test = "test";
+      export type Test = typeof test;
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const exportedVariableSymbol = exportedSymbols.find(s => s.name === "test")!;
+    const exportedVariableEntity = createVariableEntity(ctx, exportedVariableSymbol);
+
+    const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "Test")!;
+    const exportedTypeAliasEntity = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
+
+    it("should have a matching targetId", () => {
+      assert(exportedTypeAliasEntity.type.kind === TypeKind.TypeQuery);
+      expect(exportedTypeAliasEntity.type.symbolId).toBe(exportedVariableEntity.symbolId);
     });
 
   }
