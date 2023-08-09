@@ -28,11 +28,11 @@ export type Complete<ObjectType extends object> = DeepRequiredByKey<ObjectType, 
 
 
 // Remove translations suffix
-type RemoveTranslationsSuffix<T extends object, S extends "_one" | "_other"> = {
+type RemoveTranslationsSuffix<T extends object, S extends "_many" | "_one"> = {
   [Key in keyof T as Key extends `${infer KeyWithoutSuffix}${S}` ? KeyWithoutSuffix : Key]: T[Key];
 };
 
-export type TranslationWithoutSuffixes<T extends object> = RemoveTranslationsSuffix<RemoveTranslationsSuffix<T, "_one">, "_other">;
+export type TranslationWithoutSuffixes<T extends object> = RemoveTranslationsSuffix<RemoveTranslationsSuffix<T, "_one">, "_many">;
 
 
 // DeepOmit

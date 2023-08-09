@@ -1,9 +1,8 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 
 import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Encapsulation, MarkupRenderConfig } from "unwritten:renderer:markup/types-definitions/config.js";
+import type { Encapsulation } from "unwritten:renderer:markup/types-definitions/config.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
-import type { Complete, TranslationWithoutSuffixes } from "unwritten:type-definitions/utils.js";
 
 
 export function encapsulate(node: ASTNodes, encapsulation: Encapsulation | string[] | false | undefined) {
@@ -20,7 +19,7 @@ export function encapsulate(node: ASTNodes, encapsulation: Encapsulation | strin
 
 }
 
-export function getCategoryName(entityKind: ExportableEntityKinds): keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]> {
+export function getCategoryName(entityKind: ExportableEntityKinds) {
   switch (entityKind){
     case EntityKind.Class:
       return "class";

@@ -183,25 +183,25 @@
             "call-signature_one": {
               "type": "string"
             },
-            "call-signature_other": {
+            "call-signature_many": {
               "type": "string"
             },
             "class_one": {
               "type": "string"
             },
-            "class_other": {
+            "class_many": {
               "type": "string"
             },
             "construct-signature_one": {
               "type": "string"
             },
-            "construct-signature_other": {
+            "construct-signature_many": {
               "type": "string"
             },
             "constructor_one": {
               "type": "string"
             },
-            "constructor_other": {
+            "constructor_many": {
               "type": "string"
             },
             "default": {
@@ -216,43 +216,43 @@
             "description_one": {
               "type": "string"
             },
-            "description_other": {
+            "description_many": {
               "type": "string"
             },
             "enum_one": {
               "type": "string"
             },
-            "enum_other": {
+            "enum_many": {
               "type": "string"
             },
             "example_one": {
               "type": "string"
             },
-            "example_other": {
+            "example_many": {
               "type": "string"
             },
             "export-assignment_one": {
               "type": "string"
             },
-            "export-assignment_other": {
+            "export-assignment_many": {
               "type": "string"
             },
             "function_one": {
               "type": "string"
             },
-            "function_other": {
+            "function_many": {
               "type": "string"
             },
             "getter_one": {
               "type": "string"
             },
-            "getter_other": {
+            "getter_many": {
               "type": "string"
             },
             "interface": {
               "type": "string"
             },
-            "interface_other": {
+            "interface_many": {
               "type": "string"
             },
             "internal": {
@@ -261,25 +261,25 @@
             "method_one": {
               "type": "string"
             },
-            "method_other": {
+            "method_many": {
               "type": "string"
             },
             "module_one": {
               "type": "string"
             },
-            "module_other": {
+            "module_many": {
               "type": "string"
             },
             "namespace_one": {
               "type": "string"
             },
-            "namespace_other": {
+            "namespace_many": {
               "type": "string"
             },
             "object_one": {
               "type": "string"
             },
-            "object_other": {
+            "object_many": {
               "type": "string"
             },
             "optional": {
@@ -288,13 +288,13 @@
             "parameter_one": {
               "type": "string"
             },
-            "parameter_other": {
+            "parameter_many": {
               "type": "string"
             },
             "property_one": {
               "type": "string"
             },
-            "property_other": {
+            "property_many": {
               "type": "string"
             },
             "readonly": {
@@ -303,7 +303,7 @@
             "remarks_one": {
               "type": "string"
             },
-            "remarks_other": {
+            "remarks_many": {
               "type": "string"
             },
             "required": {
@@ -318,7 +318,7 @@
             "setter_one": {
               "type": "string"
             },
-            "setter_other": {
+            "setter_many": {
               "type": "string"
             },
             "static": {
@@ -327,25 +327,25 @@
             "type-alias_one": {
               "type": "string"
             },
-            "type-alias_other": {
+            "type-alias_many": {
               "type": "string"
             },
             "type-parameter_one": {
               "type": "string"
             },
-            "type-parameter_other": {
+            "type-parameter_many": {
               "type": "string"
             },
             "type_one": {
               "type": "string"
             },
-            "type_other": {
+            "type_many": {
               "type": "string"
             },
             "variable_one": {
               "type": "string"
             },
-            "variable_other": {
+            "variable_many": {
               "type": "string"
             }
           },
@@ -533,25 +533,25 @@
             "call-signature_one": {
               "type": "string"
             },
-            "call-signature_other": {
+            "call-signature_many": {
               "type": "string"
             },
             "class_one": {
               "type": "string"
             },
-            "class_other": {
+            "class_many": {
               "type": "string"
             },
             "construct-signature_one": {
               "type": "string"
             },
-            "construct-signature_other": {
+            "construct-signature_many": {
               "type": "string"
             },
             "constructor_one": {
               "type": "string"
             },
-            "constructor_other": {
+            "constructor_many": {
               "type": "string"
             },
             "default": {
@@ -566,43 +566,43 @@
             "description_one": {
               "type": "string"
             },
-            "description_other": {
+            "description_many": {
               "type": "string"
             },
             "enum_one": {
               "type": "string"
             },
-            "enum_other": {
+            "enum_many": {
               "type": "string"
             },
             "example_one": {
               "type": "string"
             },
-            "example_other": {
+            "example_many": {
               "type": "string"
             },
             "export-assignment_one": {
               "type": "string"
             },
-            "export-assignment_other": {
+            "export-assignment_many": {
               "type": "string"
             },
             "function_one": {
               "type": "string"
             },
-            "function_other": {
+            "function_many": {
               "type": "string"
             },
             "getter_one": {
               "type": "string"
             },
-            "getter_other": {
+            "getter_many": {
               "type": "string"
             },
             "interface": {
               "type": "string"
             },
-            "interface_other": {
+            "interface_many": {
               "type": "string"
             },
             "internal": {
@@ -611,25 +611,25 @@
             "method_one": {
               "type": "string"
             },
-            "method_other": {
+            "method_many": {
               "type": "string"
             },
             "module_one": {
               "type": "string"
             },
-            "module_other": {
+            "module_many": {
               "type": "string"
             },
             "namespace_one": {
               "type": "string"
             },
-            "namespace_other": {
+            "namespace_many": {
               "type": "string"
             },
             "object_one": {
               "type": "string"
             },
-            "object_other": {
+            "object_many": {
               "type": "string"
             },
             "optional": {
@@ -638,13 +638,13 @@
             "parameter_one": {
               "type": "string"
             },
-            "parameter_other": {
+            "parameter_many": {
               "type": "string"
             },
             "property_one": {
               "type": "string"
             },
-            "property_other": {
+            "property_many": {
               "type": "string"
             },
             "readonly": {
@@ -653,7 +653,7 @@
             "remarks_one": {
               "type": "string"
             },
-            "remarks_other": {
+            "remarks_many": {
               "type": "string"
             },
             "required": {
@@ -668,7 +668,7 @@
             "setter_one": {
               "type": "string"
             },
-            "setter_other": {
+            "setter_many": {
               "type": "string"
             },
             "static": {
@@ -677,25 +677,25 @@
             "type-alias_one": {
               "type": "string"
             },
-            "type-alias_other": {
+            "type-alias_many": {
               "type": "string"
             },
             "type-parameter_one": {
               "type": "string"
             },
-            "type-parameter_other": {
+            "type-parameter_many": {
               "type": "string"
             },
             "type_one": {
               "type": "string"
             },
-            "type_other": {
+            "type_many": {
               "type": "string"
             },
             "variable_one": {
               "type": "string"
             },
-            "variable_other": {
+            "variable_many": {
               "type": "string"
             }
           },

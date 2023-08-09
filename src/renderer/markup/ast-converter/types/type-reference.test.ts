@@ -52,7 +52,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
 
     it("should render the referenced type, if the target symbol is not exported", () => {
       expect(convertedPrimitiveTypeReferenceType[0].children[0]).toBe("string");
-      expect(convertedObjectTypeReferenceType[0].children[0]).toBe("object");
+      expect(convertedObjectTypeReferenceType[0].children[0]).toBe("interface");
       expect(convertedObjectTypeReferenceType[0].children[1]).toBeDefined();
     });
 

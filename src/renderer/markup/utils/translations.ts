@@ -9,29 +9,40 @@ import type { Complete, TranslationWithoutSuffixes } from "unwritten:type-defini
 interface TranslationOptions {
   capitalize?: boolean;
   capitalizeEach?: boolean;
-  count?: number;
 }
 
-export function getTranslator<MarkupRenderContext extends MarkdownRenderContext>(ctx: MarkdownRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<MarkdownRenderConfig>["translations"]>, options?: TranslationOptions) => string;
-export function getTranslator<MarkupRenderContext extends HTMLRenderContext>(ctx: HTMLRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<HTMLRenderConfig>["translations"]>, options?: TranslationOptions) => string;
-export function getTranslator<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext): (key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions) => string;
-export function getTranslator<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext) {
-  return (key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions) => translate(ctx, key, options);
+interface TranslationOptionWithCount extends TranslationOptions {
+  count: number;
 }
 
-function translate(ctx: MarkdownRenderContext, key: keyof TranslationWithoutSuffixes<Complete<MarkdownRenderConfig>["translations"]>, options?: TranslationOptions): string;
-function translate(ctx: HTMLRenderContext, key: keyof TranslationWithoutSuffixes<Complete<HTMLRenderConfig>["translations"]>, options?: TranslationOptions): string;
-function translate(ctx: MarkupRenderContexts, key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions): string;
-function translate(ctx: MarkupRenderContexts, key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions) {
+export type TranslationKeyOptions
+  <
+    Key extends TranslationKeys<MarkupRenderContexts>
+  > =
+  `${Key}_one` extends keyof
+  Complete<MarkdownRenderConfig>["translations"]
+    ? TranslationOptionWithCount
+    : TranslationOptions;
+
+export type TranslationKeys<CustomRenderContext extends MarkupRenderContexts> =
+  keyof TranslationWithoutSuffixes<CustomRenderContext["config"]["renderConfig"][CustomRenderContext["renderer"]["name"]]["translations"]>;
+
+export function getTranslator(ctx: MarkupRenderContexts) {
+  return <const Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>) => translate(ctx, key, options);
+}
+
+function translate<const Key extends TranslationKeys<MarkupRenderContexts>>(ctx: MarkupRenderContexts, key: Key, options?: TranslationKeyOptions<Key>) {
 
   const translations = getTranslations(ctx);
   const translationKey = getTranslationKey(key, options);
 
-  if(!(translationKey in translations)){
-    return translationKey;
+  // Fallback to count: 1
+  if(!(translationKey in translations) && (options === undefined || !("count" in options))){
+    return translate(ctx, key, { ...options ?? {}, count: 1 });
   }
 
-  const translation = translations[translationKey];
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Purposefully returning the key
+  const translation = translations[translationKey] ?? key;
 
   if(options?.capitalize){
     return capitalize(translation);
@@ -47,20 +58,17 @@ function translate(ctx: MarkupRenderContexts, key: keyof TranslationWithoutSuffi
 }
 
 
-function getTranslations<MarkupRenderContext extends MarkdownRenderContext>(ctx: MarkdownRenderContext): Complete<MarkdownRenderConfig>["translations"];
-function getTranslations<MarkupRenderContext extends HTMLRenderContext>(ctx: HTMLRenderContext): Complete<HTMLRenderConfig>["translations"];
-function getTranslations<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext): Complete<MarkupRenderConfig>["translations"];
 function getTranslations<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext) {
   return getRenderConfig(ctx).translations;
 }
 
 
-function getTranslationKey(key: keyof TranslationWithoutSuffixes<Complete<MarkdownRenderConfig>["translations"]>, options?: TranslationOptions): keyof Complete<MarkdownRenderConfig>["translations"];
-function getTranslationKey(key: keyof TranslationWithoutSuffixes<Complete<HTMLRenderConfig>["translations"]>, options?: TranslationOptions): keyof Complete<HTMLRenderConfig>["translations"];
-function getTranslationKey(key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions): keyof Complete<MarkupRenderConfig>["translations"];
-function getTranslationKey(key: keyof TranslationWithoutSuffixes<Complete<MarkupRenderConfig>["translations"]>, options?: TranslationOptions) {
+function getTranslationKey<const Key extends TranslationKeys<MarkdownRenderContext>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<MarkdownRenderConfig>["translations"];
+function getTranslationKey<const Key extends TranslationKeys<HTMLRenderContext>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<HTMLRenderConfig>["translations"];
+function getTranslationKey<const Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<MarkupRenderConfig>["translations"];
+function getTranslationKey<const Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>) {
 
-  const { count } = options ?? {};
+  const count = options && "count" in options ? options.count : undefined;
 
   if(count === undefined){
     return key;
@@ -69,7 +77,7 @@ function getTranslationKey(key: keyof TranslationWithoutSuffixes<Complete<Markup
   } else if(count === 1){
     return `${key}_one`;
   } else {
-    return `${key}_other`;
+    return `${key}_many`;
   }
 
 }

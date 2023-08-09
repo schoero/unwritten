@@ -65,7 +65,7 @@ scope("MarkupRenderer", TypeKind.Union, () => {
     it("should render union types as a list", () => {
       expect(convertedMultilineType.children).toHaveLength(2);
       expect(renderNode(ctx, convertedMultilineType.children[0])).toContain("string");
-      expect(renderNode(ctx, convertedMultilineType.children[1])).toContain("object");
+      expect(renderNode(ctx, convertedMultilineType.children[1])).toContain("type literal");
     });
 
   }

@@ -10,13 +10,7 @@ import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
-import type {
-  ClassType,
-  InterfaceType,
-  ObjectLiteralType,
-  ObjectType,
-  TypeLiteralType
-} from "unwritten:interpreter:type-definitions/types.js";
+import type { ObjectLikeTypes } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
@@ -27,19 +21,13 @@ import type {
 
 export function convertObjectTypeInline(
   ctx: MarkupRenderContexts,
-  objectLikeType:
-  | ClassType
-  | InterfaceType
-  | ObjectLiteralType
-  | ObjectType
-  | TypeLiteralType
+  objectLikeType: ObjectLikeTypes
 ): ConvertedObjectType {
 
-  const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
   const encapsulatedType = encapsulate(
-    translate("object", { count: 1 }),
+    getObjectTypeName(ctx, objectLikeType),
     renderConfig.typeEncapsulation
   );
 
@@ -52,12 +40,7 @@ export function convertObjectTypeInline(
 
 export function convertObjectTypeMultiline(
   ctx: MarkupRenderContexts,
-  objectLikeType:
-  | ClassType
-  | InterfaceType
-  | ObjectLiteralType
-  | ObjectType
-  | TypeLiteralType
+  objectLikeType: ObjectLikeTypes
 ): ConvertedObjectTypeMultiline {
 
   const renderConfig = getRenderConfig(ctx);
@@ -110,5 +93,26 @@ export function convertObjectTypeMultiline(
     createListNode(...convertedSetters),
     createListNode(...convertedGetters)
   ];
+
+}
+
+function getObjectTypeName(ctx: MarkupRenderContexts, objectLikeType: ObjectLikeTypes) {
+
+  const translate = getTranslator(ctx);
+
+  switch (objectLikeType.kind){
+    case TypeKind.Class:
+      return translate("class");
+    case TypeKind.Interface:
+      return translate("interface");
+    case TypeKind.ObjectLiteral:
+      return translate("object");
+    case TypeKind.Object:
+      return translate("object");
+    case TypeKind.TypeLiteral:
+      return translate("typeLiteral");
+    default:
+      return translate("object");
+  }
 
 }

@@ -100,8 +100,8 @@ scope("Types", "Utils", () => {
   test("TranslationWithoutSuffixes", () => {
 
     type TestType = {
+      name_many?: string;
       name_one?: string;
-      name_other?: string;
     };
 
     expectTypeOf<TranslationWithoutSuffixes<TestType>>().toEqualTypeOf<{
