@@ -27,7 +27,6 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     EntityKind.ExportAssignment
   ],
   renderPrivateMembers: false,
-  sectionSeparator: "---",
   stringLiteralEncapsulation: ["\"", "\""],
   tagEncapsulation: ["`", "`"],
   translations: {
@@ -107,7 +106,8 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
 
 export const defaultMarkdownRenderConfig: Complete<MarkdownRenderConfig> = {
   ...defaultRenderConfig,
-  allowedHTMLTags: false
+  allowedHTMLTags: false,
+  sectionSeparator: "---"
 };
 
 

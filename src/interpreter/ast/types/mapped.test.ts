@@ -1,6 +1,5 @@
 import { assert, expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
@@ -93,9 +92,6 @@ scope("Interpreter", TypeKind.Mapped, () => {
 
       expect(exportedTypeAlias.type.typeParameter.constraint.name).toBe("T");
 
-      assert(exportedTypeAlias.type.typeParameter.constraint.target?.kind === EntityKind.TypeParameter);
-      expect(exportedTypeAlias.type.typeParameter.constraint.target.constraint?.kind).toBe(TypeKind.String);
-
       assert(exportedTypeAlias.type.typeParameter.constraint.type?.kind === TypeKind.TypeParameter);
       expect(exportedTypeAlias.type.typeParameter.constraint.type.constraint?.kind).toBe(TypeKind.String);
     });
@@ -106,7 +102,6 @@ scope("Interpreter", TypeKind.Mapped, () => {
       assert(exportedTypeAlias.type.valueType?.kind === TypeKind.Conditional);
       assert(exportedTypeAlias.type.valueType.checkType.kind === TypeKind.TypeReference);
 
-      expect(exportedTypeAlias.type.valueType.checkType.target?.kind).toBe(EntityKind.TypeParameter);
       expect(exportedTypeAlias.type.valueType.checkType.type?.kind).toBe(TypeKind.TypeParameter);
       expect(exportedTypeAlias.type.valueType.checkType.name).toBe("K");
 

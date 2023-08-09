@@ -141,8 +141,7 @@ scope("Interpreter", EntityKind.Signature, () => {
     it("should link the function parameter to the type parameter", () => {
       assert(exportedFunction.signatures[0]!.parameters![0]!.type.kind === TypeKind.TypeReference);
       assert(exportedFunction.signatures[0]!.parameters![0]!.type.type?.kind === TypeKind.TypeParameter);
-      assert(exportedFunction.signatures[0]!.parameters![0]!.type.target?.kind === EntityKind.TypeParameter);
-      expect(exportedFunction.signatures[0]!.parameters![0]!.type.target.symbolId).toBe(exportedFunction.signatures[0]!.typeParameters![0]!.symbolId);
+      expect(exportedFunction.signatures[0]!.parameters![0]!.type.symbolId).toBe(exportedFunction.signatures[0]!.typeParameters![0]!.symbolId);
     });
 
   }

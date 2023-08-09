@@ -36,11 +36,6 @@ export interface MarkupRenderConfig {
   renderPrivateMembers?: boolean;
 
   /**
-   * Defines the string that should be used to separate sections in the rendered output.
-   */
-  sectionSeparator?: string | false;
-
-  /**
    * Defines how string literal type annotations should be encapsulated in the rendered output.
    */
   stringLiteralEncapsulation?: Encapsulation | false;
@@ -136,6 +131,10 @@ export interface MarkupRenderConfig {
 export interface MarkdownRenderConfig extends MarkupRenderConfig {
   /** Defines which HTML tags are allowed in the rendered output. */
   allowedHTMLTags?: string[] | false;
+  /**
+   * Defines the string that should be used to separate sections in the rendered output.
+   */
+  sectionSeparator?: string | false;
 }
 
 export interface HTMLRenderConfig extends MarkupRenderConfig {

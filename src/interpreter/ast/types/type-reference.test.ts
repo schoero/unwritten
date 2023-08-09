@@ -19,30 +19,32 @@ scope("Interpreter", TypeKind.TypeReference, () => {
 
     const { ctx, exportedSymbols } = compile(testFileContent);
 
-    const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "Reference")!;
-    const exportedReferenceTypeAlias = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
+    const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "A")!;
+    const exportedTypeAliasEntity = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
+
+    const exportedTypeReferenceAliasSymbol = exportedSymbols.find(s => s.name === "Reference")!;
+    const exportedReferenceEntity = createTypeAliasEntity(ctx, exportedTypeReferenceAliasSymbol);
 
     it("should be able to interpret a type reference", () => {
-      expect(exportedReferenceTypeAlias.kind).toBe(EntityKind.TypeAlias);
-      expect(exportedReferenceTypeAlias.type.kind).toBe(TypeKind.TypeReference);
+      expect(exportedReferenceEntity.kind).toBe(EntityKind.TypeAlias);
+      expect(exportedReferenceEntity.type.kind).toBe(TypeKind.TypeReference);
     });
 
     it("should have a matching name", () => {
-      assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedReferenceTypeAlias.type.name).toBe("A");
+      assert(exportedReferenceEntity.type.kind === TypeKind.TypeReference);
+      expect(exportedReferenceEntity.type.name).toBe("A");
     });
 
-    it("should have a matching target", () => {
-      assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedReferenceTypeAlias.type.target).toBeDefined();
-      expect(exportedReferenceTypeAlias.type.target!.kind).toBe(EntityKind.TypeAlias);
-      expect(exportedReferenceTypeAlias.type.target!.name).toBe("A");
+    it("should have a matching symbolId", () => {
+      assert(exportedReferenceEntity.type.kind === TypeKind.TypeReference);
+      expect(exportedReferenceEntity.type.symbolId).toBeDefined();
+      expect(exportedReferenceEntity.type.symbolId!).toBe(exportedTypeAliasEntity.symbolId);
     });
 
     it("should have a matching type", () => {
-      assert(exportedReferenceTypeAlias.type.kind === TypeKind.TypeReference);
-      expect(exportedReferenceTypeAlias.type.type).toBeDefined();
-      expect(exportedReferenceTypeAlias.type.type!.kind).toBe(TypeKind.String);
+      assert(exportedReferenceEntity.type.kind === TypeKind.TypeReference);
+      expect(exportedReferenceEntity.type.type).toBeDefined();
+      expect(exportedReferenceEntity.type.type!.kind).toBe(TypeKind.String);
     });
 
   }

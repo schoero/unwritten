@@ -26,8 +26,7 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "*.d.ts": "$(capture).test-d.ts",
-    "*.ts": "$(capture).test.ts,$(capture).test.snap"
+    "*.ts": "$(capture).test.ts,$(capture).test.snap,$(capture).test-d.ts"
   },
 
   // ES module import
@@ -59,5 +58,5 @@
   "search.exclude": {
     "lib": true
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
 }
