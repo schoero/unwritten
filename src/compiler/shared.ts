@@ -28,17 +28,35 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
     return;
   }
 
-  diagnostics.forEach(diagnostic => {
+  diagnostics.filter(
+    diagnostic => diagnostic.category === ts.DiagnosticCategory.Error ||
+     diagnostic.category === ts.DiagnosticCategory.Warning
+  ).forEach(diagnostic => {
 
-    const message: string = ts.flattenDiagnosticMessageText(diagnostic.messageText, lineEndings);
+    const color = diagnostic.category === ts.DiagnosticCategory.Error
+      ? logger.red
+      : logger.yellow;
+
+    const category = diagnostic.category === ts.DiagnosticCategory.Error
+      ? "Error"
+      : "Warning";
+
+    const title = diagnostic.category === ts.DiagnosticCategory.Error
+      ? "The TypeScript compiler has reported an error"
+      : "The TypeScript compiler has reported a warning";
+
+    const message = `${color(`${category}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, lineEndings)}`)} ${logger.gray(`ts(${diagnostic.code})`)}`;
 
     if(diagnostic.file){
 
-      const location: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
+      const startLocation: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
+      const endLocation: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start! + diagnostic.length!);
+
+      const filePath = `${logger.gray("at")} ${logger.filePath(`${diagnostic.file.fileName}:${startLocation.line + 1}:${startLocation.character + 1}`)}`;
 
       const sourceFile = diagnostic.file.text.split(lineEndings);
-      const minLine = Math.max(location.line - 2, 0);
-      const maxLine = Math.min(location.line + 3, sourceFile.length);
+      const minLine = Math.max(startLocation.line - 2, 0);
+      const maxLine = Math.min(startLocation.line + 3, sourceFile.length);
       const maxLineNumberLength = (maxLine + 1).toString().length;
       const linesAround = sourceFile.slice(minLine, maxLine);
       const commonIndentation = findCommonIndentation(linesAround.join(lineEndings), lineEndings);
@@ -50,14 +68,19 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
 
         const lineNumber = minLine + 1 + index;
         const lineIndicator = `${lineNumber.toString().padStart(maxLineNumberLength)}| `;
-        const tabCount = linesAround[index].substring(0, location.character + 1).match(/\t/g)?.length ?? 0;
-        const tabCorrectedCharacter = location.character - tabCount + tabCount * 4;
+        const tabCount = linesAround[index].substring(0, startLocation.character + 1).match(/\t/g)?.length ?? 0;
+        const tabCorrectedStartCharacter = startLocation.character - tabCount + tabCount * 4;
+        const tabCorrectedEndCharacter = endLocation.character - tabCount + tabCount * 4;
         const tabCorrectedLine = line.replace(/\t/g, "    ");
 
         acc.push(logger.gray(`${lineIndicator}${tabCorrectedLine}`));
 
-        if(lineNumber === location.line + 1){
-          acc.push(logger.yellow(`${" ".repeat(lineIndicator.length + tabCorrectedCharacter - commonIndentation)}^`));
+        if(lineNumber === startLocation.line + 1){
+          acc.push(logger.yellow(`${
+            " ".repeat(lineIndicator.length + tabCorrectedStartCharacter - commonIndentation)
+          }${
+            color("~".repeat(tabCorrectedEndCharacter - tabCorrectedStartCharacter))
+          }`));
         }
 
         return acc;
@@ -65,17 +88,22 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
       }, []);
 
       logger.warn(
-        `${diagnostic
-          .file.fileName}:${location.line + 1}:${location.character + 1}`,
-        "TypeScript",
+        title,
         [
-          logger.yellow(message),
+          filePath,
+          "",
+          message,
           "",
           ...sourceCode
         ]
       );
     } else {
-      logger.warn(message, "TypeScript", []);
+      logger.warn(
+        title,
+        [
+          message
+        ]
+      );
     }
 
   });
