@@ -14,16 +14,18 @@ scope("Renderer", "translations", () => {
     expect(translate("function", { count: 1 })).toBe("function");
   });
 
+  it("should singularize when no count is provided", () => {
+    expect(translate("function")).toBe("function");
+    expect(translate("function", { capitalize: false })).toBe("function");
+  });
+
   it("should pluralize properly", () => {
     expect(translate("function", { count: 2 })).toBe("functions");
   });
 
   it("should capitalize properly", () => {
-    expect(translate("function", { capitalize: true, count: 1 })).toBe("Function");
-  });
-
-  it("should not pluralize if not specified", () => {
-    expect(translate("beta")).toBe("beta");
+    expect(translate("function", { capitalize: true })).toBe("Function");
+    expect(translate("typeLiteral", { capitalizeEach: true })).toBe("Type Literal");
   });
 
   it("should fallback to the translation key if not found", () => {

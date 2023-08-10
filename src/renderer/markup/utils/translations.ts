@@ -12,7 +12,7 @@ interface TranslationOptions {
 }
 
 interface TranslationOptionWithCount extends TranslationOptions {
-  count: number;
+  count?: number;
 }
 
 export type TranslationKeyOptions
@@ -28,10 +28,10 @@ export type TranslationKeys<CustomRenderContext extends MarkupRenderContexts> =
   keyof TranslationWithoutSuffixes<CustomRenderContext["config"]["renderConfig"][CustomRenderContext["renderer"]["name"]]["translations"]>;
 
 export function getTranslator(ctx: MarkupRenderContexts) {
-  return <const Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>) => translate(ctx, key, options);
+  return <Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>) => translate(ctx, key, options);
 }
 
-function translate<const Key extends TranslationKeys<MarkupRenderContexts>>(ctx: MarkupRenderContexts, key: Key, options?: TranslationKeyOptions<Key>) {
+function translate<Key extends TranslationKeys<MarkupRenderContexts>>(ctx: MarkupRenderContexts, key: Key, options?: TranslationKeyOptions<Key>) {
 
   const translations = getTranslations(ctx);
   const translationKey = getTranslationKey(key, options);
@@ -63,10 +63,10 @@ function getTranslations<MarkupRenderContext extends MarkupRenderContexts>(ctx: 
 }
 
 
-function getTranslationKey<const Key extends TranslationKeys<MarkdownRenderContext>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<MarkdownRenderConfig>["translations"];
-function getTranslationKey<const Key extends TranslationKeys<HTMLRenderContext>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<HTMLRenderConfig>["translations"];
-function getTranslationKey<const Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<MarkupRenderConfig>["translations"];
-function getTranslationKey<const Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>) {
+function getTranslationKey<Key extends TranslationKeys<MarkdownRenderContext>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<MarkdownRenderConfig>["translations"];
+function getTranslationKey<Key extends TranslationKeys<HTMLRenderContext>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<HTMLRenderConfig>["translations"];
+function getTranslationKey<Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>): keyof Complete<MarkupRenderConfig>["translations"];
+function getTranslationKey<Key extends TranslationKeys<MarkupRenderContexts>>(key: Key, options?: TranslationKeyOptions<Key>) {
 
   const count = options && "count" in options ? options.count : undefined;
 
