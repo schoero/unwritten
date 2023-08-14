@@ -1,5 +1,6 @@
 import { assert, expect, it } from "vitest";
 
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createTypeAliasEntity, createVariableEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
@@ -12,27 +13,36 @@ scope("Interpreter", TypeKind.TypeQuery, () => {
   {
 
     const testFileContent = ts`
-      const test = 7;
+      export const test = 7;
       export type TypeQuery = typeof test;
     `;
 
     const { ctx, exportedSymbols } = compile(testFileContent);
 
-    const conditionalTypeAliasSymbol = exportedSymbols.find(s => s.name === "TypeQuery")!;
-    const conditionalTypeAlias = createTypeAliasEntity(ctx, conditionalTypeAliasSymbol);
+    const typeQueryTargetSymbol = exportedSymbols.find(s => s.name === "test")!;
+    const typeQueryTarget = createVariableEntity(ctx, typeQueryTargetSymbol);
+    const typeQuerySymbol = exportedSymbols.find(s => s.name === "TypeQuery")!;
+    const typeQueryTypeAlias = createTypeAliasEntity(ctx, typeQuerySymbol);
 
     it("should be able to parse type queries", () => {
-      expect(conditionalTypeAlias.type.kind).toBe(TypeKind.TypeQuery);
+      expect(typeQueryTypeAlias.type.kind).toBe(TypeKind.TypeQuery);
     });
 
     it("should have a matching name", () => {
-      assert(conditionalTypeAlias.type.kind === TypeKind.TypeQuery);
-      expect(conditionalTypeAlias.type.name).toBe("test");
+      assert(typeQueryTypeAlias.type.kind === TypeKind.TypeQuery);
+      expect(typeQueryTypeAlias.type.name).toBe("test");
     });
 
     it("should have a matching type", () => {
-      assert(conditionalTypeAlias.type.kind === TypeKind.TypeQuery);
-      expect(conditionalTypeAlias.type.type.kind).toBe(TypeKind.NumberLiteral);
+      assert(typeQueryTypeAlias.type.kind === TypeKind.TypeQuery);
+      expect(typeQueryTypeAlias.type.type.kind).toBe(TypeKind.NumberLiteral);
+    });
+
+    it("should have a matching target", () => {
+      assert(typeQueryTypeAlias.type.kind === TypeKind.TypeQuery);
+      expect(typeQueryTypeAlias.type.target).toBeDefined();
+      expect(typeQueryTypeAlias.type.target!.kind).toBe(EntityKind.Variable);
+      expect(typeQueryTypeAlias.type.target).toEqual(typeQueryTarget);
     });
 
   }
@@ -52,9 +62,9 @@ scope("Interpreter", TypeKind.TypeQuery, () => {
     const exportedTypeAliasSymbol = exportedSymbols.find(s => s.name === "Test")!;
     const exportedTypeAliasEntity = createTypeAliasEntity(ctx, exportedTypeAliasSymbol);
 
-    it("should have a matching targetId", () => {
+    it("should have a matching target", () => {
       assert(exportedTypeAliasEntity.type.kind === TypeKind.TypeQuery);
-      expect(exportedTypeAliasEntity.type.symbolId).toBe(exportedVariableEntity.symbolId);
+      expect(exportedTypeAliasEntity.type.target).toEqual(exportedVariableEntity);
     });
 
   }

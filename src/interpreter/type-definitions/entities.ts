@@ -106,6 +106,7 @@ export interface TupleMemberEntity extends EntityBase<EntityKind.TupleMember>, J
   type: Type;
   name?: Name;
   position?: Position;
+  symbolId?: ID;
 }
 
 export interface FunctionLikeEntityBase<Kind extends FunctionLikeEntityKinds> extends EntityBase<Kind> {

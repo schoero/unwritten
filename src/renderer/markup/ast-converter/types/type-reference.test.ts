@@ -81,7 +81,6 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
     const primitiveTypeAliasEntity = createTypeAliasEntity(compilerContext, primitiveTypeSymbol);
     const objectTypeAliasEntity = createTypeAliasEntity(compilerContext, objectTypeSymbol);
 
-
     const sourceFileEntities = fileSymbols.map(fileSymbol => {
       return createSourceFileEntity(compilerContext, fileSymbol);
     });
@@ -154,7 +153,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
     it("should create a type reference to the symbol in the other file", () => {
       assert(interpretedVariableEntity);
       assert(interpretedVariableEntity.type.kind === TypeKind.TypeReference);
-      expect(interpretedVariableEntity.type.symbolId).toBe(interpretedInterfaceEntity?.symbolId);
+      expect(interpretedVariableEntity.type.target).toEqual(interpretedInterfaceEntity);
     });
 
   }

@@ -35,10 +35,9 @@ scope("Interpreter", TypeKind.TypeReference, () => {
       expect(exportedReferenceEntity.type.name).toBe("A");
     });
 
-    it("should have a matching symbolId", () => {
+    it("should have a matching target", () => {
       assert(exportedReferenceEntity.type.kind === TypeKind.TypeReference);
-      expect(exportedReferenceEntity.type.symbolId).toBeDefined();
-      expect(exportedReferenceEntity.type.symbolId!).toBe(exportedTypeAliasEntity.symbolId);
+      expect(exportedReferenceEntity.type.target).toEqual(exportedTypeAliasEntity);
     });
 
     it("should have a matching type", () => {

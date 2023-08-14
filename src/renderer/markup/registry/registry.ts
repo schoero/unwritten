@@ -1,5 +1,12 @@
 import { getOutputFilePath } from "unwritten:renderer/markup/utils/file.js";
-import { isClassEntity, isInterfaceEntity, isModuleEntity, isNamespaceEntity } from "unwritten:typeguards/entities.js";
+import {
+  isClassEntity,
+  isFunctionLikeEntity,
+  isInterfaceEntity,
+  isModuleEntity,
+  isNamespaceEntity,
+  isSignatureEntity
+} from "unwritten:typeguards/entities.js";
 import { assert } from "unwritten:utils/general.js";
 
 import type { MarkupRenderContexts } from "../types-definitions/markup.js";
@@ -60,8 +67,12 @@ function addExports(set: Set<ID>, entities: Entity[]): void {
 
   for(const entity of entities){
 
-    if("symbolId" in entity && entity.symbolId !== undefined){
-      set.add(entity.symbolId);
+    if(isSignatureEntity(entity) && entity.declarationId !== undefined){
+      set.add(entity.declarationId);
+    } else {
+      if("symbolId" in entity && entity.symbolId !== undefined){
+        set.add(entity.symbolId);
+      }
     }
 
     if("typeParameters" in entity && entity.typeParameters !== undefined){
@@ -72,12 +83,16 @@ function addExports(set: Set<ID>, entities: Entity[]): void {
       addExports(set, entity.exports);
     }
 
+    if(isFunctionLikeEntity(entity)){
+      addExports(set, entity.signatures);
+    }
+
     if(isClassEntity(entity)){
       addExports(set, entity.methods);
       addExports(set, entity.properties);
       addExports(set, entity.setters);
       addExports(set, entity.getters);
-      entity.ctor && addExports(set, [entity.ctor]);
+      entity.ctor && addExports(set, entity.ctor.signatures);
     }
 
     if(isInterfaceEntity(entity)){

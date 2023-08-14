@@ -1,6 +1,5 @@
 import { createCircularEntity, createUnresolvedEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
-import { isDeclaration } from "unwritten:interpreter/typeguards/declarations.js";
 import { isSymbolLocked } from "unwritten:interpreter/utils/locker.js";
 import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import {
@@ -71,7 +70,6 @@ import {
   isNamespaceExportSymbol,
   isNamespaceSymbol,
   isSourceFileSymbol,
-  isSymbol,
   isTypeAliasSymbol,
   isTypeParameterSymbol,
   isVariableSymbol
@@ -84,7 +82,6 @@ import {
   isMappedTypeNode,
   isTemplateLiteralTypeNode,
   isTupleTypeNode,
-  isTypeNode,
   isTypeQueryNode,
   isTypeReferenceNode,
   isUnionTypeNode
@@ -98,7 +95,6 @@ import {
   isBooleanType,
   isClassType,
   isConditionalType,
-  isErrorType,
   isFunctionLikeType,
   isIndexedAccessType,
   isInterfaceType,
@@ -113,7 +109,6 @@ import {
   isStringType,
   isSymbolType,
   isTupleTypeReferenceType,
-  isType,
   isTypeLiteralType,
   isTypeParameterType,
   isUndefinedType,
@@ -299,55 +294,6 @@ export function getTypeByResolvedAndDeclaredType(ctx: InterpreterContext, resolv
   }
 
   return declaredTypeWithoutBrand;
-
-}
-
-
-function _getType(ctx: InterpreterContext, type: TSType): Type;
-function _getType(ctx: InterpreterContext, typeNode: TypeNode): Type;
-function _getType(ctx: InterpreterContext, declaration: Declaration): Type;
-function _getType(ctx: InterpreterContext, symbol: Symbol, declaration?: Declaration): Type;
-function _getType(ctx: InterpreterContext, typeNodeOrSymbolOrDeclaration: Declaration | Symbol | TSType | TypeNode, declarationOrUndefined?: Declaration): Type {
-
-  const declaration = isDeclaration(ctx, typeNodeOrSymbolOrDeclaration) ? typeNodeOrSymbolOrDeclaration : declarationOrUndefined;
-  const symbol = isSymbol(ctx, typeNodeOrSymbolOrDeclaration) ? typeNodeOrSymbolOrDeclaration : declaration && getSymbolByDeclaration(ctx, declaration);
-  const typeNode = isTypeNode(ctx, typeNodeOrSymbolOrDeclaration) ? typeNodeOrSymbolOrDeclaration : declaration && getTypeNodeByDeclaration(ctx, declaration);
-  const type = isType(ctx, typeNodeOrSymbolOrDeclaration) ? typeNodeOrSymbolOrDeclaration : undefined;
-
-  const tsTypeFromTypeNode = typeNode && ctx.checker.getTypeFromTypeNode(typeNode);
-  const tsTypeFromDeclaration = declaration && ctx.checker.getTypeAtLocation(declaration);
-  const tsTypeFromSymbolAndDeclaration = symbol && declaration && ctx.checker.getTypeOfSymbolAtLocation(symbol, declaration);
-  const tsTypeFromSymbol = symbol && ctx.checker.getTypeOfSymbol(symbol);
-
-  /*
-   * Getting the type via symbol or declaration returns an error type on type aliases for some reason.
-   * but it is often times more specific than the type from the type node.
-   */
-  const tsResolvedType = type && !isErrorType(ctx, type)
-    ? type
-    : tsTypeFromSymbolAndDeclaration && !isErrorType(ctx, tsTypeFromSymbolAndDeclaration)
-      ? tsTypeFromSymbolAndDeclaration
-      : tsTypeFromDeclaration && !isErrorType(ctx, tsTypeFromDeclaration)
-        ? tsTypeFromDeclaration
-        : tsTypeFromSymbol && !isErrorType(ctx, tsTypeFromSymbol)
-          ? tsTypeFromSymbol
-          : tsTypeFromTypeNode && !isErrorType(ctx, tsTypeFromTypeNode) ? tsTypeFromTypeNode : undefined;
-
-  const resolvedType = tsResolvedType && interpretType(ctx, tsResolvedType);
-
-  /*
-   * The resolved type from a type reference is not always correct. Sometimes the actual values get lost if the reference
-   * doesn't contain the type argument directly. So we need to override it with the resolved type from the symbol.
-   */
-  if(typeNode){
-    const declaredType = interpretTypeNode(ctx, typeNode);
-    if(isTypeReferenceType(declaredType)){
-      declaredType.type = resolvedType;
-    }
-    return declaredType;
-  }
-
-  return resolvedType!;
 
 }
 

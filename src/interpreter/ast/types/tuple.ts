@@ -2,7 +2,7 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
 import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter:ast/index.js";
-import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
+import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByDeclaration, getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
 import { isNamedTupleMember, isTupleTypeReferenceType } from "unwritten:interpreter:typeguards/types.js";
@@ -25,6 +25,8 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
 
     const type = getTypeByType(ctx, typeArgument);
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const symbolId = typeArgument.symbol && getSymbolId(ctx, typeArgument.symbol);
     const typeId = getTypeId(ctx, typeArgument);
     const elementFlag = typeReference.target.elementFlags[index];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -40,6 +42,7 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
       name,
       optional,
       rest,
+      symbolId,
       type,
       typeId
     };

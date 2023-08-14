@@ -61,7 +61,7 @@ export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContex
 
 export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: DeepRequiredByKey<SignatureEntity, "declarationId">): ConvertedSignatureEntityForDocumentation {
 
-  const symbolId = signatureEntity.declarationId;
+  const id = signatureEntity.declarationId;
 
   const convertedSignature = convertSignature(ctx, signatureEntity);
   const convertedPosition = convertPosition(ctx, signatureEntity.position);
@@ -74,7 +74,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const convertedRemarks = convertRemarks(ctx, signatureEntity.remarks);
 
   const renderedSignature = renderNode(ctx, convertedSignature);
-  const anchor = registerAnchor(ctx, renderedSignature, symbolId);
+  const anchor = registerAnchor(ctx, renderedSignature, id);
 
   return createSectionNode(
     SECTION_TYPE[signatureEntity.kind],

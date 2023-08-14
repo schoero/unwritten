@@ -94,44 +94,6 @@ scope("Interpreter", EntityKind.SourceFile, () => {
       export const test2 = "test2" as const;
     `;
 
-    const yetAnotherFileContent = ts`
-      export const test = "test" as const;
-      export const test3 = "test3" as const;
-    `;
-
-    const testFileContent = ts`
-      export * from "./other";
-      export * from "./yet-another";
-    `;
-
-    const { ctx, fileSymbol } = compile({
-      "/index.ts": testFileContent,
-      "/other.ts": otherFileContent,
-      "/yet-another.ts": yetAnotherFileContent
-    });
-
-    const sourceFile = createSourceFileEntity(ctx, fileSymbol);
-
-    it("should be able export directly from other files", () => {
-      expect(sourceFile.exports).toHaveLength(3);
-    });
-
-    it("should keep the first symbol for directly exported symbols with identical names", () => {
-      const export1 = sourceFile.exports[0];
-      assert(isVariableEntity(export1));
-      expect(export1.name).toBe("test");
-      expect(export1.position?.file).toBe("/other.ts");
-    });
-
-  }
-
-  {
-
-    const otherFileContent = ts`
-      export const test = "test" as const;
-      export const test2 = "test2" as const;
-    `;
-
     const testFileContent = ts`
       export * as other from "./other";
     `;

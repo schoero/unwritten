@@ -5,6 +5,7 @@ import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { assert } from "unwritten:utils/general.js";
 
+import type { Entity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ID } from "unwritten:interpreter/type-definitions/shared.js";
 import type { Type, TypeReferenceType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
@@ -67,7 +68,7 @@ function convertTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferen
   assert(hasExportedTarget(ctx, typeReferenceType));
 
   const name = typeReferenceType.name ?? "";
-  const anchor = createAnchorNode(name, typeReferenceType.symbolId);
+  const anchor = createAnchorNode(name, typeReferenceType.target.symbolId);
   const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
     ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
     : "";
@@ -79,7 +80,7 @@ function convertTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferen
 
 }
 
-function hasExportedTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): typeReferenceType is TypeReferenceType & { symbolId: ID; } {
-  return typeReferenceType.symbolId !== undefined &&
-    isSymbolExported(ctx, typeReferenceType.symbolId);
+function hasExportedTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): typeReferenceType is TypeReferenceType & { target: Entity & { symbolId: ID; }; } {
+  return typeReferenceType.target?.symbolId !== undefined &&
+    isSymbolExported(ctx, typeReferenceType.target.symbolId);
 }
