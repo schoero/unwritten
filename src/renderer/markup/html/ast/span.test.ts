@@ -3,7 +3,6 @@ import { expect, it } from "vitest";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createSpanNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { createTestRegistry } from "unwritten:tests:utils/registry.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { html } from "unwritten:utils/template.js";
 
@@ -27,11 +26,6 @@ scope("HTMLRenderer", "SpanNode", () => {
   });
 
   it("should render an id if available", () => {
-
-    ctx.links = createTestRegistry(ctx, {
-      exports: new Set([1])
-    });
-
     const anchor = registerAnchor(ctx, "test", 1);
     const spanNode = createSpanNode(anchor, "text");
     expect(renderSpanNode(ctx, spanNode)).toBe(html`
