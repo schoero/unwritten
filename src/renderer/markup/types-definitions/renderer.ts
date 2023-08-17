@@ -201,11 +201,11 @@ export type ConvertedMappedTypeInline = ASTNode;
 export type ConvertedMappedTypeMultiline = ListNode<[
   keyType: [
     ASTNode[],
-    ConvertedTypeMultiline | ""
+    ConditionalNode | ConvertedTypeMultiline | ""
   ],
   valueType: [
     ASTNode[],
-    ConvertedTypeMultiline | ""
+    ConditionalNode | ConvertedTypeMultiline | ""
   ]
 ]>;
 
@@ -443,5 +443,5 @@ export type ConvertedPropertyEntityForDocumentation = TitleNode<[
 ]>;
 export type ConvertedPropertyEntityForType = [
   propertySignature: ASTNode[],
-  propertyType: ConvertedTypeMultiline | ""
+  propertyType: ConditionalNode | ConvertedTypeMultiline | ""
 ];
