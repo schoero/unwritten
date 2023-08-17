@@ -28,7 +28,7 @@ scope("HTMLRenderer", "SpanNode", () => {
 
   it("should render an id if available", () => {
 
-    ctx.sourceRegistry = createTestRegistry(ctx, {
+    ctx.links = createTestRegistry(ctx, {
       exports: new Set([1])
     });
 

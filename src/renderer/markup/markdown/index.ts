@@ -1,7 +1,9 @@
 /* eslint-disable arrow-body-style */
+
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/conditional.js";
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
-import { initializeRegistry } from "unwritten:renderer/markup/registry/registry.js";
+import { setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor.js";
 import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold.js";
@@ -17,6 +19,7 @@ import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/inde
 import {
   isAnchorNode,
   isBoldNode,
+  isConditionalNode,
   isItalicNode,
   isLinkNode,
   isListNode,
@@ -32,8 +35,9 @@ import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 import { renderTitleNode } from "./ast/title.js";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import type { MarkdownRenderContext, MarkdownRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { RenderOutput } from "unwritten:type-definitions/renderer.js";
 
@@ -63,6 +67,33 @@ const markdownRenderer: MarkdownRenderer = {
   // eslint-disable-next-line sort-keys/sort-keys-fix
   initializeContext: (ctx: MarkdownRenderContext) => {
 
+    // Attach getters and setters to context
+    if(Object.hasOwn(ctx, "currentFile")){
+      ctx._currentFile = ctx.currentFile;
+    } else {
+      Object.defineProperty(ctx, "currentFile", {
+        get() {
+          return ctx._currentFile ?? undefined;
+        },
+        set(currentFile: SourceFile) {
+          ctx._currentFile = currentFile;
+        }
+      });
+    }
+
+    if(Object.hasOwn(ctx, "links")){
+      ctx._links = ctx.links;
+    } else {
+      Object.defineProperty(ctx, "links", {
+        get() {
+          return ctx._links ?? [];
+        },
+        set(links: LinkRegistry) {
+          ctx._links = links;
+        }
+      });
+    }
+
     if(Object.hasOwn(ctx, "nesting")){
       ctx._nesting = 1;
     } else {
@@ -91,13 +122,8 @@ const markdownRenderer: MarkdownRenderer = {
 
   },
 
-  initializeRegistry: (ctx: MarkdownRenderContext, sourceFileEntities: SourceFileEntity[]) => {
-    initializeRegistry(ctx, sourceFileEntities);
-  },
-
   render: (ctx: RenderContext, sourceFileEntities: SourceFileEntity[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
 
-    markdownRenderer.initializeRegistry(ctx, sourceFileEntities);
     markdownRenderer.initializeContext(ctx);
 
     return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
@@ -105,14 +131,16 @@ const markdownRenderer: MarkdownRenderer = {
       // Reset context
       ctx.nesting = 1;
       ctx.indentation = 0;
-      ctx.currentFile = sourceFileEntity.symbolId;
+
+      // Set current source file
+      setCurrentSourceFile(ctx, sourceFileEntity);
 
       const renderedNewLine = renderNewLine(ctx);
 
       const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
       const renderedContent = renderNode(ctx, markupAST);
 
-      const filePath = ctx.sourceRegistry![ctx.currentFile].dst;
+      const filePath = ctx.currentFile.dst;
 
       files[filePath] = `${renderedContent}${renderedNewLine}`;
       return files;
@@ -123,7 +151,7 @@ const markdownRenderer: MarkdownRenderer = {
 
 };
 
-export function renderNode(ctx: MarkdownRenderContext, node: ASTNodes): string {
+export function renderNode(ctx: MarkdownRenderContext, node: ASTNode): string {
 
   if(isLinkNode(node)){
     return renderLinkNode(ctx, node);
@@ -147,6 +175,8 @@ export function renderNode(ctx: MarkdownRenderContext, node: ASTNodes): string {
     return renderSpanNode(ctx, node);
   } else if(isSectionNode(node)){
     return renderSectionNode(ctx, node);
+  } else if(isConditionalNode(node)){
+    return renderConditionalNode(ctx, node);
   } else {
     if(Array.isArray(node)){
       return node.map((n, index) => {

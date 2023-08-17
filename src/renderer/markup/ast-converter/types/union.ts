@@ -7,7 +7,7 @@ import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 
 import type { UnionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { ASTNodes } from "unwritten:renderer/markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedUnionTypeInline,
@@ -22,7 +22,7 @@ export function convertUnionTypeInline(ctx: MarkupRenderContexts, unionType: Uni
 
   if(!isMultilineUnionType(unionType)){
 
-    return unionType.types.reduce<ASTNodes[]>((astNodes, type, index) => {
+    return unionType.types.reduce<ASTNode[]>((astNodes, type, index) => {
       const { inlineType, multilineType } = convertType(ctx, type);
       const convertedType = multilineType ?? inlineType;
 

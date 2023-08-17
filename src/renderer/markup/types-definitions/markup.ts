@@ -1,7 +1,5 @@
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { ID } from "unwritten:interpreter/type-definitions/shared.js";
 import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import type { SourceRegistry } from "unwritten:renderer/markup/registry/registry.js";
+import type { LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
@@ -11,19 +9,22 @@ import type { Renderer } from "unwritten:type-definitions/renderer.js";
 export interface MarkupRenderer extends Renderer {
   fileExtension: ".html" | ".md";
   initializeContext(ctx: MarkupRenderContexts): void;
-  initializeRegistry(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity[]): void;
   name: BuiltInRenderers.HTML | BuiltInRenderers.Markdown;
 }
 
 export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> extends RenderContext<CustomMarkupRenderer> {
+  get currentFile(): SourceFile;
+  set currentFile(sourceFile: SourceFile);
   set indentation(value: number);
   get indentation(): number;
+  get links(): LinkRegistry;
+  set links(value: LinkRegistry);
   get nesting(): number;
   set nesting(value: number);
+  _currentFile?: SourceFile;
   _indentation?: number;
+  _links?: LinkRegistry;
   _nesting?: number;
-  currentFile?: ID;
-  sourceRegistry?: SourceRegistry;
 }
 
 export type MarkupRenderers = HTMLRenderer | MarkdownRenderer;

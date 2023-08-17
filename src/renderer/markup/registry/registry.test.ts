@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  createNamespaceEntity,
-  createSourceFileEntity,
-  createVariableEntity
-} from "unwritten:interpreter/ast/entities/index.js";
+import { createNamespaceEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -89,13 +85,8 @@ scope("Renderer", "Source registry", () => {
       const symbol = exportedSymbols.find(symbol => symbol.name === "test");
 
       const variableEntity = createVariableEntity(compilerContext, symbol!);
-      const sourceFileEntities = fileSymbols.map(
-        fileSymbol => createSourceFileEntity(compilerContext, fileSymbol)
-      );
 
       const ctx = createRenderContext();
-      ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
-      ctx.currentFile = sourceFileEntities[0].symbolId;
 
       it("should create a simple anchor correctly", () => {
 
@@ -146,13 +137,7 @@ scope("Renderer", "Source registry", () => {
 
       assert(isVariableEntity(namespaceVariableEntity));
 
-      const sourceFileEntities = fileSymbols.map(
-        fileSymbol => createSourceFileEntity(compilerContext, fileSymbol)
-      );
-
       const ctx = createRenderContext();
-      ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
-      ctx.currentFile = sourceFileEntities[0].symbolId;
 
       const variableAnchor = registerAnchor(
         ctx,

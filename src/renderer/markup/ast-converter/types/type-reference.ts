@@ -1,52 +1,92 @@
-import { isSymbolExported } from "unwritten:renderer/markup/registry/registry.js";
+import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createConditionalNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
-import { assert } from "unwritten:utils/general.js";
+import { isSignatureEntity } from "unwritten:typeguards/entities.js";
 
-import type { Entity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { ID } from "unwritten:interpreter/type-definitions/shared.js";
 import type { Type, TypeReferenceType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
-  ConvertedMultilineTypes,
-  ConvertedTypeReferenceTypeInline
+  ConvertedTypeReferenceTypeInline,
+  ConvertedTypeReferenceTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
 export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeInline {
 
-  const name = typeReferenceType.name ?? "";
+  const fallback = (
+    typeReferenceType.type &&
+     convertType(ctx, typeReferenceType.type).inlineType
+  ) ?? typeReferenceType.name ?? "";
 
-  if(hasExportedTarget(ctx, typeReferenceType)){
-    return convertTarget(ctx, typeReferenceType);
+  if(typeReferenceType.target === undefined){
+    return fallback;
   }
 
-  if(typeReferenceType.type){
-    return convertType(ctx, typeReferenceType.type).inlineType;
+  const id = isSignatureEntity(typeReferenceType.target)
+    ? typeReferenceType.target.declarationId
+    : typeReferenceType.target.symbolId;
+
+  if(!id){
+    return fallback;
   }
 
-  return name;
+  const anchor = createAnchorNode(typeReferenceType.target.name ?? "", id, fallback);
+
+  const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
+    ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
+    : "";
+
+  return createConditionalNode(
+    getAnchorLink,
+    [ctx, typeReferenceType.name, id],
+    "!==",
+    undefined,
+    spaceBetween(
+      anchor,
+      typeArguments
+    ),
+    fallback
+  );
 
 }
 
 
-export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedMultilineTypes | undefined {
+export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeMultiline | undefined {
 
-  if(hasExportedTarget(ctx, typeReferenceType)){
+  const fallback = typeReferenceType.type && convertType(ctx, typeReferenceType.type).multilineType;
+
+  if(typeReferenceType.target === undefined){
+    return fallback;
+  }
+
+  const id = isSignatureEntity(typeReferenceType.target)
+    ? typeReferenceType.target.declarationId
+    : typeReferenceType.target.symbolId;
+
+  if(!id){
+    return fallback;
+  }
+
+  if(fallback === undefined){
     return;
   }
 
-  if(typeReferenceType.type !== undefined){
-    return convertType(ctx, typeReferenceType.type).multilineType;
-  }
+  return createConditionalNode(
+    getAnchorLink,
+    [ctx, typeReferenceType.name, id],
+    "!==",
+    undefined,
+    "",
+    fallback
+  );
 
 }
 
 
-function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]): ASTNodes {
+function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]): ASTNode {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -61,26 +101,4 @@ function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]):
 
   return encapsulate(convertedTypeArguments, renderConfig.typeParameterEncapsulation);
 
-}
-
-function convertTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ASTNodes {
-
-  assert(hasExportedTarget(ctx, typeReferenceType));
-
-  const name = typeReferenceType.name ?? "";
-  const anchor = createAnchorNode(name, typeReferenceType.target.symbolId);
-  const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
-    ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
-    : "";
-
-  return spaceBetween(
-    anchor,
-    typeArguments
-  );
-
-}
-
-function hasExportedTarget(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): typeReferenceType is TypeReferenceType & { target: Entity & { symbolId: ID; }; } {
-  return typeReferenceType.target?.symbolId !== undefined &&
-    isSymbolExported(ctx, typeReferenceType.target.symbolId);
 }

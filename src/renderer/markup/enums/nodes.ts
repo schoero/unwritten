@@ -1,6 +1,7 @@
 export enum ASTNodeKinds {
   Anchor = "Anchor",
   Bold = "Bold",
+  Conditional = "Conditional",
   Container = "Container",
   Italic = "Italic",
   Link = "Link",

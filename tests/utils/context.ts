@@ -66,14 +66,14 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
     ctx.renderer = htmlRenderer;
     assert(isHTMLRenderContext(ctx));
     ctx.renderer.initializeContext(ctx);
-    ctx.sourceRegistry = createTestRegistry(ctx);
-    ctx.currentFile = +Object.keys(ctx.sourceRegistry)[0];
+    ctx.links = createTestRegistry(ctx);
+    ctx.currentFile = Object.values(ctx.links)[0];
   } else if(rendererName === BuiltInRenderers.Markdown){
     ctx.renderer = markdownRenderer;
     assert(isMarkdownRenderContext(ctx));
     ctx.renderer.initializeContext(ctx);
-    ctx.sourceRegistry = createTestRegistry(ctx);
-    ctx.currentFile = +Object.keys(ctx.sourceRegistry)[0];
+    ctx.links = createTestRegistry(ctx);
+    ctx.currentFile = Object.values(ctx.links)[0];
   } else {
     ctx.renderer = jsonRenderer;
   }

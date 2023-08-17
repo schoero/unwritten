@@ -5,7 +5,7 @@ import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/rende
 
 import type { Type, UnresolvedType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { ConvertedTypeReferenceTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -30,7 +30,7 @@ export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolve
 }
 
 
-function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]): ASTNodes {
+function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]): ASTNode {
 
   const renderConfig = getRenderConfig(ctx);
 

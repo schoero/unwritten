@@ -5,7 +5,7 @@ import { renderIndentation as renderIndentationOriginal } from "unwritten:render
 import { renderNode } from "../index.js";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNodes, ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode, ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
 export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): string {
@@ -30,11 +30,11 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
 
 }
 
-function renderListItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string[] {
+function renderListItems(ctx: MarkdownRenderContext, items: ASTNode[]): string[] {
   return items.map(item => renderListItem(ctx, item));
 }
 
-function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
+function renderListItem(ctx: MarkdownRenderContext, item: ASTNode): string {
 
   const renderedNewLine = renderNewLine(ctx);
 
@@ -81,7 +81,7 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNodes): string {
 
 }
 
-function flattenNestedArrayItems(items: ASTNodes[]): ASTNodes[] {
+function flattenNestedArrayItems(items: ASTNode[]): ASTNode[] {
 
   // Flatten deeply nested arrays
   if(items.some(Array.isArray) && !items.some(isListNode)){
@@ -92,7 +92,7 @@ function flattenNestedArrayItems(items: ASTNodes[]): ASTNodes[] {
 
 }
 
-function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string {
+function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNode[]): string {
 
   // Render normal array without a list
   if(!items.some(isListNode)){
@@ -105,7 +105,7 @@ function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNodes[]): string
   for(let index = 0; index < items.length; index++){
 
     const currentItem = items[index];
-    const nextItem: ASTNodes | undefined = items[index + 1];
+    const nextItem: ASTNode | undefined = items[index + 1];
 
     const renderedCurrentItem = renderNode(ctx, currentItem);
 

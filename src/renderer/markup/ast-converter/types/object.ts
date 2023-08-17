@@ -12,7 +12,7 @@ import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
 import type { ObjectLikeTypes } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedObjectType,
   ConvertedObjectTypeMultiline
@@ -55,7 +55,7 @@ export function convertObjectTypeMultiline(
   const convertedConstructSignatures = constructSignatures.map(
     constructSignature => {
       const convertedSignature = convertSignatureEntityForType(ctx, constructSignature);
-      (convertedSignature[0] as ASTNodes[]).unshift("new ");
+      (convertedSignature[0] as ASTNode[]).unshift("new ");
       return convertedSignature;
     }
   );

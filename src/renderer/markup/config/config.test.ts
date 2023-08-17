@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { createClassEntity, createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { createClassEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { convertClassEntityForDocumentation } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import {
@@ -137,13 +137,7 @@ scope("Renderer", "Config", () => {
       const symbol = exportedSymbols.find(s => s.name === "Class")!;
       const classEntity = createClassEntity(compilerContext, symbol);
 
-      const sourceFileEntities = fileSymbols.map(
-        fileSymbol => createSourceFileEntity(compilerContext, fileSymbol)
-      );
-
       const ctx = createRenderContext();
-      ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
-      ctx.currentFile = sourceFileEntities[0].symbolId;
 
       {
         const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);

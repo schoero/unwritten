@@ -1,17 +1,8 @@
 import { getOutputFilePath } from "unwritten:renderer/markup/utils/file.js";
-import {
-  isClassEntity,
-  isFunctionLikeEntity,
-  isInterfaceEntity,
-  isModuleEntity,
-  isNamespaceEntity,
-  isSignatureEntity
-} from "unwritten:typeguards/entities.js";
-import { assert } from "unwritten:utils/general.js";
 
 import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
-import type { Entity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
 import type { FilePath } from "unwritten:type-definitions/file-system.js";
 
@@ -28,124 +19,55 @@ export interface AnchorTarget {
 
 export type ExportRegistry = Set<ID>;
 
-export type LinkRegistry = {
-  [linkName: Name]: ID[];
-};
-
 export type SourceFile = {
   dst: FilePath;
-  exports: ExportRegistry;
-  links: LinkRegistry;
+  id: ID;
+  links: {
+    [linkName: Name]: ID[];
+  };
   name: Name;
   src: string;
 };
 
-export type SourceRegistry = {
-  [sourceFileId: ID]: SourceFile;
-};
+export type LinkRegistry = SourceFile[];
 
 
-export function initializeRegistry(ctx: MarkupRenderContexts, sourceFileEntities: SourceFileEntity[]): void {
-
-  ctx.sourceRegistry = {};
-
-  sourceFileEntities.forEach(sourceFileEntity => {
-    ctx.sourceRegistry![sourceFileEntity.symbolId] = {
-      dst: getOutputFilePath(ctx, sourceFileEntity.path),
-      exports: new Set(),
-      links: {},
-      name: sourceFileEntity.name,
-      src: sourceFileEntity.path
-    };
-
-    addExports(ctx.sourceRegistry![sourceFileEntity.symbolId].exports, sourceFileEntity.exports);
-  });
-
+export function isSymbolExported(ctx: MarkupRenderContexts, symbolId: ID): boolean {
+  return Object.values(ctx.links).some(sourceFile => isSymbolExportedFromSourceFile(sourceFile, symbolId));
 }
 
-function addExports(set: Set<ID>, entities: Entity[]): void {
-
-  for(const entity of entities){
-
-    if(isSignatureEntity(entity) && entity.declarationId !== undefined){
-      set.add(entity.declarationId);
-    } else {
-      if("symbolId" in entity && entity.symbolId !== undefined){
-        set.add(entity.symbolId);
-      }
-    }
-
-    if("typeParameters" in entity && entity.typeParameters !== undefined){
-      addExports(set, entity.typeParameters);
-    }
-
-    if(isNamespaceEntity(entity) || isModuleEntity(entity)){
-      addExports(set, entity.exports);
-    }
-
-    if(isFunctionLikeEntity(entity)){
-      addExports(set, entity.signatures);
-    }
-
-    if(isClassEntity(entity)){
-      addExports(set, entity.methods);
-      addExports(set, entity.properties);
-      addExports(set, entity.setters);
-      addExports(set, entity.getters);
-      entity.ctor && addExports(set, entity.ctor.signatures);
-    }
-
-    if(isInterfaceEntity(entity)){
-      addExports(set, entity.properties);
-      addExports(set, entity.callSignatures);
-      addExports(set, entity.constructSignatures);
-      addExports(set, entity.methodSignatures);
-      addExports(set, entity.getterSignatures);
-      addExports(set, entity.setterSignatures);
-    }
-
-  }
-
-}
-
-export const isSymbolExported = (ctx: MarkupRenderContexts, symbolId: ID): boolean => withInitializedSourceRegistry(ctx, ctx => {
-  return Object.values(ctx.sourceRegistry).some(sourceFile => sourceFile.exports.has(symbolId));
-});
-
-export const registerAnchor = (ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget => withInitializedSourceRegistry(ctx, ctx => {
+export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  ctx.sourceRegistry[ctx.currentFile].links[name] ??= [];
+  ctx.currentFile.links[name] ??= [];
 
-  if(!ctx.sourceRegistry[ctx.currentFile].links[name].includes(id)){
-    ctx.sourceRegistry[ctx.currentFile].links[name].push(id);
+  if(!ctx.currentFile.links[name].includes(id)){
+    ctx.currentFile.links[name].push(id);
   }
 
   return { id, name };
 
-});
+}
 
-export const getAnchorLink = (ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined => withInitializedSourceRegistry(ctx, ctx => {
+export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined {
 
   const { relative } = ctx.dependencies.path;
 
-  const sourceFile = Object.entries(ctx.sourceRegistry)
-    .find(([sourceFileId, sourceFile]) => sourceFile.exports.has(id));
+  const sourceFile = ctx.links
+    .find(sourceFile => isSymbolExportedFromSourceFile(sourceFile, id));
 
   if(sourceFile === undefined){
     return;
   }
 
-  const [sourceFileId, sourceFileContent] = sourceFile;
-
-  const index = ctx.sourceRegistry[+sourceFileId].links[name].indexOf(id);
+  const index = sourceFile.links[name].indexOf(id);
 
   if(index === -1){
     return;
   }
 
-  const relativeDirectory = ctx.currentFile !== +sourceFileId
-    ? relative(ctx.sourceRegistry[ctx.currentFile].dst, sourceFileContent.dst)
+  const relativeDirectory = ctx.currentFile.id !== sourceFile.id
+    ? relative(ctx.currentFile.dst, sourceFile.dst)
     : "";
 
   const anchorText = convertTextToAnchorId(name);
@@ -153,12 +75,13 @@ export const getAnchorLink = (ctx: MarkupRenderContexts, name: Name, id: ID): st
 
   return anchorLink;
 
-});
+}
 
 
-export const getAnchorId = (ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined => withInitializedSourceRegistry(ctx, ctx => {
+export function getAnchorId(ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined {
 
-  const index = ctx.sourceRegistry[ctx.currentFile].links[name].indexOf(id);
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const index = ctx.currentFile?.links[name].indexOf(id) ?? -1;
 
   if(index === -1){
     return;
@@ -169,11 +92,11 @@ export const getAnchorId = (ctx: MarkupRenderContexts, name: Name, id: ID): stri
 
   return anchorLink;
 
-});
+}
 
-export const getSourceFileById = (ctx: MarkupRenderContexts, id: ID): SourceFile => withInitializedSourceRegistry(ctx, ctx => {
-  return ctx.sourceRegistry[id];
-});
+export function getSourceFileById(ctx: MarkupRenderContexts, id: ID): SourceFile {
+  return ctx.links[id];
+}
 
 export function convertTextToAnchorId(text: string): string {
   let link = text.toLowerCase();
@@ -195,12 +118,29 @@ export function isAnchor(input: any): input is AnchorTarget {
     Object.keys(input).length === 2;
 }
 
-function withInitializedSourceRegistry<T>(ctx: MarkupRenderContexts, callback: (ctx: MarkupRenderContexts & { currentFile: ID; sourceRegistry: SourceRegistry; }) => T): T {
-  sourceRegistryIsInitialized(ctx);
-  return callback(ctx);
+function isSymbolExportedFromSourceFile(sourceFile: SourceFile, symbolId: ID): boolean {
+  return Object.values(sourceFile.links).some(linkIds => linkIds.includes(symbolId));
 }
 
-function sourceRegistryIsInitialized(ctx: MarkupRenderContexts): asserts ctx is MarkupRenderContexts & { currentFile: ID; sourceRegistry: SourceRegistry; } {
-  assert(ctx.sourceRegistry !== undefined, "Source registry is not initialized");
-  assert(ctx.currentFile !== undefined, "Current file is not set");
+export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity): void {
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
+
+  const sourceFile = {
+    dst: getOutputFilePath(ctx, sourceFileEntity.path),
+    id: sourceFileEntity.symbolId,
+    links: {},
+    name: sourceFileEntity.name,
+    src: sourceFileEntity.path
+  };
+
+  if(index === -1){
+    ctx.links.push(sourceFile);
+  } else {
+    ctx.links[index] = sourceFile;
+  }
+
+  ctx.currentFile = sourceFile;
+
 }

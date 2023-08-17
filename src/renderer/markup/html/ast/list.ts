@@ -5,7 +5,7 @@ import { renderIndentation } from "unwritten:renderer:utils/indentation.js";
 import { renderNode } from "../index.js";
 
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNodes, ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode, ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
 export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): string {
@@ -43,7 +43,7 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
 
 }
 
-function renderListItems(ctx: HTMLRenderContext, items: ASTNodes[]): string[] {
+function renderListItems(ctx: HTMLRenderContext, items: ASTNode[]): string[] {
   return items.map(item => renderListItem(ctx, item));
 }
 
@@ -53,7 +53,7 @@ function renderListStart(ctx: HTMLRenderContext): string {
   return renderedListStart;
 }
 
-function renderListItem(ctx: HTMLRenderContext, item: ASTNodes): string {
+function renderListItem(ctx: HTMLRenderContext, item: ASTNode): string {
 
   // Flatten deeply nested arrays
   item = Array.isArray(item) ? flattenNestedArrayItems(item) : item;
@@ -123,7 +123,7 @@ function renderListEnd(ctx: HTMLRenderContext): string {
   return `${renderIndentation(ctx)}</ul>`;
 }
 
-function flattenNestedArrayItems(items: ASTNodes[]): ASTNodes[] {
+function flattenNestedArrayItems(items: ASTNode[]): ASTNode[] {
 
   // Flatten deeply nested arrays
   if(items.some(Array.isArray) && !items.some(isListNode)){
@@ -134,7 +134,7 @@ function flattenNestedArrayItems(items: ASTNodes[]): ASTNodes[] {
 
 }
 
-function renderArrayItems(ctx: HTMLRenderContext, items: ASTNodes[]): string {
+function renderArrayItems(ctx: HTMLRenderContext, items: ASTNode[]): string {
 
   // Render normal array without a list
   if(!items.some(isListNode)){
@@ -147,7 +147,7 @@ function renderArrayItems(ctx: HTMLRenderContext, items: ASTNodes[]): string {
   for(let index = 0; index < items.length; index++){
 
     const currentItem = items[index];
-    const nextItem: ASTNodes | undefined = items[index + 1];
+    const nextItem: ASTNode | undefined = items[index + 1];
 
     const renderedCurrentItem = renderNode(ctx, currentItem);
 

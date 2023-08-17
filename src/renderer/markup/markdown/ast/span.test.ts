@@ -29,9 +29,7 @@ scope("MarkdownRenderer", "SpanNode", () => {
 
   it("should render an id if available", () => {
 
-    ctx.sourceRegistry = createTestRegistry(ctx, {
-      exports: new Set([1])
-    });
+    ctx.links = createTestRegistry(ctx);
 
     const anchor = registerAnchor(ctx, "test", 1);
     const spanNode = createSpanNode(anchor, "text");

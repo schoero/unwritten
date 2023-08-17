@@ -15,7 +15,7 @@ scope("HTMLRenderer", "TitleNode", () => {
 
   const ctx = createRenderContext();
 
-  ctx.sourceRegistry = createTestRegistry(ctx, {
+  ctx.links = createTestRegistry(ctx, {
     exports: new Set([1])
   });
 

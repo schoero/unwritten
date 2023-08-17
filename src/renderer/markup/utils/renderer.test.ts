@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { minMax, nodeFilter } from "unwritten:renderer:markup/utils/renderer.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
 scope("Renderer", "utils", () => {
@@ -11,7 +11,7 @@ scope("Renderer", "utils", () => {
   describe("nodeFilter", () => {
 
     it("should filter empty strings from ASTNodes[]", () => {
-      const testNodes: ASTNodes[] = [
+      const testNodes: ASTNode[] = [
         "",
         "element",
         ""

@@ -4,10 +4,11 @@ import type { AnchorLink, AnchorTarget } from "unwritten:renderer/markup/registr
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
 
 
-export type ASTNodes =
+export type ASTNode =
   | AnchorNode
-  | ASTNodes[]
+  | ASTNode[]
   | BoldNode
+  | ConditionalNode
   | ItalicNode
   | LinkNode
   | ListNode
@@ -19,54 +20,68 @@ export type ASTNodes =
   | TitleNode
   | string;
 
-interface ASTNode<T extends ASTNodeKinds> {
-  children: ASTNodes | ASTNodes[];
+interface ASTNodeBase<T extends ASTNodeKinds> {
+  children: ASTNode | ASTNode[];
   kind: T;
 }
 
-export interface AnchorNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Anchor>, Required<AnchorLink> {
+export interface AnchorNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Anchor>, AnchorLink {
   children: Children;
 }
 
-export interface ListNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.List> {
+export type ConditionalOperator = "!=" | "!==" | "&&" | "<" | "<=" | "==" | "===" | ">" | ">=" | "||";
+export interface ConditionalNode<
+  TrueChildren extends ASTNode | undefined = ASTNode,
+  FalseChildren extends ASTNode | undefined = ASTNode
+> {
+  args: unknown[];
+  falseChildren: FalseChildren;
+  function: Function;
+  kind: ASTNodeKinds.Conditional;
+  operator: ConditionalOperator;
+  trueChildren: TrueChildren;
+  value: any;
+}
+
+export interface ListNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.List> {
   children: Children;
 }
 
-export interface ParagraphNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Paragraph> {
+export interface ParagraphNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Paragraph> {
   children: Children;
 }
 
-export interface SectionNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Section> {
+export interface SectionNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Section> {
   children: Children;
   type?: SectionType;
 }
 
-export interface TitleNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Title>, Partial<AnchorTarget> {
+export interface TitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Title>, Partial<AnchorTarget> {
   children: Children;
-  title: ASTNodes;
+  title: ASTNode;
 }
 
-export interface LinkNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Link> {
+export interface LinkNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Link> {
   children: Children;
   link: string;
 }
 
-export interface SmallNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Small> {
+export interface SmallNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Small> {
   children: Children;
 }
 
-export interface SpanNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Span>, Partial<AnchorTarget> {
+export interface SpanNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Span>, Partial<AnchorTarget> {
   children: Children;
 }
 
-export interface BoldNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Bold> {
+export interface BoldNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Bold> {
   children: Children;
 }
 
-export interface ItalicNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Italic> {
+export interface ItalicNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Italic> {
   children: Children;
 }
 
-export interface StrikethroughNode<Children extends ASTNodes[] = ASTNodes[]> extends ASTNode<ASTNodeKinds.Strikethrough> {
+export interface StrikethroughNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Strikethrough> {
   children: Children;
 }

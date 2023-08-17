@@ -1,24 +1,25 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { expect, it } from "vitest";
 
-import {
-  createInterfaceEntity,
-  createSourceFileEntity,
-  createTypeAliasEntity
-} from "unwritten:interpreter/ast/entities/index.js";
-import { interpret } from "unwritten:interpreter/ast/index.js";
+import { createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { isAnchorNode, isParagraphNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { isVariableEntity } from "unwritten:typeguards/entities.js";
-import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
-import type { TypeReferenceType } from "unwritten:interpreter/type-definitions/types.js";
 
+function extractTypeOfRenderedContent(typeName: string, content: string) {
+  const typeRegex = new RegExp(`#+\\s${typeName}[\\s\\S]+?#+\\sType\\s+(.*)\\n+([\\s\\S]*?)\\n(?:---|$|\\s\\s)`, "gm");
+  const [, inlineType, multilineType] = typeRegex.exec(content)!;
+  return {
+    inlineType,
+    multilineType: multilineType.trim() === ""
+      ? undefined
+      : multilineType
+  };
+}
 
 scope("MarkupRenderer", TypeKind.TypeReference, () => {
 
@@ -33,27 +34,23 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
       export type ObjectType = Interface;
     `;
 
-    const { ctx: compilerContext, exportedSymbols, fileSymbols } = compile(testFileContent);
-
-    const primitiveTypeSymbol = exportedSymbols.find(s => s.name === "PrimitiveType")!;
-    const objectTypeSymbol = exportedSymbols.find(s => s.name === "ObjectType")!;
-    const primitiveTypeAliasEntity = createTypeAliasEntity(compilerContext, primitiveTypeSymbol);
-    const objectTypeAliasEntity = createTypeAliasEntity(compilerContext, objectTypeSymbol);
+    const { ctx: compilerContext, fileSymbols } = compile(testFileContent);
 
     const sourceFileEntities = fileSymbols.map(fileSymbol => {
       return createSourceFileEntity(compilerContext, fileSymbol);
     });
 
-    const ctx = createRenderContext();
-    ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-    const { children: convertedPrimitiveTypeReferenceType } = convertTypeForDocumentation(ctx, primitiveTypeAliasEntity.type as TypeReferenceType);
-    const { children: convertedObjectTypeReferenceType } = convertTypeForDocumentation(ctx, objectTypeAliasEntity.type as TypeReferenceType);
+    const renderedOutput = ctx.renderer.render(ctx, sourceFileEntities);
+
+    const [filePath, content] = Object.entries(renderedOutput)[0];
 
     it("should render the referenced type, if the target symbol is not exported", () => {
-      expect(convertedPrimitiveTypeReferenceType[0].children[0]).toBe("string");
-      expect(convertedObjectTypeReferenceType[0].children[0]).toBe("interface");
-      expect(convertedObjectTypeReferenceType[0].children[1]).toBeDefined();
+      expect(extractTypeOfRenderedContent("PrimitiveType", content).inlineType).toContain("string");
+      expect(extractTypeOfRenderedContent("ObjectType", content).inlineType).toContain("interface");
+      expect(extractTypeOfRenderedContent("ObjectType", content).multilineType).toContain("prop");
+      expect(extractTypeOfRenderedContent("ObjectType", content).multilineType).toContain("string");
     });
 
   }
@@ -69,55 +66,22 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
       export type ObjectType = Interface;
     `;
 
-    const { ctx: compilerContext, exportedSymbols, fileSymbols } = compile(testFileContent);
-
-    const stringTypeSymbol = exportedSymbols.find(s => s.name === "StringType")!;
-    const interfaceSymbol = exportedSymbols.find(s => s.name === "Interface")!;
-    const primitiveTypeSymbol = exportedSymbols.find(s => s.name === "PrimitiveType")!;
-    const objectTypeSymbol = exportedSymbols.find(s => s.name === "ObjectType")!;
-
-    const stringTypeAliasEntity = createTypeAliasEntity(compilerContext, stringTypeSymbol);
-    const interfaceEntity = createInterfaceEntity(compilerContext, interfaceSymbol);
-    const primitiveTypeAliasEntity = createTypeAliasEntity(compilerContext, primitiveTypeSymbol);
-    const objectTypeAliasEntity = createTypeAliasEntity(compilerContext, objectTypeSymbol);
+    const { ctx: compilerContext, fileSymbols } = compile(testFileContent);
 
     const sourceFileEntities = fileSymbols.map(fileSymbol => {
       return createSourceFileEntity(compilerContext, fileSymbol);
     });
 
-    const ctx = createRenderContext();
-    ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-    const { children: convertedPrimitiveTypeReferenceType } = convertTypeForDocumentation(ctx, primitiveTypeAliasEntity.type as TypeReferenceType);
-    const { children: convertedObjectTypeReferenceType } = convertTypeForDocumentation(ctx, objectTypeAliasEntity.type as TypeReferenceType);
+    const renderedOutput = ctx.renderer.render(ctx, sourceFileEntities);
 
-    assert(isParagraphNode(convertedPrimitiveTypeReferenceType[0]));
-    assert(isParagraphNode(convertedObjectTypeReferenceType[0]));
+    const [filePath, content] = Object.entries(renderedOutput)[0];
 
-    const primitiveParagraphNode = convertedPrimitiveTypeReferenceType[0];
-    const objectParagraphNode = convertedObjectTypeReferenceType[0];
-
-    assert(Array.isArray(primitiveParagraphNode.children[0]));
-    assert(Array.isArray(objectParagraphNode.children[0]));
-
-    assert(isAnchorNode(primitiveParagraphNode.children[0][0]));
-    assert(isAnchorNode(objectParagraphNode.children[0][0]));
-
-    const primitiveAnchorNode = primitiveParagraphNode.children[0][0];
-    const objectAnchorNode = objectParagraphNode.children[0][0];
-
-    it("should have the correct name", () => {
-      expect(primitiveAnchorNode.name).toBe("StringType");
-      expect(objectAnchorNode.name).toBe("Interface");
-    });
-
-    it("should link to the actual type", () => {
-      expect(primitiveAnchorNode.id).toBe(stringTypeAliasEntity.symbolId);
-      expect(objectAnchorNode.id).toBe(interfaceEntity.symbolId);
-    });
-
-    it("should not have type arguments", () => {
-      expect(primitiveAnchorNode.children).toHaveLength(1);
+    it("should render a link to the referenced target, if the target symbol is exported", () => {
+      expect(extractTypeOfRenderedContent("PrimitiveType", content).inlineType).toContain("[StringType]");
+      expect(extractTypeOfRenderedContent("ObjectType", content).inlineType).toContain("[Interface]");
+      expect(extractTypeOfRenderedContent("ObjectType", content).multilineType).toBeUndefined();
     });
 
   }
@@ -142,18 +106,19 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
       "/types.ts": typesModule
     });
 
-    const sourceFileEntities = interpret(compilerContext, fileSymbols);
+    const sourceFileEntities = fileSymbols.map(fileSymbol => {
+      return createSourceFileEntity(compilerContext, fileSymbol);
+    });
 
-    const interpretedIndexFile = sourceFileEntities.find(entity => entity.name === "index.ts");
-    const interpretedTypesFile = sourceFileEntities.find(entity => entity.name === "types.ts");
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-    const interpretedVariableEntity = interpretedIndexFile?.exports.find(isVariableEntity);
-    const interpretedInterfaceEntity = interpretedTypesFile?.exports.find(entity => entity.name === "Test");
+    const renderedOutput = ctx.renderer.render(ctx, sourceFileEntities);
 
-    it("should create a type reference to the symbol in the other file", () => {
-      assert(interpretedVariableEntity);
-      assert(interpretedVariableEntity.type.kind === TypeKind.TypeReference);
-      expect(interpretedVariableEntity.type.target).toEqual(interpretedInterfaceEntity);
+    const [typesPath, typesContent] = Object.entries(renderedOutput)[0];
+    const [indexPath, indexContent] = Object.entries(renderedOutput)[1];
+
+    it("should render a link to the referenced target, if the target symbol is exported", () => {
+      expect(extractTypeOfRenderedContent("test", indexContent).inlineType).toContain("[Test](./types.md#test)");
     });
 
   }

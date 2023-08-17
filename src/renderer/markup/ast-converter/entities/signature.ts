@@ -34,7 +34,7 @@ import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
 import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedPropertyEntityForTableOfContents,
   ConvertedReturnTypeForDocumentation,
@@ -120,7 +120,7 @@ export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatu
 }
 
 
-function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ASTNodes {
+function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ASTNode {
 
   const renderConfig = getRenderConfig(ctx);
 

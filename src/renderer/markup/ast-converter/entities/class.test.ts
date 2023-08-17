@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { createClassEntity, createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { createClassEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { renderNode } from "unwritten:renderer/markup/html/index.js";
 import {
@@ -36,13 +36,7 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const classEntity = createClassEntity(compilerContext, symbol);
 
-    const sourceFileEntities = fileSymbols.map(
-      fileSymbol => createSourceFileEntity(compilerContext, fileSymbol)
-    );
-
     const ctx = createRenderContext();
-    ctx.renderer.initializeRegistry(ctx, sourceFileEntities);
-    ctx.currentFile = sourceFileEntities[0].symbolId;
 
     const convertedClassForTableOfContents = convertClassEntityForTableOfContents(ctx, classEntity);
     const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);

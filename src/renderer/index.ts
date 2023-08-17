@@ -4,7 +4,7 @@ import { renderNode as renderNodeAsMarkdown } from "unwritten:renderer:markup/ma
 import { assert } from "unwritten:utils:general.js";
 
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 
@@ -30,7 +30,7 @@ export async function getRenderer(renderer?: Renderer | string): Promise<Rendere
 
 }
 
-export function renderNode(ctx: MarkupRenderContexts, node: ASTNodes): string {
+export function renderNode(ctx: MarkupRenderContexts, node: ASTNode): string {
   if(isHTMLRenderContext(ctx)){
     return renderNodeAsHTML(ctx, node);
   } else {

@@ -2,10 +2,10 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 
 import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Encapsulation } from "unwritten:renderer:markup/types-definitions/config.js";
-import type { ASTNodes } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 
 
-export function encapsulate(node: ASTNodes, encapsulation: Encapsulation | string[] | false | undefined) {
+export function encapsulate(node: ASTNode, encapsulation: Encapsulation | string[] | false | undefined) {
 
   if(encapsulation === undefined || encapsulation === false){
     return node;
@@ -46,14 +46,14 @@ export function minMax(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
-export function nodeFilter(node: ASTNodes) {
+export function nodeFilter(node: ASTNode) {
   return node !== "";
 }
 
-export function spaceBetween(...nodes: ASTNodes[]) {
+export function spaceBetween(...nodes: ASTNode[]) {
   return nodes
     .filter(nodeFilter)
-    .reduce<ASTNodes[]>((acc, node, index) => {
+    .reduce<ASTNode[]>((acc, node, index) => {
     if(index > 0){
       acc.push(" ", node);
     } else {

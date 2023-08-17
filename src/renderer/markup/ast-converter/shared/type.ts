@@ -84,10 +84,10 @@ import {
 
 import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ParagraphNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ConditionalNode, ParagraphNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
-  ConvertedInlineTypes,
-  ConvertedMultilineTypes
+  ConvertedTypeInline,
+  ConvertedTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
@@ -127,7 +127,7 @@ export function convertType(ctx: MarkupRenderContexts, type: Type | Type) {
 
 }
 
-function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type | Type): ConvertedInlineTypes {
+function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type | Type): ConvertedTypeInline {
 
   if(isAnyType(type)){
     return convertAnyTypeInline(ctx, type);
@@ -199,7 +199,7 @@ function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type | Type):
 
 }
 
-function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineType): ConvertedMultilineTypes | undefined {
+function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineType): ConditionalNode | ConvertedTypeMultiline | undefined {
 
   if(isObjectType(type)){
     return convertObjectTypeMultiline(ctx, type);
