@@ -136,11 +136,11 @@ export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity
   };
 
   if(index === -1){
-    ctx.links.push(sourceFile);
+    ctx.links = [...ctx.links, sourceFile];
   } else {
     ctx.links[index] = sourceFile;
   }
 
-  ctx.currentFile = sourceFile;
+  ctx.currentFile = ctx.links.at(-1)!;
 
 }
