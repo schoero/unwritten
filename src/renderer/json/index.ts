@@ -1,5 +1,5 @@
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { getOutputFilePath } from "unwritten:renderer/markup/utils/file.js";
+import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
@@ -44,9 +44,9 @@ const jsonRenderer: JSONRenderer = {
         return value;
       }, renderConfig.indentation);
 
-      const outputPath = getOutputFilePath(ctx, sourceFileEntity.path);
+      const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
 
-      files[outputPath] = renderedContent;
+      files[destination] = renderedContent;
       return files;
 
     }, {});

@@ -1,3 +1,4 @@
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
 import type { FilePath } from "unwritten:type-definitions/file-system.js";
 
@@ -6,9 +7,8 @@ const MAX_IDENTICAL_FILE_NAMES = 10;
 const MAX_FILENAME_LENGTH = 255;
 
 
-export function getAvailableFileName(ctx: RenderContext, filePath: FilePath): FilePath {
+export function getAvailableFileName(ctx: RenderContext, usedFilePaths: FilePath[], filePath: FilePath): FilePath {
 
-  const { existsSync } = ctx.dependencies.fs;
   const { getDirectory, getFileExtension, getFileName, join } = ctx.dependencies.path;
 
   const directory = getDirectory(filePath);
@@ -24,13 +24,13 @@ export function getAvailableFileName(ctx: RenderContext, filePath: FilePath): Fi
 
   const validPath = join(directory, `${validFileNameWithoutExtension}${fileExtension}`) as FilePath;
 
-  if(!existsSync(validPath)){
+  if(!usedFilePaths.includes(validPath)){
     return validPath;
   }
 
   for(let i = 2; i < MAX_IDENTICAL_FILE_NAMES; i++){
     const validPath = join(directory, `${validFileNameWithoutExtension}-${i}${fileExtension}`) as FilePath;
-    if(!existsSync(validPath)){
+    if(!usedFilePaths.includes(validPath)){
       return validPath;
     }
   }
@@ -39,17 +39,29 @@ export function getAvailableFileName(ctx: RenderContext, filePath: FilePath): Fi
 
 }
 
-export function getOutputFilePath(ctx: RenderContext, filePath: string): FilePath {
+export function getDestinationFilePath(ctx: RenderContext, sourceFileEntities: SourceFileEntity[], sourceFileEntity: SourceFileEntity): FilePath {
 
-  const { getFileName, join } = ctx.dependencies.path;
+  const filePaths = sourceFileEntities.reduce<{ paths: FilePath[]; usedPaths: FilePath[]; }>(({ paths, usedPaths }, sourceFileEntity) => {
 
-  const fileName = getFileName(filePath, false);
-  const fileExtension = ctx.renderer.fileExtension;
-  const config = ctx.config;
+    const { getFileName, join } = ctx.dependencies.path;
 
-  const outputDir = config.outputDir;
-  const outputPath = join(outputDir, `${fileName}${fileExtension}`) as FilePath;
+    const fileName = getFileName(sourceFileEntity.path, false);
+    const fileExtension = ctx.renderer.fileExtension;
+    const config = ctx.config;
 
-  return getAvailableFileName(ctx, outputPath);
+    const outputDir = config.outputDir;
+    const outputPath = join(outputDir, `${fileName}${fileExtension}`) as FilePath;
+
+    const destinationFilePath = getAvailableFileName(ctx, usedPaths, outputPath);
+
+    return {
+      paths: [...paths, destinationFilePath],
+      usedPaths: [...usedPaths, destinationFilePath]
+    };
+
+  }, { paths: [], usedPaths: [] });
+
+  const index = sourceFileEntities.findIndex(({ symbolId }) => symbolId === sourceFileEntity.symbolId);
+  return filePaths.paths[index];
 
 }

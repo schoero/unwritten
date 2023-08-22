@@ -16,25 +16,21 @@ scope("Renderer", "File utilities", () => {
 
     const ctx = createRenderContext();
 
-    const { writeFileSync } = ctx.dependencies.fs;
-
     it("should keep valid file names as is", () => {
-      expect(getAvailableFileName(ctx, "valid-file-name.md")).toBe("valid-file-name.md");
-      expect(getAvailableFileName(ctx, "valid_file_name.md")).toBe("valid_file_name.md");
-      expect(getAvailableFileName(ctx, "my-gr8-valid-FileName.md")).toBe("my-gr8-valid-FileName.md");
+      expect(getAvailableFileName(ctx, [], "valid-file-name.md")).toBe("valid-file-name.md");
+      expect(getAvailableFileName(ctx, [], "valid_file_name.md")).toBe("valid_file_name.md");
+      expect(getAvailableFileName(ctx, [], "my-gr8-valid-FileName.md")).toBe("my-gr8-valid-FileName.md");
     });
 
     it("should replace invalid characters with a dash", () => {
-      expect(getAvailableFileName(ctx, "invalid file name.md")).toBe("invalid-file-name.md");
-      expect(getAvailableFileName(ctx, "invalid*file:name.md")).toBe("invalid-file-name.md");
+      expect(getAvailableFileName(ctx, [], "invalid file name.md")).toBe("invalid-file-name.md");
+      expect(getAvailableFileName(ctx, [], "invalid*file:name.md")).toBe("invalid-file-name.md");
     });
 
     it("should find an alternative name if the file already exists", () => {
-      expect(getAvailableFileName(ctx, "valid-file-name.md")).toBe("valid-file-name.md");
-      writeFileSync("valid-file-name.md", "");
-      expect(getAvailableFileName(ctx, "valid-file-name.md")).toBe("valid-file-name-2.md");
-      writeFileSync("valid-file-name-2.md", "");
-      expect(getAvailableFileName(ctx, "valid-file-name.md")).toBe("valid-file-name-3.md");
+      expect(getAvailableFileName(ctx, [], "valid-file-name.md")).toBe("valid-file-name.md");
+      expect(getAvailableFileName(ctx, ["valid-file-name.md"], "valid-file-name.md")).toBe("valid-file-name-2.md");
+      expect(getAvailableFileName(ctx, ["valid-file-name.md", "valid-file-name-2.md"], "valid-file-name.md")).toBe("valid-file-name-3.md");
     });
 
   });

@@ -1,5 +1,3 @@
-import { getOutputFilePath } from "unwritten:renderer/markup/utils/file.js";
-
 import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
@@ -122,13 +120,13 @@ function isSymbolExportedFromSourceFile(sourceFile: SourceFile, symbolId: ID): b
   return Object.values(sourceFile.links).some(linkIds => linkIds.includes(symbolId));
 }
 
-export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity): void {
+export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
   const sourceFile = {
-    dst: getOutputFilePath(ctx, sourceFileEntity.path),
+    dst: destination,
     id: sourceFileEntity.symbolId,
     links: {},
     name: sourceFileEntity.name,

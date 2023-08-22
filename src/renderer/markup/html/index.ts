@@ -2,6 +2,7 @@
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderConditionalNode } from "unwritten:renderer/markup/html/ast/conditional.js";
 import { setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
+import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:html/ast/anchor.js";
 import { renderBoldNode } from "unwritten:renderer:html/ast/bold.js";
@@ -129,8 +130,8 @@ const htmlRenderer: HTMLRenderer = {
       ctx.nesting = 1;
       ctx.indentation = 0;
 
-      // Set current source file
-      setCurrentSourceFile(ctx, sourceFileEntity);
+      const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
+      setCurrentSourceFile(ctx, sourceFileEntity, destination);
 
       const renderedNewLine = renderNewLine(ctx);
 
