@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderConditionalNode } from "unwritten:renderer/markup/html/ast/conditional.js";
-import { setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
+import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:html/ast/anchor.js";
@@ -124,19 +124,30 @@ const htmlRenderer: HTMLRenderer = {
 
     htmlRenderer.initializeContext(ctx);
 
-    return sourceFileEntities.reduce<RenderOutput>((files, sourceFileEntity) => {
+    return sourceFileEntities.reduce<(SourceFileEntity & { convertedAST: ASTNode; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
+
+      const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
+      createCurrentSourceFile(ctx, sourceFileEntity, destination);
+      setCurrentSourceFile(ctx, sourceFileEntity);
+
+      convertedSourceFileEntities.push({
+        ...sourceFileEntity,
+        convertedAST: convertToMarkupAST(ctx, sourceFileEntity.exports)
+      });
+
+      return convertedSourceFileEntities;
+
+    }, [])
+      .reduce<RenderOutput>((files, convertedSourceFileEntity) => {
 
       // Reset context
       ctx.nesting = 1;
       ctx.indentation = 0;
 
-      const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
-      setCurrentSourceFile(ctx, sourceFileEntity, destination);
+      setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
       const renderedNewLine = renderNewLine(ctx);
-
-      const markupAST = convertToMarkupAST(ctx, sourceFileEntity.exports);
-      const renderedContent = renderNode(ctx, markupAST);
+      const renderedContent = renderNode(ctx, convertedSourceFileEntity.convertedAST);
 
       const filePath = ctx.currentFile.dst;
 
@@ -146,7 +157,6 @@ const htmlRenderer: HTMLRenderer = {
     }, {});
 
   })
-
 
 };
 

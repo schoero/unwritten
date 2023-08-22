@@ -1,3 +1,5 @@
+import { assert } from "unwritten:utils/general.js";
+
 import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
@@ -120,7 +122,7 @@ function isSymbolExportedFromSourceFile(sourceFile: SourceFile, symbolId: ID): b
   return Object.values(sourceFile.links).some(linkIds => linkIds.includes(symbolId));
 }
 
-export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
+export function createCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
@@ -139,6 +141,15 @@ export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity
     ctx.links[index] = sourceFile;
   }
 
-  ctx.currentFile = ctx.links.at(-1)!;
+}
+
+export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity): void {
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
+
+  assert(index !== -1, `Source file ${sourceFileEntity.path} is not registered`);
+
+  ctx.currentFile = ctx.links.at(index)!;
 
 }

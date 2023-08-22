@@ -33,7 +33,7 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
     return fallback;
   }
 
-  const anchor = createAnchorNode(typeReferenceType.target.name ?? "", id, fallback);
+  const anchor = createAnchorNode(typeReferenceType.target.name ?? "", id);
 
   const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
     ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
