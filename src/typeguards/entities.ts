@@ -19,6 +19,7 @@ import type {
   SetterEntity,
   SignatureEntity,
   TypeAliasEntity,
+  UnresolvedEntity,
   VariableEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
 
@@ -100,6 +101,10 @@ export function isSignatureEntity(entity: Entity): entity is SignatureEntity {
 
 export function isTypeAliasEntity(entity: Entity): entity is TypeAliasEntity {
   return entity.kind === EntityKind.TypeAlias;
+}
+
+export function isUnresolvedEntity(entity: Entity): entity is UnresolvedEntity {
+  return entity.kind === EntityKind.Unresolved;
 }
 
 export function isVariableEntity(entity: Entity): entity is VariableEntity {

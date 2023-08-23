@@ -21,8 +21,10 @@ export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol):
 
     const parsedSymbol = interpretSymbol(ctx, exportedSymbol);
 
-    assert(isExportableEntity(parsedSymbol), "Parsed symbol is not an exportable entity");
-    parsedSymbols.push(parsedSymbol);
+    // Don't document unresolved entities
+    if(isExportableEntity(parsedSymbol)){
+      parsedSymbols.push(parsedSymbol);
+    }
 
     return parsedSymbols;
 
