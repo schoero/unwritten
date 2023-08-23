@@ -4,6 +4,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createInterfaceEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isCircularEntity } from "unwritten:typeguards/entities.js";
 import { isCircularType, isInterfaceType, isTypeReferenceType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
@@ -31,14 +32,17 @@ scope("Renderer", TypeKind.Circular, () => {
     const interfaceB = exportedInterfaceA.properties[0]!.type.type;
     assert(isInterfaceType(interfaceB!));
 
-    assert(isTypeReferenceType(interfaceB.properties[0]!.type));
-    const circularType = interfaceB.properties[0]!.type.type;
-
-    it("should contain the circular type", () => {
-      expect(isCircularType(circularType!)).toBe(true);
+    it("should reference back to the original interface", () => {
+      assert(isTypeReferenceType(interfaceB.properties[0]!.type));
+      expect(isCircularEntity(interfaceB.properties[0]!.type.target!)).toBe(true);
+      expect(interfaceB.properties[0]!.type.target?.symbolId).toBe(exportedInterfaceA.symbolId);
     });
 
-    it.todo("should always render the circular entity as a type reference");
+    it("should contain the circular type", () => {
+      assert(isTypeReferenceType(interfaceB.properties[0]!.type));
+      expect(isCircularType(interfaceB.properties[0]!.type.type!)).toBe(true);
+      expect(interfaceB.properties[0]!.type.type?.typeId).toBe(exportedInterfaceA.typeId);
+    });
 
   }
 
