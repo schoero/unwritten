@@ -1,5 +1,6 @@
 import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { createAnchorNode, createConditionalNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
@@ -74,13 +75,18 @@ export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typ
     return;
   }
 
+  const renderedNewLine = renderNewLine(ctx);
+
   return createConditionalNode(
     getAnchorLink,
     [ctx, typeReferenceType.name, id],
     "!==",
     undefined,
     "",
-    fallback
+    [
+      renderedNewLine,
+      fallback
+    ]
   );
 
 }

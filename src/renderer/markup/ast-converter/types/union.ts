@@ -53,7 +53,7 @@ export function convertUnionTypeMultiline(ctx: MarkupRenderContexts, unionType: 
     const { inlineType, multilineType } = convertType(ctx, type);
 
     return [
-      [inlineType],
+      inlineType,
       multilineType ?? ""
     ];
 

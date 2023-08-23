@@ -1,4 +1,3 @@
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import {
   convertAnyTypeInline,
   convertArrayTypeInline,
@@ -95,19 +94,13 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
 
   const translate = getTranslator(ctx);
 
-  const renderedNewLine = renderNewLine(ctx);
-  const convertedType = convertType(ctx, type);
+  const { inlineType, multilineType } = convertType(ctx, type);
 
   return createTitleNode(
     translate("type", { capitalize: true, count: 1 }),
     createParagraphNode(
-      convertedType.inlineType,
-      ...convertedType.multilineType
-        ? [
-          renderedNewLine,
-          convertedType.multilineType
-        ]
-        : []
+      inlineType,
+      multilineType ?? ""
     )
   );
 

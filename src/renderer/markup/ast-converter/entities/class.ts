@@ -40,6 +40,7 @@ import type {
 export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
 
   const renderConfig = getRenderConfig(ctx);
+  const translate = getTranslator(ctx);
 
   const name = classEntity.name;
   const id = classEntity.symbolId;
@@ -71,14 +72,40 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
   const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
   const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
 
+  const constructorList = convertedConstructSignatures && convertedConstructSignatures.length > 0
+    ? [translate("ctor", { capitalize: true, count: convertedConstructSignatures.length }), createListNode(...convertedConstructSignatures)]
+    : [];
+
+  const propertyList = convertedProperties.length > 0
+    ? [translate("property", { capitalize: true, count: convertedProperties.length }), createListNode(...convertedProperties)]
+    : [];
+
+  const eventPropertyList = convertedEventProperties.length > 0
+    ? [translate("event", { capitalize: true, count: convertedEventProperties.length }), createListNode(...convertedEventProperties)]
+    : [];
+
+  const methodList = convertedMethods.length > 0
+    ? [translate("method", { capitalize: true, count: convertedMethods.length }), createListNode(...convertedMethods)]
+    : [];
+
+  const setterList = convertedSetters.length > 0
+    ? [translate("setter", { capitalize: true, count: convertedSetters.length }), createListNode(...convertedSetters)]
+    : [];
+
+  const getterList = convertedGetters.length > 0
+    ? [translate("getter", { capitalize: true, count: convertedGetters.length }), createListNode(...convertedGetters)]
+    : [];
+
   return [
     anchor,
-    createListNode(...convertedConstructSignatures ?? []),
-    createListNode(...convertedProperties),
-    createListNode(...convertedMethods),
-    createListNode(...convertedSetters),
-    createListNode(...convertedGetters),
-    createListNode(...convertedEventProperties)
+    createListNode(
+      ...constructorList,
+      ...propertyList,
+      ...methodList,
+      ...setterList,
+      ...getterList,
+      ...eventPropertyList
+    )
   ];
 
 }

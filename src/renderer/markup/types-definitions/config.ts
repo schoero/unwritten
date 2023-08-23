@@ -58,8 +58,8 @@ export interface MarkupRenderConfig {
     class_one?: string;
     constructSignature_many?: string;
     constructSignature_one?: string;
-    constructor_many?: string;
-    constructor_one?: string;
+    ctor_many?: string;
+    ctor_one?: string;
     default?: string;
     definedIn?: string;
     deprecated?: string;

@@ -384,12 +384,14 @@ export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
 // Class
 export type ConvertedClassEntityForTableOfContents = [
   title: ASTNode,
-  constructor: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
-  properties: ListNode<ConvertedPropertyEntityForTableOfContents[]>,
-  methods: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
-  setters: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
-  getters: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
-  events: ListNode<ConvertedEventPropertyEntityForTableOfContents[]>
+  members: ListNode<
+  (
+    | ListNode<ConvertedEventPropertyEntityForTableOfContents[]>
+    | ListNode<ConvertedPropertyEntityForTableOfContents[]>
+    | ListNode<ConvertedSignatureEntityForTableOfContents[]>
+    | string
+  )[]
+  >
 ];
 export type ConvertedClassEntityForDocumentation = SectionNode<[
   children: TitleNode<[
