@@ -52,6 +52,8 @@ export function getJSDocTagsByDeclaration(
       } else if(tagName === JSDocTagNames.Example){
         acc[tagName] ??= [];
         acc[tagName]!.push(comment);
+      } else if(tagName === JSDocTagNames.EventProperty){
+        acc[tagName] = true;
       } else {
         acc[tagName] = comment;
       }

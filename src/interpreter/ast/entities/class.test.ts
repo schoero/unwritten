@@ -21,7 +21,7 @@ scope("Interpreter", EntityKind.Class, () => {
     const symbol = exportedSymbols.find(s => s.name === "Class")!;
     const exportedClass = createClassEntity(ctx, symbol);
 
-    it("should be able to parse a class", () => {
+    it("should be able to interpret a class", () => {
       expect(exportedClass.kind).toBe(EntityKind.Class);
     });
 
@@ -136,6 +136,33 @@ scope("Interpreter", EntityKind.Class, () => {
     it("should support type parameters", () => {
       expect(exportedClass.typeParameters).toBeDefined();
       expect(exportedClass.typeParameters!).toHaveLength(1);
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export class Class {
+        /**
+         * Event description
+         * @eventProperty
+         */
+        event;
+      }
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const exportedClass = createClassEntity(ctx, symbol);
+
+    it("should have an event", () => {
+      expect(exportedClass.events).toBeDefined();
+      expect(exportedClass.events).toHaveLength(1);
+      expect(exportedClass.events[0].name).toBe("event");
+      expect(exportedClass.events[0].description).toBe("Event description");
+      expect(exportedClass.properties).toHaveLength(0);
     });
 
   }

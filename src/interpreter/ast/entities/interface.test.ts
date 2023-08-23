@@ -279,4 +279,31 @@ scope("Interpreter", EntityKind.Interface, () => {
 
   }
 
+  {
+
+    const testFileContent = ts`
+      export interface Interface {
+        /**
+         * Event description
+         * @eventProperty
+         */
+        event;
+      };
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Interface")!;
+    const exportedInterface = createInterfaceEntity(ctx, symbol);
+
+    it("should have an event", () => {
+      expect(exportedInterface.events).toBeDefined();
+      expect(exportedInterface.events).toHaveLength(1);
+      expect(exportedInterface.events[0].name).toBe("event");
+      expect(exportedInterface.events[0].description).toBe("Event description");
+      expect(exportedInterface.properties).toHaveLength(0);
+    });
+
+  }
+
 });

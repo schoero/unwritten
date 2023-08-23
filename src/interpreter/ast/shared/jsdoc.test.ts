@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
+import { createClassEntity, createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
@@ -190,6 +190,37 @@ scope("Interpreter", "JSDoc", () => {
       expect(exportedTypeAlias.throws![1].description).toBe("This may throw a range error.");
       assert(exportedTypeAlias.throws![1].type?.kind === TypeKind.TypeReference);
       expect(exportedTypeAlias.throws![1].type.name).toBe("RangeError");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export class Class {
+        /**
+         * Event description
+         * @remarks Event remarks
+         * @example Event example
+         * @eventProperty
+         */
+        event;
+      }
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const exportedClass = createClassEntity(ctx, symbol);
+
+    it("should support events", () => {
+      expect(exportedClass.events).toBeDefined();
+      expect(exportedClass.events).toHaveLength(1);
+      expect(exportedClass.events[0].description).toBe("Event description");
+      expect(exportedClass.events[0].remarks).toBe("Event remarks");
+      expect(exportedClass.events[0].example).toStrictEqual([
+        "Event example"
+      ]);
     });
 
   }

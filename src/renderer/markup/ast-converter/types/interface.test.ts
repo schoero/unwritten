@@ -28,6 +28,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
         funcProp: () => void;
         get getter(): string;
         set setter(value: string): void;
+        /**
+         * Event description
+         * @eventProperty
+         */
+        event: string;
       }
       export type Type = Interface;
     `;
@@ -50,7 +55,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       properties,
       methods,
       setters,
-      getters
+      getters,
+      events
     ] = convertedType;
 
     it("should have a matching construct signature", () => {
@@ -86,6 +92,11 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     it("should have a matching getter", () => {
       expect(getters.children).toHaveLength(1);
       expect(renderNode(ctx, getters.children[0])).toContain("getter");
+    });
+
+    it("should have a matching event", () => {
+      expect(events.children).toHaveLength(1);
+      expect(renderNode(ctx, events.children[0])).toContain("event");
     });
 
   }

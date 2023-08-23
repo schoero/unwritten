@@ -17,12 +17,14 @@ export type Deprecated = JSDocTag;
 export type Internal = JSDocTag;
 export type Template = JSDocTag;
 export type Remarks = JSDocTag;
+export type EventProperty = true | undefined;
 
 export interface JSDocTags {
   [JSDocTagNames.Alpha]?: Alpha;
   [JSDocTagNames.Beta]?: Beta;
   [JSDocTagNames.Deprecated]?: Deprecated;
   [JSDocTagNames.Description]?: Description;
+  [JSDocTagNames.EventProperty]?: EventProperty;
   [JSDocTagNames.Example]?: Examples;
   [JSDocTagNames.Remarks]?: Remarks;
   [JSDocTagNames.Throws]?: Throws;

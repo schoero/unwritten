@@ -49,7 +49,9 @@ export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLi
   const methods = methodProperties.map(property => createMethodEntity(ctx, property));
   const getters = getterProperties.map(property => createGetterEntity(ctx, property));
   const setters = setterProperties.map(property => createSetterEntity(ctx, property));
-  const properties = propertyProperties.map(property => createPropertyEntity(ctx, property));
+  const allProperties = propertyProperties.map(property => createPropertyEntity(ctx, property));
+  const properties = allProperties.filter(property => property.eventProperty === undefined);
+  const events = allProperties.filter(property => property.eventProperty === true);
 
   const name = getNameByType(ctx, type);
   const symbolId = getSymbolId(ctx, type.symbol);
@@ -60,6 +62,7 @@ export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLi
   return <InferObjectLikeType<typeof kind>>{
     callSignatures,
     constructSignatures,
+    events,
     getters,
     isThis,
     kind,

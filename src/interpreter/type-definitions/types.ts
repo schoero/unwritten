@@ -167,6 +167,7 @@ export interface BigIntLiteralType extends LiteralTypeBase<TypeKind.BigIntLitera
 export interface ObjectLikeTypeBase<Kind extends ObjectLikeTypeKind> extends TypeBase<Kind> {
   callSignatures: SignatureEntity[];
   constructSignatures: SignatureEntity[];
+  events: PropertyEntity[];
   getters: GetterEntity[];
   isThis: boolean;
   methods: MethodEntity[];
@@ -244,6 +245,7 @@ export interface FunctionType extends TypeBase<TypeKind.Function> {
 }
 
 export interface ClassType extends ObjectLikeTypeBase<TypeKind.Class> {
+  events: PropertyEntity[];
   modifiers: Modifiers[];
   name: Name;
   position: Position;
@@ -289,7 +291,6 @@ export interface ConditionalType extends TypeBase<TypeKind.Conditional> {
 
 export interface InterfaceType extends ObjectLikeTypeBase<TypeKind.Interface> {
   name: Name;
-  properties: PropertyEntity[];
   typeParameters?: TypeParameterEntity[];
 }
 

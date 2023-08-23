@@ -2,6 +2,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { filterPrivateMembers, filterPrivateSignatures } from "unwritten:renderer/utils/private-members.js";
 import {
+  convertEventPropertyEntityForType,
   convertFunctionLikeEntityForType,
   convertPropertyEntityForType,
   convertSignatureEntityForType
@@ -51,6 +52,7 @@ export function convertObjectTypeMultiline(
   const methods = renderConfig.renderPrivateMembers ? objectLikeType.methods : filterPrivateMembers(objectLikeType.methods);
   const setters = renderConfig.renderPrivateMembers ? objectLikeType.setters : filterPrivateMembers(objectLikeType.setters);
   const getters = renderConfig.renderPrivateMembers ? objectLikeType.getters : filterPrivateMembers(objectLikeType.getters);
+  const events = renderConfig.renderPrivateMembers ? objectLikeType.events : filterPrivateMembers(objectLikeType.events);
 
   const convertedConstructSignatures = constructSignatures.map(
     constructSignature => {
@@ -68,6 +70,11 @@ export function convertObjectTypeMultiline(
   const convertedProperties = properties.map(
     propertyEntity =>
       convertPropertyEntityForType(ctx, propertyEntity)
+  );
+
+  const convertedEvents = events.map(
+    eventPropertyEntity =>
+      convertEventPropertyEntityForType(ctx, eventPropertyEntity)
   );
 
   const convertedMethods = methods.flatMap(
@@ -91,7 +98,8 @@ export function convertObjectTypeMultiline(
     createListNode(...convertedProperties),
     createListNode(...convertedMethods),
     createListNode(...convertedSetters),
-    createListNode(...convertedGetters)
+    createListNode(...convertedGetters),
+    createListNode(...convertedEvents)
   ];
 
 }

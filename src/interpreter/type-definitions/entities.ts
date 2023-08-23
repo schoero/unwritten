@@ -145,6 +145,7 @@ export interface ParameterEntity extends EntityBase<EntityKind.Parameter>, JSDoc
 export interface InterfaceEntity extends EntityBase<EntityKind.Interface>, JSDocTags {
   callSignatures: SignatureEntity[];
   constructSignatures: SignatureEntity[];
+  events: PropertyEntity[];
   getterSignatures: SignatureEntity[];
   methodSignatures: SignatureEntity[];
   name: Name;
@@ -166,6 +167,7 @@ export interface MergedInterfaceEntity extends Omit<InterfaceEntity, "declaratio
 
 export interface ClassEntity extends EntityBase<EntityKind.Class>, JSDocTags {
   declarationId: ID;
+  events: PropertyEntity[];
   getters: GetterEntity[];
   methods: MethodEntity[];
   modifiers: Modifiers[];

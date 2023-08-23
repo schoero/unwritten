@@ -1,5 +1,6 @@
 export * from "./class.js";
 export * from "./enum.js";
+export * from "./event.js";
 export * from "./export-assignment.js";
 export * from "./function-like.js";
 export * from "./interface.js";

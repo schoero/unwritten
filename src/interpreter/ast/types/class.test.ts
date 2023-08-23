@@ -51,4 +51,33 @@ scope("Interpreter", TypeKind.Class, () => {
 
   }
 
+  {
+
+    const testFileContent = ts`
+      class Class {
+        /**
+         * Event description
+         * @eventProperty
+         */
+        event;
+      }
+      export type ClassType = InstanceType<typeof Class>;
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "ClassType")!;
+    const exportedClassType = createTypeAliasEntity(ctx, symbol);
+
+    it("should have one property", () => {
+      assert(exportedClassType.type.kind === TypeKind.TypeReference);
+      assert(exportedClassType.type.type!.kind === TypeKind.Class);
+      expect(exportedClassType.type.type.events).toHaveLength(1);
+      expect(exportedClassType.type.type.events[0]!.name).toBe("event");
+      expect(exportedClassType.type.type.events[0]!.description).toBe("Event description");
+      expect(exportedClassType.type.type.properties).toHaveLength(0);
+    });
+
+  }
+
 });

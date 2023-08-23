@@ -54,7 +54,10 @@ export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): Clas
   const getters = getterDeclarations.map(symbol => createGetterEntity(ctx, symbol));
   const setters = setterDeclarations.map(symbol => createSetterEntity(ctx, symbol));
   const methods = methodDeclarations.map(symbol => createMethodEntity(ctx, symbol));
-  const properties = propertyDeclarations.map(symbol => createPropertyEntity(ctx, symbol));
+  const allProperties = propertyDeclarations.map(symbol => createPropertyEntity(ctx, symbol));
+
+  const properties = allProperties.filter(property => property.eventProperty === undefined);
+  const events = allProperties.filter(property => property.eventProperty === true);
 
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntityByDeclaration(ctx, typeParameter));
@@ -70,6 +73,7 @@ export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): Clas
     ctor,
     declarationId,
     description,
+    events,
     getters,
     heritage,
     kind,

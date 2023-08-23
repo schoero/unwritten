@@ -58,6 +58,7 @@ export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
   } else {
 
     const properties = mergeMembers(declarations, "properties");
+    const events = mergeMembers(declarations, "events");
     const callSignatures = mergeMembers(declarations, "callSignatures");
     const constructSignatures = mergeMembers(declarations, "constructSignatures");
     const methodSignatures = mergeMembers(declarations, "methodSignatures");
@@ -70,6 +71,7 @@ export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
       constructSignatures,
       declarations,
       description,
+      events,
       getterSignatures,
       kind,
       methodSignatures,
@@ -138,11 +140,14 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
     return createSignatureEntity(ctx, signature);
   });
 
-  const properties = tsProperties.map(signature => {
+  const allProperties = tsProperties.map(signature => {
     const symbol = ctx.checker.getSymbolAtLocation(signature.name);
     assert(symbol, "Property symbol not found");
     return createPropertyEntity(ctx, symbol);
   });
+
+  const properties = allProperties.filter(property => property.eventProperty === undefined);
+  const events = allProperties.filter(property => property.eventProperty === true);
 
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
   const typeParameters = declaration.typeParameters?.map(
@@ -162,6 +167,7 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
     callSignatures,
     constructSignatures,
     declarationId,
+    events,
     getterSignatures,
     heritage,
     kind,

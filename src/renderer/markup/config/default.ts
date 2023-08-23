@@ -48,6 +48,8 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     description_one: "description",
     enum_many: "enums",
     enum_one: "enum",
+    event_many: "events",
+    event_one: "event",
     example_many: "examples",
     example_one: "example",
     exportAssignment_many: "export assignments",

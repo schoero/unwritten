@@ -67,6 +67,8 @@ export interface MarkupRenderConfig {
     description_one?: string;
     enum_many?: string;
     enum_one?: string;
+    event_many?: string;
+    event_one?: string;
     example_many?: string;
     example_one?: string;
     exportAssignment_many?: string;

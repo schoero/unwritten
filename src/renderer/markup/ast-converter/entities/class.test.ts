@@ -28,6 +28,8 @@ scope("MarkupRenderer", TypeKind.Class, () => {
         public set setter(value: string) {}
         static staticProp: string;
         protected protectedProp: string;
+        /** @eventProperty */
+        event;
       }
     `;
 
@@ -53,7 +55,8 @@ scope("MarkupRenderer", TypeKind.Class, () => {
       properties,
       methods,
       setters,
-      getters
+      getters,
+      events
     ] = titleNode.children;
 
     it("should have a matching title", () => {
@@ -94,6 +97,10 @@ scope("MarkupRenderer", TypeKind.Class, () => {
 
     it("should have one getter signature", () => {
       expect(getters.children).toHaveLength(1);
+    });
+
+    it("should have one event", () => {
+      expect(events.children).toHaveLength(1);
     });
 
   }

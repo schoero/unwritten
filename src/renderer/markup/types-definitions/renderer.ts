@@ -178,7 +178,8 @@ export type ConvertedObjectTypeMultiline = [
   properties: ListNode<ConvertedPropertyEntityForType[]>,
   methods: ListNode<ConvertedSignatureEntityForType[]>,
   setters: ListNode<ConvertedSignatureEntityForType[]>,
-  getters: ListNode<ConvertedSignatureEntityForType[]>
+  getters: ListNode<ConvertedSignatureEntityForType[]>,
+  events: ListNode<ConvertedEventPropertyEntityForType[]>
 ];
 export type ConvertedObjectType = ASTNode;
 
@@ -375,7 +376,8 @@ export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
     properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
     methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
     setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
+    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    events: TitleNode<ConvertedEventPropertyEntityForDocumentation[]>
   ]>
 ]>;
 
@@ -386,7 +388,8 @@ export type ConvertedClassEntityForTableOfContents = [
   properties: ListNode<ConvertedPropertyEntityForTableOfContents[]>,
   methods: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
   setters: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
-  getters: ListNode<ConvertedSignatureEntityForTableOfContents[]>
+  getters: ListNode<ConvertedSignatureEntityForTableOfContents[]>,
+  events: ListNode<ConvertedEventPropertyEntityForTableOfContents[]>
 ];
 export type ConvertedClassEntityForDocumentation = SectionNode<[
   children: TitleNode<[
@@ -399,7 +402,8 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
     properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
     methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
     setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>
+    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    events: TitleNode<ConvertedEventPropertyEntityForDocumentation[]>
   ]>
 ]>;
 
@@ -447,4 +451,16 @@ export type ConvertedPropertyEntityForDocumentation = TitleNode<[
 export type ConvertedPropertyEntityForType = [
   propertySignature: ASTNode[],
   propertyType: ConditionalNode | ConvertedTypeMultiline | ""
+];
+
+// Event
+export type ConvertedEventPropertyEntityForTableOfContents = AnchorNode;
+export type ConvertedEventPropertyEntityForDocumentation = TitleNode<[
+  position: ConvertedPosition,
+  description: ConvertedDescriptionForDocumentation,
+  remarks: ConvertedRemarks,
+  example: ConvertedExample
+]>;
+export type ConvertedEventPropertyEntityForType = [
+  propertySignature: ASTNode[]
 ];

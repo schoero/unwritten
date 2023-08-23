@@ -3,6 +3,7 @@ export enum JSDocTagNames {
   Beta = "beta",
   Deprecated = "deprecated",
   Description = "description",
+  EventProperty = "eventProperty",
   Example = "example",
   Internal = "internal",
   Remarks = "remarks",

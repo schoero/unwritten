@@ -2,6 +2,8 @@ import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { filterImplicitSignatures, filterPrivateMembers } from "unwritten:renderer/utils/private-members.js";
 import {
+  convertEventPropertyEntityForDocumentation,
+  convertEventPropertyEntityForTableOfContents,
   convertFunctionLikeEntityForDocumentation,
   convertFunctionLikeEntityForTableOfContents,
   convertPropertyEntityForDocumentation,
@@ -49,12 +51,14 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
 
   const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
   const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
+  const eventPropertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "events");
   const methodEntities = extendClassEntityEntitiesWithHeritage(classEntity, "methods");
   const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
   const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
 
   const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterPrivateMembers([constructorEntity])[0];
   const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterPrivateMembers(propertyEntities);
+  const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterPrivateMembers(eventPropertyEntities);
   const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterPrivateMembers(methodEntities);
   const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterPrivateMembers(setterEntities);
   const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterPrivateMembers(getterEntities);
@@ -62,6 +66,7 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
   const explicitConstructSignatures = publicConstructorEntity?.signatures && filterImplicitSignatures(publicConstructorEntity.signatures);
   const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
   const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForTableOfContents(ctx, propertyEntity));
+  const convertedEventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForTableOfContents(ctx, eventPropertyEntity));
   const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForTableOfContents(ctx, methodEntity)).flat();
   const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
   const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
@@ -72,7 +77,8 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
     createListNode(...convertedProperties),
     createListNode(...convertedMethods),
     createListNode(...convertedSetters),
-    createListNode(...convertedGetters)
+    createListNode(...convertedGetters),
+    createListNode(...convertedEventProperties)
   ];
 
 }
@@ -97,12 +103,14 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
 
   const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
   const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
+  const eventPropertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "events");
   const methodEntities = extendClassEntityEntitiesWithHeritage(classEntity, "methods");
   const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
   const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
 
   const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterPrivateMembers([constructorEntity])[0];
   const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterPrivateMembers(propertyEntities);
+  const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterPrivateMembers(eventPropertyEntities);
   const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterPrivateMembers(methodEntities);
   const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterPrivateMembers(setterEntities);
   const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterPrivateMembers(getterEntities);
@@ -110,6 +118,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const explicitConstructSignatures = publicConstructorEntity?.signatures && filterImplicitSignatures(publicConstructorEntity.signatures);
   const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity)) ?? [];
   const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
+  const convertedEventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForDocumentation(ctx, eventPropertyEntity));
   const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForDocumentation(ctx, methodEntity));
   const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
   const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
@@ -128,7 +137,8 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
       createTitleNode(translate("property", { capitalize: true, count: convertedProperties.length }), ...convertedProperties),
       createTitleNode(translate("method", { capitalize: true, count: convertedMethods.length }), ...convertedMethods),
       createTitleNode(translate("setter", { capitalize: true, count: convertedSetters.length }), ...convertedSetters),
-      createTitleNode(translate("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters)
+      createTitleNode(translate("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters),
+      createTitleNode(translate("event", { capitalize: true, count: convertedEventProperties.length }), ...convertedEventProperties)
     )
   );
 

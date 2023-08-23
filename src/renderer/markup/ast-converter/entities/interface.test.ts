@@ -139,6 +139,13 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
          * @deprecated Property deprecation message
          */
         prop: string;
+        /**
+         * Event description
+         * @remarks Event remarks
+         * @example Event example
+         * @eventProperty
+         */
+        event: string;
         set setter(value: string);
       }
     `;
@@ -164,7 +171,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       properties,
       methods,
       setters,
-      getters
+      getters,
+      events
     ] = titleNode.children;
 
     const [
@@ -187,6 +195,13 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       propertyRemarks,
       propertyExample
     ] = properties.children[1].children;
+
+    const [
+      eventPosition,
+      eventDescription,
+      eventRemarks,
+      eventExample
+    ] = events.children[0].children;
 
     it("should have a matching interface description", () => {
       assert(isTitleNode(interfaceDescription));
@@ -265,6 +280,21 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       assert(isParagraphNode(propertyTags));
       expect(propertyTags.children).toContain("beta");
       expect(propertyTags.children).toContain("deprecated");
+    });
+
+    it("should have a matching event description", () => {
+      assert(isTitleNode(eventDescription));
+      expect(eventDescription.children[0].children[0]).toBe("Event description");
+    });
+
+    it("should have a matching event remarks", () => {
+      assert(isTitleNode(eventRemarks));
+      expect(eventRemarks.children[0].children[0]).toBe("Event remarks");
+    });
+
+    it("should have a matching event example", () => {
+      assert(isTitleNode(eventExample));
+      expect(eventExample.children[0].children[0]).toBe("Event example");
     });
 
   }

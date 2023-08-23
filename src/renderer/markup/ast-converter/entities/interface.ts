@@ -6,6 +6,7 @@ import {
   filterPrivateSignatures
 } from "unwritten:renderer/utils/private-members.js";
 import {
+  convertEventPropertyEntityForDocumentation,
   convertPropertyEntityForDocumentation,
   convertSignatureEntityForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
@@ -44,7 +45,6 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
 
   const name = interfaceEntity.name;
   const symbolId = interfaceEntity.symbolId;
-  const typeId = interfaceEntity.typeId;
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
@@ -54,7 +54,8 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const convertedExample = convertExample(ctx, interfaceEntity.example);
   const convertedPosition = convertPosition(ctx, interfaceEntity.position);
 
-  const propertyEntities = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity);
+  const propertyEntities = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity, "properties");
+  const eventPropertyEntities = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity, "events");
   const constructSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "constructSignatures");
   const callSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "callSignatures");
   const methodSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "methodSignatures");
@@ -62,6 +63,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "getterSignatures");
 
   const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterPrivateMembers(propertyEntities);
+  const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterPrivateMembers(eventPropertyEntities);
   const publicConstructSignatures = renderConfig.renderPrivateMembers ? constructSignatures : filterPrivateSignatures(constructSignatures);
   const publicCallSignatures = renderConfig.renderPrivateMembers ? callSignatures : filterPrivateSignatures(callSignatures);
   const publicMethodSignatures = renderConfig.renderPrivateMembers ? methodSignatures : filterPrivateSignatures(methodSignatures);
@@ -75,6 +77,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const explicitGetterSignatures = filterImplicitSignatures(publicGetterSignatures);
 
   const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
+  const convertedEventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForDocumentation(ctx, eventPropertyEntity));
   const convertedConstructSignatures = explicitConstructSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
   const convertedCallSignatures = explicitCallSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
   const convertedMethods = explicitMethodSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
@@ -96,7 +99,8 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
       createTitleNode(translate("property", { capitalize: true, count: convertedProperties.length }), ...convertedProperties),
       createTitleNode(translate("method", { capitalize: true, count: convertedMethods.length }), ...convertedMethods),
       createTitleNode(translate("setter", { capitalize: true, count: convertedSetters.length }), ...convertedSetters),
-      createTitleNode(translate("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters)
+      createTitleNode(translate("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters),
+      createTitleNode(translate("event", { capitalize: true, count: convertedEventProperties.length }), ...convertedEventProperties)
     )
   );
 

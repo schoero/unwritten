@@ -261,4 +261,34 @@ scope("Interpreter", EntityKind.Interface, () => {
 
   }
 
+  {
+
+    const testFileContent = ts`
+      interface Interface {
+        /**
+         * Event description
+         * @eventProperty
+         */
+        event;
+      };
+      export type InterfaceType = Interface;
+    `;
+
+    const { ctx, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "InterfaceType")!;
+    const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
+
+    it("should be able to parse an interface type", () => {
+      expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
+      assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
+      assert(exportedTypeAlias.type.type?.kind === TypeKind.Interface);
+      expect(exportedTypeAlias.type.type.events).toHaveLength(1);
+      expect(exportedTypeAlias.type.type.events[0]!.name).toBe("event");
+      expect(exportedTypeAlias.type.type.events[0]!.description).toBe("Event description");
+      expect(exportedTypeAlias.type.type.properties).toHaveLength(0);
+    });
+
+  }
+
 });

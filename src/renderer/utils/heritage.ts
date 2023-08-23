@@ -15,9 +15,9 @@ import type {
 } from "unwritten:interpreter/type-definitions/entities.js";
 
 
-type EntityKeys = "getters" | "methods" | "properties" | "setters";
+type EntityKeys = "events" | "getters" | "methods" | "properties" | "setters";
 type EntityMap = {
-  [Key in EntityKeys]: Key extends "properties"
+  [Key in EntityKeys]: Key extends "events" | "properties"
     ? PropertyEntity
     : Key extends "getters"
       ? GetterEntity
@@ -85,13 +85,13 @@ export function extendClassEntityEntitiesWithHeritage<
 }
 
 
-export function extendInterfaceEntityPropertiesWithHeritage(interfaceEntity: InterfaceEntity | MergedInterfaceEntity): PropertyEntity[] {
+export function extendInterfaceEntityPropertiesWithHeritage(interfaceEntity: InterfaceEntity | MergedInterfaceEntity, key: "events" | "properties" = "properties"): PropertyEntity[] {
 
   const fromHeritages = interfaceEntity.heritage?.reduce<{ [key: string]: PropertyEntity; }>((result, heritage) => {
     if(!isInterfaceType(heritage.instanceType)){
       return result;
     }
-    heritage.instanceType.properties.forEach(
+    heritage.instanceType[key].forEach(
       property => {
         result[property.name] = property;
       }
@@ -99,7 +99,7 @@ export function extendInterfaceEntityPropertiesWithHeritage(interfaceEntity: Int
     return result;
   }, {});
 
-  const properties = interfaceEntity.properties.reduce<{
+  const properties = interfaceEntity[key].reduce<{
     [key: string]: PropertyEntity;
   }>((result, property) => {
     result[property.name] = property;
