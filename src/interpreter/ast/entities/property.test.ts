@@ -114,12 +114,18 @@ scope("Interpreter", EntityKind.Property, () => {
 
     it("should have a matching example", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.example).toBe("Property example");
+      expect(exportedTypeAlias.type.properties[0]!.example).toStrictEqual([
+        "Property example"
+      ]);
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.example).toBe("Property example");
+      expect(exportedObjectLiteral.type.properties[0]!.example).toStrictEqual([
+        "Property example"
+      ]);
 
-      expect(exportedClass.properties[0].example).toBe("Property example");
+      expect(exportedClass.properties[0].example).toStrictEqual([
+        "Property example"
+      ]);
     });
 
     it("should have a matching type", () => {
@@ -186,7 +192,7 @@ scope("Interpreter", EntityKind.Property, () => {
         property: undefined;
       }
       export class ExtendedClass extends BaseClass {
-        override property: undefined;
+        override property: undefined = undefined;
       }
     `;
 

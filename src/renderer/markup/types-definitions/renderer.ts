@@ -1,7 +1,6 @@
 import type { RenderCategories } from "../enums/renderer.js";
 
-import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter/enums/jsdoc.js";
-import type { JSDocTags } from "unwritten:interpreter:type-definitions/shared.js";
+import type { Alpha, Beta, Deprecated, Examples, Internal } from "unwritten:interpreter/type-definitions/shared.js";
 
 import type {
   AnchorNode,
@@ -27,13 +26,13 @@ export type ConvertedCategoryForTableOfContents = [
 export type ConvertedCategoryForDocumentation = TitleNode<ConvertedEntitiesForDocumentation[]>;
 
 
-export type RenderableJSDocTags = Pick<
-JSDocTags,
-| JSDocTagNames.Alpha
-| JSDocTagNames.Beta
-| JSDocTagNames.Deprecated
-| JSDocTagNames.Internal
->;
+export type RenderableJSDocTags =
+  | Alpha
+  | Beta
+  | Deprecated
+  | Examples
+  | Internal;
+
 
 // Position
 export type ConvertedPosition = SmallNode<[LinkNode] | [string, LinkNode]> | "";
@@ -53,10 +52,13 @@ export type ConvertedRemarks = TitleNode<[
   ParagraphNode
 ]> | "";
 
-// Example
-export type ConvertedExample = TitleNode<[
-  ParagraphNode
+// Throws
+export type ConvertedThrows = TitleNode<[
+  ListNode
 ]> | "";
+
+// Example
+export type ConvertedExample = TitleNode<ParagraphNode[]> | "";
 
 // Types
 export interface ConvertedType {
@@ -319,6 +321,7 @@ export type ConvertedSignatureEntityForDocumentation = SectionNode<[
     typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
     parameters: ConvertedParameterEntitiesForDocumentation,
     returnType: ASTNode,
+    throws: ASTNode,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarks,
     example: ConvertedExample

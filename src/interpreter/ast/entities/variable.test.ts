@@ -60,7 +60,9 @@ scope("Interpreter", EntityKind.Variable, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedVariable.example).toBe("Variable example");
+      expect(exportedVariable.example).toStrictEqual([
+        "Variable example"
+      ]);
     });
 
     it("should have a matching position", () => {

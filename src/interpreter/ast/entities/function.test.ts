@@ -52,7 +52,9 @@ scope("Interpreter", EntityKind.Function, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedFunction.signatures[0]!.example).toBe("Function example");
+      expect(exportedFunction.signatures[0]!.example).toStrictEqual([
+        "Function example"
+      ]);
     });
 
   }

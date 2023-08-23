@@ -1,4 +1,4 @@
-export enum JSDocTags {
+export enum JSDocTagNames {
   Alpha = "alpha",
   Beta = "beta",
   Deprecated = "deprecated",
@@ -6,5 +6,6 @@ export enum JSDocTags {
   Example = "example",
   Internal = "internal",
   Remarks = "remarks",
-  Template = "template"
+  Template = "template",
+  Throws = "throws"
 }

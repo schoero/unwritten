@@ -36,6 +36,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
        * @example Signature example
        * @remarks Signature remarks
        * @returns Return type description
+       * @throws Error description
        * @beta
        */
       export function testSignature(): void {
@@ -82,6 +83,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       typeParameters,
       parameters,
       returnType,
+      throws,
       description,
       remarks,
       example
@@ -95,6 +97,10 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     it("should have a jsdoc tag", () => {
       assert(isParagraphNode(tags));
       expect(tags.children).toContain("beta");
+    });
+
+    it("should have a throw node", () => {
+      expect(throws).toBeDefined();
     });
 
     it("should not have type parameters", () => {

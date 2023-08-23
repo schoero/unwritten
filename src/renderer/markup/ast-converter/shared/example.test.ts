@@ -9,26 +9,64 @@ import { assert } from "unwritten:utils/general.js";
 
 scope("MarkupRenderer", "Example", () => {
 
-  const ctx = createRenderContext(BuiltInRenderers.Markdown);
+  {
 
-  const convertedExample = convertExample(
-    ctx,
-    "Example description"
-  );
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-  assert(convertedExample, "Converted example is undefined");
+    const convertedExample = convertExample(
+      ctx,
+      [
+        "Example description"
+      ]
+    );
 
-  const {
-    children,
-    title
-  } = convertedExample;
+    assert(convertedExample, "Converted example is undefined");
 
-  it("should have a matching title", () => {
-    expect(title).toBe("Example");
-  });
+    const {
+      children,
+      title
+    } = convertedExample;
 
-  it("should have a matching description", () => {
-    expect(children[0].children[0]).toBe("Example description");
-  });
+    it("should have a matching title", () => {
+      expect(title).toBe("Example");
+    });
+
+    it("should have a matching description", () => {
+      expect(children).toHaveLength(1);
+      expect(children[0].children[0]).toBe("Example description");
+    });
+
+  }
+
+  {
+
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+
+    const convertedExample = convertExample(
+      ctx,
+      [
+        "Example description 1",
+        "Example description 2"
+      ]
+    );
+
+    assert(convertedExample, "Converted example is undefined");
+
+    const {
+      children,
+      title
+    } = convertedExample;
+
+    it("should have a matching title", () => {
+      expect(title).toBe("Examples");
+    });
+
+    it("should have a matching description", () => {
+      expect(children).toHaveLength(2);
+      expect(children[0].children[0]).toBe("Example description 1");
+      expect(children[1].children[0]).toBe("Example description 2");
+    });
+
+  }
 
 });

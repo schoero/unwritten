@@ -1,25 +1,34 @@
-import type { JSDocTags as JSDocTagNames } from "unwritten:interpreter/enums/jsdoc.js";
+import type { JSDocTagNames } from "unwritten:interpreter/enums/jsdoc.js";
+import type { Type } from "unwritten:interpreter/type-definitions/types.js";
 
 
+type JSDocTag = string | undefined;
 export type Name = string;
 export type ID = number;
 export type Description = string | undefined;
-export type Example = JSDocTags[JSDocTagNames.Example];
-export type Alpha = JSDocTags[JSDocTagNames.Alpha];
-export type Beta = JSDocTags[JSDocTagNames.Beta];
-export type Deprecated = JSDocTags[JSDocTagNames.Deprecated];
-export type Internal = JSDocTags[JSDocTagNames.Internal];
-export type Remarks = JSDocTags[JSDocTagNames.Remarks];
-
-export type JSDocTags = {
-  -readonly [Key in keyof typeof JSDocTagNames as typeof JSDocTagNames[Key]]?: string | undefined;
-};
-
-export type JSDoc = JSDocTags & {
+export type Throws = {
   description?: Description;
-  example?: Example;
-  remarks?: Remarks;
-};
+  type?: Type;
+}[] | undefined;
+export type Examples = JSDocTag[] | undefined;
+export type Alpha = JSDocTag;
+export type Beta = JSDocTag;
+export type Deprecated = JSDocTag;
+export type Internal = JSDocTag;
+export type Template = JSDocTag;
+export type Remarks = JSDocTag;
+
+export interface JSDocTags {
+  [JSDocTagNames.Alpha]?: Alpha;
+  [JSDocTagNames.Beta]?: Beta;
+  [JSDocTagNames.Deprecated]?: Deprecated;
+  [JSDocTagNames.Description]?: Description;
+  [JSDocTagNames.Example]?: Examples;
+  [JSDocTagNames.Remarks]?: Remarks;
+  [JSDocTagNames.Throws]?: Throws;
+  [JSDocTagNames.Internal]?: Internal;
+  [JSDocTagNames.Template]?: Template;
+}
 
 export type Optional = {
   optional?: boolean;

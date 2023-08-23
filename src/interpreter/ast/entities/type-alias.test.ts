@@ -60,7 +60,9 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedTypeAlias.example).toBe("Type alias example");
+      expect(exportedTypeAlias.example).toStrictEqual([
+        "Type alias example"
+      ]);
     });
 
     it("should have a matching type", () => {

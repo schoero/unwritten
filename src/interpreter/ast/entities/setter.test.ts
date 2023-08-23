@@ -49,7 +49,9 @@ scope("Interpreter", EntityKind.Setter, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.setters[0]!.signatures[0]!.example).toBe("setter example");
+      expect(exportedClass.setters[0]!.signatures[0]!.example).toStrictEqual([
+        "setter example"
+      ]);
     });
 
   }

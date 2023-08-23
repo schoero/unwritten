@@ -40,7 +40,7 @@ scope("Interpreter", EntityKind.Namespace, () => {
   });
 
   it("should have a matching example", () => {
-    expect(exportedNamespace.example).toBe("Namespace example");
+    expect(exportedNamespace.example).toStrictEqual(["Namespace example"]);
   });
 
   it("should be deprecated", () => {

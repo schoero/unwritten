@@ -1,8 +1,10 @@
-import { JSDocTags } from "unwritten:interpreter/enums/jsdoc.js";
+import { getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
+import { JSDocTagNames } from "unwritten:interpreter/enums/jsdoc.js";
+import { assert } from "unwritten:utils/general.js";
 
 import type { Declaration, ParameterDeclaration, Symbol, Type, TypeParameterDeclaration } from "typescript";
 
-import type { Description } from "unwritten:interpreter:type-definitions/shared.js";
+import type { Description, JSDocTags } from "unwritten:interpreter:type-definitions/shared.js";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
@@ -27,35 +29,37 @@ export function getDescriptionByType(ctx: InterpreterContext, type: Type): Descr
 export function getJSDocTagsByDeclaration(
   ctx: InterpreterContext,
   declaration: Declaration,
-  tags: JSDocTags | JSDocTags[] = Object.values(JSDocTags)
-): { [tag: string]: string | undefined; } | undefined {
+  tags: JSDocTagNames[] = Object.values(JSDocTagNames)
+): JSDocTags {
 
   const { ts } = ctx.dependencies;
 
-  return ts.getJSDocTags(declaration).reduce<{ [tag: string]: string | undefined; }>((acc, tag) => {
-    if((typeof tags === "string" ? [tags] : tags).includes(tag.tagName.text as JSDocTags)){
-      acc[tag.tagName.text] = tag.comment?.toString();
+  return ts.getJSDocTags(declaration).reduce<JSDocTags>((acc, tag) => {
+
+    if((typeof tags === "string" ? [tags] : tags).includes(tag.tagName.text as JSDocTagNames)){
+
+      const tagName = tag.tagName.text as JSDocTagNames;
+      const comment = tag.comment?.toString();
+
+      if(tagName === JSDocTagNames.Throws){
+        assert(ts.isJSDocThrowsTag(tag), "Tag is not a JSDocThrowsTag");
+        const type = tag.typeExpression?.type && getTypeByTypeNode(ctx, tag.typeExpression.type);
+        acc[tagName] ??= [];
+        acc[tagName]!.push({
+          description: comment,
+          type
+        });
+      } else if(tagName === JSDocTagNames.Example){
+        acc[tagName] ??= [];
+        acc[tagName]!.push(comment);
+      } else {
+        acc[tagName] = comment;
+      }
+
     }
     return acc;
   }, {});
 }
-
-export function getJSDocTagsBySymbol(
-  ctx: InterpreterContext,
-  symbol: Symbol,
-  tags: JSDocTags | JSDocTags[] = Object.values(JSDocTags)
-): { [tag: string]: string | undefined; } | undefined {
-
-  const { ts } = ctx.dependencies;
-
-  return symbol.getJsDocTags(ctx.checker).reduce<{ [tag: string]: string | undefined; }>((acc, tag) => {
-    if((typeof tags === "string" ? [tags] : tags).includes(tag.name as JSDocTags)){
-      acc[tag.name] = ts.displayPartsToString(tag.text);
-    }
-    return acc;
-  }, {});
-}
-
 
 export function getParameterDescription(ctx: InterpreterContext, declaration: ParameterDeclaration): Description | undefined {
   const { ts } = ctx.dependencies;

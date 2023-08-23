@@ -48,7 +48,7 @@ scope("Interpreter", EntityKind.Method, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.methods[0]!.signatures[0].example).toBe("Method example");
+      expect(exportedClass.methods[0]!.signatures[0].example).toStrictEqual(["Method example"]);
     });
 
   }

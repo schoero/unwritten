@@ -40,7 +40,9 @@ scope("Interpreter", EntityKind.Module, () => {
   });
 
   it("should have a matching example", () => {
-    expect(exportedModule.example).toBe("Module example");
+    expect(exportedModule.example).toStrictEqual([
+      "Module example"
+    ]);
   });
 
   it("should be deprecated", () => {

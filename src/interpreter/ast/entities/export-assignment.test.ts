@@ -45,7 +45,9 @@ scope("Interpreter", "Export assignment", () => {
 
     it("should have a matching example", () => {
       assert(isExportAssignmentEntity(exportAssignmentEntity));
-      expect(exportAssignmentEntity.example).toBe("Export assignment example");
+      expect(exportAssignmentEntity.example).toStrictEqual([
+        "Export assignment example"
+      ]);
     });
 
     it("should be have matching jsdoc tags", () => {

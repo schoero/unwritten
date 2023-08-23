@@ -84,7 +84,9 @@ scope("Interpreter", EntityKind.Enum, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedEnum.example).toBe("Enum example");
+      expect(exportedEnum.example).toStrictEqual([
+        "Enum example"
+      ]);
     });
 
     it("should have a matching position", () => {

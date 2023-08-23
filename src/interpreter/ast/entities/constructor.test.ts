@@ -41,7 +41,9 @@ scope("Interpreter", EntityKind.Getter, () => {
     });
 
     it("should have a matching constructor example", () => {
-      expect(exportedClass.ctor!.signatures[0]!.example).toBe("Constructor example");
+      expect(exportedClass.ctor!.signatures[0]!.example).toStrictEqual([
+        "Constructor example"
+      ]);
     });
 
     it("should return the instance type of the class", () => {

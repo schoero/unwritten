@@ -98,7 +98,9 @@ scope("Interpreter", EntityKind.Class, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.example).toBe("Class example");
+      expect(exportedClass.example).toStrictEqual([
+        "Class example"
+      ]);
     });
 
   }

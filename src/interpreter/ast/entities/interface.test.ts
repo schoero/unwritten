@@ -112,7 +112,9 @@ scope("Interpreter", EntityKind.Interface, () => {
     });
 
     it("should have a matching example", () => {
-      expect(exportedInterface.example).toBe("Interface example");
+      expect(exportedInterface.example).toStrictEqual([
+        "Interface example"
+      ]);
     });
 
     it("should have a matching position", () => {

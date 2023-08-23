@@ -8,6 +8,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import {
   isAnchorNode,
+  isListNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -120,6 +121,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
          * @example Call signature example
          * @remarks Call signature remarks
          * @beta
+         * @throws Call signature throws
          * @deprecated Call signature deprecation message
          */
         (): void;
@@ -171,6 +173,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       callSignatureTypeParameters,
       callSignatureParameters,
       callSignatureReturnType,
+      callSignatureThrows,
       callSignatureDescription,
       callSignatureRemarks,
       callSignatureExample
@@ -208,6 +211,14 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       assert(isParagraphNode(interfaceTags));
       expect(interfaceTags.children).toContain("beta");
       expect(interfaceTags.children).toContain("deprecated");
+    });
+
+    it("should have a matching call signature throws", () => {
+      assert(isTitleNode(callSignatureThrows));
+      assert(isListNode(callSignatureThrows.children[0]));
+      expect(callSignatureThrows.children[0].children[0]).toStrictEqual([
+        "Call signature throws"
+      ]);
     });
 
     it("should have a matching call signature description", () => {

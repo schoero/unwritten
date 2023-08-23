@@ -1,4 +1,5 @@
 import { renderNode } from "unwritten:renderer/index.js";
+import { convertThrows } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
@@ -69,9 +70,10 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const convertedTypeParameters = convertTypeParameterEntitiesForDocumentation(ctx, signatureEntity.typeParameters);
   const convertedParameters = convertParameterEntitiesForDocumentation(ctx, signatureEntity.parameters);
   const convertedReturnType = convertReturnTypeForDocumentation(ctx, signatureEntity);
+  const convertedThrows = convertThrows(ctx, signatureEntity.throws);
   const convertedDescription = convertDescriptionForDocumentation(ctx, signatureEntity.description);
-  const convertedExample = convertExample(ctx, signatureEntity.example);
   const convertedRemarks = convertRemarks(ctx, signatureEntity.remarks);
+  const convertedExample = convertExample(ctx, signatureEntity.example);
 
   const renderedSignature = renderNode(ctx, convertedSignature);
   const anchor = registerAnchor(ctx, renderedSignature, id);
@@ -86,6 +88,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
       convertedTypeParameters,
       convertedParameters,
       convertedReturnType,
+      convertedThrows,
       convertedDescription,
       convertedRemarks,
       convertedExample
