@@ -11,8 +11,14 @@ import { ts } from "unwritten:utils/template.js";
 
 
 function extractTypeOfRenderedContent(typeName: string, content: string) {
-  const typeRegex = new RegExp(`#+\\s${typeName}[\\s\\S]+?#+\\sType\\s+(.*)\\n+([\\s\\S]*?)\\n(?:---|$|\\s\\s)`, "gm");
-  const [, inlineType, multilineType] = typeRegex.exec(content)!;
+
+  const lines = content.split("\n");
+  const start = lines.findIndex(line => line.match(new RegExp(`^#{1,6} ${typeName}`)));
+  const type = lines.findIndex((line, index) => index > start && line.match(new RegExp("^#{1,6} Type")));
+  const end = lines.findIndex((line, index) => index > type && line.match(new RegExp("^(---|#{1,6})")));
+  const inlineType = lines[type + 2];
+  const multilineType = lines.slice(type + 4, end).join("\n");
+
   return {
     inlineType,
     multilineType: multilineType.trim() === ""

@@ -48,6 +48,7 @@ export function convertUnionTypeInline(ctx: MarkupRenderContexts, unionType: Uni
 }
 
 export function convertUnionTypeMultiline(ctx: MarkupRenderContexts, unionType: UnionType): ConvertedUnionTypeMultiline {
+
   const types = unionType.types.map(type => {
 
     const { inlineType, multilineType } = convertType(ctx, type);

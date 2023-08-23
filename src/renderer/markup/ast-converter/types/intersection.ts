@@ -30,6 +30,7 @@ export function convertIntersectionTypeInline(ctx: MarkupRenderContexts, interse
 }
 
 export function convertIntersectionTypeMultiline(ctx: MarkupRenderContexts, intersectionType: IntersectionType): ConvertedIntersectionTypeMultiline {
+
   const types = intersectionType.types.map(type => {
 
     const { inlineType, multilineType } = convertType(ctx, type);
