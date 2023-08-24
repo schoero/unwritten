@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderConditionalNode } from "unwritten:renderer/markup/html/ast/conditional.js";
+import { renderMultilineNode } from "unwritten:renderer/markup/html/ast/multiline.js";
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
@@ -22,6 +23,7 @@ import {
   isItalicNode,
   isLinkNode,
   isListNode,
+  isMultilineNode,
   isParagraphNode,
   isSectionNode,
   isSmallNode,
@@ -186,6 +188,8 @@ export function renderNode(ctx: HTMLRenderContext, node: ASTNode): string {
     return renderSectionNode(ctx, node);
   } else if(isConditionalNode(node)){
     return renderConditionalNode(ctx, node);
+  } else if(isMultilineNode(node)){
+    return renderMultilineNode(ctx, node);
   } else {
     if(Array.isArray(node)){
       return node.map((n, index) => {

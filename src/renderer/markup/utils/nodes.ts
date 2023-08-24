@@ -11,6 +11,7 @@ import type {
   ItalicNode,
   LinkNode,
   ListNode,
+  MultilineNode,
   ParagraphNode,
   SectionNode,
   SmallNode,
@@ -33,10 +34,7 @@ export function createAnchorNode(name: Name, id: ID): AnchorNode {
   };
 }
 
-
 export function createBoldNode<Children extends ASTNode[]>(children: Children): BoldNode<Children>;
-
-
 export function createBoldNode<Children extends ASTNode[]>(...children: Children): BoldNode<Children>;
 export function createBoldNode<Children extends ASTNode[]>(...children: Children): BoldNode<Children> {
   return {
@@ -44,6 +42,7 @@ export function createBoldNode<Children extends ASTNode[]>(...children: Children
     kind: ASTNodeKinds.Bold
   };
 }
+
 export function createConditionalNode<TrueChildren extends ASTNode, FalseChildren extends ASTNode>(func: Function, args: unknown[], operator: ConditionalOperator, value: unknown, trueChildren: TrueChildren, falseChildren: FalseChildren): ConditionalNode<TrueChildren, FalseChildren> {
   return {
     args,
@@ -86,6 +85,15 @@ export function createListNode<Children extends ASTNode[]>(...children: Children
   return {
     children,
     kind: ASTNodeKinds.List
+  };
+}
+
+export function createMultilineNode<Children extends ASTNode[]>(children: Children): MultilineNode<Children>;
+export function createMultilineNode<Children extends ASTNode[]>(...children: Children): MultilineNode<Children>;
+export function createMultilineNode<Children extends ASTNode[]>(...children: Children): MultilineNode<Children> {
+  return {
+    children,
+    kind: ASTNodeKinds.Multiline
   };
 }
 

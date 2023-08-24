@@ -7,6 +7,7 @@ export enum ASTNodeKinds {
   Link = "Link",
   List = "List",
   ListItem = "ListItem",
+  Multiline = "Multiline",
   Paragraph = "Paragraph",
   Section = "Section",
   Small = "Small",

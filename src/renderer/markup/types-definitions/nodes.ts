@@ -12,6 +12,7 @@ export type ASTNode =
   | ItalicNode
   | LinkNode
   | ListNode
+  | MultilineNode
   | ParagraphNode
   | SectionNode
   | SmallNode
@@ -44,6 +45,10 @@ export interface ConditionalNode<
 }
 
 export interface ListNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.List> {
+  children: Children;
+}
+
+export interface MultilineNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Multiline> {
   children: Children;
 }
 

@@ -2,6 +2,7 @@
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/conditional.js";
+import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/multiline.js";
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
@@ -24,6 +25,7 @@ import {
   isItalicNode,
   isLinkNode,
   isListNode,
+  isMultilineNode,
   isParagraphNode,
   isSectionNode,
   isSmallNode,
@@ -189,6 +191,8 @@ export function renderNode(ctx: MarkdownRenderContext, node: ASTNode): string {
     return renderSectionNode(ctx, node);
   } else if(isConditionalNode(node)){
     return renderConditionalNode(ctx, node);
+  } else if(isMultilineNode(node)){
+    return renderMultilineNode(ctx, node);
   } else {
     if(Array.isArray(node)){
       return node.map((n, index) => {
