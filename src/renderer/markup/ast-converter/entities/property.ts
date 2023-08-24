@@ -1,4 +1,5 @@
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
@@ -12,7 +13,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertType, convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
+import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
@@ -63,19 +64,20 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
 
 export function convertPropertyEntityForType(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForType {
 
-  const name = propertyEntity.name;
+  const renderConfig = getRenderConfig(ctx);
 
-  const convertedTags = convertTagsForType(ctx, propertyEntity);
-  const convertedDescription = convertDescriptionForType(ctx, propertyEntity.description);
+  const name = encapsulate(propertyEntity.name, renderConfig.propertyEncapsulation);
+  const tags = convertTagsForType(ctx, propertyEntity);
+  const description = convertDescriptionForType(ctx, propertyEntity.description);
 
   const { inlineType, multilineType } = convertType(ctx, propertyEntity.type);
 
   return [
     spaceBetween(
       name,
-      convertedTags,
       inlineType,
-      convertedDescription
+      description,
+      tags
     ),
     multilineType ?? ""
   ];

@@ -115,11 +115,11 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
   return [
     spaceBetween(
       name,
-      optional,
-      rest,
       inlineType,
       description,
-      initializer
+      initializer,
+      optional,
+      rest
     ),
     multilineType ?? ""
   ];
