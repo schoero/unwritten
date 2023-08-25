@@ -34,8 +34,6 @@ export function createAnchorNode(name: Name, id: ID): AnchorNode {
   };
 }
 
-export function createBoldNode<Children extends ASTNode[]>(children: Children): BoldNode<Children>;
-export function createBoldNode<Children extends ASTNode[]>(...children: Children): BoldNode<Children>;
 export function createBoldNode<Children extends ASTNode[]>(...children: Children): BoldNode<Children> {
   return {
     children,
@@ -55,8 +53,6 @@ export function createConditionalNode<TrueChildren extends ASTNode, FalseChildre
   };
 }
 
-export function createItalicNode<Children extends ASTNode[]>(children: Children): ItalicNode<Children>;
-export function createItalicNode<Children extends ASTNode[]>(...children: Children): ItalicNode<Children>;
 export function createItalicNode<Children extends ASTNode[]>(...children: Children): ItalicNode<Children> {
   return {
     children,
@@ -64,8 +60,6 @@ export function createItalicNode<Children extends ASTNode[]>(...children: Childr
   };
 }
 
-export function createLinkNode<Children extends ASTNode[]>(children: Children, link: string): LinkNode<Children>;
-export function createLinkNode<Children extends ASTNode[]>(...childrenAndLink: [...children: Children, link: string]): LinkNode<Children>;
 export function createLinkNode<Children extends ASTNode[]>(...childrenLink: [...children: Children, link: string]): LinkNode<Children> {
 
   const link = childrenLink[childrenLink.length - 1] as string;
@@ -79,8 +73,6 @@ export function createLinkNode<Children extends ASTNode[]>(...childrenLink: [...
 
 }
 
-export function createListNode<Children extends ASTNode[]>(children: Children): ListNode<Children>;
-export function createListNode<Children extends ASTNode[]>(...children: Children): ListNode<Children>;
 export function createListNode<Children extends ASTNode[]>(...children: Children): ListNode<Children> {
   return {
     children,
@@ -88,8 +80,6 @@ export function createListNode<Children extends ASTNode[]>(...children: Children
   };
 }
 
-export function createMultilineNode<Children extends ASTNode[]>(children: Children): MultilineNode<Children>;
-export function createMultilineNode<Children extends ASTNode[]>(...children: Children): MultilineNode<Children>;
 export function createMultilineNode<Children extends ASTNode[]>(...children: Children): MultilineNode<Children> {
   return {
     children,
@@ -97,8 +87,6 @@ export function createMultilineNode<Children extends ASTNode[]>(...children: Chi
   };
 }
 
-export function createParagraphNode<Children extends ASTNode[]>(children: Children): ParagraphNode<Children>;
-export function createParagraphNode<Children extends ASTNode[]>(...children: Children): ParagraphNode<Children>;
 export function createParagraphNode<Children extends ASTNode[]>(...children: Children): ParagraphNode<Children> {
   return {
     children,
@@ -108,8 +96,6 @@ export function createParagraphNode<Children extends ASTNode[]>(...children: Chi
 
 // export function createSectionNode<Children extends ASTNodes[]>(children?: Children): SectionNode<Children>;
 // export function createSectionNode<Children extends ASTNodes[]>(...children: Children): SectionNode<Children>;
-export function createSectionNode<Children extends ASTNode[]>(type: SectionType | undefined, children?: Children): SectionNode<Children>;
-export function createSectionNode<Children extends ASTNode[]>(type: SectionType | undefined, ...children: Children): SectionNode<Children>;
 export function createSectionNode<Children extends ASTNode[]>(type: SectionType | undefined, ...children: Children): SectionNode<Children> {
 // export function createSectionNode<Children extends ASTNodes[]>(...typeOrChildren: Children | [type: SectionType, ...children: Children]): SectionNode<Children> {
 
@@ -133,8 +119,6 @@ export function createSectionNode<Children extends ASTNode[]>(type: SectionType 
 
 }
 
-export function createSmallNode<Children extends ASTNode[]>(children: Children): SmallNode<Children>;
-export function createSmallNode<Children extends ASTNode[]>(...children: Children): SmallNode<Children>;
 export function createSmallNode<Children extends ASTNode[]>(...children: Children): SmallNode<Children> {
   return {
     children,
@@ -142,9 +126,7 @@ export function createSmallNode<Children extends ASTNode[]>(...children: Childre
   };
 }
 
-export function createSpanNode<Children extends ASTNode[]>(children?: Children): SpanNode<Children>;
 export function createSpanNode<Children extends ASTNode[]>(...children: Children): SpanNode<Children>;
-export function createSpanNode<Children extends ASTNode[]>(anchor: AnchorTarget, children?: Children): SpanNode<Children>;
 export function createSpanNode<Children extends ASTNode[]>(anchor: AnchorTarget, ...children: Children): SpanNode<Children>;
 export function createSpanNode<Children extends ASTNode[]>(...anchorOrChildren: Children | [anchor: AnchorTarget, ...children: Children]): SpanNode<Children> {
 
@@ -158,7 +140,6 @@ export function createSpanNode<Children extends ASTNode[]>(...anchorOrChildren: 
 
 }
 
-export function createStrikethroughNode<Children extends ASTNode[]>(children: Children): StrikethroughNode<Children>;
 export function createStrikethroughNode<Children extends ASTNode[]>(...children: Children): StrikethroughNode<Children>;
 export function createStrikethroughNode<Children extends ASTNode[]>(...children: Children): StrikethroughNode<Children> {
   return {
@@ -167,9 +148,7 @@ export function createStrikethroughNode<Children extends ASTNode[]>(...children:
   };
 }
 
-export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, children?: Children): TitleNode<Children>;
 export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, ...children: Children): TitleNode<Children>;
-export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, anchor?: AnchorTarget, children?: Children): TitleNode<Children>;
 export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, anchor?: AnchorTarget, ...children: Children): TitleNode<Children>;
 export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, ...anchorOrChildren: Children | [anchor: AnchorTarget, ...children: Children]): TitleNode<Children> {
 
