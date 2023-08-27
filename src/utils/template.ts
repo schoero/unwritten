@@ -100,7 +100,7 @@ export function removeCommonIndentation(content: string, minIndentation: number,
 }
 
 export function removeSurroundingNewLines(content: string) {
-  return content.replace(/^\n|\n\s*$/g, "");
+  return content.replace(/^\n|\n[\t ]*$/g, "");
 }
 
 function assembleTemplateString(templateString: TemplateStringsArray, ...values: (boolean | number | string)[]) {

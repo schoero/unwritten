@@ -91,7 +91,7 @@ function renderListItem(ctx: HTMLRenderContext, item: ASTNode): string {
 
     const renderedStartTag = `${renderIndentation(ctx)}<li>`;
     ctx.indentation++;
-    const renderedItem = renderListNode(ctx, item);
+    const renderedItem = renderNode(ctx, item);
     ctx.indentation--;
     const renderedEndTag = `${renderIndentation(ctx)}</li>`;
 

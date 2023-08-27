@@ -47,7 +47,7 @@ scope("MarkupRenderer", TypeKind.Object, () => {
       methods,
       setters,
       getters
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should have one matching property", () => {
       expect(properties.children).toHaveLength(1);
@@ -98,7 +98,7 @@ scope("MarkupRenderer", TypeKind.Object, () => {
       methods,
       setters,
       getters
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should have one construct signature", () => {
       expect(constructSignatures.children).toHaveLength(1);

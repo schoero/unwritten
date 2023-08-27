@@ -1,7 +1,7 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import { assert } from "unwritten:utils/general.js";
@@ -51,22 +51,22 @@ export function convertMappedTypeMultiline(ctx: MarkupRenderContexts, mappedType
   const { inlineType: inlineValueType, multilineType: multilineValueType } = convertType(ctx, mappedType.valueType);
 
   return createListNode(
-    [
+    createMultilineNode(
       spaceBetween(
         translate("keyType"),
         inlineKeyType,
         readonly
       ),
       multilineKeyType ?? ""
-    ],
-    [
+    ),
+    createMultilineNode(
       spaceBetween(
         translate("valueType"),
         inlineValueType,
         optional
       ),
       multilineValueType ?? ""
-    ]
+    )
   );
 
 }

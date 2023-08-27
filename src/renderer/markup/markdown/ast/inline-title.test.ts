@@ -2,12 +2,12 @@ import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createInlineTitleNode, createParagraphNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { md } from "unwritten:utils/template.js";
 
-import { renderTitleNode } from "./title.js";
+import { renderInlineTitleNode } from "./inline-title.js";
 
 
 scope("MarkdownRenderer", "TitleNode", () => {
@@ -15,17 +15,17 @@ scope("MarkdownRenderer", "TitleNode", () => {
   const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
   it("should not render empty titles", () => {
-    const titleNode = createTitleNode("Title");
-    expect(renderTitleNode(ctx, titleNode)).toBe("");
+    const titleNode = createInlineTitleNode("Title");
+    expect(renderInlineTitleNode(ctx, titleNode)).toBe("");
   });
 
   it("should render a single title correctly", () => {
 
-    const titleNode = createTitleNode("Title", createParagraphNode("Paragraph"));
+    const titleNode = createInlineTitleNode("Title", createParagraphNode("Paragraph"));
 
-    expect(renderTitleNode(ctx, titleNode)).toBe(md`
+    expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
-      # Title
+      Title
         
       Paragraph  
     `);
@@ -34,16 +34,16 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
   it("should increase size for nested titles", () => {
 
-    const titleNode = createTitleNode(
+    const titleNode = createInlineTitleNode(
       "Title",
-      createTitleNode("SubTitle", createParagraphNode("Paragraph"))
+      createInlineTitleNode("SubTitle", createParagraphNode("Paragraph"))
     );
 
-    expect(renderTitleNode(ctx, titleNode)).toBe(md`
+    expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
-      # Title
+      Title
         
-      ## SubTitle
+      SubTitle
         
       Paragraph  
     `);
@@ -52,23 +52,23 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
   it("should not increase size for titles on the same level", () => {
 
-    const titleNode = createTitleNode(
+    const titleNode = createInlineTitleNode(
       "Title",
-      createTitleNode("Subtitle", createParagraphNode("Paragraph")),
-      createTitleNode("Another Subtitle", createParagraphNode("Paragraph"))
+      createInlineTitleNode("Subtitle", createParagraphNode("Paragraph")),
+      createInlineTitleNode("Another Subtitle", createParagraphNode("Paragraph"))
     );
 
-    const renderedTitle = renderTitleNode(ctx, titleNode);
+    const renderedTitle = renderInlineTitleNode(ctx, titleNode);
 
     expect(renderedTitle).toBe(md`
         
-      # Title
+      Title
         
-      ## Subtitle
+      Subtitle
         
       Paragraph  
         
-      ## Another Subtitle
+      Another Subtitle
         
       Paragraph  
     `);
@@ -77,16 +77,16 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
   it("should filter out empty strings", () => {
 
-    const titleNode = createTitleNode(
+    const titleNode = createInlineTitleNode(
       "Title",
       createParagraphNode("Paragraph"),
       "",
       createParagraphNode("Paragraph2")
     );
 
-    expect(renderTitleNode(ctx, titleNode)).toBe(md`
+    expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
-      # Title
+      Title
         
       Paragraph  
       Paragraph2  
@@ -97,11 +97,11 @@ scope("MarkdownRenderer", "TitleNode", () => {
   it("should not render an id", () => {
 
     const anchor = registerAnchor(ctx, "title", 0);
-    const titleNode = createTitleNode("Title", anchor, createParagraphNode("Paragraph"));
+    const titleNode = createInlineTitleNode("Title", anchor, createParagraphNode("Paragraph"));
 
-    expect(renderTitleNode(ctx, titleNode)).toBe(md`
+    expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
-      # Title
+      Title
         
       Paragraph  
     `);

@@ -4,9 +4,9 @@ import {
   createTableOfContents
 } from "unwritten:renderer:markup/ast-converter/index.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
@@ -46,11 +46,11 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
-  const convertedPosition = convertPosition(ctx, moduleEntity.position);
+  const convertedPosition = convertPositionForDocumentation(ctx, moduleEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, moduleEntity);
   const convertedDescription = convertDescriptionForDocumentation(ctx, moduleEntity.description);
-  const convertedRemarks = convertRemarks(ctx, moduleEntity.remarks);
-  const convertedExample = convertExample(ctx, moduleEntity.example);
+  const convertedRemarks = convertRemarksForDocumentation(ctx, moduleEntity.remarks);
+  const convertedExample = convertExamplesForDocumentation(ctx, moduleEntity.example);
 
   const children = moduleEntity.exports.map(
     exportedEntity => convertEntityForDocumentation(ctx, exportedEntity)

@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderConditionalNode } from "unwritten:renderer/markup/html/ast/conditional.js";
+import { renderInlineTitleNode } from "unwritten:renderer/markup/html/ast/inline-title.js";
 import { renderMultilineNode } from "unwritten:renderer/markup/html/ast/multiline.js";
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
@@ -20,6 +21,7 @@ import {
   isAnchorNode,
   isBoldNode,
   isConditionalNode,
+  isInlineTitleNode,
   isItalicNode,
   isLinkNode,
   isListNode,
@@ -190,21 +192,11 @@ export function renderNode(ctx: HTMLRenderContext, node: ASTNode): string {
     return renderConditionalNode(ctx, node);
   } else if(isMultilineNode(node)){
     return renderMultilineNode(ctx, node);
+  } else if(isInlineTitleNode(node)){
+    return renderInlineTitleNode(ctx, node);
   } else {
     if(Array.isArray(node)){
-      return node.map((n, index) => {
-
-        const renderedNode = renderNode(ctx, n);
-
-        if(renderedNode === ""){
-          return "";
-        }
-
-        return index > 0 && (isListNode(n) || isTitleNode(n) || isParagraphNode(n))
-          ? `${renderNewLine(ctx)}${renderedNode}`
-          : renderedNode;
-
-      }).join("");
+      return node.map(subNode => renderNode(ctx, subNode)).join("");
     } else {
       return node;
     }

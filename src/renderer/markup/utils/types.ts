@@ -1,4 +1,5 @@
 import {
+  isArrayType,
   isClassType,
   isConditionalType,
   isFunctionType,
@@ -16,7 +17,8 @@ import type { MultilineType, Type } from "unwritten:interpreter/type-definitions
 
 
 export function isMultilineType(type: Type): type is MultilineType {
-  return isObjectType(type) ||
+  return isArrayType(type) ||
+  isObjectType(type) ||
   isObjectLiteralType(type) ||
   isFunctionType(type) ||
   isTypeLiteralType(type) ||

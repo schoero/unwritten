@@ -12,9 +12,9 @@ import {
   convertSignatureEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
 import {
@@ -122,11 +122,11 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
-  const convertedPosition = convertPosition(ctx, classEntity.position);
+  const convertedPosition = convertPositionForDocumentation(ctx, classEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, classEntity);
   const convertedDescription = convertDescriptionForDocumentation(ctx, classEntity.description);
-  const convertedExample = convertExample(ctx, classEntity.example);
-  const convertedRemarks = convertRemarks(ctx, classEntity.remarks);
+  const convertedExample = convertExamplesForDocumentation(ctx, classEntity.example);
+  const convertedRemarks = convertRemarksForDocumentation(ctx, classEntity.remarks);
 
   const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
   const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");

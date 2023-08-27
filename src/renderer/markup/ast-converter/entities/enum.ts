@@ -1,8 +1,8 @@
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
@@ -36,9 +36,9 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const anchor = registerAnchor(ctx, name, symbolId);
 
   const convertedDescription = convertDescriptionForDocumentation(ctx, enumEntity.description);
-  const convertedRemarks = convertRemarks(ctx, enumEntity.remarks);
-  const convertedExample = convertExample(ctx, enumEntity.example);
-  const convertedPosition = convertPosition(ctx, enumEntity.position);
+  const convertedRemarks = convertRemarksForDocumentation(ctx, enumEntity.remarks);
+  const convertedExample = convertExamplesForDocumentation(ctx, enumEntity.example);
+  const convertedPosition = convertPositionForDocumentation(ctx, enumEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, enumEntity);
 
   const members = enumEntity.members.map(member => {

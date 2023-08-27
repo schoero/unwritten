@@ -11,7 +11,8 @@ import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-conver
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,
-  isListNode,
+  isInlineTitleNode,
+  isMultilineNode,
   isParagraphNode,
   isSectionNode,
   isSmallNode,
@@ -113,9 +114,9 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a matching return type", () => {
       assert(isTitleNode(returnType));
-      assert(isParagraphNode(returnType.children[0]));
-      expect(returnType.children[0].children.flat()[0]).toMatch(/^void/);
-      expect(returnType.children[0].children.flat()[0]).toMatch(/Return type description$/);
+      assert(isMultilineNode(returnType.children[0]));
+      expect(renderNode(ctx, returnType.children[0].children[0])).toContain("void");
+      expect(renderNode(ctx, returnType.children[0].children[0])).toContain("Return type description");
     });
 
     it("should have a matching description", () => {
@@ -219,39 +220,46 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       methods,
       setters,
       getters
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should have one method", () => {
       expect(methods.children).toHaveLength(1);
     });
 
     it("should have a matching method signature", () => {
-      const renderedSignature = renderNode(ctx, methods.children[0][0]);
+      const renderedSignature = renderNode(ctx, methods.children[0].children[0]);
       expect(renderedSignature).toContain("add(a, b)");
       expect(renderedSignature).toContain("Adds two numbers together");
     });
 
     it("should not have type parameters", () => {
-      expect(methods.children[0][1]).toBe("");
+      expect(methods.children[0].children[1]).toBe("");
     });
 
     it("should have matching parameters", () => {
-      const renderedParameter = renderNode(ctx, methods.children[0][2]);
 
-      assert(isListNode(methods.children[0][2]));
-      expect(methods.children[0][2].children).toHaveLength(2);
+      const parameterTitle = methods.children[0].children[2];
 
-      expect(renderedParameter).toContain("a");
-      expect(renderedParameter).toContain("number");
-      expect(renderedParameter).toContain("The first number");
+      assert(isInlineTitleNode(parameterTitle));
 
-      expect(renderedParameter).toContain("b");
-      expect(renderedParameter).toContain("number");
-      expect(renderedParameter).toContain("The second number");
+      const parameterList = parameterTitle.children[0];
+
+      expect(parameterList.children).toHaveLength(2);
+
+      const renderedParameterA = renderNode(ctx, parameterList.children[0]);
+      const renderedParameterB = renderNode(ctx, parameterList.children[1]);
+
+      expect(renderedParameterA).toContain("a");
+      expect(renderedParameterA).toContain("number");
+      expect(renderedParameterA).toContain("The first number");
+
+      expect(renderedParameterB).toContain("b");
+      expect(renderedParameterB).toContain("number");
+      expect(renderedParameterB).toContain("The second number");
     });
 
     it("should have a matching return type", () => {
-      const renderedReturnType = renderNode(ctx, methods.children[0][3]);
+      const renderedReturnType = renderNode(ctx, methods.children[0].children[3]);
       expect(renderedReturnType).toContain("number");
       expect(renderedReturnType).toContain("The sum of the two numbers");
     });
@@ -287,18 +295,23 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
       methods,
       setters,
       getters
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should represent the type parameter in the signature", () => {
-      const renderedSignature = renderNode(ctx, methods.children[0][0]);
+      const renderedSignature = renderNode(ctx, methods.children[0].children[0]);
       expect(renderedSignature).toContain("test<T>(param)");
     });
 
     it("should have a matching type parameter", () => {
-      const renderedTypeParameter = renderNode(ctx, methods.children[0][1]);
+      const renderedTypeParameter = renderNode(ctx, methods.children[0].children[1]);
 
-      assert(isListNode(methods.children[0][1]));
-      expect(methods.children[0][1].children).toHaveLength(1);
+      const typeParameterTitle = methods.children[0].children[1];
+
+      assert(isInlineTitleNode(typeParameterTitle));
+
+      const typeParameterList = typeParameterTitle.children[0];
+
+      expect(typeParameterList.children).toHaveLength(1);
 
       expect(renderedTypeParameter).toContain("T");
       expect(renderedTypeParameter).toContain("number");

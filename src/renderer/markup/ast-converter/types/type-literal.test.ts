@@ -39,7 +39,7 @@ scope("MarkupRenderer", TypeKind.TypeLiteral, () => {
       methods,
       setters,
       getters
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should have a matching construct signature", () => {
       expect(renderNode(ctx, constructSignatures.children[0])).toContain("new ()");

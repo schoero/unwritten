@@ -1,7 +1,7 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { convertTagsForType } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { createLinkNode, createListNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
@@ -49,7 +49,7 @@ function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleM
 
   const { inlineType, multilineType } = convertType(ctx, tupleMemberEntity.type);
 
-  return [
+  return createMultilineNode(
     spaceBetween(
       convertedName,
       inlineType,
@@ -57,6 +57,6 @@ function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleM
       convertedDescription
     ),
     multilineType ?? ""
-  ];
+  );
 
 }

@@ -6,7 +6,7 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 import type { ConvertedPosition } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertPosition(ctx: MarkupRenderContexts, position?: Position): ConvertedPosition {
+export function convertPositionForDocumentation(ctx: MarkupRenderContexts, position?: Position): ConvertedPosition {
 
   const { relative } = ctx.dependencies.path;
 

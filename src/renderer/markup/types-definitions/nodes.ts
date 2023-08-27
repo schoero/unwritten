@@ -9,6 +9,7 @@ export type ASTNode =
   | ASTNode[]
   | BoldNode
   | ConditionalNode
+  | InlineTitleNode
   | ItalicNode
   | LinkNode
   | ListNode
@@ -62,6 +63,11 @@ export interface SectionNode<Children extends ASTNode[] = ASTNode[]> extends AST
 }
 
 export interface TitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Title>, Partial<AnchorTarget> {
+  children: Children;
+  title: ASTNode;
+}
+
+export interface InlineTitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.InlineTitle>, Partial<AnchorTarget> {
   children: Children;
   title: ASTNode;
 }

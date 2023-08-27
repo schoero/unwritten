@@ -1,3 +1,4 @@
+import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { renderIndentation as renderIndentationOriginal } from "unwritten:renderer:utils/indentation.js";
@@ -9,6 +10,9 @@ import type { ASTNode, ListNode } from "unwritten:renderer:markup/types-definiti
 
 
 export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): string {
+
+  const renderedEmptyLine = renderEmptyLine(ctx);
+  const renderedNewLine = renderNewLine(ctx);
 
   // Do not render empty lists
   if(listNode.children.length === 0){
@@ -24,7 +28,18 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
   const renderedListItems = renderListItems(ctx, listNode.children);
   ctx.indentation--;
 
-  return renderedListItems
+  if(renderedListItems.every(item => item === "")){
+    return "";
+  }
+
+  const childrenEndsWithEmptyLine = renderedListItems.at(-1)?.endsWith(renderedNewLine + renderedEmptyLine);
+  const trailingEmptyLine = childrenEndsWithEmptyLine ? "" : renderedEmptyLine;
+
+  return [
+    renderedEmptyLine,
+    ...renderedListItems,
+    trailingEmptyLine
+  ]
     .filter(item => !!item)
     .join(renderNewLine(ctx));
 
@@ -50,8 +65,15 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNode): string {
       return "";
     }
 
+
+    // Remove indentation from rendered item
+    const renderedOriginalIndentation = renderIndentationOriginal(ctx);
+    const renderedItemWithoutOriginalIndentation = renderedArrayItems.startsWith(renderedOriginalIndentation)
+      ? renderedArrayItems.slice(renderedOriginalIndentation.length)
+      : renderedArrayItems;
+
     // Collapse multiple new lines into one
-    const collapsedRenderedItem = renderedArrayItems.replace(
+    const collapsedRenderedItem = renderedItemWithoutOriginalIndentation.replace(
       new RegExp(`${renderedNewLine}+`, "g"),
       renderedNewLine
     );
@@ -71,8 +93,14 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNode): string {
     return "";
   }
 
+  // Remove indentation from rendered item
+  const renderedOriginalIndentation = renderIndentationOriginal(ctx);
+  const renderedItemWithoutOriginalIndentation = renderedItem.startsWith(renderedOriginalIndentation)
+    ? renderedItem.slice(renderedOriginalIndentation.length)
+    : renderedItem;
+
   // Collapse multiple new lines into one
-  const collapsedRenderedItem = renderedItem.replace(
+  const collapsedRenderedItem = renderedItemWithoutOriginalIndentation.replace(
     new RegExp(`${renderedNewLine}+`, "g"),
     renderedNewLine
   );

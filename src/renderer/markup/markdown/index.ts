@@ -2,10 +2,12 @@
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/conditional.js";
+import { renderInlineTitleNode } from "unwritten:renderer/markup/markdown/ast/inline-title.js";
 import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/multiline.js";
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
+import { createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor.js";
 import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold.js";
@@ -22,6 +24,7 @@ import {
   isAnchorNode,
   isBoldNode,
   isConditionalNode,
+  isInlineTitleNode,
   isItalicNode,
   isLinkNode,
   isListNode,
@@ -193,25 +196,33 @@ export function renderNode(ctx: MarkdownRenderContext, node: ASTNode): string {
     return renderConditionalNode(ctx, node);
   } else if(isMultilineNode(node)){
     return renderMultilineNode(ctx, node);
+  } else if(isInlineTitleNode(node)){
+    return renderInlineTitleNode(ctx, node);
   } else {
     if(Array.isArray(node)){
-      return node.map((n, index) => {
-
-        const renderedNode = renderNode(ctx, n);
-
-        if(renderedNode === ""){
-          return "";
-        }
-
-        return index > 0 && (isListNode(n) || isTitleNode(n) || isParagraphNode(n) || isSectionNode(n))
-          ? `${renderNewLine(ctx)}${renderedNode}`
-          : renderedNode;
-
-      }).join("");
+      return renderArray(ctx, node);
     } else {
-      return escapeMarkdown(node);
+      return renderString(ctx, node);
     }
   }
+
+}
+
+function renderArray(ctx: MarkdownRenderContext, node: ASTNode[]): string {
+  return node.map(subNode => renderNode(ctx, subNode)).join("");
+}
+
+function renderString(ctx: MarkdownRenderContext, node: string): string {
+
+  // Escape markdown before splitting to allow catching code fences
+  const escapedMarkdown = escapeMarkdown(node);
+  const escapedLines = escapedMarkdown.split("\n");
+
+  if(escapedLines.length === 1){
+    return escapedLines[0];
+  }
+
+  return renderNode(ctx, createMultilineNode(...escapedLines));
 
 }
 

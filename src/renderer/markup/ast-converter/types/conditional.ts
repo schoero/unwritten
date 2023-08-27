@@ -1,7 +1,7 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -39,34 +39,34 @@ export function convertConditionalTypeMultiline(ctx: MarkupRenderContexts, condi
   const { inlineType: inlineFalseType, multilineType: multilineFalseType } = convertType(ctx, conditionalType.falseType);
 
   return createListNode(
-    [
+    createMultilineNode(
       spaceBetween(
         translate("checkType"),
         inlineCheckType
       ),
       multilineCheckType ?? ""
-    ],
-    [
+    ),
+    createMultilineNode(
       spaceBetween(
         translate("extendsType"),
         inlineExtendsType
       ),
       multilineExtendsType ?? ""
-    ],
-    [
+    ),
+    createMultilineNode(
       spaceBetween(
         translate("trueType"),
         inlineTrueType
       ),
       multilineTrueType ?? ""
-    ],
-    [
+    ),
+    createMultilineNode(
       spaceBetween(
         translate("falseType"),
         inlineFalseType
       ),
       multilineFalseType ?? ""
-    ]
+    )
   );
 
 }

@@ -36,7 +36,7 @@ scope("Interpreter", EntityKind.Module, () => {
   });
 
   it("should have a matching remarks", () => {
-    expect(exportedModule.remarks).toBe("Module remarks");
+    expect(exportedModule.remarks).toStrictEqual(["Module remarks"]);
   });
 
   it("should have a matching example", () => {

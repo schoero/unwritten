@@ -1,5 +1,5 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createLinkNode, createListNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { isMultilineUnionType } from "unwritten:renderer/markup/utils/types.js";
@@ -53,10 +53,10 @@ export function convertUnionTypeMultiline(ctx: MarkupRenderContexts, unionType: 
 
     const { inlineType, multilineType } = convertType(ctx, type);
 
-    return [
+    return createMultilineNode(
       inlineType,
       multilineType ?? ""
-    ];
+    );
 
   });
 

@@ -9,8 +9,9 @@ import type {
 import type { Complete } from "unwritten:type-definitions/utils.js";
 
 
-export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
+const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   indentation: "  ",
+  inlineTitleEncapsulation: ["", ""],
   newLine: "\n",
   parameterEncapsulation: ["`", "`"],
   propertyEncapsulation: ["`", "`"],
@@ -80,14 +81,15 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     property_many: "properties",
     property_one: "property",
     readonly: "readonly",
-    remarks_many: "remarks",
-    remarks_one: "remark",
+    remark_many: "remarks",
+    remark_one: "remark",
     required: "required",
     rest: "rest",
     returnType: "return type",
     setter_many: "setters",
     setter_one: "setter",
     static: "static",
+    throws: "throws",
     trueType: "true type",
     typeAlias_many: "type aliases",
     typeAlias_one: "type alias",
@@ -109,12 +111,14 @@ export const defaultRenderConfig: Complete<MarkupRenderConfig> = {
 export const defaultMarkdownRenderConfig: Complete<MarkdownRenderConfig> = {
   ...defaultRenderConfig,
   allowedHTMLTags: false,
+  inlineTitleEncapsulation: ["*", "*"],
   sectionSeparator: "---"
 };
 
 
 export const defaultHTMLRenderConfig: Complete<HTMLRenderConfig> = {
   ...defaultRenderConfig,
+  inlineTitleEncapsulation: ["<i>", "</i>"],
   sidebar: false,
   typeEncapsulation: ["<code>", "</code>"]
 };

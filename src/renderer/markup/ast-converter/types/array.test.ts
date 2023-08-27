@@ -2,14 +2,19 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { convertArrayTypeInline } from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { renderNode } from "unwritten:renderer:markup/html/index.js";
+import { isMultilineNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import {
+  convertArrayTypeInline,
+  convertArrayTypeMultiline
+} from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 import type { ArrayType } from "unwritten:interpreter:type-definitions/types.js";
+import type { ConvertedObjectTypeMultiline } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 scope("MarkupRenderer", TypeKind.Array, () => {
@@ -27,11 +32,15 @@ scope("MarkupRenderer", TypeKind.Array, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertArrayTypeInline(ctx, type as ArrayType);
-    const renderedType = renderNode(ctx, convertedType);
+    const inlineArrayType = convertArrayTypeInline(ctx, type as ArrayType);
+    const multilineArrayType = convertArrayTypeMultiline(ctx, type as ArrayType);
+
+    const [inlineType, multilineType] = multilineArrayType.children[0].children;
 
     it("should be able to render arrays", () => {
-      expect(renderedType).toBe("string[]");
+      expect(inlineArrayType).toBe("Array");
+      expect(inlineType).toBe("string");
+      expect(multilineType).toBe("");
     });
 
   }
@@ -49,11 +58,52 @@ scope("MarkupRenderer", TypeKind.Array, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const convertedType = convertArrayTypeInline(ctx, type as ArrayType);
-    const renderedType = renderNode(ctx, convertedType);
+    const inlineArrayType = convertArrayTypeInline(ctx, type as ArrayType);
+    const multilineArrayType = convertArrayTypeMultiline(ctx, type as ArrayType);
+
+    const [inlineType, multilineType] = multilineArrayType.children[0].children;
 
     it("should add parentheses around union types", () => {
-      expect(renderedType).toBe("(string | number)[]");
+      expect(inlineArrayType).toBe("Array");
+      expect(inlineType).toStrictEqual(["string", " | ", "number"]);
+      expect(multilineType).toBe("");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export type Type = { test: string }[];
+    `;
+
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Type")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const type = typeAliasEntity.type;
+    const ctx = createRenderContext();
+
+    const inlineArrayType = convertArrayTypeInline(ctx, type as ArrayType);
+    const multilineArrayType = convertArrayTypeMultiline(ctx, type as ArrayType);
+
+    const [inlineType, multilineType] = multilineArrayType.children[0].children;
+
+    assert(isMultilineNode(multilineType));
+
+    const [
+      constructSignatureList,
+      callSignatureList,
+      propertyList
+    ] = (multilineType as ConvertedObjectTypeMultiline).children;
+
+    const property = propertyList.children[0];
+
+    it("should add parentheses around union types", () => {
+      expect(inlineArrayType).toBe("Array");
+      expect(inlineType).toBe("type literal");
+      expect(property.children[0]).toContain("test");
+      expect(property.children[0]).toContain("string");
     });
 
   }

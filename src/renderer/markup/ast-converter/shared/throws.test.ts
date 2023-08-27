@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { convertThrows } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
+import { convertThrowsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
 import { isListNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -15,7 +15,7 @@ scope("MarkupRenderer", "Throws", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-    const convertedThrows = convertThrows(
+    const convertedThrows = convertThrowsForDocumentation(
       ctx,
       [{
         description: "Error description"
@@ -45,7 +45,7 @@ scope("MarkupRenderer", "Throws", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-    const convertedThrows = convertThrows(
+    const convertedThrows = convertThrowsForDocumentation(
       ctx,
       [
         {

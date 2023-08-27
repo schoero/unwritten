@@ -13,12 +13,15 @@ export function convertDescriptionForDocumentation(ctx: MarkupRenderContexts, de
 
   const translate = getTranslator(ctx);
 
-  return description
-    ? createTitleNode(
-      translate("description", { capitalize: true, count: 1 }),
-      createParagraphNode(description)
-    )
-    : "";
+  if(!description){
+    return "";
+  }
+
+  return createTitleNode(
+    translate("description", { capitalize: true, count: 1 }),
+    createParagraphNode(description)
+  );
+
 }
 
 

@@ -6,18 +6,23 @@ import {
   filterPrivateSignatures
 } from "unwritten:renderer/utils/private-members.js";
 import {
-  convertEventPropertyEntityForDocumentation,
-  convertPropertyEntityForDocumentation,
-  convertSignatureEntityForDocumentation
+  convertEventPropertyEntityForType,
+  convertPropertyEntityForType,
+  convertSignatureEntityForType,
+  convertTypeParameterEntitiesForDocumentation
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
-import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+import {
+  createAnchorNode,
+  createListNode,
+  createSectionNode,
+  createTitleNode
+} from "unwritten:renderer:markup/utils/nodes.js";
 import {
   extendInterfaceEntityPropertiesWithHeritage,
   extendInterfaceEntitySignaturesWithHeritage
@@ -37,35 +42,34 @@ export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContex
   return createAnchorNode(name, id);
 }
 
-
 export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
-  const translate = getTranslator(ctx);
 
   const name = interfaceEntity.name;
   const symbolId = interfaceEntity.symbolId;
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
-  const convertedTags = convertTagsForDocumentation(ctx, interfaceEntity);
-  const convertedDescription = convertDescriptionForDocumentation(ctx, interfaceEntity.description);
-  const convertedRemarks = convertRemarks(ctx, interfaceEntity.remarks);
-  const convertedExample = convertExample(ctx, interfaceEntity.example);
-  const convertedPosition = convertPosition(ctx, interfaceEntity.position);
+  const tags = convertTagsForDocumentation(ctx, interfaceEntity);
+  const description = convertDescriptionForDocumentation(ctx, interfaceEntity.description);
+  const remarks = convertRemarksForDocumentation(ctx, interfaceEntity.remarks);
+  const examples = convertExamplesForDocumentation(ctx, interfaceEntity.example);
+  const position = convertPositionForDocumentation(ctx, interfaceEntity.position);
+  const typeParameters = convertTypeParameterEntitiesForDocumentation(ctx, interfaceEntity.typeParameters);
 
   const propertyEntities = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity, "properties");
   const eventPropertyEntities = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity, "events");
-  const constructSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "constructSignatures");
-  const callSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "callSignatures");
+  const constructSignatureEntities = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "constructSignatures");
+  const callSignatureEntities = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "callSignatures");
   const methodSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "methodSignatures");
   const setterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "setterSignatures");
   const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "getterSignatures");
 
   const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterPrivateMembers(propertyEntities);
   const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterPrivateMembers(eventPropertyEntities);
-  const publicConstructSignatures = renderConfig.renderPrivateMembers ? constructSignatures : filterPrivateSignatures(constructSignatures);
-  const publicCallSignatures = renderConfig.renderPrivateMembers ? callSignatures : filterPrivateSignatures(callSignatures);
+  const publicConstructSignatures = renderConfig.renderPrivateMembers ? constructSignatureEntities : filterPrivateSignatures(constructSignatureEntities);
+  const publicCallSignatures = renderConfig.renderPrivateMembers ? callSignatureEntities : filterPrivateSignatures(callSignatureEntities);
   const publicMethodSignatures = renderConfig.renderPrivateMembers ? methodSignatures : filterPrivateSignatures(methodSignatures);
   const publicSetterSignatures = renderConfig.renderPrivateMembers ? setterSignatures : filterPrivateSignatures(setterSignatures);
   const publicGetterSignatures = renderConfig.renderPrivateMembers ? getterSignatures : filterPrivateSignatures(getterSignatures);
@@ -76,31 +80,32 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const explicitSetterSignatures = filterImplicitSignatures(publicSetterSignatures);
   const explicitGetterSignatures = filterImplicitSignatures(publicGetterSignatures);
 
-  const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
-  const convertedEventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForDocumentation(ctx, eventPropertyEntity));
-  const convertedConstructSignatures = explicitConstructSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedCallSignatures = explicitCallSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedMethods = explicitMethodSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedSetters = explicitSetterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
-  const convertedGetters = explicitGetterSignatures.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity));
+  const properties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForType(ctx, propertyEntity));
+  const eventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForType(ctx, eventPropertyEntity));
+  const constructSignatures = explicitConstructSignatures.map(signatureEntity => convertSignatureEntityForType(ctx, signatureEntity));
+  const callSignatures = explicitCallSignatures.map(signatureEntity => convertSignatureEntityForType(ctx, signatureEntity));
+  const methods = explicitMethodSignatures.map(signatureEntity => convertSignatureEntityForType(ctx, signatureEntity));
+  const setters = explicitSetterSignatures.map(signatureEntity => convertSignatureEntityForType(ctx, signatureEntity));
+  const getters = explicitGetterSignatures.map(signatureEntity => convertSignatureEntityForType(ctx, signatureEntity));
 
   return createSectionNode(
     SECTION_TYPE[interfaceEntity.kind],
     createTitleNode(
       name,
       anchor,
-      convertedPosition,
-      convertedTags,
-      convertedDescription,
-      convertedRemarks,
-      convertedExample,
-      createTitleNode(translate("constructSignature", { capitalizeEach: true, count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
-      createTitleNode(translate("callSignature", { capitalize: true, count: convertedCallSignatures.length }), ...convertedCallSignatures),
-      createTitleNode(translate("property", { capitalize: true, count: convertedProperties.length }), ...convertedProperties),
-      createTitleNode(translate("method", { capitalize: true, count: convertedMethods.length }), ...convertedMethods),
-      createTitleNode(translate("setter", { capitalize: true, count: convertedSetters.length }), ...convertedSetters),
-      createTitleNode(translate("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters),
-      createTitleNode(translate("event", { capitalize: true, count: convertedEventProperties.length }), ...convertedEventProperties)
+      position,
+      tags,
+      typeParameters,
+      description,
+      remarks,
+      examples,
+      createListNode(...constructSignatures),
+      createListNode(...callSignatures),
+      createListNode(...properties),
+      createListNode(...methods),
+      createListNode(...setters),
+      createListNode(...getters),
+      createListNode(...eventProperties)
     )
   );
 

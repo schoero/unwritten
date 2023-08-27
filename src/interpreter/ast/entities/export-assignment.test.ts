@@ -40,7 +40,7 @@ scope("Interpreter", "Export assignment", () => {
 
     it("should have matching remarks", () => {
       assert(isExportAssignmentEntity(exportAssignmentEntity));
-      expect(exportAssignmentEntity.remarks).toBe("Export assignment remarks");
+      expect(exportAssignmentEntity.remarks).toStrictEqual(["Export assignment remarks"]);
     });
 
     it("should have a matching example", () => {

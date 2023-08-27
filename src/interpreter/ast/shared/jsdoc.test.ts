@@ -32,7 +32,7 @@ scope("Interpreter", "JSDoc", () => {
 
     it("should have matching standart JSDoc tags", () => {
       expect(exportedTypeAlias.description).toBe("Type description");
-      expect(exportedTypeAlias.remarks).toBe("This is a longer description.");
+      expect(exportedTypeAlias.remarks).toStrictEqual(["This is a longer description."]);
       expect(exportedTypeAlias.alpha).toBe("This type is in alpha.");
       expect(exportedTypeAlias.beta).toBe("This type is in beta.");
       expect(exportedTypeAlias.internal).toBe("This type is internal.");
@@ -217,7 +217,7 @@ scope("Interpreter", "JSDoc", () => {
       expect(exportedClass.events).toBeDefined();
       expect(exportedClass.events).toHaveLength(1);
       expect(exportedClass.events[0].description).toBe("Event description");
-      expect(exportedClass.events[0].remarks).toBe("Event remarks");
+      expect(exportedClass.events[0].remarks).toStrictEqual(["Event remarks"]);
       expect(exportedClass.events[0].example).toStrictEqual([
         "Event example"
       ]);

@@ -48,22 +48,22 @@ scope("MarkupRenderer", TypeKind.Conditional, () => {
     const [
       inlineCheckType,
       multilineCheckType
-    ] = checkType;
+    ] = checkType.children;
 
     const [
       inlineExtendsType,
       multilineExtendsType
-    ] = extendsType;
+    ] = extendsType.children;
 
     const [
       inlineTrueType,
       multilineTrueType
-    ] = trueType;
+    ] = trueType.children;
 
     const [
       inlineFalseType,
       multilineFalseType
-    ] = falseType;
+    ] = falseType.children;
 
     it("should have a matching check type", () => {
       assert(isConditionalNode(inlineCheckType[2]));

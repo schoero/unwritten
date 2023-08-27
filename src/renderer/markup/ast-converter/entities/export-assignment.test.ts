@@ -2,13 +2,13 @@ import { expect, it } from "vitest";
 
 import { createExportAssignmentEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { renderNode } from "unwritten:renderer/index.js";
 import {
   convertExportAssignmentEntityForDocumentation,
   convertExportAssignmentEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import {
   isAnchorNode,
+  isMultilineNode,
   isParagraphNode,
   isSectionNode,
   isSmallNode,
@@ -19,6 +19,8 @@ import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
+
+import type { ConvertedObjectTypeMultiline } from "unwritten:renderer/markup/types-definitions/renderer.js";
 
 
 scope("MarkupRenderer", EntityKind.Variable, () => {
@@ -107,11 +109,23 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     it("should have a matching type", () => {
 
       assert(isTitleNode(type));
-      assert(isParagraphNode(type.children[0]));
 
-      const renderedType = renderNode(ctx, type.children[0]);
-      expect(renderedType).toContain("test");
-      expect(renderedType).toContain("number");
+      const [inlineType, multilineType] = type.children;
+
+      assert(isParagraphNode(inlineType));
+      expect(inlineType.children).toContain("object");
+
+      assert(isMultilineNode(multilineType));
+
+      const [
+        constructSignatureList,
+        callSignatureList,
+        propertyList
+      ] = (multilineType as ConvertedObjectTypeMultiline).children;
+
+      const property = propertyList.children[0];
+
+      expect(property.children[0]).toContain("number");
 
     });
 

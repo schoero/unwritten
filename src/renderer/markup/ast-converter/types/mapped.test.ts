@@ -47,12 +47,12 @@ scope("MarkupRenderer", TypeKind.Mapped, () => {
     const [
       inlineKeyType,
       multilineKeyType
-    ] = keyType;
+    ] = keyType.children;
 
     const [
       inlineValueType,
       multilineValueType
-    ] = valueType;
+    ] = valueType.children;
 
     it("should have an union type as key type", () => {
       const renderedKeyType = renderNode(ctx, inlineKeyType);

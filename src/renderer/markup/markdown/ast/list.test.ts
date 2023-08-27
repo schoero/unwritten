@@ -1,7 +1,6 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { renderNode } from "unwritten:renderer/index.js";
 import { createListNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -14,14 +13,14 @@ scope("MarkdownRenderer", "ListNode", () => {
 
   const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-  it("should render a simple list correctly", () => {
+  it("should render empty lines around a list", () => {
     const listNode = createListNode(
-      "Item 1",
-      "Item 2"
+      "Item 1"
     );
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
-      - Item 2
+        
     `);
   });
 
@@ -39,8 +38,10 @@ scope("MarkdownRenderer", "ListNode", () => {
       "Item 3"
     );
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
       - Item 3
+        
     `);
   });
 
@@ -52,8 +53,11 @@ scope("MarkdownRenderer", "ListNode", () => {
       )
     );
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
         - Item 2
+        
     `);
   });
 
@@ -70,7 +74,9 @@ scope("MarkdownRenderer", "ListNode", () => {
       )
     );
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
     `);
   });
 
@@ -83,7 +89,9 @@ scope("MarkdownRenderer", "ListNode", () => {
       ]
     );
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
     `);
   });
 
@@ -99,8 +107,11 @@ scope("MarkdownRenderer", "ListNode", () => {
       ]
     );
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
         - Item 2
+        
     `);
   });
 
@@ -116,8 +127,11 @@ scope("MarkdownRenderer", "ListNode", () => {
       )
     );
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
         - Item 2
+        
     `);
   });
 
@@ -130,9 +144,12 @@ scope("MarkdownRenderer", "ListNode", () => {
       )
     );
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
         - Item 2
         - Item 3
+        
     `);
   });
 
@@ -143,7 +160,9 @@ scope("MarkdownRenderer", "ListNode", () => {
       [[["1"]]]
     ]);
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
     `);
   });
 
@@ -159,9 +178,26 @@ scope("MarkdownRenderer", "ListNode", () => {
       ]]]]
     ]);
     expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
         - Item 2
+        
     `);
+  });
+
+  it("should indent additional lines in a list", () => {
+
+    const simpleListNode = createListNode([
+      "Line 1\nLine 2"
+    ]);
+    expect(renderListNode(ctx, simpleListNode)).toBe(md`
+        
+      - Line 1
+        Line 2
+        
+    `);
+
   });
 
   it("should collapse multiple newlines to a single new line", () => {
@@ -170,55 +206,45 @@ scope("MarkdownRenderer", "ListNode", () => {
       "Line 1\nLine 2\n\nLine 3\n\n\nLine 4"
     ]);
     expect(renderListNode(ctx, simpleListNode)).toBe(md`
+        
       - Line 1
-      Line 2
-      Line 3
-      Line 4
-    `);
-
-    const listNodeWithArray = createListNode([
-      [
-        "Line 1",
-        ["\nLine 2"],
-        "\n\nLine 3\n\n\nLine 4"
-      ]
-    ]);
-    expect(renderListNode(ctx, listNodeWithArray)).toBe(md`
-      - Line 1
-      Line 2
-      Line 3
-      Line 4
-    `);
-
-    const listNodeWithNestedList = createListNode([
-      [
-        "Line 1",
-        "\n\nLine 2",
-        createListNode([
-          "Line 3\n\n\nLine 4"
-        ])
-      ]
-    ]);
-    expect(renderListNode(ctx, listNodeWithNestedList)).toBe(md`
-      - Line 1
-      Line 2
-        - Line 3
-      Line 4
+        Line 2
+        Line 3
+        Line 4
+        
     `);
   });
 
-  it("should render list nodes in an array on new lines", () => {
-    const listNodeArray = [
-      createListNode(
-        "Item 1"
-      ),
-      createListNode(
-        "Item 1"
-      )
-    ];
-    expect(renderNode(ctx, listNodeArray)).toBe(md`
+  it("should render nested arrays correctly", () => {
+    const listNode = createListNode([
+      ["Item"],
+      [[" "]],
+      [[["1"]]]
+    ]);
+    expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
+    `);
+  });
+
+  it("should render nested arrays with lists correctly", () => {
+    const listNode = createListNode([
+      ["Item"],
+      [[" "]],
+      [[["1"]]],
+      [[[[
+        createListNode(
+          "Item 2"
+        )
+      ]]]]
+    ]);
+    expect(renderListNode(ctx, listNode)).toBe(md`
+        
       - Item 1
+        
+        - Item 2
+        
     `);
   });
 

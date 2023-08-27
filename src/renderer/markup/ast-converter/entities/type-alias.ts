@@ -6,9 +6,9 @@ import {
   convertTypeParameterEntitiesForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
@@ -40,11 +40,11 @@ export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContex
 export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForDocumentation {
 
   const convertedSignature = convertTypeAliasSignature(ctx, typeAliasEntity);
-  const convertedPosition = convertPosition(ctx, typeAliasEntity.position);
+  const convertedPosition = convertPositionForDocumentation(ctx, typeAliasEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, typeAliasEntity);
   const convertedDescription = convertDescriptionForDocumentation(ctx, typeAliasEntity.description);
-  const convertedRemarks = convertRemarks(ctx, typeAliasEntity.remarks);
-  const convertedExample = convertExample(ctx, typeAliasEntity.example);
+  const convertedRemarks = convertRemarksForDocumentation(ctx, typeAliasEntity.remarks);
+  const convertedExample = convertExamplesForDocumentation(ctx, typeAliasEntity.example);
   const convertedTypeParameterEntities = convertTypeParameterEntitiesForDocumentation(ctx, typeAliasEntity.typeParameters);
   const convertedType = convertTypeForDocumentation(ctx, typeAliasEntity.type);
 

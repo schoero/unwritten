@@ -8,6 +8,7 @@ import type {
   BoldNode,
   ConditionalNode,
   ConditionalOperator,
+  InlineTitleNode,
   ItalicNode,
   LinkNode,
   ListNode,
@@ -50,6 +51,20 @@ export function createConditionalNode<TrueChildren extends ASTNode, FalseChildre
     operator,
     trueChildren,
     value
+  };
+}
+
+export function createInlineTitleNode<Children extends ASTNode[]>(title: ASTNode, ...children: Children): InlineTitleNode<Children>;
+export function createInlineTitleNode<Children extends ASTNode[]>(title: ASTNode, anchor: AnchorTarget, ...children: Children): InlineTitleNode<Children>;
+export function createInlineTitleNode<Children extends ASTNode[]>(title: ASTNode, ...anchorOrChildren: Children | [anchor: AnchorTarget, ...children: Children]): InlineTitleNode<Children> {
+
+  const { anchor, children } = separateAnchorAndChildren<Children>(anchorOrChildren);
+
+  return {
+    ...anchor,
+    children,
+    kind: ASTNodeKinds.InlineTitle,
+    title
   };
 }
 
@@ -139,7 +154,6 @@ export function createSpanNode<Children extends ASTNode[]>(...anchorOrChildren: 
   };
 
 }
-
 export function createStrikethroughNode<Children extends ASTNode[]>(...children: Children): StrikethroughNode<Children>;
 export function createStrikethroughNode<Children extends ASTNode[]>(...children: Children): StrikethroughNode<Children> {
   return {
@@ -159,10 +173,9 @@ export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, ...a
     children,
     kind: ASTNodeKinds.Title,
     title
-  } as const;
+  };
 
 }
-
 
 function separateAnchorAndChildren<Children extends ASTNode[]>(anchorOrChildren: Children | [anchor: AnchorTarget, ...children: Children]) {
 

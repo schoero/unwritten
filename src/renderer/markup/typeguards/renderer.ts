@@ -5,6 +5,7 @@ import type {
   ASTNode,
   BoldNode,
   ConditionalNode,
+  InlineTitleNode,
   ItalicNode,
   LinkNode,
   ListNode,
@@ -23,6 +24,15 @@ export function isAnchorNode(node: ASTNode): node is AnchorNode {
   node.kind === ASTNodeKinds.Anchor;
 }
 
+/**
+ * Checks if a node is a block node. A block node is a node whose children are rendered on separate lines.
+ * @param node The node to check
+ * @returns `true` if the node is a block node, `false` otherwise
+ */
+export function isBlockNode(node: ASTNode): node is ListNode | MultilineNode | TitleNode {
+  return isListNode(node) || isMultilineNode(node) || isTitleNode(node);
+}
+
 export function isBoldNode(node: ASTNode): node is BoldNode {
   return typeof node === "object" && !Array.isArray(node) &&
       node.kind === ASTNodeKinds.Bold;
@@ -31,6 +41,11 @@ export function isBoldNode(node: ASTNode): node is BoldNode {
 export function isConditionalNode(node: ASTNode): node is ConditionalNode {
   return typeof node === "object" && !Array.isArray(node) &&
       node.kind === ASTNodeKinds.Conditional;
+}
+
+export function isInlineTitleNode(node: ASTNode): node is InlineTitleNode {
+  return typeof node === "object" && !Array.isArray(node) &&
+      node.kind === ASTNodeKinds.InlineTitle;
 }
 
 export function isItalicNode(node: ASTNode): node is ItalicNode {

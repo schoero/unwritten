@@ -57,7 +57,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       setters,
       getters,
       events
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should have a matching construct signature", () => {
       expect(constructSignatures.children).toHaveLength(1);

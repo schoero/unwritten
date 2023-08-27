@@ -28,7 +28,7 @@ export function escapeCodeFences(text: string): string | false {
 
     const escapedBefore = escapeCodeBlocks(before) || escapeString(before);
     const escapedAfter = escapeCodeBlocks(after) || escapeString(after);
-    const escapedCodeBlock = startBlock.includes("```md")
+    const escapedCodeBlock = startBlock.includes("```md") || startBlock.includes("```markdown")
       ? escapeMarkdown(codeBlock)
       : codeBlock;
 

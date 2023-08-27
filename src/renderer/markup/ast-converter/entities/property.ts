@@ -4,15 +4,21 @@ import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
 } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import {
+  convertExamplesForDocumentation,
+  convertExamplesForType
+} from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import {
+  convertRemarksForDocumentation,
+  convertRemarksForType
+} from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import {
   convertTagsForDocumentation,
   convertTagsForType
 } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertType, convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { createAnchorNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createAnchorNode, createMultilineNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
@@ -42,11 +48,11 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
-  const convertedPosition = convertPosition(ctx, propertyEntity.position);
+  const convertedPosition = convertPositionForDocumentation(ctx, propertyEntity.position);
   const convertedTags = convertTagsForDocumentation(ctx, propertyEntity);
   const convertedDescription = convertDescriptionForDocumentation(ctx, propertyEntity.description);
-  const convertedRemarks = convertRemarks(ctx, propertyEntity.remarks);
-  const convertedExample = convertExample(ctx, propertyEntity.example);
+  const convertedRemarks = convertRemarksForDocumentation(ctx, propertyEntity.remarks);
+  const convertedExample = convertExamplesForDocumentation(ctx, propertyEntity.example);
   const convertedType = convertTypeForDocumentation(ctx, propertyEntity.type);
 
   return createTitleNode(
@@ -69,17 +75,21 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
   const name = encapsulate(propertyEntity.name, renderConfig.propertyEncapsulation);
   const tags = convertTagsForType(ctx, propertyEntity);
   const description = convertDescriptionForType(ctx, propertyEntity.description);
+  const remarks = convertRemarksForType(ctx, propertyEntity.remarks);
+  const example = convertExamplesForType(ctx, propertyEntity.example);
 
   const { inlineType, multilineType } = convertType(ctx, propertyEntity.type);
 
-  return [
+  return createMultilineNode(
     spaceBetween(
       name,
       inlineType,
       description,
       tags
     ),
+    remarks,
+    example,
     multilineType ?? ""
-  ];
+  );
 
 }

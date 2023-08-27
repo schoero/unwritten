@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
@@ -13,10 +13,10 @@ scope("MarkupRenderer", "Example", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-    const convertedExample = convertExample(
+    const convertedExample = convertExamplesForDocumentation(
       ctx,
       [
-        "Example description"
+        ["Example description"]
       ]
     );
 
@@ -42,11 +42,11 @@ scope("MarkupRenderer", "Example", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
-    const convertedExample = convertExample(
+    const convertedExample = convertExamplesForDocumentation(
       ctx,
       [
-        "Example description 1",
-        "Example description 2"
+        ["Example description 1"],
+        ["Example description 2"]
       ]
     );
 

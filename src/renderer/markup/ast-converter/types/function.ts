@@ -13,18 +13,6 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertFunctionTypeMultiline(ctx: MarkupRenderContexts, functionType: FunctionType): ConvertedFunctionTypeMultiline {
-
-  const convertedSignatures = functionType.signatures.map(
-    signature => convertSignatureEntityForType(ctx, signature)
-  );
-
-  return convertedSignatures.length === 1
-    ? convertedSignatures[0]
-    : createListNode(...convertedSignatures);
-
-}
-
 export function convertFunctionTypeInline(
   ctx: MarkupRenderContexts,
   functionType: FunctionType
@@ -40,5 +28,17 @@ export function convertFunctionTypeInline(
   return ctx.config.externalTypes[TypeKind.Function]
     ? createLinkNode(encapsulatedType, ctx.config.externalTypes[TypeKind.Function])
     : encapsulatedType;
+
+}
+
+export function convertFunctionTypeMultiline(ctx: MarkupRenderContexts, functionType: FunctionType): ConvertedFunctionTypeMultiline {
+
+  const convertedSignatures = functionType.signatures.map(
+    signature => convertSignatureEntityForType(ctx, signature)
+  );
+
+  return convertedSignatures.length === 1
+    ? convertedSignatures[0]
+    : createListNode(...convertedSignatures);
 
 }

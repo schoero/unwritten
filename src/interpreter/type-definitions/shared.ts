@@ -3,21 +3,22 @@ import type { Type } from "unwritten:interpreter/type-definitions/types.js";
 
 
 type JSDocTag = string | undefined;
+
 export type Name = string;
 export type ID = number;
-export type Description = string | undefined;
-export type Throws = {
-  description?: Description;
-  type?: Type;
-}[] | undefined;
+export type Description = JSDocTag;
 export type Examples = JSDocTag[] | undefined;
 export type Alpha = JSDocTag;
 export type Beta = JSDocTag;
 export type Deprecated = JSDocTag;
 export type Internal = JSDocTag;
 export type Template = JSDocTag;
-export type Remarks = JSDocTag;
+export type Remarks = JSDocTag[] | undefined;
 export type EventProperty = true | undefined;
+export type Throws = {
+  description?: Description;
+  type?: Type;
+}[] | undefined;
 
 export interface JSDocTags {
   [JSDocTagNames.Alpha]?: Alpha;

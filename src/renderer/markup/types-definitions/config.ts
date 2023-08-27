@@ -6,6 +6,11 @@ export interface MarkupRenderConfig {
   /** Indentation characters */
   indentation?: string;
 
+  /**
+   * Defines how inline titles should be encapsulated in the rendered output.
+   */
+  inlineTitleEncapsulation?: Encapsulation | false;
+
   /** Newline character */
   newLine?: "\n" | "\r\n" | "os";
 
@@ -78,6 +83,7 @@ export interface MarkupRenderConfig {
     function_many?: string;
     function_one?: string;
     getter_many?: string;
+    throws?: string;
     getter_one?: string;
     interface_many?: string;
     interface_one?: string;
@@ -98,8 +104,8 @@ export interface MarkupRenderConfig {
     property_many?: string;
     property_one?: string;
     readonly?: string;
-    remarks_many?: string;
-    remarks_one?: string;
+    remark_many?: string;
+    remark_one?: string;
     required?: string;
     rest?: string;
     returnType?: string;

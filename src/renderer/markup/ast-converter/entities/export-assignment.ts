@@ -1,8 +1,8 @@
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
@@ -31,10 +31,10 @@ export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderC
   const anchor = registerAnchor(ctx, name, symbolId);
 
   const convertedTags = convertTagsForDocumentation(ctx, exportAssignmentEntity);
-  const convertedPosition = convertPosition(ctx, exportAssignmentEntity.position);
+  const convertedPosition = convertPositionForDocumentation(ctx, exportAssignmentEntity.position);
   const convertedDescription = convertDescriptionForDocumentation(ctx, exportAssignmentEntity.description);
-  const convertedRemarks = convertRemarks(ctx, exportAssignmentEntity.remarks);
-  const convertedExample = convertExample(ctx, exportAssignmentEntity.example);
+  const convertedRemarks = convertRemarksForDocumentation(ctx, exportAssignmentEntity.remarks);
+  const convertedExample = convertExamplesForDocumentation(ctx, exportAssignmentEntity.example);
   const convertedType = convertTypeForDocumentation(ctx, exportAssignmentEntity.type);
 
   return createSectionNode(

@@ -1,5 +1,8 @@
 import { renderNode } from "unwritten:renderer/index.js";
-import { convertThrows } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
+import {
+  convertThrowsForDocumentation,
+  convertThrowsForType
+} from "unwritten:renderer/markup/ast-converter/shared/throws.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
@@ -14,9 +17,15 @@ import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
 } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExample } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarks } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
+import {
+  convertExamplesForDocumentation,
+  convertExamplesForType
+} from "unwritten:renderer:markup/ast-converter/shared/example.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import {
+  convertRemarksForDocumentation,
+  convertRemarksForType
+} from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
 import {
   convertTagsForDocumentation,
   convertTagsForType
@@ -25,8 +34,8 @@ import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
 import {
   createAnchorNode,
-  createListNode,
-  createParagraphNode,
+  createInlineTitleNode,
+  createMultilineNode,
   createSectionNode,
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes.js";
@@ -39,7 +48,7 @@ import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.
 import type {
   ConvertedPropertyEntityForTableOfContents,
   ConvertedReturnTypeForDocumentation,
-  ConvertedReturnTypeInline,
+  ConvertedReturnTypeForType,
   ConvertedSignatureEntityForDocumentation,
   ConvertedSignatureEntityForType
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
@@ -64,34 +73,34 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
 
   const id = signatureEntity.declarationId;
 
-  const convertedSignature = convertSignature(ctx, signatureEntity);
-  const convertedPosition = convertPosition(ctx, signatureEntity.position);
-  const convertedTags = convertTagsForDocumentation(ctx, signatureEntity);
-  const convertedTypeParameters = convertTypeParameterEntitiesForDocumentation(ctx, signatureEntity.typeParameters);
-  const convertedParameters = convertParameterEntitiesForDocumentation(ctx, signatureEntity.parameters);
-  const convertedReturnType = convertReturnTypeForDocumentation(ctx, signatureEntity);
-  const convertedThrows = convertThrows(ctx, signatureEntity.throws);
-  const convertedDescription = convertDescriptionForDocumentation(ctx, signatureEntity.description);
-  const convertedRemarks = convertRemarks(ctx, signatureEntity.remarks);
-  const convertedExample = convertExample(ctx, signatureEntity.example);
+  const signature = convertSignature(ctx, signatureEntity);
+  const position = convertPositionForDocumentation(ctx, signatureEntity.position);
+  const tags = convertTagsForDocumentation(ctx, signatureEntity);
+  const typeParameters = convertTypeParameterEntitiesForDocumentation(ctx, signatureEntity.typeParameters);
+  const parameters = convertParameterEntitiesForDocumentation(ctx, signatureEntity.parameters);
+  const returnType = convertReturnTypeForDocumentation(ctx, signatureEntity);
+  const throws = convertThrowsForDocumentation(ctx, signatureEntity.throws);
+  const description = convertDescriptionForDocumentation(ctx, signatureEntity.description);
+  const remarks = convertRemarksForDocumentation(ctx, signatureEntity.remarks);
+  const example = convertExamplesForDocumentation(ctx, signatureEntity.example);
 
-  const renderedSignature = renderNode(ctx, convertedSignature);
+  const renderedSignature = renderNode(ctx, signature);
   const anchor = registerAnchor(ctx, renderedSignature, id);
 
   return createSectionNode(
     SECTION_TYPE[signatureEntity.kind],
     createTitleNode(
-      convertedSignature,
+      signature,
       anchor,
-      convertedPosition,
-      convertedTags,
-      convertedTypeParameters,
-      convertedParameters,
-      convertedReturnType,
-      convertedThrows,
-      convertedDescription,
-      convertedRemarks,
-      convertedExample
+      position,
+      tags,
+      typeParameters,
+      parameters,
+      returnType,
+      throws,
+      description,
+      remarks,
+      example
     )
   );
 
@@ -100,25 +109,29 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
 
 export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForType {
 
-  const convertedSignature = convertSignature(ctx, signatureEntity);
-  const convertedTags = convertTagsForType(ctx, signatureEntity);
-  const convertedTypeParameters = convertTypeParameterEntitiesForType(ctx, signatureEntity.typeParameters);
-  const convertedParameters = convertParameterEntitiesForType(ctx, signatureEntity.parameters);
-  const convertedReturnType = convertReturnTypeForType(ctx, signatureEntity);
-  const convertedDescription = convertDescriptionForType(ctx, signatureEntity.description);
+  const signature = convertSignature(ctx, signatureEntity);
+  const tags = convertTagsForType(ctx, signatureEntity);
+  const typeParameters = convertTypeParameterEntitiesForType(ctx, signatureEntity.typeParameters);
+  const parameters = convertParameterEntitiesForType(ctx, signatureEntity.parameters);
+  const returnType = convertReturnTypeForType(ctx, signatureEntity);
+  const description = convertDescriptionForType(ctx, signatureEntity.description);
+  const throws = convertThrowsForType(ctx, signatureEntity.throws);
+  const remarks = convertRemarksForType(ctx, signatureEntity.remarks);
+  const examples = convertExamplesForType(ctx, signatureEntity.example);
 
-  const convertedSignatureWithDescription = spaceBetween(
-    convertedSignature,
-    convertedDescription,
-    convertedTags
+  return createMultilineNode(
+    spaceBetween(
+      signature,
+      description,
+      tags
+    ),
+    typeParameters,
+    parameters,
+    returnType,
+    throws,
+    remarks,
+    examples
   );
-
-  return [
-    convertedSignatureWithDescription,
-    convertedTypeParameters,
-    convertedParameters,
-    convertedReturnType
-  ];
 
 }
 
@@ -159,14 +172,12 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
   const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
 
-  const convertedReturnTypeWithDescription = createParagraphNode(
-    [
-      spaceBetween(
-        inlineType,
-        returnDescription
-      ),
-      multilineType ?? ""
-    ]
+  const convertedReturnTypeWithDescription = createMultilineNode(
+    spaceBetween(
+      inlineType,
+      returnDescription
+    ),
+    multilineType ?? ""
   );
 
   return createTitleNode(
@@ -176,19 +187,23 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
 
 }
 
-function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeInline {
+function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeForType {
 
   const translate = getTranslator(ctx);
+  const renderConfig = getRenderConfig(ctx);
 
-  const { inlineType } = convertType(ctx, signatureEntity.returnType);
+  const title = encapsulate(translate("returnType", { capitalizeEach: true }), renderConfig.inlineTitleEncapsulation);
+
+  const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
 
-  return createListNode(
+  return createInlineTitleNode(
+    title,
     spaceBetween(
-      translate("returnType", { capitalizeEach: true }),
       inlineType,
       returnDescription
-    )
+    ),
+    multilineType ?? ""
   );
 
 }

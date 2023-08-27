@@ -3,6 +3,7 @@ export enum ASTNodeKinds {
   Bold = "Bold",
   Conditional = "Conditional",
   Container = "Container",
+  InlineTitle = "InlineTitle",
   Italic = "Italic",
   Link = "Link",
   List = "List",

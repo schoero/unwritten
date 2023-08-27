@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { convertPosition } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
 import { isLinkNode, isSmallNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -21,7 +21,7 @@ scope("MarkupRenderer", "Position", () => {
   it("should convert the position correctly", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
-    const convertedPosition = convertPosition(ctx, position);
+    const convertedPosition = convertPositionForDocumentation(ctx, position);
 
     assert(isSmallNode(convertedPosition));
     assert(convertedPosition.children.length === 2);
@@ -38,7 +38,7 @@ scope("MarkupRenderer", "Position", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
     ctx.config.renderConfig.md.translations.definedIn = "";
-    const convertedPosition = convertPosition(ctx, position);
+    const convertedPosition = convertPositionForDocumentation(ctx, position);
 
     assert(isSmallNode(convertedPosition));
     assert(convertedPosition.children.length === 1);

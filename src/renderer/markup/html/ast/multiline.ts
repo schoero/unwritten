@@ -1,3 +1,4 @@
+import { isListNode, isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderNode } from "unwritten:renderer:html/index.js";
 
@@ -9,10 +10,20 @@ export function renderMultilineNode(ctx: HTMLRenderContext, multilineNode: Multi
 
   const renderedNewLine = renderNewLine(ctx);
 
-  const renderedChildren = multilineNode.children.map(
-    child => renderNode(ctx, child)
-  ).filter(renderedChild => renderedChild !== "");
+  return multilineNode.children.map((subNode, index) => {
 
-  return renderedChildren.join(renderedNewLine);
+    const renderedNode = renderNode(ctx, subNode);
+
+    if(renderedNode === ""){
+      return "";
+    }
+
+    // Render a new line before nodes that require it
+    return index > 0 && (isListNode(subNode) || isTitleNode(subNode) || isParagraphNode(subNode))
+      ? `${renderNewLine(ctx)}${renderedNode}`
+      : renderedNode;
+
+  }).filter(renderedChild => renderedChild !== "")
+    .join(renderedNewLine);
 
 }

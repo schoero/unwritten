@@ -7,7 +7,7 @@ import {
   convertPropertyEntityForType,
   convertSignatureEntityForType
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -57,7 +57,7 @@ export function convertObjectTypeMultiline(
   const convertedConstructSignatures = constructSignatures.map(
     constructSignature => {
       const convertedSignature = convertSignatureEntityForType(ctx, constructSignature);
-      (convertedSignature[0] as ASTNode[]).unshift("new ");
+      (convertedSignature.children[0] as ASTNode[]).unshift("new ");
       return convertedSignature;
     }
   );
@@ -72,7 +72,7 @@ export function convertObjectTypeMultiline(
       convertPropertyEntityForType(ctx, propertyEntity)
   );
 
-  const convertedEvents = events.map(
+  const convertedEventProperties = events.map(
     eventPropertyEntity =>
       convertEventPropertyEntityForType(ctx, eventPropertyEntity)
   );
@@ -92,15 +92,15 @@ export function convertObjectTypeMultiline(
       convertFunctionLikeEntityForType(ctx, getterEntity)
   );
 
-  return [
+  return createMultilineNode(
     createListNode(...convertedConstructSignatures),
     createListNode(...convertedCallSignatures),
     createListNode(...convertedProperties),
     createListNode(...convertedMethods),
     createListNode(...convertedSetters),
     createListNode(...convertedGetters),
-    createListNode(...convertedEvents)
-  ];
+    createListNode(...convertedEventProperties)
+  );
 
 }
 

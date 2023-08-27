@@ -4,7 +4,7 @@ import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { convertFunctionTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isInlineTitleNode, isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -31,14 +31,14 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     const type = typeAliasEntity.type;
     const convertedType = convertFunctionTypeMultiline(ctx, type as FunctionType);
 
-    assert(Array.isArray(convertedType), "single signatures should not be wrapped in a list node");
+    assert(!isListNode(convertedType), "single signatures should not be wrapped in a list node");
 
     const [
       signature,
       typeParameters,
       parameters,
       returnType
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should render the function signature correctly", () => {
       expect(renderNode(ctx, signature)).toBe("()");
@@ -53,7 +53,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     });
 
     it("should render the return type correctly", () => {
-      assert(isListNode(returnType));
+      assert(isInlineTitleNode(returnType));
       expect(returnType.children[0]).toContain("boolean");
     });
 
@@ -74,14 +74,14 @@ scope("MarkupRenderer", TypeKind.Function, () => {
 
     const convertedType = convertFunctionTypeMultiline(ctx, type as FunctionType);
 
-    assert(Array.isArray(convertedType), "single signatures should not be wrapped in a list node");
+    assert(!isListNode(convertedType), "single signatures should not be wrapped in a list node");
 
     const [
       signature,
       typeParameters,
       parameters,
       returnType
-    ] = convertedType;
+    ] = convertedType.children;
 
     it("should render the function signature correctly", () => {
       expect(renderNode(ctx, signature)).toBe("(a, b)");
@@ -92,18 +92,19 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     });
 
     it("should have two matching parameters", () => {
-      assert(isListNode(parameters), "parameters should be wrapped in a list node");
-      expect(parameters.children).toHaveLength(2);
-      assert(Array.isArray(parameters.children[0]));
-      expect(parameters.children[0][0]).toContain("a");
-      expect(parameters.children[0][0]).toContain("string");
-      assert(Array.isArray(parameters.children[1]));
-      expect(parameters.children[1][0]).toContain("b");
-      expect(parameters.children[1][0]).toContain("number");
+      assert(isInlineTitleNode(parameters), "parameters should be wrapped in a list node");
+      const parameterList = parameters.children[0];
+      expect(parameterList.children).toHaveLength(2);
+      assert(Array.isArray(parameterList.children[0]));
+      expect(parameterList.children[0][0]).toContain("a");
+      expect(parameterList.children[0][0]).toContain("string");
+      assert(Array.isArray(parameterList.children[1]));
+      expect(parameterList.children[1][0]).toContain("b");
+      expect(parameterList.children[1][0]).toContain("number");
     });
 
     it("should render the return type correctly", () => {
-      assert(isListNode(returnType));
+      assert(isInlineTitleNode(returnType));
       expect(returnType.children[0]).toContain("boolean");
     });
 
@@ -144,19 +145,21 @@ scope("MarkupRenderer", TypeKind.Function, () => {
 
     assert(isListNode(convertedType), "multiple signatures should be wrapped in a list node");
 
+    const [convertedSignature1, convertedSignature2] = convertedType.children;
+
     const [
-      [
-        signature,
-        typeParameters,
-        parameters,
-        returnType
-      ], [
-        signature2,
-        typeParameters2,
-        parameters2,
-        returnType2
-      ]
-    ] = convertedType.children;
+      signature,
+      typeParameters,
+      parameters,
+      returnType
+    ] = convertedSignature1.children;
+
+    const [
+      signature2,
+      typeParameters2,
+      parameters2,
+      returnType2
+    ] = convertedSignature2.children;
 
     it("should render the function signature correctly", () => {
       expect(renderNode(ctx, signature)).toContain("(a, b)");
@@ -174,32 +177,34 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     });
 
     it("should have matching parameters in each signature", () => {
-      assert(isListNode(parameters));
-      expect(parameters.children).toHaveLength(2);
-      assert(Array.isArray(parameters.children[0]));
-      expect(parameters.children[0][0]).toContain("a");
-      expect(parameters.children[0][0]).toContain("number");
-      assert(Array.isArray(parameters.children[1]));
-      expect(parameters.children[1][0]).toContain("b");
-      expect(parameters.children[1][0]).toContain("number");
+      assert(isInlineTitleNode(parameters));
+      const parameterList = parameters.children[0];
+      expect(parameterList.children).toHaveLength(2);
+      assert(Array.isArray(parameterList.children[0]));
+      expect(parameterList.children[0][0]).toContain("a");
+      expect(parameterList.children[0][0]).toContain("number");
+      assert(Array.isArray(parameterList.children[1]));
+      expect(parameterList.children[1][0]).toContain("b");
+      expect(parameterList.children[1][0]).toContain("number");
 
-      assert(isListNode(parameters2));
-      expect(parameters2.children).toHaveLength(3);
-      assert(Array.isArray(parameters2.children[0]));
-      expect(parameters2.children[0][0]).toContain("a");
-      expect(parameters2.children[0][0]).toContain("number");
-      assert(Array.isArray(parameters2.children[1]));
-      expect(parameters2.children[1][0]).toContain("b");
-      expect(parameters2.children[1][0]).toContain("number");
-      assert(Array.isArray(parameters2.children[2]));
-      expect(parameters2.children[2][0]).toContain("c");
-      expect(parameters2.children[2][0]).toContain("number");
+      assert(isInlineTitleNode(parameters2));
+      const parameterList2 = parameters2.children[0];
+      expect(parameterList2.children).toHaveLength(3);
+      assert(Array.isArray(parameterList2.children[0]));
+      expect(parameterList2.children[0][0]).toContain("a");
+      expect(parameterList2.children[0][0]).toContain("number");
+      assert(Array.isArray(parameterList2.children[1]));
+      expect(parameterList2.children[1][0]).toContain("b");
+      expect(parameterList2.children[1][0]).toContain("number");
+      assert(Array.isArray(parameterList2.children[2]));
+      expect(parameterList2.children[2][0]).toContain("c");
+      expect(parameterList2.children[2][0]).toContain("number");
     });
 
     it("should render the return type correctly for each signature", () => {
-      assert(isListNode(returnType));
+      assert(isInlineTitleNode(returnType));
       expect(returnType.children[0]).toContain("number");
-      assert(isListNode(returnType2));
+      assert(isInlineTitleNode(returnType2));
       expect(returnType2.children[0]).toContain("number");
     });
 

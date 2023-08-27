@@ -1,5 +1,5 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createLinkNode, createListNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
@@ -35,10 +35,10 @@ export function convertIntersectionTypeMultiline(ctx: MarkupRenderContexts, inte
 
     const { inlineType, multilineType } = convertType(ctx, type);
 
-    return [
-      [inlineType],
+    return createMultilineNode(
+      inlineType,
       multilineType ?? ""
-    ];
+    );
 
   });
 

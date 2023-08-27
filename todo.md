@@ -7,13 +7,13 @@
   * [ ] Conditional types?
 * [x] Allow multiple entry points
   * [x] Via CLI
-  * [ ] Via API
+  * [x] Via API
     * [ ] Auto create from namespace exports (`export * from './other-module.js'`)
     * [x] Shared types should be able to get linked from the other entry points
 * [ ] Check if instanceType and staticType are really necessary
 * [ ] Parse and render type assertions
-* [ ] Add event property tags
-* [ ] Add support for @throws
+* [x] Add event property tags
+* [x] Add support for @throws
 * [ ] Read title from package.json
 * [ ] Read entry point from package.json
 * [ ] Provide "linting" functionality

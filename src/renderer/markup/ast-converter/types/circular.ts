@@ -1,5 +1,4 @@
 import { createAnchorNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 
 import type { CircularType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
@@ -10,15 +9,13 @@ export function convertCircularTypeInline(ctx: MarkupRenderContexts, circularTyp
 
   const name = circularType.name ?? "";
 
-  if(circularType.typeId){
+  if(circularType.symbolId){
 
     const anchor = circularType.symbolId
       ? createAnchorNode(name, circularType.symbolId)
       : undefined;
 
-    return spaceBetween(
-      anchor ?? name
-    );
+    return anchor ?? name;
 
   }
 

@@ -1,6 +1,7 @@
 import {
   convertAnyTypeInline,
   convertArrayTypeInline,
+  convertArrayTypeMultiline,
   convertBigIntLiteralTypeInline,
   convertBigIntTypeInline,
   convertBooleanLiteralTypeInline,
@@ -83,14 +84,14 @@ import {
 
 import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ConditionalNode, ParagraphNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ASTNode, ConditionalNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedTypeInline,
   ConvertedTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Type): TitleNode<[ParagraphNode]> {
+export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Type): TitleNode<[ASTNode, ASTNode]> {
 
   const translate = getTranslator(ctx);
 
@@ -98,10 +99,8 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
 
   return createTitleNode(
     translate("type", { capitalize: true, count: 1 }),
-    createParagraphNode(
-      inlineType,
-      multilineType ?? ""
-    )
+    createParagraphNode(inlineType),
+    multilineType ?? ""
   );
 
 }
@@ -208,6 +207,8 @@ function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineT
     return convertFunctionTypeMultiline(ctx, type);
   } else if(isTypeReferenceType(type)){
     return convertTypeReferenceTypeMultiline(ctx, type);
+  } else if(isArrayType(type)){
+    return convertArrayTypeMultiline(ctx, type);
   } else if(isTupleType(type)){
     return convertTupleTypeMultiline(ctx, type);
   } else if(isUnionType(type) && isMultilineUnionType(type)){

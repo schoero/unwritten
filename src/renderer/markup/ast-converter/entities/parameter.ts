@@ -1,6 +1,6 @@
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -43,23 +43,21 @@ export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, 
 
 export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForDocumentation {
 
-  const translate = getTranslator(ctx);
-
-  const convertedParameters = parameterEntities?.map(
-    parameter => convertParameterEntityForDocumentation(ctx, parameter)
-  ) ?? [];
-
-  if(convertedParameters.length === 0){
+  if(!parameterEntities || parameterEntities.length === 0){
     return "";
   }
 
-  const convertedParameterList = createListNode(
-    ...convertedParameters
+  const translate = getTranslator(ctx);
+
+  const parameters = parameterEntities.map(
+    parameter => convertParameterEntityForDocumentation(ctx, parameter)
   );
 
   return createTitleNode(
-    translate("parameter", { capitalize: true, count: convertedParameters.length }),
-    convertedParameterList
+    translate("parameter", { capitalize: true, count: parameters.length }),
+    createListNode(
+      ...parameters
+    )
   );
 
 }
@@ -67,16 +65,24 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
 
 export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForType {
 
-  const convertedParameters = parameterEntities?.map(
-    parameter => convertParameterEntityForDocumentation(ctx, parameter)
-  ) ?? [];
-
-  if(convertedParameters.length === 0){
+  if(!parameterEntities || parameterEntities.length === 0){
     return "";
   }
 
-  return createListNode(
-    ...convertedParameters
+  const renderConfig = getRenderConfig(ctx);
+  const translate = getTranslator(ctx);
+
+  const title = encapsulate(translate("parameter", { capitalizeEach: true, count: parameterEntities.length }), renderConfig.inlineTitleEncapsulation);
+
+  const parameters = parameterEntities.map(
+    parameter => convertParameterEntityForDocumentation(ctx, parameter)
+  );
+
+  return createInlineTitleNode(
+    title,
+    createListNode(
+      ...parameters
+    )
   );
 
 }

@@ -36,7 +36,7 @@ scope("Interpreter", EntityKind.Namespace, () => {
   });
 
   it("should have a matching remarks", () => {
-    expect(exportedNamespace.remarks).toBe("Namespace remarks");
+    expect(exportedNamespace.remarks).toStrictEqual(["Namespace remarks"]);
   });
 
   it("should have a matching example", () => {

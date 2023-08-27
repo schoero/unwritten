@@ -2,12 +2,14 @@ import { expect, it } from "vitest";
 
 import { createInterfaceEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { renderNode } from "unwritten:renderer/index.js";
 import {
   convertInterfaceEntityForDocumentation,
   convertInterfaceEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import {
   isAnchorNode,
+  isInlineTitleNode,
   isListNode,
   isParagraphNode,
   isSmallNode,
@@ -51,6 +53,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const [
       position,
       tags,
+      typeParameters,
       description,
       remarks,
       example,
@@ -163,6 +166,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const [
       interfacePosition,
       interfaceTags,
+      interfaceTypeParameters,
       interfaceDescription,
       interfaceRemarks,
       interfaceExample,
@@ -176,29 +180,24 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     ] = titleNode.children;
 
     const [
-      callSignaturePosition,
-      callSignatureTags,
+      callSignatureSignature,
       callSignatureTypeParameters,
       callSignatureParameters,
       callSignatureReturnType,
       callSignatureThrows,
-      callSignatureDescription,
       callSignatureRemarks,
       callSignatureExample
-    ] = callSignatures.children[0].children[0].children;
+    ] = callSignatures.children[0].children;
 
     const [
-      propertyTags,
-      propertyPosition,
-      propertyType,
-      propertyDescription,
+      propertySignature,
       propertyRemarks,
-      propertyExample
+      propertyExample,
+      propertyType
     ] = properties.children[1].children;
 
     const [
-      eventPosition,
-      eventDescription,
+      eventSignature,
       eventRemarks,
       eventExample
     ] = events.children[0].children;
@@ -229,7 +228,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a matching call signature throws", () => {
-      assert(isTitleNode(callSignatureThrows));
+      assert(isInlineTitleNode(callSignatureThrows));
       assert(isListNode(callSignatureThrows.children[0]));
       expect(callSignatureThrows.children[0].children[0]).toStrictEqual([
         "Call signature throws"
@@ -237,64 +236,50 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a matching call signature description", () => {
-      assert(isTitleNode(callSignatureDescription));
-      expect(callSignatureDescription.children[0].children[0]).toBe("Call signature description");
+      expect(renderNode(ctx, callSignatureSignature)).toContain("Call signature description");
     });
 
     it("should have a matching call signature remarks", () => {
-      assert(isTitleNode(callSignatureRemarks));
-      expect(callSignatureRemarks.children[0].children[0]).toBe("Call signature remarks");
+      assert(isInlineTitleNode(callSignatureRemarks));
+      expect(callSignatureRemarks.children[0]).toBe("Call signature remarks");
     });
 
     it("should have a matching call signature example", () => {
-      assert(isTitleNode(callSignatureExample));
-      expect(callSignatureExample.children[0].children[0]).toBe("Call signature example");
-    });
-
-    it("should have a call signature position", () => {
-      expect(callSignaturePosition).toBeDefined();
-    });
-
-    it("should have a call signature tags", () => {
-      assert(isParagraphNode(callSignatureTags));
-      expect(callSignatureTags.children).toContain("beta");
-      expect(callSignatureTags.children).toContain("deprecated");
+      assert(isInlineTitleNode(callSignatureExample));
+      expect(callSignatureExample.children[0]).toBe("Call signature example");
     });
 
     it("should have a matching property description", () => {
-      assert(isTitleNode(propertyDescription));
-      expect(propertyDescription.children[0].children[0]).toBe("Property description");
+      expect(renderNode(ctx, propertySignature)).toContain("Property description");
     });
 
     it("should have a matching property remarks", () => {
-      assert(isTitleNode(propertyRemarks));
-      expect(propertyRemarks.children[0].children[0]).toBe("Property remarks");
+      assert(isInlineTitleNode(propertyRemarks));
+      expect(propertyRemarks.children[0]).toBe("Property remarks");
     });
 
     it("should have a matching property example", () => {
-      assert(isTitleNode(propertyExample));
-      expect(propertyExample.children[0].children[0]).toBe("Property example");
+      assert(isInlineTitleNode(propertyExample));
+      expect(propertyExample.children[0]).toBe("Property example");
     });
 
     it("should have a property tags", () => {
-      assert(isParagraphNode(propertyTags));
-      expect(propertyTags.children).toContain("beta");
-      expect(propertyTags.children).toContain("deprecated");
+      expect(renderNode(ctx, propertySignature)).toContain("beta");
+      expect(renderNode(ctx, propertySignature)).toContain("deprecated");
     });
 
     it("should have a matching event description", () => {
-      assert(isTitleNode(eventDescription));
-      expect(eventDescription.children[0].children[0]).toBe("Event description");
+      expect(renderNode(ctx, eventSignature)).toContain("Event description");
     });
 
     it("should have a matching event remarks", () => {
-      assert(isTitleNode(eventRemarks));
-      expect(eventRemarks.children[0].children[0]).toBe("Event remarks");
+      assert(isInlineTitleNode(eventRemarks));
+      expect(eventRemarks.children[0]).toBe("Event remarks");
     });
 
     it("should have a matching event example", () => {
-      assert(isTitleNode(eventExample));
-      expect(eventExample.children[0].children[0]).toBe("Event example");
+      assert(isInlineTitleNode(eventExample));
+      expect(eventExample.children[0]).toBe("Event example");
     });
 
   }
