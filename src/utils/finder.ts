@@ -16,6 +16,8 @@ export function findFile(ctx: DefaultContext, fileName: string[] | string, entry
   const { absolute, join } = ctx.dependencies.path;
   const { cwd } = ctx.dependencies.process;
 
+  entryPath ??= cwd();
+
   if(typeof fileName === "object" && Array.isArray(fileName) === true){
     for(const name of fileName){
       const found = findFile(ctx, name, entryPath);
@@ -27,10 +29,6 @@ export function findFile(ctx: DefaultContext, fileName: string[] | string, entry
   }
 
   assert(typeof fileName === "string", "fileName must be a string or an array of strings.");
-
-  if(entryPath === undefined){
-    entryPath = cwd();
-  }
 
   const absoluteEntryDir = absolute(entryPath);
   if(existsSync(absoluteEntryDir) === false){

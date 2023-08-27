@@ -83,11 +83,8 @@ async function importFile(ctx: DefaultContext, path: string) {
 
 async function getExtendConfig(ctx: DefaultContext, config: Config): Promise<Config> {
 
-  const {
-    path: {
-      absolute: resolve
-    }
-  } = ctx.dependencies;
+  const { cwd } = ctx.dependencies.process;
+  const { join } = ctx.dependencies.path;
 
   if(config.extends === undefined){
     return config;
@@ -97,7 +94,7 @@ async function getExtendConfig(ctx: DefaultContext, config: Config): Promise<Con
     throw new TypeError("\"extends\" property in unwritten config must of type string if provided.");
   }
 
-  let loadedConfig = await importFile(ctx, resolve(config.extends));
+  let loadedConfig = await importFile(ctx, join(cwd(), "node_modules/", config.extends));
 
   if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
     throw new TypeError("The extended unwritten config is not an object.");

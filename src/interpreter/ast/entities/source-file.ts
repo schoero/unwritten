@@ -12,6 +12,8 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol): SourceFileEntity {
 
+  const { getFileName } = ctx.dependencies.path;
+
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
   assert(declaration, "Source file symbol has no declaration");
@@ -32,7 +34,7 @@ export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol):
 
   const symbolId = getSymbolId(ctx, symbol);
   const path = declaration.getSourceFile().fileName;
-  const name = path.split("/").pop() ?? "";
+  const name = getFileName(path);
   const kind = EntityKind.SourceFile;
 
   return {
