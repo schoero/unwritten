@@ -1,9 +1,11 @@
+import { convertConstraintForType } from "unwritten:renderer/markup/ast-converter/shared/constraint.js";
+import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import {
   createInlineTitleNode,
   createListNode,
+  createMultilineNode,
   createSpanNode,
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes.js";
@@ -85,39 +87,28 @@ export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContexts, t
 export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity): ConvertedTypeParameterEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
-  const translate = getTranslator(ctx);
 
   const description = typeParameterEntity.description ?? "";
   const name = encapsulate(typeParameterEntity.name, renderConfig.typeParameterEncapsulation);
   const symbolId = typeParameterEntity.symbolId;
 
-  const constrainTypes = typeParameterEntity.constraint
-    ? convertType(ctx, typeParameterEntity.constraint)
-    : undefined;
+  const constraint = typeParameterEntity.constraint &&
+    convertConstraintForType(ctx, typeParameterEntity.constraint);
 
-  const constraint = constrainTypes
-    ? constrainTypes.multilineType ?? constrainTypes.inlineType
-    : "";
-
-  const initializerTypes = typeParameterEntity.initializer !== undefined
-    ? convertType(ctx, typeParameterEntity.initializer)
-    : undefined;
-
-  const initializer = initializerTypes !== undefined
-    ? spaceBetween(
-      `${translate("default", { capitalize: true })}:`,
-      initializerTypes.multilineType ??
-      initializerTypes.inlineType
-    )
-    : "";
+  const initializer = typeParameterEntity.initializer &&
+     convertInitializerForType(ctx, typeParameterEntity.initializer);
 
   const anchor = registerAnchor(ctx, typeParameterEntity.name, symbolId);
 
-  return spaceBetween(
-    createSpanNode(anchor, name),
-    constraint,
-    description,
-    initializer
+  return createMultilineNode(
+    spaceBetween(
+      createSpanNode(anchor, name),
+      constraint?.inlineConstraint ?? "",
+      description,
+      initializer?.inlineInitializer ?? ""
+    ),
+    constraint?.multilineConstraint ?? "",
+    initializer?.multilineInitializer ?? ""
   );
 
 }
@@ -127,6 +118,5 @@ function convertTypeParameterEntityForType(ctx: MarkupRenderContexts, typeParame
 }
 
 function convertTypeParameterEntityForSignature(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity) {
-  const name = typeParameterEntity.name;
-  return name;
+  return typeParameterEntity.name;
 }

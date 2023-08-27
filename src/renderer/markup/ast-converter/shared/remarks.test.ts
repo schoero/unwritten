@@ -14,7 +14,7 @@ scope("MarkupRenderer", "Remarks", () => {
   const convertedRemarks = convertRemarksForDocumentation(
     ctx,
     [
-      ["Remarks description"]
+      "Remarks description"
     ]
   );
 

@@ -1,5 +1,5 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
+import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
@@ -55,7 +55,7 @@ export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws):
   const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
-  const title = encapsulate(translate("throws", { capitalize: true }), renderConfig.inlineTitleEncapsulation);
+  const title = translate("throws", { capitalize: true });
 
   const convertedThrows = throws.map(throws => {
 

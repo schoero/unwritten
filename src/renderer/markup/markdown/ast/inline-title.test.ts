@@ -25,7 +25,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
     expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
-      Title
+      *Title:*
         
       Paragraph  
     `);
@@ -41,9 +41,9 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
     expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
-      Title
+      *Title:*
         
-      SubTitle
+      *SubTitle:*
         
       Paragraph  
     `);
@@ -62,13 +62,13 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
     expect(renderedTitle).toBe(md`
         
-      Title
+      *Title:*
         
-      Subtitle
+      *Subtitle:*
         
       Paragraph  
         
-      Another Subtitle
+      *Another Subtitle:*
         
       Paragraph  
     `);
@@ -86,7 +86,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
     expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
-      Title
+      *Title:*
         
       Paragraph  
       Paragraph2  
@@ -101,7 +101,7 @@ scope("MarkdownRenderer", "TitleNode", () => {
 
     expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
-      Title
+      *Title:*
         
       Paragraph  
     `);

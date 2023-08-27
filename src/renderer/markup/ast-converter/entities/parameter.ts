@@ -1,6 +1,12 @@
+import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import {
+  createInlineTitleNode,
+  createListNode,
+  createMultilineNode,
+  createTitleNode
+} from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -69,10 +75,9 @@ export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, param
     return "";
   }
 
-  const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
 
-  const title = encapsulate(translate("parameter", { capitalizeEach: true, count: parameterEntities.length }), renderConfig.inlineTitleEncapsulation);
+  const title = translate("parameter", { capitalizeEach: true, count: parameterEntities.length });
 
   const parameters = parameterEntities.map(
     parameter => convertParameterEntityForDocumentation(ctx, parameter)
@@ -106,29 +111,21 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
     ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
     : "";
 
-  const initializerTypes = parameterEntity.initializer !== undefined
-    ? convertType(ctx, parameterEntity.initializer)
-    : undefined;
+  const initializer = parameterEntity.initializer &&
+     convertInitializerForType(ctx, parameterEntity.initializer);
 
-  const initializer = initializerTypes !== undefined
-    ? spaceBetween(
-      `${translate("default", { capitalize: true })}:`,
-      initializerTypes.multilineType ??
-      initializerTypes.inlineType
-    )
-    : "";
-
-  return [
+  return createMultilineNode(
     spaceBetween(
       name,
       inlineType,
       description,
-      initializer,
       optional,
-      rest
+      rest,
+      initializer?.inlineInitializer ?? ""
     ),
-    multilineType ?? ""
-  ];
+    multilineType ?? "",
+    initializer?.multilineInitializer ?? ""
+  );
 
 }
 

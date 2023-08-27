@@ -454,7 +454,11 @@ export type ConvertedTypeParameterEntitiesForDocumentation = TitleNode<[
 export type ConvertedTypeParameterEntitiesForType = InlineTitleNode<[
   ListNode
 ]> | "";
-export type ConvertedTypeParameterEntityForDocumentation = ASTNode[];
+export type ConvertedTypeParameterEntityForDocumentation = MultilineNode<[
+  typeParameterSignatureWithDescription: ASTNode,
+  constraint: InlineTitleNode | "",
+  initializer: InlineTitleNode | ""
+]> | "";
 
 // Type Argument
 export type ConvertedTypeArgumentEntityForSignature = ASTNode;

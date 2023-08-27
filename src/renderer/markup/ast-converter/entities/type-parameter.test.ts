@@ -19,9 +19,9 @@ scope("MarkupRenderer", EntityKind.TypeParameter, () => {
 
     const testFileContent = ts`
       /**
-       * @template TypeParameter - Type parameter description
+       * @template TypeParam Type parameter description
        */
-      export type TypeAlias<TypeParameter extends number = 7> = TypeParameter;
+      export type TypeAlias<TypeParam extends number = 7> = TypeParam;
     `;
 
     const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
@@ -38,8 +38,8 @@ scope("MarkupRenderer", EntityKind.TypeParameter, () => {
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
 
     it("should have a matching name", () => {
-      expect(renderedParametersForSignature).toBe("TypeParameter");
-      expect(renderedParameterForDocumentation).toMatch(/.*<TypeParameter>.*$/);
+      expect(renderedParametersForSignature).toBe("TypeParam");
+      expect(renderedParameterForDocumentation).toMatch(/.*<TypeParam>.*$/);
     });
 
     it("should have a matching description", () => {

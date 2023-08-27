@@ -38,6 +38,8 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     checkType: "check type",
     class_many: "classes",
     class_one: "class",
+    constraint_many: "constraints",
+    constraint_one: "constraint",
     constructSignature_many: "construct signatures",
     constructSignature_one: "construct signature",
     ctor_many: "constructors",
@@ -110,7 +112,9 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
 
 export const defaultMarkdownRenderConfig: Complete<MarkdownRenderConfig> = {
   ...defaultRenderConfig,
-  allowedHTMLTags: false,
+  allowedHTMLTags: [
+    "span"
+  ],
   inlineTitleEncapsulation: ["*", "*"],
   sectionSeparator: "---"
 };

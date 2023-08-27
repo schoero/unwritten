@@ -61,6 +61,8 @@ export interface MarkupRenderConfig {
     checkType?: string;
     class_many?: string;
     class_one?: string;
+    constraint_many?: string;
+    constraint_one?: string;
     constructSignature_many?: string;
     constructSignature_one?: string;
     ctor_many?: string;
@@ -83,7 +85,6 @@ export interface MarkupRenderConfig {
     function_many?: string;
     function_one?: string;
     getter_many?: string;
-    throws?: string;
     getter_one?: string;
     interface_many?: string;
     interface_one?: string;
@@ -112,6 +113,7 @@ export interface MarkupRenderConfig {
     setter_many?: string;
     setter_one?: string;
     static?: string;
+    throws?: string;
     trueType?: string;
     type_many?: string;
     type_one?: string;
@@ -137,7 +139,7 @@ export interface MarkupRenderConfig {
 }
 
 export interface MarkdownRenderConfig extends MarkupRenderConfig {
-  /** Defines which HTML tags are allowed in the rendered output. */
+  /** Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes */
   allowedHTMLTags?: string[] | false;
   /**
    * Defines the string that should be used to separate sections in the rendered output.

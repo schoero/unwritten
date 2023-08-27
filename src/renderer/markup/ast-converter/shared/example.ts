@@ -1,5 +1,3 @@
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createInlineTitleNode, createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -43,9 +41,8 @@ export function convertExamplesForType(ctx: MarkupRenderContexts, examples: Exam
   }
 
   const translate = getTranslator(ctx);
-  const renderConfig = getRenderConfig(ctx);
 
-  const title = encapsulate(`${translate("example", { capitalize: true, count: examples.length })}:`, renderConfig.inlineTitleEncapsulation);
+  const title = translate("example", { capitalize: true, count: examples.length });
 
   const convertedExamples = examples.flat().map(example => {
     if(!example){

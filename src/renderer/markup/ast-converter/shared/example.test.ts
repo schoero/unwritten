@@ -16,7 +16,7 @@ scope("MarkupRenderer", "Example", () => {
     const convertedExample = convertExamplesForDocumentation(
       ctx,
       [
-        ["Example description"]
+        "Example description"
       ]
     );
 
@@ -45,8 +45,8 @@ scope("MarkupRenderer", "Example", () => {
     const convertedExample = convertExamplesForDocumentation(
       ctx,
       [
-        ["Example description 1"],
-        ["Example description 2"]
+        "Example description 1",
+        "Example description 2"
       ]
     );
 

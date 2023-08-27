@@ -18,7 +18,7 @@ export function renderMultilineArray(ctx: MarkdownRenderContext, children: ASTNo
 
   const returnValue = children
     .filter(child => child !== "")
-    .reduce<string[]>((acc, child, index, children) => {
+    .reduce<string[]>((acc, child) => {
 
     const renderedNode = renderNode(ctx, child);
     const renderedIndentation = renderIndentation(ctx);

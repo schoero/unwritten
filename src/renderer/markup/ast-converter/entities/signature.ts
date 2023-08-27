@@ -192,7 +192,7 @@ function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: Si
   const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
 
-  const title = encapsulate(translate("returnType", { capitalizeEach: true }), renderConfig.inlineTitleEncapsulation);
+  const title = translate("returnType", { capitalizeEach: true });
 
   const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";

@@ -38,4 +38,12 @@ scope("MarkdownRenderer", "SpanNode", () => {
     `);
   });
 
+  it("should be possible to disable the rendering of span nodes", () => {
+
+    ctx.config.renderConfig.md.allowedHTMLTags = false;
+
+    const spanNode = createSpanNode("text");
+    expect(renderSpanNode(ctx, spanNode)).toBe("text");
+  });
+
 });
