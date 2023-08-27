@@ -4,9 +4,15 @@ export interface Path {
   absolute(from: string, to: string): string;
   /** Returns the directory including a trailing slash */
   getDirectory(path: string): string;
-  /** Returns the file extension including the period */
+  /**
+   * Returns the file extension including the period
+   * Returns an empty string if the path doesn't contain a file
+   */
   getFileExtension(path: string): string;
-  /** Returns the file name including the extension by default */
+  /**
+   * Returns the file name including the extension by default.
+   * Returns an empty string if the path doesn't contain a file
+   */
   getFileName(path: string, includeExtension?: boolean): string;
   /** Joins multiple segments */
   join(...segments: string[]): string;

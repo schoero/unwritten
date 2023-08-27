@@ -197,6 +197,9 @@ const path = {
 
     const combinedSegments = directorySegments.join(separator);
     const normalizedSegments = normalize(deps, combinedSegments);
+    const trailingSegment = normalizedSegments.endsWith(separator)
+      ? separator
+      : "";
     const individualSegments = normalizedSegments.split(separator)
       .filter(segment => segment !== "" && segment !== "." && segment !== "~");
 
@@ -211,7 +214,7 @@ const path = {
 
     const joinedPath = individualSegmentWithoutUnnecessaryParentPaths.join(separator);
 
-    return `${root}${joinedPath}`;
+    return `${root}${joinedPath}${trailingSegment}`;
   },
   normalize(deps: Dependencies, path: string): string {
 

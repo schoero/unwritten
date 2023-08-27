@@ -73,6 +73,10 @@ scope("Integration", "path", () => {
       expect(getFileName(unc, "\\\\some\\directory\\file.txt", false)).toBe("file");
     });
 
+    it("should return an empty string if the path does not end with a file", () => {
+      expect(getFileName(posix, "/some/directory/")).toBe("");
+    });
+
   });
 
   describe("getFileExtension", () => {
@@ -81,6 +85,10 @@ scope("Integration", "path", () => {
       expect(getFileExtension(posix, "/some/directory/file.txt")).toBe(".txt");
       expect(getFileExtension(dos, "\\some\\directory\\file.txt")).toBe(".txt");
       expect(getFileExtension(unc, "\\\\some\\directory\\file.txt")).toBe(".txt");
+    });
+
+    it("should return an empty string if the path does not end with a file", () => {
+      expect(getFileExtension(posix, "/some/directory/")).toBe("");
     });
 
   });
@@ -109,6 +117,12 @@ scope("Integration", "path", () => {
       expect(absolute(posix, "/file.txt", "../../file.txt")).toBe("/file.txt");
       expect(absolute(dos, "C:\\file.txt", "..\\..\\file.txt")).toBe("C:\\file.txt");
       expect(absolute(unc, "\\\\file.txt", "..\\..\\file.txt")).toBe("\\\\file.txt");
+    });
+
+    it("should resolve to a directory", () => {
+      expect(absolute(posix, "/some/directory/file.txt", "../other/directory/")).toBe("/some/other/directory/");
+      expect(absolute(dos, "C:\\some\\directory\\file.txt", "..\\other\\directory\\")).toBe("C:\\some\\other\\directory\\");
+      expect(absolute(unc, "\\\\some\\directory\\file.txt", "..\\other\\directory\\")).toBe("\\\\some\\other\\directory\\");
     });
 
   });
@@ -171,6 +185,18 @@ scope("Integration", "path", () => {
       expect(join(posix, "/some/directory/", "../other/directory/file.txt")).toBe("/some/other/directory/file.txt");
       expect(join(dos, "C:\\some\\directory\\", "..\\other\\directory\\file.txt")).toBe("C:\\some\\other\\directory\\file.txt");
       expect(join(unc, "\\\\some\\directory\\", "..\\other\\directory\\file.txt")).toBe("\\\\some\\other\\directory\\file.txt");
+    });
+
+    it("should be able to handle more than two segments", () => {
+      expect(join(posix, "/some/directory/", "some/other/directory/", "some-file.txt")).toBe("/some/directory/some/other/directory/some-file.txt");
+      expect(join(dos, "C:\\some\\directory\\", "some\\other\\directory/", "some-file.txt")).toBe("C:\\some\\directory\\some\\other\\directory\\some-file.txt");
+      expect(join(unc, "\\\\some\\directory\\", "some\\other\\directory/", "some-file.txt")).toBe("\\\\some\\directory\\some\\other\\directory\\some-file.txt");
+    });
+
+    it("should be possible to join directories", () => {
+      expect(join(posix, "/some/directory/", "./some//other/directory/")).toBe("/some/directory/some/other/directory/");
+      expect(join(dos, "C:\\some\\directory\\", ".\\some\\\\other\\directory\\")).toBe("C:\\some\\directory\\some\\other\\directory\\");
+      expect(join(unc, "\\\\some\\directory\\", ".\\some\\\\other\\directory\\")).toBe("\\\\some\\directory\\some\\other\\directory\\");
     });
 
   });
