@@ -2,7 +2,8 @@
 import { beforeAll, expect, it, vitest } from "vitest";
 
 import { createConfig } from "unwritten:config/config.js";
-import { readFileSync, writeFileSync } from "unwritten:platform/file-system/browser.js";
+import { mkdirSync, readFileSync, writeFileSync } from "unwritten:platform/file-system/browser.js";
+import { } from "unwritten:platform/file-system/virtual-fs.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -12,6 +13,15 @@ scope("Integration", "Config", async () => {
   beforeAll(() => {
 
     writeFileSync(".unwritten.json", JSON.stringify({
+      renderConfig: {
+        test: {
+          ".unwritten.json": true
+        }
+      }
+    }, null, 2));
+
+    mkdirSync("node_modules/@namespace", { recursive: true });
+    writeFileSync("node_modules/@namespace/.unwritten.json", JSON.stringify({
       renderConfig: {
         test: {
           ".unwritten.json": true
@@ -96,7 +106,7 @@ scope("Integration", "Config", async () => {
   it("should be able to extend a config", async () => {
 
     const config = await createConfig(ctx, {
-      extends: ".unwritten.json"
+      extends: "@namespace/.unwritten.json"
     });
 
     expect(config.renderConfig.test).toBeDefined();
