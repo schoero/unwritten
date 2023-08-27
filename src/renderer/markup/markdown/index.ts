@@ -7,6 +7,7 @@ import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/mult
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
+import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor.js";
@@ -132,7 +133,7 @@ const markdownRenderer: MarkdownRenderer = {
 
     markdownRenderer.initializeContext(ctx);
 
-    return sourceFileEntities.reduce<(SourceFileEntity & { convertedAST: ASTNode; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
+    return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
 
       const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
       createCurrentSourceFile(ctx, sourceFileEntity, destination);
@@ -140,7 +141,7 @@ const markdownRenderer: MarkdownRenderer = {
 
       convertedSourceFileEntities.push({
         ...sourceFileEntity,
-        convertedAST: convertToMarkupAST(ctx, sourceFileEntity.exports)
+        ...convertToMarkupAST(ctx, sourceFileEntity.exports)
       });
 
       return convertedSourceFileEntities;
@@ -154,8 +155,14 @@ const markdownRenderer: MarkdownRenderer = {
 
       setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
+      const ast = createTitleNode(
+        convertedSourceFileEntity.name,
+        createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents),
+        createSectionNode("documentation", ...convertedSourceFileEntity.documentation)
+      );
+
       const renderedNewLine = renderNewLine(ctx);
-      const renderedContent = renderNode(ctx, convertedSourceFileEntity.convertedAST);
+      const renderedContent = renderNode(ctx, ast);
 
       const filePath = ctx.currentFile.dst;
 

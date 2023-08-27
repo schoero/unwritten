@@ -18,7 +18,7 @@ import {
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createListNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
@@ -36,7 +36,7 @@ import {
 
 import type { Entity, ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ListNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedCategoryForDocumentation,
   ConvertedCategoryForTableOfContents,
@@ -99,20 +99,17 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
 }
 
 
-export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: ExportableEntity[]): TitleNode {
+export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: ExportableEntity[]) {
 
   const sortedEntities = sortExportableEntities(ctx, entities);
 
   const tableOfContents = createTableOfContents(ctx, sortedEntities);
   const documentation = createDocumentation(ctx, sortedEntities);
 
-  const ast = createTitleNode(
-    "API Documentation",
-    createSectionNode("table-of-contents", tableOfContents),
-    createSectionNode("documentation", ...documentation)
-  );
-
-  return ast;
+  return {
+    documentation,
+    tableOfContents
+  };
 
 }
 
