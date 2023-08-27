@@ -6,6 +6,7 @@ import { renderMultilineNode } from "unwritten:renderer/markup/html/ast/multilin
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { capitalize } from "unwritten:renderer/markup/utils/translations.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:html/ast/anchor.js";
 import { renderBoldNode } from "unwritten:renderer:html/ast/bold.js";
@@ -127,6 +128,8 @@ const htmlRenderer: HTMLRenderer = {
 
   render: (ctx: RenderContext, sourceFileEntities: SourceFileEntity[]) => withVerifiedHTMLRenderContext(ctx, ctx => {
 
+    const { getFileName } = ctx.dependencies.path;
+
     htmlRenderer.initializeContext(ctx);
 
     return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
@@ -152,7 +155,7 @@ const htmlRenderer: HTMLRenderer = {
       setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
       const ast = createTitleNode(
-        convertedSourceFileEntity.name,
+        capitalize(getFileName(convertedSourceFileEntity.name, false)),
         createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents),
         createSectionNode("documentation", ...convertedSourceFileEntity.documentation)
       );

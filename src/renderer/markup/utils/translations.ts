@@ -15,8 +15,10 @@ interface TranslationOptions {
 export type TranslationKeys<CustomRenderContext extends MarkupRenderContexts> =
   keyof TranslationWithoutSuffixes<CustomRenderContext["config"]["renderConfig"][CustomRenderContext["renderer"]["name"]]["translations"]>;
 
-export function getTranslator(ctx: MarkupRenderContexts) {
-  return (key: TranslationKeys<MarkupRenderContexts>, options?: TranslationOptions) => translate(ctx, key, options);
+export function capitalize(text: string): string {
+  return text.length <= 0
+    ? ""
+    : text[0].toUpperCase() + text.slice(1);
 }
 
 function translate(ctx: MarkupRenderContexts, key: TranslationKeys<MarkupRenderContexts>, options?: TranslationOptions) {
@@ -75,8 +77,6 @@ function getTranslationKey(key: TranslationKeys<MarkupRenderContexts>, options?:
 
 }
 
-function capitalize(text: string): string {
-  return text.length <= 0
-    ? ""
-    : text[0].toUpperCase() + text.slice(1);
+export function getTranslator(ctx: MarkupRenderContexts) {
+  return (key: TranslationKeys<MarkupRenderContexts>, options?: TranslationOptions) => translate(ctx, key, options);
 }

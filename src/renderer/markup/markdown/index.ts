@@ -8,6 +8,7 @@ import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { capitalize } from "unwritten:renderer/markup/utils/translations.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor.js";
@@ -131,6 +132,8 @@ const markdownRenderer: MarkdownRenderer = {
 
   render: (ctx: RenderContext, sourceFileEntities: SourceFileEntity[]) => withVerifiedMarkdownRenderContext(ctx, ctx => {
 
+    const { getFileName } = ctx.dependencies.path;
+
     markdownRenderer.initializeContext(ctx);
 
     return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
@@ -156,7 +159,7 @@ const markdownRenderer: MarkdownRenderer = {
       setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
       const ast = createTitleNode(
-        convertedSourceFileEntity.name,
+        capitalize(getFileName(convertedSourceFileEntity.name, false)),
         createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents),
         createSectionNode("documentation", ...convertedSourceFileEntity.documentation)
       );
