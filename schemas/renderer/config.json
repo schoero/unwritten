@@ -25,12 +25,12 @@
         "json": {
           "$ref": "#/definitions/Complete%3CJSONRenderConfig%3E"
         },
-        "md": {
+        "markdown": {
           "$ref": "#/definitions/Complete%3CMarkdownRenderConfig%3E"
         }
       },
       "required": [
-        "md",
+        "markdown",
         "html",
         "json"
       ],
@@ -80,6 +80,20 @@
       "properties": {
         "indentation": {
           "type": "string"
+        },
+        "inlineTitleEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
         },
         "newLine": {
           "enum": [
@@ -184,16 +198,22 @@
             "class_one": {
               "type": "string"
             },
+            "constraint_many": {
+              "type": "string"
+            },
+            "constraint_one": {
+              "type": "string"
+            },
             "constructSignature_many": {
               "type": "string"
             },
             "constructSignature_one": {
               "type": "string"
             },
-            "constructor_many": {
+            "ctor_many": {
               "type": "string"
             },
-            "constructor_one": {
+            "ctor_one": {
               "type": "string"
             },
             "default": {
@@ -313,10 +333,10 @@
             "readonly": {
               "type": "string"
             },
-            "remarks_many": {
+            "remark_many": {
               "type": "string"
             },
-            "remarks_one": {
+            "remark_one": {
               "type": "string"
             },
             "required": {
@@ -335,6 +355,9 @@
               "type": "string"
             },
             "static": {
+              "type": "string"
+            },
+            "throws": {
               "type": "string"
             },
             "trueType": {
@@ -459,6 +482,20 @@
         "indentation": {
           "type": "string"
         },
+        "inlineTitleEncapsulation": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ]
+        },
         "newLine": {
           "enum": [
             "\n",
@@ -570,16 +607,22 @@
             "class_one": {
               "type": "string"
             },
+            "constraint_many": {
+              "type": "string"
+            },
+            "constraint_one": {
+              "type": "string"
+            },
             "constructSignature_many": {
               "type": "string"
             },
             "constructSignature_one": {
               "type": "string"
             },
-            "constructor_many": {
+            "ctor_many": {
               "type": "string"
             },
-            "constructor_one": {
+            "ctor_one": {
               "type": "string"
             },
             "default": {
@@ -699,10 +742,10 @@
             "readonly": {
               "type": "string"
             },
-            "remarks_many": {
+            "remark_many": {
               "type": "string"
             },
-            "remarks_one": {
+            "remark_one": {
               "type": "string"
             },
             "required": {
@@ -721,6 +764,9 @@
               "type": "string"
             },
             "static": {
+              "type": "string"
+            },
+            "throws": {
               "type": "string"
             },
             "trueType": {
