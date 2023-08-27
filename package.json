@@ -28,6 +28,7 @@
     "markdownlint": "markdownlint-cli2 '**/*.md' '#node_modules' '#CHANGELOG.md'",
     "markdownlint:ci": "npm run markdownlint",
     "markdownlint:fix": "markdownlint-cli2-fix '**/*.md' '#node_modules' '#CHANGELOG.md'",
+    "prerelease": "npm run build",
     "release": "changelogen --release",
     "schema": "ts-json-schema-generator --path './src/type-definitions/config.d.ts' --type ConfigWithSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
     "spellcheck": "cspell lint",
