@@ -75,7 +75,7 @@ unwritten <path/to/entry-file.ts> [options]
                                         # to the file that default exports the 
                                         # renderer.
 
---silent                                # Disables the output.
+--silent                                # Disables any console output.
 -s
 
 --version                               # Returns the installed unwritten
