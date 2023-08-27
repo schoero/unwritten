@@ -37,7 +37,7 @@ scope("MarkupRenderer", "Position", () => {
   it("should be possible to change to label to an empty string", () => {
 
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
-    ctx.config.renderConfig.md.translations.definedIn = "";
+    ctx.config.renderConfig[BuiltInRenderers.Markdown].translations.definedIn = "";
     const convertedPosition = convertPositionForDocumentation(ctx, position);
 
     assert(isSmallNode(convertedPosition));

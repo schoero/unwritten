@@ -10,7 +10,7 @@ import type { Renderer } from "unwritten:type-definitions/renderer.js";
 
 export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {
 
-  if(renderer === undefined || renderer === BuiltInRenderers.Markdown){
+  if(renderer === undefined || renderer === BuiltInRenderers.Markdown || renderer === "md"){
     const { default: markdownRenderer } = await import("unwritten:renderer:markup/markdown/index.js");
     renderer = markdownRenderer;
   } else if(renderer === BuiltInRenderers.HTML){

@@ -34,7 +34,7 @@ scope("MarkdownRenderer", "SectionNode", () => {
     const sectionNode = createSectionNode(undefined, "Section content");
 
     ctx.nesting = 3;
-    ctx.config.renderConfig.md.sectionSeparator = false;
+    ctx.config.renderConfig[BuiltInRenderers.Markdown].sectionSeparator = false;
 
     const renderedSectionNode = renderSectionNode(ctx, sectionNode);
     expect(renderedSectionNode).toBe(md`
@@ -46,7 +46,7 @@ scope("MarkdownRenderer", "SectionNode", () => {
     const sectionNode = createSectionNode(undefined, "Section content");
 
     ctx.nesting = 3;
-    ctx.config.renderConfig.md.sectionSeparator = "___";
+    ctx.config.renderConfig[BuiltInRenderers.Markdown].sectionSeparator = "___";
 
     const renderedSectionNode = renderSectionNode(ctx, sectionNode);
     expect(renderedSectionNode).toBe(md`

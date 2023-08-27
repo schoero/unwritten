@@ -24,14 +24,14 @@ import type { RenderContext } from "unwritten:type-definitions/context.js";
 const testConfig: CompleteConfig = override(getDefaultConfig(), {
   externalTypes: {},
   renderConfig: {
-    html: {
+    [BuiltInRenderers.HTML]: {
       parameterEncapsulation: false,
       propertyEncapsulation: false,
       tagEncapsulation: false,
       typeEncapsulation: false,
       typeParameterEncapsulation: ["<", ">"]
     },
-    md: {
+    [BuiltInRenderers.Markdown]: {
       parameterEncapsulation: false,
       propertyEncapsulation: false,
       tagEncapsulation: false,
