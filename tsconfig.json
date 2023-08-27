@@ -1,0 +1,35 @@
+{
+  "extends": "@schoero/ts-config",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "incremental": false,
+    "lib": ["ESNext", "DOM"],
+    "paths": {
+      "unwritten:*": ["src/*"],
+      "unwritten:api:*": ["src/api/*"],
+      "unwritten:bin:*": ["src/bin/*"],
+      "unwritten:compiler:*": ["src/compiler/*"],
+      "unwritten:interpreter:*": ["src/interpreter/*"],
+      "unwritten:interpreter:entities": ["src/interpreter/ast/entities/index.js"],
+      "unwritten:interpreter:types": ["src/interpreter/ast/types/index.js"],
+      "unwritten:logger:*": ["src/platform/logger/*"],
+      "unwritten:renderer:*": ["src/renderer/*"],
+      "unwritten:renderer:html*": ["src/renderer/markup/html/*"],
+      "unwritten:renderer:json*": ["src/renderer/json/*"],
+      "unwritten:renderer:markdown*": ["src/renderer/markup/markdown/*"],
+      "unwritten:renderer:ts*": ["src/renderer/typescript/*"],
+      "unwritten:tests:*": ["tests/*"],
+      "unwritten:types:*": ["src/type-definitions/*"],
+      "unwritten:utils:*": ["src/utils/*"]
+    },
+    "target": "ES2020"
+  },
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib"
+  ]
+}

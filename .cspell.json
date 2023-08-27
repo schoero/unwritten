@@ -1,0 +1,25 @@
+{
+  "import": [
+    "@schoero/cspell-config"
+  ],
+  "ignorePaths": [
+    "schemas",
+    "local"
+  ],
+  "words": [
+    "anchortext",
+    "changelogen",
+    "privatefunction",
+    "renderable",
+    "envinfo",
+    "scandir",
+    "testfunction",
+    "testfunctionparam",
+    "testfunctiontparam",
+    "testt",
+    "tsdoc",
+    "typeguards",
+    "uncapitalize",
+    "unwritten"
+  ]
+}
