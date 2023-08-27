@@ -7,7 +7,7 @@ import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/mult
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
-import { createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor.js";
 import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold.js";
@@ -36,7 +36,7 @@ import {
   isStrikethroughNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
-import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
+import { minMax, nodeFilter } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderTitleNode } from "./ast/title.js";
 
@@ -214,6 +214,9 @@ function renderArray(ctx: MarkdownRenderContext, node: ASTNode[]): string {
 
 function renderString(ctx: MarkdownRenderContext, node: string): string {
 
+  const renderedNewLine = renderNewLine(ctx);
+  const renderedIndentation = renderIndentation(ctx);
+
   // Escape markdown before splitting to allow catching code fences
   const escapedMarkdown = escapeMarkdown(node);
   const escapedLines = escapedMarkdown.split("\n");
@@ -222,7 +225,15 @@ function renderString(ctx: MarkdownRenderContext, node: string): string {
     return escapedLines[0];
   }
 
-  return renderNode(ctx, createMultilineNode(...escapedLines));
+  // Indent all lines except the first one
+  const indentedLines = escapedLines
+    .filter(nodeFilter)
+    .map((line, index) =>
+      index === 0
+        ? line
+        : `${renderedIndentation}${line}`);
+
+  return indentedLines.join(renderedNewLine);
 
 }
 

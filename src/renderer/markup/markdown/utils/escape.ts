@@ -21,7 +21,7 @@ export function escapeCodeBlocks(text: string): string | false {
 
 export function escapeCodeFences(text: string): string | false {
 
-  const codeBlockRegex = /(.*?)(```\w*\s*\n)(.*?)(```\s*\n)(.*?$)/gms;
+  const codeBlockRegex = /(.*?)(```\w*\s*\n)(.*?)(```\s*\n?)(.*?$)/gms;
   const splittedCodeFences = Array.from(text.matchAll(codeBlockRegex));
 
   return splittedCodeFences.length > 0 && splittedCodeFences.map(([_, before, startBlock, codeBlock, endBlock, after]) => {

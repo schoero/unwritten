@@ -74,5 +74,18 @@ scope("Renderer", "Render abstraction", () => {
       `);
     });
 
+    it("should also work when no previous and trailing text is available", () => {
+      const testString = md`
+        \`\`\`ts
+        inside named code fences [ and ] should not be escaped
+        \`\`\`
+      `;
+      expect(escapeMarkdown(escapeMarkdown(testString))).toBe(md`
+        \`\`\`ts
+        inside named code fences [ and ] should not be escaped
+        \`\`\`
+      `);
+    });
+
   });
 });
