@@ -146,9 +146,6 @@ const path = {
       .join(separator);
   },
   getFileExtension(deps: Dependencies, path: string): string {
-
-    const { separator } = deps;
-
     const normalizedPath = normalize(deps, path);
     if(normalizedPath.includes(".") === false){
       return "";
@@ -177,8 +174,8 @@ const path = {
 
     let root: string = "";
 
-    const maxOneAbsoluteSegment = segments.reduce<string[]>((acc, segment) => {
-      if(isAbsolute(segment)){
+    const segmentsWithExtractedRoot = segments.reduce<string[]>((acc, segment) => {
+      if(isAbsolute(segment) && root === ""){
         acc = [];
         const extractedRoot = extractRoot(deps, segment);
         root = extractedRoot.root;
@@ -188,18 +185,27 @@ const path = {
       return acc;
     }, []);
 
-    const directorySegments = maxOneAbsoluteSegment.map((segment, index) => {
-      if(index === maxOneAbsoluteSegment.length - 1){
-        return segment;
-      }
-      return getDirectory(deps, segment);
+    const directorySegments = segmentsWithExtractedRoot.map((segment, index) => {
+      return getFileExtension(deps, segment) !== ""
+        ? getDirectory(deps, segment)
+        : segment;
     });
 
-    const combinedSegments = directorySegments.join(separator);
+    const fileName = segmentsWithExtractedRoot.reduce<string | undefined>((fileName, segment, index) => {
+      return getFileExtension(deps, segment) !== ""
+        ? getFileName(deps, segment)
+        : fileName;
+    }, undefined);
+
+    const combinedSegments = [...directorySegments, fileName]
+      .filter(segment => !!segment)
+      .join(separator);
+
     const normalizedSegments = normalize(deps, combinedSegments);
     const trailingSegment = normalizedSegments.endsWith(separator)
       ? separator
       : "";
+
     const individualSegments = normalizedSegments.split(separator)
       .filter(segment => segment !== "" && segment !== "." && segment !== "~");
 

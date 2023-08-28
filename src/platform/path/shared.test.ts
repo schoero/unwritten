@@ -169,10 +169,16 @@ scope("Integration", "path", () => {
       expect(join(unc, ".\\some\\", ".\\directory\\file.txt")).toBe("some\\directory\\file.txt");
     });
 
-    it("should override previous absolute paths", () => {
-      expect(join(posix, "/some/directory/", "/other/directory/file.txt")).toBe("/other/directory/file.txt");
-      expect(join(dos, "C:\\some\\directory\\", "C:\\other\\directory\\file.txt")).toBe("C:\\other\\directory\\file.txt");
-      expect(join(unc, "\\\\some\\directory\\", "\\\\other\\directory\\file.txt")).toBe("\\\\other\\directory\\file.txt");
+    it("should not treat beginning slashes as absolute paths after the first one", () => {
+      expect(join(posix, "/some/directory/", "/other/directory/file.txt")).toBe("/some/directory/other/directory/file.txt");
+      expect(join(dos, "C:\\some\\directory\\", "\\other\\directory\\file.txt")).toBe("C:\\some\\directory\\other\\directory\\file.txt");
+      expect(join(unc, "\\\\some\\directory\\", "\\other\\directory\\file.txt")).toBe("\\\\some\\directory\\other\\directory\\file.txt");
+    });
+
+    it("should be able to join empty separators", () => {
+      expect(join(posix, "/", "some", "/", "directory", "/", "file.txt")).toBe("/some/directory/file.txt");
+      expect(join(dos, "C:\\", "some", "\\", "directory", "\\", "file.txt")).toBe("C:\\some\\directory\\file.txt");
+      expect(join(unc, "\\\\", "some", "\\", "directory", "\\", "file.txt")).toBe("\\\\some\\directory\\file.txt");
     });
 
     it("should override previous files", () => {
@@ -306,7 +312,7 @@ scope("Integration", "path", () => {
   it("should join multiple segments", () => {
     expect(join(posix, "/some/directory/", "some/file.txt")).toBe("/some/directory/some/file.txt");
     expect(join(posix, "/some/directory/", "some/file.txt")).toBe("/some/directory/some/file.txt");
-    expect(join(posix, "/some/directory/", "/some/file.txt")).toBe("/some/file.txt");
+    expect(join(posix, "/some/directory/", "/some/file.txt")).toBe("/some/directory/some/file.txt");
     expect(join(posix, "/some/directory/", "./some/file.txt")).toBe("/some/directory/some/file.txt");
     expect(join(posix, "some/directory/", "./some/file.txt")).toBe("some/directory/some/file.txt");
     expect(join(posix, "./some/directory/", "./some/file.txt")).toBe("some/directory/some/file.txt");
