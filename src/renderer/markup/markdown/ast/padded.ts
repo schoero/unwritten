@@ -11,9 +11,7 @@ export function renderPaddedNode(ctx: MarkdownRenderContext, paddedNode: PaddedN
   const renderedNewLine = renderNewLine(ctx);
   const renderedEmptyLine = renderEmptyLine(ctx);
 
-  ctx.nesting++;
   const renderedChildren = renderNode(ctx, paddedNode.children);
-  ctx.nesting--;
 
   if(renderedChildren === ""){
     return "";
