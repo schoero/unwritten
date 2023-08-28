@@ -10,7 +10,7 @@ import { md } from "unwritten:utils/template.js";
 import { renderInlineTitleNode } from "./inline-title.js";
 
 
-scope("MarkdownRenderer", "TitleNode", () => {
+scope("MarkdownRenderer", "InlineTitleNode", () => {
 
   const ctx = createRenderContext(BuiltInRenderers.Markdown);
 

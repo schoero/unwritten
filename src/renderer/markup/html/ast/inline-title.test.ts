@@ -10,7 +10,7 @@ import { html } from "unwritten:utils/template.js";
 import { renderTitleNode } from "./title.js";
 
 
-scope("HTMLRenderer", "TitleNode", () => {
+scope("HTMLRenderer", "InlineTitleNode", () => {
 
   const ctx = createRenderContext();
 

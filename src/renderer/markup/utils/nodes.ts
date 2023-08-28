@@ -13,6 +13,7 @@ import type {
   LinkNode,
   ListNode,
   MultilineNode,
+  PaddedNode,
   ParagraphNode,
   SectionNode,
   SmallNode,
@@ -99,6 +100,13 @@ export function createMultilineNode<Children extends ASTNode[]>(...children: Chi
   return {
     children,
     kind: ASTNodeKinds.Multiline
+  };
+}
+
+export function createPaddedNode<Children extends ASTNode[]>(...children: Children): PaddedNode<Children> {
+  return {
+    children,
+    kind: ASTNodeKinds.Padded
   };
 }
 

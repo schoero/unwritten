@@ -10,6 +10,7 @@ import type {
   LinkNode,
   ListNode,
   MultilineNode,
+  PaddedNode,
   ParagraphNode,
   SectionNode,
   SmallNode,
@@ -37,7 +38,9 @@ export type RenderableJSDocTags =
 
 
 // Position
-export type ConvertedPosition = SmallNode<[LinkNode] | [string, LinkNode]> | "";
+export type ConvertedPosition = PaddedNode<[
+  SmallNode<[LinkNode] | [string, LinkNode]>
+]> | "";
 
 // Tags
 export type ConvertedTagsForDocumentation = ParagraphNode | "";

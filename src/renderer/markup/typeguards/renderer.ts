@@ -10,6 +10,7 @@ import type {
   LinkNode,
   ListNode,
   MultilineNode,
+  PaddedNode,
   ParagraphNode,
   SectionNode,
   SmallNode,
@@ -66,6 +67,11 @@ export function isListNode(node: ASTNode): node is ListNode {
 export function isMultilineNode(node: ASTNode): node is MultilineNode {
   return typeof node === "object" && !Array.isArray(node) &&
       node.kind === ASTNodeKinds.Multiline;
+}
+
+export function isPaddedNode(node: ASTNode): node is PaddedNode {
+  return typeof node === "object" && !Array.isArray(node) &&
+      node.kind === ASTNodeKinds.Padded;
 }
 
 export function isParagraphNode(node: ASTNode): node is ParagraphNode {

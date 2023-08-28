@@ -13,6 +13,7 @@ import {
   isAnchorNode,
   isInlineTitleNode,
   isMultilineNode,
+  isPaddedNode,
   isParagraphNode,
   isSectionNode,
   isSmallNode,
@@ -91,8 +92,9 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     ] = titleNode.children;
 
     it("should have a position", () => {
-      assert(isSmallNode(position));
-      expect(position.children).toBeDefined();
+      assert(isPaddedNode(position));
+      assert(isSmallNode(position.children[0]));
+      expect(position.children[0].children).toBeDefined();
     });
 
     it("should have a jsdoc tag", () => {

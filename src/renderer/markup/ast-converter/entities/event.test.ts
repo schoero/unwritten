@@ -6,7 +6,12 @@ import {
   convertEventPropertyEntityForDocumentation,
   convertEventPropertyEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/event.js";
-import { isAnchorNode, isSmallNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import {
+  isAnchorNode,
+  isPaddedNode,
+  isSmallNode,
+  isTitleNode
+} from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -48,8 +53,9 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     ] = convertedEventPropertyForDocumentation.children;
 
     it("should have a position", () => {
-      assert(isSmallNode(position));
-      expect(position.children[0]).not.toBe("");
+      assert(isPaddedNode(position));
+      assert(isSmallNode(position.children[0]));
+      expect(position.children[0].children).toBeDefined();
     });
 
     it("should have a matching name", () => {

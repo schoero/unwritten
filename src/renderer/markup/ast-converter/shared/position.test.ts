@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { isLinkNode, isSmallNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isLinkNode, isPaddedNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
@@ -23,14 +23,14 @@ scope("MarkupRenderer", "Position", () => {
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
     const convertedPosition = convertPositionForDocumentation(ctx, position);
 
-    assert(isSmallNode(convertedPosition));
-    assert(convertedPosition.children.length === 2);
+    assert(isPaddedNode(convertedPosition));
+    assert(convertedPosition.children[0].children.length === 2);
 
-    expect(convertedPosition.children[0]).toBe("Defined in: ");
-    expect(isLinkNode(convertedPosition.children[1])).toBe(true);
+    expect(convertedPosition.children[0].children[0]).toBe("Defined in: ");
+    expect(isLinkNode(convertedPosition.children[0].children[1])).toBe(true);
 
-    expect(convertedPosition.children[1].children[0]).toBe("src/some/file.ts");
-    expect(convertedPosition.children[1].link).toBe("../src/some/file.ts#L7C1");
+    expect(convertedPosition.children[0].children[1].children[0]).toBe("src/some/file.ts");
+    expect(convertedPosition.children[0].children[1].link).toBe("../src/some/file.ts#L7C1");
 
   });
 
@@ -40,13 +40,13 @@ scope("MarkupRenderer", "Position", () => {
     ctx.config.renderConfig[BuiltInRenderers.Markdown].translations.definedIn = "";
     const convertedPosition = convertPositionForDocumentation(ctx, position);
 
-    assert(isSmallNode(convertedPosition));
-    assert(convertedPosition.children.length === 1);
+    assert(isPaddedNode(convertedPosition));
+    assert(convertedPosition.children[0].children.length === 1);
 
-    expect(isLinkNode(convertedPosition.children[0])).toBe(true);
+    expect(isLinkNode(convertedPosition.children[0].children[0])).toBe(true);
 
-    expect(convertedPosition.children[0].children[0]).toBe("src/some/file.ts");
-    expect(convertedPosition.children[0].link).toBe("../src/some/file.ts#L7C1");
+    expect(convertedPosition.children[0].children[0].children[0]).toBe("src/some/file.ts");
+    expect(convertedPosition.children[0].children[0].link).toBe("../src/some/file.ts#L7C1");
 
   });
 

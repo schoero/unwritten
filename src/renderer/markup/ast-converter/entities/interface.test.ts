@@ -11,6 +11,7 @@ import {
   isAnchorNode,
   isInlineTitleNode,
   isListNode,
+  isPaddedNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -72,8 +73,9 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a position", () => {
-      assert(isSmallNode(position));
-      expect(position.children[0]).not.toBe("");
+      assert(isPaddedNode(position));
+      assert(isSmallNode(position.children[0]));
+      expect(position.children[0].children).toBeDefined();
     });
 
     it("should have no tags", () => {

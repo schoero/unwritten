@@ -4,6 +4,7 @@ import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/conditional.js";
 import { renderInlineTitleNode } from "unwritten:renderer/markup/markdown/ast/inline-title.js";
 import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/multiline.js";
+import { renderPaddedNode } from "unwritten:renderer/markup/markdown/ast/padded.js";
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
@@ -31,6 +32,7 @@ import {
   isLinkNode,
   isListNode,
   isMultilineNode,
+  isPaddedNode,
   isParagraphNode,
   isSectionNode,
   isSmallNode,
@@ -208,6 +210,8 @@ export function renderNode(ctx: MarkdownRenderContext, node: ASTNode): string {
     return renderMultilineNode(ctx, node);
   } else if(isInlineTitleNode(node)){
     return renderInlineTitleNode(ctx, node);
+  } else if(isPaddedNode(node)){
+    return renderPaddedNode(ctx, node);
   } else {
     if(Array.isArray(node)){
       return renderArray(ctx, node);

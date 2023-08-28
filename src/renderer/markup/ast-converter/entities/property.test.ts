@@ -14,6 +14,7 @@ import { convertObjectLiteralTypeMultiline } from "unwritten:renderer:markup/ast
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,
+  isPaddedNode,
   isParagraphNode,
   isSmallNode,
   isTitleNode
@@ -74,8 +75,9 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     });
 
     it("should have a position", () => {
-      assert(isSmallNode(position));
-      expect(position.children[0]).not.toBe("");
+      assert(isPaddedNode(position));
+      assert(isSmallNode(position.children[0]));
+      expect(position.children[0].children).toBeDefined();
     });
 
     it("should have an optional tag", () => {
