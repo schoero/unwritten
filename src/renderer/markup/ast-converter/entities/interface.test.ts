@@ -51,8 +51,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const titleNode = convertedInterfaceForDocumentation.children[0];
 
     const [
-      position,
       tags,
+      position,
       typeParameters,
       description,
       remarks,
@@ -164,8 +164,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const titleNode = convertedInterfaceForDocumentation.children[0];
 
     const [
-      interfacePosition,
       interfaceTags,
+      interfacePosition,
       interfaceTypeParameters,
       interfaceDescription,
       interfaceRemarks,

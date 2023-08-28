@@ -44,8 +44,8 @@ scope("MarkupRenderer", EntityKind.Module, () => {
     const titleNode = renderedModuleForDocumentation.children[0];
 
     const [
-      position,
       tags,
+      position,
       description,
       remarks,
       example,

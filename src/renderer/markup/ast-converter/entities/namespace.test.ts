@@ -44,8 +44,8 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     const titleNode = renderedNamespaceForDocumentation.children[0];
 
     const [
-      position,
       tags,
+      position,
       description,
       remarks,
       example,

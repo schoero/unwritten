@@ -59,8 +59,8 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
     createTitleNode(
       name,
       anchor,
-      convertedPosition,
       convertedTags,
+      convertedPosition,
       convertedDescription,
       convertedRemarks,
       convertedExample,

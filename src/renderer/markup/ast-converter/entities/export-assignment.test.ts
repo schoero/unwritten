@@ -70,8 +70,8 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     assert(isTitleNode(titleNode), "Rendered export assignment for documentation is not a title");
 
     const [
-      position,
       tags,
+      position,
       description,
       remarks,
       example,

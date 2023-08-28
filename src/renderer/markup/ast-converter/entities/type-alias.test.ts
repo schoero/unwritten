@@ -64,8 +64,8 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
     assert(isTitleNode(titleNode), "Rendered typeAlias for documentation is not a title");
 
     const [
-      position,
       tags,
+      position,
       typeParameters,
       type,
       description,

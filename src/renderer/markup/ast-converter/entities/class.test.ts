@@ -46,8 +46,8 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     const titleNode = convertedClassForDocumentation.children[0];
 
     const [
-      position,
       tags,
+      position,
       description,
       remarks,
       example,

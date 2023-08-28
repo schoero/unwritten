@@ -60,8 +60,8 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
     createTitleNode(
       name,
       anchor,
-      convertedPosition,
       convertedTags,
+      convertedPosition,
       convertedDescription,
       convertedRemarks,
       convertedExample,

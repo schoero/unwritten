@@ -155,8 +155,8 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
     createTitleNode(
       name,
       anchor,
-      convertedPosition,
       convertedTags,
+      convertedPosition,
       convertedDescription,
       convertedRemarks,
       convertedExample,

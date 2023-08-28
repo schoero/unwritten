@@ -61,8 +61,8 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
     createTitleNode(
       name,
       anchor,
-      convertedPosition,
       convertedTags,
+      convertedPosition,
       convertedDescription,
       convertedRemarks,
       convertedExample,

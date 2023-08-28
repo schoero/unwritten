@@ -42,8 +42,8 @@ export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderC
     createTitleNode(
       name,
       anchor,
-      convertedPosition,
       convertedTags,
+      convertedPosition,
       convertedDescription,
       convertedRemarks,
       convertedExample,

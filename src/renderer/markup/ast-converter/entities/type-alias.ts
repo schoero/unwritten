@@ -58,8 +58,8 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
     createTitleNode(
       renderedSignature,
       anchor,
-      convertedPosition,
       convertedTags,
+      convertedPosition,
       convertedTypeParameterEntities,
       convertedType,
       convertedDescription,

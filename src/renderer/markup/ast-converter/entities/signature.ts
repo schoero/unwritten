@@ -92,8 +92,8 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
     createTitleNode(
       signature,
       anchor,
-      position,
       tags,
+      position,
       typeParameters,
       parameters,
       returnType,

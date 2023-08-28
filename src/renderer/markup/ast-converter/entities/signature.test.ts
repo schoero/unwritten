@@ -79,8 +79,8 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     assert(isTitleNode(titleNode), "Converted signature for documentation is not a title");
 
     const [
-      position,
       tags,
+      position,
       typeParameters,
       parameters,
       returnType,

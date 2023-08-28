@@ -62,8 +62,8 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
     assert(isTitleNode(titleNode), "Rendered variable for documentation is not a title");
 
     const [
-      position,
       tags,
+      position,
       type,
       description,
       remarks,

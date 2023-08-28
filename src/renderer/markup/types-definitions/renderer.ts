@@ -280,8 +280,8 @@ export type ConvertedNamespaceEntityForTableOfContents = [
 ];
 export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
@@ -296,8 +296,8 @@ export type ConvertedModuleEntityForTableOfContents = [
 ];
 export type ConvertedModuleEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
@@ -309,8 +309,8 @@ export type ConvertedModuleEntityForDocumentation = SectionNode<[
 export type ConvertedTypeAliasEntityForTableOfContents = AnchorNode;
 export type ConvertedTypeAliasEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
     type: ConvertedTypeInline,
     description: ConvertedDescriptionForDocumentation,
@@ -333,8 +333,8 @@ export type ConvertedFunctionEntityForType = ConvertedFunctionLikeEntityForType;
 export type ConvertedSignatureEntityForTableOfContents = AnchorNode;
 export type ConvertedSignatureEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
     parameters: ConvertedParameterEntitiesForDocumentation,
     returnType: ConvertedReturnTypeForDocumentation,
@@ -358,8 +358,8 @@ export type ConvertedSignatureEntityForType = MultilineNode<[
 export type ConvertedVariableEntityForTableOfContents = AnchorNode;
 export type ConvertedVariableEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     type: ConvertedTypeInline,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
@@ -371,8 +371,8 @@ export type ConvertedVariableEntityForDocumentation = SectionNode<[
 export type ConvertedExportAssignmentEntityForTableOfContents = AnchorNode;
 export type ConvertedExportAssignmentEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
@@ -384,8 +384,8 @@ export type ConvertedExportAssignmentEntityForDocumentation = SectionNode<[
 export type ConvertedInterfaceEntityForTableOfContents = AnchorNode;
 export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     typeParameters: ConvertedTypeParameterEntitiesForDocumentation,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
@@ -414,8 +414,8 @@ export type ConvertedClassEntityForTableOfContents = [
 ];
 export type ConvertedClassEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
@@ -432,8 +432,8 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
 export type ConvertedEnumEntityForTableOfContents = AnchorNode;
 export type ConvertedEnumEntityForDocumentation = SectionNode<[
   children: TitleNode<[
-    position: ConvertedPosition,
     tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,

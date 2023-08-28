@@ -93,8 +93,8 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
     createTitleNode(
       name,
       anchor,
-      position,
       tags,
+      position,
       typeParameters,
       description,
       remarks,

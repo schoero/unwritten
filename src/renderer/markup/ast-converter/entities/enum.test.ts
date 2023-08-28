@@ -53,8 +53,8 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     const titleNode = convertedEnumEntityForDocumentation.children[0];
 
     const [
-      position,
       tags,
+      position,
       description,
       remarks,
       example,
