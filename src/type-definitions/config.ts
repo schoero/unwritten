@@ -42,7 +42,7 @@ export interface RenderConfig {
   };
 }
 
-export interface ConfigWithSchema extends CompleteConfig {
+export interface ConfigWithSchema extends Config {
   $schema: string;
 }
 
