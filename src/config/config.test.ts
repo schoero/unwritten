@@ -106,7 +106,7 @@ scope("Integration", "Config", async () => {
   it("should be able to extend a config", async () => {
 
     const config = await createConfig(ctx, {
-      extends: "@namespace/.unwritten.json"
+      extends: "@namespace"
     });
 
     expect(config.renderConfig.test).toBeDefined();

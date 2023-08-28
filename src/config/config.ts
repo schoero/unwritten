@@ -10,6 +10,13 @@ import type { CompleteConfig, Config } from "unwritten:type-definitions/config.j
 import type { DefaultContext } from "unwritten:type-definitions/context.js";
 
 
+const CONFIG_NAMES = [
+  ".unwritten.json",
+  ".unwritten.js",
+  ".unwritten.mjs",
+  ".unwritten.cjs"
+];
+
 export async function createConfig(ctx: DefaultContext, configOrPath: Config | string | undefined, output?: string): Promise<CompleteConfig> {
 
   const logger = ctx.dependencies.logger;
@@ -36,12 +43,7 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
 
   } else if(typeof configOrPath === "undefined"){
 
-    absoluteConfigPath = findFile(ctx, [
-      ".unwritten.json",
-      ".unwritten.js",
-      ".unwritten.mjs",
-      ".unwritten.cjs"
-    ], configOrPath);
+    absoluteConfigPath = findFile(ctx, CONFIG_NAMES, configOrPath);
 
     if(absoluteConfigPath === undefined){
       logger?.info("No unwritten.json found, continue using default configuration.");
@@ -79,12 +81,14 @@ async function importFile(ctx: DefaultContext, path: string) {
     const { default: importFile } = await import(path);
     return importFile;
   }
+
 }
 
 async function getExtendConfig(ctx: DefaultContext, config: Config): Promise<Config> {
 
   const { cwd } = ctx.dependencies.process;
   const { join } = ctx.dependencies.path;
+  const { existsSync } = ctx.dependencies.fs;
 
   if(config.extends === undefined){
     return config;
@@ -94,7 +98,31 @@ async function getExtendConfig(ctx: DefaultContext, config: Config): Promise<Con
     throw new TypeError("\"extends\" property in unwritten config must of type string if provided.");
   }
 
-  let loadedConfig = await importFile(ctx, join(cwd(), "node_modules/", config.extends));
+  let loadedConfig: Config | undefined;
+
+  // Load via direct import
+  if(existsSync(config.extends)){
+    loadedConfig = await importFile(ctx, config.extends);
+  }
+
+  // Load via package.json main property
+  if(loadedConfig === undefined){
+    const packageJsonPath = findFile(ctx, "package.json", join(cwd(), "node_modules", "/", config.extends, "/"));
+    const packageJson = packageJsonPath && await importFile(ctx, packageJsonPath);
+
+    if(packageJson?.main !== undefined){
+      loadedConfig = await importFile(ctx, join(cwd(), "node_modules", "/", config.extends, "/", packageJson.main));
+    }
+  }
+
+  // Load via finder
+  if(loadedConfig === undefined){
+    const foundConfigPath = findFile(ctx, CONFIG_NAMES, join(cwd(), "node_modules", "/", config.extends, "/"));
+
+    if(foundConfigPath !== undefined){
+      loadedConfig = await importFile(ctx, foundConfigPath);
+    }
+  }
 
   if(typeof loadedConfig !== "object" || Array.isArray(loadedConfig)){
     throw new TypeError("The extended unwritten config is not an object.");
