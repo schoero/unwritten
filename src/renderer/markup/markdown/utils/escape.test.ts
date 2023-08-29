@@ -87,5 +87,24 @@ scope("Renderer", "Render abstraction", () => {
       `);
     });
 
+    it("should preserve indentation", () => {
+      const testString = md`
+        should preserve indentation
+          before code fences
+          \`\`\`ts
+          inside code fences
+          \`\`\`
+          and after code fences
+      `;
+      expect(escapeMarkdown(testString)).toBe(md`
+        should preserve indentation
+          before code fences
+          \`\`\`ts
+          inside code fences
+          \`\`\`
+          and after code fences
+      `);
+    });
+
   });
 });
