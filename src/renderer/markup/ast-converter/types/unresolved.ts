@@ -11,11 +11,16 @@ import type { ConvertedTypeReferenceTypeInline } from "unwritten:renderer:markup
 
 export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolvedType: UnresolvedType): ConvertedTypeReferenceTypeInline {
 
-  const name = unresolvedType.name ?? "";
+  const renderConfig = getRenderConfig(ctx);
+
+  const name = unresolvedType.name;
+  const encapsulatedName = name
+    ? encapsulate(name, renderConfig.typeEncapsulation)
+    : "";
 
   const link = name &&
-    name in ctx.config.externalTypes
-    ? createLinkNode(name, ctx.config.externalTypes[name]!)
+  name in ctx.config.externalTypes
+    ? createLinkNode(encapsulatedName, ctx.config.externalTypes[name]!)
     : undefined;
 
   const typeArguments = unresolvedType.typeArguments && unresolvedType.typeArguments.length > 0
@@ -23,7 +28,7 @@ export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolve
     : "";
 
   return spaceBetween(
-    link ?? name,
+    link ?? encapsulatedName,
     typeArguments
   );
 

@@ -17,10 +17,16 @@ import type {
 
 export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeInline {
 
+  const renderConfig = getRenderConfig(ctx);
+
   const fallback = (
     typeReferenceType.type &&
      convertType(ctx, typeReferenceType.type).inlineType
-  ) ?? typeReferenceType.name ?? "";
+  ) ??
+  (typeReferenceType.name
+    ? encapsulate(typeReferenceType.name, renderConfig.typeEncapsulation)
+    : ""
+  );
 
   if(typeReferenceType.target === undefined){
     return fallback;
