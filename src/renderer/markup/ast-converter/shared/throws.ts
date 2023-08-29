@@ -1,8 +1,13 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import {
+  createInlineTitleNode,
+  createListNode,
+  createMultilineNode,
+  createParagraphNode,
+  createTitleNode
+} from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { Throws } from "unwritten:interpreter:type-definitions/shared.js";
 import type { ASTNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
@@ -53,7 +58,6 @@ export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws):
   }
 
   const translate = getTranslator(ctx);
-  const renderConfig = getRenderConfig(ctx);
 
   const title = translate("throws", { capitalize: true });
 
@@ -61,13 +65,15 @@ export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws):
 
     if(throws.type){
       const { inlineType, multilineType } = convertType(ctx, throws.type);
-      return [
-        spaceBetween(
-          inlineType,
-          throws.description ?? ""
+      return createMultilineNode(
+        createParagraphNode(
+          spaceBetween(
+            inlineType,
+            throws.description ?? ""
+          )
         ),
         multilineType ?? ""
-      ];
+      );
     }
 
     return throws.description;
@@ -76,7 +82,7 @@ export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws):
 
   return createInlineTitleNode(
     title,
-    createListNode(convertedThrows)
+    createListNode(...convertedThrows)
   );
 
 }

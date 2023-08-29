@@ -1,4 +1,3 @@
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createInlineTitleNode, createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -42,7 +41,6 @@ export function convertRemarksForType(ctx: MarkupRenderContexts, remarks: Remark
   }
 
   const translate = getTranslator(ctx);
-  const renderConfig = getRenderConfig(ctx);
 
   const title = translate("remark", { capitalize: true, count: remarks.length });
 
@@ -56,7 +54,9 @@ export function convertRemarksForType(ctx: MarkupRenderContexts, remarks: Remark
 
   return createInlineTitleNode(
     title,
-    ...convertedRemarks
+    createParagraphNode(
+      ...convertedRemarks
+    )
   );
 
 }

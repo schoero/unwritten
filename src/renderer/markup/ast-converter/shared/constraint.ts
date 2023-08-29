@@ -1,5 +1,5 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { createInlineTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { createInlineTitleNode, createParagraphNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { isMultilineType } from "unwritten:renderer/markup/utils/types.js";
@@ -15,9 +15,11 @@ export function convertConstraintForType(ctx: MarkupRenderContexts, type: Type) 
   const { inlineType, multilineType } = convertType(ctx, type);
 
   const inlineConstraint = !isMultilineType(type) || !multilineType
-    ? spaceBetween(
-      `${translate("constraint", { capitalize: true })}:`,
-      inlineType
+    ? createParagraphNode(
+      spaceBetween(
+        `${translate("constraint", { capitalize: true })}:`,
+        inlineType
+      )
     )
     : undefined;
 

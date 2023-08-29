@@ -233,9 +233,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     it("should have a matching call signature throws", () => {
       assert(isInlineTitleNode(callSignatureThrows));
       assert(isListNode(callSignatureThrows.children[0]));
-      expect(callSignatureThrows.children[0].children[0]).toStrictEqual([
-        "Call signature throws"
-      ]);
+      expect(renderNode(ctx, callSignatureThrows.children[0])).toContain("Call signature throws");
     });
 
     it("should have a matching call signature description", () => {
@@ -244,12 +242,12 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a matching call signature remarks", () => {
       assert(isInlineTitleNode(callSignatureRemarks));
-      expect(callSignatureRemarks.children[0]).toBe("Call signature remarks");
+      expect(renderNode(ctx, callSignatureRemarks.children[0])).toContain("Call signature remarks");
     });
 
     it("should have a matching call signature example", () => {
       assert(isInlineTitleNode(callSignatureExample));
-      expect(callSignatureExample.children[0]).toBe("Call signature example");
+      expect(renderNode(ctx, callSignatureExample.children[0])).toContain("Call signature example");
     });
 
     it("should have a matching property description", () => {
@@ -258,12 +256,12 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a matching property remarks", () => {
       assert(isInlineTitleNode(propertyRemarks));
-      expect(propertyRemarks.children[0]).toBe("Property remarks");
+      expect(renderNode(ctx, propertyRemarks.children[0])).toContain("Property remarks");
     });
 
     it("should have a matching property example", () => {
       assert(isInlineTitleNode(propertyExample));
-      expect(propertyExample.children[0]).toBe("Property example");
+      expect(renderNode(ctx, propertyExample.children[0])).toContain("Property example");
     });
 
     it("should have a property tags", () => {
@@ -277,12 +275,12 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a matching event remarks", () => {
       assert(isInlineTitleNode(eventRemarks));
-      expect(eventRemarks.children[0]).toBe("Event remarks");
+      expect(renderNode(ctx, eventRemarks.children[0])).toContain("Event remarks");
     });
 
     it("should have a matching event example", () => {
       assert(isInlineTitleNode(eventExample));
-      expect(eventExample.children[0]).toBe("Event example");
+      expect(renderNode(ctx, eventExample.children[0])).toContain("Event example");
     });
 
   }

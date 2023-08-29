@@ -12,7 +12,6 @@ import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,
   isInlineTitleNode,
-  isMultilineNode,
   isPaddedNode,
   isParagraphNode,
   isSectionNode,
@@ -117,9 +116,9 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a matching return type", () => {
       assert(isTitleNode(returnType));
-      assert(isMultilineNode(returnType.children[0]));
-      expect(renderNode(ctx, returnType.children[0].children[0])).toContain("void");
-      expect(renderNode(ctx, returnType.children[0].children[0])).toContain("Return type description");
+      assert(isParagraphNode(returnType.children[0]));
+      expect(renderNode(ctx, returnType.children[0])).toContain("void");
+      expect(renderNode(ctx, returnType.children[0])).toContain("Return type description");
     });
 
     it("should have a matching description", () => {

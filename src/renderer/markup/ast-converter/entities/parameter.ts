@@ -5,6 +5,7 @@ import {
   createInlineTitleNode,
   createListNode,
   createMultilineNode,
+  createParagraphNode,
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes.js";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
@@ -115,13 +116,15 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
      convertInitializerForType(ctx, parameterEntity.initializer);
 
   return createMultilineNode(
-    spaceBetween(
-      name,
-      inlineType,
-      description,
-      optional,
-      rest,
-      initializer?.inlineInitializer ?? ""
+    createParagraphNode(
+      spaceBetween(
+        name,
+        inlineType,
+        description,
+        optional,
+        rest,
+        initializer?.inlineInitializer ?? ""
+      )
     ),
     multilineType ?? "",
     initializer?.multilineInitializer ?? ""

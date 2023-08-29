@@ -146,7 +146,8 @@ export type ConvertedFunctionTypeInline = ASTNode;
 
 // Return type
 export type ConvertedReturnTypeForDocumentation = TitleNode<[
-  ASTNode
+  ParagraphNode,
+  ConditionalNode | ConvertedTypeMultiline | ""
 ]>;
 export type ConvertedReturnTypeForType = InlineTitleNode<[
   inlineTypeAndDescription: ASTNode,

@@ -2,11 +2,12 @@ import { expect, it } from "vitest";
 
 import { createFunctionEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { renderNode } from "unwritten:renderer/index.js";
 import {
   convertParameterEntitiesForDocumentation,
   convertParameterEntitiesForSignature
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import { isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
@@ -28,7 +29,7 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
     const symbol = exportedSymbols.find(s => s.name === "test")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
     const parameterEntities = functionEntity.signatures[0].parameters;
-    const ctx = createRenderContext();
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
     const convertedParametersForSignature = convertParameterEntitiesForSignature(ctx, parameterEntities);
     const convertedParameterForDocumentation = convertParameterEntitiesForDocumentation(ctx, parameterEntities);
@@ -39,12 +40,12 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
       const renderedParameterForSignature = renderNode(ctx, convertedParametersForSignature);
       expect(renderedParameterForSignature).toBe("param");
       const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation.children[0].children[0]);
-      expect(renderedParameterForDocumentation).toMatch(/param .*$/);
+      expect(renderedParameterForDocumentation).toContain("param");
     });
 
     it("should have a matching type", () => {
       const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation.children[0].children[0]);
-      expect(renderedParameterForDocumentation).toMatch(/^.* number$/);
+      expect(renderedParameterForDocumentation).toContain("number");
     });
 
   }

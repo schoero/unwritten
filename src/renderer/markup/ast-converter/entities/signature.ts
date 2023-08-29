@@ -36,6 +36,7 @@ import {
   createAnchorNode,
   createInlineTitleNode,
   createMultilineNode,
+  createParagraphNode,
   createSectionNode,
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes.js";
@@ -172,17 +173,15 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
   const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
 
-  const convertedReturnTypeWithDescription = createMultilineNode(
-    spaceBetween(
-      inlineType,
-      returnDescription
-    ),
-    multilineType ?? ""
-  );
-
   return createTitleNode(
     translate("returnType", { capitalizeEach: true }),
-    convertedReturnTypeWithDescription
+    createParagraphNode(
+      spaceBetween(
+        inlineType,
+        returnDescription
+      )
+    ),
+    multilineType ?? ""
   );
 
 }
@@ -190,7 +189,6 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
 function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeForType {
 
   const translate = getTranslator(ctx);
-  const renderConfig = getRenderConfig(ctx);
 
   const title = translate("returnType", { capitalizeEach: true });
 
@@ -199,9 +197,11 @@ function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: Si
 
   return createInlineTitleNode(
     title,
-    spaceBetween(
-      inlineType,
-      returnDescription
+    createParagraphNode(
+      spaceBetween(
+        inlineType,
+        returnDescription
+      )
     ),
     multilineType ?? ""
   );

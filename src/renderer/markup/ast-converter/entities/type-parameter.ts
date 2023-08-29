@@ -6,6 +6,7 @@ import {
   createInlineTitleNode,
   createListNode,
   createMultilineNode,
+  createParagraphNode,
   createSpanNode,
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes.js";
@@ -101,11 +102,13 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
   const anchor = registerAnchor(ctx, typeParameterEntity.name, symbolId);
 
   return createMultilineNode(
-    spaceBetween(
-      createSpanNode(anchor, name),
-      constraint?.inlineConstraint ?? "",
-      description,
-      initializer?.inlineInitializer ?? ""
+    createParagraphNode(
+      spaceBetween(
+        createSpanNode(anchor, name),
+        constraint?.inlineConstraint ?? "",
+        description,
+        initializer?.inlineInitializer ?? ""
+      )
     ),
     constraint?.multilineConstraint ?? "",
     initializer?.multilineInitializer ?? ""

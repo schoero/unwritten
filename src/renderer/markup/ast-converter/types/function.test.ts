@@ -4,7 +4,7 @@ import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { convertFunctionTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
 import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { isInlineTitleNode, isListNode, isMultilineNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isInlineTitleNode, isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -54,7 +54,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
 
     it("should render the return type correctly", () => {
       assert(isInlineTitleNode(returnType));
-      expect(returnType.children[0]).toContain("boolean");
+      expect(renderNode(ctx, returnType.children[0])).toContain("boolean");
     });
 
   }
@@ -95,17 +95,17 @@ scope("MarkupRenderer", TypeKind.Function, () => {
       assert(isInlineTitleNode(parameters), "parameters should be wrapped in a list node");
       const parameterList = parameters.children[0];
       expect(parameterList.children).toHaveLength(2);
-      assert(isMultilineNode(parameterList.children[0]));
-      expect(parameterList.children[0].children[0]).toContain("a");
-      expect(parameterList.children[0].children[0]).toContain("string");
-      assert(isMultilineNode(parameterList.children[1]));
-      expect(parameterList.children[1].children[0]).toContain("b");
-      expect(parameterList.children[1].children[0]).toContain("number");
+      const renderedParameter1 = renderNode(ctx, parameterList.children[0]);
+      expect(renderedParameter1).toContain("a");
+      expect(renderedParameter1).toContain("string");
+      const renderedParameter2 = renderNode(ctx, parameterList.children[1]);
+      expect(renderedParameter2).toContain("b");
+      expect(renderedParameter2).toContain("number");
     });
 
     it("should render the return type correctly", () => {
       assert(isInlineTitleNode(returnType));
-      expect(returnType.children[0]).toContain("boolean");
+      expect(renderNode(ctx, returnType.children[0])).toContain("boolean");
     });
 
   }
@@ -177,35 +177,39 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     });
 
     it("should have matching parameters in each signature", () => {
-      assert(isInlineTitleNode(parameters));
-      const parameterList = parameters.children[0];
-      expect(parameterList.children).toHaveLength(2);
-      assert(isMultilineNode(parameterList.children[0]));
-      expect(parameterList.children[0].children[0]).toContain("a");
-      expect(parameterList.children[0].children[0]).toContain("number");
-      assert(isMultilineNode(parameterList.children[1]));
-      expect(parameterList.children[1].children[0]).toContain("b");
-      expect(parameterList.children[1].children[0]).toContain("number");
+      {
+        assert(isInlineTitleNode(parameters));
+        const parameterList = parameters.children[0];
+        expect(parameterList.children).toHaveLength(2);
+        const renderedParameter1 = renderNode(ctx, parameterList.children[0]);
+        expect(renderedParameter1).toContain("a");
+        expect(renderedParameter1).toContain("number");
+        const renderedParameter2 = renderNode(ctx, parameterList.children[1]);
+        expect(renderedParameter2).toContain("b");
+        expect(renderedParameter2).toContain("number");
+      }
 
-      assert(isInlineTitleNode(parameters2));
-      const parameterList2 = parameters2.children[0];
-      expect(parameterList2.children).toHaveLength(3);
-      assert(isMultilineNode(parameterList2.children[0]));
-      expect(parameterList2.children[0].children[0]).toContain("a");
-      expect(parameterList2.children[0].children[0]).toContain("number");
-      assert(isMultilineNode(parameterList2.children[1]));
-      expect(parameterList2.children[1].children[0]).toContain("b");
-      expect(parameterList2.children[1].children[0]).toContain("number");
-      assert(isMultilineNode(parameterList2.children[2]));
-      expect(parameterList2.children[2].children[0]).toContain("c");
-      expect(parameterList2.children[2].children[0]).toContain("number");
+      {
+        assert(isInlineTitleNode(parameters2));
+        const parameterList2 = parameters2.children[0];
+        expect(parameterList2.children).toHaveLength(3);
+        const renderedParameter1 = renderNode(ctx, parameterList2.children[0]);
+        expect(renderedParameter1).toContain("a");
+        expect(renderedParameter1).toContain("number");
+        const renderedParameter2 = renderNode(ctx, parameterList2.children[1]);
+        expect(renderedParameter2).toContain("b");
+        expect(renderedParameter2).toContain("number");
+        const renderedParameter3 = renderNode(ctx, parameterList2.children[2]);
+        expect(renderedParameter3).toContain("c");
+        expect(renderedParameter3).toContain("number");
+      }
     });
 
     it("should render the return type correctly for each signature", () => {
       assert(isInlineTitleNode(returnType));
-      expect(returnType.children[0]).toContain("number");
+      expect(renderNode(ctx, returnType.children[0])).toContain("number");
       assert(isInlineTitleNode(returnType2));
-      expect(returnType2.children[0]).toContain("number");
+      expect(renderNode(ctx, returnType2.children[0])).toContain("number");
     });
 
   }
