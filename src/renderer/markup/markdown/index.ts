@@ -172,8 +172,8 @@ const markdownRenderer: MarkdownRenderer = {
 
       const renderedContent = renderNode(ctx, ast);
 
-      const renderedContendWithoutTrailingEmptyLines = renderedContent.endsWith(renderedEmptyLine + renderedNewLine)
-        ? renderedContent.slice(0, -(renderedEmptyLine.length + renderedNewLine.length))
+      const renderedContendWithoutTrailingEmptyLines = renderedContent.endsWith(renderedNewLine + renderedEmptyLine)
+        ? renderedContent.slice(0, -(renderedNewLine.length + renderedEmptyLine.length))
         : renderedContent;
 
       const renderedContentWithTrailingNewLine = renderedContendWithoutTrailingEmptyLines.endsWith(renderedNewLine)
