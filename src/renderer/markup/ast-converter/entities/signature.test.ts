@@ -99,7 +99,8 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a jsdoc tag", () => {
       assert(isParagraphNode(tags));
-      expect(tags.children).toContain("beta");
+      const renderedTags = renderNode(ctx, tags);
+      expect(renderedTags).toContain("beta");
     });
 
     it("should have a throw node", () => {

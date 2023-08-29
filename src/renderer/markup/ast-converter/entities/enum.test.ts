@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { createEnumEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { renderNode } from "unwritten:renderer/index.js";
 import {
   convertEnumEntityForDocumentation,
   convertEnumEntityForTableOfContents
@@ -79,8 +80,9 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
 
     it("should have matching tags", () => {
       assert(isParagraphNode(tags));
-      expect(tags.children).toContain("beta");
-      expect(tags.children).toContain("deprecated");
+      const renderedTags = renderNode(ctx, tags);
+      expect(renderedTags).toContain("beta");
+      expect(renderedTags).toContain("deprecated");
     });
 
     it("should have a matching description", () => {

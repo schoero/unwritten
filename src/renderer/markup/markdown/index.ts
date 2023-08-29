@@ -41,7 +41,7 @@ import {
   isStrikethroughNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
-import { minMax, nodeFilter } from "unwritten:renderer:markup/utils/renderer.js";
+import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 
 import { renderTitleNode } from "./ast/title.js";
 
@@ -252,7 +252,7 @@ function renderString(ctx: MarkdownRenderContext, node: string): string {
 
   // Indent all lines except the first one
   const indentedLines = escapedLines
-    .filter(nodeFilter)
+    .filter(node => !!node)
     .map((line, index) =>
       index === 0
         ? line

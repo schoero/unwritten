@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { createModuleEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { renderNode } from "unwritten:renderer/index.js";
 import {
   convertModuleEntityForDocumentation,
   convertModuleEntityForTableOfContents
@@ -80,8 +81,9 @@ scope("MarkupRenderer", EntityKind.Module, () => {
 
     it("should have a matching tags", () => {
       assert(isParagraphNode(tags));
-      expect(tags.children).toContain("deprecated");
-      expect(tags.children).toContain("beta");
+      const renderedTags = renderNode(ctx, tags);
+      expect(renderedTags).toContain("deprecated");
+      expect(renderedTags).toContain("beta");
     });
 
     it("should have a position", () => {

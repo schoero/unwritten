@@ -1,10 +1,10 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { renderNode } from "unwritten:renderer/markup/markdown/index.js";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
 
@@ -23,11 +23,11 @@ scope("MarkupRenderer", "Tags", () => {
       } as PropertyEntity
     );
 
-    assert(convertedTags, "Converted tags are undefined");
+    const renderedTags = renderNode(ctx, convertedTags);
 
-    expect(convertedTags.children).toContain("readonly");
-    expect(convertedTags.children).toContain("optional");
-    expect(convertedTags.children).toContain("beta");
+    expect(renderedTags).toContain("readonly");
+    expect(renderedTags).toContain("optional");
+    expect(renderedTags).toContain("beta");
 
   });
 

@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 
 import { createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { renderNode } from "unwritten:renderer/index.js";
 import {
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents
@@ -79,7 +80,8 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
 
     it("should have a jsdoc tag", () => {
       assert(isParagraphNode(tags));
-      expect(tags.children).toContain("beta");
+      const renderedTags = renderNode(ctx, tags);
+      expect(renderedTags).toContain("beta");
     });
 
     it("should have a matching type", () => {

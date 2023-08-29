@@ -225,8 +225,9 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     it("should have a interface tags", () => {
       assert(isParagraphNode(interfaceTags));
-      expect(interfaceTags.children).toContain("beta");
-      expect(interfaceTags.children).toContain("deprecated");
+      const renderedTags = renderNode(ctx, interfaceTags);
+      expect(renderedTags).toContain("beta");
+      expect(renderedTags).toContain("deprecated");
     });
 
     it("should have a matching call signature throws", () => {

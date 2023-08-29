@@ -46,13 +46,9 @@ export function minMax(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
-export function nodeFilter(node: ASTNode) {
-  return node !== "";
-}
-
 export function spaceBetween(...nodes: ASTNode[]) {
   return nodes
-    .filter(nodeFilter)
+    .filter(node => !!node)
     .reduce<ASTNode[]>((acc, node, index) => {
     if(index > 0){
       acc.push(" ", node);

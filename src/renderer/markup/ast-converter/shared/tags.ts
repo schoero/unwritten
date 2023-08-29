@@ -21,13 +21,17 @@ export function convertTagsForDocumentation(ctx: MarkupRenderContexts, entityWit
   const convertedOptional = "optional" in entityWithTags ? convertOptional(ctx, entityWithTags) : [];
 
   const convertedTags = [
-    ...convertedJSDocTags,
-    ...convertedModifiers,
-    ...convertedOptional
-  ];
+    convertedJSDocTags,
+    convertedModifiers,
+    convertedOptional
+  ].filter(
+    convertedTag => convertedTag.length > 0
+  );
 
   return convertedTags.length > 0
-    ? createParagraphNode(...spaceBetween(...convertedTags))
+    ? createParagraphNode(
+      ...spaceBetween(...convertedTags)
+    )
     : "";
 
 }
@@ -40,11 +44,13 @@ export function convertTagsForType(ctx: MarkupRenderContexts, entityWithTags: En
   const convertedRest = "rest" in entityWithTags ? convertRest(ctx, entityWithTags) : [];
 
   const convertedTags = [
-    ...convertedJSDocTags,
-    ...convertedModifiers,
-    ...convertedOptional,
-    ...convertedRest
-  ];
+    convertedJSDocTags,
+    convertedModifiers,
+    convertedOptional,
+    convertedRest
+  ].filter(
+    convertedTag => convertedTag.length > 0
+  );
 
   return convertedTags.length > 0
     ? spaceBetween(...convertedTags)
