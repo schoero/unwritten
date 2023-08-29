@@ -5,6 +5,7 @@ import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/co
 import { renderInlineTitleNode } from "unwritten:renderer/markup/markdown/ast/inline-title.js";
 import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/multiline.js";
 import { renderPaddedNode } from "unwritten:renderer/markup/markdown/ast/padded.js";
+import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line.js";
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
 import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
@@ -136,6 +137,9 @@ const markdownRenderer: MarkdownRenderer = {
 
     const { getFileName } = ctx.dependencies.path;
 
+    const renderedNewLine = renderNewLine(ctx);
+    const renderedEmptyLine = renderEmptyLine(ctx);
+
     markdownRenderer.initializeContext(ctx);
 
     return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
@@ -166,12 +170,19 @@ const markdownRenderer: MarkdownRenderer = {
         createSectionNode("documentation", ...convertedSourceFileEntity.documentation)
       );
 
-      const renderedNewLine = renderNewLine(ctx);
       const renderedContent = renderNode(ctx, ast);
+
+      const renderedContendWithoutTrailingEmptyLines = renderedContent.endsWith(renderedEmptyLine + renderedNewLine)
+        ? renderedContent.slice(0, -(renderedEmptyLine.length + renderedNewLine.length))
+        : renderedContent;
+
+      const renderedContentWithTrailingNewLine = renderedContendWithoutTrailingEmptyLines.endsWith(renderedNewLine)
+        ? renderedContendWithoutTrailingEmptyLines
+        : `${renderedContendWithoutTrailingEmptyLines}${renderedNewLine}`;
 
       const filePath = ctx.currentFile.dst;
 
-      files[filePath] = `${renderedContent}${renderedNewLine}`;
+      files[filePath] = renderedContentWithTrailingNewLine;
       return files;
 
     }, {});
