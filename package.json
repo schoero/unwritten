@@ -30,7 +30,7 @@
     "markdownlint:fix": "markdownlint-cli2-fix '**/*.md' '#node_modules' '#CHANGELOG.md'",
     "prerelease": "npm run build",
     "release": "changelogen --release",
-    "schema": "ts-json-schema-generator --path './src/type-definitions/config.d.ts' --type ConfigWithSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
+    "schema": "ts-json-schema-generator --path './src/type-definitions/config.d.ts' --type ConfigForSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
     "spellcheck": "cspell lint",
     "spellcheck:ci": "npm run spellcheck -- --no-progress",
     "test": "vitest -c ./vite.config.ts",

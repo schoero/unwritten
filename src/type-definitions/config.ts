@@ -42,8 +42,17 @@ export interface RenderConfig {
   };
 }
 
-export interface ConfigWithSchema extends Config {
+export interface ConfigForSchema extends Config {
   $schema: string;
+  interpreterConfig: InterpreterConfig;
+  renderConfig: {
+    [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
+    [BuiltInRenderers.HTML]: Complete<HTMLRenderConfig>;
+    [BuiltInRenderers.JSON]: Complete<JSONRenderConfig>;
+    [key: string]: {
+      [key: string]: any;
+    };
+  };
 }
 
 export interface InterpreterConfig {

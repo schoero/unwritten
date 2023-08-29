@@ -4,7 +4,7 @@ import { cwd } from "unwritten:platform/process/node.js";
 
 import { getDefaultConfig } from "./config.js";
 
-import type { ConfigWithSchema } from "unwritten:type-definitions/config.js";
+import type { ConfigForSchema } from "unwritten:type-definitions/config.js";
 import type { Options } from "unwritten:type-definitions/options.js";
 
 
@@ -35,7 +35,7 @@ export async function generateConfig(path?: string, options?: Options) {
 
 
 export function getConfigWithSchema() {
-  const config: ConfigWithSchema = {
+  const config: ConfigForSchema = {
     $schema: "https://raw.githubusercontent.com/schoero/unwritten/main/schemas/renderer/config.json",
     ...getDefaultConfig()
   };
