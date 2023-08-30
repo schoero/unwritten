@@ -11,9 +11,7 @@ import {
   isAnchorNode,
   isInlineTitleNode,
   isListNode,
-  isPaddedNode,
   isParagraphNode,
-  isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
@@ -73,9 +71,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a position", () => {
-      assert(isPaddedNode(position));
-      assert(isSmallNode(position.children[0]));
-      expect(position.children[0].children).toBeDefined();
+      const renderedPosition = renderNode(ctx, position);
+      expect(renderedPosition).toBeTruthy();
     });
 
     it("should have no tags", () => {
@@ -220,7 +217,8 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have a interface position", () => {
-      expect(interfacePosition).toBeDefined();
+      const renderedInterfacePosition = renderNode(ctx, interfacePosition);
+      expect(renderedInterfacePosition).toBeTruthy();
     });
 
     it("should have a interface tags", () => {

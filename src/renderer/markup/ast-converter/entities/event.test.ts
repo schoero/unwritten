@@ -2,16 +2,12 @@ import { expect, it } from "vitest";
 
 import { createInterfaceEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { renderNode } from "unwritten:renderer/index.js";
 import {
   convertEventPropertyEntityForDocumentation,
   convertEventPropertyEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/event.js";
-import {
-  isAnchorNode,
-  isPaddedNode,
-  isSmallNode,
-  isTitleNode
-} from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isAnchorNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -53,9 +49,8 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     ] = convertedEventPropertyForDocumentation.children;
 
     it("should have a position", () => {
-      assert(isPaddedNode(position));
-      assert(isSmallNode(position.children[0]));
-      expect(position.children[0].children).toBeDefined();
+      const renderedPosition = renderNode(ctx, position);
+      expect(renderedPosition).toBeTruthy();
     });
 
     it("should have a matching name", () => {

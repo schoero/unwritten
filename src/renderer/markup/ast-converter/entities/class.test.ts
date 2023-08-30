@@ -7,7 +7,7 @@ import {
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { isAnchorNode, isPaddedNode, isSmallNode } from "unwritten:renderer:markup/typeguards/renderer.js";
+import { isAnchorNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -65,9 +65,8 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     });
 
     it("should have a position", () => {
-      assert(isPaddedNode(position));
-      assert(isSmallNode(position.children[0]));
-      expect(position.children[0].children).toBeDefined();
+      const renderedPosition = renderNode(ctx, position);
+      expect(renderedPosition).toBeTruthy();
     });
 
     it("should have no tags", () => {

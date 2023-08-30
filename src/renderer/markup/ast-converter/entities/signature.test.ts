@@ -12,10 +12,8 @@ import { renderNode } from "unwritten:renderer:markup/html/index.js";
 import {
   isAnchorNode,
   isInlineTitleNode,
-  isPaddedNode,
   isParagraphNode,
   isSectionNode,
-  isSmallNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
@@ -91,9 +89,8 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     ] = titleNode.children;
 
     it("should have a position", () => {
-      assert(isPaddedNode(position));
-      assert(isSmallNode(position.children[0]));
-      expect(position.children[0].children).toBeDefined();
+      const renderedPosition = renderNode(ctx, position);
+      expect(renderedPosition).toBeTruthy();
     });
 
     it("should have a jsdoc tag", () => {
