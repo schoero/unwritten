@@ -49,7 +49,7 @@
   "devDependencies": {
     "@schoero/changelog-config": "^0.0.2",
     "@schoero/cspell-config": "^1.6.16",
-    "@schoero/eslint-config": "^1.41.10",
+    "@schoero/eslint-config": "^1.41.11",
     "@schoero/markdownlint-config": "^1.1.7",
     "@schoero/ts-config": "^0.3.4",
     "@schoero/vite-config": "^0.0.25",

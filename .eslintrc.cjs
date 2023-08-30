@@ -120,8 +120,7 @@ module.exports = {
                   "test",
                   "node:test"
                 ],
-                message: "Import from vitest instead.",
-                name: "test"
+                message: "Import from vitest instead."
               },
               {
                 allowTypeImports: false,
