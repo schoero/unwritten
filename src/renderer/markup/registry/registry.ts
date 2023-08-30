@@ -8,6 +8,7 @@ import type { FilePath } from "unwritten:type-definitions/file-system.js";
 
 
 export interface AnchorLink {
+  displayName: Name;
   id: ID;
   name: Name;
 }

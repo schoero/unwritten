@@ -36,4 +36,16 @@ scope("HTMLRenderer", "AnchorNode", () => {
 
   });
 
+  it("should render the displayName if available", () => {
+
+    const ctx = createRenderContext();
+
+    const anchor = registerAnchor(ctx, "AnchorText", 1);
+    const anchorNode = createAnchorNode(anchor.name, anchor.id, "AnchorDisplayName");
+    expect(renderAnchorNode(ctx, anchorNode)).toBe(html`
+      <a href="#anchortext">AnchorDisplayName</a>
+    `);
+
+  });
+
 });

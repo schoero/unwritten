@@ -12,22 +12,44 @@ import { renderAnchorNode } from "./anchor.js";
 
 scope("MarkdownRenderer", "AnchorNode", () => {
 
-  const ctx = createRenderContext(BuiltInRenderers.Markdown);
-
   it("should render a anchor node correctly", () => {
+
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+
     const anchor = registerAnchor(ctx, "AnchorText", 1);
     const anchorNode = createAnchorNode(anchor.name, anchor.id);
+
     expect(renderAnchorNode(ctx, anchorNode)).toBe(md`
       [AnchorText](#anchortext)
     `);
+
   });
 
   it("should render multiple anchor nodes with the same name correctly", () => {
-    const anchor = registerAnchor(ctx, "AnchorText", 2);
-    const anchorNode = createAnchorNode(anchor.name, anchor.id);
+
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+
+    const anchor1 = registerAnchor(ctx, "AnchorText", 1);
+    const anchor2 = registerAnchor(ctx, "AnchorText", 2);
+    const anchorNode = createAnchorNode(anchor2.name, anchor2.id);
+
     expect(renderAnchorNode(ctx, anchorNode)).toBe(md`
       [AnchorText](#anchortext-1)
     `);
+
+  });
+
+  it("should render the displayName if available", () => {
+
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+
+    const anchor = registerAnchor(ctx, "AnchorText", 1);
+    const anchorNode = createAnchorNode(anchor.name, anchor.id, "AnchorDisplayName");
+
+    expect(renderAnchorNode(ctx, anchorNode)).toBe(md`
+      [AnchorDisplayName](#anchortext)
+    `);
+
   });
 
 });

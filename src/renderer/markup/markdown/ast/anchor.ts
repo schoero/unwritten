@@ -14,6 +14,6 @@ export function renderAnchorNode(ctx: MarkdownRenderContext, anchorNode: AnchorN
     throw new Error(`No anchor link and no fallback found for anchor node ${anchorNode.name} with id ${anchorNode.id}`);
   }
 
-  return renderLinkNode(ctx, createLinkNode(anchorNode.name, anchorLink));
+  return renderLinkNode(ctx, createLinkNode(anchorNode.displayName, anchorLink));
 
 }

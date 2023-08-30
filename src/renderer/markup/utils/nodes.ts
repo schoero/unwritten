@@ -27,9 +27,10 @@ import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry.j
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
 
 
-export function createAnchorNode(name: Name, id: ID): AnchorNode {
+export function createAnchorNode(name: Name, id: ID, displayName = name): AnchorNode {
   return {
     children: [name],
+    displayName,
     id,
     kind: ASTNodeKinds.Anchor,
     name
