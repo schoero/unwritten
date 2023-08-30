@@ -205,7 +205,6 @@ const path = {
     const trailingSegment = normalizedSegments.endsWith(separator)
       ? separator
       : "";
-
     const individualSegments = normalizedSegments.split(separator)
       .filter(segment => segment !== "" && segment !== "." && segment !== "~");
 

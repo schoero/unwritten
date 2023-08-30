@@ -1,8 +1,6 @@
 # Changelog
 
-
 ## v0.0.3
-
 
 ### Features
 
@@ -545,7 +543,6 @@
 
 ## v0.0.2
 
-
 ### Features
 
 - Create initial config ([c495d00](https://github.com/schoero/unwritten/commit/c495d00))
@@ -1048,4 +1045,3 @@
 ### ❤️ Contributors
 
 - Roger Schönbächler
-
