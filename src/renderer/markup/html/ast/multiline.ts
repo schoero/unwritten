@@ -1,4 +1,4 @@
-import { isListNode, isParagraphNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderNode } from "unwritten:renderer:html/index.js";
 
@@ -9,6 +9,7 @@ import type { MultilineNode } from "unwritten:renderer:markup/types-definitions/
 export function renderMultilineNode(ctx: HTMLRenderContext, multilineNode: MultilineNode): string {
 
   const renderedNewLine = renderNewLine(ctx);
+  const renderedIndentation = renderIndentation(ctx);
 
   return multilineNode.children.map((subNode, index) => {
 
@@ -18,10 +19,12 @@ export function renderMultilineNode(ctx: HTMLRenderContext, multilineNode: Multi
       return "";
     }
 
-    // Render a new line before nodes that require it
-    return index > 0 && (isListNode(subNode) || isTitleNode(subNode) || isParagraphNode(subNode))
-      ? `${renderNewLine(ctx)}${renderedNode}`
-      : renderedNode;
+    // Render indentation for all children
+    const renderedNodeWithIndentation = renderedNode.startsWith(renderedIndentation)
+      ? renderedNode
+      : `${renderedIndentation}${renderedNode}`;
+
+    return renderedNodeWithIndentation;
 
   }).filter(renderedChild => renderedChild !== "")
     .join(renderedNewLine);
