@@ -1,3 +1,4 @@
+import { renderNode } from "unwritten:renderer/index.js";
 import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
@@ -19,18 +20,24 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 
   const renderConfig = getRenderConfig(ctx);
 
+  const name = typeReferenceType.name ?? "";
+  const encapsulatedName = name
+    ? encapsulate(name, renderConfig.typeEncapsulation)
+    : "";
+
   const fallback = (
     typeReferenceType.type &&
      convertType(ctx, typeReferenceType.type).inlineType
-  ) ??
-  (typeReferenceType.name
-    ? encapsulate(typeReferenceType.name, renderConfig.typeEncapsulation)
-    : ""
-  );
+  ) ?? encapsulatedName;
 
   if(typeReferenceType.target === undefined){
     return fallback;
   }
+
+  const targetName = typeReferenceType.target.name ?? name;
+  const encapsulatedTargetName = targetName
+    ? encapsulate(targetName, renderConfig.typeEncapsulation)
+    : "";
 
   const id = isSignatureEntity(typeReferenceType.target)
     ? typeReferenceType.target.declarationId
@@ -40,7 +47,8 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
     return fallback;
   }
 
-  const anchor = createAnchorNode(typeReferenceType.target.name ?? "", id);
+  const renderedName = renderNode(ctx, encapsulatedTargetName);
+  const anchor = createAnchorNode(targetName, id, renderedName);
 
   const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0
     ? convertTypeArguments(ctx, typeReferenceType.typeArguments)
@@ -48,7 +56,7 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 
   return createConditionalNode(
     getAnchorLink,
-    [ctx, typeReferenceType.name, id],
+    [ctx, targetName, id],
     "!==",
     undefined,
     spaceBetween(
