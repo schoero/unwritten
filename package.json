@@ -38,6 +38,9 @@
     "test:renderer": "vitest -c ./vite.config.ts --dir src/renderer",
     "typecheck": "tsc --project tsconfig.production.json --noEmit"
   },
+  "engines": {
+    "node": ">=16.9.0"
+  },
   "files": [
     "lib"
   ],
