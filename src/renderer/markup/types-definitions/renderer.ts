@@ -36,10 +36,11 @@ export type RenderableJSDocTags =
   | Examples
   | Internal;
 
-
 // Position
 export type ConvertedPosition = PaddedNode<[
-  SmallNode<[LinkNode] | [string, LinkNode]>
+  ParagraphNode<[
+    SmallNode<[LinkNode] | [string, LinkNode]>
+  ]>
 ]> | "";
 
 // Tags

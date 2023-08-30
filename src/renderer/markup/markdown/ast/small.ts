@@ -5,8 +5,5 @@ import type { SmallNode } from "unwritten:renderer:markup/types-definitions/node
 
 
 export function renderSmallNode(ctx: MarkdownRenderContext, smallNode: SmallNode): string {
-  const renderedNode = renderNode(ctx, smallNode.children);
-  return renderedNode === ""
-    ? renderedNode
-    : `${renderedNode}  `;
+  return renderNode(ctx, smallNode.children);
 }

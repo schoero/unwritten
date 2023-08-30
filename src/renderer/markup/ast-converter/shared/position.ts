@@ -1,4 +1,9 @@
-import { createLinkNode, createPaddedNode, createSmallNode } from "unwritten:renderer:markup/utils/nodes.js";
+import {
+  createLinkNode,
+  createPaddedNode,
+  createParagraphNode,
+  createSmallNode
+} from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
 import type { Position } from "unwritten:interpreter:type-definitions/shared.js";
@@ -27,13 +32,15 @@ export function convertPositionForDocumentation(ctx: MarkupRenderContexts, posit
   const linkNode = createLinkNode(linkLabel, link);
 
   return createPaddedNode(
-    createSmallNode(
-      ...definedInLabel
-        ? [
-          definedInLabel,
-          linkNode
-        ]
-        : [linkNode]
+    createParagraphNode(
+      createSmallNode(
+        ...definedInLabel
+          ? [
+            definedInLabel,
+            linkNode
+          ]
+          : [linkNode]
+      )
     )
   );
 
