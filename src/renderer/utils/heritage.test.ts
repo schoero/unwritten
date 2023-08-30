@@ -101,8 +101,8 @@ scope("Renderer", "utils", () => {
         }
 
         export class Class extends BaseClass {
-          public override instanceProperty: undefined;
-          public static override staticProperty: undefined;
+          declare public instanceProperty: undefined;
+          declare public static staticProperty: undefined;
         }
       `;
 
@@ -163,6 +163,7 @@ scope("Renderer", "utils", () => {
         }
         export class Class extends BaseClass {
           constructor(param: string) {
+            super(param);
           }
         }
       `;
