@@ -33,10 +33,6 @@ export type SourceFile = {
 export type LinkRegistry = SourceFile[];
 
 
-export function isSymbolExported(ctx: MarkupRenderContexts, symbolId: ID): boolean {
-  return Object.values(ctx.links).some(sourceFile => isSymbolExportedFromSourceFile(sourceFile, symbolId));
-}
-
 export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -55,7 +51,7 @@ export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): st
   const { relative } = ctx.dependencies.path;
 
   const sourceFile = ctx.links
-    .find(sourceFile => isSymbolExportedFromSourceFile(sourceFile, id));
+    .find(sourceFile => isSymbolDocumentedFromSourceFile(sourceFile, id));
 
   if(sourceFile === undefined){
     return;
@@ -119,7 +115,7 @@ export function isAnchor(input: any): input is AnchorTarget {
     Object.keys(input).length === 2;
 }
 
-function isSymbolExportedFromSourceFile(sourceFile: SourceFile, symbolId: ID): boolean {
+function isSymbolDocumentedFromSourceFile(sourceFile: SourceFile, symbolId: ID): boolean {
   return Object.values(sourceFile.links).some(linkIds => linkIds.includes(symbolId));
 }
 
