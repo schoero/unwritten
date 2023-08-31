@@ -12,6 +12,7 @@
     "privatefunction",
     "renderable",
     "envinfo",
+    "postrelease",
     "scandir",
     "testfunction",
     "testfunctionparam",
