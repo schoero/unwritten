@@ -1,12 +1,13 @@
+import { type Program, type Symbol, type Type as TSType } from "typescript";
+
 import {
   isAliasedSymbol,
   isExportSpecifierSymbol,
+  isImportClauseSymbol,
   isImportSpecifierSymbol
 } from "unwritten:interpreter/typeguards/symbols.js";
 import * as locker from "unwritten:interpreter:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
-
-import type { Program, Symbol, Type as TSType } from "typescript";
 
 import type { Entity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Type } from "unwritten:interpreter/type-definitions/types.js";
@@ -39,7 +40,9 @@ export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Sym
     return symbol;
   }
 
-  if(!isExportSpecifierSymbol(ctx, symbol) && !isImportSpecifierSymbol(ctx, symbol)){
+  if(!isExportSpecifierSymbol(ctx, symbol) &&
+  !isImportSpecifierSymbol(ctx, symbol) &&
+  !isImportClauseSymbol(ctx, symbol)){
     return symbol;
   }
 

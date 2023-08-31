@@ -65,6 +65,13 @@ export function isGetterSymbol(ctx: InterpreterContext, symbol: Symbol): boolean
   return (symbol.getFlags() & ts.SymbolFlags.GetAccessor) !== 0;
 }
 
+export function isImportClauseSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  const { ts } = ctx.dependencies;
+  return (symbol.getFlags() & ts.SymbolFlags.ValueModule) !== 0 &&
+    symbol.valueDeclaration?.kind === ts.SyntaxKind.ImportClause ||
+    symbol.declarations?.[0]?.kind === ts.SyntaxKind.ImportClause;
+}
+
 export function isImportSpecifierSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
   const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.ModuleMember) !== 0 &&
