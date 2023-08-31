@@ -1,6 +1,5 @@
 import { getResolvedTypeByTypeNode, getTypeByTypeNode, interpretSymbol } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
 import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
@@ -21,8 +20,7 @@ export function createTypeReferenceType(ctx: InterpreterContext, type: TSTypeRef
 export function createTypeReferenceByTypeNode(ctx: InterpreterContext, typeNode: TypeReferenceNode): TypeReferenceType {
 
   const symbol = ctx.checker.getSymbolAtLocation(typeNode.typeName);
-  const resolvedSymbol = symbol && resolveSymbolInCaseOfImport(ctx, symbol);
-  const target = resolvedSymbol && interpretSymbol(ctx, resolvedSymbol);
+  const target = symbol && interpretSymbol(ctx, symbol);
 
   const type = getResolvedTypeByTypeNode(ctx, typeNode);
   const typeId = getIdByTypeNode(ctx, typeNode);
