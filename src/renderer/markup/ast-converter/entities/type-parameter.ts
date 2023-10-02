@@ -1,5 +1,6 @@
 import { convertConstraintForType } from "unwritten:renderer/markup/ast-converter/shared/constraint.js";
 import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
+import { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
@@ -99,12 +100,18 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
   const initializer = typeParameterEntity.initializer &&
      convertInitializerForType(ctx, typeParameterEntity.initializer);
 
-  const anchor = registerAnchor(ctx, typeParameterEntity.name, symbolId);
+  const nameAnchor = !isMarkdownRenderContext(ctx) ||
+    (ctx.config.renderConfig[ctx.renderer.name].allowedHTMLTags as string[]).includes("span")
+    ? createSpanNode(
+      registerAnchor(ctx, typeParameterEntity.name, symbolId),
+      name
+    )
+    : name;
 
   return createMultilineNode(
     createParagraphNode(
       spaceBetween(
-        createSpanNode(anchor, name),
+        nameAnchor,
         constraint?.inlineConstraint ?? "",
         description,
         initializer?.inlineInitializer ?? ""

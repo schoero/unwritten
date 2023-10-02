@@ -36,14 +36,14 @@ export function isConditionalTypeNode(ctx: InterpreterContext, typeNode: TypeNod
   return ts.isConditionalTypeNode(typeNode);
 }
 
-export function isExpressionWithTypeArguments(ctx: InterpreterContext, node: TypeNode): node is ExpressionWithTypeArguments {
+export function isExpressionWithTypeArguments(ctx: InterpreterContext, typeNode: TypeNode): typeNode is ExpressionWithTypeArguments {
   const { ts } = ctx.dependencies;
-  return ts.isExpressionWithTypeArguments(node);
+  return ts.isExpressionWithTypeArguments(typeNode);
 }
 
-export function isIndexedAccessTypeNode(ctx: InterpreterContext, node: TypeNode): node is IndexedAccessTypeNode {
+export function isIndexedAccessTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is IndexedAccessTypeNode {
   const { ts } = ctx.dependencies;
-  return ts.isIndexedAccessTypeNode(node);
+  return ts.isIndexedAccessTypeNode(typeNode);
 }
 
 export function isMappedTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is MappedTypeNode {
@@ -51,9 +51,9 @@ export function isMappedTypeNode(ctx: InterpreterContext, typeNode: TypeNode): t
   return ts.isMappedTypeNode(typeNode);
 }
 
-export function isOptionalTypeNode(ctx: InterpreterContext, node: TypeNode): node is OptionalTypeNode {
+export function isOptionalTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is OptionalTypeNode {
   const { ts } = ctx.dependencies;
-  return ts.isOptionalTypeNode(node);
+  return ts.isOptionalTypeNode(typeNode);
 }
 
 export function isRestTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is RestTypeNode {

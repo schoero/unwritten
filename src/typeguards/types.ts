@@ -21,6 +21,7 @@ import type {
   NullType,
   NumberLiteralType,
   NumberType,
+  ObjectLikeTypes,
   ObjectLiteralType,
   ObjectType,
   StringLiteralType,
@@ -30,6 +31,7 @@ import type {
   TupleType,
   Type,
   TypeLiteralType,
+  TypeParameterType,
   TypeReferenceType,
   UndefinedType,
   UnionType,
@@ -122,6 +124,14 @@ export function isNumberType(type: Type): type is NumberType {
   return type.kind === TypeKind.Number;
 }
 
+export function isObjectLikeType(type: Type): type is ObjectLikeTypes {
+  return isObjectType(type) ||
+  isInterfaceType(type) ||
+  isClassType(type) ||
+  isObjectLiteralType(type) ||
+  isTypeLiteralType(type);
+}
+
 export function isObjectLiteralType(type: Type): type is ObjectLiteralType {
   return type.kind === TypeKind.ObjectLiteral;
 }
@@ -154,7 +164,7 @@ export function isTypeLiteralType(type: Type): type is TypeLiteralType {
   return type.kind === TypeKind.TypeLiteral;
 }
 
-export function isTypeParameterType(type: Type): type is TypeReferenceType {
+export function isTypeParameterType(type: Type): type is TypeParameterType {
   return type.kind === TypeKind.TypeParameter;
 }
 

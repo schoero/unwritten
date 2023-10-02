@@ -1,5 +1,3 @@
-import { type Program, type Symbol, type Type as TSType } from "typescript";
-
 import {
   isAliasedSymbol,
   isExportSpecifierSymbol,
@@ -8,6 +6,8 @@ import {
 } from "unwritten:interpreter/typeguards/symbols.js";
 import * as locker from "unwritten:interpreter:utils/locker.js";
 import { assert } from "unwritten:utils:general.js";
+
+import type { Program, Symbol, Type as TSType } from "typescript";
 
 import type { Entity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { Type } from "unwritten:interpreter/type-definitions/types.js";
@@ -29,7 +29,12 @@ export function getEntryFileSymbolsFromProgram(ctx: InterpreterContext, program:
 
 }
 
+
 // Locker
+export function isSymbolLocked(ctx: InterpreterContext, symbol: Symbol) {
+  return locker.isSymbolLocked(ctx, symbol);
+}
+
 export function isTypeLocked(ctx: InterpreterContext, type: TSType) {
   return locker.isTypeLocked(ctx, type);
 }
