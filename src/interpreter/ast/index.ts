@@ -1,7 +1,6 @@
 import { createCircularEntity, createUnresolvedEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
-import { isSymbolLocked } from "unwritten:interpreter/utils/locker.js";
-import { isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
+import { isSymbolLocked, isTypeLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
 import {
   createClassEntity,
   createEnumEntity,
@@ -32,7 +31,6 @@ import {
   createExpressionType,
   createFunctionType,
   createIndexedAccessType,
-  createIndexedAccessTypeByTypeNode,
   createInterfaceByType,
   createIntersectionType,
   createMappedTypeByTypeNode,
@@ -78,7 +76,6 @@ import {
   isArrayTypeNode,
   isConditionalTypeNode,
   isExpressionWithTypeArguments,
-  isIndexedAccessTypeNode,
   isMappedTypeNode,
   isTemplateLiteralTypeNode,
   isTupleTypeNode,
@@ -116,7 +113,7 @@ import {
   isUnknownType,
   isVoidType
 } from "unwritten:interpreter:typeguards/types.js";
-import { isArrayType, isTypeReferenceType } from "unwritten:typeguards/types.js";
+import { isTypeReferenceType } from "unwritten:typeguards/types.js";
 import { isSymbolExcluded } from "unwritten:utils/exclude.js";
 import { assert } from "unwritten:utils:general.js";
 
@@ -311,8 +308,6 @@ function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
     return createMappedTypeByTypeNode(ctx, typeNode);
   } else if(isConditionalTypeNode(ctx, typeNode)){
     return createConditionalTypeByTypeNode(ctx, typeNode);
-  } else if(isIndexedAccessTypeNode(ctx, typeNode)){
-    return createIndexedAccessTypeByTypeNode(ctx, typeNode);
   } else if(isUnionTypeNode(ctx, typeNode)){
     return createUnionTypeByTypeNode(ctx, typeNode);
   }
@@ -382,7 +377,7 @@ function interpretType(ctx: InterpreterContext, type: TSType): Type {
     return createIndexedAccessType(ctx, type);
   } else if(isConditionalType(ctx, type)){
     return createConditionalType(ctx, type);
-  } else if(isArrayType(type)){
+  } else if(isArrayTypeReferenceType(ctx, type)){
     return createArrayType(ctx, type);
   }
 

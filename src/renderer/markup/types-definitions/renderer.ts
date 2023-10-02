@@ -163,7 +163,8 @@ export type ConvertedTypeReferenceTypeInline = ConditionalNode | ConvertedTypeIn
 export type ConvertedUnresolvedTypeInline = ASTNode;
 
 // Indexed access type
-export type ConvertedIndexedAccessTypeInline = ASTNode;
+export type ConvertedIndexedAccessTypeInline = ConditionalNode | ConvertedTypeInline;
+export type ConvertedIndexedAccessTypeMultiline = ConditionalNode | ConvertedTypeMultiline;
 
 // Type parameter
 export type ConvertedTypeParameterTypeInline = ASTNode;

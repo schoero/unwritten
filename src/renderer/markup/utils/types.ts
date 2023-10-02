@@ -3,6 +3,7 @@ import {
   isClassType,
   isConditionalType,
   isFunctionType,
+  isIndexedAccessType,
   isInterfaceType,
   isIntersectionType,
   isObjectLiteralType,
@@ -28,6 +29,7 @@ export function isMultilineType(type: Type): type is MultilineType {
   isTypeReferenceType(type) ||
   isMultilineUnionType(type) ||
   isIntersectionType(type) ||
+  isIndexedAccessType(type) ||
   isTupleType(type);
 }
 

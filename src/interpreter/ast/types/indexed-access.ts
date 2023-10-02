@@ -1,7 +1,7 @@
 import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
 import { getTypeId } from "unwritten:interpreter/ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { isIndexedAccessType } from "unwritten:interpreter/typeguards/types.js";
+import { withLockedType } from "unwritten:interpreter/utils/ts.js";
 
 import type { IndexedAccessType as TSIndexedAccessType, IndexedAccessTypeNode } from "typescript";
 
@@ -9,13 +9,14 @@ import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/t
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createIndexedAccessType(ctx: InterpreterContext, indexedAccessType: TSIndexedAccessType): IndexedAccessType {
+export const createIndexedAccessType = (ctx: InterpreterContext, indexedAccessType: TSIndexedAccessType): IndexedAccessType => withLockedType(ctx, indexedAccessType, () => {
+
   const indexType = getTypeByType(ctx, indexedAccessType.indexType);
   const objectType = getTypeByType(ctx, indexedAccessType.objectType);
 
+  const typeId = getTypeId(ctx, indexedAccessType);
   const baseConstraint = ctx.checker.getBaseConstraintOfType(indexedAccessType);
   const type = baseConstraint && getTypeByType(ctx, baseConstraint);
-  const typeId = getTypeId(ctx, indexedAccessType);
 
   const kind = TypeKind.IndexedAccess;
 
@@ -27,20 +28,14 @@ export function createIndexedAccessType(ctx: InterpreterContext, indexedAccessTy
     typeId
   };
 
-}
-
+});
 
 export function createIndexedAccessTypeByTypeNode(ctx: InterpreterContext, typeNode: IndexedAccessTypeNode): IndexedAccessType {
 
   const tsType = ctx.checker.getTypeFromTypeNode(typeNode);
 
-  if(isIndexedAccessType(ctx, tsType)){
-    return createIndexedAccessType(ctx, tsType);
-  }
-
   const indexType = getTypeByTypeNode(ctx, typeNode.indexType);
   const objectType = getTypeByTypeNode(ctx, typeNode.objectType);
-
   const type = getTypeByType(ctx, tsType);
   const typeId = getTypeId(ctx, tsType);
 
