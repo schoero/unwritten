@@ -65,8 +65,22 @@ const path = {
     }, []);
 
     const commonParts = fromDirIsAbsolute && toDirIsAbsolute || fromDirIsHome && toDirIsHome
-      ? fromPartsWithoutUnnecessaryParentParts.filter((dir, index) => dir === toPartsWithoutUnnecessaryParentParts[index])
+      ? fromPartsWithoutUnnecessaryParentParts.reduce<{ break: boolean; parts: string[]; }>(
+        (acc, dir, index) => {
+          if(acc.break === true){
+            return acc;
+          }
+          if(dir === toPartsWithoutUnnecessaryParentParts[index]){
+            acc.parts.push(dir);
+          } else {
+            acc.break = true;
+          }
+          return acc;
+        },
+        { break: false, parts: [] }
+      ).parts
       : [];
+
     const commonDirs = commonParts.length;
 
     const absoluteFromParts = fromDirIsAbsolute
@@ -257,7 +271,21 @@ const path = {
     const absoluteToDir = getDirectory(deps, absolute(deps, from, to)).split(separator)
       .filter(part => part !== "");
 
-    const commonParts = absoluteStartDir.filter((dir, index) => dir === absoluteToDir[index]);
+    const commonParts = absoluteStartDir.reduce<{ break: boolean; parts: string[]; }>(
+      (acc, dir, index) => {
+        if(acc.break === true){
+          return acc;
+        }
+        if(dir === absoluteToDir[index]){
+          acc.parts.push(dir);
+        } else {
+          acc.break = true;
+        }
+        return acc;
+      },
+      { break: false, parts: [] }
+    ).parts;
+
     const commonDirs = commonParts.length;
 
     const relativeToParentDirs = absoluteStartDir.length - commonDirs;
