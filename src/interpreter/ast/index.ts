@@ -31,6 +31,7 @@ import {
   createExpressionType,
   createFunctionType,
   createIndexedAccessType,
+  createIndexedAccessTypeByTypeNode,
   createInterfaceByType,
   createIntersectionType,
   createMappedTypeByTypeNode,
@@ -76,6 +77,7 @@ import {
   isArrayTypeNode,
   isConditionalTypeNode,
   isExpressionWithTypeArguments,
+  isIndexedAccessTypeNode,
   isMappedTypeNode,
   isTemplateLiteralTypeNode,
   isTupleTypeNode,
@@ -310,6 +312,8 @@ function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
     return createConditionalTypeByTypeNode(ctx, typeNode);
   } else if(isUnionTypeNode(ctx, typeNode)){
     return createUnionTypeByTypeNode(ctx, typeNode);
+  } else if(isIndexedAccessTypeNode(ctx, typeNode)){
+    return createIndexedAccessTypeByTypeNode(ctx, typeNode);
   }
 
   if(isTypeReferenceNode(ctx, typeNode)){
