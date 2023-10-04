@@ -7,7 +7,11 @@ import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/mult
 import { renderPaddedNode } from "unwritten:renderer/markup/markdown/ast/padded.js";
 import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line.js";
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
-import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
+import {
+  createCurrentSourceFile,
+  registerAnonymousAnchor,
+  setCurrentSourceFile
+} from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { capitalize } from "unwritten:renderer/markup/utils/translations.js";
@@ -46,7 +50,7 @@ import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 import { renderTitleNode } from "./ast/title.js";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry.js";
+import type { AnchorTarget, LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import type { MarkdownRenderContext, MarkdownRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
@@ -142,13 +146,19 @@ const markdownRenderer: MarkdownRenderer = {
 
     markdownRenderer.initializeContext(ctx);
 
-    return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
+    return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; title: string; titleAnchor: AnchorTarget; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
 
       const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
+
       createCurrentSourceFile(ctx, sourceFileEntity, destination);
       setCurrentSourceFile(ctx, sourceFileEntity);
 
+      const title = capitalize(getFileName(sourceFileEntity.name, false));
+      const titleAnchor = registerAnonymousAnchor(ctx, title);
+
       convertedSourceFileEntities.push({
+        title,
+        titleAnchor,
         ...sourceFileEntity,
         ...convertToMarkupAST(ctx, sourceFileEntity.exports)
       });
@@ -165,7 +175,8 @@ const markdownRenderer: MarkdownRenderer = {
       setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
       const ast = createTitleNode(
-        capitalize(getFileName(convertedSourceFileEntity.name, false)),
+        convertedSourceFileEntity.title,
+        convertedSourceFileEntity.titleAnchor,
         createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents),
         createSectionNode("documentation", ...convertedSourceFileEntity.documentation)
       );

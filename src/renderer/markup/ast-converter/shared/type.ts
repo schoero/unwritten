@@ -1,3 +1,4 @@
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import {
   convertAnyTypeInline,
   convertArrayTypeInline,
@@ -100,8 +101,12 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
 
   const { inlineType, multilineType } = convertType(ctx, type);
 
+  const typeTranslation = translate("type", { capitalize: true, count: 1 });
+  const typeAnchor = registerAnonymousAnchor(ctx, typeTranslation);
+
   return createTitleNode(
-    translate("type", { capitalize: true, count: 1 }),
+    typeTranslation,
+    typeAnchor,
     createParagraphNode(inlineType),
     multilineType ?? ""
   );

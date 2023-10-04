@@ -1,4 +1,5 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import {
@@ -43,8 +44,12 @@ export function convertThrowsForDocumentation(ctx: MarkupRenderContexts, throws:
 
   }).filter(node => !!node) as ASTNode[];
 
+  const title = translate("throws", { capitalize: true, count: 1 });
+  const anchor = registerAnonymousAnchor(ctx, title);
+
   return createTitleNode(
-    translate("throws", { capitalize: true }),
+    title,
+    anchor,
     createListNode(convertedThrows)
   );
 
@@ -58,8 +63,6 @@ export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws):
   }
 
   const translate = getTranslator(ctx);
-
-  const title = translate("throws", { capitalize: true });
 
   const convertedThrows = throws.map(throws => {
 
@@ -80,8 +83,13 @@ export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws):
 
   }).filter(node => !!node) as ASTNode[];
 
+  const title = translate("throws", { capitalize: true });
+  const anchor = registerAnonymousAnchor(ctx, title);
+
+
   return createInlineTitleNode(
     title,
+    anchor,
     createListNode(...convertedThrows)
   );
 

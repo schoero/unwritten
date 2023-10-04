@@ -1,3 +1,4 @@
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createInlineTitleNode, createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -26,8 +27,12 @@ export function convertExamplesForDocumentation(ctx: MarkupRenderContexts, examp
   })
     .filter(node => !!node) as ParagraphNode[];
 
+  const exampleTranslation = translate("example", { capitalize: true, count: examples.length });
+  const exampleAnchor = registerAnonymousAnchor(ctx, exampleTranslation);
+
   return createTitleNode(
-    translate("example", { capitalize: true, count: examples.length }),
+    exampleTranslation,
+    exampleAnchor,
     ...convertedExamples
   );
 
@@ -42,8 +47,6 @@ export function convertExamplesForType(ctx: MarkupRenderContexts, examples: Exam
 
   const translate = getTranslator(ctx);
 
-  const title = translate("example", { capitalize: true, count: examples.length });
-
   const convertedExamples = examples.flat().map(example => {
     if(!example){
       return;
@@ -52,8 +55,12 @@ export function convertExamplesForType(ctx: MarkupRenderContexts, examples: Exam
   })
     .filter(node => !!node) as ASTNode[];
 
+  const title = translate("example", { capitalize: true, count: examples.length });
+  const anchor = registerAnonymousAnchor(ctx, title);
+
   return createInlineTitleNode(
     title,
+    anchor,
     createParagraphNode(
       ...convertedExamples
     )

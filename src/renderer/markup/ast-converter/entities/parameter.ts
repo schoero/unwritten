@@ -1,4 +1,5 @@
 import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import {
@@ -60,8 +61,12 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
     parameter => convertParameterEntityForDocumentation(ctx, parameter)
   );
 
+  const parameterTranslation = translate("parameter", { capitalize: true, count: parameters.length });
+  const parameterAnchor = registerAnonymousAnchor(ctx, parameterTranslation);
+
   return createTitleNode(
-    translate("parameter", { capitalize: true, count: parameters.length }),
+    parameterTranslation,
+    parameterAnchor,
     createListNode(
       ...parameters
     )
@@ -79,6 +84,7 @@ export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, param
   const translate = getTranslator(ctx);
 
   const title = translate("parameter", { capitalizeEach: true, count: parameterEntities.length });
+  const anchor = registerAnonymousAnchor(ctx, title);
 
   const parameters = parameterEntities.map(
     parameter => convertParameterEntityForDocumentation(ctx, parameter)
@@ -86,6 +92,7 @@ export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, param
 
   return createInlineTitleNode(
     title,
+    anchor,
     createListNode(
       ...parameters
     )

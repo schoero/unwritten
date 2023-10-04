@@ -1,3 +1,4 @@
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import {
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents,
@@ -157,11 +158,12 @@ export function createDocumentation(ctx: MarkupRenderContexts, entities: Exporta
 
     const categoryName = getCategoryName(entity.kind);
     const categoryTitle = translate(categoryName, { capitalize: true, count: entities.length });
+    const categoryAnchor = registerAnonymousAnchor(ctx, categoryTitle);
     const existingCategory = documentation.find(category => category.title === categoryTitle);
 
     if(existingCategory === undefined){
       documentation.push(
-        createTitleNode(categoryTitle)
+        createTitleNode(categoryTitle, categoryAnchor)
       );
     }
 

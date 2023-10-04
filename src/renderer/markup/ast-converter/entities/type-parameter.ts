@@ -1,7 +1,8 @@
+import { renderNode } from "unwritten:renderer/index.js";
 import { convertConstraintForType } from "unwritten:renderer/markup/ast-converter/shared/constraint.js";
 import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
 import { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   createInlineTitleNode,
@@ -54,8 +55,12 @@ export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderCo
     ...convertedTypeParameters
   );
 
+  const typeParametersTranslation = translate("typeParameter", { capitalize: true, count: convertedTypeParameters.length });
+  const typeParametersAnchor = registerAnonymousAnchor(ctx, typeParametersTranslation);
+
   return createTitleNode(
-    translate("typeParameter", { capitalize: true, count: convertedTypeParameters.length }),
+    typeParametersTranslation,
+    typeParametersAnchor,
     convertedTypeParameterList
   );
 
@@ -71,7 +76,8 @@ export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContexts, t
     return "";
   }
 
-  const title = encapsulate(translate("typeParameter", { capitalizeEach: true, count: typeParameterEntities.length }), renderConfig.inlineTitleEncapsulation);
+  const title = renderNode(ctx, encapsulate(translate("typeParameter", { capitalizeEach: true, count: typeParameterEntities.length }), renderConfig.inlineTitleEncapsulation));
+  const anchor = registerAnonymousAnchor(ctx, title);
 
   const convertedTypeParameters = typeParameterEntities.map(
     typeParameter => convertTypeParameterEntityForType(ctx, typeParameter)
@@ -79,6 +85,7 @@ export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContexts, t
 
   return createInlineTitleNode(
     title,
+    anchor,
     createListNode(
       ...convertedTypeParameters
     )

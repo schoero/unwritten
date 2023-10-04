@@ -72,7 +72,7 @@ export interface TitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNo
   title: ASTNode;
 }
 
-export interface InlineTitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.InlineTitle>, Partial<AnchorTarget> {
+export interface InlineTitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.InlineTitle>, AnchorTarget {
   children: Children;
   title: ASTNode;
 }

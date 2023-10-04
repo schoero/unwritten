@@ -3,7 +3,7 @@ import {
   convertThrowsForDocumentation,
   convertThrowsForType
 } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertParameterEntitiesForDocumentation,
@@ -173,8 +173,13 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
   const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
 
+  const returnTypeTranslation = translate("returnType", { capitalizeEach: true });
+  const returnTypeAnchor = registerAnonymousAnchor(ctx, returnTypeTranslation);
+
+
   return createTitleNode(
-    translate("returnType", { capitalizeEach: true }),
+    returnTypeTranslation,
+    returnTypeAnchor,
     createParagraphNode(
       spaceBetween(
         inlineType,
@@ -191,12 +196,14 @@ function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: Si
   const translate = getTranslator(ctx);
 
   const title = translate("returnType", { capitalizeEach: true });
+  const anchor = registerAnonymousAnchor(ctx, title);
 
   const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
   const returnDescription = signatureEntity.returnType.description ?? "";
 
   return createInlineTitleNode(
     title,
+    anchor,
     createParagraphNode(
       spaceBetween(
         inlineType,

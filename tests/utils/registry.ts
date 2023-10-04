@@ -5,9 +5,10 @@ import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-defin
 export function createTestRegistry(ctx: MarkupRenderContexts): LinkRegistry {
   return [
     {
+      anonymousId: 0,
       dst: "index.md",
       id: 0,
-      links: {},
+      links: new Map(),
       name: "index",
       src: "/index.ts"
     }

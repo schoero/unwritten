@@ -1,4 +1,4 @@
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { filterImplicitSignatures, filterPrivateMembers } from "unwritten:renderer/utils/private-members.js";
 import {
@@ -150,6 +150,30 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
   const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
 
+  const constructSignaturesTranslation = translate("constructSignature", { capitalizeEach: true, count: convertedConstructSignatures.length });
+  const constructSignaturesAnchor = registerAnonymousAnchor(ctx, constructSignaturesTranslation);
+  const constructSignatures = createTitleNode(constructSignaturesTranslation, constructSignaturesAnchor, ...convertedConstructSignatures);
+
+  const propertiesTranslation = translate("property", { capitalizeEach: true, count: convertedProperties.length });
+  const propertiesAnchor = registerAnonymousAnchor(ctx, propertiesTranslation);
+  const properties = createTitleNode(propertiesTranslation, propertiesAnchor, ...convertedProperties);
+
+  const methodsTranslation = translate("method", { capitalizeEach: true, count: convertedMethods.length });
+  const methodsAnchor = registerAnonymousAnchor(ctx, methodsTranslation);
+  const methods = createTitleNode(methodsTranslation, methodsAnchor, ...convertedMethods);
+
+  const settersTranslation = translate("setter", { capitalizeEach: true, count: convertedSetters.length });
+  const settersAnchor = registerAnonymousAnchor(ctx, settersTranslation);
+  const setters = createTitleNode(settersTranslation, settersAnchor, ...convertedSetters);
+
+  const gettersTranslation = translate("getter", { capitalizeEach: true, count: convertedGetters.length });
+  const gettersAnchor = registerAnonymousAnchor(ctx, gettersTranslation);
+  const getters = createTitleNode(gettersTranslation, gettersAnchor, ...convertedGetters);
+
+  const eventPropertiesTranslation = translate("event", { capitalizeEach: true, count: convertedEventProperties.length });
+  const eventPropertiesAnchor = registerAnonymousAnchor(ctx, eventPropertiesTranslation);
+  const eventProperties = createTitleNode(eventPropertiesTranslation, eventPropertiesAnchor, ...convertedEventProperties);
+
   return createSectionNode(
     SECTION_TYPE[classEntity.kind],
     createTitleNode(
@@ -160,12 +184,12 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
       convertedDescription,
       convertedRemarks,
       convertedExample,
-      createTitleNode(translate("constructSignature", { capitalizeEach: true, count: convertedConstructSignatures.length }), ...convertedConstructSignatures),
-      createTitleNode(translate("property", { capitalize: true, count: convertedProperties.length }), ...convertedProperties),
-      createTitleNode(translate("method", { capitalize: true, count: convertedMethods.length }), ...convertedMethods),
-      createTitleNode(translate("setter", { capitalize: true, count: convertedSetters.length }), ...convertedSetters),
-      createTitleNode(translate("getter", { capitalize: true, count: convertedGetters.length }), ...convertedGetters),
-      createTitleNode(translate("event", { capitalize: true, count: convertedEventProperties.length }), ...convertedEventProperties)
+      constructSignatures,
+      properties,
+      methods,
+      setters,
+      getters,
+      eventProperties
     )
   );
 

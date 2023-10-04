@@ -18,35 +18,59 @@ export interface AnchorTarget {
   name: Name;
 }
 
+export type AnchorID = string;
+
 export type ExportRegistry = Set<ID>;
 
 export type SourceFile = {
+  anonymousId: ID;
   dst: FilePath;
   id: ID;
-  links: {
-    [linkName: Name]: ID[];
-  };
+  links: Map<AnchorID, ID[]>;
   name: Name;
   src: string;
 };
 
 export type LinkRegistry = SourceFile[];
 
+function getAnonymousId(ctx: MarkupRenderContexts): ID {
+  return ctx.currentFile.anonymousId--;
+}
 
 export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget {
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  ctx.currentFile.links[name] ??= [];
+  const anchorId = convertTextToAnchorId(name);
 
-  if(!ctx.currentFile.links[name].includes(id)){
-    ctx.currentFile.links[name].push(id);
+  if(!ctx.currentFile.links.has(anchorId)){
+    ctx.currentFile.links.set(anchorId, []);
+  }
+
+  if(!ctx.currentFile.links.get(anchorId)!.includes(id)){
+    ctx.currentFile.links.get(anchorId)!.push(id);
   }
 
   return { id, name };
 
 }
 
+export function registerAnonymousAnchor(ctx: MarkupRenderContexts, name: Name): AnchorTarget {
+
+  const anchorId = convertTextToAnchorId(name);
+
+  if(!ctx.currentFile.links.has(anchorId)){
+    ctx.currentFile.links.set(anchorId, []);
+  }
+
+  const id = getAnonymousId(ctx);
+  ctx.currentFile.links.get(anchorId)!.push(id);
+
+  return { id, name };
+
+}
+
 export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined {
+
+  const anchorId = convertTextToAnchorId(name);
 
   const { relative } = ctx.dependencies.path;
 
@@ -57,7 +81,7 @@ export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): st
     return;
   }
 
-  const index = sourceFile.links[name].indexOf(id);
+  const index = sourceFile.links.get(anchorId)?.indexOf(id);
 
   if(index === -1){
     return;
@@ -67,8 +91,7 @@ export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): st
     ? relative(ctx.currentFile.dst, sourceFile.dst)
     : "";
 
-  const anchorText = convertTextToAnchorId(name);
-  const anchorLink = `${relativeDirectory}#${anchorText}${index === 0 ? "" : `-${index}`}`;
+  const anchorLink = `${relativeDirectory}#${anchorId}${index === 0 ? "" : `-${index}`}`;
 
   return anchorLink;
 
@@ -77,15 +100,16 @@ export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): st
 
 export function getAnchorId(ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined {
 
+  const anchorId = convertTextToAnchorId(name);
+
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const index = ctx.currentFile?.links[name].indexOf(id) ?? -1;
+  const index = ctx.currentFile?.links.get(anchorId)?.indexOf(id) ?? -1;
 
   if(index === -1){
     return;
   }
 
-  const anchorText = convertTextToAnchorId(name);
-  const anchorLink = `${anchorText}${index === 0 ? "" : `-${index}`}`;
+  const anchorLink = `${anchorId}${index === 0 ? "" : `-${index}`}`;
 
   return anchorLink;
 
@@ -95,7 +119,7 @@ export function getSourceFileById(ctx: MarkupRenderContexts, id: ID): SourceFile
   return ctx.links[id];
 }
 
-export function convertTextToAnchorId(text: string): string {
+export function convertTextToAnchorId(text: string): AnchorID {
   let link = text.toLowerCase();
   link = link.replace(/&(?:[A-Za-z]+|#\d+|#x[\dA-Fa-f]+);/g, "");
   link = link.replace(/[^\s\w-]/gi, "");
@@ -116,7 +140,7 @@ export function isAnchor(input: any): input is AnchorTarget {
 }
 
 function isSymbolDocumentedFromSourceFile(sourceFile: SourceFile, symbolId: ID): boolean {
-  return Object.values(sourceFile.links).some(linkIds => linkIds.includes(symbolId));
+  return Array.from(sourceFile.links.values()).some(linkIds => linkIds.includes(symbolId));
 }
 
 export function createCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
@@ -125,9 +149,10 @@ export function createCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEnt
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
   const sourceFile = {
+    anonymousId: 0,
     dst: destination,
     id: sourceFileEntity.symbolId,
-    links: {},
+    links: new Map(),
     name: sourceFileEntity.name,
     src: sourceFileEntity.path
   };

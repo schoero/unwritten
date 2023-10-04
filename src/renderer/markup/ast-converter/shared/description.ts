@@ -1,3 +1,4 @@
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -17,8 +18,12 @@ export function convertDescriptionForDocumentation(ctx: MarkupRenderContexts, de
     return "";
   }
 
+  const title = translate("description", { capitalize: true, count: 1 });
+  const anchor = registerAnonymousAnchor(ctx, title);
+
   return createTitleNode(
-    translate("description", { capitalize: true, count: 1 }),
+    title,
+    anchor,
     createParagraphNode(description)
   );
 
