@@ -23,7 +23,7 @@ export type AnchorID = string;
 export type ExportRegistry = Set<ID>;
 
 export type SourceFile = {
-  anonymousId: ID;
+  _anonymousId: ID;
   dst: FilePath;
   id: ID;
   links: Map<AnchorID, ID[]>;
@@ -34,7 +34,7 @@ export type SourceFile = {
 export type LinkRegistry = SourceFile[];
 
 function getAnonymousId(ctx: MarkupRenderContexts): ID {
-  return ctx.currentFile.anonymousId--;
+  return ctx.currentFile._anonymousId--;
 }
 
 export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget {
@@ -50,6 +50,24 @@ export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): A
   }
 
   return { id, name };
+
+}
+
+export function unregisterAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): void {
+
+  const anchorId = convertTextToAnchorId(name);
+
+  if(!ctx.currentFile.links.has(anchorId)){
+    return;
+  }
+
+  const index = ctx.currentFile.links.get(anchorId)!.indexOf(id);
+
+  if(index === -1){
+    return;
+  }
+
+  void ctx.currentFile.links.get(anchorId)!.splice(index, 1);
 
 }
 
@@ -149,7 +167,7 @@ export function createCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEnt
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
   const sourceFile = {
-    anonymousId: 0,
+    _anonymousId: 0,
     dst: destination,
     id: sourceFileEntity.symbolId,
     links: new Map(),

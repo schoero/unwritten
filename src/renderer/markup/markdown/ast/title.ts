@@ -1,5 +1,6 @@
 import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/multiline.js";
 import { renderNode } from "unwritten:renderer/markup/markdown/index.js";
+import { hasAnchor, unregisterAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line.js";
 
@@ -20,6 +21,11 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
   ctx.nesting--;
 
   if(renderedChildren === ""){
+
+    if(hasAnchor(titleNode)){
+      void unregisterAnchor(ctx, titleNode.name, titleNode.id);
+    }
+
     return "";
   }
 

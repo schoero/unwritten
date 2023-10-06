@@ -142,8 +142,8 @@ const htmlRenderer: HTMLRenderer = {
 
       const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
 
-      createCurrentSourceFile(ctx, sourceFileEntity, destination);
-      setCurrentSourceFile(ctx, sourceFileEntity);
+      void createCurrentSourceFile(ctx, sourceFileEntity, destination);
+      void setCurrentSourceFile(ctx, sourceFileEntity);
 
       const title = capitalize(getFileName(sourceFileEntity.name, false));
       const titleAnchor = registerAnonymousAnchor(ctx, title);

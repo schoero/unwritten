@@ -167,14 +167,12 @@ export function createStrikethroughNode<Children extends ASTNode[]>(...children:
 }
 
 export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, anchor: AnchorTarget, ...children: Children): TitleNode<Children> {
-
   return {
     ...anchor,
     children,
     kind: ASTNodeKinds.Title,
     title
   };
-
 }
 
 function separateAnchorAndChildren<Children extends ASTNode[]>(anchorOrChildren: Children | [anchor: AnchorTarget, ...children: Children]) {

@@ -426,12 +426,12 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
-    constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-    methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    events: TitleNode<ConvertedEventPropertyEntityForDocumentation[]>
+    constructor: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    properties: Empty | TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+    methods: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    setters: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    getters: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    events: Empty | TitleNode<ConvertedEventPropertyEntityForDocumentation[]>
   ]>
 ]>;
 

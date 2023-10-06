@@ -1,4 +1,4 @@
-import { getAnchorId, hasAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { getAnchorId, hasAnchor, unregisterAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderNode } from "unwritten:renderer:html/index.js";
@@ -25,6 +25,11 @@ export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): s
   ctx.nesting--;
 
   if(renderedChildren.every(renderedChild => renderedChild === "")){
+
+    if(hasAnchor(titleNode)){
+      void unregisterAnchor(ctx, titleNode.name, titleNode.id);
+    }
+
     return "";
   }
 
