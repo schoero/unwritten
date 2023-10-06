@@ -43,8 +43,8 @@ export function convertTupleTypeMultiline(ctx: MarkupRenderContexts, tupleType: 
 
 function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleMemberEntity) {
 
-  const convertedName = tupleMemberEntity.name ?? "";
-  const convertedDescription = tupleMemberEntity.description ?? "";
+  const convertedName = tupleMemberEntity.name;
+  const convertedDescription = tupleMemberEntity.description;
   const convertedTags = convertTagsForType(ctx, tupleMemberEntity);
 
   const { inlineType, multilineType } = convertType(ctx, tupleMemberEntity.type);
@@ -56,7 +56,7 @@ function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleM
       convertedTags,
       convertedDescription
     ),
-    multilineType ?? ""
+    multilineType
   );
 
 }

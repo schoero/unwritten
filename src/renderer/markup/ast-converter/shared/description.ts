@@ -15,7 +15,7 @@ export function convertDescriptionForDocumentation(ctx: MarkupRenderContexts, de
   const translate = getTranslator(ctx);
 
   if(!description){
-    return "";
+    return;
   }
 
   const title = translate("description", { capitalize: true, count: 1 });
@@ -31,5 +31,5 @@ export function convertDescriptionForDocumentation(ctx: MarkupRenderContexts, de
 
 
 export function convertDescriptionForType(ctx: MarkupRenderContexts, description: Description): ConvertedDescriptionForType {
-  return description ?? "";
+  return description;
 }

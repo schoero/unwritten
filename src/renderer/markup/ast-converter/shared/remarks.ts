@@ -14,7 +14,7 @@ import type {
 export function convertRemarksForDocumentation(ctx: MarkupRenderContexts, remarks: Remarks): ConvertedRemarksForDocumentation {
 
   if(!remarks){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);
@@ -42,7 +42,7 @@ export function convertRemarksForDocumentation(ctx: MarkupRenderContexts, remark
 export function convertRemarksForType(ctx: MarkupRenderContexts, remarks: Remarks): ConvertedRemarksForType {
 
   if(!remarks){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);

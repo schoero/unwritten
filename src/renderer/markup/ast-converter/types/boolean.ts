@@ -16,6 +16,6 @@ export function convertBooleanTypeInline(ctx: MarkupRenderContexts, booleanType:
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.Boolean] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Boolean]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

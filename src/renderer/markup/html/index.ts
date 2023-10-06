@@ -221,6 +221,8 @@ export function renderNode(ctx: HTMLRenderContext, node: ASTNode): string {
   } else {
     if(Array.isArray(node)){
       return node.map(subNode => renderNode(ctx, subNode)).join("");
+    } else if(!node){
+      return "";
     } else {
       return node;
     }

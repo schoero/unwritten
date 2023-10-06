@@ -104,11 +104,11 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     });
 
     it("should not have type parameters", () => {
-      expect(typeParameters).toBe("");
+      expect(typeParameters).toBeFalsy();
     });
 
     it("should not have parameters", () => {
-      expect(parameters).toBe("");
+      expect(parameters).toBeFalsy();
     });
 
     it("should have a matching return type", () => {
@@ -232,7 +232,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
     });
 
     it("should not have type parameters", () => {
-      expect(methods.children[0].children[1]).toBe("");
+      expect(methods.children[0].children[1]).toBeFalsy();
     });
 
     it("should have matching parameters", () => {

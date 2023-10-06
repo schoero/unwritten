@@ -24,7 +24,7 @@ import type {
 export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForSignature {
 
   if(parameterEntities === undefined){
-    return "";
+    return undefined;
   }
 
   const renderedParameters = parameterEntities.flatMap((parameter, index) => {
@@ -52,7 +52,7 @@ export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, 
 export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForDocumentation {
 
   if(!parameterEntities || parameterEntities.length === 0){
-    return "";
+    return undefined;
   }
 
   const translate = getTranslator(ctx);
@@ -78,7 +78,7 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
 export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForType {
 
   if(!parameterEntities || parameterEntities.length === 0){
-    return "";
+    return undefined;
   }
 
   const translate = getTranslator(ctx);
@@ -106,21 +106,15 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
 
-  const description = parameterEntity.description ?? "";
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
 
+  const description = parameterEntity.description;
+
+  const rest = parameterEntity.rest === true && encapsulate(translate("rest"), renderConfig.tagEncapsulation);
+  const optional = parameterEntity.optional === true && encapsulate(translate("optional"), renderConfig.tagEncapsulation);
+  const initializer = parameterEntity.initializer && convertInitializerForType(ctx, parameterEntity.initializer);
+
   const { inlineType, multilineType } = convertType(ctx, parameterEntity.type);
-
-  const rest = parameterEntity.rest === true
-    ? encapsulate(translate("rest"), renderConfig.tagEncapsulation)
-    : "";
-
-  const optional = parameterEntity.optional === true
-    ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
-    : "";
-
-  const initializer = parameterEntity.initializer &&
-     convertInitializerForType(ctx, parameterEntity.initializer);
 
   return createMultilineNode(
     createParagraphNode(
@@ -130,11 +124,11 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
         description,
         optional,
         rest,
-        initializer?.inlineInitializer ?? ""
+        initializer?.inlineInitializer
       )
     ),
-    multilineType ?? "",
-    initializer?.multilineInitializer ?? ""
+    multilineType,
+    initializer?.multilineInitializer
   );
 
 }

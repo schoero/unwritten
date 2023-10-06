@@ -108,7 +108,7 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
     typeTranslation,
     typeAnchor,
     createParagraphNode(inlineType),
-    multilineType ?? ""
+    multilineType
   );
 
 }

@@ -77,13 +77,11 @@ function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: T
 
   const typeAliasName = typeAliasEntity.name;
 
-  const convertedTypeParameters = typeAliasEntity.typeParameters && typeAliasEntity.typeParameters.length > 0
-    ? convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters)
-    : "";
+  const convertedTypeParameters = typeAliasEntity.typeParameters && typeAliasEntity.typeParameters.length > 0 &&
+    convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters);
 
-  const encapsulatedTypeParameters = convertedTypeParameters
-    ? encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation)
-    : "";
+  const encapsulatedTypeParameters = convertedTypeParameters &&
+     encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation);
 
   return [
     typeAliasName,

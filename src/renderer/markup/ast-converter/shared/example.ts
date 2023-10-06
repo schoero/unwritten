@@ -14,7 +14,7 @@ import type {
 export function convertExamplesForDocumentation(ctx: MarkupRenderContexts, examples: Examples): ConvertedExamples {
 
   if(!examples){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);
@@ -42,7 +42,7 @@ export function convertExamplesForDocumentation(ctx: MarkupRenderContexts, examp
 export function convertExamplesForType(ctx: MarkupRenderContexts, examples: Examples): ConvertedExamplesForType {
 
   if(!examples){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);

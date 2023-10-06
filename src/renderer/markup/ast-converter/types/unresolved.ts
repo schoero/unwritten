@@ -14,21 +14,17 @@ export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolve
   const renderConfig = getRenderConfig(ctx);
 
   const name = unresolvedType.name;
-  const encapsulatedName = name
-    ? encapsulate(name, renderConfig.typeEncapsulation)
-    : "";
+  const encapsulatedName = name &&
+    encapsulate(name, renderConfig.typeEncapsulation);
 
-  const link = name &&
-  name in ctx.config.externalTypes
-    ? createLinkNode(encapsulatedName, ctx.config.externalTypes[name]!)
-    : undefined;
+  const link = name && name in ctx.config.externalTypes &&
+    createLinkNode(encapsulatedName, ctx.config.externalTypes[name]!);
 
-  const typeArguments = unresolvedType.typeArguments && unresolvedType.typeArguments.length > 0
-    ? convertTypeArguments(ctx, unresolvedType.typeArguments)
-    : "";
+  const typeArguments = unresolvedType.typeArguments && unresolvedType.typeArguments.length > 0 &&
+    convertTypeArguments(ctx, unresolvedType.typeArguments);
 
   return spaceBetween(
-    link ?? encapsulatedName,
+    link || encapsulatedName,
     typeArguments
   );
 

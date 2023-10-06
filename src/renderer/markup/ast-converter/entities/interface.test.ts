@@ -76,7 +76,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     });
 
     it("should have no tags", () => {
-      expect(tags).toBe("");
+      expect(tags).toBeFalsy();
     });
 
     it("should have one construct signature", () => {

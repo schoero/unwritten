@@ -24,7 +24,7 @@ export function convertUnionTypeInline(ctx: MarkupRenderContexts, unionType: Uni
 
     return unionType.types.reduce<ASTNode[]>((astNodes, type, index) => {
       const { inlineType, multilineType } = convertType(ctx, type);
-      const convertedType = multilineType ?? inlineType;
+      const convertedType = multilineType || inlineType;
 
       astNodes.push(convertedType);
       if(index < unionType.types.length - 1){
@@ -55,7 +55,7 @@ export function convertUnionTypeMultiline(ctx: MarkupRenderContexts, unionType: 
 
     return createMultilineNode(
       inlineType,
-      multilineType ?? ""
+      multilineType
     );
 
   });

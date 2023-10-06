@@ -16,6 +16,6 @@ export function convertNeverTypeInline(ctx: MarkupRenderContexts, neverType: Nev
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.Never] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Never]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

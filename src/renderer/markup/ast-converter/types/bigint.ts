@@ -16,6 +16,6 @@ export function convertBigIntTypeInline(ctx: MarkupRenderContexts, bigIntType: B
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.BigInt] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.BigInt]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

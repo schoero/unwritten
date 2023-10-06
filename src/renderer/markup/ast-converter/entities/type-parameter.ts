@@ -42,7 +42,7 @@ export function convertTypeParameterEntitiesForSignature(ctx: MarkupRenderContex
 export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderContexts, parameterEntities: TypeParameterEntity[] | undefined): ConvertedTypeParameterEntitiesForDocumentation {
 
   if(parameterEntities === undefined || parameterEntities.length === 0){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);
@@ -73,7 +73,7 @@ export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContexts, t
   const renderConfig = getRenderConfig(ctx);
 
   if(!typeParameterEntities || typeParameterEntities.length === 0){
-    return "";
+    return;
   }
 
   const title = renderNode(ctx, encapsulate(translate("typeParameter", { capitalizeEach: true, count: typeParameterEntities.length }), renderConfig.inlineTitleEncapsulation));
@@ -97,8 +97,8 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
 
   const renderConfig = getRenderConfig(ctx);
 
-  const description = typeParameterEntity.description ?? "";
   const name = encapsulate(typeParameterEntity.name, renderConfig.typeParameterEncapsulation);
+  const description = typeParameterEntity.description;
   const symbolId = typeParameterEntity.symbolId;
 
   const constraint = typeParameterEntity.constraint &&
@@ -119,13 +119,13 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
     createParagraphNode(
       spaceBetween(
         nameAnchor,
-        constraint?.inlineConstraint ?? "",
+        constraint?.inlineConstraint,
         description,
-        initializer?.inlineInitializer ?? ""
+        initializer?.inlineInitializer
       )
     ),
-    constraint?.multilineConstraint ?? "",
-    initializer?.multilineInitializer ?? ""
+    constraint?.multilineConstraint,
+    initializer?.multilineInitializer
   );
 
 }

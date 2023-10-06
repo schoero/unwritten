@@ -22,7 +22,7 @@ import type {
 export function convertThrowsForDocumentation(ctx: MarkupRenderContexts, throws: Throws): ConvertedThrowsForDocumentation {
 
   if(!throws || throws.length === 0){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);
@@ -34,9 +34,9 @@ export function convertThrowsForDocumentation(ctx: MarkupRenderContexts, throws:
       return [
         spaceBetween(
           inlineType,
-          throws.description ?? ""
+          throws.description
         ),
-        multilineType ?? ""
+        multilineType
       ];
     }
 
@@ -59,7 +59,7 @@ export function convertThrowsForDocumentation(ctx: MarkupRenderContexts, throws:
 export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws): ConvertedThrowsForType {
 
   if(!throws || throws.length === 0){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);
@@ -72,10 +72,10 @@ export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws):
         createParagraphNode(
           spaceBetween(
             inlineType,
-            throws.description ?? ""
+            throws.description
           )
         ),
-        multilineType ?? ""
+        multilineType
       );
     }
 

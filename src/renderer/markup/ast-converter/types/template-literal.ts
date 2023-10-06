@@ -8,13 +8,13 @@ import type { ConvertedTemplateLiteralTypeInline } from "unwritten:renderer:mark
 
 export function convertTemplateLiteralTypeInline(ctx: MarkupRenderContexts, templateLiteralType: TemplateLiteralType): ConvertedTemplateLiteralTypeInline {
 
-  const head = templateLiteralType.head ?? "";
+  const head = templateLiteralType.head;
   const types = templateLiteralType.types;
   const spans = templateLiteralType.spans;
 
   const renderedTemplateLiteralType = types.reduce<ASTNode[]>((acc, type, index) => {
     const { inlineType } = convertType(ctx, type);
-    const span = spans[index] ?? "";
+    const span = spans[index];
     return [
       ...acc,
       "${",

@@ -237,6 +237,8 @@ export function renderNode(ctx: MarkdownRenderContext, node: ASTNode): string {
   } else {
     if(Array.isArray(node)){
       return renderArray(ctx, node);
+    } else if(!node){
+      return "";
     } else {
       return renderString(ctx, node);
     }

@@ -36,7 +36,7 @@ scope("MarkupRenderer", "Tags", () => {
       ctx,
       {} as PropertyEntity
     );
-    expect(convertedTags).toBe("");
+    expect(convertedTags).toBeFalsy();
   });
 
 });

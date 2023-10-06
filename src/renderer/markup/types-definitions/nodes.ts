@@ -4,11 +4,14 @@ import type { AnchorLink, AnchorTarget } from "unwritten:renderer/markup/registr
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
 
 
+export type Empty = false | null | undefined;
+
 export type ASTNode =
   | AnchorNode
   | ASTNode[]
   | BoldNode
   | ConditionalNode
+  | Empty
   | InlineTitleNode
   | ItalicNode
   | LinkNode

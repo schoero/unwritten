@@ -35,13 +35,11 @@ export function convertMappedTypeMultiline(ctx: MarkupRenderContexts, mappedType
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
 
-  const readonly = mappedType.readonly === true
-    ? encapsulate(translate("readonly"), renderConfig.tagEncapsulation)
-    : "";
+  const readonly = mappedType.readonly === true &&
+    encapsulate(translate("readonly"), renderConfig.tagEncapsulation);
 
-  const optional = mappedType.optional === true
-    ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
-    : "";
+  const optional = mappedType.optional === true &&
+    encapsulate(translate("optional"), renderConfig.tagEncapsulation);
 
   assert(mappedType.typeParameter, "Mapped type must have a type parameter");
   assert(mappedType.typeParameter.constraint, "Mapped type must have a type parameter");
@@ -57,7 +55,7 @@ export function convertMappedTypeMultiline(ctx: MarkupRenderContexts, mappedType
         inlineKeyType,
         readonly
       ),
-      multilineKeyType ?? ""
+      multilineKeyType
     ),
     createMultilineNode(
       spaceBetween(
@@ -65,7 +63,7 @@ export function convertMappedTypeMultiline(ctx: MarkupRenderContexts, mappedType
         inlineValueType,
         optional
       ),
-      multilineValueType ?? ""
+      multilineValueType
     )
   );
 

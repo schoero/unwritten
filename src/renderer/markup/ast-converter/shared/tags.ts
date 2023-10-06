@@ -28,11 +28,8 @@ export function convertTagsForDocumentation(ctx: MarkupRenderContexts, entityWit
     convertedTag => convertedTag.length > 0
   );
 
-  return convertedTags.length > 0
-    ? createParagraphNode(
-      ...spaceBetween(...convertedTags)
-    )
-    : "";
+  return convertedTags.length > 0 &&
+    createParagraphNode(...spaceBetween(...convertedTags));
 
 }
 
@@ -52,8 +49,7 @@ export function convertTagsForType(ctx: MarkupRenderContexts, entityWithTags: En
     convertedTag => convertedTag.length > 0
   );
 
-  return convertedTags.length > 0
-    ? spaceBetween(...convertedTags)
-    : "";
+  return convertedTags.length > 0 &&
+    spaceBetween(...convertedTags);
 
 }

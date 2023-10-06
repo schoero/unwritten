@@ -37,7 +37,7 @@ export function convertIntersectionTypeMultiline(ctx: MarkupRenderContexts, inte
 
     return createMultilineNode(
       inlineType,
-      multilineType ?? ""
+      multilineType
     );
 
   });

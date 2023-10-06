@@ -16,6 +16,6 @@ export function convertAnyTypeInline(ctx: MarkupRenderContexts, anyType: AnyType
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.Any] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Any]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

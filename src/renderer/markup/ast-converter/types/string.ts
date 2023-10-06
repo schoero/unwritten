@@ -16,6 +16,6 @@ export function convertStringTypeInline(ctx: MarkupRenderContexts, stringType: S
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.String] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.String]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

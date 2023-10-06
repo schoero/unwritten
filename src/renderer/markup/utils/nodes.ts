@@ -186,7 +186,7 @@ function separateAnchorAndChildren<Children extends ASTNode[]>(anchorOrChildren:
     anchor = anchorOrChildren;
     children = <ASTNode>[] as Children;
   } else {
-    if(isAnchor(anchorOrChildren[0]) || typeof anchorOrChildren[0] === "undefined"){
+    if(isAnchor(anchorOrChildren[0])){
       const [first, ...rest] = anchorOrChildren;
       anchor = first;
       children = rest as Children;
