@@ -1,5 +1,5 @@
 import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
-import { getTypeId } from "unwritten:interpreter/ast/shared/id.js";
+import { getIdByTypeNode, getTypeId } from "unwritten:interpreter/ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { withLockedType } from "unwritten:interpreter/utils/ts.js";
 
@@ -37,7 +37,7 @@ export function createIndexedAccessTypeByTypeNode(ctx: InterpreterContext, typeN
   const indexType = getTypeByTypeNode(ctx, typeNode.indexType);
   const objectType = getTypeByTypeNode(ctx, typeNode.objectType);
   const type = getTypeByType(ctx, tsType);
-  const typeId = getTypeId(ctx, tsType);
+  const typeId = getIdByTypeNode(ctx, typeNode);
 
   const kind = TypeKind.IndexedAccess;
 

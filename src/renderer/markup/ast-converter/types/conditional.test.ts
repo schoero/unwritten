@@ -70,22 +70,22 @@ scope("MarkupRenderer", TypeKind.Conditional, () => {
       assert(Array.isArray(inlineCheckType[2].trueChildren));
       assert(isAnchorNode(inlineCheckType[2].trueChildren[0]));
       expect(inlineCheckType[2].trueChildren[0].name).toBe("T");
-      expect(multilineCheckType).toBe("");
+      expect(multilineCheckType).toBeFalsy();
     });
 
     it("should have a matching extends type", () => {
       expect(inlineExtendsType[2]).toContain("A");
-      expect(multilineExtendsType).toBe("");
+      expect(multilineExtendsType).toBeFalsy();
     });
 
     it("should have a matching true type", () => {
       expect(inlineTrueType[2]).toContain("a");
-      expect(multilineTrueType).toBe("");
+      expect(multilineTrueType).toBeFalsy();
     });
 
     it("should have a matching false type", () => {
       expect(inlineFalseType[2]).toContain("b");
-      expect(multilineFalseType).toBe("");
+      expect(multilineFalseType).toBeFalsy();
     });
 
   }

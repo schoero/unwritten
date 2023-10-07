@@ -4,7 +4,11 @@ import { renderConditionalNode } from "unwritten:renderer/markup/html/ast/condit
 import { renderInlineTitleNode } from "unwritten:renderer/markup/html/ast/inline-title.js";
 import { renderMultilineNode } from "unwritten:renderer/markup/html/ast/multiline.js";
 import { renderPaddedNode } from "unwritten:renderer/markup/html/ast/padded.js";
-import { createCurrentSourceFile, setCurrentSourceFile } from "unwritten:renderer/markup/registry/registry.js";
+import {
+  createCurrentSourceFile,
+  registerAnonymousAnchor,
+  setCurrentSourceFile
+} from "unwritten:renderer/markup/registry/registry.js";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
 import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { capitalize } from "unwritten:renderer/markup/utils/translations.js";
@@ -42,7 +46,7 @@ import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 import { renderTitleNode } from "./ast/title.js";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry.js";
+import type { AnchorTarget, LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry.js";
 import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
@@ -134,13 +138,19 @@ const htmlRenderer: HTMLRenderer = {
 
     htmlRenderer.initializeContext(ctx);
 
-    return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
+    return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; title: string; titleAnchor: AnchorTarget; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
 
       const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
-      createCurrentSourceFile(ctx, sourceFileEntity, destination);
-      setCurrentSourceFile(ctx, sourceFileEntity);
+
+      void createCurrentSourceFile(ctx, sourceFileEntity, destination);
+      void setCurrentSourceFile(ctx, sourceFileEntity);
+
+      const title = capitalize(getFileName(sourceFileEntity.name, false));
+      const titleAnchor = registerAnonymousAnchor(ctx, title);
 
       convertedSourceFileEntities.push({
+        title,
+        titleAnchor,
         ...sourceFileEntity,
         ...convertToMarkupAST(ctx, sourceFileEntity.exports)
       });
@@ -157,7 +167,8 @@ const htmlRenderer: HTMLRenderer = {
       setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
       const ast = createTitleNode(
-        capitalize(getFileName(convertedSourceFileEntity.name, false)),
+        convertedSourceFileEntity.title,
+        convertedSourceFileEntity.titleAnchor,
         createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents),
         createSectionNode("documentation", ...convertedSourceFileEntity.documentation)
       );
@@ -210,6 +221,8 @@ export function renderNode(ctx: HTMLRenderContext, node: ASTNode): string {
   } else {
     if(Array.isArray(node)){
       return node.map(subNode => renderNode(ctx, subNode)).join("");
+    } else if(!node){
+      return "";
     } else {
       return node;
     }

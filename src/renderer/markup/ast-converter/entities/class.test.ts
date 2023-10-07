@@ -70,37 +70,37 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     });
 
     it("should have no tags", () => {
-      expect(tags).toBe("");
+      expect(tags).toBeFalsy();
     });
 
     it("should have one construct signature", () => {
-      expect(constructSignatures.children).toHaveLength(1);
+      expect(constructSignatures && constructSignatures.children).toHaveLength(1);
     });
 
     it("should have two properties", () => {
-      expect(properties.children).toHaveLength(3);
+      expect(properties && properties.children).toHaveLength(3);
     });
 
     it("should support all possible modifiers", () => {
-      expect(renderNode(ctx, properties.children[0].children[0])).toContain("public");
-      expect(renderNode(ctx, properties.children[1].children[0])).toContain("static");
-      expect(renderNode(ctx, properties.children[2].children[0])).toContain("protected");
+      expect(properties && renderNode(ctx, properties.children[0].children[0])).toContain("public");
+      expect(properties && renderNode(ctx, properties.children[1].children[0])).toContain("static");
+      expect(properties && renderNode(ctx, properties.children[2].children[0])).toContain("protected");
     });
 
     it("should have one method signature", () => {
-      expect(methods.children).toHaveLength(1);
+      expect(methods && methods.children).toHaveLength(1);
     });
 
     it("should have one setter signature", () => {
-      expect(setters.children).toHaveLength(1);
+      expect(setters && setters.children).toHaveLength(1);
     });
 
     it("should have one getter signature", () => {
-      expect(getters.children).toHaveLength(1);
+      expect(getters && getters.children).toHaveLength(1);
     });
 
     it("should have one event", () => {
-      expect(events.children).toHaveLength(1);
+      expect(events && events.children).toHaveLength(1);
     });
 
   }
@@ -139,7 +139,7 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     ] = titleNode.children;
 
     it("should not render implicit constructors", () => {
-      expect(constructSignatures.children).toHaveLength(0);
+      expect(constructSignatures).toBeFalsy();
     });
 
   }

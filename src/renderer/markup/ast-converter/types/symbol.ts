@@ -16,6 +16,6 @@ export function convertSymbolTypeInline(ctx: MarkupRenderContexts, symbolType: S
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.Symbol] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Symbol]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

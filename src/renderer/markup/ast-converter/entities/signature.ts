@@ -3,7 +3,7 @@ import {
   convertThrowsForDocumentation,
   convertThrowsForType
 } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertParameterEntitiesForDocumentation,
@@ -141,19 +141,16 @@ function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureE
 
   const renderConfig = getRenderConfig(ctx);
 
-  const name = signatureEntity.name ?? "";
+  const name = signatureEntity.name;
 
-  const convertedTypeParameters = signatureEntity.typeParameters && signatureEntity.typeParameters.length > 0
-    ? convertTypeParameterEntitiesForSignature(ctx, signatureEntity.typeParameters)
-    : "";
+  const convertedTypeParameters = signatureEntity.typeParameters && signatureEntity.typeParameters.length > 0 &&
+    convertTypeParameterEntitiesForSignature(ctx, signatureEntity.typeParameters);
 
-  const encapsulatedTypeParameters = convertedTypeParameters
-    ? encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation)
-    : "";
+  const encapsulatedTypeParameters = convertedTypeParameters &&
+    encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation);
 
-  const convertedParameters = signatureEntity.parameters
-    ? convertParameterEntitiesForSignature(ctx, signatureEntity.parameters)
-    : "";
+  const convertedParameters = signatureEntity.parameters &&
+    convertParameterEntitiesForSignature(ctx, signatureEntity.parameters);
 
   return [
     name,
@@ -170,18 +167,23 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
 
   const translate = getTranslator(ctx);
 
+  const returnDescription = signatureEntity.returnType.description;
+
+  const returnTypeTranslation = translate("returnType", { capitalizeEach: true });
+  const returnTypeAnchor = registerAnonymousAnchor(ctx, returnTypeTranslation);
+
   const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
-  const returnDescription = signatureEntity.returnType.description ?? "";
 
   return createTitleNode(
-    translate("returnType", { capitalizeEach: true }),
+    returnTypeTranslation,
+    returnTypeAnchor,
     createParagraphNode(
       spaceBetween(
         inlineType,
         returnDescription
       )
     ),
-    multilineType ?? ""
+    multilineType
   );
 
 }
@@ -191,19 +193,22 @@ function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: Si
   const translate = getTranslator(ctx);
 
   const title = translate("returnType", { capitalizeEach: true });
+  const anchor = registerAnonymousAnchor(ctx, title);
+
+  const returnDescription = signatureEntity.returnType.description;
 
   const { inlineType, multilineType } = convertType(ctx, signatureEntity.returnType);
-  const returnDescription = signatureEntity.returnType.description ?? "";
 
   return createInlineTitleNode(
     title,
+    anchor,
     createParagraphNode(
       spaceBetween(
         inlineType,
         returnDescription
       )
     ),
-    multilineType ?? ""
+    multilineType
   );
 
 }

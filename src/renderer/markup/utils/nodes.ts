@@ -56,12 +56,7 @@ export function createConditionalNode<TrueChildren extends ASTNode, FalseChildre
   };
 }
 
-export function createInlineTitleNode<Children extends ASTNode[]>(title: ASTNode, ...children: Children): InlineTitleNode<Children>;
-export function createInlineTitleNode<Children extends ASTNode[]>(title: ASTNode, anchor: AnchorTarget, ...children: Children): InlineTitleNode<Children>;
-export function createInlineTitleNode<Children extends ASTNode[]>(title: ASTNode, ...anchorOrChildren: Children | [anchor: AnchorTarget, ...children: Children]): InlineTitleNode<Children> {
-
-  const { anchor, children } = separateAnchorAndChildren<Children>(anchorOrChildren);
-
+export function createInlineTitleNode<Children extends ASTNode[]>(title: ASTNode, anchor: AnchorTarget, ...children: Children): InlineTitleNode<Children> {
   return {
     ...anchor,
     children,
@@ -171,19 +166,13 @@ export function createStrikethroughNode<Children extends ASTNode[]>(...children:
   };
 }
 
-export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, ...children: Children): TitleNode<Children>;
-export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, anchor?: AnchorTarget, ...children: Children): TitleNode<Children>;
-export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, ...anchorOrChildren: Children | [anchor: AnchorTarget, ...children: Children]): TitleNode<Children> {
-
-  const { anchor, children } = separateAnchorAndChildren<Children>(anchorOrChildren);
-
+export function createTitleNode<Children extends ASTNode[]>(title: ASTNode, anchor: AnchorTarget, ...children: Children): TitleNode<Children> {
   return {
     ...anchor,
     children,
     kind: ASTNodeKinds.Title,
     title
   };
-
 }
 
 function separateAnchorAndChildren<Children extends ASTNode[]>(anchorOrChildren: Children | [anchor: AnchorTarget, ...children: Children]) {
@@ -195,7 +184,7 @@ function separateAnchorAndChildren<Children extends ASTNode[]>(anchorOrChildren:
     anchor = anchorOrChildren;
     children = <ASTNode>[] as Children;
   } else {
-    if(isAnchor(anchorOrChildren[0]) || typeof anchorOrChildren[0] === "undefined"){
+    if(isAnchor(anchorOrChildren[0])){
       const [first, ...rest] = anchorOrChildren;
       anchor = first;
       children = rest as Children;

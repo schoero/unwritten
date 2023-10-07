@@ -16,7 +16,7 @@ export function convertPositionForDocumentation(ctx: MarkupRenderContexts, posit
   const { relative } = ctx.dependencies.path;
 
   if(!position){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);

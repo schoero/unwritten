@@ -4,11 +4,14 @@ import type { AnchorLink, AnchorTarget } from "unwritten:renderer/markup/registr
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
 
 
+export type Empty = false | null | undefined;
+
 export type ASTNode =
   | AnchorNode
   | ASTNode[]
   | BoldNode
   | ConditionalNode
+  | Empty
   | InlineTitleNode
   | ItalicNode
   | LinkNode
@@ -72,7 +75,7 @@ export interface TitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNo
   title: ASTNode;
 }
 
-export interface InlineTitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.InlineTitle>, Partial<AnchorTarget> {
+export interface InlineTitleNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.InlineTitle>, AnchorTarget {
   children: Children;
   title: ASTNode;
 }

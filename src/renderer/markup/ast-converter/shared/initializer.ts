@@ -1,4 +1,5 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createInlineTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
@@ -21,9 +22,13 @@ export function convertInitializerForType(ctx: MarkupRenderContexts, type: Type)
     )
     : undefined;
 
+  const title = translate("default", { capitalize: true });
+  const anchor = registerAnonymousAnchor(ctx, title);
+
   const multilineInitializer = isMultilineType(type) && multilineType
     ? createInlineTitleNode(
-      translate("default", { capitalize: true }),
+      title,
+      anchor,
       inlineType,
       multilineType
     )

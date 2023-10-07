@@ -45,11 +45,11 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     });
 
     it("should not have type parameters", () => {
-      expect(typeParameters).toBe("");
+      expect(typeParameters).toBeFalsy();
     });
 
     it("should not have parameters", () => {
-      expect(parameters).toBe("");
+      expect(parameters).toBeFalsy();
     });
 
     it("should render the return type correctly", () => {
@@ -88,7 +88,7 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     });
 
     it("should not have type parameters", () => {
-      expect(typeParameters).toBe("");
+      expect(typeParameters).toBeFalsy();
     });
 
     it("should have two matching parameters", () => {
@@ -172,8 +172,8 @@ scope("MarkupRenderer", TypeKind.Function, () => {
     });
 
     it("should not have type parameters", () => {
-      expect(typeParameters).toBe("");
-      expect(typeParameters2).toBe("");
+      expect(typeParameters).toBeFalsy();
+      expect(typeParameters2).toBeFalsy();
     });
 
     it("should have matching parameters in each signature", () => {

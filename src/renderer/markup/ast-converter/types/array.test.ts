@@ -40,7 +40,7 @@ scope("MarkupRenderer", TypeKind.Array, () => {
     it("should be able to render arrays", () => {
       expect(inlineArrayType).toBe("Array");
       expect(inlineType).toBe("string");
-      expect(multilineType).toBe("");
+      expect(multilineType).toBeFalsy();
     });
 
   }
@@ -66,7 +66,7 @@ scope("MarkupRenderer", TypeKind.Array, () => {
     it("should add parentheses around union types", () => {
       expect(inlineArrayType).toBe("Array");
       expect(inlineType).toStrictEqual(["string", " | ", "number"]);
-      expect(multilineType).toBe("");
+      expect(multilineType).toBeFalsy();
     });
 
   }

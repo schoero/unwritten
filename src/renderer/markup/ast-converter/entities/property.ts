@@ -89,7 +89,7 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
     ),
     remarks,
     example,
-    multilineType ?? ""
+    multilineType
   );
 
 }

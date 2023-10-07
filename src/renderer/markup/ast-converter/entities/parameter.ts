@@ -1,4 +1,5 @@
 import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
 import {
@@ -23,7 +24,7 @@ import type {
 export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForSignature {
 
   if(parameterEntities === undefined){
-    return "";
+    return undefined;
   }
 
   const renderedParameters = parameterEntities.flatMap((parameter, index) => {
@@ -51,7 +52,7 @@ export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, 
 export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForDocumentation {
 
   if(!parameterEntities || parameterEntities.length === 0){
-    return "";
+    return undefined;
   }
 
   const translate = getTranslator(ctx);
@@ -60,8 +61,12 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
     parameter => convertParameterEntityForDocumentation(ctx, parameter)
   );
 
+  const parameterTranslation = translate("parameter", { capitalize: true, count: parameters.length });
+  const parameterAnchor = registerAnonymousAnchor(ctx, parameterTranslation);
+
   return createTitleNode(
-    translate("parameter", { capitalize: true, count: parameters.length }),
+    parameterTranslation,
+    parameterAnchor,
     createListNode(
       ...parameters
     )
@@ -73,12 +78,13 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
 export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForType {
 
   if(!parameterEntities || parameterEntities.length === 0){
-    return "";
+    return undefined;
   }
 
   const translate = getTranslator(ctx);
 
   const title = translate("parameter", { capitalizeEach: true, count: parameterEntities.length });
+  const anchor = registerAnonymousAnchor(ctx, title);
 
   const parameters = parameterEntities.map(
     parameter => convertParameterEntityForDocumentation(ctx, parameter)
@@ -86,6 +92,7 @@ export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, param
 
   return createInlineTitleNode(
     title,
+    anchor,
     createListNode(
       ...parameters
     )
@@ -99,21 +106,15 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
 
-  const description = parameterEntity.description ?? "";
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
 
+  const description = parameterEntity.description;
+
+  const rest = parameterEntity.rest === true && encapsulate(translate("rest"), renderConfig.tagEncapsulation);
+  const optional = parameterEntity.optional === true && encapsulate(translate("optional"), renderConfig.tagEncapsulation);
+  const initializer = parameterEntity.initializer && convertInitializerForType(ctx, parameterEntity.initializer);
+
   const { inlineType, multilineType } = convertType(ctx, parameterEntity.type);
-
-  const rest = parameterEntity.rest === true
-    ? encapsulate(translate("rest"), renderConfig.tagEncapsulation)
-    : "";
-
-  const optional = parameterEntity.optional === true
-    ? encapsulate(translate("optional"), renderConfig.tagEncapsulation)
-    : "";
-
-  const initializer = parameterEntity.initializer &&
-     convertInitializerForType(ctx, parameterEntity.initializer);
 
   return createMultilineNode(
     createParagraphNode(
@@ -123,11 +124,11 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
         description,
         optional,
         rest,
-        initializer?.inlineInitializer ?? ""
+        initializer?.inlineInitializer
       )
     ),
-    multilineType ?? "",
-    initializer?.multilineInitializer ?? ""
+    multilineType,
+    initializer?.multilineInitializer
   );
 
 }

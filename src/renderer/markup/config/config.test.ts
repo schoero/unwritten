@@ -158,9 +158,9 @@ scope("Renderer", "Config", () => {
         ] = titleNode.children;
 
         it("should not have any private members when disabled", () => {
-          expect(constructSignatures.children).toHaveLength(0);
-          expect(properties.children.flat()).toHaveLength(0);
-          expect(methods.children.flat()).toHaveLength(0);
+          expect(constructSignatures).toBeFalsy();
+          expect(properties).toBeFalsy();
+          expect(methods).toBeFalsy();
         });
 
       }
@@ -186,9 +186,9 @@ scope("Renderer", "Config", () => {
         ] = titleNode.children;
 
         it("should have private members when enabled", () => {
-          expect(constructSignatures.children).toHaveLength(1);
-          expect(properties.children.flat()).toHaveLength(1);
-          expect(methods.children.flat()).toHaveLength(1);
+          expect(constructSignatures && constructSignatures.children).toHaveLength(1);
+          expect(properties && properties.children.flat()).toHaveLength(1);
+          expect(methods && methods.children.flat()).toHaveLength(1);
         });
 
       }

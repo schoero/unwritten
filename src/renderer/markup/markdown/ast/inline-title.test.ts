@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createInlineTitleNode, createParagraphNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
@@ -15,13 +15,21 @@ scope("MarkdownRenderer", "InlineTitleNode", () => {
   const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
   it("should not render empty titles", () => {
-    const titleNode = createInlineTitleNode("Title");
+
+    const title = "Title";
+    const anchor = registerAnonymousAnchor(ctx, title);
+
+    const titleNode = createInlineTitleNode(title, anchor);
     expect(renderInlineTitleNode(ctx, titleNode)).toBe("");
+
   });
 
   it("should render a single title correctly", () => {
 
-    const titleNode = createInlineTitleNode("Title", createParagraphNode("Paragraph"));
+    const title = "Title";
+    const anchor = registerAnonymousAnchor(ctx, title);
+
+    const titleNode = createInlineTitleNode(title, anchor, createParagraphNode("Paragraph"));
 
     expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
@@ -34,16 +42,23 @@ scope("MarkdownRenderer", "InlineTitleNode", () => {
 
   it("should increase size for nested titles", () => {
 
+    const title = "Title";
+    const anchor = registerAnonymousAnchor(ctx, title);
+
+    const subtitle = "Subtitle";
+    const subtitleAnchor = registerAnonymousAnchor(ctx, subtitle);
+
     const titleNode = createInlineTitleNode(
-      "Title",
-      createInlineTitleNode("SubTitle", createParagraphNode("Paragraph"))
+      title,
+      anchor,
+      createInlineTitleNode(subtitle, subtitleAnchor, createParagraphNode("Paragraph"))
     );
 
     expect(renderInlineTitleNode(ctx, titleNode)).toBe(md`
         
       *Title:*
         
-      *SubTitle:*
+      *Subtitle:*
         
       Paragraph  
     `);
@@ -52,10 +67,20 @@ scope("MarkdownRenderer", "InlineTitleNode", () => {
 
   it("should not increase size for titles on the same level", () => {
 
+    const title = "Title";
+    const anchor = registerAnonymousAnchor(ctx, title);
+
+    const subtitle = "Subtitle";
+    const subtitleAnchor = registerAnonymousAnchor(ctx, subtitle);
+
+    const anotherSubtitle = "Another Subtitle";
+    const anotherSubtitleAnchor = registerAnonymousAnchor(ctx, anotherSubtitle);
+
     const titleNode = createInlineTitleNode(
-      "Title",
-      createInlineTitleNode("Subtitle", createParagraphNode("Paragraph")),
-      createInlineTitleNode("Another Subtitle", createParagraphNode("Paragraph"))
+      title,
+      anchor,
+      createInlineTitleNode(subtitle, subtitleAnchor, createParagraphNode("Paragraph")),
+      createInlineTitleNode(anotherSubtitle, anotherSubtitleAnchor, createParagraphNode("Paragraph"))
     );
 
     const renderedTitle = renderInlineTitleNode(ctx, titleNode);
@@ -77,8 +102,12 @@ scope("MarkdownRenderer", "InlineTitleNode", () => {
 
   it("should filter out empty strings", () => {
 
+    const title = "Title";
+    const anchor = registerAnonymousAnchor(ctx, title);
+
     const titleNode = createInlineTitleNode(
-      "Title",
+      title,
+      anchor,
       createParagraphNode("Paragraph"),
       "",
       createParagraphNode("Paragraph2")

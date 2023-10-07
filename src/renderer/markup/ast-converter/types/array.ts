@@ -35,7 +35,7 @@ export function convertArrayTypeMultiline(ctx: MarkupRenderContexts, arrayType: 
   return createListNode(
     createMultilineNode(
       inlineType,
-      multilineType ?? ""
+      multilineType
     )
   );
 

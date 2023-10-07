@@ -16,6 +16,6 @@ export function convertNullTypeInline(ctx: MarkupRenderContexts, nullType: NullT
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.Null] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Null]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

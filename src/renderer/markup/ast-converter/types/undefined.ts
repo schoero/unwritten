@@ -16,6 +16,6 @@ export function convertUndefinedTypeInline(ctx: MarkupRenderContexts, undefinedT
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.Undefined] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Undefined]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

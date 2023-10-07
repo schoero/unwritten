@@ -16,6 +16,6 @@ export function convertNumberTypeInline(ctx: MarkupRenderContexts, numberType: N
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.Number] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Number]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

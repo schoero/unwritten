@@ -16,6 +16,6 @@ export function convertVoidTypeInline(ctx: MarkupRenderContexts, voidType: VoidT
   const encapsulatedName = encapsulate(name, renderConfig.typeEncapsulation);
   const link = ctx.config.externalTypes[TypeKind.Void] && createLinkNode(encapsulatedName, ctx.config.externalTypes[TypeKind.Void]);
 
-  return link ?? encapsulatedName;
+  return link || encapsulatedName;
 
 }

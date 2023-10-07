@@ -44,7 +44,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const members = enumEntity.members.map(member => {
 
     const name = member.name;
-    const description = member.description ?? "";
+    const description = member.description;
     const { inlineType: type } = convertType(ctx, member.type);
 
     return [

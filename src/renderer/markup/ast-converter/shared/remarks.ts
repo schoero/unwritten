@@ -1,3 +1,4 @@
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createInlineTitleNode, createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
@@ -13,7 +14,7 @@ import type {
 export function convertRemarksForDocumentation(ctx: MarkupRenderContexts, remarks: Remarks): ConvertedRemarksForDocumentation {
 
   if(!remarks){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);
@@ -26,8 +27,12 @@ export function convertRemarksForDocumentation(ctx: MarkupRenderContexts, remark
   })
     .filter(node => !!node) as ParagraphNode[];
 
+  const remarksTranslation = translate("remark", { capitalize: true, count: 1 });
+  const remarksAnchor = registerAnonymousAnchor(ctx, remarksTranslation);
+
   return createTitleNode(
-    translate("remark", { capitalize: true, count: remarks.length }),
+    remarksTranslation,
+    remarksAnchor,
     ...convertedRemarks
   );
 
@@ -37,12 +42,10 @@ export function convertRemarksForDocumentation(ctx: MarkupRenderContexts, remark
 export function convertRemarksForType(ctx: MarkupRenderContexts, remarks: Remarks): ConvertedRemarksForType {
 
   if(!remarks){
-    return "";
+    return;
   }
 
   const translate = getTranslator(ctx);
-
-  const title = translate("remark", { capitalize: true, count: remarks.length });
 
   const convertedRemarks = remarks.flat().map(remark => {
     if(!remark){
@@ -52,8 +55,12 @@ export function convertRemarksForType(ctx: MarkupRenderContexts, remarks: Remark
   })
     .filter(node => !!node) as ASTNode[];
 
+  const title = translate("remark", { capitalize: true, count: remarks.length });
+  const anchor = registerAnonymousAnchor(ctx, title);
+
   return createInlineTitleNode(
     title,
+    anchor,
     createParagraphNode(
       ...convertedRemarks
     )

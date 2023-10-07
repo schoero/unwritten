@@ -44,28 +44,28 @@ export function convertConditionalTypeMultiline(ctx: MarkupRenderContexts, condi
         translate("checkType"),
         inlineCheckType
       ),
-      multilineCheckType ?? ""
+      multilineCheckType
     ),
     createMultilineNode(
       spaceBetween(
         translate("extendsType"),
         inlineExtendsType
       ),
-      multilineExtendsType ?? ""
+      multilineExtendsType
     ),
     createMultilineNode(
       spaceBetween(
         translate("trueType"),
         inlineTrueType
       ),
-      multilineTrueType ?? ""
+      multilineTrueType
     ),
     createMultilineNode(
       spaceBetween(
         translate("falseType"),
         inlineFalseType
       ),
-      multilineFalseType ?? ""
+      multilineFalseType
     )
   );
 

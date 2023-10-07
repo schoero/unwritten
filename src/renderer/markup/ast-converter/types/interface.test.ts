@@ -27,7 +27,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
         prop: string;
         funcProp: () => void;
         get getter(): string;
-        set setter(value: string): void;
+        set setter(value: string);
         /**
          * Event description
          * @eventProperty

@@ -6,6 +6,7 @@ import type {
   AnchorNode,
   ASTNode,
   ConditionalNode,
+  Empty,
   InlineTitleNode,
   LinkNode,
   ListNode,
@@ -37,35 +38,35 @@ export type RenderableJSDocTags =
   | Internal;
 
 // Position
-export type ConvertedPosition = PaddedNode<[
+export type ConvertedPosition = Empty | PaddedNode<[
   ParagraphNode<[
     SmallNode<[LinkNode] | [string, LinkNode]>
   ]>
-]> | "";
+]>;
 
 // Tags
-export type ConvertedTagsForDocumentation = ParagraphNode | "";
+export type ConvertedTagsForDocumentation = Empty | ParagraphNode;
 export type ConvertedTagsForType = ASTNode;
 
 // Description
-export type ConvertedDescriptionForDocumentation = TitleNode<ParagraphNode[]> | "";
+export type ConvertedDescriptionForDocumentation = Empty | TitleNode<ParagraphNode[]>;
 export type ConvertedDescriptionForType = ASTNode;
 
 // Remarks
-export type ConvertedRemarksForDocumentation = TitleNode<ParagraphNode[]> | "";
-export type ConvertedRemarksForType = InlineTitleNode | "";
+export type ConvertedRemarksForDocumentation = Empty | TitleNode<ParagraphNode[]>;
+export type ConvertedRemarksForType = Empty | InlineTitleNode;
 
 // Throws
-export type ConvertedThrowsForDocumentation = TitleNode<[
+export type ConvertedThrowsForDocumentation = Empty | TitleNode<[
   ListNode
-]> | "";
-export type ConvertedThrowsForType = InlineTitleNode<[
+]>;
+export type ConvertedThrowsForType = Empty | InlineTitleNode<[
   throws: ListNode
-]> | "";
+]>;
 
 // Example
-export type ConvertedExamples = TitleNode<ParagraphNode[]> | "";
-export type ConvertedExamplesForType = InlineTitleNode | "";
+export type ConvertedExamples = Empty | TitleNode<ParagraphNode[]>;
+export type ConvertedExamplesForType = Empty | InlineTitleNode;
 
 // Types
 export interface ConvertedType {
@@ -148,12 +149,12 @@ export type ConvertedFunctionTypeInline = ASTNode;
 // Return type
 export type ConvertedReturnTypeForDocumentation = TitleNode<[
   ParagraphNode,
-  ConditionalNode | ConvertedTypeMultiline | ""
+  ConditionalNode | ConvertedTypeMultiline | Empty
 ]>;
-export type ConvertedReturnTypeForType = InlineTitleNode<[
+export type ConvertedReturnTypeForType = Empty | InlineTitleNode<[
   inlineTypeAndDescription: ASTNode,
   multilineType: ASTNode
-]> | "";
+]>;
 
 // Type reference
 export type ConvertedTypeReferenceTypeMultiline = ConditionalNode | ConvertedTypeMultiline;
@@ -174,7 +175,7 @@ export type ConvertedArrayTypeInline = ASTNode;
 export type ConvertedArrayTypeMultiline = ListNode<[
   MultilineNode<[
     ConvertedTypeInline,
-    ConditionalNode | ConvertedTypeMultiline | ""
+    ConditionalNode | ConvertedTypeMultiline | Empty
   ]>
 ]>;
 
@@ -182,7 +183,7 @@ export type ConvertedArrayTypeMultiline = ListNode<[
 export type ConvertedTupleTypeInline = ASTNode;
 export type ConvertedTupleTypeMultiline = ListNode<MultilineNode<[
   ASTNode,
-  ConditionalNode | ConvertedTypeMultiline | ""
+  ConditionalNode | ConvertedTypeMultiline | Empty
 ]>[]>;
 
 // Union type
@@ -226,11 +227,11 @@ export type ConvertedMappedTypeInline = ASTNode;
 export type ConvertedMappedTypeMultiline = ListNode<[
   keyType: MultilineNode<[
     ASTNode[],
-    ConditionalNode | ConvertedTypeMultiline | ""
+    ConditionalNode | ConvertedTypeMultiline | Empty
   ]>,
   valueType: MultilineNode<[
     ASTNode[],
-    ConditionalNode | ConvertedTypeMultiline | ""
+    ConditionalNode | ConvertedTypeMultiline | Empty
   ]>
 ]>;
 
@@ -239,19 +240,19 @@ export type ConvertedConditionalTypeInline = ASTNode;
 export type ConvertedConditionalTypeMultiline = ListNode<[
   checkType: MultilineNode<[
     ASTNode[],
-    ConvertedTypeMultiline | ConvertedTypeReferenceTypeMultiline | ""
+    ConvertedTypeMultiline | ConvertedTypeReferenceTypeMultiline | Empty
   ]>,
   extendsType: MultilineNode<[
     ASTNode[],
-    ConvertedTypeMultiline | ConvertedTypeReferenceTypeMultiline | ""
+    ConvertedTypeMultiline | ConvertedTypeReferenceTypeMultiline | Empty
   ]>,
   trueType: MultilineNode<[
     ASTNode[],
-    ConvertedTypeMultiline | ConvertedTypeReferenceTypeMultiline | ""
+    ConvertedTypeMultiline | ConvertedTypeReferenceTypeMultiline | Empty
   ]>,
   falseType: MultilineNode<[
     ASTNode[],
-    ConvertedTypeMultiline | ConvertedTypeReferenceTypeMultiline | ""
+    ConvertedTypeMultiline | ConvertedTypeReferenceTypeMultiline | Empty
   ]>
 ]>;
 
@@ -425,12 +426,12 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
-    constructor: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    properties: TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-    methods: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    setters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    getters: TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    events: TitleNode<ConvertedEventPropertyEntityForDocumentation[]>
+    constructor: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    properties: Empty | TitleNode<ConvertedPropertyEntityForDocumentation[]>,
+    methods: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    setters: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    getters: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
+    events: Empty | TitleNode<ConvertedEventPropertyEntityForDocumentation[]>
   ]>
 ]>;
 
@@ -448,23 +449,23 @@ export type ConvertedEnumEntityForDocumentation = SectionNode<[
 ]>;
 
 // Parameter
-export type ConvertedParameterEntitiesForSignature = ASTNode[] | "";
-export type ConvertedParameterEntitiesForDocumentation = TitleNode<[ListNode]> | "";
-export type ConvertedParameterEntitiesForType = InlineTitleNode<[ListNode]> | "";
+export type ConvertedParameterEntitiesForSignature = ASTNode[] | Empty;
+export type ConvertedParameterEntitiesForDocumentation = Empty | TitleNode<[ListNode]>;
+export type ConvertedParameterEntitiesForType = Empty | InlineTitleNode<[ListNode]>;
 
 // Type Parameter
 export type ConvertedTypeParameterEntitiesForSignature = ASTNode[];
-export type ConvertedTypeParameterEntitiesForDocumentation = TitleNode<[
+export type ConvertedTypeParameterEntitiesForDocumentation = Empty | TitleNode<[
   ListNode<ConvertedTypeParameterEntityForDocumentation[]>
-]> | "";
-export type ConvertedTypeParameterEntitiesForType = InlineTitleNode<[
+]>;
+export type ConvertedTypeParameterEntitiesForType = Empty | InlineTitleNode<[
   ListNode
-]> | "";
-export type ConvertedTypeParameterEntityForDocumentation = MultilineNode<[
+]>;
+export type ConvertedTypeParameterEntityForDocumentation = Empty | MultilineNode<[
   typeParameterSignatureWithDescription: ASTNode,
-  constraint: InlineTitleNode | "",
-  initializer: InlineTitleNode | ""
-]> | "";
+  constraint: Empty | InlineTitleNode,
+  initializer: Empty | InlineTitleNode
+]>;
 
 // Type Argument
 export type ConvertedTypeArgumentEntityForSignature = ASTNode;
@@ -485,7 +486,7 @@ export type ConvertedPropertyEntityForType = MultilineNode<[
   propertySignature: ASTNode,
   remarks: ConvertedRemarksForType,
   example: ConvertedExamplesForType,
-  propertyType: ConditionalNode | ConvertedTypeMultiline | ""
+  propertyType: ConditionalNode | ConvertedTypeMultiline | Empty
 ]>;
 
 // Event
