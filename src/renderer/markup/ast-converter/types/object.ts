@@ -1,6 +1,6 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { filterPrivateMembers, filterPrivateSignatures } from "unwritten:renderer/utils/private-members.js";
+import { filterOutPrivateMembers, filterOutPrivateSignatures } from "unwritten:renderer/utils/private-members.js";
 import {
   convertEventPropertyEntityForType,
   convertFunctionLikeEntityForType,
@@ -46,13 +46,13 @@ export function convertObjectTypeMultiline(
 
   const renderConfig = getRenderConfig(ctx);
 
-  const constructSignatures = renderConfig.renderPrivateMembers ? objectLikeType.constructSignatures : filterPrivateSignatures(objectLikeType.constructSignatures);
-  const callSignatures = renderConfig.renderPrivateMembers ? objectLikeType.callSignatures : filterPrivateSignatures(objectLikeType.callSignatures);
-  const properties = renderConfig.renderPrivateMembers ? objectLikeType.properties : filterPrivateMembers(objectLikeType.properties);
-  const methods = renderConfig.renderPrivateMembers ? objectLikeType.methods : filterPrivateMembers(objectLikeType.methods);
-  const setters = renderConfig.renderPrivateMembers ? objectLikeType.setters : filterPrivateMembers(objectLikeType.setters);
-  const getters = renderConfig.renderPrivateMembers ? objectLikeType.getters : filterPrivateMembers(objectLikeType.getters);
-  const events = renderConfig.renderPrivateMembers ? objectLikeType.events : filterPrivateMembers(objectLikeType.events);
+  const constructSignatures = renderConfig.renderPrivateMembers ? objectLikeType.constructSignatures : filterOutPrivateSignatures(objectLikeType.constructSignatures);
+  const callSignatures = renderConfig.renderPrivateMembers ? objectLikeType.callSignatures : filterOutPrivateSignatures(objectLikeType.callSignatures);
+  const properties = renderConfig.renderPrivateMembers ? objectLikeType.properties : filterOutPrivateMembers(objectLikeType.properties);
+  const methods = renderConfig.renderPrivateMembers ? objectLikeType.methods : filterOutPrivateMembers(objectLikeType.methods);
+  const setters = renderConfig.renderPrivateMembers ? objectLikeType.setters : filterOutPrivateMembers(objectLikeType.setters);
+  const getters = renderConfig.renderPrivateMembers ? objectLikeType.getters : filterOutPrivateMembers(objectLikeType.getters);
+  const events = renderConfig.renderPrivateMembers ? objectLikeType.events : filterOutPrivateMembers(objectLikeType.events);
 
   const convertedConstructSignatures = constructSignatures.map(
     constructSignature => {

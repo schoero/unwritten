@@ -88,6 +88,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     required: "required",
     rest: "rest",
     returnType: "return type",
+    see: "see also",
     setter_many: "setters",
     setter_one: "setter",
     static: "static",

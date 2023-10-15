@@ -1,8 +1,9 @@
-import { getTypeByType } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getSymbolIdByType, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
 import { withLockedType } from "unwritten:interpreter:utils/ts.js";
+
+import { getTypeByType } from "../type";
 
 import type { TypeParameter } from "typescript";
 

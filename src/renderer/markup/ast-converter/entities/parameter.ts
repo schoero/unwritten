@@ -1,3 +1,4 @@
+import { convertDescriptionForType } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
 import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
@@ -108,8 +109,7 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
 
   const name = encapsulate(parameterEntity.name, renderConfig.parameterEncapsulation);
 
-  const description = parameterEntity.description;
-
+  const description = parameterEntity.description && convertDescriptionForType(ctx, parameterEntity.description);
   const rest = parameterEntity.rest === true && encapsulate(translate("rest"), renderConfig.tagEncapsulation);
   const optional = parameterEntity.optional === true && encapsulate(translate("optional"), renderConfig.tagEncapsulation);
   const initializer = parameterEntity.initializer && convertInitializerForType(ctx, parameterEntity.initializer);

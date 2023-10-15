@@ -2,22 +2,31 @@ import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/regi
 import {
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents,
+  convertClassEntityToAnchor,
   convertEnumEntityForDocumentation,
   convertEnumEntityForTableOfContents,
+  convertEnumEntityToAnchor,
   convertExportAssignmentEntityForDocumentation,
   convertExportAssignmentEntityForTableOfContents,
+  convertExportAssignmentEntityToAnchor,
   convertFunctionLikeEntityForDocumentation,
   convertFunctionLikeEntityForTableOfContents,
   convertInterfaceEntityForDocumentation,
   convertInterfaceEntityForTableOfContents,
+  convertInterfaceEntityToAnchor,
   convertModuleEntityForDocumentation,
   convertModuleEntityForTableOfContents,
+  convertModuleEntityToAnchor,
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents,
+  convertNamespaceEntityToAnchor,
+  convertSignatureEntityToAnchor,
   convertTypeAliasEntityForDocumentation,
   convertTypeAliasEntityForTableOfContents,
+  convertTypeAliasEntityToAnchor,
   convertVariableEntityForDocumentation,
-  convertVariableEntityForTableOfContents
+  convertVariableEntityForTableOfContents,
+  convertVariableEntityToAnchor
 } from "unwritten:renderer:markup/ast-converter/entities/index.js";
 import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
@@ -26,6 +35,7 @@ import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
   isClassEntity,
   isEnumEntity,
+  isExplicitSignatureEntity,
   isExportAssignmentEntity,
   isFunctionEntity,
   isInterfaceEntity,
@@ -35,7 +45,7 @@ import {
   isVariableEntity
 } from "unwritten:typeguards/entities.js";
 
-import type { Entity, ExportableEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { Entity, ExportableEntity, LinkableEntity } from "unwritten:interpreter/type-definitions/entities.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
@@ -45,6 +55,32 @@ import type {
   ConvertedEntitiesForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
+
+export function convertEntityToAnchor(ctx: MarkupRenderContexts, entity: LinkableEntity, displayName?: string) {
+
+  if(isExplicitSignatureEntity(entity)){
+    return convertSignatureEntityToAnchor(ctx, entity, displayName);
+  } else if(isInterfaceEntity(entity)){
+    return convertInterfaceEntityToAnchor(ctx, entity, displayName);
+  } else if(isVariableEntity(entity)){
+    return convertVariableEntityToAnchor(ctx, entity, displayName);
+  } else if(isNamespaceEntity(entity)){
+    return convertNamespaceEntityToAnchor(ctx, entity, displayName);
+  } else if(isTypeAliasEntity(entity)){
+    return convertTypeAliasEntityToAnchor(ctx, entity, displayName);
+  } else if(isEnumEntity(entity)){
+    return convertEnumEntityToAnchor(ctx, entity, displayName);
+  } else if(isClassEntity(entity)){
+    return convertClassEntityToAnchor(ctx, entity, displayName);
+  } else if(isExportAssignmentEntity(entity)){
+    return convertExportAssignmentEntityToAnchor(ctx, entity, displayName);
+  } else if(isModuleEntity(entity)){
+    return convertModuleEntityToAnchor(ctx, entity, displayName);
+  }
+
+  throw new RangeError(`Entity is not linkable: ${(<Entity>entity).kind}`);
+
+}
 
 export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entity: ExportableEntity): ConvertedEntitiesForTableOfContents {
 

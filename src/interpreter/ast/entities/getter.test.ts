@@ -4,6 +4,8 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { createClassEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -45,13 +47,15 @@ scope("Interpreter", EntityKind.Getter, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedClass.getters[0]!.signatures[0]!.description).toBe("Getter description");
+      expect(exportedClass.getters[0]!.signatures[0].description).toHaveLength(1);
+      assert(isJSDocText(exportedClass.getters[0]!.signatures[0].description![0]));
+      expect(exportedClass.getters[0]!.signatures[0].description![0].text).toBe("Getter description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.getters[0]!.signatures[0]!.example).toStrictEqual([
-        "Getter example"
-      ]);
+      expect(exportedClass.getters[0]!.signatures[0].example).toHaveLength(1);
+      assert(isJSDocText(exportedClass.getters[0]!.signatures[0].example![0].content[0]));
+      expect(exportedClass.getters[0]!.signatures[0].example![0].content[0].text).toBe("Getter example");
     });
 
   }

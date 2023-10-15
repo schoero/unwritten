@@ -1,18 +1,18 @@
 import { isFunctionLikeEntity } from "unwritten:typeguards/entities.js";
 
 import type {
+  ExplicitSignatureEntity,
   FunctionLikeEntity,
   PropertyEntity,
   SignatureEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
-import type { DeepRequiredByKey } from "unwritten:type-definitions/utils.js";
 
 
-export function filterImplicitSignatures(signatures: SignatureEntity[]): DeepRequiredByKey<SignatureEntity, "declarationId">[] {
-  return signatures.filter(signature => signature.declarationId !== undefined) as DeepRequiredByKey<SignatureEntity, "declarationId">[];
+export function filterOutImplicitSignatures(signatures: SignatureEntity[]): ExplicitSignatureEntity[] {
+  return signatures.filter(signature => signature.declarationId !== undefined) as ExplicitSignatureEntity[];
 }
 
-export function filterPrivateMembers<Entities extends FunctionLikeEntity | PropertyEntity>(entities: Entities[]): Entities[] {
+export function filterOutPrivateMembers<Entities extends FunctionLikeEntity | PropertyEntity>(entities: Entities[]): Entities[] {
   return entities.filter(entity => {
     if(isFunctionLikeEntity(entity)){
       return entity.signatures.every(signature => !signature.modifiers?.includes("private"));
@@ -21,7 +21,6 @@ export function filterPrivateMembers<Entities extends FunctionLikeEntity | Prope
   });
 }
 
-
-export function filterPrivateSignatures(signatures: SignatureEntity[]): SignatureEntity[] {
+export function filterOutPrivateSignatures(signatures: SignatureEntity[]): SignatureEntity[] {
   return signatures.filter(signature => !signature.modifiers?.includes("private"));
 }

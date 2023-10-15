@@ -1,99 +1,122 @@
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
+import { JSDocTagNames } from "unwritten:interpreter/enums/jsdoc.js";
 import { convertThrowsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
-import { isListNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { isAnchorNode, isConditionalNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { compile } from "unwritten:tests:utils/compile.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { assert } from "unwritten:utils/general.js";
+import { ts } from "unwritten:utils/template.js";
 
 
-scope("MarkupRenderer", "Throws", () => {
+scope("MarkupRenderer", JSDocTagNames.Throws, () => {
 
   {
 
-    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+    const testFileContent = ts`
+      /**
+       * @throws {RangeError} Line 1
+       * Line 2
+       */
+      export type Test = true;
+    `;
 
-    const convertedThrows = convertThrowsForDocumentation(
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Test")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const ctx = createRenderContext();
+
+    assert(typeAliasEntity.throws);
+
+    const convertedThrowsTag = convertThrowsForDocumentation(
       ctx,
-      [{
-        description: "Error description"
-      }]
+      typeAliasEntity.throws
     );
 
-    assert(convertedThrows, "Converted throws is undefined");
+    assert(convertedThrowsTag);
 
     const {
       children,
       title
-    } = convertedThrows;
+    } = convertedThrowsTag;
+
 
     it("should have a matching title", () => {
       expect(title).toBe("Throws");
     });
 
-    it("should render only the description if no error type is defined", () => {
-      assert(isListNode(children[0]));
+    it("should have a matching link", () => {
       assert(Array.isArray(children[0].children[0]));
-      expect(children[0].children[0][0]).toBe("Error description");
+      assert(isConditionalNode(children[0].children[0][0]));
+      assert(isAnchorNode(children[0].children[0][0].trueChildren));
+      expect(children[0].children[0][0].trueChildren.name).toBe("RangeError");
+    });
+
+    it("should have a matching description", () => {
+      assert(Array.isArray(children[0].children[0]));
+      expect(children[0].children[0][1]).toBe("Line 1\nLine 2");
     });
 
   }
 
   {
 
-    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+    const testFileContent = ts`
+      /**
+       * @throws {RangeError} Line 1
+       * Line 2
+       * @throws {SyntaxError} Line 3
+       * Line 4
+       */
+      export type Test = true;
+    `;
 
-    const convertedThrows = convertThrowsForDocumentation(
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Test")!;
+    const typeAliasEntity = createTypeAliasEntity(compilerContext, symbol);
+    const ctx = createRenderContext();
+
+    assert(typeAliasEntity.throws);
+
+    const convertedThrowsTag = convertThrowsForDocumentation(
       ctx,
-      [
-        {
-          description: "Error description",
-          type: {
-            kind: TypeKind.TypeReference,
-            name: "RangeError",
-            typeId: 1
-          }
-        },
-        {
-          description: "Error description 2",
-          type: {
-            kind: TypeKind.TypeReference,
-            name: "Error",
-            typeId: 1
-          }
-        }
-      ]
+      typeAliasEntity.throws
     );
 
-    assert(convertedThrows, "Converted throws is undefined");
+    assert(convertedThrowsTag);
 
     const {
       children,
       title
-    } = convertedThrows;
+    } = convertedThrowsTag;
 
     it("should have a matching title", () => {
       expect(title).toBe("Throws");
     });
 
-    it("should render only the description if no error type is defined", () => {
-      assert(isListNode(children[0]));
+    it("should have matching links", () => {
       assert(Array.isArray(children[0].children[0]));
-      assert(Array.isArray(children[0].children[0][0]));
+      assert(isConditionalNode(children[0].children[0][0]));
+      assert(isAnchorNode(children[0].children[0][0].trueChildren));
+      expect(children[0].children[0][0].trueChildren.name).toBe("RangeError");
 
-      const [inlineRangeType] = children[0].children[0][0];
+      assert(Array.isArray(children[0].children[1]));
+      assert(isConditionalNode(children[0].children[1][0]));
+      assert(isAnchorNode(children[0].children[1][0].trueChildren));
+      expect(children[0].children[1][0].trueChildren.name).toBe("SyntaxError");
+    });
 
-      expect(inlineRangeType).toContain("RangeError");
-      expect(inlineRangeType).toContain("Error description");
+    it("should have a matching description", () => {
+      expect(children[0].children).toHaveLength(2);
+
       assert(Array.isArray(children[0].children[0]));
-      assert(Array.isArray(children[0].children[0][1]));
-
-      const [multilineErrorType] = children[0].children[0][1];
-
-      expect(multilineErrorType).toContain("Error");
-      expect(multilineErrorType).toContain("Error description 2");
+      expect(children[0].children[0][1]).toBe("Line 1\nLine 2");
+      assert(Array.isArray(children[0].children[1]));
+      expect(children[0].children[1][1]).toBe("Line 3\nLine 4");
     });
 
   }

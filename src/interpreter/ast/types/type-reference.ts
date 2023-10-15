@@ -1,9 +1,11 @@
-import { getResolvedTypeByTypeNode, getTypeByTypeNode, interpretSymbol } from "unwritten:interpreter/ast/index.js";
+import { interpretSymbol } from "unwritten:interpreter/ast/symbol.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
 import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
 import { isTypeReferenceNode } from "unwritten:interpreter:typeguards/type-nodes.js";
+
+import { getResolvedTypeByTypeNode, getTypeByTypeNode } from "../type";
 
 import type { TypeReferenceNode, TypeReferenceType as TSTypeReferenceType } from "typescript";
 

@@ -1,6 +1,7 @@
 import { renderNode } from "unwritten:renderer/index.js";
 import { convertConstraintForType } from "unwritten:renderer/markup/ast-converter/shared/constraint.js";
 import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
 import { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index.js";
 import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
@@ -98,8 +99,11 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
   const renderConfig = getRenderConfig(ctx);
 
   const name = encapsulate(typeParameterEntity.name, renderConfig.typeParameterEncapsulation);
-  const description = typeParameterEntity.description;
   const symbolId = typeParameterEntity.symbolId;
+
+  const description = typeParameterEntity.description
+    ? convertJSDocNodes(ctx, typeParameterEntity.description)
+    : [];
 
   const constraint = typeParameterEntity.constraint &&
     convertConstraintForType(ctx, typeParameterEntity.constraint);

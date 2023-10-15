@@ -1,3 +1,7 @@
+import {
+  convertSeeTagsForDocumentation,
+  convertSeeTagsForType
+} from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
@@ -22,6 +26,7 @@ import { createAnchorNode, createMultilineNode, createTitleNode } from "unwritte
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedPropertyEntityForDocumentation,
@@ -30,16 +35,22 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertPropertyEntityForTableOfContents(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
+export function convertPropertyEntityToAnchor(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {
+
   const name = propertyEntity.name;
   const id = propertyEntity.symbolId;
 
   return createAnchorNode(
     name,
-    id
+    id,
+    displayName
   );
+
 }
 
+export function convertPropertyEntityForTableOfContents(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
+  return convertPropertyEntityToAnchor(ctx, propertyEntity);
+}
 
 export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
 
@@ -48,22 +59,25 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
-  const convertedPosition = convertPositionForDocumentation(ctx, propertyEntity.position);
-  const convertedTags = convertTagsForDocumentation(ctx, propertyEntity);
-  const convertedDescription = convertDescriptionForDocumentation(ctx, propertyEntity.description);
-  const convertedRemarks = convertRemarksForDocumentation(ctx, propertyEntity.remarks);
-  const convertedExample = convertExamplesForDocumentation(ctx, propertyEntity.example);
-  const convertedType = convertTypeForDocumentation(ctx, propertyEntity.type);
+  const position = convertPositionForDocumentation(ctx, propertyEntity.position);
+  const tags = convertTagsForDocumentation(ctx, propertyEntity);
+  const type = convertTypeForDocumentation(ctx, propertyEntity.type);
+
+  const description = propertyEntity.description && convertDescriptionForDocumentation(ctx, propertyEntity.description);
+  const remarks = propertyEntity.remarks && convertRemarksForDocumentation(ctx, propertyEntity.remarks);
+  const example = propertyEntity.example && convertExamplesForDocumentation(ctx, propertyEntity.example);
+  const see = propertyEntity.see && convertSeeTagsForDocumentation(ctx, propertyEntity.see);
 
   return createTitleNode(
     name,
     anchor,
-    convertedTags,
-    convertedPosition,
-    convertedType,
-    convertedDescription,
-    convertedRemarks,
-    convertedExample
+    tags,
+    position,
+    type,
+    description,
+    remarks,
+    example,
+    see
   );
 
 }
@@ -74,9 +88,10 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
 
   const name = encapsulate(propertyEntity.name, renderConfig.propertyEncapsulation);
   const tags = convertTagsForType(ctx, propertyEntity);
-  const description = convertDescriptionForType(ctx, propertyEntity.description);
-  const remarks = convertRemarksForType(ctx, propertyEntity.remarks);
-  const example = convertExamplesForType(ctx, propertyEntity.example);
+  const description = propertyEntity.description && convertDescriptionForType(ctx, propertyEntity.description);
+  const remarks = propertyEntity.remarks && convertRemarksForType(ctx, propertyEntity.remarks);
+  const example = propertyEntity.example && convertExamplesForType(ctx, propertyEntity.example);
+  const see = propertyEntity.see && convertSeeTagsForType(ctx, propertyEntity.see);
 
   const { inlineType, multilineType } = convertType(ctx, propertyEntity.type);
 
@@ -89,6 +104,7 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
     ),
     remarks,
     example,
+    see,
     multilineType
   );
 

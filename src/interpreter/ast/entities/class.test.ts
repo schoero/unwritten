@@ -5,6 +5,8 @@ import { createClassEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -94,13 +96,15 @@ scope("Interpreter", EntityKind.Class, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedClass.description).toBe("Class description");
+      expect(exportedClass.description).toHaveLength(1);
+      assert(isJSDocText(exportedClass.description![0]));
+      expect(exportedClass.description![0].text).toBe("Class description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.example).toStrictEqual([
-        "Class example"
-      ]);
+      expect(exportedClass.example).toHaveLength(1);
+      assert(isJSDocText(exportedClass.example![0].content[0]));
+      expect(exportedClass.example![0].content[0].text).toBe("Class example");
     });
 
   }
@@ -161,7 +165,10 @@ scope("Interpreter", EntityKind.Class, () => {
       expect(exportedClass.events).toBeDefined();
       expect(exportedClass.events).toHaveLength(1);
       expect(exportedClass.events[0].name).toBe("event");
-      expect(exportedClass.events[0].description).toBe("Event description");
+
+      assert(isJSDocText(exportedClass.events[0].description![0]));
+      expect(exportedClass.events[0].description![0].text).toBe("Event description");
+
       expect(exportedClass.properties).toHaveLength(0);
     });
 

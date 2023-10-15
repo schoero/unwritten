@@ -9,6 +9,7 @@ import {
 } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { isObjectType, isStringLiteralType, isTypeReferenceType } from "unwritten:typeguards/types.js";
 import { ts } from "unwritten:utils/template.js";
 
@@ -104,28 +105,34 @@ scope("Interpreter", EntityKind.Property, () => {
 
     it("should have a matching description", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.description).toBe("Property description");
+      expect(exportedTypeAlias.type.properties[0]!.description).toHaveLength(1);
+      assert(isJSDocText(exportedTypeAlias.type.properties[0]!.description![0]));
+      expect(exportedTypeAlias.type.properties[0]!.description![0].text).toBe("Property description");
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.description).toBe("Property description");
+      expect(exportedObjectLiteral.type.properties[0]!.description).toHaveLength(1);
+      assert(isJSDocText(exportedObjectLiteral.type.properties[0]!.description![0]));
+      expect(exportedObjectLiteral.type.properties[0]!.description![0].text).toBe("Property description");
 
-      expect(exportedClass.properties[0].description).toBe("Property description");
+      expect(exportedClass.properties[0].description).toHaveLength(1);
+      assert(isJSDocText(exportedClass.properties[0].description![0]));
+      expect(exportedClass.properties[0].description![0].text).toBe("Property description");
     });
 
     it("should have a matching example", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.example).toStrictEqual([
-        "Property example"
-      ]);
+      expect(exportedTypeAlias.type.properties[0]!.example).toHaveLength(1);
+      assert(isJSDocText(exportedTypeAlias.type.properties[0]!.example![0].content[0]));
+      expect(exportedTypeAlias.type.properties[0]!.example![0].content[0].text).toBe("Property example");
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.example).toStrictEqual([
-        "Property example"
-      ]);
+      expect(exportedObjectLiteral.type.properties[0]!.example).toHaveLength(1);
+      assert(isJSDocText(exportedObjectLiteral.type.properties[0]!.example![0].content[0]));
+      expect(exportedObjectLiteral.type.properties[0]!.example![0].content[0].text).toBe("Property example");
 
-      expect(exportedClass.properties[0].example).toStrictEqual([
-        "Property example"
-      ]);
+      expect(exportedClass.properties[0].example).toHaveLength(1);
+      assert(isJSDocText(exportedClass.properties[0].example![0].content[0]));
+      expect(exportedClass.properties[0].example![0].content[0].text).toBe("Property example");
     });
 
     it("should have a matching type", () => {

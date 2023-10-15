@@ -3,7 +3,8 @@ import {
   isPropertyAssignment,
   isPropertyDeclaration
 } from "unwritten:interpreter/typeguards/declarations.js";
-import { getTypeByType } from "unwritten:interpreter:ast/index.js";
+
+import { getTypeByType } from "../type";
 
 import type { Declaration } from "typescript";
 

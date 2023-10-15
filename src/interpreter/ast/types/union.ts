@@ -1,6 +1,7 @@
-import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
+
+import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { UnionType as TSUnionType, UnionTypeNode } from "typescript";
 

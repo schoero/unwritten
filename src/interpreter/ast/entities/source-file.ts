@@ -1,5 +1,5 @@
+import { interpretSymbol } from "unwritten:interpreter/ast/symbol.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { interpretSymbol } from "unwritten:interpreter:ast/index.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { isExportableEntity } from "unwritten:typeguards/entities.js";
 import { assert } from "unwritten:utils/general.js";

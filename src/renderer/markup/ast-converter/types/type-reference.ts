@@ -1,15 +1,15 @@
 import { renderNode } from "unwritten:renderer/index.js";
+import { convertEntityToAnchor } from "unwritten:renderer/markup/ast-converter/index.js";
 import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { createAnchorNode, createConditionalNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
-import { isSignatureEntity } from "unwritten:typeguards/entities.js";
+import { createConditionalNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
+import { isFunctionLikeEntity, isLinkableEntity, isSignatureEntity } from "unwritten:typeguards/entities.js";
 
-import type { Type, TypeReferenceType } from "unwritten:interpreter:type-definitions/types.js";
+import type { TypeReferenceType } from "unwritten:interpreter:type-definitions/types.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type {
   ConvertedTypeReferenceTypeInline,
   ConvertedTypeReferenceTypeMultiline
@@ -20,45 +20,34 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 
   const renderConfig = getRenderConfig(ctx);
 
-  const name = typeReferenceType.name ?? "";
-  const encapsulatedName = name &&
-    encapsulate(name, renderConfig.typeEncapsulation);
-
   const fallback = typeReferenceType.type
     ? convertType(ctx, typeReferenceType.type).inlineType
-    : encapsulatedName;
+    : encapsulate(typeReferenceType.name ?? "", renderConfig.typeEncapsulation);
 
   if(typeReferenceType.target === undefined){
     return fallback;
   }
 
-  const targetName = typeReferenceType.target.name ?? name;
-  const encapsulatedTargetName = targetName &&
-    encapsulate(targetName, renderConfig.typeEncapsulation);
+  // Use the first signature if the target is a function-like entity
+  const entity = isFunctionLikeEntity(typeReferenceType.target)
+    ? typeReferenceType.target.signatures[0]
+    : typeReferenceType.target;
 
-  const id = isSignatureEntity(typeReferenceType.target)
-    ? typeReferenceType.target.declarationId
-    : typeReferenceType.target.symbolId;
-
-  if(!id){
+  if(!isLinkableEntity(entity)){
     return fallback;
   }
 
-  const renderedName = renderNode(ctx, encapsulatedTargetName);
-  const anchor = createAnchorNode(targetName, id, renderedName);
+  const encapsulatedName = encapsulate(typeReferenceType.name ?? entity.name, renderConfig.typeEncapsulation);
+  const renderedName = renderNode(ctx, encapsulatedName);
 
-  const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0 &&
-    convertTypeArguments(ctx, typeReferenceType.typeArguments);
+  const anchor = convertEntityToAnchor(ctx, entity, renderedName);
 
   return createConditionalNode(
     getAnchorLink,
-    [ctx, targetName, id],
+    [ctx, anchor.name, anchor.id],
     "!==",
     undefined,
-    spaceBetween(
-      anchor,
-      typeArguments
-    ),
+    anchor,
     fallback
   );
 
@@ -98,23 +87,5 @@ export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typ
       fallback
     ]
   );
-
-}
-
-
-function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]): ASTNode {
-
-  const renderConfig = getRenderConfig(ctx);
-
-  const convertedTypeArguments = typeArguments.map((typeArgument, index) => {
-    const { inlineType } = convertType(ctx, typeArgument);
-    if(index === 0){
-      return inlineType;
-    } else {
-      return [", ", inlineType];
-    }
-  }, []);
-
-  return encapsulate(convertedTypeArguments, renderConfig.typeParameterEncapsulation);
 
 }

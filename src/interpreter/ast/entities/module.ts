@@ -1,7 +1,7 @@
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { getDeclarationId } from "unwritten:interpreter/ast/shared/id.js";
 import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 
 import { createSourceFileEntity } from "./source-file.js";
@@ -19,8 +19,8 @@ export function createModuleEntity(ctx: InterpreterContext, symbol: Symbol): Mod
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
   const name = getNameBySymbol(ctx, symbol);
-  const description = declaration && getDescriptionByDeclaration(ctx, declaration);
-  const jsdocTags = declaration && getJSDocTagsByDeclaration(ctx, declaration);
+
+  const jsdocProperties = declaration && getJSDocProperties(ctx, declaration);
   const position = declaration && getPositionByDeclaration(ctx, declaration);
   const declarationId = declaration && getDeclarationId(ctx, declaration);
 
@@ -28,8 +28,7 @@ export function createModuleEntity(ctx: InterpreterContext, symbol: Symbol): Mod
 
   return {
     ...fromSourceFile,
-    ...jsdocTags,
-    description,
+    ...jsdocProperties,
     kind,
     name,
     position

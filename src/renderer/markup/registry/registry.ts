@@ -3,7 +3,7 @@ import { assert } from "unwritten:utils/general.js";
 import type { MarkupRenderContexts } from "../types-definitions/markup.js";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
+import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc.js";
 import type { FilePath } from "unwritten:type-definitions/file-system.js";
 
 

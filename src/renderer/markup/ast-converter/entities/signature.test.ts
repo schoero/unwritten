@@ -2,7 +2,7 @@ import { assert, expect, it } from "vitest";
 
 import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { filterImplicitSignatures } from "unwritten:renderer/utils/private-members.js";
+import { filterOutImplicitSignatures } from "unwritten:renderer/utils/private-members.js";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
@@ -47,7 +47,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "testSignature")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
-    const signatureEntity = filterImplicitSignatures(functionEntity.signatures)[0];
+    const signatureEntity = filterOutImplicitSignatures(functionEntity.signatures)[0];
     const ctx = createRenderContext();
 
     const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
@@ -152,7 +152,7 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "testSignature")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
-    const signatureEntity = filterImplicitSignatures(functionEntity.signatures)[0];
+    const signatureEntity = filterOutImplicitSignatures(functionEntity.signatures)[0];
     const ctx = createRenderContext();
 
     const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);

@@ -6,12 +6,14 @@ import type {
   ConstructorEntity,
   Entity,
   EnumEntity,
+  ExplicitSignatureEntity,
   ExportableEntity,
   ExportAssignmentEntity,
   FunctionEntity,
   FunctionLikeEntity,
   GetterEntity,
   InterfaceEntity,
+  LinkableEntity,
   MethodEntity,
   ModuleEntity,
   NamespaceEntity,
@@ -38,6 +40,10 @@ export function isConstructorEntity(entity: Entity): entity is ConstructorEntity
 
 export function isEnumEntity(entity: Entity): entity is EnumEntity {
   return entity.kind === EntityKind.Enum;
+}
+
+export function isExplicitSignatureEntity(entity: Entity): entity is ExplicitSignatureEntity {
+  return isSignatureEntity(entity) && entity.declarationId !== undefined;
 }
 
 export function isExportAssignmentEntity(entity: Entity): entity is ExportAssignmentEntity {
@@ -73,6 +79,12 @@ export function isGetterEntity(entity: Entity): entity is GetterEntity {
 
 export function isInterfaceEntity(entity: Entity): entity is InterfaceEntity {
   return entity.kind === EntityKind.Interface;
+}
+
+export function isLinkableEntity(entity: Entity): entity is LinkableEntity {
+  return isExportableEntity(entity) ||
+    isPropertyEntity(entity) ||
+    isSignatureEntity(entity);
 }
 
 export function isMethodEntity(entity: Entity): entity is MethodEntity {

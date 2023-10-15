@@ -1,8 +1,7 @@
-import { getTypeByDeclaration, getTypeBySymbol } from "unwritten:interpreter/ast/index.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -14,6 +13,8 @@ import {
   isShorthandPropertyAssignment
 } from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
+
+import { getTypeByDeclaration, getTypeBySymbol } from "../type";
 
 import type {
   ParameterDeclaration,
@@ -71,9 +72,8 @@ function interpretPropertyDeclaration(ctx: InterpreterContext, declaration: Para
   const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
-  const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
-  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
   const initializer = getInitializerByDeclaration(ctx, declaration);
   const type = getTypeByDeclaration(ctx, declaration);
 
@@ -85,9 +85,8 @@ function interpretPropertyDeclaration(ctx: InterpreterContext, declaration: Para
   assert(name, "Property name not found");
 
   return {
-    ...jsdocTags,
+    ...jsdocProperties,
     declarationId,
-    description,
     initializer,
     kind,
     modifiers,

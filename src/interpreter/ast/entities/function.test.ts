@@ -5,6 +5,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { isUnresolvedType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
@@ -48,13 +49,15 @@ scope("Interpreter", EntityKind.Function, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedFunction.signatures[0]!.description).toBe("Function description");
+      expect(exportedFunction.signatures[0].description).toHaveLength(1);
+      assert(isJSDocText(exportedFunction.signatures[0].description![0]));
+      expect(exportedFunction.signatures[0].description![0].text).toBe("Function description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedFunction.signatures[0]!.example).toStrictEqual([
-        "Function example"
-      ]);
+      expect(exportedFunction.signatures[0].example).toHaveLength(1);
+      assert(isJSDocText(exportedFunction.signatures[0].example![0].content[0]));
+      expect(exportedFunction.signatures[0].example![0].content[0].text).toBe("Function example");
     });
 
   }

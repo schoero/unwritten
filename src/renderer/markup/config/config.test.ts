@@ -178,6 +178,7 @@ scope("Renderer", "Config", () => {
           description,
           remarks,
           example,
+          see,
           constructSignatures,
           properties,
           methods,

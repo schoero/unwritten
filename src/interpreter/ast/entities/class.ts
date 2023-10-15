@@ -1,3 +1,4 @@
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import {
@@ -9,7 +10,6 @@ import {
   createTypeParameterEntityByDeclaration
 } from "unwritten:interpreter:ast/entities/index.js";
 import { getDeclarationId, getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -62,17 +62,15 @@ export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): Clas
   const heritage = declaration.heritageClauses && parseHeritageClauses(ctx, declaration.heritageClauses);
   const typeParameters = declaration.typeParameters?.map(typeParameter => createTypeParameterEntityByDeclaration(ctx, typeParameter));
   const position = getPositionByDeclaration(ctx, declaration);
-  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
-  const description = getDescriptionByDeclaration(ctx, declaration);
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
   const declarationId = getDeclarationId(ctx, declaration);
   const kind = EntityKind.Class;
 
   return {
-    ...jsdocTags,
+    ...jsdocProperties,
     ctor,
     declarationId,
-    description,
     events,
     getters,
     heritage,

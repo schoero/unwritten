@@ -5,6 +5,8 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -88,7 +90,9 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
 
     it("should have a type parameter description", () => {
       expect(exportedTypeAlias.typeParameters![0]!.description).toBeDefined();
-      expect(exportedTypeAlias.typeParameters![0]!.description).toBe("Generic type parameter description");
+      expect(exportedTypeAlias.typeParameters![0]!.description).toHaveLength(1);
+      assert(isJSDocText(exportedTypeAlias.typeParameters![0]!.description![0]));
+      expect(exportedTypeAlias.typeParameters![0]!.description![0].text).toBe("Generic type parameter description");
     });
 
   }

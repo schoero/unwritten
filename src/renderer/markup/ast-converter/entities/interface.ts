@@ -1,9 +1,10 @@
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
-  filterImplicitSignatures,
-  filterPrivateMembers,
-  filterPrivateSignatures
+  filterOutImplicitSignatures,
+  filterOutPrivateMembers,
+  filterOutPrivateSignatures
 } from "unwritten:renderer/utils/private-members.js";
 import {
   convertEventPropertyEntityForType,
@@ -29,6 +30,7 @@ import {
 } from "unwritten:renderer:utils/heritage.js";
 
 import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedInterfaceEntityForDocumentation,
@@ -36,10 +38,21 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForTableOfContents {
+export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity, displayName?: string): AnchorNode {
+
   const name = interfaceEntity.name;
   const id = interfaceEntity.symbolId;
-  return createAnchorNode(name, id);
+
+  return createAnchorNode(
+    name,
+    id,
+    displayName
+  );
+
+}
+
+export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForTableOfContents {
+  return convertInterfaceEntityToAnchor(ctx, interfaceEntity);
 }
 
 export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForDocumentation {
@@ -51,12 +64,14 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
-  const tags = convertTagsForDocumentation(ctx, interfaceEntity);
-  const description = convertDescriptionForDocumentation(ctx, interfaceEntity.description);
-  const remarks = convertRemarksForDocumentation(ctx, interfaceEntity.remarks);
-  const examples = convertExamplesForDocumentation(ctx, interfaceEntity.example);
   const position = convertPositionForDocumentation(ctx, interfaceEntity.position);
+  const tags = convertTagsForDocumentation(ctx, interfaceEntity);
   const typeParameters = convertTypeParameterEntitiesForDocumentation(ctx, interfaceEntity.typeParameters);
+
+  const description = interfaceEntity.description && convertDescriptionForDocumentation(ctx, interfaceEntity.description);
+  const remarks = interfaceEntity.remarks && convertRemarksForDocumentation(ctx, interfaceEntity.remarks);
+  const examples = interfaceEntity.example && convertExamplesForDocumentation(ctx, interfaceEntity.example);
+  const see = interfaceEntity.see && convertSeeTagsForDocumentation(ctx, interfaceEntity.see);
 
   const propertyEntities = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity, "properties");
   const eventPropertyEntities = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity, "events");
@@ -66,19 +81,19 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const setterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "setterSignatures");
   const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "getterSignatures");
 
-  const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterPrivateMembers(propertyEntities);
-  const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterPrivateMembers(eventPropertyEntities);
-  const publicConstructSignatures = renderConfig.renderPrivateMembers ? constructSignatureEntities : filterPrivateSignatures(constructSignatureEntities);
-  const publicCallSignatures = renderConfig.renderPrivateMembers ? callSignatureEntities : filterPrivateSignatures(callSignatureEntities);
-  const publicMethodSignatures = renderConfig.renderPrivateMembers ? methodSignatures : filterPrivateSignatures(methodSignatures);
-  const publicSetterSignatures = renderConfig.renderPrivateMembers ? setterSignatures : filterPrivateSignatures(setterSignatures);
-  const publicGetterSignatures = renderConfig.renderPrivateMembers ? getterSignatures : filterPrivateSignatures(getterSignatures);
+  const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterOutPrivateMembers(propertyEntities);
+  const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterOutPrivateMembers(eventPropertyEntities);
+  const publicConstructSignatures = renderConfig.renderPrivateMembers ? constructSignatureEntities : filterOutPrivateSignatures(constructSignatureEntities);
+  const publicCallSignatures = renderConfig.renderPrivateMembers ? callSignatureEntities : filterOutPrivateSignatures(callSignatureEntities);
+  const publicMethodSignatures = renderConfig.renderPrivateMembers ? methodSignatures : filterOutPrivateSignatures(methodSignatures);
+  const publicSetterSignatures = renderConfig.renderPrivateMembers ? setterSignatures : filterOutPrivateSignatures(setterSignatures);
+  const publicGetterSignatures = renderConfig.renderPrivateMembers ? getterSignatures : filterOutPrivateSignatures(getterSignatures);
 
-  const explicitConstructSignatures = filterImplicitSignatures(publicConstructSignatures);
-  const explicitCallSignatures = filterImplicitSignatures(publicCallSignatures);
-  const explicitMethodSignatures = filterImplicitSignatures(publicMethodSignatures);
-  const explicitSetterSignatures = filterImplicitSignatures(publicSetterSignatures);
-  const explicitGetterSignatures = filterImplicitSignatures(publicGetterSignatures);
+  const explicitConstructSignatures = filterOutImplicitSignatures(publicConstructSignatures);
+  const explicitCallSignatures = filterOutImplicitSignatures(publicCallSignatures);
+  const explicitMethodSignatures = filterOutImplicitSignatures(publicMethodSignatures);
+  const explicitSetterSignatures = filterOutImplicitSignatures(publicSetterSignatures);
+  const explicitGetterSignatures = filterOutImplicitSignatures(publicGetterSignatures);
 
   const properties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForType(ctx, propertyEntity));
   const eventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForType(ctx, eventPropertyEntity));
@@ -99,6 +114,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
       description,
       remarks,
       examples,
+      see,
       createListNode(...constructSignatures),
       createListNode(...callSignatures),
       createListNode(...properties),

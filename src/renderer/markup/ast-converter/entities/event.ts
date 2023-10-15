@@ -1,3 +1,7 @@
+import {
+  convertSeeTagsForDocumentation,
+  convertSeeTagsForType
+} from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import {
   convertDescriptionForDocumentation,
@@ -16,6 +20,7 @@ import { createAnchorNode, createMultilineNode, createTitleNode } from "unwritte
 import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedEventPropertyEntityForDocumentation,
@@ -24,14 +29,22 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertEventPropertyEntityForTableOfContents(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForTableOfContents {
+export function convertEventPropertyEntityToAnchor(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {
+
   const name = propertyEntity.name;
   const id = propertyEntity.symbolId;
 
   return createAnchorNode(
     name,
-    id
+    id,
+    displayName
   );
+
+}
+
+
+export function convertEventPropertyEntityForTableOfContents(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForTableOfContents {
+  return convertEventPropertyEntityToAnchor(ctx, propertyEntity);
 }
 
 
@@ -42,18 +55,20 @@ export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderCont
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
-  const convertedPosition = convertPositionForDocumentation(ctx, propertyEntity.position);
-  const convertedDescription = convertDescriptionForDocumentation(ctx, propertyEntity.description);
-  const convertedRemarks = convertRemarksForDocumentation(ctx, propertyEntity.remarks);
-  const convertedExample = convertExamplesForDocumentation(ctx, propertyEntity.example);
+  const position = convertPositionForDocumentation(ctx, propertyEntity.position);
+  const description = propertyEntity.description && convertDescriptionForDocumentation(ctx, propertyEntity.description);
+  const remarks = propertyEntity.remarks && convertRemarksForDocumentation(ctx, propertyEntity.remarks);
+  const example = propertyEntity.example && convertExamplesForDocumentation(ctx, propertyEntity.example);
+  const see = propertyEntity.see && convertSeeTagsForDocumentation(ctx, propertyEntity.see);
 
   return createTitleNode(
     name,
     anchor,
-    convertedPosition,
-    convertedDescription,
-    convertedRemarks,
-    convertedExample
+    position,
+    description,
+    remarks,
+    example,
+    see
   );
 
 }
@@ -62,17 +77,19 @@ export function convertEventPropertyEntityForType(ctx: MarkupRenderContexts, pro
 
   const name = propertyEntity.name;
 
-  const convertedDescription = convertDescriptionForType(ctx, propertyEntity.description);
-  const convertedRemarks = convertRemarksForType(ctx, propertyEntity.remarks);
-  const convertedExample = convertExamplesForType(ctx, propertyEntity.example);
+  const description = propertyEntity.description && convertDescriptionForType(ctx, propertyEntity.description);
+  const remarks = propertyEntity.remarks && convertRemarksForType(ctx, propertyEntity.remarks);
+  const example = propertyEntity.example && convertExamplesForType(ctx, propertyEntity.example);
+  const see = propertyEntity.see && convertSeeTagsForType(ctx, propertyEntity.see);
 
   return createMultilineNode(
     spaceBetween(
       name,
-      convertedDescription
+      description
     ),
-    convertedRemarks,
-    convertedExample
+    remarks,
+    example,
+    see
   );
 
 }

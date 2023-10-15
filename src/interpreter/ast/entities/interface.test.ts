@@ -5,6 +5,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createInterfaceEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -108,13 +109,15 @@ scope("Interpreter", EntityKind.Interface, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedInterface.description).toBe("Interface description");
+      expect(exportedInterface.description).toHaveLength(1);
+      assert(isJSDocText(exportedInterface.description![0]));
+      expect(exportedInterface.description![0].text).toBe("Interface description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedInterface.example).toStrictEqual([
-        "Interface example"
-      ]);
+      expect(exportedInterface.example).toHaveLength(1);
+      assert(isJSDocText(exportedInterface.example![0].content[0]));
+      expect(exportedInterface.example![0].content[0].text).toBe("Interface example");
     });
 
     it("should have a matching position", () => {
@@ -300,7 +303,10 @@ scope("Interpreter", EntityKind.Interface, () => {
       expect(exportedInterface.events).toBeDefined();
       expect(exportedInterface.events).toHaveLength(1);
       expect(exportedInterface.events[0].name).toBe("event");
-      expect(exportedInterface.events[0].description).toBe("Event description");
+
+      assert(isJSDocText(exportedInterface.events[0].description![0]));
+      expect(exportedInterface.events[0].description![0].text).toBe("Event description");
+
       expect(exportedInterface.properties).toHaveLength(0);
     });
 
