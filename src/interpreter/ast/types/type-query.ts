@@ -1,13 +1,9 @@
+import { interpretSymbol } from "unwritten:interpreter/ast/symbol.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
-import { interpretSymbol } from "unwritten:interpreter/ast/symbol.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 
-import {
-  getResolvedTypeByTypeNode,
-  getTypeByResolvedAndDeclaredType,
-  getTypeByTypeNode
-} from "../type";
+import { getResolvedTypeByTypeNode, getTypeByResolvedAndDeclaredType, getTypeByTypeNode } from "../type";
 
 import type { TypeQueryNode } from "typescript";
 

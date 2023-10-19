@@ -1,5 +1,6 @@
 import { interpretSymbol } from "unwritten:interpreter/ast/symbol.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { isExportableEntity } from "unwritten:typeguards/entities.js";
 import { assert } from "unwritten:utils/general.js";
@@ -10,7 +11,7 @@ import type { ExportableEntity, SourceFileEntity } from "unwritten:interpreter/t
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol): SourceFileEntity {
+export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol): SourceFileEntity => withLockedSymbol(ctx, symbol, () => {
 
   const { getFileName } = ctx.dependencies.path;
 
@@ -45,4 +46,4 @@ export function createSourceFileEntity(ctx: InterpreterContext, symbol: Symbol):
     symbolId
   };
 
-}
+});

@@ -32,7 +32,7 @@ export function convertJSDocType(ctx: MarkupRenderContexts, jsdocType: JSDocType
 
   return createConditionalNode(
     getAnchorLink,
-    [ctx, renderedLabel, jsdocType.type.typeId],
+    [ctx, jsdocType.type.typeId],
     "!==",
     undefined,
     anchor,

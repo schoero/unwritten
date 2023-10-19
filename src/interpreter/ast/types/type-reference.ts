@@ -21,12 +21,12 @@ export function createTypeReferenceType(ctx: InterpreterContext, type: TSTypeRef
 
 export function createTypeReferenceByTypeNode(ctx: InterpreterContext, typeNode: TypeReferenceNode): TypeReferenceType {
 
+  const name = getNameByTypeNode(ctx, typeNode.typeName);
   const symbol = ctx.checker.getSymbolAtLocation(typeNode.typeName);
   const target = symbol && interpretSymbol(ctx, symbol);
 
   const type = getResolvedTypeByTypeNode(ctx, typeNode);
   const typeId = getIdByTypeNode(ctx, typeNode);
-  const name = getNameByTypeNode(ctx, typeNode.typeName);
   const kind = TypeKind.TypeReference;
 
   const typeArguments = typeNode.typeArguments?.map(

@@ -81,9 +81,13 @@ export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContex
 
 export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity): ConvertedSignatureEntityForDocumentation {
 
-  const id = signatureEntity.declarationId;
+  const declarationId = signatureEntity.declarationId;
+  const symbolId = signatureEntity.symbolId;
 
   const signature = convertSignature(ctx, signatureEntity);
+  const renderedSignature = renderNode(ctx, signature);
+  const anchor = registerAnchor(ctx, renderedSignature, [declarationId, ...symbolId ? [symbolId] : []]);
+
   const position = convertPositionForDocumentation(ctx, signatureEntity.position);
   const tags = convertTagsForDocumentation(ctx, signatureEntity);
   const typeParameters = convertTypeParameterEntitiesForDocumentation(ctx, signatureEntity.typeParameters);
@@ -95,9 +99,6 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const remarks = signatureEntity.remarks && convertRemarksForDocumentation(ctx, signatureEntity.remarks);
   const example = signatureEntity.example && convertExamplesForDocumentation(ctx, signatureEntity.example);
   const see = signatureEntity.see && convertSeeTagsForDocumentation(ctx, signatureEntity.see);
-
-  const renderedSignature = renderNode(ctx, signature);
-  const anchor = registerAnchor(ctx, renderedSignature, id);
 
   return createSectionNode(
     SECTION_TYPE[signatureEntity.kind],

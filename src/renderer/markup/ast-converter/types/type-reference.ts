@@ -44,7 +44,7 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 
   return createConditionalNode(
     getAnchorLink,
-    [ctx, anchor.name, anchor.id],
+    [ctx, anchor.id],
     "!==",
     undefined,
     anchor,
@@ -78,7 +78,7 @@ export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typ
 
   return createConditionalNode(
     getAnchorLink,
-    [ctx, typeReferenceType.name, id],
+    [ctx, id],
     "!==",
     undefined,
     undefined,

@@ -41,11 +41,11 @@ scope("MarkupRenderer", JSDocKind.See, () => {
     });
 
     it("should render the see tag description correctly", () => {
-      expect(convertedSeeTag[1]).toBe("line 1\nline 2");
+      expect(convertedSeeTag[2]).toBe("line 1\nline 2");
     });
 
     it("should throw away the text before the see tag", () => {
-      expect(convertedSeeTag).toHaveLength(2);
+      expect(convertedSeeTag).toHaveLength(3);
     });
 
   });

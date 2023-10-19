@@ -15,7 +15,7 @@ export function renderSpanNode(ctx: MarkdownRenderContext, spanNode: SpanNode): 
   }
 
   const id = hasAnchor(spanNode)
-    ? getAnchorId(ctx, spanNode.name, spanNode.id)
+    ? getAnchorId(ctx, spanNode.ids)
     : undefined;
 
   const idAttribute = id ? ` id="${id}"` : "";

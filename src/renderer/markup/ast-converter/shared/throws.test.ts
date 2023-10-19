@@ -57,7 +57,7 @@ scope("MarkupRenderer", JSDocTagNames.Throws, () => {
 
     it("should have a matching description", () => {
       assert(Array.isArray(children[0].children[0]));
-      expect(children[0].children[0][1]).toBe("Line 1\nLine 2");
+      expect(children[0].children[0][2]).toBe("Line 1\nLine 2");
     });
 
   }
@@ -114,9 +114,9 @@ scope("MarkupRenderer", JSDocTagNames.Throws, () => {
       expect(children[0].children).toHaveLength(2);
 
       assert(Array.isArray(children[0].children[0]));
-      expect(children[0].children[0][1]).toBe("Line 1\nLine 2");
+      expect(children[0].children[0][2]).toBe("Line 1\nLine 2");
       assert(Array.isArray(children[0].children[1]));
-      expect(children[0].children[1][1]).toBe("Line 3\nLine 4");
+      expect(children[0].children[1][2]).toBe("Line 3\nLine 4");
     });
 
   }

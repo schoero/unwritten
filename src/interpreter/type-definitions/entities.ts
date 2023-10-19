@@ -33,9 +33,12 @@ export type ExportableEntity =
   | VariableEntity;
 
 export type LinkableEntity =
+  | CircularEntity
   | ExportableEntity
+  | ParameterEntity
   | PropertyEntity
-  | SignatureEntity;
+  | SignatureEntity
+  | TypeParameterEntity;
 
 export type FunctionLikeEntityKinds =
   | EntityKind.Constructor

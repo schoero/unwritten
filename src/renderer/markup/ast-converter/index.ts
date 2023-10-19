@@ -1,5 +1,6 @@
 import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import {
+  convertCircularEntityToAnchor,
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents,
   convertClassEntityToAnchor,
@@ -20,10 +21,12 @@ import {
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents,
   convertNamespaceEntityToAnchor,
+  convertParameterEntityToAnchor,
   convertSignatureEntityToAnchor,
   convertTypeAliasEntityForDocumentation,
   convertTypeAliasEntityForTableOfContents,
   convertTypeAliasEntityToAnchor,
+  convertTypeParameterEntityToAnchor,
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents,
   convertVariableEntityToAnchor
@@ -33,6 +36,7 @@ import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 import {
+  isCircularEntity,
   isClassEntity,
   isEnumEntity,
   isExplicitSignatureEntity,
@@ -41,7 +45,9 @@ import {
   isInterfaceEntity,
   isModuleEntity,
   isNamespaceEntity,
+  isParameterEntity,
   isTypeAliasEntity,
+  isTypeParameterEntity,
   isVariableEntity
 } from "unwritten:typeguards/entities.js";
 
@@ -76,6 +82,12 @@ export function convertEntityToAnchor(ctx: MarkupRenderContexts, entity: Linkabl
     return convertExportAssignmentEntityToAnchor(ctx, entity, displayName);
   } else if(isModuleEntity(entity)){
     return convertModuleEntityToAnchor(ctx, entity, displayName);
+  } else if(isParameterEntity(entity)){
+    return convertParameterEntityToAnchor(ctx, entity, displayName);
+  } else if(isTypeParameterEntity(entity)){
+    return convertTypeParameterEntityToAnchor(ctx, entity, displayName);
+  } else if(isCircularEntity(entity)){
+    return convertCircularEntityToAnchor(ctx, entity, displayName);
   }
 
   throw new RangeError(`Entity is not linkable: ${(<Entity>entity).kind}`);

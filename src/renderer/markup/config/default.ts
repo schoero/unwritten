@@ -113,9 +113,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
 
 export const defaultMarkdownRenderConfig: Complete<MarkdownRenderConfig> = {
   ...defaultRenderConfig,
-  allowedHTMLTags: [
-    "span"
-  ],
+  allowedHTMLTags: false,
   inlineTitleEncapsulation: ["*", "*"],
   sectionSeparator: "---"
 };

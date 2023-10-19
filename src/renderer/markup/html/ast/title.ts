@@ -13,7 +13,7 @@ export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): s
   const title = renderNode(ctx, titleNode.title);
 
   const id = hasAnchor(titleNode)
-    ? getAnchorId(ctx, titleNode.name, titleNode.id)
+    ? getAnchorId(ctx, titleNode.ids)
     : undefined;
 
   const idAttribute = id ? ` id="${id}"` : "";
@@ -27,7 +27,7 @@ export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): s
   if(renderedChildren.every(renderedChild => renderedChild === "")){
 
     if(hasAnchor(titleNode)){
-      void unregisterAnchor(ctx, titleNode.name, titleNode.id);
+      void unregisterAnchor(ctx, titleNode.ids);
     }
 
     return "";

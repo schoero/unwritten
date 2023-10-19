@@ -3,6 +3,7 @@ import { getDeclarationId, getSymbolId } from "unwritten:interpreter/ast/shared/
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { isNamespaceExport } from "unwritten:interpreter/typeguards/declarations.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 import { assert } from "unwritten:utils/general.js";
@@ -13,7 +14,7 @@ import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/ent
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): NamespaceEntity {
+export const createNamespaceEntity = (ctx: InterpreterContext, symbol: Symbol): NamespaceEntity => withLockedSymbol(ctx, symbol, () => {
 
   const fromSourceFile = createSourceFileEntity(ctx, symbol);
 
@@ -37,9 +38,9 @@ export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): 
     symbolId
   };
 
-}
+});
 
-export function createNamespaceEntityFromNamespaceExport(ctx: InterpreterContext, symbol: Symbol): NamespaceEntity {
+export const createNamespaceEntityFromNamespaceExport = (ctx: InterpreterContext, symbol: Symbol): NamespaceEntity => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
@@ -76,4 +77,4 @@ export function createNamespaceEntityFromNamespaceExport(ctx: InterpreterContext
     symbolId
   };
 
-}
+});

@@ -1,5 +1,6 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
@@ -29,7 +30,7 @@ import type { PropertyEntity } from "unwritten:interpreter/type-definitions/enti
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): PropertyEntity {
+export const createPropertyEntity = (ctx: InterpreterContext, symbol: Symbol): PropertyEntity => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -64,7 +65,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
     type
   };
 
-}
+});
 
 
 function interpretPropertyDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature | ShorthandPropertyAssignment) { // ParameterDeclaration can also be a property when defined in a constructor

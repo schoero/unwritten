@@ -65,12 +65,10 @@ scope("Interpreter", JSDocKind.Generic, () => {
 
     it("should support multiple examples with markdown", () => {
       expect(exportedTypeAlias.example).toHaveLength(2);
-      assert(exportedTypeAlias.example?.[0].kind === JSDocKind.Generic);
-      assert(exportedTypeAlias.example[0].content[0].kind === JSDocKind.Text);
+      assert(exportedTypeAlias.example?.[0].content[0].kind === JSDocKind.Text);
       expect(exportedTypeAlias.example[0].content[0].text).toContain("example 1");
       expect(exportedTypeAlias.example[0].content[0].text).toContain("export type Test = true;");
 
-      assert(exportedTypeAlias.example[1].kind === JSDocKind.Generic);
       assert(exportedTypeAlias.example[1].content[0].kind === JSDocKind.Text);
       expect(exportedTypeAlias.example[1].content[0].text).toContain("example 2");
       expect(exportedTypeAlias.example[1].content[0].text).toContain("export type Test = true;");

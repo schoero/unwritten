@@ -4,6 +4,7 @@ import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { isExportAssignment } from "unwritten:interpreter/typeguards/declarations.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { assert } from "unwritten:utils/general.js";
 
 import { getTypeByType } from "../type";
@@ -14,7 +15,7 @@ import type { ExportAssignmentEntity } from "unwritten:interpreter/type-definiti
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createExportAssignmentEntity(ctx: InterpreterContext, symbol: Symbol): ExportAssignmentEntity {
+export const createExportAssignmentEntity = (ctx: InterpreterContext, symbol: Symbol): ExportAssignmentEntity => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
@@ -37,4 +38,4 @@ export function createExportAssignmentEntity(ctx: InterpreterContext, symbol: Sy
     type
   };
 
-}
+});

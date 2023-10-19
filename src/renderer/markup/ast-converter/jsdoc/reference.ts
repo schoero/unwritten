@@ -37,7 +37,7 @@ export function convertJSDocReference(ctx: MarkupRenderContexts, jsdocReference:
 
   return createConditionalNode(
     getAnchorLink,
-    [ctx, anchor.name, anchor.id],
+    [ctx, anchor.id],
     "!==",
     undefined,
     anchor,

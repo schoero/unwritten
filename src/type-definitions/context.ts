@@ -28,7 +28,11 @@ export interface InterpreterContext extends DefaultContext {
   /**
    * @internal
    */
-  locker?: Set<number>;
+  symbolLocker?: Set<number>;
+  /**
+   * @internal
+   */
+  typeLocker?: Set<number>;
 }
 
 export interface RenderContext<CustomRenderer extends Renderer = Renderer> extends DefaultContext {

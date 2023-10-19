@@ -11,7 +11,12 @@ import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 export function createJSDocReference(ctx: InterpreterContext, identifier: EntityName | JSDocMemberName): JSDocReference | undefined {
 
-  const symbol = ctx.checker.getSymbolAtLocation(identifier);
+  const { ts } = ctx.dependencies;
+
+  const symbol = ts.isJSDocMemberName(identifier)
+    // @ts-expect-error - Internal API
+    ? ctx.checker.getSymbolAtLocation(identifier.right)?.links.target
+    : ctx.checker.getSymbolAtLocation(identifier);
 
   if(!symbol){
     return;

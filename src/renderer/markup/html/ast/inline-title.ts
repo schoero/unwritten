@@ -7,7 +7,7 @@ import type { InlineTitleNode } from "unwritten:renderer:markup/types-definition
 
 export function renderInlineTitleNode(ctx: HTMLRenderContext, inlineTitleNode: InlineTitleNode): string {
 
-  const anchor = { id: inlineTitleNode.id, name: inlineTitleNode.name };
+  const anchor = { ids: inlineTitleNode.ids, name: inlineTitleNode.name };
   const title = createTitleNode(inlineTitleNode.title, anchor, ...inlineTitleNode.children);
 
   return renderNode(ctx, title);

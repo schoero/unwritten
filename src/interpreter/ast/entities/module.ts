@@ -2,6 +2,7 @@ import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { getDeclarationId } from "unwritten:interpreter/ast/shared/id.js";
 import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 
 import { createSourceFileEntity } from "./source-file.js";
@@ -12,7 +13,7 @@ import type { ModuleEntity } from "unwritten:interpreter/type-definitions/entiti
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createModuleEntity(ctx: InterpreterContext, symbol: Symbol): ModuleEntity {
+export const createModuleEntity = (ctx: InterpreterContext, symbol: Symbol): ModuleEntity => withLockedSymbol(ctx, symbol, () => {
 
   const fromSourceFile = createSourceFileEntity(ctx, symbol);
 
@@ -34,4 +35,4 @@ export function createModuleEntity(ctx: InterpreterContext, symbol: Symbol): Mod
     position
   };
 
-}
+});

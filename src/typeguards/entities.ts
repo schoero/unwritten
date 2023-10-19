@@ -17,10 +17,12 @@ import type {
   MethodEntity,
   ModuleEntity,
   NamespaceEntity,
+  ParameterEntity,
   PropertyEntity,
   SetterEntity,
   SignatureEntity,
   TypeAliasEntity,
+  TypeParameterEntity,
   UnresolvedEntity,
   VariableEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
@@ -84,7 +86,10 @@ export function isInterfaceEntity(entity: Entity): entity is InterfaceEntity {
 export function isLinkableEntity(entity: Entity): entity is LinkableEntity {
   return isExportableEntity(entity) ||
     isPropertyEntity(entity) ||
-    isSignatureEntity(entity);
+    isSignatureEntity(entity) ||
+    isTypeParameterEntity(entity) ||
+    isParameterEntity(entity) ||
+    isCircularEntity(entity);
 }
 
 export function isMethodEntity(entity: Entity): entity is MethodEntity {
@@ -97,6 +102,10 @@ export function isModuleEntity(entity: Entity): entity is ModuleEntity {
 
 export function isNamespaceEntity(entity: Entity): entity is NamespaceEntity {
   return entity.kind === EntityKind.Namespace;
+}
+
+export function isParameterEntity(entity: Entity): entity is ParameterEntity {
+  return entity.kind === EntityKind.Parameter;
 }
 
 export function isPropertyEntity(entity: Entity): entity is PropertyEntity {
@@ -113,6 +122,10 @@ export function isSignatureEntity(entity: Entity): entity is SignatureEntity {
 
 export function isTypeAliasEntity(entity: Entity): entity is TypeAliasEntity {
   return entity.kind === EntityKind.TypeAlias;
+}
+
+export function isTypeParameterEntity(entity: Entity): entity is TypeParameterEntity {
+  return entity.kind === EntityKind.TypeParameter;
 }
 
 export function isUnresolvedEntity(entity: Entity): entity is UnresolvedEntity {

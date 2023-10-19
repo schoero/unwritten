@@ -14,7 +14,7 @@ export interface AnchorLink {
 }
 
 export interface AnchorTarget {
-  id: ID;
+  ids: ID[];
   name: Name;
 }
 
@@ -26,7 +26,7 @@ export type SourceFile = {
   _anonymousId: ID;
   dst: FilePath;
   id: ID;
-  links: Map<AnchorID, ID[]>;
+  links: Map<AnchorID, ID[][]>;
   name: Name;
   src: string;
 };
@@ -37,37 +37,47 @@ function getAnonymousId(ctx: MarkupRenderContexts): ID {
   return ctx.currentFile._anonymousId--;
 }
 
-export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): AnchorTarget {
+export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID | ID[]): AnchorTarget {
 
   const anchorId = convertTextToAnchorId(name);
+  const ids = Array.isArray(id) ? id : [id];
 
   if(!ctx.currentFile.links.has(anchorId)){
     ctx.currentFile.links.set(anchorId, []);
   }
 
-  if(!ctx.currentFile.links.get(anchorId)!.includes(id)){
-    ctx.currentFile.links.get(anchorId)!.push(id);
+  if(
+    !ctx.currentFile.links.get(anchorId)!
+      .flat()
+      .some(storedId => ids.includes(storedId))
+  ){
+    ctx.currentFile.links.get(anchorId)!.push(ids);
   }
 
-  return { id, name };
+  return { ids, name };
 
 }
 
-export function unregisterAnchor(ctx: MarkupRenderContexts, name: Name, id: ID): void {
+export function unregisterAnchor(ctx: MarkupRenderContexts, id: ID | ID[]): void {
 
-  const anchorId = convertTextToAnchorId(name);
+  const ids = Array.isArray(id) ? id : [id];
+  const anchor = findRegisteredAnchorData(ctx, id);
 
-  if(!ctx.currentFile.links.has(anchorId)){
+  if(anchor === undefined){
     return;
   }
 
-  const index = ctx.currentFile.links.get(anchorId)!.indexOf(id);
+  const newIds = anchor.sourceFile.links.get(anchor.anchorId)![anchor.index]!.filter(storedId => !ids.includes(storedId));
 
-  if(index === -1){
-    return;
+  if(newIds.length === 0){
+    void anchor.sourceFile.links.get(anchor.anchorId)!.splice(anchor.index, 1);
+  } else {
+    anchor.sourceFile.links.get(anchor.anchorId)![anchor.index] = newIds;
   }
 
-  void ctx.currentFile.links.get(anchorId)!.splice(index, 1);
+  if(ctx.currentFile.links.get(anchor.anchorId)!.length === 0){
+    void ctx.currentFile.links.delete(anchor.anchorId);
+  }
 
 }
 
@@ -80,56 +90,45 @@ export function registerAnonymousAnchor(ctx: MarkupRenderContexts, name: Name): 
   }
 
   const id = getAnonymousId(ctx);
-  ctx.currentFile.links.get(anchorId)!.push(id);
+  const ids = [id];
 
-  return { id, name };
+  ctx.currentFile.links.get(anchorId)!.push(ids);
+
+  return { ids, name };
 
 }
 
-export function getAnchorLink(ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined {
-
-  const anchorId = convertTextToAnchorId(name);
+export function getAnchorLink(ctx: MarkupRenderContexts, id: ID | ID[]): string | undefined {
 
   const { relative } = ctx.dependencies.path;
 
-  const sourceFile = ctx.links
-    .find(sourceFile => isSymbolDocumentedFromSourceFile(sourceFile, id));
+  const ids = Array.isArray(id) ? id : [id];
 
-  if(sourceFile === undefined){
+  const anchor = findRegisteredAnchorData(ctx, ids);
+
+  if(anchor === undefined){
     return;
   }
 
-  const index = sourceFile.links.get(anchorId)?.indexOf(id);
-
-  if(index === -1){
-    return;
-  }
-
-  const relativeDirectory = ctx.currentFile.id !== sourceFile.id
-    ? relative(ctx.currentFile.dst, sourceFile.dst)
+  const relativeDirectory = ctx.currentFile.id !== anchor.sourceFile.id
+    ? relative(ctx.currentFile.dst, anchor.sourceFile.dst)
     : "";
 
-  const anchorLink = `${relativeDirectory}#${anchorId}${index === 0 ? "" : `-${index}`}`;
-
-  return anchorLink;
+  return `${relativeDirectory}#${anchor.anchorId}${anchor.index === 0 ? "" : `-${anchor.index}`}`;
 
 }
 
+export function getAnchorId(ctx: MarkupRenderContexts, id: ID | ID[]): string | undefined {
 
-export function getAnchorId(ctx: MarkupRenderContexts, name: Name, id: ID): string | undefined {
+  const ids = Array.isArray(id) ? id : [id];
 
-  const anchorId = convertTextToAnchorId(name);
+  const anchor = findRegisteredAnchorData(ctx, ids);
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const index = ctx.currentFile?.links.get(anchorId)?.indexOf(id) ?? -1;
-
-  if(index === -1){
+  if(anchor === undefined){
     return;
   }
 
-  const anchorLink = `${anchorId}${index === 0 ? "" : `-${index}`}`;
-
-  return anchorLink;
+  return `${anchor.anchorId}${anchor.index === 0 ? "" : `-${anchor.index}`}`;
 
 }
 
@@ -148,7 +147,7 @@ export function convertTextToAnchorId(text: string): AnchorID {
 
 export function hasAnchor(input: any): input is AnchorTarget {
   return typeof input === "object" &&
-    "id" in input &&
+    "ids" in input &&
     "name" in input;
 }
 
@@ -157,17 +156,13 @@ export function isAnchor(input: any): input is AnchorTarget {
     Object.keys(input).length === 2;
 }
 
-function isSymbolDocumentedFromSourceFile(sourceFile: SourceFile, symbolId: ID): boolean {
-  return Array.from(sourceFile.links.values()).some(linkIds => linkIds.includes(symbolId));
-}
-
 export function createCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
   const sourceFile = {
-    _anonymousId: 0,
+    _anonymousId: -10,
     dst: destination,
     id: sourceFileEntity.symbolId,
     links: new Map(),
@@ -191,5 +186,22 @@ export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity
   assert(index !== -1, `Source file ${sourceFileEntity.path} is not registered`);
 
   ctx.currentFile = ctx.links.at(index)!;
+
+}
+
+function findRegisteredAnchorData(ctx: MarkupRenderContexts, id: ID | ID[]): { anchorId: AnchorID; index: number; sourceFile: SourceFile; } | undefined {
+
+  const ids = Array.isArray(id) ? id : [id];
+
+  for(const sourceFile of ctx.links){
+    for(const [anchorId, linkIds] of sourceFile.links.entries()){
+      const index = linkIds.findIndex(storedIds =>
+        storedIds.some(storedId =>
+          ids.includes(storedId)));
+      if(index !== -1){
+        return { anchorId, index, sourceFile };
+      }
+    }
+  }
 
 }

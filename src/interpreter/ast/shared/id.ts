@@ -17,7 +17,8 @@ export function getDeclarationId(ctx: InterpreterContext, declaration: Declarati
 }
 
 export function getSymbolIdByDeclaration(ctx: InterpreterContext, declaration: Declaration): ID | undefined {
-  const symbol = ctx.checker.getSymbolAtLocation(declaration);
+  // @ts-expect-error - Internal API
+  const symbol = declaration.symbol ?? ctx.checker.getSymbolAtLocation(declaration);
   return symbol && getSymbolId(ctx, symbol);
 }
 

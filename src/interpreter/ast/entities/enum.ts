@@ -1,5 +1,6 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -18,7 +19,7 @@ import type {
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createEnumEntity(ctx: InterpreterContext, symbol: Symbol): EnumEntity | MergedEnumEntity {
+export const createEnumEntity = (ctx: InterpreterContext, symbol: Symbol): EnumEntity | MergedEnumEntity => withLockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.getDeclarations()?.flatMap(declaration => isEnumDeclaration(ctx, declaration) ? declaration : []);
 
@@ -48,7 +49,7 @@ export function createEnumEntity(ctx: InterpreterContext, symbol: Symbol): EnumE
     };
   }
 
-}
+});
 
 
 function mergeMembers(enums: ReturnType<typeof parseEnumDeclaration>[]): EnumEntity["members"] {
