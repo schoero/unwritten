@@ -23,7 +23,7 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
   if(renderedChildren === ""){
 
     if(hasAnchor(titleNode)){
-      void unregisterAnchor(ctx, titleNode.name, titleNode.id);
+      void unregisterAnchor(ctx, titleNode.ids);
     }
 
     return "";

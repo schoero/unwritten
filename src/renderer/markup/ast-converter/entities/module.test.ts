@@ -50,6 +50,7 @@ scope("MarkupRenderer", EntityKind.Module, () => {
       description,
       remarks,
       example,
+      see,
       ...children
     ] = titleNode.children;
 

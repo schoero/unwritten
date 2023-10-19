@@ -1,11 +1,12 @@
-import { getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
-import { getTypeParameterDescription } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 import { isTypeParameterDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
+
+import { getTypeByTypeNode } from "../type";
 
 import type { Symbol, TypeParameter, TypeParameterDeclaration } from "typescript";
 
@@ -24,7 +25,8 @@ export function createTypeParameterEntityByTypeParameter(ctx: InterpreterContext
   const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
-  const description = getTypeParameterDescription(ctx, declaration);
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
+  const description = jsdocProperties.template?.[0]?.content;
   const initializer = declaration.default && getTypeByTypeNode(ctx, declaration.default);
   const constraint = declaration.constraint && getTypeByTypeNode(ctx, declaration.constraint);
   const kind = EntityKind.TypeParameter;
@@ -52,7 +54,8 @@ export function createTypeParameterEntity(ctx: InterpreterContext, symbol: Symbo
   const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
-  const description = getTypeParameterDescription(ctx, declaration);
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
+  const description = jsdocProperties.template?.[0]?.content;
   const initializer = declaration.default && getTypeByTypeNode(ctx, declaration.default);
   const constraint = declaration.constraint && getTypeByTypeNode(ctx, declaration.constraint);
   const kind = EntityKind.TypeParameter;
@@ -83,7 +86,8 @@ export function createTypeParameterEntityByDeclaration(ctx: InterpreterContext, 
   const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameBySymbol(ctx, symbol);
   const position = getPositionByDeclaration(ctx, declaration);
-  const description = getTypeParameterDescription(ctx, declaration);
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
+  const description = jsdocProperties.template?.[0]?.content;
   const initializer = declaration.default && getTypeByTypeNode(ctx, declaration.default);
   const constraint = declaration.constraint && getTypeByTypeNode(ctx, declaration.constraint);
   const kind = EntityKind.TypeParameter;

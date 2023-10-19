@@ -6,6 +6,7 @@ import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -56,13 +57,15 @@ scope("Interpreter", EntityKind.TypeAlias, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedTypeAlias.description).toBe("Type alias description");
+      expect(exportedTypeAlias.description).toHaveLength(1);
+      assert(isJSDocText(exportedTypeAlias.description![0]));
+      expect(exportedTypeAlias.description![0].text).toBe("Type alias description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedTypeAlias.example).toStrictEqual([
-        "Type alias example"
-      ]);
+      expect(exportedTypeAlias.example).toHaveLength(1);
+      assert(isJSDocText(exportedTypeAlias.example![0].content[0]));
+      expect(exportedTypeAlias.example![0].content[0].text).toBe("Type alias example");
     });
 
     it("should have a matching type", () => {

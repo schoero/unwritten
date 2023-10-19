@@ -92,11 +92,11 @@ scope("Renderer", "Source registry", () => {
 
         const anchor = registerAnchor(
           ctx,
-          variableEntity.name,
-          variableEntity.symbolId
+          "test",
+          1
         );
 
-        const anchorText = getAnchorLink(ctx, anchor.name, anchor.id);
+        const anchorText = getAnchorLink(ctx, anchor.ids);
         expect(anchorText).toBe("#test");
 
       });
@@ -105,12 +105,29 @@ scope("Renderer", "Source registry", () => {
 
         const anchor = registerAnchor(
           ctx,
-          variableEntity.name,
-          variableEntity.symbolId
+          "test",
+          1
         );
 
-        const anchorText = getAnchorLink(ctx, anchor.name, anchor.id);
+        const anchorText = getAnchorLink(ctx, anchor.ids);
         expect(anchorText).toBe("#test");
+
+      });
+
+      it("should be possible to register the same anchor with multiple ids", () => {
+
+        const anchor = registerAnchor(
+          ctx,
+          "test",
+          [2, 3]
+        );
+
+        const anchorText = getAnchorLink(ctx, 2);
+        const anchorText2 = getAnchorLink(ctx, 3);
+        const anchorText3 = getAnchorLink(ctx, anchor.ids);
+
+        expect(anchorText).toStrictEqual(anchorText2);
+        expect(anchorText2).toStrictEqual(anchorText3);
 
       });
 
@@ -150,8 +167,8 @@ scope("Renderer", "Source registry", () => {
         namespaceVariableEntity.symbolId
       );
 
-      const variableAnchorText = getAnchorLink(ctx, variableAnchor.name, variableAnchor.id);
-      const namespaceAnchorText = getAnchorLink(ctx, namespaceAnchor.name, namespaceAnchor.id);
+      const variableAnchorText = getAnchorLink(ctx, variableAnchor.ids);
+      const namespaceAnchorText = getAnchorLink(ctx, namespaceAnchor.ids);
 
       expect(variableAnchorText).toBe("#test");
       expect(namespaceAnchorText).toBe("#test-1");

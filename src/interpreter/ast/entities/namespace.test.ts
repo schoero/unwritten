@@ -4,6 +4,8 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { createNamespaceEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -12,7 +14,6 @@ scope("Interpreter", EntityKind.Namespace, () => {
   const testFileContent = ts`
     /**
      * Namespace description
-     * @remarks Namespace remarks
      * @example Namespace example
      * @deprecated
      * @beta
@@ -32,15 +33,15 @@ scope("Interpreter", EntityKind.Namespace, () => {
   });
 
   it("should have a matching description", () => {
-    expect(exportedNamespace.description).toBe("Namespace description");
-  });
-
-  it("should have a matching remarks", () => {
-    expect(exportedNamespace.remarks).toStrictEqual(["Namespace remarks"]);
+    expect(exportedNamespace.description).toHaveLength(1);
+    assert(isJSDocText(exportedNamespace.description![0]));
+    expect(exportedNamespace.description![0].text).toBe("Namespace description");
   });
 
   it("should have a matching example", () => {
-    expect(exportedNamespace.example).toStrictEqual(["Namespace example"]);
+    expect(exportedNamespace.example).toHaveLength(1);
+    assert(isJSDocText(exportedNamespace.example![0].content[0]));
+    expect(exportedNamespace.example![0].content[0].text).toBe("Namespace example");
   });
 
   it("should be deprecated", () => {

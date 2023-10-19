@@ -1,12 +1,14 @@
 import { createTypeParameterEntityByDeclaration } from "unwritten:interpreter/ast/entities/index.js";
-import { getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
-import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { isTypeAliasDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
+
+import { getTypeByTypeNode } from "../type";
 
 import type { Symbol } from "typescript";
 
@@ -14,7 +16,7 @@ import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/ent
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): TypeAliasEntity {
+export const createTypeAliasEntity = (ctx: InterpreterContext, symbol: Symbol): TypeAliasEntity => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -22,9 +24,10 @@ export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): 
 
   const name = getNameBySymbol(ctx, symbol);
   const symbolId = getSymbolId(ctx, symbol);
-  const description = getDescriptionBySymbol(ctx, symbol);
+
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
+
   const declarationId = getDeclarationId(ctx, declaration);
-  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
 
   // Getting the resolved type via symbol or declaration results in an error type
@@ -36,9 +39,8 @@ export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): 
   );
 
   return {
-    ...jsdocTags,
+    ...jsdocProperties,
     declarationId,
-    description,
     kind,
     name,
     position,
@@ -47,4 +49,4 @@ export function createTypeAliasEntity(ctx: InterpreterContext, symbol: Symbol): 
     typeParameters
   };
 
-}
+});

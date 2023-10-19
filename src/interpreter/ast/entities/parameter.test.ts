@@ -5,6 +5,8 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createFunctionEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -33,7 +35,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
 
     const testFileContent = ts`
       /**
-       * @param param - Parameter description
+       * @param param Parameter description
        */
       export function functionSymbol(param: string): void {}
     `;
@@ -53,7 +55,9 @@ scope("Interpreter", EntityKind.Parameter, () => {
     });
 
     it("should have a matching description", () => {
-      expect(parameter.description).toBe("- Parameter description");
+      expect(parameter.description).toHaveLength(1);
+      assert(isJSDocText(parameter.description![0]));
+      expect(parameter.description![0].text).toBe("Parameter description");
     });
 
     it("should have a matching position", () => {

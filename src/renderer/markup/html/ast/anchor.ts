@@ -8,7 +8,7 @@ import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nod
 
 export function renderAnchorNode(ctx: HTMLRenderContext, anchorNode: AnchorNode): string {
 
-  const anchorLink = getAnchorLink(ctx, anchorNode.name, anchorNode.id);
+  const anchorLink = getAnchorLink(ctx, anchorNode.id);
 
   if(!anchorLink){
     throw new Error(`No anchor link and no fallback found for anchor node ${anchorNode.name} with id ${anchorNode.id}`);

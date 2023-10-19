@@ -5,6 +5,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createInterfaceEntity, createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -283,9 +284,14 @@ scope("Interpreter", EntityKind.Interface, () => {
       expect(exportedTypeAlias.kind).toBe(EntityKind.TypeAlias);
       assert(exportedTypeAlias.type.kind === TypeKind.TypeReference);
       assert(exportedTypeAlias.type.type?.kind === TypeKind.Interface);
+
+      expect(exportedTypeAlias.type.type.events).toBeDefined();
       expect(exportedTypeAlias.type.type.events).toHaveLength(1);
-      expect(exportedTypeAlias.type.type.events[0]!.name).toBe("event");
-      expect(exportedTypeAlias.type.type.events[0]!.description).toBe("Event description");
+      expect(exportedTypeAlias.type.type.events[0].name).toBe("event");
+
+      assert(isJSDocText(exportedTypeAlias.type.type.events[0].description![0]));
+      expect(exportedTypeAlias.type.type.events[0].description![0].text).toBe("Event description");
+
       expect(exportedTypeAlias.type.type.properties).toHaveLength(0);
     });
 

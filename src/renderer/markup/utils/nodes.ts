@@ -22,7 +22,7 @@ import type {
   TitleNode
 } from "../types-definitions/nodes.js";
 
-import type { ID, Name } from "unwritten:interpreter/type-definitions/shared.js";
+import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc.js";
 import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry.js";
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
 

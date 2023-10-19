@@ -1,7 +1,8 @@
-import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter/ast/index.js";
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter/ast/shared/id.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { withLockedType } from "unwritten:interpreter/utils/ts.js";
+
+import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { IndexedAccessType as TSIndexedAccessType, IndexedAccessTypeNode } from "typescript";
 

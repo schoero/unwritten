@@ -4,6 +4,8 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { createModuleEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -12,7 +14,6 @@ scope("Interpreter", EntityKind.Module, () => {
   const testFileContent = ts`
     /**
      * Module description
-     * @remarks Module remarks
      * @example Module example
      * @deprecated
      * @beta
@@ -32,18 +33,17 @@ scope("Interpreter", EntityKind.Module, () => {
   });
 
   it("should have a matching description", () => {
-    expect(exportedModule.description).toBe("Module description");
-  });
-
-  it("should have a matching remarks", () => {
-    expect(exportedModule.remarks).toStrictEqual(["Module remarks"]);
+    expect(exportedModule.description).toHaveLength(1);
+    assert(isJSDocText(exportedModule.description![0]));
+    expect(exportedModule.description![0].text).toBe("Module description");
   });
 
   it("should have a matching example", () => {
-    expect(exportedModule.example).toStrictEqual([
-      "Module example"
-    ]);
+    expect(exportedModule.example).toHaveLength(1);
+    assert(isJSDocText(exportedModule.example![0].content[0]));
+    expect(exportedModule.example![0].content[0].text).toBe("Module example");
   });
+
 
   it("should be deprecated", () => {
     expect(exportedModule).toHaveProperty("deprecated");

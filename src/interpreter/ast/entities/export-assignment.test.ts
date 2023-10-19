@@ -6,6 +6,7 @@ import { createExportAssignmentEntity } from "unwritten:interpreter:ast/entities
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { isExportAssignmentEntity } from "unwritten:typeguards/entities.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
@@ -17,7 +18,6 @@ scope("Interpreter", "Export assignment", () => {
     const testFileContent = ts`
       /**
        * Export assignment description
-       * @remarks Export assignment remarks
        * @example Export assignment example
        * @deprecated
        * @beta
@@ -34,20 +34,15 @@ scope("Interpreter", "Export assignment", () => {
     });
 
     it("should have a matching description", () => {
-      assert(isExportAssignmentEntity(exportAssignmentEntity));
-      expect(exportAssignmentEntity.description).toBe("Export assignment description");
-    });
-
-    it("should have matching remarks", () => {
-      assert(isExportAssignmentEntity(exportAssignmentEntity));
-      expect(exportAssignmentEntity.remarks).toStrictEqual(["Export assignment remarks"]);
+      expect(exportAssignmentEntity.description).toHaveLength(1);
+      assert(isJSDocText(exportAssignmentEntity.description![0]));
+      expect(exportAssignmentEntity.description![0].text).toBe("Export assignment description");
     });
 
     it("should have a matching example", () => {
-      assert(isExportAssignmentEntity(exportAssignmentEntity));
-      expect(exportAssignmentEntity.example).toStrictEqual([
-        "Export assignment example"
-      ]);
+      expect(exportAssignmentEntity.example).toHaveLength(1);
+      assert(isJSDocText(exportAssignmentEntity.example![0].content[0]));
+      expect(exportAssignmentEntity.example![0].content[0].text).toBe("Export assignment example");
     });
 
     it("should be have matching jsdoc tags", () => {

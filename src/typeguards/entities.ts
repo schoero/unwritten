@@ -6,19 +6,23 @@ import type {
   ConstructorEntity,
   Entity,
   EnumEntity,
+  ExplicitSignatureEntity,
   ExportableEntity,
   ExportAssignmentEntity,
   FunctionEntity,
   FunctionLikeEntity,
   GetterEntity,
   InterfaceEntity,
+  LinkableEntity,
   MethodEntity,
   ModuleEntity,
   NamespaceEntity,
+  ParameterEntity,
   PropertyEntity,
   SetterEntity,
   SignatureEntity,
   TypeAliasEntity,
+  TypeParameterEntity,
   UnresolvedEntity,
   VariableEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
@@ -38,6 +42,10 @@ export function isConstructorEntity(entity: Entity): entity is ConstructorEntity
 
 export function isEnumEntity(entity: Entity): entity is EnumEntity {
   return entity.kind === EntityKind.Enum;
+}
+
+export function isExplicitSignatureEntity(entity: Entity): entity is ExplicitSignatureEntity {
+  return isSignatureEntity(entity) && entity.declarationId !== undefined;
 }
 
 export function isExportAssignmentEntity(entity: Entity): entity is ExportAssignmentEntity {
@@ -75,6 +83,15 @@ export function isInterfaceEntity(entity: Entity): entity is InterfaceEntity {
   return entity.kind === EntityKind.Interface;
 }
 
+export function isLinkableEntity(entity: Entity): entity is LinkableEntity {
+  return isExportableEntity(entity) ||
+    isPropertyEntity(entity) ||
+    isSignatureEntity(entity) ||
+    isTypeParameterEntity(entity) ||
+    isParameterEntity(entity) ||
+    isCircularEntity(entity);
+}
+
 export function isMethodEntity(entity: Entity): entity is MethodEntity {
   return entity.kind === EntityKind.Method;
 }
@@ -85,6 +102,10 @@ export function isModuleEntity(entity: Entity): entity is ModuleEntity {
 
 export function isNamespaceEntity(entity: Entity): entity is NamespaceEntity {
   return entity.kind === EntityKind.Namespace;
+}
+
+export function isParameterEntity(entity: Entity): entity is ParameterEntity {
+  return entity.kind === EntityKind.Parameter;
 }
 
 export function isPropertyEntity(entity: Entity): entity is PropertyEntity {
@@ -101,6 +122,10 @@ export function isSignatureEntity(entity: Entity): entity is SignatureEntity {
 
 export function isTypeAliasEntity(entity: Entity): entity is TypeAliasEntity {
   return entity.kind === EntityKind.TypeAlias;
+}
+
+export function isTypeParameterEntity(entity: Entity): entity is TypeParameterEntity {
+  return entity.kind === EntityKind.TypeParameter;
 }
 
 export function isUnresolvedEntity(entity: Entity): entity is UnresolvedEntity {

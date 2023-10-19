@@ -3,7 +3,7 @@ import {
   getResolvedTypeByTypeNode,
   getTypeByResolvedAndDeclaredType,
   getTypeByTypeNode
-} from "unwritten:interpreter/ast/index.js";
+} from "unwritten:interpreter/ast/type.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";

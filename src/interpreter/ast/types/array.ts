@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/array-type */
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
+
+import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { ArrayTypeNode, TypeReference } from "typescript";
 

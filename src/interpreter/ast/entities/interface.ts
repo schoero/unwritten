@@ -1,3 +1,4 @@
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import {
@@ -6,7 +7,6 @@ import {
   createTypeParameterEntityByDeclaration
 } from "unwritten:interpreter:ast/entities/index.js";
 import { getDeclarationId, getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getDescriptionBySymbol, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
@@ -42,14 +42,12 @@ export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
   const symbolId = getSymbolId(ctx, symbol);
   const name = getNameBySymbol(ctx, symbol);
 
-  const description = getDescriptionBySymbol(ctx, symbol);
   const declarations = interfaceDeclarations.map(declaration => parseInterfaceDeclaration(ctx, declaration));
   const kind = EntityKind.Interface;
 
   if(declarations.length === 1){
     return <InterfaceEntity>{
       ...declarations[0],
-      description,
       kind,
       name,
       symbolId,
@@ -70,7 +68,6 @@ export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
       callSignatures,
       constructSignatures,
       declarations,
-      description,
       events,
       getterSignatures,
       kind,
@@ -157,13 +154,13 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
   const declarationId = getDeclarationId(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
-  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
   const kind = EntityKind.Interface;
 
   assert(name, "Interface name not found");
 
   return {
-    ...jsdocTags,
+    ...jsdocProperties,
     callSignatures,
     constructSignatures,
     declarationId,

@@ -1,9 +1,10 @@
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { isNamespaceExport } from "unwritten:interpreter/typeguards/declarations.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
 import { assert } from "unwritten:utils/general.js";
 
@@ -13,7 +14,7 @@ import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/ent
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): NamespaceEntity {
+export const createNamespaceEntity = (ctx: InterpreterContext, symbol: Symbol): NamespaceEntity => withLockedSymbol(ctx, symbol, () => {
 
   const fromSourceFile = createSourceFileEntity(ctx, symbol);
 
@@ -21,8 +22,7 @@ export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): 
 
   const name = getNameBySymbol(ctx, symbol);
   const symbolId = getSymbolId(ctx, symbol);
-  const description = declaration && getDescriptionByDeclaration(ctx, declaration);
-  const jsdocTags = declaration && getJSDocTagsByDeclaration(ctx, declaration);
+  const jsdocProperties = declaration && getJSDocProperties(ctx, declaration);
   const position = declaration && getPositionByDeclaration(ctx, declaration);
   const declarationId = declaration && getDeclarationId(ctx, declaration);
 
@@ -30,18 +30,17 @@ export function createNamespaceEntity(ctx: InterpreterContext, symbol: Symbol): 
 
   return {
     ...fromSourceFile,
-    ...jsdocTags,
+    ...jsdocProperties,
     declarationId,
-    description,
     kind,
     name,
     position,
     symbolId
   };
 
-}
+});
 
-export function createNamespaceEntityFromNamespaceExport(ctx: InterpreterContext, symbol: Symbol): NamespaceEntity {
+export const createNamespaceEntityFromNamespaceExport = (ctx: InterpreterContext, symbol: Symbol): NamespaceEntity => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
@@ -62,8 +61,7 @@ export function createNamespaceEntityFromNamespaceExport(ctx: InterpreterContext
   assert(name, "Namespace exports must have a name");
 
   const symbolId = getSymbolId(ctx, symbol);
-  const description = getDescriptionByDeclaration(ctx, declaration);
-  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
   const declarationId = getDeclarationId(ctx, declaration);
 
@@ -71,13 +69,12 @@ export function createNamespaceEntityFromNamespaceExport(ctx: InterpreterContext
 
   return {
     ...fromSourceFile,
-    ...jsdocTags,
+    ...jsdocProperties,
     declarationId,
-    description,
     kind,
     name,
     position,
     symbolId
   };
 
-}
+});

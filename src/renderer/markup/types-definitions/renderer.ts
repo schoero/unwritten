@@ -1,6 +1,6 @@
 import type { RenderCategories } from "../enums/renderer.js";
 
-import type { Alpha, Beta, Deprecated, Examples, Internal } from "unwritten:interpreter/type-definitions/shared.js";
+import type { Alpha, Beta, Deprecated, Example, Internal } from "unwritten:interpreter/type-definitions/jsdoc.js";
 
 import type {
   AnchorNode,
@@ -34,7 +34,7 @@ export type RenderableJSDocTags =
   | Alpha
   | Beta
   | Deprecated
-  | Examples
+  | Example
   | Internal;
 
 // Position
@@ -45,8 +45,24 @@ export type ConvertedPosition = Empty | PaddedNode<[
 ]>;
 
 // Tags
+export type ConvertedJSDocTags = ASTNode;
+
 export type ConvertedTagsForDocumentation = Empty | ParagraphNode;
 export type ConvertedTagsForType = ASTNode;
+
+export type ConvertedJSDocReference = ASTNode | ConditionalNode;
+
+export type ConvertedJSDocType = ASTNode | ConditionalNode;
+
+export type ConvertedJSDocSeeTag = ConvertedJSDocTags | [
+  reference: ConvertedJSDocReference,
+  content: ConvertedJSDocTags
+];
+
+export type ConvertedJSDocThrowsTag = ConvertedJSDocTags | [
+  reference: ConvertedJSDocReference,
+  content: ConvertedJSDocTags
+];
 
 // Description
 export type ConvertedDescriptionForDocumentation = Empty | TitleNode<ParagraphNode[]>;
@@ -67,6 +83,10 @@ export type ConvertedThrowsForType = Empty | InlineTitleNode<[
 // Example
 export type ConvertedExamples = Empty | TitleNode<ParagraphNode[]>;
 export type ConvertedExamplesForType = Empty | InlineTitleNode;
+
+// See
+export type ConvertedSeeTags = Empty | TitleNode<ListNode[]>;
+export type ConvertedSeeTagsForType = Empty | InlineTitleNode;
 
 // Types
 export interface ConvertedType {
@@ -292,6 +312,7 @@ export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
+    see: ConvertedSeeTags,
     ...exports: ConvertedEntitiesForDocumentation[]
   ]>
 ]>;
@@ -308,6 +329,7 @@ export type ConvertedModuleEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
+    see: ConvertedSeeTags,
     ...exports: ConvertedEntitiesForDocumentation[]
   ]>
 ]>;
@@ -322,7 +344,8 @@ export type ConvertedTypeAliasEntityForDocumentation = SectionNode<[
     type: ConvertedTypeInline,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
-    example: ConvertedExamples
+    example: ConvertedExamples,
+    see: ConvertedSeeTags
   ]>
 ]>;
 
@@ -348,7 +371,8 @@ export type ConvertedSignatureEntityForDocumentation = SectionNode<[
     throws: ConvertedThrowsForDocumentation,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
-    example: ConvertedExamples
+    example: ConvertedExamples,
+    see: ConvertedSeeTags
   ]>
 ]>;
 export type ConvertedSignatureEntityForType = MultilineNode<[
@@ -358,7 +382,8 @@ export type ConvertedSignatureEntityForType = MultilineNode<[
   returnType: ConvertedReturnTypeForType,
   throws: ConvertedThrowsForType,
   remarks: ConvertedRemarksForType,
-  example: ConvertedExamplesForType
+  example: ConvertedExamplesForType,
+  see: ConvertedSeeTagsForType
 ]>;
 
 // Variable
@@ -370,7 +395,8 @@ export type ConvertedVariableEntityForDocumentation = SectionNode<[
     type: ConvertedTypeInline,
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
-    example: ConvertedExamples
+    example: ConvertedExamples,
+    see: ConvertedSeeTags
   ]>
 ]>;
 
@@ -383,6 +409,7 @@ export type ConvertedExportAssignmentEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
+    see: ConvertedSeeTags,
     type: ConvertedTypeInline
   ]>
 ]>;
@@ -397,6 +424,7 @@ export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
+    see: ConvertedSeeTags,
     constructSignatures: ListNode<ConvertedSignatureEntityForType[]>,
     callSignatures: ListNode<ConvertedSignatureEntityForType[]>,
     properties: ListNode<ConvertedPropertyEntityForType[]>,
@@ -426,6 +454,7 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
+    see: ConvertedSeeTags,
     constructor: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
     properties: Empty | TitleNode<ConvertedPropertyEntityForDocumentation[]>,
     methods: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
@@ -444,6 +473,7 @@ export type ConvertedEnumEntityForDocumentation = SectionNode<[
     description: ConvertedDescriptionForDocumentation,
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
+    see: ConvertedSeeTags,
     members: ListNode
   ]>
 ]>;
@@ -480,12 +510,14 @@ export type ConvertedPropertyEntityForDocumentation = TitleNode<[
   type: ConvertedTypeInline,
   description: ConvertedDescriptionForDocumentation,
   remarks: ConvertedRemarksForDocumentation,
-  example: ConvertedExamples
+  example: ConvertedExamples,
+  see: ConvertedSeeTags
 ]>;
 export type ConvertedPropertyEntityForType = MultilineNode<[
   propertySignature: ASTNode,
   remarks: ConvertedRemarksForType,
   example: ConvertedExamplesForType,
+  see: ConvertedSeeTagsForType,
   propertyType: ConditionalNode | ConvertedTypeMultiline | Empty
 ]>;
 
@@ -495,10 +527,12 @@ export type ConvertedEventPropertyEntityForDocumentation = TitleNode<[
   position: ConvertedPosition,
   description: ConvertedDescriptionForDocumentation,
   remarks: ConvertedRemarksForDocumentation,
-  example: ConvertedExamples
+  example: ConvertedExamples,
+  see: ConvertedSeeTags
 ]>;
 export type ConvertedEventPropertyEntityForType = MultilineNode<[
   propertySignature: ASTNode,
   remarks: ConvertedRemarksForType,
-  example: ConvertedExamplesForType
+  example: ConvertedExamplesForType,
+  see: ConvertedSeeTagsForType
 ]>;

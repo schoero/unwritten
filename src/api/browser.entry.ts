@@ -2,7 +2,7 @@ import ts from "typescript";
 
 import { compile } from "unwritten:compiler:browser.js";
 import { createConfig } from "unwritten:config/config.js";
-import { interpret } from "unwritten:interpreter:ast/index.js";
+import { interpret } from "unwritten:interpreter/ast/symbol.js";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
 import { getEntryFileSymbolsFromProgram } from "unwritten:interpreter:utils/ts.js";
 import fs from "unwritten:platform/file-system/browser.js";

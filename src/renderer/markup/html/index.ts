@@ -46,7 +46,7 @@ import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
 import { renderTitleNode } from "./ast/title.js";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { AnchorTarget, LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry.js";
+import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry.js";
 import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
 import type { RenderContext } from "unwritten:type-definitions/context.js";
@@ -77,33 +77,9 @@ const htmlRenderer: HTMLRenderer = {
   // eslint-disable-next-line sort-keys/sort-keys-fix
   initializeContext: (ctx: HTMLRenderContext) => {
 
+    ctx.links = [];
+
     // Attach getters and setters to context
-    if(Object.hasOwn(ctx, "currentFile")){
-      ctx._currentFile = ctx.currentFile;
-    } else {
-      Object.defineProperty(ctx, "currentFile", {
-        get() {
-          return ctx._currentFile ?? undefined;
-        },
-        set(currentFile: SourceFile) {
-          ctx._currentFile = currentFile;
-        }
-      });
-    }
-
-    if(Object.hasOwn(ctx, "links")){
-      ctx._links = ctx.links;
-    } else {
-      Object.defineProperty(ctx, "links", {
-        get() {
-          return ctx._links ?? [];
-        },
-        set(links: LinkRegistry) {
-          ctx._links = links;
-        }
-      });
-    }
-
     if(Object.hasOwn(ctx, "nesting")){
       ctx._nesting = ctx.nesting;
     } else {

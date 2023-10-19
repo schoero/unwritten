@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { createTestRegistry } from "unwritten:tests:utils/registry.js";
+import { attachTestRegistry } from "unwritten:tests:utils/registry.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 import { html } from "unwritten:utils/template.js";
 
@@ -15,7 +15,7 @@ scope("HTMLRenderer", "InlineTitleNode", () => {
   it("should not render empty titles", () => {
 
     const ctx = createRenderContext();
-    ctx.links = createTestRegistry(ctx);
+    void attachTestRegistry(ctx);
 
     const title = "Title";
     const anchor = registerAnonymousAnchor(ctx, title);
@@ -26,7 +26,8 @@ scope("HTMLRenderer", "InlineTitleNode", () => {
   it("should render a single title correctly", () => {
 
     const ctx = createRenderContext();
-    ctx.links = createTestRegistry(ctx);
+    void attachTestRegistry(ctx);
+    ctx.currentFile = ctx.links.at(0)!;
 
     const title = "Title";
     const anchor = registerAnonymousAnchor(ctx, title);
@@ -42,7 +43,7 @@ scope("HTMLRenderer", "InlineTitleNode", () => {
   it("should increase size for nested titles", () => {
 
     const ctx = createRenderContext();
-    ctx.links = createTestRegistry(ctx);
+    void attachTestRegistry(ctx);
 
     const title = "Title";
     const anchor = registerAnonymousAnchor(ctx, title);
@@ -67,7 +68,7 @@ scope("HTMLRenderer", "InlineTitleNode", () => {
   it("should not increase size for titles on the same level", () => {
 
     const ctx = createRenderContext();
-    ctx.links = createTestRegistry(ctx);
+    void attachTestRegistry(ctx);
 
     const title = "Title";
     const anchor = registerAnonymousAnchor(ctx, title);
@@ -100,7 +101,7 @@ scope("HTMLRenderer", "InlineTitleNode", () => {
   it("should filter out empty strings", () => {
 
     const ctx = createRenderContext();
-    ctx.links = createTestRegistry(ctx);
+    void attachTestRegistry(ctx);
 
     const title = "Title";
     const anchor = registerAnonymousAnchor(ctx, title);
@@ -124,7 +125,7 @@ scope("HTMLRenderer", "InlineTitleNode", () => {
   it("should render an id if the title has an anchor", () => {
 
     const ctx = createRenderContext();
-    ctx.links = createTestRegistry(ctx);
+    void attachTestRegistry(ctx);
 
     const title = "Title";
     const anchor = registerAnchor(ctx, title, 1);

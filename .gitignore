@@ -3,3 +3,4 @@ lib
 local
 .DS_Store
 .env
+todo.md

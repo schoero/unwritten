@@ -10,7 +10,7 @@ import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
 import jsonRenderer from "unwritten:renderer:json/index.js";
 import htmlRenderer, { isHTMLRenderContext } from "unwritten:renderer:markup/html/index.js";
 import markdownRenderer, { isMarkdownRenderContext } from "unwritten:renderer:markup/markdown/index.js";
-import { createTestRegistry } from "unwritten:tests:utils/registry.js";
+import { attachTestRegistry } from "unwritten:tests:utils/registry.js";
 import { createContext as createDefaultContext } from "unwritten:utils/context.js";
 import { assert } from "unwritten:utils/general.js";
 import { override } from "unwritten:utils:override.js";
@@ -66,14 +66,14 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
     ctx.renderer = htmlRenderer;
     assert(isHTMLRenderContext(ctx));
     ctx.renderer.initializeContext(ctx);
-    ctx.links = createTestRegistry(ctx);
-    ctx.currentFile = Object.values(ctx.links)[0];
+    void attachTestRegistry(ctx);
+    ctx.currentFile = ctx.links.at(0)!;
   } else if(rendererName === BuiltInRenderers.Markdown){
     ctx.renderer = markdownRenderer;
     assert(isMarkdownRenderContext(ctx));
     ctx.renderer.initializeContext(ctx);
-    ctx.links = createTestRegistry(ctx);
-    ctx.currentFile = Object.values(ctx.links)[0];
+    void attachTestRegistry(ctx);
+    ctx.currentFile = ctx.links.at(0)!;
   } else {
     ctx.renderer = jsonRenderer;
   }

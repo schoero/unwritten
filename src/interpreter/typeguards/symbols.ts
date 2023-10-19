@@ -161,6 +161,10 @@ export function isTypeSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
   return (symbol.getFlags() & ts.SymbolFlags.Type) !== 0;
 }
 
+export function isUnresolvedSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
+  return !isSymbol(ctx, symbol);
+}
+
 export function isVariableSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {
   const { ts } = ctx.dependencies;
   return (symbol.getFlags() & ts.SymbolFlags.Variable) !== 0;

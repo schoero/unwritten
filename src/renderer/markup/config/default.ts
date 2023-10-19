@@ -88,6 +88,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     required: "required",
     rest: "rest",
     returnType: "return type",
+    see: "see also",
     setter_many: "setters",
     setter_one: "setter",
     static: "static",
@@ -112,9 +113,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
 
 export const defaultMarkdownRenderConfig: Complete<MarkdownRenderConfig> = {
   ...defaultRenderConfig,
-  allowedHTMLTags: [
-    "span"
-  ],
+  allowedHTMLTags: false,
   inlineTitleEncapsulation: ["*", "*"],
   sectionSeparator: "---"
 };

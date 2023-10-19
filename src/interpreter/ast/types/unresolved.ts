@@ -1,9 +1,10 @@
-import { getTypeByType } from "unwritten:interpreter/ast/index.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { isTypeReferenceType } from "unwritten:interpreter/typeguards/types.js";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
+
+import { getTypeByType } from "../type";
 
 import type { Type, TypeNode } from "typescript";
 

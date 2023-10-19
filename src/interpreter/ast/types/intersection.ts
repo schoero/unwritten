@@ -1,6 +1,7 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getTypeByType } from "unwritten:interpreter:ast/index.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
+
+import { getTypeByType } from "../type";
 
 import type { IntersectionType as TSIntersectionType } from "typescript";
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { interpret } from "unwritten:interpreter/ast/index.js";
+import { interpret } from "unwritten:interpreter/ast/symbol.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
