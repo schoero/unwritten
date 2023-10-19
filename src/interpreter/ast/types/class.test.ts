@@ -4,6 +4,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -71,10 +72,15 @@ scope("Interpreter", TypeKind.Class, () => {
 
     it("should have one property", () => {
       assert(exportedClassType.type.kind === TypeKind.TypeReference);
-      assert(exportedClassType.type.type!.kind === TypeKind.Class);
+      assert(exportedClassType.type.type?.kind === TypeKind.Class);
+
+      expect(exportedClassType.type.type.events).toBeDefined();
       expect(exportedClassType.type.type.events).toHaveLength(1);
-      expect(exportedClassType.type.type.events[0]!.name).toBe("event");
-      expect(exportedClassType.type.type.events[0]!.description).toBe("Event description");
+      expect(exportedClassType.type.type.events[0].name).toBe("event");
+
+      assert(isJSDocText(exportedClassType.type.type.events[0].description![0]));
+      expect(exportedClassType.type.type.events[0].description![0].text).toBe("Event description");
+
       expect(exportedClassType.type.type.properties).toHaveLength(0);
     });
 

@@ -110,6 +110,7 @@ export interface MarkupRenderConfig {
     required?: string;
     rest?: string;
     returnType?: string;
+    see?: string;
     setter_many?: string;
     setter_one?: string;
     static?: string;

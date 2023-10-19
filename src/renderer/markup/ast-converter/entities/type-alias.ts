@@ -1,4 +1,5 @@
 import { renderNode } from "unwritten:renderer/index.js";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
@@ -16,6 +17,7 @@ import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
 
 import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedTypeAliasEntityForDocumentation,
@@ -23,7 +25,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForTableOfContents {
+export function convertTypeAliasEntityToAnchor(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity, displayName?: string): AnchorNode {
 
   const convertedSignature = convertTypeAliasSignature(ctx, typeAliasEntity);
   const renderedSignature = renderNode(ctx, convertedSignature);
@@ -31,24 +33,31 @@ export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContex
 
   return createAnchorNode(
     renderedSignature,
-    id
+    id,
+    displayName
   );
 
 }
 
+export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForTableOfContents {
+  return convertTypeAliasEntityToAnchor(ctx, typeAliasEntity);
+}
 
 export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForDocumentation {
 
-  const convertedSignature = convertTypeAliasSignature(ctx, typeAliasEntity);
-  const convertedPosition = convertPositionForDocumentation(ctx, typeAliasEntity.position);
-  const convertedTags = convertTagsForDocumentation(ctx, typeAliasEntity);
-  const convertedDescription = convertDescriptionForDocumentation(ctx, typeAliasEntity.description);
-  const convertedRemarks = convertRemarksForDocumentation(ctx, typeAliasEntity.remarks);
-  const convertedExample = convertExamplesForDocumentation(ctx, typeAliasEntity.example);
-  const convertedTypeParameterEntities = convertTypeParameterEntitiesForDocumentation(ctx, typeAliasEntity.typeParameters);
-  const convertedType = convertTypeForDocumentation(ctx, typeAliasEntity.type);
+  const signature = convertTypeAliasSignature(ctx, typeAliasEntity);
+  const position = convertPositionForDocumentation(ctx, typeAliasEntity.position);
+  const tags = convertTagsForDocumentation(ctx, typeAliasEntity);
 
-  const renderedSignature = renderNode(ctx, convertedSignature);
+  const typeParameterEntities = convertTypeParameterEntitiesForDocumentation(ctx, typeAliasEntity.typeParameters);
+  const type = convertTypeForDocumentation(ctx, typeAliasEntity.type);
+
+  const description = typeAliasEntity.description && convertDescriptionForDocumentation(ctx, typeAliasEntity.description);
+  const remarks = typeAliasEntity.remarks && convertRemarksForDocumentation(ctx, typeAliasEntity.remarks);
+  const example = typeAliasEntity.example && convertExamplesForDocumentation(ctx, typeAliasEntity.example);
+  const see = typeAliasEntity.see && convertSeeTagsForDocumentation(ctx, typeAliasEntity.see);
+
+  const renderedSignature = renderNode(ctx, signature);
 
   const symbolId = typeAliasEntity.symbolId;
   const anchor = registerAnchor(ctx, renderedSignature, symbolId);
@@ -58,13 +67,14 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
     createTitleNode(
       renderedSignature,
       anchor,
-      convertedTags,
-      convertedPosition,
-      convertedTypeParameterEntities,
-      convertedType,
-      convertedDescription,
-      convertedRemarks,
-      convertedExample
+      tags,
+      position,
+      typeParameterEntities,
+      type,
+      description,
+      remarks,
+      example,
+      see
     )
   );
 

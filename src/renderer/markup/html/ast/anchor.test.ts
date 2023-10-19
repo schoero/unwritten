@@ -16,7 +16,7 @@ scope("HTMLRenderer", "AnchorNode", () => {
     const ctx = createRenderContext();
 
     const anchor = registerAnchor(ctx, "AnchorText", 1);
-    const anchorNode = createAnchorNode(anchor.name, anchor.id);
+    const anchorNode = createAnchorNode(anchor.name, anchor.ids);
     expect(renderAnchorNode(ctx, anchorNode)).toBe(html`
       <a href="#anchortext">AnchorText</a>
     `);
@@ -29,7 +29,7 @@ scope("HTMLRenderer", "AnchorNode", () => {
 
     const anchor1 = registerAnchor(ctx, "AnchorText", 1);
     const anchor2 = registerAnchor(ctx, "AnchorText", 2);
-    const anchorNode = createAnchorNode(anchor2.name, anchor2.id);
+    const anchorNode = createAnchorNode(anchor2.name, anchor2.ids);
     expect(renderAnchorNode(ctx, anchorNode)).toBe(html`
       <a href="#anchortext-1">AnchorText</a>
     `);
@@ -41,7 +41,7 @@ scope("HTMLRenderer", "AnchorNode", () => {
     const ctx = createRenderContext();
 
     const anchor = registerAnchor(ctx, "AnchorText", 1);
-    const anchorNode = createAnchorNode(anchor.name, anchor.id, "AnchorDisplayName");
+    const anchorNode = createAnchorNode(anchor.name, anchor.ids, "AnchorDisplayName");
     expect(renderAnchorNode(ctx, anchorNode)).toBe(html`
       <a href="#anchortext">AnchorDisplayName</a>
     `);

@@ -1,8 +1,8 @@
-import { getTypeByDeclaration, getTypeBySymbol } from "unwritten:interpreter/ast/index.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
-import { getDescriptionByDeclaration, getJSDocTagsByDeclaration } from "unwritten:interpreter:ast/shared/jsdoc.js";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
@@ -14,6 +14,8 @@ import {
   isShorthandPropertyAssignment
 } from "unwritten:interpreter:typeguards/declarations.js";
 import { assert } from "unwritten:utils:general.js";
+
+import { getTypeByDeclaration, getTypeBySymbol } from "../type";
 
 import type {
   ParameterDeclaration,
@@ -28,7 +30,7 @@ import type { PropertyEntity } from "unwritten:interpreter/type-definitions/enti
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): PropertyEntity {
+export const createPropertyEntity = (ctx: InterpreterContext, symbol: Symbol): PropertyEntity => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -63,7 +65,7 @@ export function createPropertyEntity(ctx: InterpreterContext, symbol: Symbol): P
     type
   };
 
-}
+});
 
 
 function interpretPropertyDeclaration(ctx: InterpreterContext, declaration: ParameterDeclaration | PropertyAssignment | PropertyDeclaration | PropertySignature | ShorthandPropertyAssignment) { // ParameterDeclaration can also be a property when defined in a constructor
@@ -71,9 +73,8 @@ function interpretPropertyDeclaration(ctx: InterpreterContext, declaration: Para
   const declarationId = getDeclarationId(ctx, declaration);
   const name = getNameByDeclaration(ctx, declaration);
   const position = getPositionByDeclaration(ctx, declaration);
-  const description = getDescriptionByDeclaration(ctx, declaration);
   const modifiers = getModifiersByDeclaration(ctx, declaration);
-  const jsdocTags = getJSDocTagsByDeclaration(ctx, declaration);
+  const jsdocProperties = getJSDocProperties(ctx, declaration);
   const initializer = getInitializerByDeclaration(ctx, declaration);
   const type = getTypeByDeclaration(ctx, declaration);
 
@@ -85,9 +86,8 @@ function interpretPropertyDeclaration(ctx: InterpreterContext, declaration: Para
   assert(name, "Property name not found");
 
   return {
-    ...jsdocTags,
+    ...jsdocProperties,
     declarationId,
-    description,
     initializer,
     kind,
     modifiers,

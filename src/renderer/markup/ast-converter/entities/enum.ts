@@ -1,3 +1,5 @@
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
@@ -13,7 +15,12 @@ import {
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes.js";
 
-import type { EnumEntity, MergedEnumEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type {
+  EnumEntity,
+  EnumMemberEntity,
+  MergedEnumEntity
+} from "unwritten:interpreter/type-definitions/entities.js";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedEnumEntityForDocumentation,
@@ -21,10 +28,22 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForTableOfContents {
+export function convertEnumEntityToAnchor(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity, displayName?: string): AnchorNode {
+
   const name = enumEntity.name;
   const id = enumEntity.symbolId;
-  return createAnchorNode(name, id);
+
+  return createAnchorNode(
+    name,
+    id,
+    displayName
+  );
+
+}
+
+
+export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForTableOfContents {
+  return convertEnumEntityToAnchor(ctx, enumEntity);
 }
 
 
@@ -34,39 +53,47 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const symbolId = enumEntity.symbolId;
 
   const anchor = registerAnchor(ctx, name, symbolId);
+  const position = convertPositionForDocumentation(ctx, enumEntity.position);
+  const tags = convertTagsForDocumentation(ctx, enumEntity);
 
-  const convertedDescription = convertDescriptionForDocumentation(ctx, enumEntity.description);
-  const convertedRemarks = convertRemarksForDocumentation(ctx, enumEntity.remarks);
-  const convertedExample = convertExamplesForDocumentation(ctx, enumEntity.example);
-  const convertedPosition = convertPositionForDocumentation(ctx, enumEntity.position);
-  const convertedTags = convertTagsForDocumentation(ctx, enumEntity);
+  const description = enumEntity.description && convertDescriptionForDocumentation(ctx, enumEntity.description);
+  const remarks = enumEntity.remarks && convertRemarksForDocumentation(ctx, enumEntity.remarks);
+  const example = enumEntity.example && convertExamplesForDocumentation(ctx, enumEntity.example);
+  const see = enumEntity.see && convertSeeTagsForDocumentation(ctx, enumEntity.see);
 
-  const members = enumEntity.members.map(member => {
-
-    const name = member.name;
-    const description = member.description;
-    const { inlineType: type } = convertType(ctx, member.type);
-
-    return [
-      name,
-      type,
-      description
-    ];
-
-  });
+  const members = enumEntity.members.map(member => convertEnumMember(ctx, member));
 
   return createSectionNode(
     SECTION_TYPE[enumEntity.kind],
     createTitleNode(
       name,
       anchor,
-      convertedTags,
-      convertedPosition,
-      convertedDescription,
-      convertedRemarks,
-      convertedExample,
+      tags,
+      position,
+      description,
+      remarks,
+      example,
+      see,
       createListNode(...members)
     )
   );
+
+}
+
+function convertEnumMember(ctx: MarkupRenderContexts, member: EnumMemberEntity) {
+
+  const name = member.name;
+
+  const description = member.description
+    ? convertJSDocNodes(ctx, member.description)
+    : [];
+
+  const { inlineType: type } = convertType(ctx, member.type);
+
+  return [
+    name,
+    type,
+    ...description
+  ];
 
 }

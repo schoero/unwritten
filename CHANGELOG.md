@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.1.0
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.0.4...v0.1.0)
+
+### Features
+
+- ⚠️  Add support for inline jsdoc tags ([c8a3d7c](https://github.com/schoero/unwritten/commit/c8a3d7c))
+
+### Refactors
+
+- Improve link registry ([9a53703](https://github.com/schoero/unwritten/commit/9a53703))
+
+### Documentation
+
+- Update badges ([9e98e65](https://github.com/schoero/unwritten/commit/9e98e65))
+
+### Chore
+
+- Update dependencies ([90af25b](https://github.com/schoero/unwritten/commit/90af25b))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Add support for inline jsdoc tags ([c8a3d7c](https://github.com/schoero/unwritten/commit/c8a3d7c))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.0.4
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.0.2...v0.0.4)

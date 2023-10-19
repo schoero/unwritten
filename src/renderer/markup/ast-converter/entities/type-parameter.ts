@@ -1,10 +1,12 @@
 import { renderNode } from "unwritten:renderer/index.js";
 import { convertConstraintForType } from "unwritten:renderer/markup/ast-converter/shared/constraint.js";
 import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
 import { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index.js";
 import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
+  createAnchorNode,
   createInlineTitleNode,
   createListNode,
   createMultilineNode,
@@ -16,6 +18,7 @@ import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/rende
 import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
 
 import type { TypeParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedTypeParameterEntitiesForDocumentation,
@@ -24,6 +27,19 @@ import type {
   ConvertedTypeParameterEntityForDocumentation
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
+
+export function convertTypeParameterEntityToAnchor(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity, displayName?: string): AnchorNode {
+
+  const name = typeParameterEntity.name;
+  const id = typeParameterEntity.symbolId;
+
+  return createAnchorNode(
+    name,
+    id,
+    displayName
+  );
+
+}
 
 export function convertTypeParameterEntitiesForSignature(ctx: MarkupRenderContexts, typeParameterEntities: TypeParameterEntity[]): ConvertedTypeParameterEntitiesForSignature {
   const convertedTypeParameters = typeParameterEntities.flatMap((typeParameter, index) => {
@@ -98,8 +114,11 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
   const renderConfig = getRenderConfig(ctx);
 
   const name = encapsulate(typeParameterEntity.name, renderConfig.typeParameterEncapsulation);
-  const description = typeParameterEntity.description;
   const symbolId = typeParameterEntity.symbolId;
+
+  const description = typeParameterEntity.description
+    ? convertJSDocNodes(ctx, typeParameterEntity.description)
+    : [];
 
   const constraint = typeParameterEntity.constraint &&
     convertConstraintForType(ctx, typeParameterEntity.constraint);
@@ -108,6 +127,7 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
      convertInitializerForType(ctx, typeParameterEntity.initializer);
 
   const nameAnchor = !isMarkdownRenderContext(ctx) ||
+    Array.isArray(ctx.config.renderConfig[ctx.renderer.name].allowedHTMLTags) &&
     (ctx.config.renderConfig[ctx.renderer.name].allowedHTMLTags as string[]).includes("span")
     ? createSpanNode(
       registerAnchor(ctx, typeParameterEntity.name, symbolId),

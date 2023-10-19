@@ -1,3 +1,4 @@
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
 import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
@@ -19,7 +20,7 @@ import type {
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
-export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> {
+export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> => withLockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.declarations?.flatMap(declaration =>
     isFunctionLikeDeclaration(ctx, declaration) ||
@@ -47,4 +48,4 @@ export function createFunctionLikeEntity<Kind extends FunctionLikeEntityKinds>(c
     symbolId
   };
 
-}
+});

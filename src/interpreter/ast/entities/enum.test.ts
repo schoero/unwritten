@@ -6,6 +6,7 @@ import { createEnumEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -80,13 +81,15 @@ scope("Interpreter", EntityKind.Enum, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedEnum.description).toBe("Enum description");
+      expect(exportedEnum.description).toHaveLength(1);
+      assert(isJSDocText(exportedEnum.description![0]));
+      expect(exportedEnum.description![0].text).toBe("Enum description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedEnum.example).toStrictEqual([
-        "Enum example"
-      ]);
+      expect(exportedEnum.example).toHaveLength(1);
+      assert(isJSDocText(exportedEnum.example![0].content[0]));
+      expect(exportedEnum.example![0].content[0].text).toBe("Enum example");
     });
 
     it("should have a matching position", () => {

@@ -1,4 +1,5 @@
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { convertDescriptionForType } from "unwritten:renderer/markup/ast-converter/shared/description.js";
 import { convertTagsForType } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
 import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
@@ -43,18 +44,19 @@ export function convertTupleTypeMultiline(ctx: MarkupRenderContexts, tupleType: 
 
 function convertTupleMember(ctx: MarkupRenderContexts, tupleMemberEntity: TupleMemberEntity) {
 
-  const convertedName = tupleMemberEntity.name;
-  const convertedDescription = tupleMemberEntity.description;
-  const convertedTags = convertTagsForType(ctx, tupleMemberEntity);
+  const name = tupleMemberEntity.name;
+  const description = tupleMemberEntity.description && convertDescriptionForType(ctx, tupleMemberEntity.description);
+
+  const tags = convertTagsForType(ctx, tupleMemberEntity);
 
   const { inlineType, multilineType } = convertType(ctx, tupleMemberEntity.type);
 
   return createMultilineNode(
     spaceBetween(
-      convertedName,
+      name,
       inlineType,
-      convertedTags,
-      convertedDescription
+      tags,
+      description
     ),
     multilineType
   );

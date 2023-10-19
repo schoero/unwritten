@@ -67,9 +67,8 @@ scope("MarkupRenderer", TypeKind.Conditional, () => {
 
     it("should have a matching check type", () => {
       assert(isConditionalNode(inlineCheckType[2]));
-      assert(Array.isArray(inlineCheckType[2].trueChildren));
-      assert(isAnchorNode(inlineCheckType[2].trueChildren[0]));
-      expect(inlineCheckType[2].trueChildren[0].name).toBe("T");
+      assert(isAnchorNode(inlineCheckType[2].trueChildren));
+      expect(inlineCheckType[2].trueChildren.name).toBe("T");
       expect(multilineCheckType).toBeFalsy();
     });
 

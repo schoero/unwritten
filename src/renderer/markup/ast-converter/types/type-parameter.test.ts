@@ -31,9 +31,8 @@ scope("MarkupRenderer", TypeKind.TypeParameter, () => {
 
     it("should have the correct name", () => {
       assert(isConditionalNode(convertedTypeReferenceType));
-      assert(Array.isArray(convertedTypeReferenceType.trueChildren));
-      assert(isAnchorNode(convertedTypeReferenceType.trueChildren[0]));
-      expect(convertedTypeReferenceType.trueChildren[0].name).toBe("T");
+      assert(isAnchorNode(convertedTypeReferenceType.trueChildren));
+      expect(convertedTypeReferenceType.trueChildren.name).toBe("T");
     });
 
   }

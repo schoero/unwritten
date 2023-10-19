@@ -5,6 +5,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { createClassEntity, createFunctionEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
@@ -60,13 +61,15 @@ scope("Interpreter", EntityKind.Signature, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedFunction.signatures[0]!.description).toBe("Function description");
+      expect(exportedFunction.signatures[0].description).toHaveLength(1);
+      assert(isJSDocText(exportedFunction.signatures[0].description![0]));
+      expect(exportedFunction.signatures[0].description![0].text).toBe("Function description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedFunction.signatures[0]!.example).toStrictEqual([
-        "Function example"
-      ]);
+      expect(exportedFunction.signatures[0].example).toHaveLength(1);
+      assert(isJSDocText(exportedFunction.signatures[0].example![0].content[0]));
+      expect(exportedFunction.signatures[0].example![0].content[0].text).toBe("Function example");
     });
 
     it("should have a matching position", () => {

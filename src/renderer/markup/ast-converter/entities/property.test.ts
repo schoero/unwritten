@@ -196,11 +196,11 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     it("should render the property name, type and description", () => {
       expect(properties.children[0].children[0]).toContain("property");
       expect(properties.children[0].children[0]).toContain("number");
-      expect(properties.children[0].children[0]).toContain("Property description");
+      expect(properties.children[0].children[0]).toContainEqual(["Property description"]);
 
       expect(properties.children[1].children[0]).toContain("functionProperty");
       expect(properties.children[1].children[0]).toContain("function");
-      expect(properties.children[1].children[0]).toContain("Function property description");
+      expect(properties.children[1].children[0]).toContainEqual(["Function property description"]);
     });
 
   }

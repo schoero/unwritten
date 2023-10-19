@@ -9,24 +9,14 @@
 ---
 
 <div align="center">
-  <a href="https://github.com/schoero/unwritten/blob/main/LICENSE">
-    <img alt="MIT License" src="https://img.shields.io/npm/l/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
-  </a>
-  <a href="https://www.npmjs.com/package/unwritten">
-    <img alt="Version" src="https://img.shields.io/npm/v/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
-  </a>
-  <a href="https://github.com/schoero/unwritten/issues">
-    <img alt="Issues" src="https://img.shields.io/github/issues-raw/schoero/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
-  </a>
-  <a href="https://www.npmjs.com/package/unwritten">
-    <img alt="Downloads" src="https://img.shields.io/npm/dw/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
-  </a>
-  <a href="https://github.com/schoero/unwritten/stargazers">
-    <img alt="Downloads" src="https://img.shields.io/github/stars/schoero/unwritten?labelColor=454c5c&color=00AD51&&style=flat-square">
-  </a>
-  <a href="https://github.com/schoero/unwritten/actions?query=workflow%3ACI">
-    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/schoero/unwritten/ci.yml?branch=main&labelColor=454c5c&color=00AD51&&style=flat-square">
-  </a>
+
+  [![GitHub license](https://img.shields.io/github/license/schoero/unwritten?style=flat-square&labelColor=454c5c&color=00AD51)](https://github.com/schoero/unwritten/blob/main/LICENSE)
+  [![npm version](https://img.shields.io/npm/v/unwritten?style=flat-square&labelColor=454c5c&color=00AD51)](https://www.npmjs.com/package/unwritten?activeTab=versions)
+  [![GitHub issues](https://img.shields.io/github/issues/schoero/unwritten?style=flat-square&labelColor=454c5c&color=00AD51)](https://github.com/schoero/unwritten/issues)
+  [![npm weekly downloads](https://img.shields.io/npm/dw/unwritten?style=flat-square&labelColor=454c5c&color=00AD51)](https://www.npmjs.com/package/unwritten?activeTab=readme)
+  [![GitHub repo stars](https://img.shields.io/github/stars/schoero/unwritten?style=flat-square&labelColor=454c5c&color=00AD51)](https://github.com/schoero/unwritten/stargazers)
+  [![GitHub workflow status](https://img.shields.io/github/actions/workflow/status/schoero/unwritten/ci.yml?event=push&style=flat-square&labelColor=454c5c&color=00AD51)](https://github.com/schoero/unwritten/actions?query=workflow%3ACI)
+
 </div>
 
 ---

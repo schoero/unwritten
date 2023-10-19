@@ -1,3 +1,4 @@
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import {
   convertEntityForDocumentation,
@@ -12,6 +13,7 @@ import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sectio
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
 
 import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
 import type {
   ConvertedNamespaceEntityForDocumentation,
@@ -19,15 +21,22 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer.js";
 
 
-export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForTableOfContents {
+export function convertNamespaceEntityToAnchor(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity, displayName?: string): AnchorNode {
 
   const name = namespaceEntity.name;
   const id = namespaceEntity.symbolId;
 
-  const anchor = createAnchorNode(
+  return createAnchorNode(
     name,
-    id
+    id,
+    displayName
   );
+
+}
+
+export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForTableOfContents {
+
+  const anchor = convertNamespaceEntityToAnchor(ctx, namespaceEntity);
 
   const moduleExports = createTableOfContents(ctx, namespaceEntity.exports);
 
@@ -38,7 +47,6 @@ export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContex
 
 }
 
-
 export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForDocumentation {
 
   const name = namespaceEntity.name;
@@ -46,11 +54,13 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
 
   const anchor = registerAnchor(ctx, name, symbolId);
 
-  const convertedPosition = convertPositionForDocumentation(ctx, namespaceEntity.position);
-  const convertedTags = convertTagsForDocumentation(ctx, namespaceEntity);
-  const convertedDescription = convertDescriptionForDocumentation(ctx, namespaceEntity.description);
-  const convertedRemarks = convertRemarksForDocumentation(ctx, namespaceEntity.remarks);
-  const convertedExample = convertExamplesForDocumentation(ctx, namespaceEntity.example);
+  const position = convertPositionForDocumentation(ctx, namespaceEntity.position);
+  const tags = convertTagsForDocumentation(ctx, namespaceEntity);
+
+  const description = namespaceEntity.description && convertDescriptionForDocumentation(ctx, namespaceEntity.description);
+  const remarks = namespaceEntity.remarks && convertRemarksForDocumentation(ctx, namespaceEntity.remarks);
+  const example = namespaceEntity.example && convertExamplesForDocumentation(ctx, namespaceEntity.example);
+  const see = namespaceEntity.see && convertSeeTagsForDocumentation(ctx, namespaceEntity.see);
 
   const children = namespaceEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
 
@@ -59,11 +69,12 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
     createTitleNode(
       name,
       anchor,
-      convertedTags,
-      convertedPosition,
-      convertedDescription,
-      convertedRemarks,
-      convertedExample,
+      tags,
+      position,
+      description,
+      remarks,
+      example,
+      see,
       ...children
     )
   );

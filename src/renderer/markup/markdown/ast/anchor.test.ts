@@ -17,7 +17,7 @@ scope("MarkdownRenderer", "AnchorNode", () => {
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
     const anchor = registerAnchor(ctx, "AnchorText", 1);
-    const anchorNode = createAnchorNode(anchor.name, anchor.id);
+    const anchorNode = createAnchorNode(anchor.name, anchor.ids);
 
     expect(renderAnchorNode(ctx, anchorNode)).toBe(md`
       [AnchorText](#anchortext)
@@ -31,7 +31,7 @@ scope("MarkdownRenderer", "AnchorNode", () => {
 
     const anchor1 = registerAnchor(ctx, "AnchorText", 1);
     const anchor2 = registerAnchor(ctx, "AnchorText", 2);
-    const anchorNode = createAnchorNode(anchor2.name, anchor2.id);
+    const anchorNode = createAnchorNode(anchor2.name, anchor2.ids);
 
     expect(renderAnchorNode(ctx, anchorNode)).toBe(md`
       [AnchorText](#anchortext-1)
@@ -44,7 +44,7 @@ scope("MarkdownRenderer", "AnchorNode", () => {
     const ctx = createRenderContext(BuiltInRenderers.Markdown);
 
     const anchor = registerAnchor(ctx, "AnchorText", 1);
-    const anchorNode = createAnchorNode(anchor.name, anchor.id, "AnchorDisplayName");
+    const anchorNode = createAnchorNode(anchor.name, anchor.ids, "AnchorDisplayName");
 
     expect(renderAnchorNode(ctx, anchorNode)).toBe(md`
       [AnchorDisplayName](#anchortext)

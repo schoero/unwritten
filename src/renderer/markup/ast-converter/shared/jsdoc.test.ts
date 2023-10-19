@@ -1,11 +1,11 @@
 import { expect, it } from "vitest";
 
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { RenderableJSDocTags } from "unwritten:renderer:markup/enums/jsdoc.js";
+import { RenderableJSDocKeyTags } from "unwritten:renderer:markup/enums/jsdoc.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
-import { convertJSDocTags, hasRenderableJSDocTags } from "./jsdoc-tags.js";
+import { convertJSDocTags, hasRenderableJSDocKeyTags } from "./jsdoc.js";
 
 
 scope("MarkupRenderer", "JSDocTags", () => {
@@ -14,10 +14,10 @@ scope("MarkupRenderer", "JSDocTags", () => {
 
   it("should detect jsdoc tags correctly", () => {
 
-    const jsdocTagNames = Object.values(RenderableJSDocTags);
+    const jsdocTagNames = Object.values(RenderableJSDocKeyTags);
 
     for(const jsdocTagName of jsdocTagNames){
-      expect(hasRenderableJSDocTags({
+      expect(hasRenderableJSDocKeyTags({
         [jsdocTagName]: undefined
       })).toBe(true);
     }
@@ -26,7 +26,7 @@ scope("MarkupRenderer", "JSDocTags", () => {
 
   it("should render jsdoc tags correctly", () => {
 
-    const jsdocTagNames = Object.values(RenderableJSDocTags);
+    const jsdocTagNames = Object.values(RenderableJSDocKeyTags);
     const renderedJSDocTags = convertJSDocTags(
       ctx,
       Object.fromEntries(jsdocTagNames.map(

@@ -9,7 +9,9 @@ import type {
   TupleMemberEntity,
   TypeParameterEntity
 } from "unwritten:interpreter/type-definitions/entities.js";
-import type { ID, Modifiers, Name, Position } from "unwritten:interpreter:type-definitions/shared.js";
+import type { Modifiers, Position } from "unwritten:interpreter:type-definitions/shared.js";
+
+import type { ID, Name } from "./jsdoc";
 
 
 type TypeBase<Kind extends TypeKind> = {

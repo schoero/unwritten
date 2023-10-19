@@ -4,6 +4,7 @@ import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { createClassEntity } from "unwritten:interpreter:ast/entities/index.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
 import { isCircularType } from "unwritten:typeguards/types.js";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
@@ -36,14 +37,17 @@ scope("Interpreter", EntityKind.Getter, () => {
       expect(exportedClass.ctor!.signatures).toHaveLength(1);
     });
 
-    it("should have a matching constructor description", () => {
-      expect(exportedClass.ctor!.signatures[0]!.description).toBe("Constructor description");
+
+    it("should have a matching description", () => {
+      expect(exportedClass.ctor!.signatures[0]!.description).toHaveLength(1);
+      assert(isJSDocText(exportedClass.ctor!.signatures[0]!.description![0]));
+      expect(exportedClass.ctor!.signatures[0]!.description![0].text).toBe("Constructor description");
     });
 
-    it("should have a matching constructor example", () => {
-      expect(exportedClass.ctor!.signatures[0]!.example).toStrictEqual([
-        "Constructor example"
-      ]);
+    it("should have a matching example", () => {
+      expect(exportedClass.ctor!.signatures[0]!.example).toHaveLength(1);
+      assert(isJSDocText(exportedClass.ctor!.signatures[0]!.example![0].content[0]));
+      expect(exportedClass.ctor!.signatures[0]!.example![0].content[0].text).toBe("Constructor example");
     });
 
     it("should return the instance type of the class", () => {

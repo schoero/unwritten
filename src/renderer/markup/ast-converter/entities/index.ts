@@ -1,3 +1,4 @@
+export * from "./circular.js";
 export * from "./class.js";
 export * from "./enum.js";
 export * from "./event.js";

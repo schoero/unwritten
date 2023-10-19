@@ -1,6 +1,6 @@
 import type { Declaration, Symbol, Type, TypeNode } from "typescript";
 
-import type { ID } from "unwritten:interpreter:type-definitions/shared.js";
+import type { ID } from "unwritten:interpreter/type-definitions/jsdoc";
 import type { InterpreterContext } from "unwritten:type-definitions/context.js";
 
 
@@ -17,7 +17,8 @@ export function getDeclarationId(ctx: InterpreterContext, declaration: Declarati
 }
 
 export function getSymbolIdByDeclaration(ctx: InterpreterContext, declaration: Declaration): ID | undefined {
-  const symbol = ctx.checker.getSymbolAtLocation(declaration);
+  // @ts-expect-error - Internal API
+  const symbol = declaration.symbol ?? ctx.checker.getSymbolAtLocation(declaration);
   return symbol && getSymbolId(ctx, symbol);
 }
 

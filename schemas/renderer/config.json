@@ -340,6 +340,9 @@
             "returnType": {
               "type": "string"
             },
+            "see": {
+              "type": "string"
+            },
             "setter_many": {
               "type": "string"
             },
@@ -727,6 +730,9 @@
               "type": "string"
             },
             "returnType": {
+              "type": "string"
+            },
+            "see": {
               "type": "string"
             },
             "setter_many": {

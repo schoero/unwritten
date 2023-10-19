@@ -6,6 +6,8 @@ import { createVariableEntity } from "unwritten:interpreter:ast/entities/index.j
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
 import { compile } from "unwritten:tests:utils/compile.js";
 import { scope } from "unwritten:tests:utils/scope.js";
+import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template.js";
 
 
@@ -56,13 +58,15 @@ scope("Interpreter", EntityKind.Variable, () => {
     });
 
     it("should have a matching description", () => {
-      expect(exportedVariable.description).toBe("Variable description");
+      expect(exportedVariable.description).toHaveLength(1);
+      assert(isJSDocText(exportedVariable.description![0]));
+      expect(exportedVariable.description![0].text).toBe("Variable description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedVariable.example).toStrictEqual([
-        "Variable example"
-      ]);
+      expect(exportedVariable.example).toHaveLength(1);
+      assert(isJSDocText(exportedVariable.example![0].content[0]));
+      expect(exportedVariable.example![0].content[0].text).toBe("Variable example");
     });
 
     it("should have a matching position", () => {

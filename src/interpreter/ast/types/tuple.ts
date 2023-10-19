@@ -1,12 +1,13 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type.js";
 import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
-import { getTypeByType, getTypeByTypeNode } from "unwritten:interpreter:ast/index.js";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
 import { getNameByDeclaration, getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
 import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
 import { isNamedTupleMember, isTupleTypeReferenceType } from "unwritten:interpreter:typeguards/types.js";
 import { assert } from "unwritten:utils:general.js";
+
+import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { NamedTupleMember, TupleTypeNode, TupleTypeReference, TypeNode } from "typescript";
 

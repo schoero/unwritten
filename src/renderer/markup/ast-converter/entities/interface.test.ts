@@ -56,6 +56,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       description,
       remarks,
       example,
+      see,
       constructSignatures,
       callSignatures,
       properties,
@@ -169,6 +170,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       interfaceDescription,
       interfaceRemarks,
       interfaceExample,
+      interfaceSee,
       constructSignatures,
       callSignatures,
       properties,
@@ -192,6 +194,7 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
       propertySignature,
       propertyRemarks,
       propertyExample,
+      propertySee,
       propertyType
     ] = properties.children[1].children;
 
