@@ -1,6 +1,7 @@
 import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
@@ -90,10 +91,10 @@ function convertEnumMember(ctx: MarkupRenderContexts, member: EnumMemberEntity) 
 
   const { inlineType: type } = convertType(ctx, member.type);
 
-  return [
+  return spaceBetween(
     name,
     type,
     ...description
-  ];
+  );
 
 }
