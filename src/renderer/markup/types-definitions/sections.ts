@@ -11,7 +11,7 @@ export const SECTION_TYPE = {
   [EntityKind.Variable]: "variable",
   [EntityKind.TypeAlias]: "type",
   [EntityKind.Interface]: "interface",
-  [EntityKind.Function]: "class",
+  [EntityKind.Function]: "function",
   documentation: "documentation",
   tableOfContents: "table-of-contents"
 } as const;
