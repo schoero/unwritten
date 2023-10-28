@@ -59,4 +59,3 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-      max-parallel: 1
