@@ -47,6 +47,8 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     const convertedPropertyForSignature = convertPropertyEntityForTableOfContents(ctx, propertyEntity);
     const convertedPropertyForDocumentation = convertPropertyEntityForDocumentation(ctx, propertyEntity);
 
+    const titleNode = convertedPropertyForDocumentation.children[0];
+
     const [
       tags,
       position,
@@ -54,12 +56,12 @@ scope("MarkupRenderer", EntityKind.Property, () => {
       description,
       remarks,
       example
-    ] = convertedPropertyForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have a matching name", () => {
       assert(isAnchorNode(convertedPropertyForSignature));
       expect(convertedPropertyForSignature.children[0]).toBe("prop");
-      expect(convertedPropertyForDocumentation.title).toBe("prop");
+      expect(titleNode.title).toBe("prop");
     });
 
     it("should have a matching type", () => {

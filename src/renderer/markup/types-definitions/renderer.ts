@@ -504,14 +504,16 @@ export type ConvertedTypeArgumentEntityForDocumentation = ASTNode[];
 
 // Property
 export type ConvertedPropertyEntityForTableOfContents = AnchorNode;
-export type ConvertedPropertyEntityForDocumentation = TitleNode<[
-  tags: ConvertedTagsForDocumentation,
-  position: ConvertedPosition,
-  type: ConvertedTypeInline,
-  description: ConvertedDescriptionForDocumentation,
-  remarks: ConvertedRemarksForDocumentation,
-  example: ConvertedExamples,
-  see: ConvertedSeeTags
+export type ConvertedPropertyEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    tags: ConvertedTagsForDocumentation,
+    position: ConvertedPosition,
+    type: ConvertedTypeInline,
+    description: ConvertedDescriptionForDocumentation,
+    remarks: ConvertedRemarksForDocumentation,
+    example: ConvertedExamples,
+    see: ConvertedSeeTags
+  ]>
 ]>;
 export type ConvertedPropertyEntityForType = MultilineNode<[
   propertySignature: ASTNode,
