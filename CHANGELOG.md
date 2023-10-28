@@ -9,9 +9,14 @@
 - Missing spaces in enum members ([9db87d0](https://github.com/schoero/unwritten/commit/9db87d0))
 - Function section type ([fdf01d6](https://github.com/schoero/unwritten/commit/fdf01d6))
 
+### Chore
+
+- **release:** V0.1.1 ([3c4365d](https://github.com/schoero/unwritten/commit/3c4365d))
+
 ### Tests
 
 - Adapt tests ([e14c2e7](https://github.com/schoero/unwritten/commit/e14c2e7))
+- Fix linting error ([956c20a](https://github.com/schoero/unwritten/commit/956c20a))
 
 ### ❤️ Contributors
 
