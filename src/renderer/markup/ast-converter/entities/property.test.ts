@@ -129,11 +129,7 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
     const modifiers = convertedPropertiesForDocumentation.map(
       convertedPropertyForDocumentation => {
-        if(convertedPropertyForDocumentation.children[0]){
-          return renderNode(ctx, convertedPropertyForDocumentation.children[0].children);
-        } else {
-          return "";
-        }
+        return renderNode(ctx, convertedPropertyForDocumentation.children[0].children);
       }
     );
 
