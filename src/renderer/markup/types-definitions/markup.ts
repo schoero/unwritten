@@ -13,14 +13,10 @@ export interface MarkupRenderer extends Renderer {
 }
 
 export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> extends RenderContext<CustomMarkupRenderer> {
-  // get currentFile(): SourceFile;
-  // set currentFile(sourceFile: SourceFile);
   currentFile: SourceFile;
   set indentation(value: number);
   get indentation(): number;
   links: LinkRegistry;
-  // get links(): LinkRegistry;
-  // set links(value: LinkRegistry);
   get nesting(): number;
   set nesting(value: number);
   _currentFile?: SourceFile;
