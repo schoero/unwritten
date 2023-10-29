@@ -1,5 +1,39 @@
 # Changelog
 
+## v0.1.2
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.1.1...v0.1.2)
+
+### Features
+
+- Add option to render the name of the parent namespace ([51cd641](https://github.com/schoero/unwritten/commit/51cd641))
+
+### Fixes
+
+- Make properties in config optional ([0066206](https://github.com/schoero/unwritten/commit/0066206))
+
+### Refactors
+
+- Use helper functions for ctx modifiers ([50d79f9](https://github.com/schoero/unwritten/commit/50d79f9))
+
+### Chore
+
+- Clean up old members ([7dc473f](https://github.com/schoero/unwritten/commit/7dc473f))
+- Update dependencies ([1dc6dc5](https://github.com/schoero/unwritten/commit/1dc6dc5))
+
+### Styles
+
+- Code cleanup ([f873483](https://github.com/schoero/unwritten/commit/f873483))
+
+### CI
+
+- Test on latest node version ([22cb1ba](https://github.com/schoero/unwritten/commit/22cb1ba))
+- Allow parallel execution ([dc00702](https://github.com/schoero/unwritten/commit/dc00702))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.1.1
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.1.0...v0.1.1)
