@@ -302,7 +302,7 @@ export type ConvertedEntitiesForDocumentation =
 
 // Namespace
 export type ConvertedNamespaceEntityForTableOfContents = [
-  name: ASTNode,
+  name: AnchorNode,
   exports: ListNode<ConvertedCategoryForTableOfContents[]>
 ];
 export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
@@ -319,7 +319,7 @@ export type ConvertedNamespaceEntityForDocumentation = SectionNode<[
 
 // Module
 export type ConvertedModuleEntityForTableOfContents = [
-  name: ASTNode,
+  name: AnchorNode,
   exports: ListNode<ConvertedCategoryForTableOfContents[]>
 ];
 export type ConvertedModuleEntityForDocumentation = SectionNode<[

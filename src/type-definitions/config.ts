@@ -43,9 +43,9 @@ export interface RenderConfig {
 }
 
 export interface ConfigForSchema extends Config {
-  $schema: string;
-  interpreterConfig: InterpreterConfig;
-  renderConfig: {
+  $schema?: string;
+  interpreterConfig?: InterpreterConfig;
+  renderConfig?: {
     [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
     [BuiltInRenderers.HTML]: Complete<HTMLRenderConfig>;
     [BuiltInRenderers.JSON]: Complete<JSONRenderConfig>;

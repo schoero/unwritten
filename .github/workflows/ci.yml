@@ -54,8 +54,8 @@ jobs:
         node:
           - 18
           - 20
+          - 21
         os:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-      max-parallel: 1

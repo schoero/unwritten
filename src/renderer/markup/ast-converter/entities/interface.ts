@@ -1,5 +1,6 @@
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   filterOutImplicitSignatures,
@@ -40,11 +41,12 @@ import type {
 
 export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity, displayName?: string): AnchorNode {
 
-  const name = interfaceEntity.name;
   const id = interfaceEntity.symbolId;
+  const name = interfaceEntity.name;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   return createAnchorNode(
-    name,
+    nameWithContext,
     id,
     displayName
   );
@@ -62,7 +64,8 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const name = interfaceEntity.name;
   const symbolId = interfaceEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, symbolId);
+  const nameWithContext = renderMemberContext(ctx, name);
+  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const position = convertPositionForDocumentation(ctx, interfaceEntity.position);
   const tags = convertTagsForDocumentation(ctx, interfaceEntity);
@@ -106,7 +109,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   return createSectionNode(
     SECTION_TYPE[interfaceEntity.kind],
     createTitleNode(
-      name,
+      nameWithContext,
       anchor,
       tags,
       position,

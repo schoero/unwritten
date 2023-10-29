@@ -1,6 +1,7 @@
 import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/multiline.js";
 import { renderNode } from "unwritten:renderer/markup/markdown/index.js";
 import { hasAnchor, unregisterAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { withNesting } from "unwritten:renderer/markup/utils/context.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line.js";
 
@@ -16,9 +17,7 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
   const renderedEmptyLine = renderEmptyLine(ctx);
   const renderedTitle = `${"#".repeat(ctx.nesting)} ${title}`;
 
-  ctx.nesting++;
-  const renderedChildren = renderMultilineArray(ctx, titleNode.children);
-  ctx.nesting--;
+  const renderedChildren = withNesting(ctx, ctx => renderMultilineArray(ctx, titleNode.children));
 
   if(renderedChildren === ""){
 

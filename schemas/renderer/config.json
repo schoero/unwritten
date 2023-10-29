@@ -57,11 +57,6 @@
           "type": "object"
         }
       },
-      "required": [
-        "$schema",
-        "interpreterConfig",
-        "renderConfig"
-      ],
       "type": "object"
     },
     "DeepRequiredByKey<(string1379558387|string2073129684),string>": {
@@ -131,6 +126,9 @@
             "$ref": "#/definitions/ExportableEntityKinds"
           },
           "type": "array"
+        },
+        "renderParentNames": {
+          "type": "boolean"
         },
         "renderPrivateMembers": {
           "type": "boolean"
@@ -515,6 +513,9 @@
             "$ref": "#/definitions/ExportableEntityKinds"
           },
           "type": "array"
+        },
+        "renderParentNames": {
+          "type": "boolean"
         },
         "renderPrivateMembers": {
           "type": "boolean"

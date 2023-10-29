@@ -1,3 +1,4 @@
+import { withIndentation } from "unwritten:renderer/markup/utils/context.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import {
   isInlineTitleNode,
@@ -27,7 +28,7 @@ export function renderListNode(ctx: HTMLRenderContext, listNode: ListNode): stri
   }
 
   const renderedListStart = renderListStart(ctx);
-  const renderedListItems = renderListItems(ctx, listNode.children);
+  const renderedListItems = withIndentation(ctx, ctx => renderListItems(ctx, listNode.children));
   const renderedListEnd = renderListEnd(ctx);
 
   const filteredListItems = renderedListItems.filter(item => !!item);
@@ -55,7 +56,11 @@ function renderListItems(ctx: HTMLRenderContext, items: ASTNode[]): string[] {
 
 function renderListStart(ctx: HTMLRenderContext): string {
   const renderedListStart = `${renderIndentation(ctx)}<ul>`;
-  ctx.indentation++;
+  return renderedListStart;
+}
+
+function renderListItemStart(ctx: HTMLRenderContext): string {
+  const renderedListStart = `${renderIndentation(ctx)}<li>`;
   return renderedListStart;
 }
 
@@ -67,19 +72,20 @@ function renderListItem(ctx: HTMLRenderContext, item: ASTNode): string {
   // Render lists in an array on a new line
   if(Array.isArray(item) && item.some(isListNode)){
 
-    const renderedStartTag = `${renderIndentation(ctx)}<li>`;
-    ctx.indentation++;
+    const renderedStartTag = renderListItemStart(ctx);
 
-    const renderedArrayItems = renderArrayItems(ctx, item);
+    const renderedItem = withIndentation(ctx, (ctx, item) => {
+      const renderedArrayItems = renderArrayItems(ctx, item);
 
-    if(renderedArrayItems === ""){
-      return "";
-    }
+      if(renderedArrayItems === ""){
+        return "";
+      }
 
-    const renderedItem = `${renderIndentation(ctx)}${renderedArrayItems}`;
+      return `${renderIndentation(ctx)}${renderedArrayItems}`;
 
-    ctx.indentation--;
-    const renderedEndTag = `${renderIndentation(ctx)}</li>`;
+    }, item);
+
+    const renderedEndTag = renderListItemEnd(ctx);
 
     const renderedListItem = [
       renderedStartTag,
@@ -99,11 +105,9 @@ function renderListItem(ctx: HTMLRenderContext, item: ASTNode): string {
   isInlineTitleNode(item) ||
   isParagraphNode(item)){
 
-    const renderedStartTag = `${renderIndentation(ctx)}<li>`;
-    ctx.indentation++;
-    const renderedItem = renderNode(ctx, item);
-    ctx.indentation--;
-    const renderedEndTag = `${renderIndentation(ctx)}</li>`;
+    const renderedStartTag = renderListItemStart(ctx);
+    const renderedItem = withIndentation(ctx, ctx => renderNode(ctx, item));
+    const renderedEndTag = renderListItemEnd(ctx);
 
     if(renderedItem === ""){
       return "";
@@ -129,8 +133,11 @@ function renderListItem(ctx: HTMLRenderContext, item: ASTNode): string {
 }
 
 function renderListEnd(ctx: HTMLRenderContext): string {
-  ctx.indentation--;
   return `${renderIndentation(ctx)}</ul>`;
+}
+
+function renderListItemEnd(ctx: HTMLRenderContext): string {
+  return `${renderIndentation(ctx)}</li>`;
 }
 
 function flattenNestedArrayItems(items: ASTNode[]): ASTNode[] {

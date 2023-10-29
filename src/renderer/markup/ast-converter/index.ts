@@ -22,6 +22,7 @@ import {
   convertNamespaceEntityForTableOfContents,
   convertNamespaceEntityToAnchor,
   convertParameterEntityToAnchor,
+  convertPropertyEntityToAnchor,
   convertSignatureEntityToAnchor,
   convertTypeAliasEntityForDocumentation,
   convertTypeAliasEntityForTableOfContents,
@@ -46,6 +47,7 @@ import {
   isModuleEntity,
   isNamespaceEntity,
   isParameterEntity,
+  isPropertyEntity,
   isTypeAliasEntity,
   isTypeParameterEntity,
   isVariableEntity
@@ -88,6 +90,8 @@ export function convertEntityToAnchor(ctx: MarkupRenderContexts, entity: Linkabl
     return convertTypeParameterEntityToAnchor(ctx, entity, displayName);
   } else if(isCircularEntity(entity)){
     return convertCircularEntityToAnchor(ctx, entity, displayName);
+  } else if(isPropertyEntity(entity)){
+    return convertPropertyEntityToAnchor(ctx, entity, displayName);
   }
 
   throw new RangeError(`Entity is not linkable: ${(<Entity>entity).kind}`);

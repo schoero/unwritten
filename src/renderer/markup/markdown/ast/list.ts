@@ -1,4 +1,5 @@
 import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line.js";
+import { withIndentation } from "unwritten:renderer/markup/utils/context.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
 import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
 import { renderIndentation as renderIndentationOriginal } from "unwritten:renderer:utils/indentation.js";
@@ -24,9 +25,7 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
     return renderListNode(ctx, listNode.children[0]);
   }
 
-  ctx.indentation++;
-  const renderedListItems = renderListItems(ctx, listNode.children);
-  ctx.indentation--;
+  const renderedListItems = withIndentation(ctx, ctx => renderListItems(ctx, listNode.children));
 
   if(renderedListItems.every(item => item === "")){
     return "";

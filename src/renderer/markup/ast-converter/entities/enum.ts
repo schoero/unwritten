@@ -1,6 +1,7 @@
 import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
@@ -31,11 +32,12 @@ import type {
 
 export function convertEnumEntityToAnchor(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity, displayName?: string): AnchorNode {
 
-  const name = enumEntity.name;
   const id = enumEntity.symbolId;
+  const name = enumEntity.name;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   return createAnchorNode(
-    name,
+    nameWithContext,
     id,
     displayName
   );
@@ -53,7 +55,9 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const name = enumEntity.name;
   const symbolId = enumEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, symbolId);
+  const nameWithContext = renderMemberContext(ctx, name);
+  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
+
   const position = convertPositionForDocumentation(ctx, enumEntity.position);
   const tags = convertTagsForDocumentation(ctx, enumEntity);
 
@@ -67,7 +71,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   return createSectionNode(
     SECTION_TYPE[enumEntity.kind],
     createTitleNode(
-      name,
+      nameWithContext,
       anchor,
       tags,
       position,

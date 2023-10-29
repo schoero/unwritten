@@ -58,6 +58,7 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
       assert(isAnchorNode(renderedNamespaceForTableOfContents[0]));
       expect(renderedNamespaceForTableOfContents[0].name).toBe("Namespace");
     });
+
     it("should have a matching description", () => {
       assert(isTitleNode(description));
       expect(description.children[0].children[0]).toBe("Namespace description");

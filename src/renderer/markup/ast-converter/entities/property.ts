@@ -4,6 +4,7 @@ import {
 } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
 import { SECTION_TYPE } from "unwritten:renderer/markup/types-definitions/sections.js";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertDescriptionForDocumentation,
@@ -43,16 +44,18 @@ import type {
 
 export function convertPropertyEntityToAnchor(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {
 
-  const name = propertyEntity.name;
   const id = propertyEntity.symbolId;
+  const name = propertyEntity.name;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   return createAnchorNode(
-    name,
+    nameWithContext,
     id,
     displayName
   );
 
 }
+
 
 export function convertPropertyEntityForTableOfContents(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
   return convertPropertyEntityToAnchor(ctx, propertyEntity);
@@ -63,7 +66,8 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   const name = propertyEntity.name;
   const symbolId = propertyEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, symbolId);
+  const nameWithContext = renderMemberContext(ctx, name);
+  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const position = convertPositionForDocumentation(ctx, propertyEntity.position);
   const tags = convertTagsForDocumentation(ctx, propertyEntity);
@@ -77,7 +81,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   return createSectionNode(
     SECTION_TYPE[propertyEntity.kind],
     createTitleNode(
-      name,
+      nameWithContext,
       anchor,
       tags,
       position,
@@ -95,7 +99,8 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
 
   const renderConfig = getRenderConfig(ctx);
 
-  const name = encapsulate(propertyEntity.name, renderConfig.propertyEncapsulation);
+  const nameWithContext = renderMemberContext(ctx, propertyEntity.name);
+  const name = encapsulate(nameWithContext, renderConfig.propertyEncapsulation);
   const tags = convertTagsForType(ctx, propertyEntity);
   const description = propertyEntity.description && convertDescriptionForType(ctx, propertyEntity.description);
   const remarks = propertyEntity.remarks && convertRemarksForType(ctx, propertyEntity.remarks);

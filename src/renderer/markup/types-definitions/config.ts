@@ -36,6 +36,13 @@ export interface MarkupRenderConfig {
   renderOrder?: ExportableEntityKinds[];
 
   /**
+   * Defines whether the parent name of members should be rendered in the signature.
+   * @example
+   * Class.method() instead of method()
+   */
+  renderParentNames?: boolean;
+
+  /**
    * Defines whether the renderer should render private members.
    */
   renderPrivateMembers?: boolean;
