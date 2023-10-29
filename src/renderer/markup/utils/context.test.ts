@@ -102,7 +102,6 @@ scope("Renderer", "utils", () => {
             memberContext: ["outer", "inner"]
           }, "name")
         ).toBe("name");
-
       });
 
     });

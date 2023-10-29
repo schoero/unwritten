@@ -33,8 +33,9 @@ export function withMemberContext<RenderContext extends MarkupRenderContexts, Re
 }
 
 export function withNesting<RenderContext extends MarkupRenderContexts, ReturnType>(ctx: RenderContext, callback: (ctx: RenderContext) => ReturnType): ReturnType {
+  const initialNesting = ctx.nesting;
   ctx.nesting++;
   const result = callback(ctx);
-  ctx.nesting--;
+  initialNesting !== ctx.nesting && ctx.nesting--;
   return result;
 }
