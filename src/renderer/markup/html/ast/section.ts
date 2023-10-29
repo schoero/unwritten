@@ -1,3 +1,4 @@
+import { withIndentation } from "unwritten:renderer/markup/utils/context.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
@@ -17,11 +18,7 @@ export function renderSectionNode(ctx: HTMLRenderContext, sectionNode: SectionNo
   const renderedIndentation = renderIndentation(ctx);
   const renderedNewLine = renderNewLine(ctx);
   const renderedOpeningTag = `<${tag}${classAttribute}>`;
-
-  ctx.indentation++;
-  const renderedChildren = renderNode(ctx, sectionNode.children);
-  ctx.indentation--;
-
+  const renderedChildren = withIndentation(ctx, ctx => renderNode(ctx, sectionNode.children));
   const renderedClosingTag = `</${tag}>`;
 
   return renderedChildren === ""

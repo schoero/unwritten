@@ -83,6 +83,7 @@ const markdownRenderer: MarkdownRenderer = {
   initializeContext: (ctx: MarkdownRenderContext) => {
 
     ctx.links = [];
+    ctx.memberContext = [];
 
     // Attach getters and setters to context
     if(Object.hasOwn(ctx, "nesting")){
