@@ -17,8 +17,9 @@ export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer
   set indentation(value: number);
   get indentation(): number;
   links: LinkRegistry;
-  get nesting(): number;
+  memberContext: string[];
   set nesting(value: number);
+  get nesting(): number;
   _currentFile?: SourceFile;
   _indentation?: number;
   _links?: LinkRegistry;

@@ -27,6 +27,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     EntityKind.Interface,
     EntityKind.ExportAssignment
   ],
+  renderParentNames: true,
   renderPrivateMembers: false,
   stringLiteralEncapsulation: ["\"", "\""],
   tagEncapsulation: ["`", "`"],

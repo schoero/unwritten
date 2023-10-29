@@ -1,5 +1,6 @@
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { filterOutImplicitSignatures, filterOutPrivateMembers } from "unwritten:renderer/utils/private-members.js";
 import {
@@ -41,11 +42,12 @@ import type {
 
 export function convertClassEntityToAnchor(ctx: MarkupRenderContexts, classEntity: ClassEntity, displayName?: string): AnchorNode {
 
-  const name = classEntity.name;
   const id = classEntity.symbolId;
+  const name = classEntity.name;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   return createAnchorNode(
-    name,
+    nameWithContext,
     id,
     displayName
   );
@@ -59,63 +61,67 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
 
   const anchor = convertClassEntityToAnchor(ctx, classEntity);
 
-  const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
-  const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
-  const eventPropertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "events");
-  const methodEntities = extendClassEntityEntitiesWithHeritage(classEntity, "methods");
-  const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
-  const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
+  return withMemberContext(ctx, classEntity.name, ctx => {
 
-  const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterOutPrivateMembers([constructorEntity])[0];
-  const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterOutPrivateMembers(propertyEntities);
-  const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterOutPrivateMembers(eventPropertyEntities);
-  const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterOutPrivateMembers(methodEntities);
-  const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterOutPrivateMembers(setterEntities);
-  const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterOutPrivateMembers(getterEntities);
+    const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
+    const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
+    const eventPropertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "events");
+    const methodEntities = extendClassEntityEntitiesWithHeritage(classEntity, "methods");
+    const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
+    const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
 
-  const explicitConstructSignatures = publicConstructorEntity?.signatures && filterOutImplicitSignatures(publicConstructorEntity.signatures);
-  const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
-  const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForTableOfContents(ctx, propertyEntity));
-  const convertedEventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForTableOfContents(ctx, eventPropertyEntity));
-  const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForTableOfContents(ctx, methodEntity)).flat();
-  const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
-  const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
+    const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterOutPrivateMembers([constructorEntity])[0];
+    const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterOutPrivateMembers(propertyEntities);
+    const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterOutPrivateMembers(eventPropertyEntities);
+    const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterOutPrivateMembers(methodEntities);
+    const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterOutPrivateMembers(setterEntities);
+    const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterOutPrivateMembers(getterEntities);
 
-  const constructorList = convertedConstructSignatures && convertedConstructSignatures.length > 0
-    ? [translate("ctor", { capitalize: true, count: convertedConstructSignatures.length }), createListNode(...convertedConstructSignatures)]
-    : [];
+    const explicitConstructSignatures = publicConstructorEntity?.signatures && filterOutImplicitSignatures(publicConstructorEntity.signatures);
+    const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
+    const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForTableOfContents(ctx, propertyEntity));
+    const convertedEventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForTableOfContents(ctx, eventPropertyEntity));
+    const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForTableOfContents(ctx, methodEntity)).flat();
+    const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForTableOfContents(ctx, setterEntity));
+    const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForTableOfContents(ctx, getterEntity));
 
-  const propertyList = convertedProperties.length > 0
-    ? [translate("property", { capitalize: true, count: convertedProperties.length }), createListNode(...convertedProperties)]
-    : [];
+    const constructorList = convertedConstructSignatures && convertedConstructSignatures.length > 0
+      ? [translate("ctor", { capitalize: true, count: convertedConstructSignatures.length }), createListNode(...convertedConstructSignatures)]
+      : [];
 
-  const eventPropertyList = convertedEventProperties.length > 0
-    ? [translate("event", { capitalize: true, count: convertedEventProperties.length }), createListNode(...convertedEventProperties)]
-    : [];
+    const propertyList = convertedProperties.length > 0
+      ? [translate("property", { capitalize: true, count: convertedProperties.length }), createListNode(...convertedProperties)]
+      : [];
 
-  const methodList = convertedMethods.length > 0
-    ? [translate("method", { capitalize: true, count: convertedMethods.length }), createListNode(...convertedMethods)]
-    : [];
+    const eventPropertyList = convertedEventProperties.length > 0
+      ? [translate("event", { capitalize: true, count: convertedEventProperties.length }), createListNode(...convertedEventProperties)]
+      : [];
 
-  const setterList = convertedSetters.length > 0
-    ? [translate("setter", { capitalize: true, count: convertedSetters.length }), createListNode(...convertedSetters)]
-    : [];
+    const methodList = convertedMethods.length > 0
+      ? [translate("method", { capitalize: true, count: convertedMethods.length }), createListNode(...convertedMethods)]
+      : [];
 
-  const getterList = convertedGetters.length > 0
-    ? [translate("getter", { capitalize: true, count: convertedGetters.length }), createListNode(...convertedGetters)]
-    : [];
+    const setterList = convertedSetters.length > 0
+      ? [translate("setter", { capitalize: true, count: convertedSetters.length }), createListNode(...convertedSetters)]
+      : [];
 
-  return [
-    anchor,
-    createListNode(
-      ...constructorList,
-      ...propertyList,
-      ...methodList,
-      ...setterList,
-      ...getterList,
-      ...eventPropertyList
-    )
-  ];
+    const getterList = convertedGetters.length > 0
+      ? [translate("getter", { capitalize: true, count: convertedGetters.length }), createListNode(...convertedGetters)]
+      : [];
+
+    return [
+      anchor,
+      createListNode(
+        ...constructorList,
+        ...propertyList,
+        ...methodList,
+        ...setterList,
+        ...getterList,
+        ...eventPropertyList
+      )
+    ];
+
+  });
 
 }
 
@@ -129,88 +135,93 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const symbolId = classEntity.symbolId;
   const typeId = classEntity.typeId;
 
-  const anchor = registerAnchor(ctx, name, symbolId);
+  const nameWithContext = renderMemberContext(ctx, name);
+  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
-  const position = convertPositionForDocumentation(ctx, classEntity.position);
-  const tags = convertTagsForDocumentation(ctx, classEntity);
+  return withMemberContext(ctx, classEntity.name, ctx => {
 
-  const description = classEntity.description && convertDescriptionForDocumentation(ctx, classEntity.description);
-  const example = classEntity.example && convertExamplesForDocumentation(ctx, classEntity.example);
-  const remarks = classEntity.remarks && convertRemarksForDocumentation(ctx, classEntity.remarks);
-  const see = classEntity.see && convertSeeTagsForDocumentation(ctx, classEntity.see);
+    const position = convertPositionForDocumentation(ctx, classEntity.position);
+    const tags = convertTagsForDocumentation(ctx, classEntity);
 
-  const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
-  const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
-  const methodEntities = extendClassEntityEntitiesWithHeritage(classEntity, "methods");
-  const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
-  const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
-  const eventPropertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "events");
+    const description = classEntity.description && convertDescriptionForDocumentation(ctx, classEntity.description);
+    const example = classEntity.example && convertExamplesForDocumentation(ctx, classEntity.example);
+    const remarks = classEntity.remarks && convertRemarksForDocumentation(ctx, classEntity.remarks);
+    const see = classEntity.see && convertSeeTagsForDocumentation(ctx, classEntity.see);
 
-  const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterOutPrivateMembers([constructorEntity])[0];
-  const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterOutPrivateMembers(propertyEntities);
-  const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterOutPrivateMembers(methodEntities);
-  const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterOutPrivateMembers(setterEntities);
-  const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterOutPrivateMembers(getterEntities);
-  const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterOutPrivateMembers(eventPropertyEntities);
+    const constructorEntity = extendClassEntityConstructorsWithHeritage(classEntity);
+    const propertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "properties");
+    const methodEntities = extendClassEntityEntitiesWithHeritage(classEntity, "methods");
+    const setterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "setters");
+    const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
+    const eventPropertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "events");
 
-  const explicitConstructSignatures = publicConstructorEntity?.signatures && filterOutImplicitSignatures(publicConstructorEntity.signatures);
+    const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterOutPrivateMembers([constructorEntity])[0];
+    const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterOutPrivateMembers(propertyEntities);
+    const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterOutPrivateMembers(methodEntities);
+    const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterOutPrivateMembers(setterEntities);
+    const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterOutPrivateMembers(getterEntities);
+    const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterOutPrivateMembers(eventPropertyEntities);
 
-  const hasConstructSignatures = explicitConstructSignatures && explicitConstructSignatures.length > 0;
-  const constructSignaturesTranslation = translate("constructSignature", { capitalizeEach: true, count: explicitConstructSignatures?.length });
-  const constructSignaturesAnchor = hasConstructSignatures && registerAnonymousAnchor(ctx, constructSignaturesTranslation);
+    const explicitConstructSignatures = publicConstructorEntity?.signatures && filterOutImplicitSignatures(publicConstructorEntity.signatures);
 
-  const hasProperties = publicPropertyEntities.length > 0;
-  const propertiesTranslation = translate("property", { capitalizeEach: true, count: publicPropertyEntities.length });
-  const propertiesAnchor = hasProperties && registerAnonymousAnchor(ctx, propertiesTranslation);
+    const hasConstructSignatures = explicitConstructSignatures && explicitConstructSignatures.length > 0;
+    const constructSignaturesTranslation = translate("constructSignature", { capitalizeEach: true, count: explicitConstructSignatures?.length });
+    const constructSignaturesAnchor = hasConstructSignatures && registerAnonymousAnchor(ctx, constructSignaturesTranslation);
 
-  const hasMethods = publicMethodEntities.length > 0;
-  const methodsTranslation = translate("method", { capitalizeEach: true, count: publicMethodEntities.length });
-  const methodsAnchor = hasMethods && registerAnonymousAnchor(ctx, methodsTranslation);
+    const hasProperties = publicPropertyEntities.length > 0;
+    const propertiesTranslation = translate("property", { capitalizeEach: true, count: publicPropertyEntities.length });
+    const propertiesAnchor = hasProperties && registerAnonymousAnchor(ctx, propertiesTranslation);
 
-  const hasSetters = publicSetterEntities.length > 0;
-  const settersTranslation = translate("setter", { capitalizeEach: true, count: publicSetterEntities.length });
-  const settersAnchor = hasSetters && registerAnonymousAnchor(ctx, settersTranslation);
+    const hasMethods = publicMethodEntities.length > 0;
+    const methodsTranslation = translate("method", { capitalizeEach: true, count: publicMethodEntities.length });
+    const methodsAnchor = hasMethods && registerAnonymousAnchor(ctx, methodsTranslation);
 
-  const hasGetters = publicGetterEntities.length > 0;
-  const gettersTranslation = translate("getter", { capitalizeEach: true, count: publicGetterEntities.length });
-  const gettersAnchor = hasGetters && registerAnonymousAnchor(ctx, gettersTranslation);
+    const hasSetters = publicSetterEntities.length > 0;
+    const settersTranslation = translate("setter", { capitalizeEach: true, count: publicSetterEntities.length });
+    const settersAnchor = hasSetters && registerAnonymousAnchor(ctx, settersTranslation);
 
-  const hasEventProperties = publicEventPropertyEntities.length > 0;
-  const eventPropertiesTranslation = translate("event", { capitalizeEach: true, count: publicEventPropertyEntities.length });
-  const eventPropertiesAnchor = hasEventProperties && registerAnonymousAnchor(ctx, eventPropertiesTranslation);
+    const hasGetters = publicGetterEntities.length > 0;
+    const gettersTranslation = translate("getter", { capitalizeEach: true, count: publicGetterEntities.length });
+    const gettersAnchor = hasGetters && registerAnonymousAnchor(ctx, gettersTranslation);
 
-  const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity)) ?? [];
-  const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
-  const convertedEventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForDocumentation(ctx, eventPropertyEntity));
-  const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForDocumentation(ctx, methodEntity));
-  const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
-  const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
+    const hasEventProperties = publicEventPropertyEntities.length > 0;
+    const eventPropertiesTranslation = translate("event", { capitalizeEach: true, count: publicEventPropertyEntities.length });
+    const eventPropertiesAnchor = hasEventProperties && registerAnonymousAnchor(ctx, eventPropertiesTranslation);
 
-  const constructSignatures = constructSignaturesAnchor && createTitleNode(constructSignaturesTranslation, constructSignaturesAnchor, ...convertedConstructSignatures);
-  const properties = propertiesAnchor && createTitleNode(propertiesTranslation, propertiesAnchor, ...convertedProperties);
-  const methods = methodsAnchor && createTitleNode(methodsTranslation, methodsAnchor, ...convertedMethods);
-  const getters = gettersAnchor && createTitleNode(gettersTranslation, gettersAnchor, ...convertedGetters);
-  const setters = settersAnchor && createTitleNode(settersTranslation, settersAnchor, ...convertedSetters);
-  const eventProperties = eventPropertiesAnchor && createTitleNode(eventPropertiesTranslation, eventPropertiesAnchor, ...convertedEventProperties);
+    const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForDocumentation(ctx, signatureEntity)) ?? [];
+    const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForDocumentation(ctx, propertyEntity));
+    const convertedEventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForDocumentation(ctx, eventPropertyEntity));
+    const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForDocumentation(ctx, methodEntity));
+    const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
+    const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
 
-  return createSectionNode(
-    SECTION_TYPE[classEntity.kind],
-    createTitleNode(
-      name,
-      anchor,
-      tags,
-      position,
-      description,
-      remarks,
-      example,
-      see,
-      constructSignatures,
-      properties,
-      methods,
-      setters,
-      getters,
-      eventProperties
-    )
-  );
+    const constructSignatures = constructSignaturesAnchor && createTitleNode(constructSignaturesTranslation, constructSignaturesAnchor, ...convertedConstructSignatures);
+    const properties = propertiesAnchor && createTitleNode(propertiesTranslation, propertiesAnchor, ...convertedProperties);
+    const methods = methodsAnchor && createTitleNode(methodsTranslation, methodsAnchor, ...convertedMethods);
+    const getters = gettersAnchor && createTitleNode(gettersTranslation, gettersAnchor, ...convertedGetters);
+    const setters = settersAnchor && createTitleNode(settersTranslation, settersAnchor, ...convertedSetters);
+    const eventProperties = eventPropertiesAnchor && createTitleNode(eventPropertiesTranslation, eventPropertiesAnchor, ...convertedEventProperties);
+
+    return createSectionNode(
+      SECTION_TYPE[classEntity.kind],
+      createTitleNode(
+        nameWithContext,
+        anchor,
+        tags,
+        position,
+        description,
+        remarks,
+        example,
+        see,
+        constructSignatures,
+        properties,
+        methods,
+        setters,
+        getters,
+        eventProperties
+      )
+    );
+
+  });
 
 }

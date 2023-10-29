@@ -1,6 +1,7 @@
 import { renderNode } from "unwritten:renderer/index.js";
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertTypeParameterEntitiesForDocumentation,
@@ -27,9 +28,9 @@ import type {
 
 export function convertTypeAliasEntityToAnchor(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity, displayName?: string): AnchorNode {
 
+  const id = typeAliasEntity.symbolId;
   const convertedSignature = convertTypeAliasSignature(ctx, typeAliasEntity);
   const renderedSignature = renderNode(ctx, convertedSignature);
-  const id = typeAliasEntity.symbolId;
 
   return createAnchorNode(
     renderedSignature,
@@ -85,7 +86,8 @@ function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: T
 
   const renderConfig = getRenderConfig(ctx);
 
-  const typeAliasName = typeAliasEntity.name;
+  const name = typeAliasEntity.name;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   const convertedTypeParameters = typeAliasEntity.typeParameters && typeAliasEntity.typeParameters.length > 0 &&
     convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters);
@@ -94,7 +96,7 @@ function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: T
      encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation);
 
   return [
-    typeAliasName,
+    nameWithContext,
     encapsulatedTypeParameters
   ];
 

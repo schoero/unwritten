@@ -1,5 +1,6 @@
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
@@ -20,11 +21,12 @@ import type {
 
 export function convertVariableEntityToAnchor(ctx: MarkupRenderContexts, variableEntity: VariableEntity, displayName?: string): AnchorNode {
 
-  const name = variableEntity.name;
   const id = variableEntity.symbolId;
+  const name = variableEntity.name;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   return createAnchorNode(
-    name,
+    nameWithContext,
     id,
     displayName
   );
@@ -40,7 +42,8 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
   const name = variableEntity.name;
   const symbolId = variableEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, symbolId);
+  const nameWithContext = renderMemberContext(ctx, name);
+  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const tags = convertTagsForDocumentation(ctx, variableEntity);
   const position = convertPositionForDocumentation(ctx, variableEntity.position);
@@ -54,7 +57,7 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
   return createSectionNode(
     SECTION_TYPE[variableEntity.kind],
     createTitleNode(
-      name,
+      nameWithContext,
       anchor,
       tags,
       position,

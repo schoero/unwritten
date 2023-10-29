@@ -1,6 +1,12 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, it, test } from "vitest";
 
-import { withIndentation, withNesting } from "unwritten:renderer/markup/utils/context.js";
+import {
+  renderMemberContext,
+  withIndentation,
+  withMemberContext,
+  withNesting
+} from "unwritten:renderer/markup/utils/context.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { createRenderContext } from "unwritten:tests:utils/context.js";
 import { scope } from "unwritten:tests:utils/scope.js";
 
@@ -39,6 +45,66 @@ scope("Renderer", "utils", () => {
       });
 
       expect(ctx.nesting).toBe(1);
+    });
+
+    test("withMemberContext", () => {
+      const ctx = createRenderContext();
+
+      expect(ctx.memberContext).toStrictEqual([]);
+
+      withMemberContext(ctx, "outer", ctx => {
+        expect(ctx.memberContext).toStrictEqual(["outer"]);
+        withMemberContext(ctx, "inner", ctx => {
+          expect(ctx.memberContext).toStrictEqual(["outer", "inner"]);
+        });
+        expect(ctx.memberContext).toStrictEqual(["outer"]);
+      });
+
+      expect(ctx.memberContext).toStrictEqual([]);
+    });
+
+    describe("renderMemberContext", () => {
+
+      it("should render the parent name by default", () => {
+        const ctx = createRenderContext();
+
+        expect(renderMemberContext(ctx, "name")).toBe("name");
+        expect(
+          renderMemberContext({
+            ...ctx,
+            memberContext: ["outer"]
+          }, "name")
+        ).toBe("outer.name");
+        expect(
+          renderMemberContext({
+            ...ctx,
+            memberContext: ["outer", "inner"]
+          }, "name")
+        ).toBe("outer.inner.name");
+
+      });
+
+      it("should be possible to disable the rendering of the parent name", () => {
+        const ctx = createRenderContext();
+        const renderConfig = getRenderConfig(ctx);
+        renderConfig.renderParentNames = false;
+
+        expect(renderMemberContext(ctx, "name")).toBe("name");
+        expect(
+          renderMemberContext({
+            ...ctx,
+            memberContext: ["outer"]
+          }, "name")
+        ).toBe("name");
+        expect(
+          renderMemberContext({
+            ...ctx,
+            memberContext: ["outer", "inner"]
+          }, "name")
+        ).toBe("name");
+
+      });
+
     });
 
   });

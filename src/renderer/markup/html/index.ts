@@ -78,6 +78,7 @@ const htmlRenderer: HTMLRenderer = {
   initializeContext: (ctx: HTMLRenderContext) => {
 
     ctx.links = [];
+    ctx.memberContext = [];
 
     // Attach getters and setters to context
     if(Object.hasOwn(ctx, "nesting")){

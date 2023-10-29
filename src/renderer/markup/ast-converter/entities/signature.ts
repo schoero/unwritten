@@ -9,6 +9,7 @@ import {
   convertThrowsForType
 } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
 import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertParameterEntitiesForDocumentation,
@@ -62,9 +63,9 @@ import type {
 
 export function convertSignatureEntityToAnchor(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity, displayName?: string): AnchorNode {
 
+  const id = signatureEntity.declarationId;
   const convertedSignature = convertSignature(ctx, signatureEntity);
   const renderedSignature = renderNode(ctx, convertedSignature);
-  const id = signatureEntity.declarationId;
 
   return createAnchorNode(
     renderedSignature,
@@ -158,6 +159,9 @@ function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureE
   const renderConfig = getRenderConfig(ctx);
 
   const name = signatureEntity.name;
+  const nameWithContext = name === "constructor"
+    ? `new ${renderMemberContext(ctx)}`
+    : name && renderMemberContext(ctx, name);
 
   const convertedTypeParameters = signatureEntity.typeParameters && signatureEntity.typeParameters.length > 0 &&
     convertTypeParameterEntitiesForSignature(ctx, signatureEntity.typeParameters);
@@ -169,7 +173,7 @@ function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureE
     convertParameterEntitiesForSignature(ctx, signatureEntity.parameters);
 
   return [
-    name,
+    nameWithContext,
     encapsulatedTypeParameters,
     "(",
     convertedParameters,

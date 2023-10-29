@@ -3,6 +3,7 @@ import {
   convertSeeTagsForType
 } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
@@ -33,9 +34,10 @@ export function convertEventPropertyEntityToAnchor(ctx: MarkupRenderContexts, pr
 
   const name = propertyEntity.name;
   const id = propertyEntity.symbolId;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   return createAnchorNode(
-    name,
+    nameWithContext,
     id,
     displayName
   );
@@ -53,7 +55,8 @@ export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderCont
   const name = propertyEntity.name;
   const symbolId = propertyEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, symbolId);
+  const nameWithContext = renderMemberContext(ctx, name);
+  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const position = convertPositionForDocumentation(ctx, propertyEntity.position);
   const description = propertyEntity.description && convertDescriptionForDocumentation(ctx, propertyEntity.description);
@@ -62,7 +65,7 @@ export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderCont
   const see = propertyEntity.see && convertSeeTagsForDocumentation(ctx, propertyEntity.see);
 
   return createTitleNode(
-    name,
+    nameWithContext,
     anchor,
     position,
     description,
@@ -76,6 +79,7 @@ export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderCont
 export function convertEventPropertyEntityForType(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForType {
 
   const name = propertyEntity.name;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   const description = propertyEntity.description && convertDescriptionForType(ctx, propertyEntity.description);
   const remarks = propertyEntity.remarks && convertRemarksForType(ctx, propertyEntity.remarks);
@@ -84,7 +88,7 @@ export function convertEventPropertyEntityForType(ctx: MarkupRenderContexts, pro
 
   return createMultilineNode(
     spaceBetween(
-      name,
+      nameWithContext,
       description
     ),
     remarks,

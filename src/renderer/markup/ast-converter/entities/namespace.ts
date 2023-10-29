@@ -1,5 +1,6 @@
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import {
   convertEntityForDocumentation,
   createTableOfContents
@@ -23,11 +24,12 @@ import type {
 
 export function convertNamespaceEntityToAnchor(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity, displayName?: string): AnchorNode {
 
-  const name = namespaceEntity.name;
   const id = namespaceEntity.symbolId;
+  const name = namespaceEntity.name;
+  const nameWithContext = renderMemberContext(ctx, name);
 
   return createAnchorNode(
-    name,
+    nameWithContext,
     id,
     displayName
   );
@@ -36,14 +38,19 @@ export function convertNamespaceEntityToAnchor(ctx: MarkupRenderContexts, namesp
 
 export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForTableOfContents {
 
+  const name = namespaceEntity.name;
   const anchor = convertNamespaceEntityToAnchor(ctx, namespaceEntity);
 
-  const moduleExports = createTableOfContents(ctx, namespaceEntity.exports);
+  return withMemberContext(ctx, name, () => {
 
-  return [
-    anchor,
-    moduleExports
-  ];
+    const moduleExports = createTableOfContents(ctx, namespaceEntity.exports);
+
+    return [
+      anchor,
+      moduleExports
+    ];
+
+  });
 
 }
 
@@ -52,31 +59,36 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
   const name = namespaceEntity.name;
   const symbolId = namespaceEntity.symbolId;
 
-  const anchor = registerAnchor(ctx, name, symbolId);
+  const nameWithContext = renderMemberContext(ctx, name);
+  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
-  const position = convertPositionForDocumentation(ctx, namespaceEntity.position);
-  const tags = convertTagsForDocumentation(ctx, namespaceEntity);
+  return withMemberContext(ctx, name, () => {
 
-  const description = namespaceEntity.description && convertDescriptionForDocumentation(ctx, namespaceEntity.description);
-  const remarks = namespaceEntity.remarks && convertRemarksForDocumentation(ctx, namespaceEntity.remarks);
-  const example = namespaceEntity.example && convertExamplesForDocumentation(ctx, namespaceEntity.example);
-  const see = namespaceEntity.see && convertSeeTagsForDocumentation(ctx, namespaceEntity.see);
+    const position = convertPositionForDocumentation(ctx, namespaceEntity.position);
+    const tags = convertTagsForDocumentation(ctx, namespaceEntity);
 
-  const children = namespaceEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
+    const description = namespaceEntity.description && convertDescriptionForDocumentation(ctx, namespaceEntity.description);
+    const remarks = namespaceEntity.remarks && convertRemarksForDocumentation(ctx, namespaceEntity.remarks);
+    const example = namespaceEntity.example && convertExamplesForDocumentation(ctx, namespaceEntity.example);
+    const see = namespaceEntity.see && convertSeeTagsForDocumentation(ctx, namespaceEntity.see);
 
-  return createSectionNode(
-    SECTION_TYPE[namespaceEntity.kind],
-    createTitleNode(
-      name,
-      anchor,
-      tags,
-      position,
-      description,
-      remarks,
-      example,
-      see,
-      ...children
-    )
-  );
+    const children = namespaceEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
+
+    return createSectionNode(
+      SECTION_TYPE[namespaceEntity.kind],
+      createTitleNode(
+        nameWithContext,
+        anchor,
+        tags,
+        position,
+        description,
+        remarks,
+        example,
+        see,
+        ...children
+      )
+    );
+
+  });
 
 }
