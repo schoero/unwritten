@@ -44,10 +44,13 @@ export function convertClassEntityToAnchor(ctx: MarkupRenderContexts, classEntit
 
   const id = classEntity.symbolId;
   const name = classEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+
+  displayName ??= tableOfContentsName;
 
   return createAnchorNode(
-    nameWithContext,
+    documentationName,
     id,
     displayName
   );
@@ -135,7 +138,7 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const symbolId = classEntity.symbolId;
   const typeId = classEntity.typeId;
 
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", name);
   const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   return withMemberContext(ctx, classEntity.name, ctx => {

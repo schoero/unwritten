@@ -26,11 +26,15 @@ export function convertModuleEntityToAnchor(ctx: MarkupRenderContexts, moduleEnt
 
   const id = moduleEntity.symbolId;
   const name = moduleEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+
+  displayName ??= tableOfContentsName;
 
   return createAnchorNode(
-    nameWithContext,
-    id
+    documentationName,
+    id,
+    displayName
   );
 
 }
@@ -58,7 +62,7 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
   const name = moduleEntity.name;
   const symbolId = moduleEntity.symbolId;
 
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", name);
   const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   return withMemberContext(ctx, name, () => {

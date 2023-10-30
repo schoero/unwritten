@@ -128,7 +128,19 @@
           "type": "array"
         },
         "renderParentNames": {
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "documentation",
+              "type": "string"
+            },
+            {
+              "const": "tableOfContents",
+              "type": "string"
+            }
+          ]
         },
         "renderPrivateMembers": {
           "type": "boolean"
@@ -515,7 +527,19 @@
           "type": "array"
         },
         "renderParentNames": {
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "documentation",
+              "type": "string"
+            },
+            {
+              "const": "tableOfContents",
+              "type": "string"
+            }
+          ]
         },
         "renderPrivateMembers": {
           "type": "boolean"

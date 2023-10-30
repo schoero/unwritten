@@ -23,10 +23,13 @@ export function convertVariableEntityToAnchor(ctx: MarkupRenderContexts, variabl
 
   const id = variableEntity.symbolId;
   const name = variableEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+
+  displayName ??= tableOfContentsName;
 
   return createAnchorNode(
-    nameWithContext,
+    documentationName,
     id,
     displayName
   );
@@ -42,7 +45,7 @@ export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts,
   const name = variableEntity.name;
   const symbolId = variableEntity.symbolId;
 
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", name);
   const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const tags = convertTagsForDocumentation(ctx, variableEntity);

@@ -40,7 +40,7 @@ export interface MarkupRenderConfig {
    * @example
    * Class.method() instead of method()
    */
-  renderParentNames?: boolean;
+  renderParentNames?: boolean | "documentation" | "tableOfContents";
 
   /**
    * Defines whether the renderer should render private members.

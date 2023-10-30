@@ -34,10 +34,13 @@ export function convertEnumEntityToAnchor(ctx: MarkupRenderContexts, enumEntity:
 
   const id = enumEntity.symbolId;
   const name = enumEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+
+  displayName ??= tableOfContentsName;
 
   return createAnchorNode(
-    nameWithContext,
+    documentationName,
     id,
     displayName
   );
@@ -55,7 +58,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const name = enumEntity.name;
   const symbolId = enumEntity.symbolId;
 
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", name);
   const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const position = convertPositionForDocumentation(ctx, enumEntity.position);

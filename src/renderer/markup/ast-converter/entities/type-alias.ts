@@ -29,11 +29,16 @@ import type {
 export function convertTypeAliasEntityToAnchor(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity, displayName?: string): AnchorNode {
 
   const id = typeAliasEntity.symbolId;
-  const convertedSignature = convertTypeAliasSignature(ctx, typeAliasEntity);
-  const renderedSignature = renderNode(ctx, convertedSignature);
+  const convertedSignatureForAnchor = convertTypeAliasSignature(ctx, typeAliasEntity, "documentation");
+  const renderedSignatureForAnchor = renderNode(ctx, convertedSignatureForAnchor);
+
+  const convertedSignatureForTableOfContents = convertTypeAliasSignature(ctx, typeAliasEntity, "tableOfContents");
+  const renderedSignatureForTableOfContents = renderNode(ctx, convertedSignatureForTableOfContents);
+
+  displayName ??= renderedSignatureForTableOfContents;
 
   return createAnchorNode(
-    renderedSignature,
+    renderedSignatureForAnchor,
     id,
     displayName
   );
@@ -46,7 +51,7 @@ export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContex
 
 export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForDocumentation {
 
-  const signature = convertTypeAliasSignature(ctx, typeAliasEntity);
+  const signature = convertTypeAliasSignature(ctx, typeAliasEntity, "documentation");
   const position = convertPositionForDocumentation(ctx, typeAliasEntity.position);
   const tags = convertTagsForDocumentation(ctx, typeAliasEntity);
 
@@ -82,12 +87,12 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
 }
 
 
-function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity) {
+function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity, target: "documentation" | "tableOfContents") {
 
   const renderConfig = getRenderConfig(ctx);
 
   const name = typeAliasEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, target, name);
 
   const convertedTypeParameters = typeAliasEntity.typeParameters && typeAliasEntity.typeParameters.length > 0 &&
     convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters);

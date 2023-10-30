@@ -22,10 +22,13 @@ export function convertExportAssignmentEntityToAnchor(ctx: MarkupRenderContexts,
 
   const id = exportAssignmentEntity.symbolId;
   const name = exportAssignmentEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+
+  displayName ??= tableOfContentsName;
 
   return createAnchorNode(
-    nameWithContext,
+    documentationName,
     id,
     displayName
   );
@@ -41,7 +44,7 @@ export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderC
   const name = exportAssignmentEntity.name;
   const symbolId = exportAssignmentEntity.symbolId;
 
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", name);
   const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const tags = convertTagsForDocumentation(ctx, exportAssignmentEntity);

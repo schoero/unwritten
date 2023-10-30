@@ -46,10 +46,13 @@ export function convertPropertyEntityToAnchor(ctx: MarkupRenderContexts, propert
 
   const id = propertyEntity.symbolId;
   const name = propertyEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+
+  displayName ??= tableOfContentsName;
 
   return createAnchorNode(
-    nameWithContext,
+    documentationName,
     id,
     displayName
   );
@@ -66,7 +69,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   const name = propertyEntity.name;
   const symbolId = propertyEntity.symbolId;
 
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", name);
   const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const position = convertPositionForDocumentation(ctx, propertyEntity.position);
@@ -99,7 +102,7 @@ export function convertPropertyEntityForType(ctx: MarkupRenderContexts, property
 
   const renderConfig = getRenderConfig(ctx);
 
-  const nameWithContext = renderMemberContext(ctx, propertyEntity.name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", propertyEntity.name);
   const name = encapsulate(nameWithContext, renderConfig.propertyEncapsulation);
   const tags = convertTagsForType(ctx, propertyEntity);
   const description = propertyEntity.description && convertDescriptionForType(ctx, propertyEntity.description);

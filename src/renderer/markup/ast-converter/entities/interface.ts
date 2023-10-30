@@ -43,10 +43,13 @@ export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContexts, interf
 
   const id = interfaceEntity.symbolId;
   const name = interfaceEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+
+  displayName ??= tableOfContentsName;
 
   return createAnchorNode(
-    nameWithContext,
+    documentationName,
     id,
     displayName
   );
@@ -64,7 +67,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const name = interfaceEntity.name;
   const symbolId = interfaceEntity.symbolId;
 
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", name);
   const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   const position = convertPositionForDocumentation(ctx, interfaceEntity.position);
