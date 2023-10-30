@@ -9,7 +9,7 @@ import {
   convertThrowsForType
 } from "unwritten:renderer/markup/ast-converter/shared/throws.js";
 import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
+import { isRenderParentNamesEnabled, renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   convertParameterEntitiesForDocumentation,
@@ -64,11 +64,16 @@ import type {
 export function convertSignatureEntityToAnchor(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity, displayName?: string): AnchorNode {
 
   const id = signatureEntity.declarationId;
-  const convertedSignature = convertSignature(ctx, signatureEntity);
-  const renderedSignature = renderNode(ctx, convertedSignature);
+  const convertedSignatureForAnchor = convertSignature(ctx, signatureEntity, "documentation");
+  const renderedSignatureForAnchor = renderNode(ctx, convertedSignatureForAnchor);
+
+  const convertedSignatureForTableOfContents = convertSignature(ctx, signatureEntity, "tableOfContents");
+  const renderedSignatureForTableOfContents = renderNode(ctx, convertedSignatureForTableOfContents);
+
+  displayName ??= renderedSignatureForTableOfContents;
 
   return createAnchorNode(
-    renderedSignature,
+    renderedSignatureForAnchor,
     id,
     displayName
   );
@@ -85,7 +90,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const declarationId = signatureEntity.declarationId;
   const symbolId = signatureEntity.symbolId;
 
-  const signature = convertSignature(ctx, signatureEntity);
+  const signature = convertSignature(ctx, signatureEntity, "documentation");
   const renderedSignature = renderNode(ctx, signature);
   const anchor = registerAnchor(ctx, renderedSignature, [declarationId, ...symbolId ? [symbolId] : []]);
 
@@ -124,7 +129,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
 
 export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForType {
 
-  const signature = convertSignature(ctx, signatureEntity);
+  const signature = convertSignature(ctx, signatureEntity, "documentation");
   const tags = convertTagsForType(ctx, signatureEntity);
   const typeParameters = convertTypeParameterEntitiesForType(ctx, signatureEntity.typeParameters);
   const parameters = convertParameterEntitiesForType(ctx, signatureEntity.parameters);
@@ -154,14 +159,21 @@ export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatu
 }
 
 
-function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ASTNode {
+function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity, target: "documentation" | "tableOfContents"): ASTNode {
 
   const renderConfig = getRenderConfig(ctx);
 
   const name = signatureEntity.name;
-  const nameWithContext = name === "constructor"
-    ? `new ${renderMemberContext(ctx)}`
-    : name && renderMemberContext(ctx, name);
+  const withRenderContext = isRenderParentNamesEnabled(ctx, target);
+  const nameWithContext =
+  name === "constructor"
+    ? withRenderContext
+      ? `new ${renderMemberContext(ctx, target)}`
+      : ctx.memberContext.length > 0
+        ? `new ${ctx.memberContext.at(-1)}`
+        : name
+    : renderMemberContext(ctx, target, name);
+
 
   const convertedTypeParameters = signatureEntity.typeParameters && signatureEntity.typeParameters.length > 0 &&
     convertTypeParameterEntitiesForSignature(ctx, signatureEntity.typeParameters);

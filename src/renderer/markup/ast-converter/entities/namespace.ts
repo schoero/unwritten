@@ -26,10 +26,13 @@ export function convertNamespaceEntityToAnchor(ctx: MarkupRenderContexts, namesp
 
   const id = namespaceEntity.symbolId;
   const name = namespaceEntity.name;
-  const nameWithContext = renderMemberContext(ctx, name);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+
+  displayName ??= tableOfContentsName;
 
   return createAnchorNode(
-    nameWithContext,
+    documentationName,
     id,
     displayName
   );
@@ -59,7 +62,7 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts
   const name = namespaceEntity.name;
   const symbolId = namespaceEntity.symbolId;
 
-  const nameWithContext = renderMemberContext(ctx, name);
+  const nameWithContext = renderMemberContext(ctx, "documentation", name);
   const anchor = registerAnchor(ctx, nameWithContext, symbolId);
 
   return withMemberContext(ctx, name, () => {

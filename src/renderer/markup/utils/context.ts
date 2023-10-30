@@ -3,11 +3,14 @@ import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
 
 
-export function renderMemberContext(ctx: MarkupRenderContexts, name?: string): string {
-
+export function isRenderParentNamesEnabled(ctx: MarkupRenderContexts, target: "documentation" | "tableOfContents"): boolean {
   const renderConfig = getRenderConfig(ctx);
+  return renderConfig.renderParentNames === true || renderConfig.renderParentNames === target;
+}
 
-  return renderConfig.renderParentNames
+export function renderMemberContext(ctx: MarkupRenderContexts, target: "documentation" | "tableOfContents", name?: string): string {
+
+  return isRenderParentNamesEnabled(ctx, target)
     ? [
       ...ctx.memberContext,
       ...name
@@ -33,8 +36,9 @@ export function withMemberContext<RenderContext extends MarkupRenderContexts, Re
 }
 
 export function withNesting<RenderContext extends MarkupRenderContexts, ReturnType>(ctx: RenderContext, callback: (ctx: RenderContext) => ReturnType): ReturnType {
+  const initialNesting = ctx.nesting;
   ctx.nesting++;
   const result = callback(ctx);
-  ctx.nesting--;
+  initialNesting !== ctx.nesting && ctx.nesting--;
   return result;
 }

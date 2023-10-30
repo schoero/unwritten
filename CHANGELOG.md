@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.1.3
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.1.2...v0.1.3)
+
+### Features
+
+- Allow partial rendering of parent names ([c960a4e](https://github.com/schoero/unwritten/commit/c960a4e))
+
+### Fixes
+
+- Reduce nesting only if it was increased ([8126e25](https://github.com/schoero/unwritten/commit/8126e25))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.1.2
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.1.1...v0.1.2)

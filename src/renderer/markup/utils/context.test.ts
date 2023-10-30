@@ -68,18 +68,18 @@ scope("Renderer", "utils", () => {
       it("should render the parent name by default", () => {
         const ctx = createRenderContext();
 
-        expect(renderMemberContext(ctx, "name")).toBe("name");
+        expect(renderMemberContext(ctx, "documentation", "name")).toBe("name");
         expect(
           renderMemberContext({
             ...ctx,
             memberContext: ["outer"]
-          }, "name")
+          }, "documentation", "name")
         ).toBe("outer.name");
         expect(
           renderMemberContext({
             ...ctx,
             memberContext: ["outer", "inner"]
-          }, "name")
+          }, "documentation", "name")
         ).toBe("outer.inner.name");
 
       });
@@ -89,20 +89,19 @@ scope("Renderer", "utils", () => {
         const renderConfig = getRenderConfig(ctx);
         renderConfig.renderParentNames = false;
 
-        expect(renderMemberContext(ctx, "name")).toBe("name");
+        expect(renderMemberContext(ctx, "documentation", "name")).toBe("name");
         expect(
           renderMemberContext({
             ...ctx,
             memberContext: ["outer"]
-          }, "name")
+          }, "documentation", "name")
         ).toBe("name");
         expect(
           renderMemberContext({
             ...ctx,
             memberContext: ["outer", "inner"]
-          }, "name")
+          }, "documentation", "name")
         ).toBe("name");
-
       });
 
     });
