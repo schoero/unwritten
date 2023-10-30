@@ -1,4 +1,4 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 import type {
   CircularEntity,
@@ -25,7 +25,7 @@ import type {
   TypeParameterEntity,
   UnresolvedEntity,
   VariableEntity
-} from "unwritten:interpreter/type-definitions/entities.js";
+} from "unwritten:interpreter/type-definitions/entities";
 
 
 export function isCircularEntity(entity: Entity): entity is CircularEntity {

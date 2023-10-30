@@ -1,11 +1,11 @@
-import { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node.js";
-import { absolute, getDirectory, join } from "unwritten:platform/path/node.js";
-import { cwd } from "unwritten:platform/process/node.js";
+import { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node";
+import { absolute, getDirectory, join } from "unwritten:platform/path/node";
+import { cwd } from "unwritten:platform/process/node";
 
-import { getDefaultConfig } from "./config.js";
+import { getDefaultConfig } from "./config";
 
-import type { ConfigForSchema } from "unwritten:type-definitions/config.js";
-import type { Options } from "unwritten:type-definitions/options.js";
+import type { ConfigForSchema } from "unwritten:type-definitions/config";
+import type { Options } from "unwritten:type-definitions/options";
 
 
 export async function generateConfig(path?: string, options?: Options) {

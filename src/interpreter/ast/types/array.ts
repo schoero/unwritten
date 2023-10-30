@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/array-type */
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id";
+import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { ArrayTypeNode, TypeReference } from "typescript";
 
-import type { ArrayType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { ArrayType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createArrayType(ctx: InterpreterContext, typeReference: TypeReference): ArrayType {

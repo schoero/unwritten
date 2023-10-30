@@ -1,9 +1,9 @@
 import { expect, it } from "vitest";
 
-import { renderNode } from "unwritten:renderer/index.js";
-import { createConditionalNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
+import { renderNode } from "unwritten:renderer/index";
+import { createConditionalNode } from "unwritten:renderer:markup/utils/nodes";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
 
 
 scope("HTMLRenderer", "ConditionalNode", () => {

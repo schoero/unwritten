@@ -1,8 +1,8 @@
-import { evaluateCondition } from "unwritten:renderer/markup/utils/condition.js";
-import { renderNode } from "unwritten:renderer:html/index.js";
+import { evaluateCondition } from "unwritten:renderer/markup/utils/condition";
+import { renderNode } from "unwritten:renderer:html/index";
 
-import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ConditionalNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ConditionalNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderConditionalNode(ctx: HTMLRenderContext, conditionalNode: ConditionalNode): string {

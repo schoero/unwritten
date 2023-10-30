@@ -1,18 +1,18 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
-import { isMultilineUnionType } from "unwritten:renderer/markup/utils/types.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes";
+import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations";
+import { isMultilineUnionType } from "unwritten:renderer/markup/utils/types";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 
-import type { UnionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { ASTNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { UnionType } from "unwritten:interpreter:type-definitions/types";
+import type { ASTNode } from "unwritten:renderer/markup/types-definitions/nodes";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedUnionTypeInline,
   ConvertedUnionTypeMultiline
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertUnionTypeInline(ctx: MarkupRenderContexts, unionType: UnionType): ConvertedUnionTypeInline {

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 import type {
   HTMLRenderConfig,
   MarkdownRenderConfig,
   MarkupRenderConfig
-} from "unwritten:renderer:markup/types-definitions/config.js";
-import type { Complete } from "unwritten:type-definitions/utils.js";
+} from "unwritten:renderer:markup/types-definitions/config";
+import type { Complete } from "unwritten:type-definitions/utils";
 
 
 const defaultRenderConfig: Complete<MarkupRenderConfig> = {

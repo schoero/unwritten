@@ -1,9 +1,9 @@
-import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { renderNode } from "unwritten:renderer:html/index.js";
+import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { renderNode } from "unwritten:renderer:html/index";
 
-import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { MultilineNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MultilineNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderMultilineNode(ctx: HTMLRenderContext, multilineNode: MultilineNode): string {

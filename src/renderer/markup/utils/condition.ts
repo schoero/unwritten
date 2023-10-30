@@ -1,4 +1,4 @@
-import type { ConditionalOperator } from "unwritten:renderer/markup/types-definitions/nodes.js";
+import type { ConditionalOperator } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function evaluateCondition(func: Function, args: unknown[], operator: ConditionalOperator, value: any): boolean {

@@ -1,10 +1,10 @@
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { Optional } from "unwritten:interpreter/type-definitions/shared.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { Optional } from "unwritten:interpreter/type-definitions/shared";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function convertOptional(ctx: MarkupRenderContexts, entity: Optional): ASTNode[] {

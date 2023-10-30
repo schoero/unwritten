@@ -1,6 +1,6 @@
-import { readFileSync } from "unwritten:platform/file-system/node.js";
-import { absolute, getDirectory } from "unwritten:platform/path/node.js";
-import { assert } from "unwritten:utils:general.js";
+import { readFileSync } from "unwritten:platform/file-system/node";
+import { absolute, getDirectory } from "unwritten:platform/path/node";
+import { assert } from "unwritten:utils:general";
 
 
 const currentDirectoryPath = getDirectory(import.meta.url);

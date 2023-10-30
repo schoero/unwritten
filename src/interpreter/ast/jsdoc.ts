@@ -1,21 +1,21 @@
-import { createGenericJSDocTag } from "unwritten:interpreter/ast/jsdoc/generic.js";
-import { createJSDocLink } from "unwritten:interpreter/ast/jsdoc/link.js";
-import { createJSDocSeeTag } from "unwritten:interpreter/ast/jsdoc/see.js";
-import { createJSDocText } from "unwritten:interpreter/ast/jsdoc/text.js";
-import { createJSDocThrowsTag } from "unwritten:interpreter/ast/jsdoc/throws.js";
-import { JSDocKind } from "unwritten:interpreter/enums/jsdoc.js";
+import { createGenericJSDocTag } from "unwritten:interpreter/ast/jsdoc/generic";
+import { createJSDocLink } from "unwritten:interpreter/ast/jsdoc/link";
+import { createJSDocSeeTag } from "unwritten:interpreter/ast/jsdoc/see";
+import { createJSDocText } from "unwritten:interpreter/ast/jsdoc/text";
+import { createJSDocThrowsTag } from "unwritten:interpreter/ast/jsdoc/throws";
+import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 import {
   isJSDoc,
   isJSDocLink,
   isJSDocSeeTag,
   isJSDocText,
   isJSDocThrowsTag
-} from "unwritten:interpreter/typeguards/jsdoc.js";
+} from "unwritten:interpreter/typeguards/jsdoc";
 
 import type { Declaration, JSDoc, JSDocComment, JSDocTag as TSJSDocTag, NodeArray } from "typescript";
 
-import type { JSDocProperties, JSDocTag, JSDocTags } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { JSDocProperties, JSDocTag, JSDocTags } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function getJSDocProperties(ctx: InterpreterContext, declaration: Declaration): JSDocProperties {

@@ -1,4 +1,4 @@
-import { lineEndings } from "unwritten:platform/os/node.js";
+import { lineEndings } from "unwritten:platform/os/node";
 
 
 export module logger {

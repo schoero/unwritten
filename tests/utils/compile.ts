@@ -1,19 +1,19 @@
 import ts, { ModuleResolutionKind } from "typescript";
 
-import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler:shared.js";
-import { getDefaultConfig } from "unwritten:config/config.js";
-import { createContext } from "unwritten:interpreter/utils/context.js";
-import * as fs from "unwritten:platform/file-system/browser.js";
-import { readFileSync as readFileSyncOriginal } from "unwritten:platform/file-system/node.js";
-import { logger } from "unwritten:platform/logger/node.js";
-import os from "unwritten:platform/os/node.js";
-import path from "unwritten:platform/path/browser.js";
-import process from "unwritten:platform/process/browser.js";
-import { createContext as createDefaultContext } from "unwritten:utils/context.js";
-import { override } from "unwritten:utils/override.js";
-import { assert } from "unwritten:utils:general.js";
+import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler:shared";
+import { getDefaultConfig } from "unwritten:config/config";
+import { createContext } from "unwritten:interpreter/utils/context";
+import * as fs from "unwritten:platform/file-system/browser";
+import { readFileSync as readFileSyncOriginal } from "unwritten:platform/file-system/node";
+import { logger } from "unwritten:platform/logger/node";
+import os from "unwritten:platform/os/node";
+import path from "unwritten:platform/path/browser";
+import process from "unwritten:platform/process/browser";
+import { createContext as createDefaultContext } from "unwritten:utils/context";
+import { override } from "unwritten:utils/override";
+import { assert } from "unwritten:utils:general";
 
-import type { Config } from "unwritten:type-definitions/config.js";
+import type { Config } from "unwritten:type-definitions/config";
 
 
 type CompilerInput = {

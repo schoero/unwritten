@@ -1,8 +1,8 @@
-import { renderNode } from "unwritten:renderer/markup/html/index.js";
-import { createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { renderNode } from "unwritten:renderer/markup/html/index";
+import { createTitleNode } from "unwritten:renderer/markup/utils/nodes";
 
-import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { InlineTitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { InlineTitleNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderInlineTitleNode(ctx: HTMLRenderContext, inlineTitleNode: InlineTitleNode): string {

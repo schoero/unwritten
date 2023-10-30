@@ -1,11 +1,11 @@
 import { expect, it } from "vitest";
 
-import { createBoldNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { html } from "unwritten:utils/template.js";
+import { createBoldNode } from "unwritten:renderer:markup/utils/nodes";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { html } from "unwritten:utils/template";
 
-import { renderBoldNode } from "./bold.js";
+import { renderBoldNode } from "./bold";
 
 
 scope("HTMLRenderer", "BoldNode", () => {

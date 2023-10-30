@@ -1,11 +1,11 @@
 import { expect, it } from "vitest";
 
-import { createSourceFileEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:utils/template.js";
+import { createSourceFileEntity } from "unwritten:interpreter/ast/entities/index";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { ts } from "unwritten:utils/template";
 
 
 scope("JSONRenderer", "JSON", () => {

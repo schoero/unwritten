@@ -1,20 +1,20 @@
 import { expect, it } from "vitest";
 
-import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { isMultilineNode } from "unwritten:renderer/markup/typeguards/renderer.js";
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { isMultilineNode } from "unwritten:renderer/markup/typeguards/renderer";
 import {
   convertArrayTypeInline,
   convertArrayTypeMultiline
-} from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+} from "unwritten:renderer:markup/ast-converter/types/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
-import type { ArrayType } from "unwritten:interpreter:type-definitions/types.js";
-import type { ConvertedObjectTypeMultiline } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { ArrayType } from "unwritten:interpreter:type-definitions/types";
+import type { ConvertedObjectTypeMultiline } from "unwritten:renderer/markup/types-definitions/renderer";
 
 
 scope("MarkupRenderer", TypeKind.Array, () => {

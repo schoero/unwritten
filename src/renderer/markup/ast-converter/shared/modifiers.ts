@@ -1,8 +1,8 @@
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function convertModifiers(ctx: MarkupRenderContexts, modifiers?: string[]): ASTNode[] {

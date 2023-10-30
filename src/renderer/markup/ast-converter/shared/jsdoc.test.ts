@@ -1,11 +1,11 @@
 import { expect, it } from "vitest";
 
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { RenderableJSDocKeyTags } from "unwritten:renderer:markup/enums/jsdoc.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { RenderableJSDocKeyTags } from "unwritten:renderer:markup/enums/jsdoc";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
 
-import { convertJSDocTags, hasRenderableJSDocKeyTags } from "./jsdoc.js";
+import { convertJSDocTags, hasRenderableJSDocKeyTags } from "./jsdoc";
 
 
 scope("MarkupRenderer", "JSDocTags", () => {

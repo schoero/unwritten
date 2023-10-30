@@ -1,4 +1,4 @@
-import type { Process } from "unwritten:type-definitions/process.js";
+import type { Process } from "unwritten:type-definitions/process";
 
 
 const process: Process = {

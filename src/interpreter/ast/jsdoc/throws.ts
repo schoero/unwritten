@@ -1,11 +1,11 @@
-import { interpretJSDocComments } from "unwritten:interpreter/ast/jsdoc.js";
-import { createJSDocType } from "unwritten:interpreter/ast/jsdoc/type.js";
-import { JSDocKind } from "unwritten:interpreter/enums/jsdoc.js";
+import { interpretJSDocComments } from "unwritten:interpreter/ast/jsdoc";
+import { createJSDocType } from "unwritten:interpreter/ast/jsdoc/type";
+import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 
 import type { JSDocThrowsTag as TSJSDocThrowsTag } from "typescript";
 
-import type { JSDocThrowsTag } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { JSDocThrowsTag } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createJSDocThrowsTag(ctx: InterpreterContext, jsdocThrowsTag: TSJSDocThrowsTag): JSDocThrowsTag {

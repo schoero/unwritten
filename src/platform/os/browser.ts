@@ -1,4 +1,4 @@
-import type { OS } from "unwritten:type-definitions/os.js";
+import type { OS } from "unwritten:type-definitions/os";
 
 
 function getEOL(): string {

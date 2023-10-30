@@ -1,19 +1,19 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
-import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
-import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer.js";
-import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
-import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
+import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer";
+import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 import {
   isParameterDeclaration,
   isPropertyAssignment,
   isPropertyDeclaration,
   isPropertySignatureDeclaration,
   isShorthandPropertyAssignment
-} from "unwritten:interpreter:typeguards/declarations.js";
-import { assert } from "unwritten:utils:general.js";
+} from "unwritten:interpreter:typeguards/declarations";
+import { assert } from "unwritten:utils:general";
 
 import { getTypeByDeclaration, getTypeBySymbol } from "../type";
 
@@ -26,8 +26,8 @@ import type {
   Symbol
 } from "typescript";
 
-import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createPropertyEntity = (ctx: InterpreterContext, symbol: Symbol): PropertyEntity => withLockedSymbol(ctx, symbol, () => {

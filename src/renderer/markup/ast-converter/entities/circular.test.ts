@@ -1,11 +1,11 @@
 import { expect, it } from "vitest";
 
-import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:utils/template.js";
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { ts } from "unwritten:utils/template";
 
 
 scope("MarkupRenderer", TypeKind.Class, () => {

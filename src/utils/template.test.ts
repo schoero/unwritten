@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { ts } from "./template.js";
+import { ts } from "./template";
 
 
 describe("template utils", () => {

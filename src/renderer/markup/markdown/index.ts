@@ -1,33 +1,33 @@
 /* eslint-disable arrow-body-style */
 
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/conditional.js";
-import { renderInlineTitleNode } from "unwritten:renderer/markup/markdown/ast/inline-title.js";
-import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/multiline.js";
-import { renderPaddedNode } from "unwritten:renderer/markup/markdown/ast/padded.js";
-import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line.js";
-import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/conditional";
+import { renderInlineTitleNode } from "unwritten:renderer/markup/markdown/ast/inline-title";
+import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/multiline";
+import { renderPaddedNode } from "unwritten:renderer/markup/markdown/ast/padded";
+import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line";
+import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape";
 import {
   createCurrentSourceFile,
   registerAnonymousAnchor,
   setCurrentSourceFile
-} from "unwritten:renderer/markup/registry/registry.js";
-import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
-import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { capitalize } from "unwritten:renderer/markup/utils/translations.js";
-import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor.js";
-import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold.js";
-import { renderItalicNode } from "unwritten:renderer:markdown/ast/italic.js";
-import { renderLinkNode } from "unwritten:renderer:markdown/ast/link.js";
-import { renderListNode } from "unwritten:renderer:markdown/ast/list.js";
-import { renderParagraphNode } from "unwritten:renderer:markdown/ast/paragraph.js";
-import { renderSectionNode } from "unwritten:renderer:markdown/ast/section.js";
-import { renderSmallNode } from "unwritten:renderer:markdown/ast/small.js";
-import { renderSpanNode } from "unwritten:renderer:markdown/ast/span.js";
-import { renderStrikethroughNode } from "unwritten:renderer:markdown/ast/strikethrough.js";
-import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index.js";
+} from "unwritten:renderer/markup/registry/registry";
+import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file";
+import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes";
+import { capitalize } from "unwritten:renderer/markup/utils/translations";
+import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor";
+import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold";
+import { renderItalicNode } from "unwritten:renderer:markdown/ast/italic";
+import { renderLinkNode } from "unwritten:renderer:markdown/ast/link";
+import { renderListNode } from "unwritten:renderer:markdown/ast/list";
+import { renderParagraphNode } from "unwritten:renderer:markdown/ast/paragraph";
+import { renderSectionNode } from "unwritten:renderer:markdown/ast/section";
+import { renderSmallNode } from "unwritten:renderer:markdown/ast/small";
+import { renderSpanNode } from "unwritten:renderer:markdown/ast/span";
+import { renderStrikethroughNode } from "unwritten:renderer:markdown/ast/strikethrough";
+import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index";
 import {
   isAnchorNode,
   isBoldNode,
@@ -44,17 +44,17 @@ import {
   isSpanNode,
   isStrikethroughNode,
   isTitleNode
-} from "unwritten:renderer:markup/typeguards/renderer.js";
-import { minMax } from "unwritten:renderer:markup/utils/renderer.js";
+} from "unwritten:renderer:markup/typeguards/renderer";
+import { minMax } from "unwritten:renderer:markup/utils/renderer";
 
-import { renderTitleNode } from "./ast/title.js";
+import { renderTitleNode } from "./ast/title";
 
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry.js";
-import type { MarkdownRenderContext, MarkdownRenderer } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
-import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { RenderOutput } from "unwritten:type-definitions/renderer.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
+import type { MarkdownRenderContext, MarkdownRenderer } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
+import type { RenderContext } from "unwritten:type-definitions/context";
+import type { RenderOutput } from "unwritten:type-definitions/renderer";
 
 
 export function isMarkdownRenderContext(ctx: RenderContext): ctx is MarkdownRenderContext {

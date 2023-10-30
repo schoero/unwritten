@@ -1,13 +1,13 @@
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default.js";
-import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default.js";
-import { findFile } from "unwritten:utils:finder.js";
-import { override } from "unwritten:utils:override.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default";
+import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default";
+import { findFile } from "unwritten:utils:finder";
+import { override } from "unwritten:utils:override";
 
-import { defaultExternalTypes, defaultInterpreterConfig, defaultOutputPath } from "./default.js";
+import { defaultExternalTypes, defaultInterpreterConfig, defaultOutputPath } from "./default";
 
-import type { CompleteConfig, Config } from "unwritten:type-definitions/config.js";
-import type { DefaultContext } from "unwritten:type-definitions/context.js";
+import type { CompleteConfig, Config } from "unwritten:type-definitions/config";
+import type { DefaultContext } from "unwritten:type-definitions/context";
 
 
 const CONFIG_NAMES = [

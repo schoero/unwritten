@@ -1,6 +1,6 @@
-import { isDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
-import { isSymbol } from "unwritten:interpreter:typeguards/symbols.js";
-import { isTypeNode } from "unwritten:interpreter:typeguards/type-nodes.js";
+import { isDeclaration } from "unwritten:interpreter:typeguards/declarations";
+import { isSymbol } from "unwritten:interpreter:typeguards/symbols";
+import { isTypeNode } from "unwritten:interpreter:typeguards/type-nodes";
 
 import type {
   BigIntLiteralType,
@@ -25,7 +25,7 @@ import type {
   UnionType
 } from "typescript";
 
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function isAnonymousType(ctx: InterpreterContext, type: Type) {

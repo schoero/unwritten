@@ -1,14 +1,14 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getSymbolIdByType, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
-import { withLockedType } from "unwritten:interpreter:utils/ts.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getSymbolIdByType, getTypeId } from "unwritten:interpreter:ast/shared/id";
+import { getNameByType } from "unwritten:interpreter:ast/shared/name";
+import { withLockedType } from "unwritten:interpreter:utils/ts";
 
 import { getTypeByType } from "../type";
 
 import type { TypeParameter } from "typescript";
 
-import type { TypeParameterType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { TypeParameterType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createTypeParameterType = (ctx: InterpreterContext, type: TypeParameter): TypeParameterType => withLockedType(ctx, type, () => {

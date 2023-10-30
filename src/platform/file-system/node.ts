@@ -7,7 +7,7 @@ import {
   writeFileSync as nodeWriteFileSync
 } from "node:fs";
 
-import type { FileSystem } from "unwritten:types:file-system.js";
+import type { FileSystem } from "unwritten:types:file-system";
 
 
 const fileSystem: FileSystem = {

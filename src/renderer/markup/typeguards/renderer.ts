@@ -1,4 +1,4 @@
-import { ASTNodeKinds } from "../enums/nodes.js";
+import { ASTNodeKinds } from "../enums/nodes";
 
 import type {
   AnchorNode,
@@ -17,7 +17,7 @@ import type {
   SpanNode,
   StrikethroughNode,
   TitleNode
-} from "unwritten:renderer:markup/types-definitions/nodes.js";
+} from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function isAnchorNode(node: ASTNode): node is AnchorNode {

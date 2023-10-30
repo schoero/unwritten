@@ -5,9 +5,9 @@ import {
   createPropertyEntity,
   createSetterEntity,
   createUnresolvedEntity
-} from "unwritten:interpreter/ast/entities/index.js";
-import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position.js";
-import { isSymbolLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
+} from "unwritten:interpreter/ast/entities/index";
+import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position";
+import { isSymbolLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
 import {
   createClassEntity,
   createEnumEntity,
@@ -21,8 +21,8 @@ import {
   createTypeAliasEntity,
   createTypeParameterEntity,
   createVariableEntity
-} from "unwritten:interpreter:ast/entities/index.js";
-import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
+} from "unwritten:interpreter:ast/entities/index";
+import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import {
   isClassSymbol,
   isEnumSymbol,
@@ -40,14 +40,14 @@ import {
   isTypeAliasSymbol,
   isTypeParameterSymbol,
   isVariableSymbol
-} from "unwritten:interpreter:typeguards/symbols.js";
-import { isSymbolExcluded } from "unwritten:utils/exclude.js";
-import { assert } from "unwritten:utils:general.js";
+} from "unwritten:interpreter:typeguards/symbols";
+import { isSymbolExcluded } from "unwritten:utils/exclude";
+import { assert } from "unwritten:utils:general";
 
 import type { Symbol } from "typescript";
 
-import type { Entity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { Entity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function interpret(ctx: InterpreterContext, sourceFileSymbols: Symbol[]): SourceFileEntity[] {

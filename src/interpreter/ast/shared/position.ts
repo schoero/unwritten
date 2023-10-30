@@ -1,7 +1,7 @@
 import type { Declaration, Node, Symbol, Type } from "typescript";
 
-import type { Position } from "unwritten:interpreter:type-definitions/shared.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { Position } from "unwritten:interpreter:type-definitions/shared";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function getPositionByNode(ctx: InterpreterContext, node: Node): Position {

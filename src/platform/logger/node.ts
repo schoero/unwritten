@@ -1,7 +1,7 @@
 import { stdout } from "node:process";
 
-import { lineEndings } from "unwritten:platform/os/node.js";
-import { name, version } from "unwritten:utils/package-json.entry.js";
+import { lineEndings } from "unwritten:platform/os/node";
+import { name, version } from "unwritten:utils/package-json.entry";
 
 
 export namespace logger {

@@ -5,9 +5,9 @@ import {
   readFileSync as virtualReadFileSync,
   rmSync as virtualRmSync,
   writeFileSync as virtualWriteFileSync
-} from "unwritten:platform/file-system/virtual-fs.js";
+} from "unwritten:platform/file-system/virtual-fs";
 
-import type { FileSystem } from "unwritten:types:file-system.js";
+import type { FileSystem } from "unwritten:types:file-system";
 
 
 const fileSystem: FileSystem = {

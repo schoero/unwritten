@@ -1,6 +1,6 @@
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { FilePath } from "unwritten:type-definitions/file-system.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { RenderContext } from "unwritten:type-definitions/context";
+import type { FilePath } from "unwritten:type-definitions/file-system";
 
 
 const MAX_IDENTICAL_FILE_NAMES = 10;

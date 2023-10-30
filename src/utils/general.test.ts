@@ -1,9 +1,9 @@
 /* eslint-disable sort-keys/sort-keys-fix */
 import { describe, expect, it } from "vitest";
 
-import { scope } from "unwritten:tests:utils/scope.js";
+import { scope } from "unwritten:tests:utils/scope";
 
-import { sortKeys } from "./general.js";
+import { sortKeys } from "./general";
 
 
 scope("Interpreter", "Utils", () => {

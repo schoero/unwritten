@@ -1,10 +1,10 @@
-import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/multiline.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line.js";
+import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/multiline";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
 
-import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderSectionNode(ctx: MarkdownRenderContext, sectionNode: SectionNode): string {

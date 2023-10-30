@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { override } from "./override.js";
+import { override } from "./override";
 
 
 describe("override", () => {

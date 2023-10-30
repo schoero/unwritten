@@ -1,42 +1,42 @@
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 import {
   filterOutImplicitSignatures,
   filterOutPrivateMembers,
   filterOutPrivateSignatures
-} from "unwritten:renderer/utils/private-members.js";
+} from "unwritten:renderer/utils/private-members";
 import {
   convertEventPropertyEntityForType,
   convertPropertyEntityForType,
   convertSignatureEntityForType,
   convertTypeParameterEntitiesForDocumentation
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
-import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
+import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
+import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createListNode,
   createSectionNode,
   createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
+} from "unwritten:renderer:markup/utils/nodes";
 import {
   extendInterfaceEntityPropertiesWithHeritage,
   extendInterfaceEntitySignaturesWithHeritage
-} from "unwritten:renderer:utils/heritage.js";
+} from "unwritten:renderer:utils/heritage";
 
-import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedInterfaceEntityForDocumentation,
   ConvertedInterfaceEntityForTableOfContents
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity, displayName?: string): AnchorNode {

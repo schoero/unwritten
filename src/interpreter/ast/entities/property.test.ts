@@ -1,17 +1,17 @@
 import { assert, expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 import {
   createClassEntity,
   createTypeAliasEntity,
   createVariableEntity
-} from "unwritten:interpreter:ast/entities/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
-import { isObjectType, isStringLiteralType, isTypeReferenceType } from "unwritten:typeguards/types.js";
-import { ts } from "unwritten:utils/template.js";
+} from "unwritten:interpreter:ast/entities/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { isJSDocText } from "unwritten:typeguards/jsdoc";
+import { isObjectType, isStringLiteralType, isTypeReferenceType } from "unwritten:typeguards/types";
+import { ts } from "unwritten:utils/template";
 
 
 scope("Interpreter", EntityKind.Property, () => {

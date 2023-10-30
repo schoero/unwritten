@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { evaluateCondition } from "unwritten:renderer/markup/utils/condition.js";
-import { scope } from "unwritten:tests:utils/scope.js";
+import { evaluateCondition } from "unwritten:renderer/markup/utils/condition";
+import { scope } from "unwritten:tests:utils/scope";
 
 
 scope("Renderer", "utils", () => {

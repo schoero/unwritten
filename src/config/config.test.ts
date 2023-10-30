@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { beforeAll, expect, it, vitest } from "vitest";
 
-import { createConfig } from "unwritten:config/config.js";
-import { mkdirSync, readFileSync, writeFileSync } from "unwritten:platform/file-system/browser.js";
-import { } from "unwritten:platform/file-system/virtual-fs.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
+import { createConfig } from "unwritten:config/config";
+import { mkdirSync, readFileSync, writeFileSync } from "unwritten:platform/file-system/browser";
+import { } from "unwritten:platform/file-system/virtual-fs";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
 
 
 scope("Integration", "Config", async () => {

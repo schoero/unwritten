@@ -1,15 +1,15 @@
-import { convertJSDocType } from "unwritten:renderer/markup/ast-converter/jsdoc/index.js";
-import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
-import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
-import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
+import { convertJSDocType } from "unwritten:renderer/markup/ast-converter/jsdoc/index";
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { getTranslator } from "unwritten:renderer/markup/utils/translations";
+import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 
 import type { Throws } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedThrowsForDocumentation,
   ConvertedThrowsForType
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertThrowsForDocumentation(ctx: MarkupRenderContexts, throws: Throws): ConvertedThrowsForDocumentation {

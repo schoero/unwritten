@@ -1,14 +1,14 @@
 import { expect, it } from "vitest";
 
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { createSpanNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { attachTestRegistry } from "unwritten:tests:utils/registry.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { md } from "unwritten:utils/template.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { createSpanNode } from "unwritten:renderer:markup/utils/nodes";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { attachTestRegistry } from "unwritten:tests:utils/registry";
+import { scope } from "unwritten:tests:utils/scope";
+import { md } from "unwritten:utils/template";
 
-import { renderSpanNode } from "./span.js";
+import { renderSpanNode } from "./span";
 
 
 scope("MarkdownRenderer", "SpanNode", () => {

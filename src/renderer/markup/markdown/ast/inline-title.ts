@@ -1,13 +1,13 @@
-import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/multiline.js";
-import { renderNode } from "unwritten:renderer/markup/markdown/index.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line.js";
+import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/multiline";
+import { renderNode } from "unwritten:renderer/markup/markdown/index";
+import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
 
-import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { InlineTitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { InlineTitleNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderInlineTitleNode(ctx: MarkdownRenderContext, inlineTitleNode: InlineTitleNode): string {

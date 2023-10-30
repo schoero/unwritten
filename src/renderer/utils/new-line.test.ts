@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
 
 
 scope("Renderer", "utils", () => {

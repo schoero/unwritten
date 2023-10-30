@@ -1,13 +1,13 @@
-import { withIndentation } from "unwritten:renderer/markup/utils/context.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { renderNode } from "unwritten:renderer:html/index.js";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
+import { withIndentation } from "unwritten:renderer/markup/utils/context";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { renderNode } from "unwritten:renderer:html/index";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
 
-import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
-import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
+import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes";
+import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections";
 
 
 export function renderSectionNode(ctx: HTMLRenderContext, sectionNode: SectionNode): string {

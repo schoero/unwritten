@@ -1,12 +1,12 @@
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByNode } from "unwritten:interpreter/ast/shared/position.js";
-import { interpretSymbol } from "unwritten:interpreter/ast/symbol.js";
-import { JSDocKind } from "unwritten:interpreter/enums/jsdoc.js";
+import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
+import { getPositionByNode } from "unwritten:interpreter/ast/shared/position";
+import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
+import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 
 import type { EntityName, JSDocMemberName } from "typescript";
 
-import type { JSDocReference } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { JSDocReference } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createJSDocReference(ctx: InterpreterContext, identifier: EntityName | JSDocMemberName): JSDocReference | undefined {

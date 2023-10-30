@@ -1,19 +1,19 @@
 import ts from "typescript";
 
-import { compile } from "unwritten:compiler:node.js";
-import { createConfig } from "unwritten:config/config.js";
-import { interpret } from "unwritten:interpreter/ast/symbol.js";
-import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
-import { getEntryFileSymbolsFromProgram } from "unwritten:interpreter:utils/ts.js";
-import fs, { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node.js";
-import os from "unwritten:platform/os/node.js";
-import path from "unwritten:platform/path/node.js";
-import process from "unwritten:platform/process/node.js";
-import { getRenderer } from "unwritten:renderer:index.js";
-import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";
-import { createContext as createDefaultContext } from "unwritten:utils:context.js";
+import { compile } from "unwritten:compiler:node";
+import { createConfig } from "unwritten:config/config";
+import { interpret } from "unwritten:interpreter/ast/symbol";
+import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context";
+import { getEntryFileSymbolsFromProgram } from "unwritten:interpreter:utils/ts";
+import fs, { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node";
+import os from "unwritten:platform/os/node";
+import path from "unwritten:platform/path/node";
+import process from "unwritten:platform/process/node";
+import { getRenderer } from "unwritten:renderer:index";
+import { createContext as createRenderContext } from "unwritten:renderer:utils/context";
+import { createContext as createDefaultContext } from "unwritten:utils:context";
 
-import type { APIOptions } from "unwritten:type-definitions/options.js";
+import type { APIOptions } from "unwritten:type-definitions/options";
 
 
 export async function unwritten(entryFilePaths: string[] | string, options?: APIOptions): Promise<string[]> {

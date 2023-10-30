@@ -1,8 +1,8 @@
-import { reportCompilerDiagnostics } from "unwritten:compiler/shared.js";
+import { reportCompilerDiagnostics } from "unwritten:compiler/shared";
 
 import type { CompilerHost, CompilerOptions } from "typescript";
 
-import type { DefaultContext } from "unwritten:type-definitions/context.js";
+import type { DefaultContext } from "unwritten:type-definitions/context";
 
 
 export function compile(ctx: DefaultContext, code: string, tsconfig?: CompilerOptions) {

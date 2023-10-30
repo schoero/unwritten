@@ -1,15 +1,15 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createClassEntity, createFunctionEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { createClassEntity, createFunctionEntity } from "unwritten:interpreter:ast/entities/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { isJSDocText } from "unwritten:typeguards/jsdoc";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
-import { createInterfaceEntity } from "./interface.js";
+import { createInterfaceEntity } from "./interface";
 
 
 scope("Interpreter", EntityKind.Signature, () => {

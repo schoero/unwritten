@@ -1,12 +1,12 @@
-import { getNameByTypeNode } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByNode } from "unwritten:interpreter/ast/shared/position.js";
-import { getTypeByTypeNode } from "unwritten:interpreter/ast/type.js";
-import { JSDocKind } from "unwritten:interpreter/enums/jsdoc.js";
+import { getNameByTypeNode } from "unwritten:interpreter/ast/shared/name";
+import { getPositionByNode } from "unwritten:interpreter/ast/shared/position";
+import { getTypeByTypeNode } from "unwritten:interpreter/ast/type";
+import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 
 import type { JSDocTypeExpression } from "typescript";
 
-import type { JSDocType } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { JSDocType } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createJSDocType(ctx: InterpreterContext, typeExpression: JSDocTypeExpression): JSDocType | undefined {

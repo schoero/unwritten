@@ -1,23 +1,23 @@
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
-import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index";
+import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
+import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
   isFunctionLikeDeclaration,
   isMethodSignatureDeclaration
-} from "unwritten:interpreter:typeguards/declarations.js";
-import { functionOverloadDeclarationFilter } from "unwritten:interpreter:utils/filter.js";
-import { assert } from "unwritten:utils/general.js";
+} from "unwritten:interpreter:typeguards/declarations";
+import { functionOverloadDeclarationFilter } from "unwritten:interpreter:utils/filter";
+import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";
 
 import type {
   FunctionLikeEntityKinds,
   InferFunctionLikeEntityKind
-} from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+} from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> => withLockedSymbol(ctx, symbol, () => {

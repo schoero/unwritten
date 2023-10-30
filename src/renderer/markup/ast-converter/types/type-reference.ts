@@ -1,19 +1,19 @@
-import { renderNode } from "unwritten:renderer/index.js";
-import { convertEntityToAnchor } from "unwritten:renderer/markup/ast-converter/index.js";
-import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { createConditionalNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
-import { isFunctionLikeEntity, isLinkableEntity, isSignatureEntity } from "unwritten:typeguards/entities.js";
+import { renderNode } from "unwritten:renderer/index";
+import { convertEntityToAnchor } from "unwritten:renderer/markup/ast-converter/index";
+import { getAnchorLink } from "unwritten:renderer/markup/registry/registry";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
+import { createConditionalNode } from "unwritten:renderer:markup/utils/nodes";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
+import { isFunctionLikeEntity, isLinkableEntity, isSignatureEntity } from "unwritten:typeguards/entities";
 
-import type { TypeReferenceType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { TypeReferenceType } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedTypeReferenceTypeInline,
   ConvertedTypeReferenceTypeMultiline
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeInline {

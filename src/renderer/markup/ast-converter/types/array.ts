@@ -1,15 +1,15 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes";
+import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 
-import type { ArrayType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ArrayType } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedArrayTypeInline,
   ConvertedArrayTypeMultiline
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertArrayTypeInline(ctx: MarkupRenderContexts, arrayType: ArrayType): ConvertedArrayTypeInline {

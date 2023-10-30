@@ -1,13 +1,13 @@
-import { getIdByTypeNode, getTypeId } from "unwritten:interpreter/ast/shared/id.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { withLockedType } from "unwritten:interpreter/utils/ts.js";
+import { getIdByTypeNode, getTypeId } from "unwritten:interpreter/ast/shared/id";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withLockedType } from "unwritten:interpreter/utils/ts";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { IndexedAccessType as TSIndexedAccessType, IndexedAccessTypeNode } from "typescript";
 
-import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createIndexedAccessType = (ctx: InterpreterContext, indexedAccessType: TSIndexedAccessType): IndexedAccessType => withLockedType(ctx, indexedAccessType, () => {

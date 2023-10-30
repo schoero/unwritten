@@ -1,11 +1,11 @@
-import { isFunctionLikeEntity } from "unwritten:typeguards/entities.js";
+import { isFunctionLikeEntity } from "unwritten:typeguards/entities";
 
 import type {
   ExplicitSignatureEntity,
   FunctionLikeEntity,
   PropertyEntity,
   SignatureEntity
-} from "unwritten:interpreter/type-definitions/entities.js";
+} from "unwritten:interpreter/type-definitions/entities";
 
 
 export function filterOutImplicitSignatures(signatures: SignatureEntity[]): ExplicitSignatureEntity[] {

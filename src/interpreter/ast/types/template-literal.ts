@@ -1,12 +1,12 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByTypeNode } from "../type";
 
 import type { TemplateLiteralTypeNode } from "typescript";
 
-import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createTemplateLiteralType(ctx: InterpreterContext, typeNode: TemplateLiteralTypeNode): TemplateLiteralType {

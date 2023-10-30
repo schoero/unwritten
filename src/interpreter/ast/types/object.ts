@@ -1,28 +1,28 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 import {
   createGetterEntity,
   createMethodEntity,
   createPropertyEntity,
   createSetterEntity,
   createSignatureEntity
-} from "unwritten:interpreter:ast/entities/index.js";
-import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
+} from "unwritten:interpreter:ast/entities/index";
+import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
+import { getNameByType } from "unwritten:interpreter:ast/shared/name";
+import { getPositionByType } from "unwritten:interpreter:ast/shared/position";
 import {
   isGetterSymbol,
   isMethodSymbol,
   isPropertySymbol,
   isSetterSymbol
-} from "unwritten:interpreter:typeguards/symbols.js";
-import { isThisType } from "unwritten:interpreter:typeguards/types.js";
-import { withLockedType } from "unwritten:interpreter:utils/ts.js";
-import { isSymbolExcluded } from "unwritten:utils/exclude.js";
+} from "unwritten:interpreter:typeguards/symbols";
+import { isThisType } from "unwritten:interpreter:typeguards/types";
+import { withLockedType } from "unwritten:interpreter:utils/ts";
+import { isSymbolExcluded } from "unwritten:utils/exclude";
 
 import type { ObjectType as TSObjectType } from "typescript";
 
-import type { InferObjectLikeType, ObjectLikeTypeKind } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { InferObjectLikeType, ObjectLikeTypeKind } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLikeTypeKind>(ctx: InterpreterContext, type: TSObjectType, kind: SpecificObjectLikeTypeKind = TypeKind.Object as SpecificObjectLikeTypeKind): InferObjectLikeType<SpecificObjectLikeTypeKind> => withLockedType(ctx, type, () => {

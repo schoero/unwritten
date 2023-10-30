@@ -1,9 +1,9 @@
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 
-import type { BooleanLiteralType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ConvertedBooleanLiteralTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { BooleanLiteralType } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ConvertedBooleanLiteralTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertBooleanLiteralTypeInline(ctx: MarkupRenderContexts, booleanType: BooleanLiteralType): ConvertedBooleanLiteralTypeInline {

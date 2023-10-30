@@ -1,20 +1,20 @@
 import { describe, expect, it } from "vitest";
 
-import { createClassEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { convertClassEntityForDocumentation } from "unwritten:renderer:markup/ast-converter/entities/index.js";
+import { createClassEntity } from "unwritten:interpreter/ast/entities/index";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { convertClassEntityForDocumentation } from "unwritten:renderer:markup/ast-converter/entities/index";
 import {
   convertStringLiteralTypeInline,
   convertStringTypeInline
-} from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:utils/template.js";
+} from "unwritten:renderer:markup/ast-converter/types/index";
+import { renderNode } from "unwritten:renderer:markup/html/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { ts } from "unwritten:utils/template";
 
-import type { StringLiteralType, StringType } from "unwritten:interpreter:type-definitions/types.js";
-import type { Testable } from "unwritten:type-definitions/utils.js";
+import type { StringLiteralType, StringType } from "unwritten:interpreter:type-definitions/types";
+import type { Testable } from "unwritten:type-definitions/utils";
 
 
 scope("Renderer", "Config", () => {

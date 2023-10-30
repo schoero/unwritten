@@ -1,6 +1,6 @@
-import { isAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { isAnchor } from "unwritten:renderer/markup/registry/registry";
 
-import { ASTNodeKinds } from "../enums/nodes.js";
+import { ASTNodeKinds } from "../enums/nodes";
 
 import type {
   AnchorNode,
@@ -20,11 +20,11 @@ import type {
   SpanNode,
   StrikethroughNode,
   TitleNode
-} from "../types-definitions/nodes.js";
+} from "../types-definitions/nodes";
 
-import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry.js";
-import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections.js";
+import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
+import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections";
 
 
 export function createAnchorNode(name: Name, id: ID, displayName = name): AnchorNode {

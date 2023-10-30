@@ -1,14 +1,14 @@
 import {
   convertObjectTypeInline,
   convertObjectTypeMultiline
-} from "unwritten:renderer:markup/ast-converter/types/index.js";
+} from "unwritten:renderer:markup/ast-converter/types/index";
 
-import type { InterfaceType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { InterfaceType } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedInterfaceTypeInline,
   ConvertedInterfaceTypeMultiline
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertInterfaceTypeInline(ctx: MarkupRenderContexts, interfaceType: InterfaceType): ConvertedInterfaceTypeInline {

@@ -1,22 +1,18 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
-import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { isEnumDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
-import { assert } from "unwritten:utils:general.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
+import { isEnumDeclaration } from "unwritten:interpreter:typeguards/declarations";
+import { assert } from "unwritten:utils:general";
 
 import { getTypeByDeclaration } from "../type";
 
 import type { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
 
-import type {
-  EnumEntity,
-  EnumMemberEntity,
-  MergedEnumEntity
-} from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createEnumEntity = (ctx: InterpreterContext, symbol: Symbol): EnumEntity | MergedEnumEntity => withLockedSymbol(ctx, symbol, () => {

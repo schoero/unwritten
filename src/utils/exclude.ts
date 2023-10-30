@@ -1,12 +1,12 @@
 import { minimatch } from "minimatch";
 
-import { getNameByDeclaration } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
+import { getNameByDeclaration } from "unwritten:interpreter/ast/shared/name";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 
 import type { Declaration, Symbol } from "typescript";
 
-import type { InterpreterConfig } from "unwritten:type-definitions/config.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { InterpreterConfig } from "unwritten:type-definitions/config";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function isExcluded(path: string, name: string = "*", excludedPaths: InterpreterConfig["exclude"]): boolean {

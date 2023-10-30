@@ -1,18 +1,18 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
-import { getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { isExportAssignment } from "unwritten:interpreter/typeguards/declarations.js";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
-import { assert } from "unwritten:utils/general.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { getSymbolId } from "unwritten:interpreter/ast/shared/id";
+import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
+import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { isExportAssignment } from "unwritten:interpreter/typeguards/declarations";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { assert } from "unwritten:utils/general";
 
 import { getTypeByType } from "../type";
 
 import type { Symbol } from "typescript";
 
-import type { ExportAssignmentEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { ExportAssignmentEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createExportAssignmentEntity = (ctx: InterpreterContext, symbol: Symbol): ExportAssignmentEntity => withLockedSymbol(ctx, symbol, () => {

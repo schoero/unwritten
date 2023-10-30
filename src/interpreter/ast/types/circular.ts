@@ -1,12 +1,12 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionBySymbol } from "unwritten:interpreter:ast/shared/position.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
+import { getNameByType } from "unwritten:interpreter:ast/shared/name";
+import { getPositionBySymbol } from "unwritten:interpreter:ast/shared/position";
 
 import type { Type } from "typescript";
 
-import type { CircularType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { CircularType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createCircularType(ctx: InterpreterContext, type: Type): CircularType {

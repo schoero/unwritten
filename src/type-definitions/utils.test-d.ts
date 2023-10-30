@@ -1,14 +1,8 @@
 import { expectTypeOf, test } from "vitest";
 
-import { scope } from "unwritten:tests:utils/scope.js";
+import { scope } from "unwritten:tests:utils/scope";
 
-import type {
-  Complete,
-  DeepPartialByKey,
-  DeepRequiredByKey,
-  PartialByKey,
-  TranslationWithoutSuffixes
-} from "./utils.js";
+import type { Complete, DeepPartialByKey, DeepRequiredByKey, PartialByKey, TranslationWithoutSuffixes } from "./utils";
 
 
 scope("Types", "Utils", () => {

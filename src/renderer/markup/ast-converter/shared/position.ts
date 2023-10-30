@@ -3,12 +3,12 @@ import {
   createPaddedNode,
   createParagraphNode,
   createSmallNode
-} from "unwritten:renderer:markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+} from "unwritten:renderer:markup/utils/nodes";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { Position } from "unwritten:interpreter:type-definitions/shared.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ConvertedPosition } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { Position } from "unwritten:interpreter:type-definitions/shared";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ConvertedPosition } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertPositionForDocumentation(ctx: MarkupRenderContexts, position?: Position): ConvertedPosition {

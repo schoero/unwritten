@@ -1,17 +1,17 @@
-import { filterOutImplicitSignatures } from "unwritten:renderer/utils/private-members.js";
+import { filterOutImplicitSignatures } from "unwritten:renderer/utils/private-members";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents,
   convertSignatureEntityForType
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
 
-import type { FunctionLikeEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { FunctionLikeEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedFunctionEntityForDocumentation,
   ConvertedFunctionEntityForTableOfContents,
   ConvertedFunctionEntityForType
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertFunctionLikeEntityForTableOfContents(ctx: MarkupRenderContexts, functionLikeEntity: FunctionLikeEntity): ConvertedFunctionEntityForTableOfContents {

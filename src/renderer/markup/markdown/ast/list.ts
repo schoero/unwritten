@@ -1,13 +1,13 @@
-import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line.js";
-import { withIndentation } from "unwritten:renderer/markup/utils/context.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { isListNode } from "unwritten:renderer:markup/typeguards/renderer.js";
-import { renderIndentation as renderIndentationOriginal } from "unwritten:renderer:utils/indentation.js";
+import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line";
+import { withIndentation } from "unwritten:renderer/markup/utils/context";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { isListNode } from "unwritten:renderer:markup/typeguards/renderer";
+import { renderIndentation as renderIndentationOriginal } from "unwritten:renderer:utils/indentation";
 
-import { renderNode } from "../index.js";
+import { renderNode } from "../index";
 
-import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode, ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ASTNode, ListNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): string {

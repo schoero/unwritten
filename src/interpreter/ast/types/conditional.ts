@@ -1,12 +1,12 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByTypeNode } from "../type";
 
 import type { ConditionalType as TSConditionalType, ConditionalTypeNode } from "typescript";
 
-import type { ConditionalType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { ConditionalType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createConditionalTypeByTypeNode(ctx: InterpreterContext, typeNode: ConditionalTypeNode): ConditionalType {

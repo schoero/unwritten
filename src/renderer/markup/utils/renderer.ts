@@ -1,8 +1,8 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 
-import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Encapsulation } from "unwritten:renderer:markup/types-definitions/config.js";
-import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities";
+import type { Encapsulation } from "unwritten:renderer:markup/types-definitions/config";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function encapsulate(node: ASTNode, encapsulation: Encapsulation | string[] | false | undefined) {

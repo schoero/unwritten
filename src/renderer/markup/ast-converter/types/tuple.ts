@@ -1,18 +1,18 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { convertDescriptionForType } from "unwritten:renderer/markup/ast-converter/shared/description.js";
-import { convertTagsForType } from "unwritten:renderer/markup/ast-converter/shared/tags.js";
-import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { convertDescriptionForType } from "unwritten:renderer/markup/ast-converter/shared/description";
+import { convertTagsForType } from "unwritten:renderer/markup/ast-converter/shared/tags";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type";
+import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes";
+import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { TupleType } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedTupleTypeInline,
   ConvertedTupleTypeMultiline
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertTupleTypeInline(ctx: MarkupRenderContexts, tupleType: TupleType): ConvertedTupleTypeInline {

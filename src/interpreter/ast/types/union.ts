@@ -1,12 +1,12 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { UnionType as TSUnionType, UnionTypeNode } from "typescript";
 
-import type { UnionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { UnionType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createUnionType(ctx: InterpreterContext, type: TSUnionType): UnionType {

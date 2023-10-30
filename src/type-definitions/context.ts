@@ -1,14 +1,14 @@
 import type { TypeChecker } from "typescript";
 import type ts from "typescript";
 
-import type { FileSystem } from "unwritten:type-definitions/file-system.js";
-import type { Logger } from "unwritten:type-definitions/logger.js";
-import type { OS } from "unwritten:type-definitions/os.js";
-import type { Path } from "unwritten:type-definitions/path.js";
-import type { Process } from "unwritten:type-definitions/process.js";
+import type { FileSystem } from "unwritten:type-definitions/file-system";
+import type { Logger } from "unwritten:type-definitions/logger";
+import type { OS } from "unwritten:type-definitions/os";
+import type { Path } from "unwritten:type-definitions/path";
+import type { Process } from "unwritten:type-definitions/process";
 
-import type { CompleteConfig } from "./config.js";
-import type { Renderer } from "./renderer.js";
+import type { CompleteConfig } from "./config";
+import type { Renderer } from "./renderer";
 
 
 export interface DefaultContext {

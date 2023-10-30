@@ -3,15 +3,15 @@ import {
   isExportSpecifierSymbol,
   isImportClauseSymbol,
   isImportSpecifierSymbol
-} from "unwritten:interpreter/typeguards/symbols.js";
-import * as locker from "unwritten:interpreter:utils/locker.js";
-import { assert } from "unwritten:utils:general.js";
+} from "unwritten:interpreter/typeguards/symbols";
+import * as locker from "unwritten:interpreter:utils/locker";
+import { assert } from "unwritten:utils:general";
 
 import type { Program, Symbol, Type as TSType } from "typescript";
 
-import type { Entity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Type } from "unwritten:interpreter/type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { Entity } from "unwritten:interpreter/type-definitions/entities";
+import type { Type } from "unwritten:interpreter/type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function getEntryFileSymbolsFromProgram(ctx: InterpreterContext, program: Program) {

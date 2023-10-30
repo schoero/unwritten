@@ -1,10 +1,10 @@
 import { expect, it } from "vitest";
 
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { convertModifiers } from "unwritten:renderer:markup/ast-converter/shared/modifiers.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { convertModifiers } from "unwritten:renderer:markup/ast-converter/shared/modifiers";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
 
 
 scope("MarkupRenderer", "Modifiers", () => {

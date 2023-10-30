@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { interpret } from "unwritten:interpreter/ast/symbol.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { isTypeAliasEntity } from "unwritten:typeguards/entities.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { interpret } from "unwritten:interpreter/ast/symbol";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { isTypeAliasEntity } from "unwritten:typeguards/entities";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
 
 scope("Interpreter", TypeKind.IndexedAccess, () => {

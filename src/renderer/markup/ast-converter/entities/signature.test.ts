@@ -1,28 +1,28 @@
 import { assert, expect, it } from "vitest";
 
-import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { filterOutImplicitSignatures } from "unwritten:renderer/utils/private-members.js";
+import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { filterOutImplicitSignatures } from "unwritten:renderer/utils/private-members";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { renderNode } from "unwritten:renderer:markup/html/index.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
+import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index";
+import { renderNode } from "unwritten:renderer:markup/html/index";
 import {
   isAnchorNode,
   isInlineTitleNode,
   isParagraphNode,
   isSectionNode,
   isTitleNode
-} from "unwritten:renderer:markup/typeguards/renderer.js";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:utils/template.js";
+} from "unwritten:renderer:markup/typeguards/renderer";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { ts } from "unwritten:utils/template";
 
-import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types.js";
+import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types";
 
 
 scope("MarkupRenderer", EntityKind.Signature, () => {

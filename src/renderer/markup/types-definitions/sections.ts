@@ -1,4 +1,4 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 
 export const SECTION_TYPE = {

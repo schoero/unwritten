@@ -1,7 +1,7 @@
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { FileExtension, FilePath } from "unwritten:type-definitions/file-system.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { FileExtension, FilePath } from "unwritten:type-definitions/file-system";
 
-import type { RenderContext } from "./context.js";
+import type { RenderContext } from "./context";
 
 
 export interface RenderOutput {

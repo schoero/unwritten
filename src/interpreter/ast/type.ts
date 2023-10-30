@@ -1,5 +1,5 @@
-import { isSymbolLocked, isTypeLocked } from "unwritten:interpreter/utils/ts.js";
-import { getNameByType } from "unwritten:interpreter:ast/shared/name.js";
+import { isSymbolLocked, isTypeLocked } from "unwritten:interpreter/utils/ts";
+import { getNameByType } from "unwritten:interpreter:ast/shared/name";
 import {
   createAnyType,
   createArrayType,
@@ -42,7 +42,7 @@ import {
   createUnresolved,
   createUnresolvedType,
   createVoidType
-} from "unwritten:interpreter:ast/types/index.js";
+} from "unwritten:interpreter:ast/types/index";
 import {
   isArrayTypeNode,
   isConditionalTypeNode,
@@ -54,7 +54,7 @@ import {
   isTypeQueryNode,
   isTypeReferenceNode,
   isUnionTypeNode
-} from "unwritten:interpreter:typeguards/type-nodes.js";
+} from "unwritten:interpreter:typeguards/type-nodes";
 import {
   isAnyType,
   isArrayTypeReferenceType,
@@ -84,9 +84,9 @@ import {
   isUnionType,
   isUnknownType,
   isVoidType
-} from "unwritten:interpreter:typeguards/types.js";
-import { isTypeReferenceType } from "unwritten:typeguards/types.js";
-import { isSymbolExcluded } from "unwritten:utils/exclude.js";
+} from "unwritten:interpreter:typeguards/types";
+import { isTypeReferenceType } from "unwritten:typeguards/types";
+import { isSymbolExcluded } from "unwritten:utils/exclude";
 
 import type { Declaration, ObjectType as TSObjectType, Symbol, Type as TSType, TypeNode } from "typescript";
 
@@ -95,8 +95,8 @@ import type {
   ResolvedType,
   Type,
   TypeReferenceType
-} from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+} from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 function getTypeNodeByDeclaration(ctx: InterpreterContext, declaration: Declaration): TypeNode | undefined {
