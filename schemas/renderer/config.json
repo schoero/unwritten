@@ -49,11 +49,6 @@
               "$ref": "#/definitions/Complete%3CMarkdownRenderConfig%3E"
             }
           },
-          "required": [
-            "markdown",
-            "html",
-            "json"
-          ],
           "type": "object"
         }
       },
@@ -118,9 +113,6 @@
             }
           ]
         },
-        "removeHyphenAtStartOfTag": {
-          "type": "boolean"
-        },
         "renderOrder": {
           "items": {
             "$ref": "#/definitions/ExportableEntityKinds"
@@ -143,6 +135,9 @@
           ]
         },
         "renderPrivateMembers": {
+          "type": "boolean"
+        },
+        "renderSourceCodeLinks": {
           "type": "boolean"
         },
         "sidebar": {
@@ -517,9 +512,6 @@
             }
           ]
         },
-        "removeHyphenAtStartOfTag": {
-          "type": "boolean"
-        },
         "renderOrder": {
           "items": {
             "$ref": "#/definitions/ExportableEntityKinds"
@@ -542,6 +534,9 @@
           ]
         },
         "renderPrivateMembers": {
+          "type": "boolean"
+        },
+        "renderSourceCodeLinks": {
           "type": "boolean"
         },
         "sectionSeparator": {

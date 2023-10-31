@@ -148,6 +148,7 @@ export interface MarkupRenderConfig {
 export interface MarkdownRenderConfig extends MarkupRenderConfig {
   /** Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes */
   allowedHTMLTags?: string[] | false;
+
   /**
    * Defines the string that should be used to separate sections in the rendered output.
    */
