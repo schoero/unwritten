@@ -15,7 +15,6 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   newLine: "\n",
   parameterEncapsulation: ["`", "`"],
   propertyEncapsulation: ["`", "`"],
-  removeHyphenAtStartOfTag: true,
   renderOrder: [
     EntityKind.Module,
     EntityKind.Namespace,
