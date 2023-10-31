@@ -14,7 +14,6 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   inlineTitleEncapsulation: ["", ""],
   newLine: "\n",
   parameterEncapsulation: ["`", "`"],
-  renderSourceCodeLinks: true,
   propertyEncapsulation: ["`", "`"],
   renderOrder: [
     EntityKind.Module,
@@ -29,6 +28,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   ],
   renderParentNames: "documentation",
   renderPrivateMembers: false,
+  renderSourceCodeLinks: true,
   stringLiteralEncapsulation: ["\"", "\""],
   tagEncapsulation: ["`", "`"],
   translations: {

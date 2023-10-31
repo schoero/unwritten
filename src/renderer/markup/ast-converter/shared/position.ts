@@ -1,3 +1,4 @@
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   createLinkNode,
   createPaddedNode,
@@ -9,17 +10,16 @@ import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import type { Position } from "unwritten:interpreter:type-definitions/shared";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ConvertedPosition } from "unwritten:renderer:markup/types-definitions/renderer";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 
 export function convertPositionForDocumentation(ctx: MarkupRenderContexts, position?: Position): ConvertedPosition {
 
   const renderConfig = getRenderConfig(ctx);
-  
+
   if(renderConfig.renderSourceCodeLinks === false){
     return;
   }
-  
+
   const { relative } = ctx.dependencies.path;
 
   if(!position){
