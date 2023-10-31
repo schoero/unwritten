@@ -54,7 +54,6 @@ scope("Renderer", "Config", () => {
 
   });
 
-
   describe("stringLiteralTypeEncapsulation", async () => {
 
     const stringLiteralType: Testable<StringLiteralType> = {
