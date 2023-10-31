@@ -47,4 +47,16 @@ scope("MarkupRenderer", "Position", () => {
 
   });
 
+  it("should be possible disable the rendering of source code links", () => {
+
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+    ctx.config.renderConfig[BuiltInRenderers.Markdown].renderSourceCodeLinks = false;
+
+    const convertedPosition = convertPositionForDocumentation(ctx, position);
+    const renderedPosition = renderNode(ctx, convertedPosition);
+
+    expect(renderedPosition).toBe("");
+
+  });
+
 });

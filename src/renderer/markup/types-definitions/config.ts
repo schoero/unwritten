@@ -42,6 +42,11 @@ export interface MarkupRenderConfig {
   renderPrivateMembers?: boolean;
 
   /**
+   * Defines whether the renderer should render links to the source code.
+   */
+  renderSourceCodeLinks?: boolean;
+
+  /**
    * Defines how string literal type annotations should be encapsulated in the rendered output.
    */
   stringLiteralEncapsulation?: Encapsulation | false;
