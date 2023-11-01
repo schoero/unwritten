@@ -34,10 +34,9 @@ export async function generateConfig(path?: string, options?: Options) {
 }
 
 
-export function getConfigWithSchema() {
-  const config: ConfigForSchema = {
+export function getConfigWithSchema(): ConfigForSchema {
+  return {
     $schema: "https://raw.githubusercontent.com/schoero/unwritten/main/schemas/renderer/config.json",
     ...getDefaultConfig()
   };
-  return config;
 }
