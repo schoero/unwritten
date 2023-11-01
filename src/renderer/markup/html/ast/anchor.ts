@@ -1,9 +1,9 @@
-import { renderLinkNode } from "unwritten:renderer/markup/html/ast/link.js";
-import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
-import { createLinkNode } from "unwritten:renderer/markup/utils/nodes.js";
+import { renderLinkNode } from "unwritten:renderer/markup/html/ast/link";
+import { getAnchorLink } from "unwritten:renderer/markup/registry/registry";
+import { createLinkNode } from "unwritten:renderer/markup/utils/nodes";
 
-import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { AnchorNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderAnchorNode(ctx: HTMLRenderContext, anchorNode: AnchorNode): string {

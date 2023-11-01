@@ -1,10 +1,10 @@
-import type { BuiltInRenderers } from "../renderer/enums/renderer.js";
+import type { BuiltInRenderers } from "../renderer/enums/renderer";
 
-import type { TypeKind } from "unwritten:interpreter/enums/type.js";
-import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config.js";
-import type { HTMLRenderConfig, MarkdownRenderConfig } from "unwritten:renderer:markup/types-definitions/config.js";
+import type { TypeKind } from "unwritten:interpreter/enums/type";
+import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config";
+import type { HTMLRenderConfig, MarkdownRenderConfig } from "unwritten:renderer:markup/types-definitions/config";
 
-import type { Complete } from "./utils.js";
+import type { Complete } from "./utils";
 
 
 export interface Config {
@@ -46,9 +46,10 @@ export interface ConfigForSchema extends Config {
   $schema?: string;
   interpreterConfig?: InterpreterConfig;
   renderConfig?: {
-    [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
-    [BuiltInRenderers.HTML]: Complete<HTMLRenderConfig>;
-    [BuiltInRenderers.JSON]: Complete<JSONRenderConfig>;
+    [BuiltInRenderers.Markdown]?: MarkdownRenderConfig;
+    [BuiltInRenderers.HTML]?: HTMLRenderConfig;
+    [BuiltInRenderers.JSON]?: JSONRenderConfig;
+  } & {
     [key: string]: {
       [key: string]: any;
     };

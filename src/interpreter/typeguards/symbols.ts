@@ -1,6 +1,6 @@
 import type { Declaration, Symbol, Type, TypeNode } from "typescript";
 
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function isAliasExcludesSymbol(ctx: InterpreterContext, symbol: Symbol): boolean {

@@ -1,16 +1,16 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
-import { getDeclarationId } from "unwritten:interpreter/ast/shared/id.js";
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { getDeclarationId } from "unwritten:interpreter/ast/shared/id";
+import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 
-import { createSourceFileEntity } from "./source-file.js";
+import { createSourceFileEntity } from "./source-file";
 
 import type { Symbol } from "typescript";
 
-import type { ModuleEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { ModuleEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createModuleEntity = (ctx: InterpreterContext, symbol: Symbol): ModuleEntity => withLockedSymbol(ctx, symbol, () => {

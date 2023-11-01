@@ -1,7 +1,7 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { isSignatureEntity } from "unwritten:typeguards/entities.js";
-import { isInterfaceType } from "unwritten:typeguards/types.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { isSignatureEntity } from "unwritten:typeguards/entities";
+import { isInterfaceType } from "unwritten:typeguards/types";
 
 import type {
   ClassEntity,
@@ -12,7 +12,7 @@ import type {
   MethodEntity,
   PropertyEntity,
   SetterEntity
-} from "unwritten:interpreter/type-definitions/entities.js";
+} from "unwritten:interpreter/type-definitions/entities";
 
 
 type EntityKeys = "events" | "getters" | "methods" | "properties" | "setters";

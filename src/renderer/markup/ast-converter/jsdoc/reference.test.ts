@@ -1,14 +1,14 @@
 import { expect, it } from "vitest";
 
-import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { JSDocKind } from "unwritten:interpreter/enums/jsdoc.js";
-import { convertJSDocReference } from "unwritten:renderer/markup/ast-converter/jsdoc/reference.js";
-import { isAnchorNode, isConditionalNode } from "unwritten:renderer/markup/typeguards/renderer.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
+import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
+import { convertJSDocReference } from "unwritten:renderer/markup/ast-converter/jsdoc/reference";
+import { isAnchorNode, isConditionalNode } from "unwritten:renderer/markup/typeguards/renderer";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
 
 scope("MarkupRenderer", JSDocKind.Reference, () => {

@@ -1,19 +1,19 @@
 import { describe, expect, it } from "vitest";
 
-import { createClassEntity, createInterfaceEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { createClassEntity, createInterfaceEntity } from "unwritten:interpreter/ast/entities/index";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 import {
   extendClassEntityConstructorsWithHeritage,
   extendClassEntityEntitiesWithHeritage,
   extendInterfaceEntityPropertiesWithHeritage,
   extendInterfaceEntitySignaturesWithHeritage
-} from "unwritten:renderer:utils/heritage.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+} from "unwritten:renderer:utils/heritage";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
-import type { InterfaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
+import type { InterfaceEntity } from "unwritten:interpreter/type-definitions/entities";
 
 
 scope("Renderer", "utils", () => {

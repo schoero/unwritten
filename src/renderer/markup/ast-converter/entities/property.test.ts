@@ -4,22 +4,22 @@ import {
   createClassEntity,
   createInterfaceEntity,
   createVariableEntity
-} from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+} from "unwritten:interpreter/ast/entities/index";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 import {
   convertPropertyEntityForDocumentation,
   convertPropertyEntityForTableOfContents
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { convertObjectLiteralTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
+import { convertObjectLiteralTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index";
+import { renderNode } from "unwritten:renderer:markup/html/index";
+import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
-import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types.js";
+import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types";
 
 
 scope("MarkupRenderer", EntityKind.Property, () => {

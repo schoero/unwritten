@@ -1,12 +1,12 @@
 import { assert, expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createInterfaceEntity, createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
-import { ts } from "unwritten:utils/template.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { createInterfaceEntity, createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { isJSDocText } from "unwritten:typeguards/jsdoc";
+import { ts } from "unwritten:utils/template";
 
 
 scope("Interpreter", EntityKind.Interface, () => {

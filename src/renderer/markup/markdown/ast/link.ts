@@ -1,7 +1,7 @@
-import { renderNode } from "unwritten:renderer:markdown/index.js";
+import { renderNode } from "unwritten:renderer:markdown/index";
 
-import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { LinkNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { LinkNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderLinkNode(ctx: MarkdownRenderContext, linkNode: LinkNode): string {

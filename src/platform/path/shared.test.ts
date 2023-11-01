@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { scope } from "unwritten:tests:utils/scope.js";
+import { scope } from "unwritten:tests:utils/scope";
 
 import {
   absolute,
@@ -11,7 +11,7 @@ import {
   join,
   normalize,
   relative
-} from "./shared.js";
+} from "./shared";
 
 
 scope("Integration", "path", () => {

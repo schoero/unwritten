@@ -1,14 +1,14 @@
-import { renderNode } from "unwritten:renderer/index.js";
-import { convertEntityToAnchor } from "unwritten:renderer/markup/ast-converter/index.js";
-import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
-import { createConditionalNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { isFunctionLikeEntity, isLinkableEntity } from "unwritten:typeguards/entities.js";
+import { renderNode } from "unwritten:renderer/index";
+import { convertEntityToAnchor } from "unwritten:renderer/markup/ast-converter/index";
+import { getAnchorLink } from "unwritten:renderer/markup/registry/registry";
+import { createConditionalNode } from "unwritten:renderer/markup/utils/nodes";
+import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { isFunctionLikeEntity, isLinkableEntity } from "unwritten:typeguards/entities";
 
-import type { JSDocReference } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ConvertedJSDocReference } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { JSDocReference } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup";
+import type { ConvertedJSDocReference } from "unwritten:renderer/markup/types-definitions/renderer";
 
 
 export function convertJSDocReference(ctx: MarkupRenderContexts, jsdocReference: JSDocReference): ConvertedJSDocReference {

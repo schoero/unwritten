@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { renderNode } from "unwritten:renderer/index.js";
-import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { md } from "unwritten:utils/template.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { renderNode } from "unwritten:renderer/index";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { md } from "unwritten:utils/template";
 
-import type { Position } from "unwritten:interpreter/type-definitions/shared.js";
+import type { Position } from "unwritten:interpreter/type-definitions/shared";
 
 
 scope("MarkupRenderer", "Position", () => {
@@ -44,6 +44,18 @@ scope("MarkupRenderer", "Position", () => {
         
       [src/some/file.ts](../src/some/file.ts#L7C1)  
     `);
+
+  });
+
+  it("should be possible disable the rendering of source code links", () => {
+
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+    ctx.config.renderConfig[BuiltInRenderers.Markdown].renderSourceCodeLinks = false;
+
+    const convertedPosition = convertPositionForDocumentation(ctx, position);
+    const renderedPosition = renderNode(ctx, convertedPosition);
+
+    expect(renderedPosition).toBe("");
 
   });
 

@@ -1,33 +1,33 @@
 import {
   convertSeeTagsForDocumentation,
   convertSeeTagsForType
-} from "unwritten:renderer/markup/ast-converter/shared/see.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
+} from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
 import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
-} from "unwritten:renderer:markup/ast-converter/shared/description.js";
+} from "unwritten:renderer:markup/ast-converter/shared/description";
 import {
   convertExamplesForDocumentation,
   convertExamplesForType
-} from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+} from "unwritten:renderer:markup/ast-converter/shared/example";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
 import {
   convertRemarksForDocumentation,
   convertRemarksForType
-} from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
-import { createAnchorNode, createMultilineNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
+} from "unwritten:renderer:markup/ast-converter/shared/remarks";
+import { createAnchorNode, createMultilineNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
+import { spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 
-import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedEventPropertyEntityForDocumentation,
   ConvertedEventPropertyEntityForTableOfContents,
   ConvertedEventPropertyEntityForType
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertEventPropertyEntityToAnchor(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {

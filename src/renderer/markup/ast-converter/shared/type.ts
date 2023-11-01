@@ -1,4 +1,4 @@
-import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
 import {
   convertAnyTypeInline,
   convertArrayTypeInline,
@@ -46,10 +46,10 @@ import {
   convertUnknownTypeInline,
   convertUnresolvedTypeInline,
   convertVoidTypeInline
-} from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
-import { isMultilineType, isMultilineUnionType } from "unwritten:renderer:markup/utils/types.js";
+} from "unwritten:renderer:markup/ast-converter/types/index";
+import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations";
+import { isMultilineType, isMultilineUnionType } from "unwritten:renderer:markup/utils/types";
 import {
   isAnyType,
   isArrayType,
@@ -84,15 +84,15 @@ import {
   isUnknownType,
   isUnresolvedType,
   isVoidType
-} from "unwritten:typeguards/types.js";
+} from "unwritten:typeguards/types";
 
-import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode, ConditionalNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ASTNode, ConditionalNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
   ConvertedTypeInline,
   ConvertedTypeMultiline
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Type): TitleNode<[ASTNode, ASTNode]> {

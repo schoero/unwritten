@@ -1,11 +1,11 @@
-import { getAnchorId, hasAnchor, unregisterAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { withNesting } from "unwritten:renderer/markup/utils/context.js";
-import { renderIndentation } from "unwritten:renderer/utils/indentation.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { renderNode } from "unwritten:renderer:html/index.js";
+import { getAnchorId, hasAnchor, unregisterAnchor } from "unwritten:renderer/markup/registry/registry";
+import { withNesting } from "unwritten:renderer/markup/utils/context";
+import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { renderNode } from "unwritten:renderer:html/index";
 
-import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { TitleNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { TitleNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): string {

@@ -1,9 +1,9 @@
 import { expect, it } from "vitest";
 
-import { convertRest } from "unwritten:renderer/markup/ast-converter/shared/rest.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
+import { convertRest } from "unwritten:renderer/markup/ast-converter/shared/rest";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
 
 
 scope("MarkupRenderer", "Rest", () => {

@@ -1,13 +1,13 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id";
+import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { ExpressionWithTypeArguments } from "typescript";
 
-import type { ExpressionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { ExpressionType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createExpressionType(ctx: InterpreterContext, expressionWithTypeArguments: ExpressionWithTypeArguments): ExpressionType {

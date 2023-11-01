@@ -1,9 +1,9 @@
-import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler/shared.js";
-import { findFile } from "unwritten:utils:finder.js";
+import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler/shared";
+import { findFile } from "unwritten:utils:finder";
 
 import type { CompilerOptions } from "typescript";
 
-import type { DefaultContext } from "unwritten:type-definitions/context.js";
+import type { DefaultContext } from "unwritten:type-definitions/context";
 
 
 export function compile(ctx: DefaultContext, entryFilePaths: string[], tsConfigOrFilePath?: CompilerOptions | string) {

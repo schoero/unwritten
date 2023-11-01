@@ -2,15 +2,6 @@
   "$ref": "#/definitions/ConfigForSchema",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "Complete<HTMLRenderConfig>": {
-      "$ref": "#/definitions/DeepRequiredByKey%3CHTMLRenderConfig%2Cstring%3E"
-    },
-    "Complete<JSONRenderConfig>": {
-      "$ref": "#/definitions/DeepRequiredByKey%3CJSONRenderConfig%2Cstring%3E"
-    },
-    "Complete<MarkdownRenderConfig>": {
-      "$ref": "#/definitions/DeepRequiredByKey%3CMarkdownRenderConfig%2Cstring%3E"
-    },
     "ConfigForSchema": {
       "additionalProperties": false,
       "properties": {
@@ -40,810 +31,34 @@
           "description": "Render configuration.",
           "properties": {
             "html": {
-              "$ref": "#/definitions/Complete%3CHTMLRenderConfig%3E"
+              "$ref": "#/definitions/HTMLRenderConfig"
             },
             "json": {
-              "$ref": "#/definitions/Complete%3CJSONRenderConfig%3E"
+              "$ref": "#/definitions/JSONRenderConfig"
             },
             "markdown": {
-              "$ref": "#/definitions/Complete%3CMarkdownRenderConfig%3E"
-            }
-          },
-          "required": [
-            "markdown",
-            "html",
-            "json"
-          ],
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "DeepRequiredByKey<(string1379558387|string2073129684),string>": {
-      "type": "string"
-    },
-    "DeepRequiredByKey<HTMLRenderConfig,string>": {
-      "additionalProperties": false,
-      "properties": {
-        "indentation": {
-          "type": "string"
-        },
-        "inlineTitleEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "newLine": {
-          "enum": [
-            "\n",
-            "\r\n",
-            "os"
-          ],
-          "type": "string"
-        },
-        "parameterEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "propertyEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "removeHyphenAtStartOfTag": {
-          "type": "boolean"
-        },
-        "renderOrder": {
-          "items": {
-            "$ref": "#/definitions/ExportableEntityKinds"
-          },
-          "type": "array"
-        },
-        "renderParentNames": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "const": "documentation",
-              "type": "string"
-            },
-            {
-              "const": "tableOfContents",
-              "type": "string"
-            }
-          ]
-        },
-        "renderPrivateMembers": {
-          "type": "boolean"
-        },
-        "sidebar": {
-          "type": "boolean"
-        },
-        "stringLiteralEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "tagEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "translations": {
-          "additionalProperties": false,
-          "properties": {
-            "abstract": {
-              "type": "string"
-            },
-            "beta": {
-              "type": "string"
-            },
-            "callSignature_many": {
-              "type": "string"
-            },
-            "callSignature_one": {
-              "type": "string"
-            },
-            "checkType": {
-              "type": "string"
-            },
-            "class_many": {
-              "type": "string"
-            },
-            "class_one": {
-              "type": "string"
-            },
-            "constraint_many": {
-              "type": "string"
-            },
-            "constraint_one": {
-              "type": "string"
-            },
-            "constructSignature_many": {
-              "type": "string"
-            },
-            "constructSignature_one": {
-              "type": "string"
-            },
-            "ctor_many": {
-              "type": "string"
-            },
-            "ctor_one": {
-              "type": "string"
-            },
-            "default": {
-              "type": "string"
-            },
-            "definedIn": {
-              "type": "string"
-            },
-            "deprecated": {
-              "type": "string"
-            },
-            "description_many": {
-              "type": "string"
-            },
-            "description_one": {
-              "type": "string"
-            },
-            "enum_many": {
-              "type": "string"
-            },
-            "enum_one": {
-              "type": "string"
-            },
-            "event_many": {
-              "type": "string"
-            },
-            "event_one": {
-              "type": "string"
-            },
-            "example_many": {
-              "type": "string"
-            },
-            "example_one": {
-              "type": "string"
-            },
-            "exportAssignment_many": {
-              "type": "string"
-            },
-            "exportAssignment_one": {
-              "type": "string"
-            },
-            "extendsType": {
-              "type": "string"
-            },
-            "falseType": {
-              "type": "string"
-            },
-            "function_many": {
-              "type": "string"
-            },
-            "function_one": {
-              "type": "string"
-            },
-            "getter_many": {
-              "type": "string"
-            },
-            "getter_one": {
-              "type": "string"
-            },
-            "interface_many": {
-              "type": "string"
-            },
-            "interface_one": {
-              "type": "string"
-            },
-            "internal": {
-              "type": "string"
-            },
-            "intersection": {
-              "type": "string"
-            },
-            "keyType": {
-              "$ref": "#/definitions/DeepRequiredByKey%3Cstring%2Cstring%3E"
-            },
-            "mappedType": {
-              "type": "string"
-            },
-            "method_many": {
-              "type": "string"
-            },
-            "method_one": {
-              "type": "string"
-            },
-            "module_many": {
-              "type": "string"
-            },
-            "module_one": {
-              "type": "string"
-            },
-            "namespace_many": {
-              "type": "string"
-            },
-            "namespace_one": {
-              "type": "string"
-            },
-            "object_many": {
-              "type": "string"
-            },
-            "object_one": {
-              "type": "string"
-            },
-            "optional": {
-              "type": "string"
-            },
-            "parameter_many": {
-              "type": "string"
-            },
-            "parameter_one": {
-              "type": "string"
-            },
-            "property_many": {
-              "type": "string"
-            },
-            "property_one": {
-              "type": "string"
-            },
-            "readonly": {
-              "type": "string"
-            },
-            "remark_many": {
-              "type": "string"
-            },
-            "remark_one": {
-              "type": "string"
-            },
-            "required": {
-              "type": "string"
-            },
-            "rest": {
-              "type": "string"
-            },
-            "returnType": {
-              "type": "string"
-            },
-            "see": {
-              "type": "string"
-            },
-            "setter_many": {
-              "type": "string"
-            },
-            "setter_one": {
-              "type": "string"
-            },
-            "static": {
-              "type": "string"
-            },
-            "throws": {
-              "type": "string"
-            },
-            "trueType": {
-              "type": "string"
-            },
-            "typeAlias_many": {
-              "type": "string"
-            },
-            "typeAlias_one": {
-              "type": "string"
-            },
-            "typeLiteral": {
-              "type": "string"
-            },
-            "typeParameter_many": {
-              "type": "string"
-            },
-            "typeParameter_one": {
-              "type": "string"
-            },
-            "type_many": {
-              "type": "string"
-            },
-            "type_one": {
-              "type": "string"
-            },
-            "union": {
-              "type": "string"
-            },
-            "valueType": {
-              "$ref": "#/definitions/DeepRequiredByKey%3Cstring%2Cstring%3E"
-            },
-            "variable_many": {
-              "type": "string"
-            },
-            "variable_one": {
-              "type": "string"
+              "$ref": "#/definitions/MarkdownRenderConfig"
             }
           },
           "type": "object"
-        },
-        "typeEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "typeParameterEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
         }
       },
       "type": "object"
     },
-    "DeepRequiredByKey<JSONRenderConfig,string>": {
-      "additionalProperties": false,
-      "properties": {
-        "includeIds": {
-          "type": "boolean"
+    "Encapsulation": {
+      "items": [
+        {
+          "title": "prefix",
+          "type": "string"
         },
-        "indentation": {
+        {
+          "title": "suffix",
           "type": "string"
         }
-      },
-      "type": "object"
-    },
-    "DeepRequiredByKey<MarkdownRenderConfig,string>": {
-      "additionalProperties": false,
-      "properties": {
-        "allowedHTMLTags": {
-          "anyOf": [
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "indentation": {
-          "type": "string"
-        },
-        "inlineTitleEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "newLine": {
-          "enum": [
-            "\n",
-            "\r\n",
-            "os"
-          ],
-          "type": "string"
-        },
-        "parameterEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "propertyEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "removeHyphenAtStartOfTag": {
-          "type": "boolean"
-        },
-        "renderOrder": {
-          "items": {
-            "$ref": "#/definitions/ExportableEntityKinds"
-          },
-          "type": "array"
-        },
-        "renderParentNames": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "const": "documentation",
-              "type": "string"
-            },
-            {
-              "const": "tableOfContents",
-              "type": "string"
-            }
-          ]
-        },
-        "renderPrivateMembers": {
-          "type": "boolean"
-        },
-        "sectionSeparator": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "stringLiteralEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "tagEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "translations": {
-          "additionalProperties": false,
-          "properties": {
-            "abstract": {
-              "type": "string"
-            },
-            "beta": {
-              "type": "string"
-            },
-            "callSignature_many": {
-              "type": "string"
-            },
-            "callSignature_one": {
-              "type": "string"
-            },
-            "checkType": {
-              "type": "string"
-            },
-            "class_many": {
-              "type": "string"
-            },
-            "class_one": {
-              "type": "string"
-            },
-            "constraint_many": {
-              "type": "string"
-            },
-            "constraint_one": {
-              "type": "string"
-            },
-            "constructSignature_many": {
-              "type": "string"
-            },
-            "constructSignature_one": {
-              "type": "string"
-            },
-            "ctor_many": {
-              "type": "string"
-            },
-            "ctor_one": {
-              "type": "string"
-            },
-            "default": {
-              "type": "string"
-            },
-            "definedIn": {
-              "type": "string"
-            },
-            "deprecated": {
-              "type": "string"
-            },
-            "description_many": {
-              "type": "string"
-            },
-            "description_one": {
-              "type": "string"
-            },
-            "enum_many": {
-              "type": "string"
-            },
-            "enum_one": {
-              "type": "string"
-            },
-            "event_many": {
-              "type": "string"
-            },
-            "event_one": {
-              "type": "string"
-            },
-            "example_many": {
-              "type": "string"
-            },
-            "example_one": {
-              "type": "string"
-            },
-            "exportAssignment_many": {
-              "type": "string"
-            },
-            "exportAssignment_one": {
-              "type": "string"
-            },
-            "extendsType": {
-              "type": "string"
-            },
-            "falseType": {
-              "type": "string"
-            },
-            "function_many": {
-              "type": "string"
-            },
-            "function_one": {
-              "type": "string"
-            },
-            "getter_many": {
-              "type": "string"
-            },
-            "getter_one": {
-              "type": "string"
-            },
-            "interface_many": {
-              "type": "string"
-            },
-            "interface_one": {
-              "type": "string"
-            },
-            "internal": {
-              "type": "string"
-            },
-            "intersection": {
-              "type": "string"
-            },
-            "keyType": {
-              "$ref": "#/definitions/DeepRequiredByKey%3Cstring%2Cstring%3E"
-            },
-            "mappedType": {
-              "type": "string"
-            },
-            "method_many": {
-              "type": "string"
-            },
-            "method_one": {
-              "type": "string"
-            },
-            "module_many": {
-              "type": "string"
-            },
-            "module_one": {
-              "type": "string"
-            },
-            "namespace_many": {
-              "type": "string"
-            },
-            "namespace_one": {
-              "type": "string"
-            },
-            "object_many": {
-              "type": "string"
-            },
-            "object_one": {
-              "type": "string"
-            },
-            "optional": {
-              "type": "string"
-            },
-            "parameter_many": {
-              "type": "string"
-            },
-            "parameter_one": {
-              "type": "string"
-            },
-            "property_many": {
-              "type": "string"
-            },
-            "property_one": {
-              "type": "string"
-            },
-            "readonly": {
-              "type": "string"
-            },
-            "remark_many": {
-              "type": "string"
-            },
-            "remark_one": {
-              "type": "string"
-            },
-            "required": {
-              "type": "string"
-            },
-            "rest": {
-              "type": "string"
-            },
-            "returnType": {
-              "type": "string"
-            },
-            "see": {
-              "type": "string"
-            },
-            "setter_many": {
-              "type": "string"
-            },
-            "setter_one": {
-              "type": "string"
-            },
-            "static": {
-              "type": "string"
-            },
-            "throws": {
-              "type": "string"
-            },
-            "trueType": {
-              "type": "string"
-            },
-            "typeAlias_many": {
-              "type": "string"
-            },
-            "typeAlias_one": {
-              "type": "string"
-            },
-            "typeLiteral": {
-              "type": "string"
-            },
-            "typeParameter_many": {
-              "type": "string"
-            },
-            "typeParameter_one": {
-              "type": "string"
-            },
-            "type_many": {
-              "type": "string"
-            },
-            "type_one": {
-              "type": "string"
-            },
-            "union": {
-              "type": "string"
-            },
-            "valueType": {
-              "$ref": "#/definitions/DeepRequiredByKey%3Cstring%2Cstring%3E"
-            },
-            "variable_many": {
-              "type": "string"
-            },
-            "variable_one": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "typeEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        },
-        "typeParameterEncapsulation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/definitions/DeepRequiredByKey%3C(string1379558387%7Cstring2073129684)%2Cstring%3E"
-              },
-              "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
-          ]
-        }
-      },
-      "type": "object"
-    },
-    "DeepRequiredByKey<string,string>": {
-      "type": "string"
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
     },
     "ExportableEntityKinds": {
       "enum": [
@@ -862,6 +77,377 @@
     "ExternalTypes": {
       "additionalProperties": {
         "type": "string"
+      },
+      "type": "object"
+    },
+    "HTMLRenderConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "indentation": {
+          "description": "Indentation characters",
+          "type": "string"
+        },
+        "inlineTitleEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how inline titles should be encapsulated in the rendered output."
+        },
+        "newLine": {
+          "description": "Newline character",
+          "enum": [
+            "\n",
+            "\r\n",
+            "os"
+          ],
+          "type": "string"
+        },
+        "parameterEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how parameters should be encapsulated in the rendered output."
+        },
+        "propertyEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how properties should be encapsulated in the rendered output."
+        },
+        "renderOrder": {
+          "description": "Defines the order in which entities should be rendered.",
+          "items": {
+            "$ref": "#/definitions/ExportableEntityKinds"
+          },
+          "type": "array"
+        },
+        "renderParentNames": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "documentation",
+              "type": "string"
+            },
+            {
+              "const": "tableOfContents",
+              "type": "string"
+            }
+          ],
+          "description": "Defines whether the parent name of members should be rendered in the signature."
+        },
+        "renderPrivateMembers": {
+          "description": "Defines whether the renderer should render private members.",
+          "type": "boolean"
+        },
+        "renderSourceCodeLinks": {
+          "description": "Defines whether the renderer should render links to the source code.",
+          "type": "boolean"
+        },
+        "sidebar": {
+          "description": "Renders the table of contents in an aside element and the documentation in a main element.",
+          "type": "boolean"
+        },
+        "stringLiteralEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how string literal type annotations should be encapsulated in the rendered output."
+        },
+        "tagEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output."
+        },
+        "translations": {
+          "additionalProperties": false,
+          "description": "Translations for otherwise hardcoded labels",
+          "properties": {
+            "abstract": {
+              "type": "string"
+            },
+            "beta": {
+              "type": "string"
+            },
+            "callSignature_many": {
+              "type": "string"
+            },
+            "callSignature_one": {
+              "type": "string"
+            },
+            "checkType": {
+              "type": "string"
+            },
+            "class_many": {
+              "type": "string"
+            },
+            "class_one": {
+              "type": "string"
+            },
+            "constraint_many": {
+              "type": "string"
+            },
+            "constraint_one": {
+              "type": "string"
+            },
+            "constructSignature_many": {
+              "type": "string"
+            },
+            "constructSignature_one": {
+              "type": "string"
+            },
+            "ctor_many": {
+              "type": "string"
+            },
+            "ctor_one": {
+              "type": "string"
+            },
+            "default": {
+              "type": "string"
+            },
+            "definedIn": {
+              "type": "string"
+            },
+            "deprecated": {
+              "type": "string"
+            },
+            "description_many": {
+              "type": "string"
+            },
+            "description_one": {
+              "type": "string"
+            },
+            "enum_many": {
+              "type": "string"
+            },
+            "enum_one": {
+              "type": "string"
+            },
+            "event_many": {
+              "type": "string"
+            },
+            "event_one": {
+              "type": "string"
+            },
+            "example_many": {
+              "type": "string"
+            },
+            "example_one": {
+              "type": "string"
+            },
+            "exportAssignment_many": {
+              "type": "string"
+            },
+            "exportAssignment_one": {
+              "type": "string"
+            },
+            "extendsType": {
+              "type": "string"
+            },
+            "falseType": {
+              "type": "string"
+            },
+            "function_many": {
+              "type": "string"
+            },
+            "function_one": {
+              "type": "string"
+            },
+            "getter_many": {
+              "type": "string"
+            },
+            "getter_one": {
+              "type": "string"
+            },
+            "interface_many": {
+              "type": "string"
+            },
+            "interface_one": {
+              "type": "string"
+            },
+            "internal": {
+              "type": "string"
+            },
+            "intersection": {
+              "type": "string"
+            },
+            "keyType": {
+              "type": "string"
+            },
+            "mappedType": {
+              "type": "string"
+            },
+            "method_many": {
+              "type": "string"
+            },
+            "method_one": {
+              "type": "string"
+            },
+            "module_many": {
+              "type": "string"
+            },
+            "module_one": {
+              "type": "string"
+            },
+            "namespace_many": {
+              "type": "string"
+            },
+            "namespace_one": {
+              "type": "string"
+            },
+            "object_many": {
+              "type": "string"
+            },
+            "object_one": {
+              "type": "string"
+            },
+            "optional": {
+              "type": "string"
+            },
+            "parameter_many": {
+              "type": "string"
+            },
+            "parameter_one": {
+              "type": "string"
+            },
+            "property_many": {
+              "type": "string"
+            },
+            "property_one": {
+              "type": "string"
+            },
+            "readonly": {
+              "type": "string"
+            },
+            "remark_many": {
+              "type": "string"
+            },
+            "remark_one": {
+              "type": "string"
+            },
+            "required": {
+              "type": "string"
+            },
+            "rest": {
+              "type": "string"
+            },
+            "returnType": {
+              "type": "string"
+            },
+            "see": {
+              "type": "string"
+            },
+            "setter_many": {
+              "type": "string"
+            },
+            "setter_one": {
+              "type": "string"
+            },
+            "static": {
+              "type": "string"
+            },
+            "throws": {
+              "type": "string"
+            },
+            "trueType": {
+              "type": "string"
+            },
+            "typeAlias_many": {
+              "type": "string"
+            },
+            "typeAlias_one": {
+              "type": "string"
+            },
+            "typeLiteral": {
+              "type": "string"
+            },
+            "typeParameter_many": {
+              "type": "string"
+            },
+            "typeParameter_one": {
+              "type": "string"
+            },
+            "type_many": {
+              "type": "string"
+            },
+            "type_one": {
+              "type": "string"
+            },
+            "union": {
+              "type": "string"
+            },
+            "valueType": {
+              "type": "string"
+            },
+            "variable_many": {
+              "type": "string"
+            },
+            "variable_one": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "keyType",
+            "valueType"
+          ],
+          "type": "object"
+        },
+        "typeEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how type annotations should be encapsulated in the rendered output."
+        },
+        "typeParameterEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how type parameters should be encapsulated in the rendered output."
+        }
       },
       "type": "object"
     },
@@ -895,6 +481,414 @@
             }
           ],
           "description": "An array or object of excluded directories."
+        }
+      },
+      "type": "object"
+    },
+    "JSONRenderConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "includeIds": {
+          "description": "Whether ids should be included in the output",
+          "type": "boolean"
+        },
+        "indentation": {
+          "description": "Indentation characters",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MarkdownRenderConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "allowedHTMLTags": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes"
+        },
+        "indentation": {
+          "description": "Indentation characters",
+          "type": "string"
+        },
+        "inlineTitleEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how inline titles should be encapsulated in the rendered output."
+        },
+        "newLine": {
+          "description": "Newline character",
+          "enum": [
+            "\n",
+            "\r\n",
+            "os"
+          ],
+          "type": "string"
+        },
+        "parameterEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how parameters should be encapsulated in the rendered output."
+        },
+        "propertyEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how properties should be encapsulated in the rendered output."
+        },
+        "renderOrder": {
+          "description": "Defines the order in which entities should be rendered.",
+          "items": {
+            "$ref": "#/definitions/ExportableEntityKinds"
+          },
+          "type": "array"
+        },
+        "renderParentNames": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "documentation",
+              "type": "string"
+            },
+            {
+              "const": "tableOfContents",
+              "type": "string"
+            }
+          ],
+          "description": "Defines whether the parent name of members should be rendered in the signature."
+        },
+        "renderPrivateMembers": {
+          "description": "Defines whether the renderer should render private members.",
+          "type": "boolean"
+        },
+        "renderSourceCodeLinks": {
+          "description": "Defines whether the renderer should render links to the source code.",
+          "type": "boolean"
+        },
+        "sectionSeparator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines the string that should be used to separate sections in the rendered output."
+        },
+        "stringLiteralEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how string literal type annotations should be encapsulated in the rendered output."
+        },
+        "tagEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output."
+        },
+        "translations": {
+          "additionalProperties": false,
+          "description": "Translations for otherwise hardcoded labels",
+          "properties": {
+            "abstract": {
+              "type": "string"
+            },
+            "beta": {
+              "type": "string"
+            },
+            "callSignature_many": {
+              "type": "string"
+            },
+            "callSignature_one": {
+              "type": "string"
+            },
+            "checkType": {
+              "type": "string"
+            },
+            "class_many": {
+              "type": "string"
+            },
+            "class_one": {
+              "type": "string"
+            },
+            "constraint_many": {
+              "type": "string"
+            },
+            "constraint_one": {
+              "type": "string"
+            },
+            "constructSignature_many": {
+              "type": "string"
+            },
+            "constructSignature_one": {
+              "type": "string"
+            },
+            "ctor_many": {
+              "type": "string"
+            },
+            "ctor_one": {
+              "type": "string"
+            },
+            "default": {
+              "type": "string"
+            },
+            "definedIn": {
+              "type": "string"
+            },
+            "deprecated": {
+              "type": "string"
+            },
+            "description_many": {
+              "type": "string"
+            },
+            "description_one": {
+              "type": "string"
+            },
+            "enum_many": {
+              "type": "string"
+            },
+            "enum_one": {
+              "type": "string"
+            },
+            "event_many": {
+              "type": "string"
+            },
+            "event_one": {
+              "type": "string"
+            },
+            "example_many": {
+              "type": "string"
+            },
+            "example_one": {
+              "type": "string"
+            },
+            "exportAssignment_many": {
+              "type": "string"
+            },
+            "exportAssignment_one": {
+              "type": "string"
+            },
+            "extendsType": {
+              "type": "string"
+            },
+            "falseType": {
+              "type": "string"
+            },
+            "function_many": {
+              "type": "string"
+            },
+            "function_one": {
+              "type": "string"
+            },
+            "getter_many": {
+              "type": "string"
+            },
+            "getter_one": {
+              "type": "string"
+            },
+            "interface_many": {
+              "type": "string"
+            },
+            "interface_one": {
+              "type": "string"
+            },
+            "internal": {
+              "type": "string"
+            },
+            "intersection": {
+              "type": "string"
+            },
+            "keyType": {
+              "type": "string"
+            },
+            "mappedType": {
+              "type": "string"
+            },
+            "method_many": {
+              "type": "string"
+            },
+            "method_one": {
+              "type": "string"
+            },
+            "module_many": {
+              "type": "string"
+            },
+            "module_one": {
+              "type": "string"
+            },
+            "namespace_many": {
+              "type": "string"
+            },
+            "namespace_one": {
+              "type": "string"
+            },
+            "object_many": {
+              "type": "string"
+            },
+            "object_one": {
+              "type": "string"
+            },
+            "optional": {
+              "type": "string"
+            },
+            "parameter_many": {
+              "type": "string"
+            },
+            "parameter_one": {
+              "type": "string"
+            },
+            "property_many": {
+              "type": "string"
+            },
+            "property_one": {
+              "type": "string"
+            },
+            "readonly": {
+              "type": "string"
+            },
+            "remark_many": {
+              "type": "string"
+            },
+            "remark_one": {
+              "type": "string"
+            },
+            "required": {
+              "type": "string"
+            },
+            "rest": {
+              "type": "string"
+            },
+            "returnType": {
+              "type": "string"
+            },
+            "see": {
+              "type": "string"
+            },
+            "setter_many": {
+              "type": "string"
+            },
+            "setter_one": {
+              "type": "string"
+            },
+            "static": {
+              "type": "string"
+            },
+            "throws": {
+              "type": "string"
+            },
+            "trueType": {
+              "type": "string"
+            },
+            "typeAlias_many": {
+              "type": "string"
+            },
+            "typeAlias_one": {
+              "type": "string"
+            },
+            "typeLiteral": {
+              "type": "string"
+            },
+            "typeParameter_many": {
+              "type": "string"
+            },
+            "typeParameter_one": {
+              "type": "string"
+            },
+            "type_many": {
+              "type": "string"
+            },
+            "type_one": {
+              "type": "string"
+            },
+            "union": {
+              "type": "string"
+            },
+            "valueType": {
+              "type": "string"
+            },
+            "variable_many": {
+              "type": "string"
+            },
+            "variable_one": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "keyType",
+            "valueType"
+          ],
+          "type": "object"
+        },
+        "typeEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how type annotations should be encapsulated in the rendered output."
+        },
+        "typeParameterEncapsulation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Encapsulation"
+            },
+            {
+              "const": false,
+              "type": "boolean"
+            }
+          ],
+          "description": "Defines how type parameters should be encapsulated in the rendered output."
         }
       },
       "type": "object"

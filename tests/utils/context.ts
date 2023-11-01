@@ -1,24 +1,24 @@
 import ts from "typescript";
 
-import { getDefaultConfig } from "unwritten:config/config.js";
-import fs from "unwritten:platform/file-system/browser.js";
-import { logger } from "unwritten:platform/logger/node.js";
-import os from "unwritten:platform/os/node.js";
-import path from "unwritten:platform/path/browser.js";
-import process from "unwritten:platform/process/browser.js";
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import jsonRenderer from "unwritten:renderer:json/index.js";
-import htmlRenderer, { isHTMLRenderContext } from "unwritten:renderer:markup/html/index.js";
-import markdownRenderer, { isMarkdownRenderContext } from "unwritten:renderer:markup/markdown/index.js";
-import { attachTestRegistry } from "unwritten:tests:utils/registry.js";
-import { createContext as createDefaultContext } from "unwritten:utils/context.js";
-import { assert } from "unwritten:utils/general.js";
-import { override } from "unwritten:utils:override.js";
+import { getDefaultConfig } from "unwritten:config/config";
+import fs from "unwritten:platform/file-system/browser";
+import { logger } from "unwritten:platform/logger/node";
+import os from "unwritten:platform/os/node";
+import path from "unwritten:platform/path/browser";
+import process from "unwritten:platform/process/browser";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import jsonRenderer from "unwritten:renderer:json/index";
+import htmlRenderer, { isHTMLRenderContext } from "unwritten:renderer:markup/html/index";
+import markdownRenderer, { isMarkdownRenderContext } from "unwritten:renderer:markup/markdown/index";
+import { attachTestRegistry } from "unwritten:tests:utils/registry";
+import { createContext as createDefaultContext } from "unwritten:utils/context";
+import { assert } from "unwritten:utils/general";
+import { override } from "unwritten:utils:override";
 
-import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer.js";
-import type { HTMLRenderContext, MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { CompleteConfig } from "unwritten:type-definitions/config.js";
-import type { RenderContext } from "unwritten:type-definitions/context.js";
+import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer";
+import type { HTMLRenderContext, MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { CompleteConfig } from "unwritten:type-definitions/config";
+import type { RenderContext } from "unwritten:type-definitions/context";
 
 
 const testConfig: CompleteConfig = override(getDefaultConfig(), {

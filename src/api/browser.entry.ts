@@ -1,20 +1,20 @@
 import ts from "typescript";
 
-import { compile } from "unwritten:compiler:browser.js";
-import { createConfig } from "unwritten:config/config.js";
-import { interpret } from "unwritten:interpreter/ast/symbol.js";
-import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context.js";
-import { getEntryFileSymbolsFromProgram } from "unwritten:interpreter:utils/ts.js";
-import fs from "unwritten:platform/file-system/browser.js";
-import os from "unwritten:platform/os/browser.js";
-import path from "unwritten:platform/path/browser.js";
-import process from "unwritten:platform/process/browser.js";
-import { getRenderer } from "unwritten:renderer:index.js";
-import { createContext as createRenderContext } from "unwritten:renderer:utils/context.js";
-import { createContext as createDefaultContext } from "unwritten:utils:context.js";
+import { compile } from "unwritten:compiler:browser";
+import { createConfig } from "unwritten:config/config";
+import { interpret } from "unwritten:interpreter/ast/symbol";
+import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context";
+import { getEntryFileSymbolsFromProgram } from "unwritten:interpreter:utils/ts";
+import fs from "unwritten:platform/file-system/browser";
+import os from "unwritten:platform/os/browser";
+import path from "unwritten:platform/path/browser";
+import process from "unwritten:platform/process/browser";
+import { getRenderer } from "unwritten:renderer:index";
+import { createContext as createRenderContext } from "unwritten:renderer:utils/context";
+import { createContext as createDefaultContext } from "unwritten:utils:context";
 
-import type { BrowserAPIOptions } from "unwritten:type-definitions/options.js";
-import type { RenderOutput } from "unwritten:type-definitions/renderer.js";
+import type { BrowserAPIOptions } from "unwritten:type-definitions/options";
+import type { RenderOutput } from "unwritten:type-definitions/renderer";
 
 
 export async function unwritten(code: string, options?: BrowserAPIOptions): Promise<RenderOutput> {

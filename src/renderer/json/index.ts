@@ -1,11 +1,11 @@
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { JSONRenderContext, JSONRenderer } from "unwritten:renderer:json/type-definitions/renderer.js";
-import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { Renderer, RenderOutput } from "unwritten:type-definitions/renderer.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { JSONRenderContext, JSONRenderer } from "unwritten:renderer:json/type-definitions/renderer";
+import type { RenderContext } from "unwritten:type-definitions/context";
+import type { Renderer, RenderOutput } from "unwritten:type-definitions/renderer";
 
 
 export function isJSONRenderer(renderer: Renderer): renderer is JSONRenderer {

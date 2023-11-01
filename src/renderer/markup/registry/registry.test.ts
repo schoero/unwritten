@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
 
-import { createNamespaceEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { isVariableEntity } from "unwritten:typeguards/entities.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { createNamespaceEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { isVariableEntity } from "unwritten:typeguards/entities";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
-import { convertTextToAnchorId, getAnchorLink, registerAnchor } from "./registry.js";
+import { convertTextToAnchorId, getAnchorLink, registerAnchor } from "./registry";
 
 
 scope("Renderer", "Source registry", () => {

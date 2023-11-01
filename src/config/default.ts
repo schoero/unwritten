@@ -1,9 +1,9 @@
 /* eslint-disable sort-keys/sort-keys-fix */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 
-import type { ExternalTypes, InterpreterConfig } from "unwritten:type-definitions/config.js";
-import type { Complete } from "unwritten:type-definitions/utils.js";
+import type { ExternalTypes, InterpreterConfig } from "unwritten:type-definitions/config";
+import type { Complete } from "unwritten:type-definitions/utils";
 
 
 export const defaultOutputPath = "./docs/";

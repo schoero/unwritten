@@ -7,8 +7,8 @@ import {
   readFileSync,
   rmSync,
   writeFileSync
-} from "unwritten:platform/file-system/node.js";
-import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs.js";
+} from "unwritten:platform/file-system/node";
+import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs";
 
 
 describe("virtual fs", () => {

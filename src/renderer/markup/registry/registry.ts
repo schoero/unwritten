@@ -1,10 +1,10 @@
-import { assert } from "unwritten:utils/general.js";
+import { assert } from "unwritten:utils/general";
 
-import type { MarkupRenderContexts } from "../types-definitions/markup.js";
+import type { MarkupRenderContexts } from "../types-definitions/markup";
 
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { FilePath } from "unwritten:type-definitions/file-system.js";
+import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { FilePath } from "unwritten:type-definitions/file-system";
 
 
 export interface AnchorLink {

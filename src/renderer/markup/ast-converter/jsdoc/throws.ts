@@ -1,10 +1,10 @@
-import { convertJSDocType } from "unwritten:renderer/markup/ast-converter/jsdoc/type.js";
-import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
-import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
+import { convertJSDocType } from "unwritten:renderer/markup/ast-converter/jsdoc/type";
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
+import { spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 
-import type { JSDocThrowsTag } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ConvertedJSDocThrowsTag } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { JSDocThrowsTag } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup";
+import type { ConvertedJSDocThrowsTag } from "unwritten:renderer/markup/types-definitions/renderer";
 
 
 export function convertJSDocThrowsTag(ctx: MarkupRenderContexts, jsdocThrowsTag: JSDocThrowsTag): ConvertedJSDocThrowsTag {

@@ -1,16 +1,16 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { convertSignatureEntityForType } from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer:markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { convertSignatureEntityForType } from "unwritten:renderer:markup/ast-converter/entities/index";
+import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/nodes";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { FunctionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { FunctionType } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedFunctionTypeInline,
   ConvertedFunctionTypeMultiline
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertFunctionTypeInline(

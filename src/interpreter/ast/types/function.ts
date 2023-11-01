@@ -1,11 +1,11 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { ObjectType } from "typescript";
 
-import type { FunctionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { FunctionType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createFunctionType(ctx: InterpreterContext, type: ObjectType): FunctionType {

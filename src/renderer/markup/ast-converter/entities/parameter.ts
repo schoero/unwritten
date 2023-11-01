@@ -1,9 +1,9 @@
-import { convertDescriptionForType } from "unwritten:renderer/markup/ast-converter/shared/description.js";
-import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
-import { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index.js";
-import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { convertDescriptionForType } from "unwritten:renderer/markup/ast-converter/shared/description";
+import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer";
+import { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 import {
   createAnchorNode,
   createInlineTitleNode,
@@ -12,18 +12,18 @@ import {
   createParagraphNode,
   createSpanNode,
   createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
-import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+} from "unwritten:renderer:markup/utils/nodes";
+import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { ParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ParameterEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedParameterEntitiesForDocumentation,
   ConvertedParameterEntitiesForSignature,
   ConvertedParameterEntitiesForType
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertParameterEntityToAnchor(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity, displayName?: string): AnchorNode {

@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createExportAssignmentEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { isExportAssignmentEntity } from "unwritten:typeguards/entities.js";
-import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { createExportAssignmentEntity } from "unwritten:interpreter:ast/entities/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { isExportAssignmentEntity } from "unwritten:typeguards/entities";
+import { isJSDocText } from "unwritten:typeguards/jsdoc";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
 
 scope("Interpreter", "Export assignment", () => {

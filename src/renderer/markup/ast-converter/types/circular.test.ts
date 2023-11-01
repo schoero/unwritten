@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createInterfaceEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { isCircularEntity } from "unwritten:typeguards/entities.js";
-import { isCircularType, isInterfaceType, isTypeReferenceType } from "unwritten:typeguards/types.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { createInterfaceEntity } from "unwritten:interpreter:ast/entities/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { isCircularEntity } from "unwritten:typeguards/entities";
+import { isCircularType, isInterfaceType, isTypeReferenceType } from "unwritten:typeguards/types";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
 
 scope("Renderer", TypeKind.Circular, () => {

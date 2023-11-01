@@ -1,9 +1,9 @@
-import { renderNode } from "unwritten:renderer/markup/markdown/index.js";
-import { renderNewLine } from "unwritten:renderer/utils/new-line.js";
-import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line.js";
+import { renderNode } from "unwritten:renderer/markup/markdown/index";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
+import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
 
-import type { PaddedNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { PaddedNode } from "unwritten:renderer/markup/types-definitions/nodes";
+import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 
 
 export function renderPaddedNode(ctx: MarkdownRenderContext, paddedNode: PaddedNode): string {

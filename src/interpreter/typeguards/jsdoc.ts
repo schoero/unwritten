@@ -10,7 +10,7 @@ import type {
   JSDocThrowsTag
 } from "typescript";
 
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function isJSDoc(ctx: InterpreterContext, jsdoc: JSDoc | JSDocTag): jsdoc is JSDoc {

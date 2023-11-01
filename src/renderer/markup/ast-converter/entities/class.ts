@@ -1,8 +1,8 @@
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
-import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { filterOutImplicitSignatures, filterOutPrivateMembers } from "unwritten:renderer/utils/private-members.js";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
+import { filterOutImplicitSignatures, filterOutPrivateMembers } from "unwritten:renderer/utils/private-members";
 import {
   convertEventPropertyEntityForDocumentation,
   convertEventPropertyEntityForTableOfContents,
@@ -12,32 +12,32 @@ import {
   convertPropertyEntityForTableOfContents,
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
-import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
+import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
+import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createListNode,
   createSectionNode,
   createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+} from "unwritten:renderer:markup/utils/nodes";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import {
   extendClassEntityConstructorsWithHeritage,
   extendClassEntityEntitiesWithHeritage
-} from "unwritten:renderer:utils/heritage.js";
+} from "unwritten:renderer:utils/heritage";
 
-import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedClassEntityForDocumentation,
   ConvertedClassEntityForTableOfContents
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertClassEntityToAnchor(ctx: MarkupRenderContexts, classEntity: ClassEntity, displayName?: string): AnchorNode {

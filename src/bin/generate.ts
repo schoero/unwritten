@@ -1,6 +1,6 @@
-import { unwritten } from "unwritten:api/node.entry.js";
+import { unwritten } from "unwritten:api/node.entry";
 
-import type { APIOptions } from "unwritten:type-definitions/options.js";
+import type { APIOptions } from "unwritten:type-definitions/options";
 
 
 export async function generate(entryFilePaths: string[], options?: APIOptions) {

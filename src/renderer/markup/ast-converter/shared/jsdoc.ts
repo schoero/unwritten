@@ -1,4 +1,4 @@
-import { renderNode } from "unwritten:renderer/index.js";
+import { renderNode } from "unwritten:renderer/index";
 import {
   convertJSDocGenericTag,
   convertJSDocLink,
@@ -6,10 +6,10 @@ import {
   convertJSDocSeeTag,
   convertJSDocThrowsTag,
   convertJSDocType
-} from "unwritten:renderer/markup/ast-converter/jsdoc/index.js";
-import { convertJSDocText } from "unwritten:renderer/markup/ast-converter/jsdoc/text.js";
-import { RenderableJSDocKeyTags, RenderableJSDocValueTags } from "unwritten:renderer:markup/enums/jsdoc.js";
-import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
+} from "unwritten:renderer/markup/ast-converter/jsdoc/index";
+import { convertJSDocText } from "unwritten:renderer/markup/ast-converter/jsdoc/text";
+import { RenderableJSDocKeyTags, RenderableJSDocValueTags } from "unwritten:renderer:markup/enums/jsdoc";
+import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import {
   isJSDocGenericTag,
   isJSDocLink,
@@ -18,11 +18,11 @@ import {
   isJSDocText,
   isJSDocThrowsTag,
   isJSDocType
-} from "unwritten:typeguards/jsdoc.js";
+} from "unwritten:typeguards/jsdoc";
 
 import type { JSDocProperties, JSDocTags } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function convertJSDocNodes(ctx: MarkupRenderContexts, jsdocTags: JSDocTags): ASTNode[] {

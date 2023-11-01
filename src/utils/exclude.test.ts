@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { describe, expect, it } from "vitest";
 
-import { scope } from "unwritten:tests:utils/scope.js";
+import { scope } from "unwritten:tests:utils/scope";
 
-import { isExcluded } from "./exclude.js";
+import { isExcluded } from "./exclude";
 
 
 scope("Interpreter", "Utils", () => {

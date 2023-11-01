@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { createInlineTitleNode, createParagraphNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { md } from "unwritten:utils/template.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { createInlineTitleNode, createParagraphNode } from "unwritten:renderer:markup/utils/nodes";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { md } from "unwritten:utils/template";
 
-import { renderInlineTitleNode } from "./inline-title.js";
+import { renderInlineTitleNode } from "./inline-title";
 
 
 scope("MarkdownRenderer", "InlineTitleNode", () => {

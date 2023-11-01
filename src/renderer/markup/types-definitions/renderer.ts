@@ -1,6 +1,6 @@
-import type { RenderCategories } from "../enums/renderer.js";
+import type { RenderCategories } from "../enums/renderer";
 
-import type { Alpha, Beta, Deprecated, Example, Internal } from "unwritten:interpreter/type-definitions/jsdoc.js";
+import type { Alpha, Beta, Deprecated, Example, Internal } from "unwritten:interpreter/type-definitions/jsdoc";
 
 import type {
   AnchorNode,
@@ -16,7 +16,7 @@ import type {
   SectionNode,
   SmallNode,
   TitleNode
-} from "./nodes.js";
+} from "./nodes";
 
 
 export type CategoryNames = {

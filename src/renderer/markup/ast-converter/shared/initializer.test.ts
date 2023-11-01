@@ -1,12 +1,12 @@
 import { expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
 
-import type { ArrayType, NumberLiteralType } from "unwritten:interpreter/type-definitions/types.js";
+import type { ArrayType, NumberLiteralType } from "unwritten:interpreter/type-definitions/types";
 
 
 scope("MarkupRenderer", "Example", () => {

@@ -18,7 +18,7 @@ import type {
   UnionTypeNode
 } from "typescript";
 
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function isArrayTypeNode(ctx: InterpreterContext, typeNode: TypeNode): typeNode is ArrayTypeNode {

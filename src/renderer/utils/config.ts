@@ -1,19 +1,15 @@
-import type {
-  HTMLRenderConfig,
-  MarkdownRenderConfig,
-  MarkupRenderConfig
-} from "../markup/types-definitions/config.js";
+import type { HTMLRenderConfig, MarkdownRenderConfig, MarkupRenderConfig } from "../markup/types-definitions/config";
 import type {
   HTMLRenderContext,
   MarkdownRenderContext,
   MarkupRenderContexts
-} from "../markup/types-definitions/markup.js";
+} from "../markup/types-definitions/markup";
 
-import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config.js";
-import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer.js";
-import type { RenderConfig } from "unwritten:type-definitions/config.js";
-import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { Complete } from "unwritten:type-definitions/utils.js";
+import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config";
+import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer";
+import type { RenderConfig } from "unwritten:type-definitions/config";
+import type { RenderContext } from "unwritten:type-definitions/context";
+import type { Complete } from "unwritten:type-definitions/utils";
 
 
 export function getRenderConfig(ctx: MarkdownRenderContext): Complete<MarkdownRenderConfig>;

@@ -1,4 +1,4 @@
-import { isTypeNode } from "unwritten:interpreter:typeguards/type-nodes.js";
+import { isTypeNode } from "unwritten:interpreter:typeguards/type-nodes";
 
 import type {
   ArrowFunction,
@@ -39,7 +39,7 @@ import type {
   VariableDeclaration
 } from "typescript";
 
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function isArrowFunctionDeclaration(ctx: InterpreterContext, declaration: Declaration): declaration is ArrowFunction {

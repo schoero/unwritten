@@ -1,16 +1,16 @@
-import { renderNode } from "unwritten:renderer/index.js";
-import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
+import { renderNode } from "unwritten:renderer/index";
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
 import {
   convertSeeTagsForDocumentation,
   convertSeeTagsForType
-} from "unwritten:renderer/markup/ast-converter/shared/see.js";
+} from "unwritten:renderer/markup/ast-converter/shared/see";
 import {
   convertThrowsForDocumentation,
   convertThrowsForType
-} from "unwritten:renderer/markup/ast-converter/shared/throws.js";
-import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { isRenderParentNamesEnabled, renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+} from "unwritten:renderer/markup/ast-converter/shared/throws";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { isRenderParentNamesEnabled, renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 import {
   convertParameterEntitiesForDocumentation,
   convertParameterEntitiesForSignature,
@@ -18,26 +18,23 @@ import {
   convertTypeParameterEntitiesForDocumentation,
   convertTypeParameterEntitiesForSignature,
   convertTypeParameterEntitiesForType
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
 import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
-} from "unwritten:renderer:markup/ast-converter/shared/description.js";
+} from "unwritten:renderer:markup/ast-converter/shared/description";
 import {
   convertExamplesForDocumentation,
   convertExamplesForType
-} from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
+} from "unwritten:renderer:markup/ast-converter/shared/example";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
 import {
   convertRemarksForDocumentation,
   convertRemarksForType
-} from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
-import {
-  convertTagsForDocumentation,
-  convertTagsForType
-} from "unwritten:renderer:markup/ast-converter/shared/tags.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
+} from "unwritten:renderer:markup/ast-converter/shared/remarks";
+import { convertTagsForDocumentation, convertTagsForType } from "unwritten:renderer:markup/ast-converter/shared/tags";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createInlineTitleNode,
@@ -45,20 +42,20 @@ import {
   createParagraphNode,
   createSectionNode,
   createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
-import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+} from "unwritten:renderer:markup/utils/nodes";
+import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { ExplicitSignatureEntity, SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { AnchorNode, ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { ExplicitSignatureEntity, SignatureEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { AnchorNode, ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
   ConvertedPropertyEntityForTableOfContents,
   ConvertedReturnTypeForDocumentation,
   ConvertedReturnTypeForType,
   ConvertedSignatureEntityForDocumentation,
   ConvertedSignatureEntityForType
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertSignatureEntityToAnchor(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity, displayName?: string): AnchorNode {

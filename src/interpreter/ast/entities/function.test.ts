@@ -1,16 +1,16 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { isJSDocText } from "unwritten:typeguards/jsdoc.js";
-import { isUnresolvedType } from "unwritten:typeguards/types.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { isJSDocText } from "unwritten:typeguards/jsdoc";
+import { isUnresolvedType } from "unwritten:typeguards/types";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
-import { createFunctionEntity } from "./function.js";
+import { createFunctionEntity } from "./function";
 
 
 scope("Interpreter", EntityKind.Function, () => {

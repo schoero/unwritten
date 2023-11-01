@@ -1,7 +1,7 @@
-import type { JSDocKind, JSDocTagNames } from "unwritten:interpreter/enums/jsdoc.js";
-import type { Entity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { Position } from "unwritten:interpreter/type-definitions/shared.js";
-import type { Type } from "unwritten:interpreter/type-definitions/types.js";
+import type { JSDocKind, JSDocTagNames } from "unwritten:interpreter/enums/jsdoc";
+import type { Entity } from "unwritten:interpreter/type-definitions/entities";
+import type { Position } from "unwritten:interpreter/type-definitions/shared";
+import type { Type } from "unwritten:interpreter/type-definitions/types";
 
 
 type JSDocBase<Kind extends JSDocKind> = {

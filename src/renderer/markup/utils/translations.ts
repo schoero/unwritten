@@ -1,9 +1,9 @@
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { HTMLRenderConfig, MarkdownRenderConfig, MarkupRenderConfig } from "../types-definitions/config.js";
-import type { HTMLRenderContext, MarkdownRenderContext, MarkupRenderContexts } from "../types-definitions/markup.js";
+import type { HTMLRenderConfig, MarkdownRenderConfig, MarkupRenderConfig } from "../types-definitions/config";
+import type { HTMLRenderContext, MarkdownRenderContext, MarkupRenderContexts } from "../types-definitions/markup";
 
-import type { Complete, TranslationWithoutSuffixes } from "unwritten:type-definitions/utils.js";
+import type { Complete, TranslationWithoutSuffixes } from "unwritten:type-definitions/utils";
 
 
 interface TranslationOptions {

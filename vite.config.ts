@@ -3,7 +3,7 @@ import noBundlePlugin from "vite-plugin-no-bundle";
 
 import { config, defineConfig } from "@schoero/vite-config";
 
-
+/** @type {import('vitest/config').UserConfig} */
 export default defineConfig({
   ...config,
   build: {

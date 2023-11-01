@@ -1,14 +1,14 @@
 import { expect, it } from "vitest";
 
-import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { convertTemplateLiteralTypeInline } from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { renderNode } from "unwritten:renderer:markup/html/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { convertTemplateLiteralTypeInline } from "unwritten:renderer:markup/ast-converter/types/index";
+import { renderNode } from "unwritten:renderer:markup/html/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
 
-import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types.js";
+import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types";
 
 
 scope("MarkupRenderer", TypeKind.StringLiteral, () => {

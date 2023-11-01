@@ -1,10 +1,10 @@
-import { convertJSDocReference } from "unwritten:renderer/markup/ast-converter/jsdoc/reference.js";
-import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
-import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
+import { convertJSDocReference } from "unwritten:renderer/markup/ast-converter/jsdoc/reference";
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
+import { spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 
-import type { JSDocSeeTag } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ConvertedJSDocSeeTag } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { JSDocSeeTag } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup";
+import type { ConvertedJSDocSeeTag } from "unwritten:renderer/markup/types-definitions/renderer";
 
 
 export function convertJSDocSeeTag(ctx: MarkupRenderContexts, jsdocSeeTag: JSDocSeeTag): ConvertedJSDocSeeTag {

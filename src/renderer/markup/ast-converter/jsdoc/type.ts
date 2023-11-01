@@ -1,13 +1,13 @@
-import { renderNode } from "unwritten:renderer/index.js";
-import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { getAnchorLink } from "unwritten:renderer/markup/registry/registry.js";
-import { createAnchorNode, createConditionalNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { renderNode } from "unwritten:renderer/index";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type";
+import { getAnchorLink } from "unwritten:renderer/markup/registry/registry";
+import { createAnchorNode, createConditionalNode } from "unwritten:renderer/markup/utils/nodes";
+import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { JSDocType } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
-import type { ConvertedJSDocType } from "unwritten:renderer/markup/types-definitions/renderer.js";
+import type { JSDocType } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup";
+import type { ConvertedJSDocType } from "unwritten:renderer/markup/types-definitions/renderer";
 
 
 export function convertJSDocType(ctx: MarkupRenderContexts, jsdocType: JSDocType): ConvertedJSDocType {

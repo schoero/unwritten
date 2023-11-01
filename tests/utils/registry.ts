@@ -1,4 +1,4 @@
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 
 
 export function attachTestRegistry(ctx: MarkupRenderContexts): void {

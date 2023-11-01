@@ -1,6 +1,6 @@
-import { assert } from "./general.js";
+import { assert } from "./general";
 
-import type { DefaultContext } from "unwritten:type-definitions/context.js";
+import type { DefaultContext } from "unwritten:type-definitions/context";
 
 
 /**

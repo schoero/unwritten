@@ -1,6 +1,6 @@
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 
 
 export function renderNewLine(ctx: MarkupRenderContexts): string {

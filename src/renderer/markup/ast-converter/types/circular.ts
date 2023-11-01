@@ -1,11 +1,11 @@
-import { renderNode } from "unwritten:renderer/index.js";
-import { createAnchorNode } from "unwritten:renderer/markup/utils/nodes.js";
-import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { renderNode } from "unwritten:renderer/index";
+import { createAnchorNode } from "unwritten:renderer/markup/utils/nodes";
+import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { CircularType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ConvertedCircularTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { CircularType } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ConvertedCircularTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertCircularTypeInline(ctx: MarkupRenderContexts, circularType: CircularType): ConvertedCircularTypeInline {

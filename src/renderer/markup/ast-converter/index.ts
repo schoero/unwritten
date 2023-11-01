@@ -1,4 +1,4 @@
-import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry.js";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
 import {
   convertCircularEntityToAnchor,
   convertClassEntityForDocumentation,
@@ -31,11 +31,11 @@ import {
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents,
   convertVariableEntityToAnchor
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { getCategoryName } from "unwritten:renderer:markup/utils/renderer.js";
-import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort.js";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
+import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
+import { getCategoryName } from "unwritten:renderer:markup/utils/renderer";
+import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort";
+import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import {
   isCircularEntity,
   isClassEntity,
@@ -51,17 +51,17 @@ import {
   isTypeAliasEntity,
   isTypeParameterEntity,
   isVariableEntity
-} from "unwritten:typeguards/entities.js";
+} from "unwritten:typeguards/entities";
 
-import type { Entity, ExportableEntity, LinkableEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ListNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { Entity, ExportableEntity, LinkableEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ListNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
   ConvertedCategoryForDocumentation,
   ConvertedCategoryForTableOfContents,
   ConvertedEntitiesForDocumentation,
   ConvertedEntitiesForTableOfContents
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertEntityToAnchor(ctx: MarkupRenderContexts, entity: LinkableEntity, displayName?: string) {

@@ -1,18 +1,18 @@
 import { expect, it } from "vitest";
 
-import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 import {
   convertFunctionLikeEntityForDocumentation,
   convertFunctionLikeEntityForTableOfContents
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
-import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { ts } from "unwritten:utils/template.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
+import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { ts } from "unwritten:utils/template";
 
-import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types.js";
+import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types";
 
 
 scope("MarkupRenderer", EntityKind.Function, () => {

@@ -1,17 +1,17 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
-import { getDeclarationId, getSymbolId } from "unwritten:interpreter/ast/shared/id.js";
-import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { isNamespaceExport } from "unwritten:interpreter/typeguards/declarations.js";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
-import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index.js";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { assert } from "unwritten:utils/general.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter/ast/shared/id";
+import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { isNamespaceExport } from "unwritten:interpreter/typeguards/declarations";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
+import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";
 
-import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createNamespaceEntity = (ctx: InterpreterContext, symbol: Symbol): NamespaceEntity => withLockedSymbol(ctx, symbol, () => {

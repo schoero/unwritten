@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 
-import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/type-alias.js";
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/type-alias";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
 // TODO: Implement this test
 

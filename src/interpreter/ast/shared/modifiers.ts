@@ -1,9 +1,9 @@
-import { isPropertyDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
+import { isPropertyDeclaration } from "unwritten:interpreter:typeguards/declarations";
 
 import type { Declaration } from "typescript";
 
-import type { Modifiers, NativeModifiers } from "unwritten:interpreter:type-definitions/shared.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { Modifiers, NativeModifiers } from "unwritten:interpreter:type-definitions/shared";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function getModifiersByDeclaration(ctx: InterpreterContext, declaration: Declaration): Modifiers[] {

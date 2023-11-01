@@ -1,33 +1,29 @@
-import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc.js";
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context.js";
-import { spaceBetween } from "unwritten:renderer/markup/utils/renderer.js";
-import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description.js";
-import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example.js";
-import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position.js";
-import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks.js";
-import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags.js";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections.js";
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import { spaceBetween } from "unwritten:renderer/markup/utils/renderer";
+import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
+import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
+import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
+import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
+import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
+import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createListNode,
   createSectionNode,
   createTitleNode
-} from "unwritten:renderer:markup/utils/nodes.js";
+} from "unwritten:renderer:markup/utils/nodes";
 
-import type {
-  EnumEntity,
-  EnumMemberEntity,
-  MergedEnumEntity
-} from "unwritten:interpreter/type-definitions/entities.js";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
+import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedEnumEntityForDocumentation,
   ConvertedEnumEntityForTableOfContents
-} from "unwritten:renderer:markup/types-definitions/renderer.js";
+} from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertEnumEntityToAnchor(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity, displayName?: string): AnchorNode {

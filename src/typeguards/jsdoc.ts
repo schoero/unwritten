@@ -1,4 +1,4 @@
-import { JSDocKind } from "unwritten:interpreter/enums/jsdoc.js";
+import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 
 import type {
   JSDocGenericTag,
@@ -9,7 +9,7 @@ import type {
   JSDocText,
   JSDocThrowsTag,
   JSDocType
-} from "unwritten:interpreter/type-definitions/jsdoc.js";
+} from "unwritten:interpreter/type-definitions/jsdoc";
 
 
 export function isJSDocGenericTag(jsdocTag: JSDocTag): jsdocTag is JSDocGenericTag {

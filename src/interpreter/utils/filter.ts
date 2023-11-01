@@ -2,7 +2,7 @@ import {
   isCallSignatureDeclaration,
   isConstructSignatureDeclaration,
   isMethodSignatureDeclaration
-} from "unwritten:interpreter:typeguards/declarations.js";
+} from "unwritten:interpreter:typeguards/declarations";
 
 import type {
   CallSignatureDeclaration,
@@ -12,7 +12,7 @@ import type {
   Symbol
 } from "typescript";
 
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function functionOverloadDeclarationFilter(ctx: InterpreterContext, declaration: CallSignatureDeclaration | ConstructSignatureDeclaration | FunctionLikeDeclaration | MethodSignature, symbol: Symbol): boolean {

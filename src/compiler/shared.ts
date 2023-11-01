@@ -1,8 +1,8 @@
-import { findCommonIndentation, removeCommonIndentation } from "unwritten:utils/template.js";
+import { findCommonIndentation, removeCommonIndentation } from "unwritten:utils/template";
 
 import type { CompilerOptions, Diagnostic, LineAndCharacter } from "typescript";
 
-import type { DefaultContext } from "unwritten:type-definitions/context.js";
+import type { DefaultContext } from "unwritten:type-definitions/context";
 
 
 export function getDefaultCompilerOptions(ctx: DefaultContext): CompilerOptions {

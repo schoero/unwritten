@@ -1,15 +1,15 @@
-import { createJSDocReference } from "unwritten:interpreter/ast/jsdoc/reference.js";
-import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name.js";
-import { getPositionByNode } from "unwritten:interpreter/ast/shared/position.js";
-import { interpretSymbol } from "unwritten:interpreter/ast/symbol.js";
-import { JSDocKind } from "unwritten:interpreter/enums/jsdoc.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
+import { createJSDocReference } from "unwritten:interpreter/ast/jsdoc/reference";
+import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
+import { getPositionByNode } from "unwritten:interpreter/ast/shared/position";
+import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
+import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 
 import type { EntityName, JSDocLink as TSJSDocLink, JSDocMemberName } from "typescript";
 
-import type { JSDocLink } from "unwritten:interpreter/type-definitions/jsdoc.js";
-import type { TypeReferenceType } from "unwritten:interpreter/type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { JSDocLink } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { TypeReferenceType } from "unwritten:interpreter/type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createJSDocLink(ctx: InterpreterContext, jsdocLink: TSJSDocLink): JSDocLink {

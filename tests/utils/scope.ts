@@ -1,6 +1,6 @@
 import { describe } from "vitest";
 
-import type { TypeKind } from "unwritten:interpreter/enums/type.js";
+import type { TypeKind } from "unwritten:interpreter/enums/type";
 
 
 type Scopes =

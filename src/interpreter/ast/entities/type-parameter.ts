@@ -1,17 +1,17 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { isTypeParameterDeclaration } from "unwritten:interpreter:typeguards/declarations.js";
-import { assert } from "unwritten:utils:general.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
+import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
+import { isTypeParameterDeclaration } from "unwritten:interpreter:typeguards/declarations";
+import { assert } from "unwritten:utils:general";
 
 import { getTypeByTypeNode } from "../type";
 
 import type { Symbol, TypeParameter, TypeParameterDeclaration } from "typescript";
 
-import type { TypeParameterEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { TypeParameterEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createTypeParameterEntityByTypeParameter(ctx: InterpreterContext, typeParameter: TypeParameter): TypeParameterEntity {

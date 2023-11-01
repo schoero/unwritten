@@ -1,11 +1,11 @@
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { isHTMLRenderContext, renderNode as renderNodeAsHTML } from "unwritten:renderer:markup/html/index.js";
-import { renderNode as renderNodeAsMarkdown } from "unwritten:renderer:markup/markdown/index.js";
-import { assert } from "unwritten:utils:general.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { isHTMLRenderContext, renderNode as renderNodeAsHTML } from "unwritten:renderer:markup/html/index";
+import { renderNode as renderNodeAsMarkdown } from "unwritten:renderer:markup/markdown/index";
+import { assert } from "unwritten:utils:general";
 
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
-import type { Renderer } from "unwritten:type-definitions/renderer.js";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
+import type { Renderer } from "unwritten:type-definitions/renderer";
 
 
 export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {

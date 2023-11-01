@@ -1,14 +1,14 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 import {
   createParameterEntity,
   createTypeParameterEntityByTypeParameter
-} from "unwritten:interpreter:ast/entities/index.js";
-import { getDeclarationId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id.js";
-import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
-import { getNameByDeclaration } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { assert } from "unwritten:utils:general.js";
+} from "unwritten:interpreter:ast/entities/index";
+import { getDeclarationId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id";
+import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers";
+import { getNameByDeclaration } from "unwritten:interpreter:ast/shared/name";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
+import { assert } from "unwritten:utils:general";
 
 import {
   getDeclaredTypeByTypeNode,
@@ -19,8 +19,8 @@ import {
 
 import type { Signature as TSSignature, SignatureDeclaration } from "typescript";
 
-import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createSignatureEntity(ctx: InterpreterContext, signature: TSSignature): SignatureEntity {

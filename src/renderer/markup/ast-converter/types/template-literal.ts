@@ -1,9 +1,9 @@
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type.js";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 
-import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types.js";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
-import type { ConvertedTemplateLiteralTypeInline } from "unwritten:renderer:markup/types-definitions/renderer.js";
+import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
+import type { ConvertedTemplateLiteralTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
 export function convertTemplateLiteralTypeInline(ctx: MarkupRenderContexts, templateLiteralType: TemplateLiteralType): ConvertedTemplateLiteralTypeInline {

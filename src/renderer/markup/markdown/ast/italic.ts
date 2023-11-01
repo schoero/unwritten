@@ -1,7 +1,7 @@
-import { renderNode } from "unwritten:renderer:markdown/index.js";
+import { renderNode } from "unwritten:renderer:markdown/index";
 
-import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup.js";
-import type { ItalicNode } from "unwritten:renderer:markup/types-definitions/nodes.js";
+import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ItalicNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
 export function renderItalicNode(ctx: MarkdownRenderContext, italicNode: ItalicNode): string {

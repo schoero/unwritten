@@ -1,23 +1,23 @@
 import { expect, it } from "vitest";
 
-import { createVariableEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { renderNode } from "unwritten:renderer/index.js";
+import { createVariableEntity } from "unwritten:interpreter/ast/entities/index";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { renderNode } from "unwritten:renderer/index";
 import {
   convertVariableEntityForDocumentation,
   convertVariableEntityForTableOfContents
-} from "unwritten:renderer:markup/ast-converter/entities/index.js";
+} from "unwritten:renderer:markup/ast-converter/entities/index";
 import {
   isAnchorNode,
   isParagraphNode,
   isSectionNode,
   isTitleNode
-} from "unwritten:renderer:markup/typeguards/renderer.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+} from "unwritten:renderer:markup/typeguards/renderer";
+import { compile } from "unwritten:tests:utils/compile";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
 
 scope("MarkupRenderer", EntityKind.Variable, () => {

@@ -12,9 +12,9 @@ import {
   isTypeLiteralType,
   isTypeReferenceType,
   isUnionType
-} from "unwritten:typeguards/types.js";
+} from "unwritten:typeguards/types";
 
-import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types.js";
+import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types";
 
 
 export function isMultilineType(type: Type): type is MultilineType {

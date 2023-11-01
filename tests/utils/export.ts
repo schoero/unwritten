@@ -1,5 +1,5 @@
-import { readdirSync, readFileSync } from "unwritten:platform/file-system/node.js";
-import { getDirectory, getFileName, normalize } from "unwritten:platform/path/node.js";
+import { readdirSync, readFileSync } from "unwritten:platform/file-system/node";
+import { getDirectory, getFileName, normalize } from "unwritten:platform/path/node";
 
 
 export function getExportsFromIndexFile(importURL: string) {

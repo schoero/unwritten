@@ -1,7 +1,7 @@
-import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import type { LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry.js";
-import type { RenderContext } from "unwritten:type-definitions/context.js";
-import type { Renderer } from "unwritten:type-definitions/renderer.js";
+import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import type { LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry";
+import type { RenderContext } from "unwritten:type-definitions/context";
+import type { Renderer } from "unwritten:type-definitions/renderer";
 
 
 //-- Markup

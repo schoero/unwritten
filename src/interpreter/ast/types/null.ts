@@ -1,12 +1,12 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { isNullType } from "unwritten:interpreter:typeguards/types.js";
-import { assert } from "unwritten:utils:general.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id";
+import { isNullType } from "unwritten:interpreter:typeguards/types";
+import { assert } from "unwritten:utils:general";
 
 import type { Type } from "typescript";
 
-import type { NullType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { NullType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createNullType(ctx: InterpreterContext, type: Type): NullType {

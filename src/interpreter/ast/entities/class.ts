@@ -1,6 +1,6 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc.js";
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts.js";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import {
   createConstructorEntity,
   createGetterEntity,
@@ -8,12 +8,12 @@ import {
   createPropertyEntity,
   createSetterEntity,
   createTypeParameterEntityByDeclaration
-} from "unwritten:interpreter:ast/entities/index.js";
-import { getDeclarationId, getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers.js";
-import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position.js";
-import { createExpressionType } from "unwritten:interpreter:ast/types/index.js";
+} from "unwritten:interpreter:ast/entities/index";
+import { getDeclarationId, getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
+import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers";
+import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
+import { createExpressionType } from "unwritten:interpreter:ast/types/index";
 import {
   isClassDeclaration,
   isConstructorDeclaration,
@@ -21,15 +21,15 @@ import {
   isMethodDeclaration,
   isPropertyDeclaration,
   isSetterDeclaration
-} from "unwritten:interpreter:typeguards/declarations.js";
-import { isExpressionType } from "unwritten:typeguards/types.js";
-import { assert } from "unwritten:utils:general.js";
+} from "unwritten:interpreter:typeguards/declarations";
+import { isExpressionType } from "unwritten:typeguards/types";
+import { assert } from "unwritten:utils:general";
 
 import type { ClassLikeDeclaration, HeritageClause, NodeArray, Symbol } from "typescript";
 
-import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { ExpressionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ExpressionType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): ClassEntity => withLockedSymbol(ctx, symbol, () => {

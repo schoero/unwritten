@@ -1,12 +1,12 @@
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { getTypeId } from "unwritten:interpreter:ast/shared/id.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByType } from "../type";
 
 import type { IntersectionType as TSIntersectionType } from "typescript";
 
-import type { IntersectionType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { IntersectionType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createIntersectionType(ctx: InterpreterContext, type: TSIntersectionType): IntersectionType {

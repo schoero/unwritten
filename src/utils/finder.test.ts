@@ -1,9 +1,9 @@
 import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
-import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { findFile } from "unwritten:utils/finder.js";
+import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { findFile } from "unwritten:utils/finder";
 
 
 scope("Integration", "finder", async () => {

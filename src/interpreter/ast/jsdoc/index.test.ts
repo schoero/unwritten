@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
-import { getExportsFromIndexFile, getFilesInDirectory } from "unwritten:tests:utils/export.js";
-import { scope } from "unwritten:tests:utils/scope.js";
+import { getExportsFromIndexFile, getFilesInDirectory } from "unwritten:tests:utils/export";
+import { scope } from "unwritten:tests:utils/scope";
 
 
 scope("Interpreter", "JSDoc", () => {
@@ -12,7 +12,7 @@ scope("Interpreter", "JSDoc", () => {
   const indexExports = getExportsFromIndexFile(importUrl);
 
   it.each(exportedFiles)("should export from all files of the current directory", file => {
-    const exportName = file.replace(".ts", ".js");
+    const exportName = file.replace(".ts", "");
     expect(indexExports).toContain(`export * from "./${exportName}";`);
   });
 

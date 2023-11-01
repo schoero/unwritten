@@ -1,14 +1,14 @@
-import { interpretSymbol } from "unwritten:interpreter/ast/symbol.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts.js";
-import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id.js";
+import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
+import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id";
 
 import { getResolvedTypeByTypeNode, getTypeByResolvedAndDeclaredType, getTypeByTypeNode } from "../type";
 
 import type { TypeQueryNode } from "typescript";
 
-import type { TypeQueryType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { TypeQueryType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createTypeQueryType(ctx: InterpreterContext, typeNode: TypeQueryNode): TypeQueryType {

@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer.js";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry.js";
-import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes.js";
-import { createRenderContext } from "unwritten:tests:utils/context.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { md } from "unwritten:utils/template.js";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes";
+import { createRenderContext } from "unwritten:tests:utils/context";
+import { scope } from "unwritten:tests:utils/scope";
+import { md } from "unwritten:utils/template";
 
-import { renderAnchorNode } from "./anchor.js";
+import { renderAnchorNode } from "./anchor";
 
 
 scope("MarkdownRenderer", "AnchorNode", () => {

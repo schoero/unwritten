@@ -1,4 +1,4 @@
-import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities.js";
+import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities";
 
 
 export interface MarkupRenderConfig {
@@ -25,12 +25,6 @@ export interface MarkupRenderConfig {
   propertyEncapsulation?: Encapsulation | false;
 
   /**
-   * As per {@link https://tsdoc.org/pages/tags/param/ | specification}, parameters should be separated by a hyphen from the description.
-   * You can remove this hyphen from the output by setting this option to `false`.
-   */
-  removeHyphenAtStartOfTag?: boolean;
-
-  /**
    * Defines the order in which entities should be rendered.
    */
   renderOrder?: ExportableEntityKinds[];
@@ -46,6 +40,11 @@ export interface MarkupRenderConfig {
    * Defines whether the renderer should render private members.
    */
   renderPrivateMembers?: boolean;
+
+  /**
+   * Defines whether the renderer should render links to the source code.
+   */
+  renderSourceCodeLinks?: boolean;
 
   /**
    * Defines how string literal type annotations should be encapsulated in the rendered output.
@@ -149,6 +148,7 @@ export interface MarkupRenderConfig {
 export interface MarkdownRenderConfig extends MarkupRenderConfig {
   /** Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes */
   allowedHTMLTags?: string[] | false;
+
   /**
    * Defines the string that should be used to separate sections in the rendered output.
    */

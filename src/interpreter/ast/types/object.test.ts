@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 
-import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { createObjectLikeType } from "unwritten:interpreter:ast/types/index.js";
-import { isObjectType } from "unwritten:interpreter:typeguards/types.js";
-import { compile } from "unwritten:tests:utils/compile.js";
-import { scope } from "unwritten:tests:utils/scope.js";
-import { assert } from "unwritten:utils/general.js";
-import { ts } from "unwritten:utils/template.js";
+import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { createObjectLikeType } from "unwritten:interpreter:ast/types/index";
+import { isObjectType } from "unwritten:interpreter:typeguards/types";
+import { compile } from "unwritten:tests:utils/compile";
+import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general";
+import { ts } from "unwritten:utils/template";
 
 
 scope("Interpreter", TypeKind.Object, () => {

@@ -1,19 +1,19 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { TypeKind } from "unwritten:interpreter/enums/type.js";
-import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes.js";
-import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id.js";
-import { getNameByDeclaration, getNameByTypeNode } from "unwritten:interpreter:ast/shared/name.js";
-import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position.js";
-import { isNamedTupleMember, isTupleTypeReferenceType } from "unwritten:interpreter:typeguards/types.js";
-import { assert } from "unwritten:utils:general.js";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes";
+import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
+import { getNameByDeclaration, getNameByTypeNode } from "unwritten:interpreter:ast/shared/name";
+import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position";
+import { isNamedTupleMember, isTupleTypeReferenceType } from "unwritten:interpreter:typeguards/types";
+import { assert } from "unwritten:utils:general";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { NamedTupleMember, TupleTypeNode, TupleTypeReference, TypeNode } from "typescript";
 
-import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities.js";
-import type { TupleType } from "unwritten:interpreter:type-definitions/types.js";
-import type { InterpreterContext } from "unwritten:type-definitions/context.js";
+import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { TupleType } from "unwritten:interpreter:type-definitions/types";
+import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeReference: TupleTypeReference): TupleType {
