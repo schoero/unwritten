@@ -1,5 +1,37 @@
 # Changelog
 
+## v0.1.4
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.1.2...v0.1.4)
+
+### Features
+
+- Allow partial rendering of parent names ([c960a4e](https://github.com/schoero/unwritten/commit/c960a4e))
+- Add option to disable the rendering of source code links ([7644118](https://github.com/schoero/unwritten/commit/7644118))
+
+### Fixes
+
+- Reduce nesting only if it was increased ([8126e25](https://github.com/schoero/unwritten/commit/8126e25))
+- Schema types ([705e690](https://github.com/schoero/unwritten/commit/705e690))
+- Tuple types getting widened with `DeepRequiredByKey` and `DeepPartialByKey` ([5fbe807](https://github.com/schoero/unwritten/commit/5fbe807))
+
+### Chore
+
+- **release:** V0.1.3 ([e5dcf33](https://github.com/schoero/unwritten/commit/e5dcf33))
+- Add type annotations ([2b55d3b](https://github.com/schoero/unwritten/commit/2b55d3b))
+- Code cleanup ([8fbfa6c](https://github.com/schoero/unwritten/commit/8fbfa6c))
+- Remove unused config ([77f3faf](https://github.com/schoero/unwritten/commit/77f3faf))
+- Update schema ([4df6fb8](https://github.com/schoero/unwritten/commit/4df6fb8))
+
+### Styles
+
+- Remove import file extensions ([7d079db](https://github.com/schoero/unwritten/commit/7d079db))
+- Fix eslint violations ([3b3f83e](https://github.com/schoero/unwritten/commit/3b3f83e))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.1.3
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.1.2...v0.1.3)
