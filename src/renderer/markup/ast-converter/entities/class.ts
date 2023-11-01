@@ -201,8 +201,8 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
     const constructSignatures = constructSignaturesAnchor && createTitleNode(constructSignaturesTranslation, constructSignaturesAnchor, ...convertedConstructSignatures);
     const properties = propertiesAnchor && createTitleNode(propertiesTranslation, propertiesAnchor, ...convertedProperties);
     const methods = methodsAnchor && createTitleNode(methodsTranslation, methodsAnchor, ...convertedMethods);
-    const getters = gettersAnchor && createTitleNode(gettersTranslation, gettersAnchor, ...convertedGetters);
     const setters = settersAnchor && createTitleNode(settersTranslation, settersAnchor, ...convertedSetters);
+    const getters = gettersAnchor && createTitleNode(gettersTranslation, gettersAnchor, ...convertedGetters);
     const eventProperties = eventPropertiesAnchor && createTitleNode(eventPropertiesTranslation, eventPropertiesAnchor, ...convertedEventProperties);
 
     return createSectionNode(
