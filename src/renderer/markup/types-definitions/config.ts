@@ -6,27 +6,19 @@ export interface MarkupRenderConfig {
   /** Indentation characters */
   indentation?: string;
 
-  /**
-   * Defines how inline titles should be encapsulated in the rendered output.
-   */
+  /** Defines how inline titles should be encapsulated in the rendered output. */
   inlineTitleEncapsulation?: Encapsulation | false;
 
   /** Newline character */
   newLine?: "\n" | "\r\n" | "os";
 
-  /**
-   * Defines how parameters should be encapsulated in the rendered output.
-   */
+  /** Defines how parameters should be encapsulated in the rendered output. */
   parameterEncapsulation?: Encapsulation | false;
 
-  /**
-   * Defines how properties should be encapsulated in the rendered output.
-   */
+  /** Defines how properties should be encapsulated in the rendered output. */
   propertyEncapsulation?: Encapsulation | false;
 
-  /**
-   * Defines the order in which entities should be rendered.
-   */
+  /** Defines the order in which entities should be rendered. */
   renderOrder?: ExportableEntityKinds[];
 
   /**
@@ -36,24 +28,16 @@ export interface MarkupRenderConfig {
    */
   renderParentNames?: boolean | "documentation" | "tableOfContents";
 
-  /**
-   * Defines whether the renderer should render private members.
-   */
+  /** Defines whether the renderer should render private members. */
   renderPrivateMembers?: boolean;
 
-  /**
-   * Defines whether the renderer should render links to the source code.
-   */
+  /** Defines whether the renderer should render links to the source code. */
   renderSourceCodeLinks?: boolean;
 
-  /**
-   * Defines how string literal type annotations should be encapsulated in the rendered output.
-   */
+  /** Defines how string literal type annotations should be encapsulated in the rendered output. */
   stringLiteralEncapsulation?: Encapsulation | false;
 
-  /**
-   * Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output.
-   */
+  /** Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output. */
   tagEncapsulation?: Encapsulation | false;
 
   /** Translations for otherwise hardcoded labels */
@@ -134,14 +118,10 @@ export interface MarkupRenderConfig {
     variable_one?: string;
   };
 
-  /**
-   * Defines how type annotations should be encapsulated in the rendered output.
-   */
+  /** Defines how type annotations should be encapsulated in the rendered output. */
   typeEncapsulation?: Encapsulation | false;
 
-  /**
-   * Defines how type parameters should be encapsulated in the rendered output.
-   */
+  /** Defines how type parameters should be encapsulated in the rendered output.*/
   typeParameterEncapsulation?: Encapsulation | false;
 }
 
@@ -149,9 +129,7 @@ export interface MarkdownRenderConfig extends MarkupRenderConfig {
   /** Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes */
   allowedHTMLTags?: string[] | false;
 
-  /**
-   * Defines the string that should be used to separate sections in the rendered output.
-   */
+  /** Defines the string that should be used to separate sections in the rendered output. */
   sectionSeparator?: string | false;
 }
 
