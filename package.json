@@ -17,7 +17,7 @@
   "browser": "./lib/api/browser.js",
   "bin": "./lib/bin/index.js",
   "scripts": {
-    "build": "npm run typecheck && npm run lint && npm run spellcheck && npm run schema && vite build",
+    "build": "vite build",
     "build:dev": "vite build",
     "eslint": "eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml,.md ./",
     "eslint:ci": "npm run eslint -- --max-warnings 0",
@@ -31,6 +31,7 @@
     "postrelease:alpha": "npm run postrelease",
     "postrelease:beta": "npm run postrelease",
     "postrelease:latest": "eslint --fix package.json &&  markdownlint-cli2-fix 'CHANGELOG.md'",
+    "prebuild": "npm run typecheck && npm run lint && npm run spellcheck && npm run schema",
     "prerelease:alpha": "npm run test -- --run && npm run build",
     "prerelease:beta": "npm run test -- --run && npm run build",
     "prerelease:latest": "npm run test -- --run && npm run build",
