@@ -15,6 +15,27 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
   const renderedEmptyLine = renderEmptyLine(ctx);
   const renderedNewLine = renderNewLine(ctx);
 
+  const renderedListItems = renderNestedListNode(ctx, listNode);
+
+  if(renderedListItems === ""){
+    return "";
+  }
+
+  const childrenEndsWithEmptyLine = renderedListItems.endsWith(renderedNewLine + renderedEmptyLine);
+  const trailingEmptyLine = childrenEndsWithEmptyLine ? "" : renderedEmptyLine;
+
+  return [
+    renderedEmptyLine,
+    renderedListItems,
+    trailingEmptyLine
+  ]
+    .filter(item => !!item)
+    .join(renderNewLine(ctx));
+
+}
+
+function renderNestedListNode(ctx: MarkdownRenderContext, listNode: ListNode): string {
+
   // Do not render empty lists
   if(listNode.children.length === 0){
     return "";
@@ -22,7 +43,7 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
 
   // Collapse nested lists without siblings
   if(listNode.children.length === 1 && isListNode(listNode.children[0])){
-    return renderListNode(ctx, listNode.children[0]);
+    return renderNestedListNode(ctx, listNode.children[0]);
   }
 
   const renderedListItems = withIndentation(ctx, ctx => renderListItems(ctx, listNode.children));
@@ -31,14 +52,7 @@ export function renderListNode(ctx: MarkdownRenderContext, listNode: ListNode): 
     return "";
   }
 
-  const childrenEndsWithEmptyLine = renderedListItems.at(-1)?.endsWith(renderedNewLine + renderedEmptyLine);
-  const trailingEmptyLine = childrenEndsWithEmptyLine ? "" : renderedEmptyLine;
-
-  return [
-    renderedEmptyLine,
-    ...renderedListItems,
-    trailingEmptyLine
-  ]
+  return renderedListItems
     .filter(item => !!item)
     .join(renderNewLine(ctx));
 
@@ -83,7 +97,7 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNode): string {
 
   // Render lists without wrapping in a list element
   if(isListNode(item)){
-    return renderListNode(ctx, item);
+    return renderNestedListNode(ctx, item);
   }
 
   const renderedItem = renderNode(ctx, item);
