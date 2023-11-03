@@ -7,7 +7,12 @@ import {
   convertClassEntityForDocumentation,
   convertClassEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index";
-import { isAnchorNode } from "unwritten:renderer:markup/typeguards/renderer";
+import {
+  isAnchorNode,
+  isParagraphNode,
+  isSectionNode,
+  isTitleNode
+} from "unwritten:renderer:markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
@@ -43,7 +48,10 @@ scope("MarkupRenderer", EntityKind.Class, () => {
     const convertedClassForTableOfContents = convertClassEntityForTableOfContents(ctx, classEntity);
     const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
 
-    const titleNode = convertedClassForDocumentation.children[0];
+    const titleNode = convertedClassForDocumentation.title;
+
+    assert(isSectionNode(convertedClassForDocumentation));
+    assert(isTitleNode(titleNode));
 
     const [
       tags,
@@ -75,33 +83,47 @@ scope("MarkupRenderer", EntityKind.Class, () => {
     });
 
     it("should have one construct signature", () => {
-      expect(constructSignatures && constructSignatures.children).toHaveLength(1);
+      expect(constructSignatures && constructSignatures.title?.children).toHaveLength(1);
     });
 
-    it("should have two properties", () => {
-      expect(properties && properties.children).toHaveLength(3);
+    it("should have three properties", () => {
+      expect(properties && properties.title?.children).toHaveLength(3);
     });
 
     it("should support all possible modifiers", () => {
-      expect(properties && renderNode(ctx, properties.children[0].children[0])).toContain("public");
-      expect(properties && renderNode(ctx, properties.children[1].children[0])).toContain("static");
-      expect(properties && renderNode(ctx, properties.children[2].children[0])).toContain("protected");
+
+      const propertiesTitle = properties && properties.title;
+
+      assert(isSectionNode(properties));
+      assert(isTitleNode(propertiesTitle));
+
+      const publicPropertyTags = propertiesTitle.children[0].title?.children[0];
+      const staticPropertyTags = propertiesTitle.children[1].title?.children[0];
+      const protectedPropertyTags = propertiesTitle.children[2].title?.children[0];
+
+      assert(isParagraphNode(publicPropertyTags));
+      assert(isParagraphNode(staticPropertyTags));
+      assert(isParagraphNode(protectedPropertyTags));
+
+      expect(renderNode(ctx, publicPropertyTags.children)).toContain("public");
+      expect(renderNode(ctx, staticPropertyTags.children)).toContain("static");
+      expect(renderNode(ctx, protectedPropertyTags.children)).toContain("protected");
     });
 
     it("should have one method signature", () => {
-      expect(methods && methods.children).toHaveLength(1);
+      expect(methods && methods.title?.children).toHaveLength(1);
     });
 
     it("should have one setter signature", () => {
-      expect(setters && setters.children).toHaveLength(1);
+      expect(setters && setters.title?.children).toHaveLength(1);
     });
 
     it("should have one getter signature", () => {
-      expect(getters && getters.children).toHaveLength(1);
+      expect(getters && getters.title?.children).toHaveLength(1);
     });
 
     it("should have one event", () => {
-      expect(events && events.children).toHaveLength(1);
+      expect(events && events.title?.children).toHaveLength(1);
     });
 
   }
@@ -124,7 +146,11 @@ scope("MarkupRenderer", EntityKind.Class, () => {
 
     const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
 
-    const titleNode = convertedClassForDocumentation.children[0];
+    const titleNode = convertedClassForDocumentation.title;
+
+    assert(isSectionNode(convertedClassForDocumentation));
+    assert(isTitleNode(titleNode));
+
 
     const [
       position,

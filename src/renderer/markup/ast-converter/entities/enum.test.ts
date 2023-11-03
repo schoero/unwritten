@@ -7,7 +7,7 @@ import {
   convertEnumEntityForDocumentation,
   convertEnumEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index";
-import { isParagraphNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
+import { isParagraphNode, isSectionNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
@@ -51,7 +51,11 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     const convertedEnumEntityForTableOfContents = convertEnumEntityForTableOfContents(ctx, enumEntity as EnumEntity);
     const convertedEnumEntityForDocumentation = convertEnumEntityForDocumentation(ctx, enumEntity as EnumEntity);
 
-    const titleNode = convertedEnumEntityForDocumentation.children[0];
+    const titleNode = convertedEnumEntityForDocumentation.title;
+
+    assert(isSectionNode(convertedEnumEntityForDocumentation));
+    assert(isTitleNode(titleNode));
+
 
     const [
       tags,
@@ -121,7 +125,10 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
 
     const convertedEnumEntityForDocumentation = convertEnumEntityForDocumentation(ctx, enumEntity);
 
-    const titleNode = convertedEnumEntityForDocumentation.children[0];
+    const titleNode = convertedEnumEntityForDocumentation.title;
+
+    assert(isSectionNode(convertedEnumEntityForDocumentation));
+    assert(isTitleNode(titleNode));
 
     const [
       position,

@@ -7,7 +7,12 @@ import {
   convertModuleEntityForDocumentation,
   convertModuleEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index";
-import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
+import {
+  isAnchorNode,
+  isParagraphNode,
+  isSectionNode,
+  isTitleNode
+} from "unwritten:renderer:markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
@@ -42,7 +47,10 @@ scope("MarkupRenderer", EntityKind.Module, () => {
     const renderedModuleForTableOfContents = convertModuleEntityForTableOfContents(ctx, moduleEntity);
     const renderedModuleForDocumentation = convertModuleEntityForDocumentation(ctx, moduleEntity);
 
-    const titleNode = renderedModuleForDocumentation.children[0];
+    const titleNode = renderedModuleForDocumentation.title;
+
+    assert(isSectionNode(renderedModuleForDocumentation));
+    assert(isTitleNode(titleNode));
 
     const [
       tags,

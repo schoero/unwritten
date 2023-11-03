@@ -59,7 +59,10 @@ scope("MarkupRenderer", EntityKind.Variable, () => {
 
     assert(isAnchorNode(convertedVariableForTableOfContents), "Rendered variable for table of contents is not a link");
 
-    const titleNode = convertedVariableForDocumentation.children[0];
+    const titleNode = convertedVariableForDocumentation.title;
+
+    assert(isSectionNode(convertedVariableForDocumentation));
+    assert(isTitleNode(titleNode));
 
     it("should have a matching documentation title", () => {
       expect(isTitleNode(titleNode)).toBe(true);

@@ -9,7 +9,7 @@ import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-c
 import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createListNode,
@@ -68,7 +68,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const members = enumEntity.members.map(member => convertEnumMember(ctx, member));
 
   return createSectionNode(
-    SECTION_TYPE[enumEntity.kind],
+    getSectionType(enumEntity.kind),
     createTitleNode(
       nameWithContext,
       anchor,

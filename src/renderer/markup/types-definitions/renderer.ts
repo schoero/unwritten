@@ -27,7 +27,7 @@ export type ConvertedCategoryForTableOfContents = [
   title: string,
   content: ListNode
 ];
-export type ConvertedCategoryForDocumentation = TitleNode<ConvertedEntitiesForDocumentation[]>;
+export type ConvertedCategoryForDocumentation = SectionNode<[TitleNode<ConvertedEntitiesForDocumentation[]>]>;
 
 
 export type RenderableJSDocTags =
@@ -455,12 +455,12 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
     see: ConvertedSeeTags,
-    constructor: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    properties: Empty | TitleNode<ConvertedPropertyEntityForDocumentation[]>,
-    methods: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    setters: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    getters: Empty | TitleNode<ConvertedSignatureEntityForDocumentation[]>,
-    events: Empty | TitleNode<ConvertedEventPropertyEntityForDocumentation[]>
+    constructor: Empty | SectionNode<[TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
+    properties: Empty | SectionNode<[TitleNode<ConvertedPropertyEntityForDocumentation[]>]>,
+    methods: Empty | SectionNode<[TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
+    setters: Empty | SectionNode<[TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
+    getters: Empty | SectionNode<[TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
+    events: Empty | SectionNode<[TitleNode<ConvertedEventPropertyEntityForDocumentation[]>]>
   ]>
 ]>;
 

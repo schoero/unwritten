@@ -67,6 +67,7 @@ export interface ParagraphNode<Children extends ASTNode[] = ASTNode[]> extends A
 
 export interface SectionNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Section> {
   children: Children;
+  title?: Children[0] extends TitleNode ? Children[0] : TitleNode;
   type?: SectionType;
 }
 

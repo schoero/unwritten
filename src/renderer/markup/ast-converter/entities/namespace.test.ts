@@ -7,7 +7,12 @@ import {
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents
 } from "unwritten:renderer:markup/ast-converter/entities/index";
-import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
+import {
+  isAnchorNode,
+  isParagraphNode,
+  isSectionNode,
+  isTitleNode
+} from "unwritten:renderer:markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
@@ -42,7 +47,10 @@ scope("MarkupRenderer", EntityKind.Namespace, () => {
     const renderedNamespaceForTableOfContents = convertNamespaceEntityForTableOfContents(ctx, namespaceEntity);
     const renderedNamespaceForDocumentation = convertNamespaceEntityForDocumentation(ctx, namespaceEntity);
 
-    const titleNode = renderedNamespaceForDocumentation.children[0];
+    const titleNode = renderedNamespaceForDocumentation.title;
+
+    assert(isSectionNode(renderedNamespaceForDocumentation));
+    assert(isTitleNode(titleNode));
 
     const [
       tags,

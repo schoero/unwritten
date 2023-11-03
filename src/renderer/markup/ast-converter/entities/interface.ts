@@ -18,7 +18,7 @@ import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-c
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
 import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createListNode,
@@ -110,7 +110,7 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts
   const getters = explicitGetterSignatures.map(signatureEntity => convertSignatureEntityForType(ctx, signatureEntity));
 
   return createSectionNode(
-    SECTION_TYPE[interfaceEntity.kind],
+    getSectionType(interfaceEntity.kind),
     createTitleNode(
       nameWithContext,
       anchor,

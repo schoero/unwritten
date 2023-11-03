@@ -16,7 +16,7 @@ import {
   isSectionNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
@@ -55,12 +55,17 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     it("should have a matching section type", () => {
       expect(isSectionNode(convertedSignatureForDocumentation)).toBe(true);
-      expect(convertedSignatureForDocumentation.type).toBe(SECTION_TYPE[EntityKind.Signature]);
+      expect(convertedSignatureForDocumentation.type).toBe(
+        getSectionType(signatureEntity.kind)
+      );
     });
 
     assert(isSectionNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a section");
 
-    const titleNode = convertedSignatureForDocumentation.children[0];
+    const titleNode = convertedSignatureForDocumentation.title;
+
+    assert(isSectionNode(convertedSignatureForDocumentation));
+    assert(isTitleNode(titleNode));
 
     it("should have matching table of contents entry", () => {
       expect(isAnchorNode(convertedSignatureForTableOfContents)).toBe(true);
@@ -160,7 +165,11 @@ scope("MarkupRenderer", EntityKind.Signature, () => {
 
     assert(isSectionNode(convertedSignatureForDocumentation), "Converted signature for documentation is not a section");
 
-    const titleNode = convertedSignatureForDocumentation.children[0];
+    const titleNode = convertedSignatureForDocumentation.title;
+
+    assert(isSectionNode(convertedSignatureForDocumentation));
+    assert(isTitleNode(titleNode));
+
 
     it("should have a matching documentation title", () => {
       expect(isTitleNode(titleNode)).toBe(true);

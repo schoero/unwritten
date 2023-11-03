@@ -3,7 +3,6 @@ import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { renderIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderNode } from "unwritten:renderer:html/index";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
 
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes";
@@ -35,10 +34,10 @@ function getTag(ctx: HTMLRenderContext, type?: SectionType) {
   const renderConfig = getRenderConfig(ctx);
 
   switch (type){
-    case SECTION_TYPE.tableOfContents: {
+    case "table-of-contents": {
       return renderConfig.sidebar ? "aside" : "nav";
     }
-    case SECTION_TYPE.documentation: {
+    case "documentation": {
       return "main";
     }
     default: {

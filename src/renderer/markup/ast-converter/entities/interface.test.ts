@@ -12,6 +12,7 @@ import {
   isInlineTitleNode,
   isListNode,
   isParagraphNode,
+  isSectionNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
@@ -47,7 +48,10 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
     const convertedInterfaceForTableOfContents = convertInterfaceEntityForTableOfContents(ctx, interfaceEntity);
     const convertedInterfaceForDocumentation = convertInterfaceEntityForDocumentation(ctx, interfaceEntity);
 
-    const titleNode = convertedInterfaceForDocumentation.children[0];
+    const titleNode = convertedInterfaceForDocumentation.title;
+
+    assert(isSectionNode(convertedInterfaceForDocumentation));
+    assert(isTitleNode(titleNode));
 
     const [
       tags,
@@ -161,7 +165,10 @@ scope("MarkupRenderer", TypeKind.Interface, () => {
 
     const convertedInterfaceForDocumentation = convertInterfaceEntityForDocumentation(ctx, interfaceEntity);
 
-    const titleNode = convertedInterfaceForDocumentation.children[0];
+    const titleNode = convertedInterfaceForDocumentation.title;
+
+    assert(isSectionNode(convertedInterfaceForDocumentation));
+    assert(isTitleNode(titleNode));
 
     const [
       interfaceTags,

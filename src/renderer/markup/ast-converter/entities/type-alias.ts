@@ -13,7 +13,7 @@ import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-c
 import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 
@@ -69,7 +69,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const anchor = registerAnchor(ctx, renderedSignature, symbolId);
 
   return createSectionNode(
-    SECTION_TYPE[typeAliasEntity.kind],
+    getSectionType(typeAliasEntity.kind),
     createTitleNode(
       renderedSignature,
       anchor,

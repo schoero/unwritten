@@ -11,20 +11,13 @@ import type { TitleNode } from "unwritten:renderer:markup/types-definitions/node
 
 export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode): string {
 
-  const title = renderNode(ctx, titleNode.title);
-
   const renderedNewLine = renderNewLine(ctx);
   const renderedEmptyLine = renderEmptyLine(ctx);
-  const renderedTitle = `${"#".repeat(ctx.nesting)} ${title}`;
+  const renderedTitle = renderTitle(ctx, titleNode);
 
-  const renderedChildren = withNesting(ctx, ctx => renderMultilineArray(ctx, titleNode.children));
+  const renderedChildren = renderTitleChildren(ctx, titleNode);
 
   if(renderedChildren === ""){
-
-    if(hasAnchor(titleNode)){
-      void unregisterAnchor(ctx, titleNode.ids);
-    }
-
     return "";
   }
 
@@ -39,5 +32,27 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
   ]
     .filter(renderedNode => !!renderedNode)
     .join(renderedNewLine);
+
+}
+
+export function renderTitle(ctx: MarkdownRenderContext, titleNode: TitleNode): string {
+  const title = renderNode(ctx, titleNode.title);
+  return `${"#".repeat(ctx.nesting)} ${title}`;
+}
+
+export function renderTitleChildren(ctx: MarkdownRenderContext, titleNode: TitleNode) {
+
+  const renderedChildren = withNesting(ctx, ctx => renderMultilineArray(ctx, titleNode.children));
+
+  if(renderedChildren === ""){
+
+    if(hasAnchor(titleNode)){
+      void unregisterAnchor(ctx, titleNode.ids);
+    }
+
+    return "";
+  }
+
+  return renderedChildren;
 
 }

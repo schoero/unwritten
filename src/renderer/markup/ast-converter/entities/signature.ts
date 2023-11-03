@@ -34,7 +34,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation, convertTagsForType } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createInlineTitleNode,
@@ -104,7 +104,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const see = signatureEntity.see && convertSeeTagsForDocumentation(ctx, signatureEntity.see);
 
   return createSectionNode(
-    SECTION_TYPE[signatureEntity.kind],
+    getSectionType(signatureEntity.kind),
     createTitleNode(
       signature,
       anchor,

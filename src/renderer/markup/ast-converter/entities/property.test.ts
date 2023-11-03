@@ -12,7 +12,12 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index";
 import { convertObjectLiteralTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index";
 import { renderNode } from "unwritten:renderer:markup/html/index";
-import { isAnchorNode, isParagraphNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
+import {
+  isAnchorNode,
+  isParagraphNode,
+  isSectionNode,
+  isTitleNode
+} from "unwritten:renderer:markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
@@ -47,7 +52,10 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     const convertedPropertyForSignature = convertPropertyEntityForTableOfContents(ctx, propertyEntity);
     const convertedPropertyForDocumentation = convertPropertyEntityForDocumentation(ctx, propertyEntity);
 
-    const titleNode = convertedPropertyForDocumentation.children[0];
+    const titleNode = convertedPropertyForDocumentation.title;
+
+    assert(isSectionNode(convertedPropertyForDocumentation));
+    assert(isTitleNode(titleNode));
 
     const [
       tags,
@@ -129,7 +137,9 @@ scope("MarkupRenderer", EntityKind.Property, () => {
 
     const modifiers = convertedPropertiesForDocumentation.map(
       convertedPropertyForDocumentation => {
-        return renderNode(ctx, convertedPropertyForDocumentation.children[0].children);
+        const propertyTags = convertedPropertyForDocumentation.title?.children[0];
+        assert(isParagraphNode(propertyTags));
+        return renderNode(ctx, propertyTags);
       }
     );
 

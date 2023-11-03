@@ -3,7 +3,7 @@ import {
   convertSeeTagsForType
 } from "unwritten:renderer/markup/ast-converter/shared/see";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
-import { SECTION_TYPE } from "unwritten:renderer/markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
 import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import {
@@ -79,7 +79,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
   const see = propertyEntity.see && convertSeeTagsForDocumentation(ctx, propertyEntity.see);
 
   return createSectionNode(
-    SECTION_TYPE[propertyEntity.kind],
+    getSectionType(propertyEntity.kind),
     createTitleNode(
       nameWithContext,
       anchor,
