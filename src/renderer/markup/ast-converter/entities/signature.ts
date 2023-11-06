@@ -34,7 +34,7 @@ import {
 } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation, convertTagsForType } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createInlineTitleNode,
@@ -43,7 +43,7 @@ import {
   createSectionNode,
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes";
-import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
+import { encapsulate, renderEntityPrefix, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { ExplicitSignatureEntity, SignatureEntity } from "unwritten:interpreter/type-definitions/entities";
@@ -61,16 +61,29 @@ import type {
 export function convertSignatureEntityToAnchor(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity, displayName?: string): AnchorNode {
 
   const id = signatureEntity.declarationId;
+
   const convertedSignatureForAnchor = convertSignature(ctx, signatureEntity, "documentation");
   const renderedSignatureForAnchor = renderNode(ctx, convertedSignatureForAnchor);
+  const documentationEntityPrefix = renderEntityPrefix(ctx, "documentation", signatureEntity.kind);
+  const documentationName = renderMemberContext(ctx, "documentation", renderedSignatureForAnchor);
 
   const convertedSignatureForTableOfContents = convertSignature(ctx, signatureEntity, "tableOfContents");
   const renderedSignatureForTableOfContents = renderNode(ctx, convertedSignatureForTableOfContents);
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", renderedSignatureForTableOfContents);
+  const tableOfContentsEntityPrefix = renderEntityPrefix(ctx, "tableOfContents", signatureEntity.kind);
 
-  displayName ??= renderedSignatureForTableOfContents;
+  const prefixedDocumentationName = documentationEntityPrefix
+    ? `${documentationEntityPrefix}: ${documentationName}`
+    : documentationName;
+
+  const prefixedTableOfContentsName = tableOfContentsEntityPrefix
+    ? `${tableOfContentsEntityPrefix}: ${tableOfContentsName}`
+    : tableOfContentsName;
+
+  displayName ??= prefixedTableOfContentsName;
 
   return createAnchorNode(
-    renderedSignatureForAnchor,
+    prefixedDocumentationName,
     id,
     displayName
   );
@@ -81,7 +94,6 @@ export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContex
   return convertSignatureEntityToAnchor(ctx, signatureEntity);
 }
 
-
 export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity): ConvertedSignatureEntityForDocumentation {
 
   const declarationId = signatureEntity.declarationId;
@@ -89,7 +101,15 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
 
   const signature = convertSignature(ctx, signatureEntity, "documentation");
   const renderedSignature = renderNode(ctx, signature);
-  const anchor = registerAnchor(ctx, renderedSignature, [declarationId, ...symbolId ? [symbolId] : []]);
+
+  const entityPrefix = renderEntityPrefix(ctx, "documentation", signatureEntity.kind);
+  const nameWithContext = renderMemberContext(ctx, "documentation", renderedSignature);
+
+  const prefixedDocumentationName = entityPrefix
+    ? `${entityPrefix}: ${nameWithContext}`
+    : nameWithContext;
+
+  const anchor = registerAnchor(ctx, prefixedDocumentationName, [declarationId, ...symbolId ? [symbolId] : []]);
 
   const position = convertPositionForDocumentation(ctx, signatureEntity.position);
   const tags = convertTagsForDocumentation(ctx, signatureEntity);
@@ -104,9 +124,9 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const see = signatureEntity.see && convertSeeTagsForDocumentation(ctx, signatureEntity.see);
 
   return createSectionNode(
-    SECTION_TYPE[signatureEntity.kind],
+    getSectionType(signatureEntity.kind),
     createTitleNode(
-      signature,
+      prefixedDocumentationName,
       anchor,
       tags,
       position,

@@ -15,6 +15,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   newLine: "\n",
   parameterEncapsulation: ["`", "`"],
   propertyEncapsulation: ["`", "`"],
+  renderEntityPrefixes: "documentation",
   renderOrder: [
     EntityKind.Module,
     EntityKind.Namespace,

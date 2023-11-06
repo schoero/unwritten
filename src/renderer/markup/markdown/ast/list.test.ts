@@ -55,7 +55,6 @@ scope("MarkdownRenderer", "ListNode", () => {
     expect(renderListNode(ctx, listNode)).toBe(md`
         
       - Item 1
-        
         - Item 2
         
     `);
@@ -129,7 +128,6 @@ scope("MarkdownRenderer", "ListNode", () => {
     expect(renderListNode(ctx, listNode)).toBe(md`
         
       - Item 1
-        
         - Item 2
         
     `);
@@ -146,7 +144,6 @@ scope("MarkdownRenderer", "ListNode", () => {
     expect(renderListNode(ctx, listNode)).toBe(md`
         
       - Item 1
-        
         - Item 2
         - Item 3
         

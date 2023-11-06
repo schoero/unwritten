@@ -1,4 +1,5 @@
 import { isAnchor } from "unwritten:renderer/markup/registry/registry";
+import { isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 
 import { ASTNodeKinds } from "../enums/nodes";
 
@@ -113,26 +114,17 @@ export function createParagraphNode<Children extends ASTNode[]>(...children: Chi
   };
 }
 
-// export function createSectionNode<Children extends ASTNodes[]>(children?: Children): SectionNode<Children>;
-// export function createSectionNode<Children extends ASTNodes[]>(...children: Children): SectionNode<Children>;
-export function createSectionNode<Children extends ASTNode[]>(type: SectionType | undefined, ...children: Children): SectionNode<Children> {
-// export function createSectionNode<Children extends ASTNodes[]>(...typeOrChildren: Children | [type: SectionType, ...children: Children]): SectionNode<Children> {
 
-  // const separateTypeAndChildren = (typeOrChildren: Children | [type: SectionType, ...children: Children]): [SectionType | undefined, Children] => {
-  //   if(typeof typeOrChildren[0] === "string" && Object.values(SECTION_TYPE).includes(typeOrChildren[0] as SectionType)){
-  //     const [type, ...children] = typeOrChildren as [SectionType, ...Children];
-  //     return [type, children];
-  //   } else {
-  //     const [children] = typeOrChildren;
-  //     return [undefined, children] as [undefined, Children];
-  //   }
-  // };
+export function createSectionNode<Children extends ASTNode[]>(type: SectionType | undefined, ...titleOrChildren: Children): SectionNode<Children>;
+export function createSectionNode<TitleChild extends TitleNode, Children extends ASTNode[]>(type: SectionType | undefined, title: TitleChild, ...children: Children): SectionNode<[TitleChild, ...Children]>;
+export function createSectionNode<Children extends ASTNode[]>(type: SectionType | undefined, ...titleOrChildren: Children): SectionNode<Children> {
 
-  // const [type, children] = separateTypeAndChildren(typeOrChildren);
+  const { children, title } = separateTitleAndChildren<Children>(titleOrChildren);
 
   return {
     children,
     kind: ASTNodeKinds.Section,
+    title,
     type
   };
 
@@ -196,6 +188,32 @@ function separateAnchorAndChildren<Children extends ASTNode[]>(anchorOrChildren:
   return {
     anchor,
     children
+  };
+
+}
+
+
+function separateTitleAndChildren<Children extends ASTNode[]>(titleOrChildren: Children | [title: TitleNode, ...children: Children]) {
+
+  let title: TitleNode | undefined;
+  let children: Children;
+
+  if(isTitleNode(titleOrChildren)){
+    title = titleOrChildren;
+    children = <ASTNode>[] as Children;
+  } else {
+    if(isTitleNode(titleOrChildren[0])){
+      const [first, ...rest] = titleOrChildren;
+      title = first;
+      children = rest as Children;
+    } else {
+      children = titleOrChildren as Children;
+    }
+  }
+
+  return {
+    children,
+    title
   };
 
 }

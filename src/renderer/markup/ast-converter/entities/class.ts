@@ -1,6 +1,7 @@
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
 import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
 import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
+import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { filterOutImplicitSignatures, filterOutPrivateMembers } from "unwritten:renderer/utils/private-members";
 import {
@@ -18,7 +19,7 @@ import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-c
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
 import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createListNode,
@@ -44,13 +45,25 @@ export function convertClassEntityToAnchor(ctx: MarkupRenderContexts, classEntit
 
   const id = classEntity.symbolId;
   const name = classEntity.name;
-  const documentationName = renderMemberContext(ctx, "documentation", name);
-  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
 
-  displayName ??= tableOfContentsName;
+  const documentationEntityPrefix = renderEntityPrefix(ctx, "documentation", classEntity.kind);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+  const tableOfContentsEntityPrefix = renderEntityPrefix(ctx, "tableOfContents", classEntity.kind);
+
+  const prefixedDocumentationName = documentationEntityPrefix
+    ? `${documentationEntityPrefix}: ${documentationName}`
+    : documentationName;
+
+  const prefixedTableOfContentsName = tableOfContentsEntityPrefix
+    ? `${tableOfContentsEntityPrefix}: ${tableOfContentsName}`
+    : tableOfContentsName;
+
+  displayName ??= prefixedTableOfContentsName;
 
   return createAnchorNode(
-    documentationName,
+    prefixedDocumentationName,
     id,
     displayName
   );
@@ -138,8 +151,14 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
   const symbolId = classEntity.symbolId;
   const typeId = classEntity.typeId;
 
+  const entityPrefix = renderEntityPrefix(ctx, "documentation", classEntity.kind);
   const nameWithContext = renderMemberContext(ctx, "documentation", name);
-  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
+
+  const prefixedDocumentationName = entityPrefix
+    ? `${entityPrefix}: ${nameWithContext}`
+    : nameWithContext;
+
+  const anchor = registerAnchor(ctx, prefixedDocumentationName, symbolId);
 
   return withMemberContext(ctx, classEntity.name, ctx => {
 
@@ -198,17 +217,17 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, cl
     const convertedSetters = publicSetterEntities.flatMap(setterEntity => convertFunctionLikeEntityForDocumentation(ctx, setterEntity));
     const convertedGetters = publicGetterEntities.flatMap(getterEntity => convertFunctionLikeEntityForDocumentation(ctx, getterEntity));
 
-    const constructSignatures = constructSignaturesAnchor && createTitleNode(constructSignaturesTranslation, constructSignaturesAnchor, ...convertedConstructSignatures);
-    const properties = propertiesAnchor && createTitleNode(propertiesTranslation, propertiesAnchor, ...convertedProperties);
-    const methods = methodsAnchor && createTitleNode(methodsTranslation, methodsAnchor, ...convertedMethods);
-    const getters = gettersAnchor && createTitleNode(gettersTranslation, gettersAnchor, ...convertedGetters);
-    const setters = settersAnchor && createTitleNode(settersTranslation, settersAnchor, ...convertedSetters);
-    const eventProperties = eventPropertiesAnchor && createTitleNode(eventPropertiesTranslation, eventPropertiesAnchor, ...convertedEventProperties);
+    const constructSignatures = constructSignaturesAnchor && createSectionNode("constructor", createTitleNode(constructSignaturesTranslation, constructSignaturesAnchor, ...convertedConstructSignatures));
+    const properties = propertiesAnchor && createSectionNode("properties", createTitleNode(propertiesTranslation, propertiesAnchor, ...convertedProperties));
+    const methods = methodsAnchor && createSectionNode("methods", createTitleNode(methodsTranslation, methodsAnchor, ...convertedMethods));
+    const setters = settersAnchor && createSectionNode("setters", createTitleNode(settersTranslation, settersAnchor, ...convertedSetters));
+    const getters = gettersAnchor && createSectionNode("getters", createTitleNode(gettersTranslation, gettersAnchor, ...convertedGetters));
+    const eventProperties = eventPropertiesAnchor && createSectionNode("events", createTitleNode(eventPropertiesTranslation, eventPropertiesAnchor, ...convertedEventProperties));
 
     return createSectionNode(
-      SECTION_TYPE[classEntity.kind],
+      getSectionType(classEntity.kind),
       createTitleNode(
-        nameWithContext,
+        prefixedDocumentationName,
         anchor,
         tags,
         position,

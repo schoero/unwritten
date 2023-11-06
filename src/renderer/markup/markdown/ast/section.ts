@@ -1,4 +1,6 @@
 import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/multiline";
+import { renderTitle, renderTitleChildren, renderTitleNode } from "unwritten:renderer/markup/markdown/ast/title.js";
+import { isSectionNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
@@ -11,25 +13,103 @@ export function renderSectionNode(ctx: MarkdownRenderContext, sectionNode: Secti
 
   const renderConfig = getRenderConfig(ctx);
 
-  const renderedChildren = renderMultilineArray(ctx, sectionNode.children);
+  if(!renderConfig.sectionSeparator){
+    return renderMultilineArray(
+      ctx,
+      [
+        sectionNode.title,
+        ...sectionNode.children
+      ]
+    );
+  }
+
   const renderedEmptyLine = renderEmptyLine(ctx);
   const renderedNewLine = renderNewLine(ctx);
 
-  const childrenBeginsWithEmptyLine = renderedChildren.startsWith(renderedEmptyLine);
-  const trailingEmptyLine = childrenBeginsWithEmptyLine
-    ? ""
-    : `${renderedEmptyLine}${renderedNewLine}`;
+  const separator = [
+    renderedEmptyLine,
+    renderConfig.sectionSeparator,
+    renderedEmptyLine
+  ];
+  const renderedSeparator = separator.join(renderedNewLine);
 
-  const renderedSeparator = renderConfig.sectionSeparator && ctx.nesting > 2
-    ? [
-      renderedEmptyLine,
-      renderConfig.sectionSeparator,
-      trailingEmptyLine
+  const renderedSectionChildren = renderMultilineArray(ctx, sectionNode.children);
+
+  // sectionNode > titleNode > [sectionNode, ...] should not render the section separator for the first nested section
+  if(sectionNode.title && isSectionNode(sectionNode.title.children[0])){
+
+    const renderedTitleChildren = renderTitleChildren(ctx, sectionNode.title);
+
+    const renderedTitleChildrenBeginsWithSeparator = renderedTitleChildren.startsWith(renderedSeparator);
+    const renderedTitleChildrenWithoutInitialSectionSeparator = renderedTitleChildrenBeginsWithSeparator
+      ? renderedTitleChildren.slice(renderedSeparator.length + 1) // +1 for the new line
+      : renderedTitleChildren;
+
+    const renderedTitle = renderTitle(ctx, sectionNode.title);
+
+    const childrenBeginsWithEmptyLine = renderedTitleChildrenWithoutInitialSectionSeparator.startsWith(renderedEmptyLine + renderedNewLine);
+    const trailingEmptyLine = childrenBeginsWithEmptyLine ? "" : renderedEmptyLine;
+
+    const renderedChildren = [
+      renderedTitleChildrenWithoutInitialSectionSeparator,
+      renderedSectionChildren
     ]
-      .join(renderedNewLine)
+      .filter(renderedNode => !!renderedNode)
+      .join(renderedSeparator);
+
+    return [
+      renderedSeparator,
+      renderedTitle,
+      trailingEmptyLine,
+      renderedChildren
+    ]
+      .filter(renderedNode => !!renderedNode)
+      .join(renderedNewLine);
+
+  }
+
+  const renderedTitleNode = sectionNode.title
+    ? renderTitleNode(ctx, sectionNode.title)
     : "";
 
-  return renderedChildren === ""
-    ? renderedChildren
-    : `${renderedSeparator}${renderedChildren}`;
+  if(renderedTitleNode === "" && renderedSectionChildren === ""){
+    return "";
+  }
+
+  const sectionChildrenBeginsWithSeparator = renderedSectionChildren.startsWith(renderedSeparator);
+
+  if(renderedTitleNode !== ""){
+
+    const renderedChildrenBeginWithEmptyLine = renderedTitleNode.startsWith(renderedEmptyLine);
+    const renderedCompensatedSeparator = renderedChildrenBeginWithEmptyLine
+      ? separator.slice(0, -1).join(renderedNewLine)
+      : separator.join(renderedNewLine);
+
+    return [
+      renderedCompensatedSeparator,
+      renderedTitleNode,
+      renderedSectionChildren
+    ]
+      .filter(item => !!item)
+      .join(renderedNewLine);
+  }
+
+  if(renderedSectionChildren !== ""){
+
+    const renderedChildrenBeginWithEmptyLine = renderedSectionChildren.startsWith(renderedEmptyLine);
+    const renderedCompensatedSeparator = renderedChildrenBeginWithEmptyLine
+      ? separator.slice(0, -1).join(renderedNewLine)
+      : separator.join(renderedNewLine);
+
+    return sectionChildrenBeginsWithSeparator
+      ? renderedSectionChildren
+      : [
+        renderedCompensatedSeparator,
+        renderedSectionChildren
+      ]
+        .filter(item => !!item)
+        .join(renderedNewLine);
+  }
+
+  return "";
 }

@@ -117,7 +117,12 @@ export function isSetterEntity(entity: Entity): entity is SetterEntity {
 }
 
 export function isSignatureEntity(entity: Entity): entity is SignatureEntity {
-  return entity.kind === EntityKind.Signature;
+  return entity.kind === EntityKind.FunctionSignature ||
+    entity.kind === EntityKind.MethodSignature ||
+    entity.kind === EntityKind.ConstructSignature ||
+    entity.kind === EntityKind.CallSignature ||
+    entity.kind === EntityKind.GetterSignature ||
+    entity.kind === EntityKind.SetterSignature;
 }
 
 export function isTypeAliasEntity(entity: Entity): entity is TypeAliasEntity {

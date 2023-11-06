@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { createClassEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { isSectionNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { convertClassEntityForDocumentation } from "unwritten:renderer:markup/ast-converter/entities/index";
 import {
   convertStringLiteralTypeInline,
@@ -11,6 +12,7 @@ import { renderNode } from "unwritten:renderer:markup/html/index";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
+import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template";
 
 import type { StringLiteralType, StringType } from "unwritten:interpreter:type-definitions/types";
@@ -141,7 +143,10 @@ scope("Renderer", "Config", () => {
       {
         const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
 
-        const titleNode = convertedClassForDocumentation.children[0];
+        const titleNode = convertedClassForDocumentation.title;
+
+        assert(isSectionNode(convertedClassForDocumentation));
+        assert(isTitleNode(titleNode));
 
         const [
           position,
@@ -169,7 +174,10 @@ scope("Renderer", "Config", () => {
       {
         const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
 
-        const titleNode = convertedClassForDocumentation.children[0];
+        const titleNode = convertedClassForDocumentation.title;
+
+        assert(isSectionNode(convertedClassForDocumentation));
+        assert(isTitleNode(titleNode));
 
         const [
           position,
@@ -186,9 +194,9 @@ scope("Renderer", "Config", () => {
         ] = titleNode.children;
 
         it("should have private members when enabled", () => {
-          expect(constructSignatures && constructSignatures.children).toHaveLength(1);
-          expect(properties && properties.children.flat()).toHaveLength(1);
-          expect(methods && methods.children.flat()).toHaveLength(1);
+          expect(constructSignatures && constructSignatures.title?.children).toHaveLength(1);
+          expect(properties && properties.title?.children.flat()).toHaveLength(1);
+          expect(methods && methods.title?.children.flat()).toHaveLength(1);
         });
 
       }

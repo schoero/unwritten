@@ -2,14 +2,14 @@ import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/share
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
 import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
-import { spaceBetween } from "unwritten:renderer/markup/utils/renderer";
+import { renderEntityPrefix, spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
 import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import {
   createAnchorNode,
   createListNode,
@@ -30,13 +30,25 @@ export function convertEnumEntityToAnchor(ctx: MarkupRenderContexts, enumEntity:
 
   const id = enumEntity.symbolId;
   const name = enumEntity.name;
-  const documentationName = renderMemberContext(ctx, "documentation", name);
-  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
 
-  displayName ??= tableOfContentsName;
+  const documentationEntityPrefix = renderEntityPrefix(ctx, "documentation", enumEntity.kind);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+  const tableOfContentsEntityPrefix = renderEntityPrefix(ctx, "tableOfContents", enumEntity.kind);
+
+  const prefixedDocumentationName = documentationEntityPrefix
+    ? `${documentationEntityPrefix}: ${documentationName}`
+    : documentationName;
+
+  const prefixedTableOfContentsName = tableOfContentsEntityPrefix
+    ? `${tableOfContentsEntityPrefix}: ${tableOfContentsName}`
+    : tableOfContentsName;
+
+  displayName ??= prefixedTableOfContentsName;
 
   return createAnchorNode(
-    documentationName,
+    prefixedDocumentationName,
     id,
     displayName
   );
@@ -54,8 +66,14 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const name = enumEntity.name;
   const symbolId = enumEntity.symbolId;
 
+  const entityPrefix = renderEntityPrefix(ctx, "documentation", enumEntity.kind);
   const nameWithContext = renderMemberContext(ctx, "documentation", name);
-  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
+
+  const prefixedDocumentationName = entityPrefix
+    ? `${entityPrefix}: ${nameWithContext}`
+    : nameWithContext;
+
+  const anchor = registerAnchor(ctx, prefixedDocumentationName, symbolId);
 
   const position = convertPositionForDocumentation(ctx, enumEntity.position);
   const tags = convertTagsForDocumentation(ctx, enumEntity);
@@ -68,9 +86,9 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
   const members = enumEntity.members.map(member => convertEnumMember(ctx, member));
 
   return createSectionNode(
-    SECTION_TYPE[enumEntity.kind],
+    getSectionType(enumEntity.kind),
     createTitleNode(
-      nameWithContext,
+      prefixedDocumentationName,
       anchor,
       tags,
       position,

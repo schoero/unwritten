@@ -1,4 +1,5 @@
 import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { getSectionType, pluralizeEntityKind } from "unwritten:renderer/markup/types-definitions/sections.js";
 import {
   convertCircularEntityToAnchor,
   convertClassEntityForDocumentation,
@@ -32,8 +33,8 @@ import {
   convertVariableEntityForTableOfContents,
   convertVariableEntityToAnchor
 } from "unwritten:renderer:markup/ast-converter/entities/index";
-import { createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
-import { getCategoryName } from "unwritten:renderer:markup/utils/renderer";
+import { createListNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
+import { renderCategoryName } from "unwritten:renderer:markup/utils/renderer";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import {
@@ -52,6 +53,7 @@ import {
   isTypeParameterEntity,
   isVariableEntity
 } from "unwritten:typeguards/entities";
+import { assert } from "unwritten:utils/general.js";
 
 import type { Entity, ExportableEntity, LinkableEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
@@ -175,20 +177,19 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
 
   for(const entity of entities){
 
-    const categoryName = getCategoryName(entity.kind);
-    const categoryTitle = translate(categoryName, { capitalize: true, count: entities.length });
-    const existingCategory = tableOfContents.find(category => category[0] === categoryTitle);
+    const categoryName = renderCategoryName(ctx, entities);
+    const existingCategory = tableOfContents.find(category => category[0] === categoryName);
 
     if(existingCategory === undefined){
       tableOfContents.push(
         [
-          categoryTitle,
+          categoryName,
           createListNode()
         ]
       );
     }
 
-    const category = tableOfContents.find(category => category[0] === categoryTitle)!;
+    const category = tableOfContents.find(category => category[0] === categoryName)!;
     const convertedEntity = convertEntityForTableOfContents(ctx, entity);
 
     category[1].children.push(convertedEntity);
@@ -208,21 +209,27 @@ export function createDocumentation(ctx: MarkupRenderContexts, entities: Exporta
 
   for(const entity of entities){
 
-    const categoryName = getCategoryName(entity.kind);
-    const categoryTitle = translate(categoryName, { capitalize: true, count: entities.length });
-    const categoryAnchor = registerAnonymousAnchor(ctx, categoryTitle);
-    const existingCategory = documentation.find(category => category.title === categoryTitle);
+    const sectionName = getSectionType(pluralizeEntityKind(entity.kind));
+
+    assert(sectionName, `No section name found for entity kind: ${entity.kind}`);
+
+    const categoryName = renderCategoryName(ctx, entities);
+    const categoryAnchor = registerAnonymousAnchor(ctx, categoryName);
+    const existingCategory = documentation.find(section => section.type === sectionName);
 
     if(existingCategory === undefined){
       documentation.push(
-        createTitleNode(categoryTitle, categoryAnchor)
+        createSectionNode(
+          sectionName,
+          createTitleNode(categoryName, categoryAnchor)
+        )
       );
     }
 
-    const category = documentation.find(category => category.title === categoryTitle)!;
+    const section = documentation.find(section => section.title!.title === categoryName)!;
     const convertedEntity = convertEntityForDocumentation(ctx, entity);
 
-    category.children.push(convertedEntity);
+    section.title!.children.push(convertedEntity);
 
   }
 

@@ -27,6 +27,7 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
     [BuiltInRenderers.HTML]: {
       parameterEncapsulation: false,
       propertyEncapsulation: false,
+      renderEntityPrefixes: false,
       tagEncapsulation: false,
       typeEncapsulation: false,
       typeParameterEncapsulation: ["<", ">"]
@@ -34,6 +35,7 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
     [BuiltInRenderers.Markdown]: {
       parameterEncapsulation: false,
       propertyEncapsulation: false,
+      renderEntityPrefixes: false,
       tagEncapsulation: false,
       typeEncapsulation: false,
       typeParameterEncapsulation: ["<", ">"]

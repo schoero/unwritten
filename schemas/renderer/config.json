@@ -132,6 +132,22 @@
           ],
           "description": "Defines how properties should be encapsulated in the rendered output."
         },
+        "renderEntityPrefixes": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "documentation",
+              "type": "string"
+            },
+            {
+              "const": "tableOfContents",
+              "type": "string"
+            }
+          ],
+          "description": "Defines whether the renderer should render prefixes for entities."
+        },
         "renderOrder": {
           "description": "Defines the order in which entities should be rendered.",
           "items": {
@@ -565,6 +581,22 @@
             }
           ],
           "description": "Defines how properties should be encapsulated in the rendered output."
+        },
+        "renderEntityPrefixes": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "documentation",
+              "type": "string"
+            },
+            {
+              "const": "tableOfContents",
+              "type": "string"
+            }
+          ],
+          "description": "Defines whether the renderer should render prefixes for entities."
         },
         "renderOrder": {
           "description": "Defines the order in which entities should be rendered.",

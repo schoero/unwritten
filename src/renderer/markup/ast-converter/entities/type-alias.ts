@@ -13,9 +13,9 @@ import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-c
 import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
-import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
+import { encapsulate, renderEntityPrefix } from "unwritten:renderer:markup/utils/renderer";
 
 import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
@@ -29,16 +29,25 @@ import type {
 export function convertTypeAliasEntityToAnchor(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity, displayName?: string): AnchorNode {
 
   const id = typeAliasEntity.symbolId;
-  const convertedSignatureForAnchor = convertTypeAliasSignature(ctx, typeAliasEntity, "documentation");
-  const renderedSignatureForAnchor = renderNode(ctx, convertedSignatureForAnchor);
 
+  const documentationEntityPrefix = renderEntityPrefix(ctx, "documentation", typeAliasEntity.kind);
+  const convertedSignatureForDocumentation = convertTypeAliasSignature(ctx, typeAliasEntity, "documentation");
+  const renderedSignatureForDocumentation = renderNode(ctx, convertedSignatureForDocumentation);
+  const prefixedSignatureForDocumentation = documentationEntityPrefix
+    ? `${documentationEntityPrefix}: ${renderedSignatureForDocumentation}`
+    : renderedSignatureForDocumentation;
+
+  const tableOfContentsEntityPrefix = renderEntityPrefix(ctx, "tableOfContents", typeAliasEntity.kind);
   const convertedSignatureForTableOfContents = convertTypeAliasSignature(ctx, typeAliasEntity, "tableOfContents");
   const renderedSignatureForTableOfContents = renderNode(ctx, convertedSignatureForTableOfContents);
+  const prefixedSignatureForTableOfContents = tableOfContentsEntityPrefix
+    ? `${tableOfContentsEntityPrefix}: ${renderedSignatureForTableOfContents}`
+    : renderedSignatureForTableOfContents;
 
-  displayName ??= renderedSignatureForTableOfContents;
+  displayName ??= prefixedSignatureForTableOfContents;
 
   return createAnchorNode(
-    renderedSignatureForAnchor,
+    prefixedSignatureForDocumentation,
     id,
     displayName
   );
@@ -69,7 +78,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
   const anchor = registerAnchor(ctx, renderedSignature, symbolId);
 
   return createSectionNode(
-    SECTION_TYPE[typeAliasEntity.kind],
+    getSectionType(typeAliasEntity.kind),
     createTitleNode(
       renderedSignature,
       anchor,
@@ -92,7 +101,13 @@ function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: T
   const renderConfig = getRenderConfig(ctx);
 
   const name = typeAliasEntity.name;
+
+  const entityPrefix = renderEntityPrefix(ctx, target, typeAliasEntity.kind);
   const nameWithContext = renderMemberContext(ctx, target, name);
+
+  const entityPrefixWithContext = entityPrefix
+    ? `${entityPrefix}: ${nameWithContext}`
+    : nameWithContext;
 
   const convertedTypeParameters = typeAliasEntity.typeParameters && typeAliasEntity.typeParameters.length > 0 &&
     convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters);
@@ -101,7 +116,7 @@ function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: T
      encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation);
 
   return [
-    nameWithContext,
+    entityPrefixWithContext,
     encapsulatedTypeParameters
   ];
 

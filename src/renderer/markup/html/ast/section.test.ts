@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { createParagraphNode, createSectionNode } from "unwritten:renderer:markup/utils/nodes";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
@@ -29,12 +29,19 @@ scope("HTMLRenderer", "SectionNode", () => {
   });
 
   it("should add the type as a class name", () => {
-    const sectionNode = createSectionNode(SECTION_TYPE[EntityKind.Function], createParagraphNode("Section content"));
+
+    const sectionType = getSectionType(EntityKind.Function);
+    const sectionNode = createSectionNode(
+      sectionType,
+      createParagraphNode("Section content")
+    );
+
     expect(renderSectionNode(ctx, sectionNode)).toBe(html`
-      <section class="${SECTION_TYPE[EntityKind.Function]}">
+      <section class="${sectionType}">
         <p>Section content</p>
       </section>
     `);
+
   });
 
 });

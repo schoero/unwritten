@@ -1,13 +1,14 @@
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
 import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
 import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type";
-import { SECTION_TYPE } from "unwritten:renderer:markup/types-definitions/sections";
+import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 
 import type { ExportAssignmentEntity } from "unwritten:interpreter/type-definitions/entities";
@@ -22,13 +23,25 @@ export function convertExportAssignmentEntityToAnchor(ctx: MarkupRenderContexts,
 
   const id = exportAssignmentEntity.symbolId;
   const name = exportAssignmentEntity.name;
-  const documentationName = renderMemberContext(ctx, "documentation", name);
-  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
 
-  displayName ??= tableOfContentsName;
+  const documentationEntityPrefix = renderEntityPrefix(ctx, "documentation", exportAssignmentEntity.kind);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+  const tableOfContentsEntityPrefix = renderEntityPrefix(ctx, "tableOfContents", exportAssignmentEntity.kind);
+
+  const prefixedDocumentationName = documentationEntityPrefix
+    ? `${documentationEntityPrefix}: ${documentationName}`
+    : documentationName;
+
+  const prefixedTableOfContentsName = tableOfContentsEntityPrefix
+    ? `${tableOfContentsEntityPrefix}: ${tableOfContentsName}`
+    : tableOfContentsName;
+
+  displayName ??= prefixedTableOfContentsName;
 
   return createAnchorNode(
-    documentationName,
+    prefixedDocumentationName,
     id,
     displayName
   );
@@ -44,8 +57,14 @@ export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderC
   const name = exportAssignmentEntity.name;
   const symbolId = exportAssignmentEntity.symbolId;
 
+  const entityPrefix = renderEntityPrefix(ctx, "documentation", exportAssignmentEntity.kind);
   const nameWithContext = renderMemberContext(ctx, "documentation", name);
-  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
+
+  const prefixedDocumentationName = entityPrefix
+    ? `${entityPrefix}: ${nameWithContext}`
+    : nameWithContext;
+
+  const anchor = registerAnchor(ctx, prefixedDocumentationName, symbolId);
 
   const tags = convertTagsForDocumentation(ctx, exportAssignmentEntity);
   const position = convertPositionForDocumentation(ctx, exportAssignmentEntity.position);
@@ -57,9 +76,9 @@ export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderC
   const see = exportAssignmentEntity.see && convertSeeTagsForDocumentation(ctx, exportAssignmentEntity.see);
 
   return createSectionNode(
-    SECTION_TYPE[exportAssignmentEntity.kind],
+    getSectionType(exportAssignmentEntity.kind),
     createTitleNode(
-      nameWithContext,
+      prefixedDocumentationName,
       anchor,
       tags,
       position,

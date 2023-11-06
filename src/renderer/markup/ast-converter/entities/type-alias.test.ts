@@ -52,15 +52,15 @@ scope("MarkupRenderer", EntityKind.TypeAlias, () => {
 
     assert(isAnchorNode(convertedTypeAliasForTableOfContents), "Rendered typeAlias for table of contents is not a link");
 
-    const titleNode = convertedTypeAliasForDocumentation.children[0];
+    const titleNode = convertedTypeAliasForDocumentation.title;
 
     it("should have a matching documentation signature", () => {
       assert(isTitleNode(titleNode));
       expect(renderNode(ctx, titleNode.title)).toBe("TypeAlias<A>");
     });
 
-    assert(isSectionNode(convertedTypeAliasForDocumentation), "Rendered typeAlias for documentation is not a section");
-    assert(isTitleNode(titleNode), "Rendered typeAlias for documentation is not a title");
+    assert(isSectionNode(convertedTypeAliasForDocumentation));
+    assert(isTitleNode(titleNode));
 
     const [
       tags,
