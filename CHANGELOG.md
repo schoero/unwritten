@@ -1,5 +1,42 @@
 # Changelog
 
+## v0.2.0
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.1.4...v0.2.0)
+
+### Features
+
+- ⚠️  Render entity prefixes ([7779d37](https://github.com/schoero/unwritten/commit/7779d37))
+
+### Fixes
+
+- Don't render empty lines between nested lists ([7ed4522](https://github.com/schoero/unwritten/commit/7ed4522))
+- Unregister anonymous anchor from correct file ([ab44d76](https://github.com/schoero/unwritten/commit/ab44d76))
+- Adapt helper function to new signatures ([933f4d2](https://github.com/schoero/unwritten/commit/933f4d2))
+
+### Refactors
+
+- Improve section rendering in markdown ([6e50b90](https://github.com/schoero/unwritten/commit/6e50b90))
+
+### Build
+
+- Split pre-build and build ([b002ee6](https://github.com/schoero/unwritten/commit/b002ee6))
+
+### Chore
+
+- Add funding ([2a7257b](https://github.com/schoero/unwritten/commit/2a7257b))
+- Code cleanup ([50cc87d](https://github.com/schoero/unwritten/commit/50cc87d))
+- Code cleanup ([885ba40](https://github.com/schoero/unwritten/commit/885ba40))
+- Update dependencies ([0489074](https://github.com/schoero/unwritten/commit/0489074))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Render entity prefixes ([7779d37](https://github.com/schoero/unwritten/commit/7779d37))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.1.4
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.1.2...v0.1.4)
