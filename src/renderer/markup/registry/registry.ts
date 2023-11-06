@@ -7,6 +7,7 @@ import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc";
 import type { FilePath } from "unwritten:type-definitions/file-system";
 
 
+export const MAX_ANONYMOUS_ID = -10;
 export interface AnchorLink {
   displayName: Name;
   id: ID;
@@ -67,7 +68,8 @@ export function unregisterAnchor(ctx: MarkupRenderContexts, id: ID | ID[]): void
     return;
   }
 
-  const newIds = anchor.sourceFile.links.get(anchor.anchorId)![anchor.index]!.filter(storedId => !ids.includes(storedId));
+  const newIds = anchor.sourceFile.links.get(anchor.anchorId)![anchor.index]!
+    .filter(storedId => !ids.includes(storedId));
 
   if(newIds.length === 0){
     void anchor.sourceFile.links.get(anchor.anchorId)!.splice(anchor.index, 1);
@@ -161,8 +163,8 @@ export function createCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEnt
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
-  const sourceFile = {
-    _anonymousId: -10,
+  const sourceFile: SourceFile = {
+    _anonymousId: MAX_ANONYMOUS_ID,
     dst: destination,
     id: sourceFileEntity.symbolId,
     links: new Map(),
@@ -193,7 +195,14 @@ function findRegisteredAnchorData(ctx: MarkupRenderContexts, id: ID | ID[]): { a
 
   const ids = Array.isArray(id) ? id : [id];
 
+  const fromCurrentSourceFile = ids.some(id => id <= -10);
+
   for(const sourceFile of ctx.links){
+
+    if(fromCurrentSourceFile && sourceFile.id !== ctx.currentFile.id){
+      continue;
+    }
+
     for(const [anchorId, linkIds] of sourceFile.links.entries()){
       const index = linkIds.findIndex(storedIds =>
         storedIds.some(storedId =>
@@ -202,6 +211,7 @@ function findRegisteredAnchorData(ctx: MarkupRenderContexts, id: ID | ID[]): { a
         return { anchorId, index, sourceFile };
       }
     }
+
   }
 
 }
