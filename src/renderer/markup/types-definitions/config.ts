@@ -18,7 +18,14 @@ export interface MarkupRenderConfig {
   /** Defines how properties should be encapsulated in the rendered output. */
   propertyEncapsulation?: Encapsulation | false;
 
-  /** Defines the order in which entities should be rendered. */
+  /** Defines whether the renderer should render prefixes for entities. */
+  renderEntityPrefixes?: boolean | "documentation" | "tableOfContents";
+
+  /**
+   * Defines the order in which entities should be rendered.
+   * @example
+   * Class: MyClass instead of just MyClass
+   */
   renderOrder?: ExportableEntityKinds[];
 
   /**

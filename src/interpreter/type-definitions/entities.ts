@@ -41,6 +41,7 @@ export type LinkableEntity =
   | TypeParameterEntity;
 
 export type FunctionLikeEntityKinds =
+  | EntityKind.CallSignature
   | EntityKind.Constructor
   | EntityKind.Function
   | EntityKind.Getter
@@ -53,6 +54,14 @@ export type FunctionLikeEntity =
   | GetterEntity
   | MethodEntity
   | SetterEntity;
+
+export type SignatureEntityKinds =
+  | EntityKind.CallSignature
+  | EntityKind.ConstructSignature
+  | EntityKind.FunctionSignature
+  | EntityKind.GetterSignature
+  | EntityKind.MethodSignature
+  | EntityKind.SetterSignature;
 
 export type InferFunctionLikeEntityKind<Kind extends FunctionLikeEntityKinds> =
   Kind extends EntityKind.Constructor
@@ -120,7 +129,7 @@ export interface FunctionLikeEntityBase<Kind extends FunctionLikeEntityKinds> ex
 export interface FunctionEntity extends FunctionLikeEntityBase<EntityKind.Function> {
 }
 
-export interface SignatureEntity extends EntityBase<EntityKind.Signature>, JSDocProperties {
+export interface SignatureEntity extends EntityBase<SignatureEntityKinds>, JSDocProperties {
   returnType: Type & { description?: Description; } ;
   declarationId?: ID;
   modifiers?: Modifiers[];

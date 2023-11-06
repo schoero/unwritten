@@ -18,7 +18,7 @@ import {
   convertRemarksForType
 } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { createAnchorNode, createMultilineNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
-import { spaceBetween } from "unwritten:renderer:markup/utils/renderer";
+import { renderEntityPrefix, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
@@ -34,13 +34,25 @@ export function convertEventPropertyEntityToAnchor(ctx: MarkupRenderContexts, pr
 
   const name = propertyEntity.name;
   const id = propertyEntity.symbolId;
-  const documentationName = renderMemberContext(ctx, "documentation", name);
-  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
 
-  displayName ??= tableOfContentsName;
+  const documentationEntityPrefix = renderEntityPrefix(ctx, "documentation", propertyEntity.kind);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+  const tableOfContentsEntityPrefix = renderEntityPrefix(ctx, "tableOfContents", propertyEntity.kind);
+
+  const prefixedDocumentationName = documentationEntityPrefix
+    ? `${documentationEntityPrefix}: ${documentationName}`
+    : documentationName;
+
+  const prefixedTableOfContentsName = tableOfContentsEntityPrefix
+    ? `${tableOfContentsEntityPrefix}: ${tableOfContentsName}`
+    : tableOfContentsName;
+
+  displayName ??= prefixedTableOfContentsName;
 
   return createAnchorNode(
-    documentationName,
+    prefixedDocumentationName,
     id,
     displayName
   );
@@ -58,8 +70,14 @@ export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderCont
   const name = propertyEntity.name;
   const symbolId = propertyEntity.symbolId;
 
+  const entityPrefix = renderEntityPrefix(ctx, "documentation", propertyEntity.kind);
   const nameWithContext = renderMemberContext(ctx, "documentation", name);
-  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
+
+  const prefixedDocumentationName = entityPrefix
+    ? `${entityPrefix}: ${nameWithContext}`
+    : nameWithContext;
+
+  const anchor = registerAnchor(ctx, prefixedDocumentationName, symbolId);
 
   const position = convertPositionForDocumentation(ctx, propertyEntity.position);
   const description = propertyEntity.description && convertDescriptionForDocumentation(ctx, propertyEntity.description);
@@ -68,7 +86,7 @@ export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderCont
   const see = propertyEntity.see && convertSeeTagsForDocumentation(ctx, propertyEntity.see);
 
   return createTitleNode(
-    nameWithContext,
+    prefixedDocumentationName,
     anchor,
     position,
     description,

@@ -2,6 +2,7 @@ import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-co
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
 import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
 import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
+import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 import { convertEntityForDocumentation, createTableOfContents } from "unwritten:renderer:markup/ast-converter/index";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
@@ -23,13 +24,25 @@ export function convertModuleEntityToAnchor(ctx: MarkupRenderContexts, moduleEnt
 
   const id = moduleEntity.symbolId;
   const name = moduleEntity.name;
-  const documentationName = renderMemberContext(ctx, "documentation", name);
-  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
 
-  displayName ??= tableOfContentsName;
+  const documentationEntityPrefix = renderEntityPrefix(ctx, "documentation", moduleEntity.kind);
+  const documentationName = renderMemberContext(ctx, "documentation", name);
+
+  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", name);
+  const tableOfContentsEntityPrefix = renderEntityPrefix(ctx, "tableOfContents", moduleEntity.kind);
+
+  const prefixedDocumentationName = documentationEntityPrefix
+    ? `${documentationEntityPrefix}: ${documentationName}`
+    : documentationName;
+
+  const prefixedTableOfContentsName = tableOfContentsEntityPrefix
+    ? `${tableOfContentsEntityPrefix}: ${tableOfContentsName}`
+    : tableOfContentsName;
+
+  displayName ??= prefixedTableOfContentsName;
 
   return createAnchorNode(
-    documentationName,
+    prefixedDocumentationName,
     id,
     displayName
   );
@@ -59,8 +72,14 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
   const name = moduleEntity.name;
   const symbolId = moduleEntity.symbolId;
 
+  const entityPrefix = renderEntityPrefix(ctx, "documentation", moduleEntity.kind);
   const nameWithContext = renderMemberContext(ctx, "documentation", name);
-  const anchor = registerAnchor(ctx, nameWithContext, symbolId);
+
+  const prefixedDocumentationName = entityPrefix
+    ? `${entityPrefix}: ${nameWithContext}`
+    : nameWithContext;
+
+  const anchor = registerAnchor(ctx, prefixedDocumentationName, symbolId);
 
   return withMemberContext(ctx, name, () => {
 
@@ -79,7 +98,7 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, m
     return createSectionNode(
       getSectionType(moduleEntity.kind),
       createTitleNode(
-        nameWithContext,
+        prefixedDocumentationName,
         anchor,
         tags,
         position,

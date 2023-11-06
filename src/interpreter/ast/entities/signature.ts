@@ -1,5 +1,4 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
-import { EntityKind } from "unwritten:interpreter/enums/entity";
 import {
   createParameterEntity,
   createTypeParameterEntityByTypeParameter
@@ -19,11 +18,11 @@ import {
 
 import type { Signature as TSSignature, SignatureDeclaration } from "typescript";
 
-import type { SignatureEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { SignatureEntity, SignatureEntityKinds } from "unwritten:interpreter/type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createSignatureEntity(ctx: InterpreterContext, signature: TSSignature): SignatureEntity {
+export function createSignatureEntity(ctx: InterpreterContext, signature: TSSignature, kind: SignatureEntityKinds): SignatureEntity {
 
   // Implicit construct signatures have no declaration.
   const symbolId = signature.declaration && getSymbolIdByDeclaration(ctx, signature.declaration);
@@ -42,7 +41,6 @@ export function createSignatureEntity(ctx: InterpreterContext, signature: TSSign
   );
 
   const returnType = getReturnTypeBySignature(ctx, signature);
-  const kind = EntityKind.Signature;
 
   return {
     ...jsdocProperties,

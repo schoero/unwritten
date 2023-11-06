@@ -113,8 +113,12 @@ export function extendInterfaceEntityPropertiesWithHeritage(interfaceEntity: Int
 
 }
 
-type SignatureKeys = "callSignatures" | "constructSignatures" | "getterSignatures" | "methodSignatures" | "setterSignatures";
-
+type SignatureKeys =
+  | "callSignatures"
+  | "constructSignatures"
+  | "getterSignatures"
+  | "methodSignatures"
+  | "setterSignatures";
 
 export function extendInterfaceEntitySignaturesWithHeritage<Key extends SignatureKeys>(interfaceEntity: InterfaceEntity | MergedInterfaceEntity, key: Key): InterfaceEntity[Key] {
 

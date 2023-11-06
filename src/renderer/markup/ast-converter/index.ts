@@ -34,7 +34,7 @@ import {
   convertVariableEntityToAnchor
 } from "unwritten:renderer:markup/ast-converter/entities/index";
 import { createListNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
-import { getCategoryName } from "unwritten:renderer:markup/utils/renderer";
+import { renderCategoryName } from "unwritten:renderer:markup/utils/renderer";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import {
@@ -177,20 +177,19 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
 
   for(const entity of entities){
 
-    const categoryName = getCategoryName(entity.kind);
-    const categoryTitle = translate(categoryName, { capitalize: true, count: entities.length });
-    const existingCategory = tableOfContents.find(category => category[0] === categoryTitle);
+    const categoryName = renderCategoryName(ctx, entities);
+    const existingCategory = tableOfContents.find(category => category[0] === categoryName);
 
     if(existingCategory === undefined){
       tableOfContents.push(
         [
-          categoryTitle,
+          categoryName,
           createListNode()
         ]
       );
     }
 
-    const category = tableOfContents.find(category => category[0] === categoryTitle)!;
+    const category = tableOfContents.find(category => category[0] === categoryName)!;
     const convertedEntity = convertEntityForTableOfContents(ctx, entity);
 
     category[1].children.push(convertedEntity);
@@ -214,21 +213,20 @@ export function createDocumentation(ctx: MarkupRenderContexts, entities: Exporta
 
     assert(sectionName, `No section name found for entity kind: ${entity.kind}`);
 
-    const categoryName = getCategoryName(entity.kind);
-    const categoryTitle = translate(categoryName, { capitalize: true, count: entities.length });
-    const categoryAnchor = registerAnonymousAnchor(ctx, categoryTitle);
+    const categoryName = renderCategoryName(ctx, entities);
+    const categoryAnchor = registerAnonymousAnchor(ctx, categoryName);
     const existingCategory = documentation.find(section => section.type === sectionName);
 
     if(existingCategory === undefined){
       documentation.push(
         createSectionNode(
           sectionName,
-          createTitleNode(categoryTitle, categoryAnchor)
+          createTitleNode(categoryName, categoryAnchor)
         )
       );
     }
 
-    const section = documentation.find(section => section.title!.title === categoryTitle)!;
+    const section = documentation.find(section => section.title!.title === categoryName)!;
     const convertedEntity = convertEntityForDocumentation(ctx, entity);
 
     section.title!.children.push(convertedEntity);

@@ -1,3 +1,4 @@
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
@@ -35,7 +36,7 @@ export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(c
   const signatures = signatureDeclarations?.map(declaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(declaration);
     assert(signature, "FunctionLike signature is not found");
-    return createSignatureEntity(ctx, signature);
+    return createSignatureEntity(ctx, signature, EntityKind.FunctionSignature);
   });
 
   const symbolId = getSymbolId(ctx, symbol);

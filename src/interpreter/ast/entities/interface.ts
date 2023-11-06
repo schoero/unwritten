@@ -110,31 +110,31 @@ function parseInterfaceDeclaration(ctx: InterpreterContext, declaration: Interfa
   const constructSignatures = tsConstructSignatures.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
     assert(signature, "Construct signature not found");
-    return createSignatureEntity(ctx, signature);
+    return createSignatureEntity(ctx, signature, EntityKind.ConstructSignature);
   });
 
   const callSignatures = tsCallSignatures.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
     assert(signature, "Call signature not found");
-    return createSignatureEntity(ctx, signature);
+    return createSignatureEntity(ctx, signature, EntityKind.CallSignature);
   });
 
   const methodSignatures = tsMethods.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
     assert(signature, "Method signature not found");
-    return createSignatureEntity(ctx, signature);
-  });
-
-  const getterSignatures = tsGetters.map(signatureDeclaration => {
-    const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
-    assert(signature, "Getter signature not found");
-    return createSignatureEntity(ctx, signature);
+    return createSignatureEntity(ctx, signature, EntityKind.MethodSignature);
   });
 
   const setterSignatures = tsSetters.map(signatureDeclaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
     assert(signature, "Setter signature not found");
-    return createSignatureEntity(ctx, signature);
+    return createSignatureEntity(ctx, signature, EntityKind.SetterSignature);
+  });
+
+  const getterSignatures = tsGetters.map(signatureDeclaration => {
+    const signature = ctx.checker.getSignatureFromDeclaration(signatureDeclaration);
+    assert(signature, "Getter signature not found");
+    return createSignatureEntity(ctx, signature, EntityKind.GetterSignature);
   });
 
   const allProperties = tsProperties.map(signature => {

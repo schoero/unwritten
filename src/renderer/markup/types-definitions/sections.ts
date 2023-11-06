@@ -2,7 +2,12 @@ import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 
 const ENTITY_SECTIONS = {
-  [EntityKind.Signature]: "signature",
+  [EntityKind.FunctionSignature]: "signature",
+  [EntityKind.MethodSignature]: "signature",
+  [EntityKind.SetterSignature]: "signature",
+  [EntityKind.GetterSignature]: "signature",
+  [EntityKind.CallSignature]: "signature",
+  [EntityKind.ConstructSignature]: "signature",
   [EntityKind.Namespace]: "namespace",
   [EntityKind.Module]: "module",
   [EntityKind.Class]: "class",
@@ -84,7 +89,12 @@ export function pluralizeEntityKind(entityKind: keyof typeof ENTITY_SECTIONS): k
       return "setters";
     case EntityKind.Module:
       return "modules";
-    case EntityKind.Signature:
+    case EntityKind.FunctionSignature:
+    case EntityKind.MethodSignature:
+    case EntityKind.SetterSignature:
+    case EntityKind.GetterSignature:
+    case EntityKind.CallSignature:
+    case EntityKind.ConstructSignature:
       return "signatures";
   }
 

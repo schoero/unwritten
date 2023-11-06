@@ -1,3 +1,4 @@
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import {
   createGetterEntity,
@@ -43,8 +44,8 @@ export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLi
   const methodProperties = tsProperties.filter(property => isMethodSymbol(ctx, property))
     .filter(method => !isSymbolExcluded(ctx, method));
 
-  const constructSignatures = tsConstructSignatures.map(signature => createSignatureEntity(ctx, signature));
-  const callSignatures = tsCallSignatures.map(signature => createSignatureEntity(ctx, signature));
+  const constructSignatures = tsConstructSignatures.map(signature => createSignatureEntity(ctx, signature, EntityKind.ConstructSignature));
+  const callSignatures = tsCallSignatures.map(signature => createSignatureEntity(ctx, signature, EntityKind.CallSignature));
 
   const methods = methodProperties.map(property => createMethodEntity(ctx, property));
   const getters = getterProperties.map(property => createGetterEntity(ctx, property));

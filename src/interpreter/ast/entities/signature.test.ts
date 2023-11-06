@@ -12,7 +12,7 @@ import { ts } from "unwritten:utils/template";
 import { createInterfaceEntity } from "./interface";
 
 
-scope("Interpreter", EntityKind.Signature, () => {
+scope("Interpreter", "Signature", () => {
 
   {
 
@@ -57,7 +57,7 @@ scope("Interpreter", EntityKind.Signature, () => {
     });
 
     it("should have a matching kind", () => {
-      expect(exportedFunction.signatures[0]!.kind).toBe(EntityKind.Signature);
+      expect(exportedFunction.signatures[0]!.kind).toBe(EntityKind.FunctionSignature);
     });
 
     it("should have a matching description", () => {
@@ -111,8 +111,8 @@ scope("Interpreter", EntityKind.Signature, () => {
       expect(exportedInterface.callSignatures).toHaveLength(1);
       expect(exportedInterface.constructSignatures).toHaveLength(1);
       expect(exportedInterface.methodSignatures).toHaveLength(1);
-      expect(exportedInterface.getterSignatures).toHaveLength(1);
       expect(exportedInterface.setterSignatures).toHaveLength(1);
+      expect(exportedInterface.getterSignatures).toHaveLength(1);
     });
 
     it("should have a 'declarationId' for each signature", () => {
@@ -120,8 +120,17 @@ scope("Interpreter", EntityKind.Signature, () => {
       expect(exportedInterface.callSignatures[0]!.declarationId).toBeDefined();
       expect(exportedInterface.constructSignatures[0]!.declarationId).toBeDefined();
       expect(exportedInterface.methodSignatures[0]!.declarationId).toBeDefined();
-      expect(exportedInterface.getterSignatures[0]!.declarationId).toBeDefined();
       expect(exportedInterface.setterSignatures[0]!.declarationId).toBeDefined();
+      expect(exportedInterface.getterSignatures[0]!.declarationId).toBeDefined();
+    });
+
+    it("should have the correct kind for each signature", () => {
+      expect(exportedFunction.signatures[0]!.kind).toBe(EntityKind.FunctionSignature);
+      expect(exportedInterface.callSignatures[0]!.kind).toBe(EntityKind.CallSignature);
+      expect(exportedInterface.constructSignatures[0]!.kind).toBe(EntityKind.ConstructSignature);
+      expect(exportedInterface.methodSignatures[0]!.kind).toBe(EntityKind.MethodSignature);
+      expect(exportedInterface.setterSignatures[0]!.kind).toBe(EntityKind.SetterSignature);
+      expect(exportedInterface.getterSignatures[0]!.kind).toBe(EntityKind.GetterSignature);
     });
 
   }
