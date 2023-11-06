@@ -41,7 +41,6 @@ export type LinkableEntity =
   | TypeParameterEntity;
 
 export type FunctionLikeEntityKinds =
-  | EntityKind.CallSignature
   | EntityKind.Constructor
   | EntityKind.Function
   | EntityKind.Getter
