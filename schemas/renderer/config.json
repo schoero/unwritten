@@ -132,6 +132,22 @@
           ],
           "description": "Defines how properties should be encapsulated in the rendered output."
         },
+        "renderClassMemberTitles": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "documentation",
+              "type": "string"
+            },
+            {
+              "const": "tableOfContents",
+              "type": "string"
+            }
+          ],
+          "description": "Defines whether the renderer should render titles for object members."
+        },
         "renderEntityPrefixes": {
           "anyOf": [
             {
@@ -581,6 +597,22 @@
             }
           ],
           "description": "Defines how properties should be encapsulated in the rendered output."
+        },
+        "renderClassMemberTitles": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "documentation",
+              "type": "string"
+            },
+            {
+              "const": "tableOfContents",
+              "type": "string"
+            }
+          ],
+          "description": "Defines whether the renderer should render titles for object members."
         },
         "renderEntityPrefixes": {
           "anyOf": [
