@@ -62,23 +62,21 @@ export function convertSignatureEntityToAnchor(ctx: MarkupRenderContexts, signat
 
   const id = signatureEntity.declarationId;
 
-  const convertedSignatureForAnchor = convertSignature(ctx, signatureEntity, "documentation");
-  const renderedSignatureForAnchor = renderNode(ctx, convertedSignatureForAnchor);
+  const convertedSignatureForDocumentation = convertSignature(ctx, signatureEntity, "documentation");
+  const renderedSignatureForDocumentation = renderNode(ctx, convertedSignatureForDocumentation);
   const documentationEntityPrefix = renderEntityPrefix(ctx, "documentation", signatureEntity.kind);
-  const documentationName = renderMemberContext(ctx, "documentation", renderedSignatureForAnchor);
 
   const convertedSignatureForTableOfContents = convertSignature(ctx, signatureEntity, "tableOfContents");
   const renderedSignatureForTableOfContents = renderNode(ctx, convertedSignatureForTableOfContents);
-  const tableOfContentsName = renderMemberContext(ctx, "tableOfContents", renderedSignatureForTableOfContents);
   const tableOfContentsEntityPrefix = renderEntityPrefix(ctx, "tableOfContents", signatureEntity.kind);
 
   const prefixedDocumentationName = documentationEntityPrefix
-    ? `${documentationEntityPrefix}: ${documentationName}`
-    : documentationName;
+    ? `${documentationEntityPrefix}: ${renderedSignatureForDocumentation}`
+    : renderedSignatureForDocumentation;
 
   const prefixedTableOfContentsName = tableOfContentsEntityPrefix
-    ? `${tableOfContentsEntityPrefix}: ${tableOfContentsName}`
-    : tableOfContentsName;
+    ? `${tableOfContentsEntityPrefix}: ${renderedSignatureForTableOfContents}`
+    : renderedSignatureForTableOfContents;
 
   displayName ??= prefixedTableOfContentsName;
 
@@ -103,11 +101,10 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
   const renderedSignature = renderNode(ctx, signature);
 
   const entityPrefix = renderEntityPrefix(ctx, "documentation", signatureEntity.kind);
-  const nameWithContext = renderMemberContext(ctx, "documentation", renderedSignature);
 
   const prefixedDocumentationName = entityPrefix
-    ? `${entityPrefix}: ${nameWithContext}`
-    : nameWithContext;
+    ? `${entityPrefix}: ${renderedSignature}`
+    : renderedSignature;
 
   const anchor = registerAnchor(ctx, prefixedDocumentationName, [declarationId, ...symbolId ? [symbolId] : []]);
 
