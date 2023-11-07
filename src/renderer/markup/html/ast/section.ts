@@ -17,16 +17,20 @@ export function renderSectionNode(ctx: HTMLRenderContext, sectionNode: SectionNo
   const renderedIndentation = renderIndentation(ctx);
   const renderedNewLine = renderNewLine(ctx);
   const renderedOpeningTag = `<${tag}${classAttribute}>`;
+  const renderedTitle = withIndentation(ctx, ctx => renderNode(ctx, sectionNode.title));
   const renderedChildren = withIndentation(ctx, ctx => renderNode(ctx, sectionNode.children));
   const renderedClosingTag = `</${tag}>`;
 
-  return renderedChildren === ""
+  return renderedChildren === "" && renderedTitle === ""
     ? ""
     : [
       `${renderedIndentation}${renderedOpeningTag}`,
+      renderedTitle,
       renderedChildren,
       `${renderedIndentation}${renderedClosingTag}`
-    ].join(renderedNewLine);
+    ]
+      .filter(renderedNode => !!renderedNode)
+      .join(renderedNewLine);
 }
 
 function getTag(ctx: HTMLRenderContext, type?: SectionType) {
