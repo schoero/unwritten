@@ -65,9 +65,9 @@ export interface ParagraphNode<Children extends ASTNode[] = ASTNode[]> extends A
   children: Children;
 }
 
-export interface SectionNode<Children extends ASTNode[] = ASTNode[]> extends ASTNodeBase<ASTNodeKinds.Section> {
-  children: Children;
-  title?: Children[0] extends TitleNode ? Children[0] : TitleNode;
+export interface SectionNode<Children extends ASTNode[] = ASTNode[] | [TitleNode, ...ASTNode[]]> extends ASTNodeBase<ASTNodeKinds.Section> {
+  children: Children extends [infer First, ...infer Rest] ? First extends TitleNode ? Rest : Children : Children;
+  title?: Children extends [infer First, ...infer Rest] ? First extends TitleNode ? First : undefined : undefined;
   type?: SectionType;
 }
 

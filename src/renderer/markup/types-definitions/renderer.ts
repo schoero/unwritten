@@ -455,12 +455,13 @@ export type ConvertedClassEntityForDocumentation = SectionNode<[
     remarks: ConvertedRemarksForDocumentation,
     example: ConvertedExamples,
     see: ConvertedSeeTags,
-    constructor: Empty | SectionNode<[TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
-    properties: Empty | SectionNode<[TitleNode<ConvertedPropertyEntityForDocumentation[]>]>,
-    methods: Empty | SectionNode<[TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
-    setters: Empty | SectionNode<[TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
-    getters: Empty | SectionNode<[TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
-    events: Empty | SectionNode<[TitleNode<ConvertedEventPropertyEntityForDocumentation[]>]>
+    constructor: Empty | SectionNode<ConvertedSignatureEntityForDocumentation[] | [TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
+    properties: Empty | SectionNode<ConvertedPropertyEntityForDocumentation[] | [TitleNode<ConvertedPropertyEntityForDocumentation[]>]>,
+    methods: Empty | SectionNode<ConvertedSignatureEntityForDocumentation[] | [TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
+    setters: Empty | SectionNode<ConvertedSignatureEntityForDocumentation[] | [TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
+    getters: Empty | SectionNode<ConvertedSignatureEntityForDocumentation[] | [TitleNode<ConvertedSignatureEntityForDocumentation[]>]>,
+    events: Empty | SectionNode<ConvertedEventPropertyEntityForDocumentation[] | [TitleNode<ConvertedEventPropertyEntityForDocumentation[]>]>
+
   ]>
 ]>;
 
@@ -525,12 +526,14 @@ export type ConvertedPropertyEntityForType = MultilineNode<[
 
 // Event
 export type ConvertedEventPropertyEntityForTableOfContents = AnchorNode;
-export type ConvertedEventPropertyEntityForDocumentation = TitleNode<[
-  position: ConvertedPosition,
-  description: ConvertedDescriptionForDocumentation,
-  remarks: ConvertedRemarksForDocumentation,
-  example: ConvertedExamples,
-  see: ConvertedSeeTags
+export type ConvertedEventPropertyEntityForDocumentation = SectionNode<[
+  children: TitleNode<[
+    position: ConvertedPosition,
+    description: ConvertedDescriptionForDocumentation,
+    remarks: ConvertedRemarksForDocumentation,
+    example: ConvertedExamples,
+    see: ConvertedSeeTags
+  ]>
 ]>;
 export type ConvertedEventPropertyEntityForType = MultilineNode<[
   propertySignature: ASTNode,

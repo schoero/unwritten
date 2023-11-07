@@ -83,23 +83,20 @@ scope("MarkupRenderer", EntityKind.Class, () => {
     });
 
     it("should have one construct signature", () => {
-      expect(constructSignatures && constructSignatures.title?.children).toHaveLength(1);
+      expect(constructSignatures && constructSignatures.children).toHaveLength(1);
     });
 
     it("should have three properties", () => {
-      expect(properties && properties.title?.children).toHaveLength(3);
+      expect(properties && properties.children).toHaveLength(3);
     });
 
     it("should support all possible modifiers", () => {
 
-      const propertiesTitle = properties && properties.title;
-
       assert(isSectionNode(properties));
-      assert(isTitleNode(propertiesTitle));
 
-      const publicPropertyTags = propertiesTitle.children[0].title?.children[0];
-      const staticPropertyTags = propertiesTitle.children[1].title?.children[0];
-      const protectedPropertyTags = propertiesTitle.children[2].title?.children[0];
+      const publicPropertyTags = properties.children[0].title?.children[0];
+      const staticPropertyTags = properties.children[1].title?.children[0];
+      const protectedPropertyTags = properties.children[2].title?.children[0];
 
       assert(isParagraphNode(publicPropertyTags));
       assert(isParagraphNode(staticPropertyTags));
@@ -111,19 +108,19 @@ scope("MarkupRenderer", EntityKind.Class, () => {
     });
 
     it("should have one method signature", () => {
-      expect(methods && methods.title?.children).toHaveLength(1);
+      expect(methods && methods.children).toHaveLength(1);
     });
 
     it("should have one setter signature", () => {
-      expect(setters && setters.title?.children).toHaveLength(1);
+      expect(setters && setters.children).toHaveLength(1);
     });
 
     it("should have one getter signature", () => {
-      expect(getters && getters.title?.children).toHaveLength(1);
+      expect(getters && getters.children).toHaveLength(1);
     });
 
     it("should have one event", () => {
-      expect(events && events.title?.children).toHaveLength(1);
+      expect(events && events.children).toHaveLength(1);
     });
 
   }
@@ -151,7 +148,6 @@ scope("MarkupRenderer", EntityKind.Class, () => {
     assert(isSectionNode(convertedClassForDocumentation));
     assert(isTitleNode(titleNode));
 
-
     const [
       position,
       tags,
@@ -168,6 +164,98 @@ scope("MarkupRenderer", EntityKind.Class, () => {
 
     it("should not render implicit constructors", () => {
       expect(constructSignatures).toBeFalsy();
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export class Class {
+        constructor() {}
+        prop: string;
+        method() {}
+        get getter(): string { return ""; }
+        set setter(value: string) {}
+        /** @eventProperty */
+        event;
+      }
+    `;
+
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "Class")!;
+    const classEntity = createClassEntity(compilerContext, symbol);
+
+    const ctx = createRenderContext();
+    ctx.config.renderConfig.html.renderClassMemberTitles = true;
+
+    const convertedClassForTableOfContents = convertClassEntityForTableOfContents(ctx, classEntity);
+    const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
+
+    it("should be possible to enable class member titles for the table of contents", () => {
+
+      expect(convertedClassForTableOfContents[1].children).toHaveLength(12);
+
+      const [
+        constructSignaturesTitle,
+        constructSignatures,
+        propertiesTitle,
+        properties,
+        methodsTitle,
+        methods,
+        settersTitle,
+        setters,
+        gettersTitle,
+        getters,
+        eventsTitle,
+        events
+      ] = convertedClassForTableOfContents[1].children;
+
+      expect(constructSignaturesTitle).toBe("Constructor");
+      expect(propertiesTitle).toBe("Property");
+      expect(methodsTitle).toBe("Method");
+      expect(settersTitle).toBe("Setter");
+      expect(gettersTitle).toBe("Getter");
+      expect(eventsTitle).toBe("Event");
+
+    });
+
+    it("should be possible to enable class member titles for the documentation", () => {
+
+      const titleNode = convertedClassForDocumentation.title;
+
+      assert(isSectionNode(convertedClassForDocumentation));
+      assert(isTitleNode(titleNode));
+
+      const [
+        position,
+        tags,
+        description,
+        remarks,
+        example,
+        see,
+        constructSignatures,
+        properties,
+        methods,
+        setters,
+        getters
+      ] = titleNode.children;
+
+      assert(isSectionNode(constructSignatures));
+      expect(isTitleNode(constructSignatures.title)).toBeTruthy();
+
+      assert(isSectionNode(properties));
+      expect(isTitleNode(properties.title)).toBeTruthy();
+
+      assert(isSectionNode(methods));
+      expect(isTitleNode(methods.title)).toBeTruthy();
+
+      assert(isSectionNode(setters));
+      expect(isTitleNode(setters.title)).toBeTruthy();
+
+      assert(isSectionNode(getters));
+      expect(isTitleNode(getters.title)).toBeTruthy();
     });
 
   }

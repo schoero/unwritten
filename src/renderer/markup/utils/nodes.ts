@@ -115,8 +115,6 @@ export function createParagraphNode<Children extends ASTNode[]>(...children: Chi
 }
 
 
-export function createSectionNode<Children extends ASTNode[]>(type: SectionType | undefined, ...titleOrChildren: Children): SectionNode<Children>;
-export function createSectionNode<TitleChild extends TitleNode, Children extends ASTNode[]>(type: SectionType | undefined, title: TitleChild, ...children: Children): SectionNode<[TitleChild, ...Children]>;
 export function createSectionNode<Children extends ASTNode[]>(type: SectionType | undefined, ...titleOrChildren: Children): SectionNode<Children> {
 
   const { children, title } = separateTitleAndChildren<Children>(titleOrChildren);
@@ -193,22 +191,18 @@ function separateAnchorAndChildren<Children extends ASTNode[]>(anchorOrChildren:
 }
 
 
-function separateTitleAndChildren<Children extends ASTNode[]>(titleOrChildren: Children | [title: TitleNode, ...children: Children]) {
+function separateTitleAndChildren<const Children extends ASTNode[]>(titleOrChildren: Children): { children: ExtractChildrenFromSectionNode<SectionNode<Children>>; title?: ExtractTitleNodeFromSectionNode<SectionNode<Children>>; } {
 
-  let title: TitleNode | undefined;
-  let children: Children;
+  let title: ExtractTitleNodeFromSectionNode<SectionNode<Children>> | undefined;
+  let children: ExtractChildrenFromSectionNode<SectionNode<Children>>;
 
-  if(isTitleNode(titleOrChildren)){
-    title = titleOrChildren;
-    children = <ASTNode>[] as Children;
+  const [first, ...rest] = titleOrChildren;
+
+  if(isTitleNode(first)){
+    title = first as unknown as ExtractTitleNodeFromSectionNode<SectionNode<Children>>;
+    children = rest as ExtractChildrenFromSectionNode<SectionNode<Children>>;
   } else {
-    if(isTitleNode(titleOrChildren[0])){
-      const [first, ...rest] = titleOrChildren;
-      title = first;
-      children = rest as Children;
-    } else {
-      children = titleOrChildren as Children;
-    }
+    children = titleOrChildren as ExtractChildrenFromSectionNode<SectionNode<Children>>;
   }
 
   return {
@@ -217,3 +211,22 @@ function separateTitleAndChildren<Children extends ASTNode[]>(titleOrChildren: C
   };
 
 }
+
+
+type ExtractTitleNodeFromSectionNode<Section extends SectionNode> =
+  Section extends SectionNode<infer Children>
+    ? Children extends [infer First, ...infer Rest]
+      ? First extends TitleNode
+        ? First
+        : undefined
+      : undefined
+    : undefined;
+
+type ExtractChildrenFromSectionNode<Section extends SectionNode> =
+  Section extends SectionNode<infer Children>
+    ? Children extends [infer First, ...infer Rest]
+      ? First extends TitleNode
+        ? Rest
+        : Children
+      : Children
+    : never;

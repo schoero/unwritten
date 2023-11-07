@@ -59,7 +59,6 @@ export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContexts, interf
     ? `${tableOfContentsEntityPrefix}: ${tableOfContentsName}`
     : tableOfContentsName;
 
-
   displayName ??= prefixedTableOfContentsName;
 
   return createAnchorNode(

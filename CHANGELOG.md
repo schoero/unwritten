@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.2.1
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.2.0...v0.2.1)
+
+### Features
+
+- Add option to disable class member titles ([782ea1c](https://github.com/schoero/unwritten/commit/782ea1c))
+
+### Fixes
+
+- Use correct signature entities ([1048555](https://github.com/schoero/unwritten/commit/1048555))
+- Correct function entity kinds ([7e2c43b](https://github.com/schoero/unwritten/commit/7e2c43b))
+- Double rendering of member context ([cd2ce41](https://github.com/schoero/unwritten/commit/cd2ce41))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.2.0
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.1.4...v0.2.0)

@@ -36,7 +36,7 @@ export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(c
   const signatures = signatureDeclarations?.map(declaration => {
     const signature = ctx.checker.getSignatureFromDeclaration(declaration);
     assert(signature, "FunctionLike signature is not found");
-    return createSignatureEntity(ctx, signature, EntityKind.FunctionSignature);
+    return createSignatureEntity(ctx, signature, signatureKindMap[kind]);
   });
 
   const symbolId = getSymbolId(ctx, symbol);
@@ -50,3 +50,11 @@ export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(c
   };
 
 });
+
+const signatureKindMap = {
+  [EntityKind.Function]: EntityKind.FunctionSignature,
+  [EntityKind.Method]: EntityKind.MethodSignature,
+  [EntityKind.Setter]: EntityKind.SetterSignature,
+  [EntityKind.Getter]: EntityKind.GetterSignature,
+  [EntityKind.Constructor]: EntityKind.ConstructSignature
+} as const;

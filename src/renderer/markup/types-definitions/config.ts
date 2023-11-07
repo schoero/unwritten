@@ -18,6 +18,9 @@ export interface MarkupRenderConfig {
   /** Defines how properties should be encapsulated in the rendered output. */
   propertyEncapsulation?: Encapsulation | false;
 
+  /** Defines whether the renderer should render titles for object members. */
+  renderClassMemberTitles?: boolean | "documentation" | "tableOfContents";
+
   /** Defines whether the renderer should render prefixes for entities. */
   renderEntityPrefixes?: boolean | "documentation" | "tableOfContents";
 

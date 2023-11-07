@@ -7,7 +7,7 @@ import {
   convertEventPropertyEntityForDocumentation,
   convertEventPropertyEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/event";
-import { isAnchorNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
+import { isAnchorNode, isSectionNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
@@ -41,12 +41,17 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     const convertedEventPropertyForSignature = convertEventPropertyEntityForTableOfContents(ctx, eventPropertyEntity);
     const convertedEventPropertyForDocumentation = convertEventPropertyEntityForDocumentation(ctx, eventPropertyEntity);
 
+    const titleNode = convertedEventPropertyForDocumentation.title;
+
+    assert(isSectionNode(convertedEventPropertyForDocumentation));
+    assert(isTitleNode(titleNode));
+
     const [
       position,
       description,
       remarks,
       example
-    ] = convertedEventPropertyForDocumentation.children;
+    ] = titleNode.children;
 
     it("should have a position", () => {
       const renderedPosition = renderNode(ctx, position);
@@ -56,7 +61,6 @@ scope("MarkupRenderer", EntityKind.Property, () => {
     it("should have a matching name", () => {
       assert(isAnchorNode(convertedEventPropertyForSignature));
       expect(convertedEventPropertyForSignature.children[0]).toBe("event");
-      expect(convertedEventPropertyForDocumentation.title).toBe("event");
     });
 
     it("should have a matching description", () => {
