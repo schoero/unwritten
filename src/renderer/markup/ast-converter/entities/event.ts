@@ -3,6 +3,7 @@ import {
   convertSeeTagsForType
 } from "unwritten:renderer/markup/ast-converter/shared/see";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
 import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
 import {
   convertDescriptionForDocumentation,
@@ -17,7 +18,12 @@ import {
   convertRemarksForDocumentation,
   convertRemarksForType
 } from "unwritten:renderer:markup/ast-converter/shared/remarks";
-import { createAnchorNode, createMultilineNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
+import {
+  createAnchorNode,
+  createMultilineNode,
+  createSectionNode,
+  createTitleNode
+} from "unwritten:renderer:markup/utils/nodes";
 import { renderEntityPrefix, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
@@ -85,14 +91,17 @@ export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderCont
   const example = propertyEntity.example && convertExamplesForDocumentation(ctx, propertyEntity.example);
   const see = propertyEntity.see && convertSeeTagsForDocumentation(ctx, propertyEntity.see);
 
-  return createTitleNode(
-    prefixedDocumentationName,
-    anchor,
-    position,
-    description,
-    remarks,
-    example,
-    see
+  return createSectionNode(
+    getSectionType(propertyEntity.kind),
+    createTitleNode(
+      prefixedDocumentationName,
+      anchor,
+      position,
+      description,
+      remarks,
+      example,
+      see
+    )
   );
 
 }

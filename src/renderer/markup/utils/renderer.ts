@@ -50,6 +50,11 @@ export function isRenderEntityPrefixEnabled(ctx: MarkupRenderContexts, target: "
   return renderConfig.renderEntityPrefixes === true || renderConfig.renderEntityPrefixes === target;
 }
 
+export function isRenderObjectMemberTitlesEnabled(ctx: MarkupRenderContexts, target: "documentation" | "tableOfContents"): boolean {
+  const renderConfig = getRenderConfig(ctx);
+  return renderConfig.renderClassMemberTitles === true || renderConfig.renderClassMemberTitles === target;
+}
+
 export function minMax(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
