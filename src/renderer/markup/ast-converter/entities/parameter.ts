@@ -45,19 +45,34 @@ export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, 
     return undefined;
   }
 
-  const renderedParameters = parameterEntities.flatMap((parameter, index) => {
-    const convertedParameter = convertParameterEntityForSignature(ctx, parameter);
+  const renderConfig = getRenderConfig(ctx);
+
+  const renderedParameters = parameterEntities.flatMap((parameterEntity, index) => {
+    const convertedParameter = convertParameterEntityForSignature(ctx, parameterEntity);
+
     if(index === 0){
       return [
-        parameter.optional === true ? "[" : "",
+        parameterEntity.optional === true ||
+        renderConfig.renderDefaultValuesAsOptional && parameterEntity.initializer
+          ? "["
+          : "",
         ...convertedParameter,
-        parameter.optional === true ? "]" : ""
+        parameterEntity.optional === true ||
+        renderConfig.renderDefaultValuesAsOptional && parameterEntity.initializer
+          ? "]"
+          : ""
       ];
     } else {
       return [
-        parameter.optional === true ? "[, " : ", ",
+        parameterEntity.optional === true ||
+        renderConfig.renderDefaultValuesAsOptional && parameterEntity.initializer
+          ? "[, "
+          : ", ",
         ...convertedParameter,
-        parameter.optional === true ? "]" : ""
+        parameterEntity.optional === true ||
+        renderConfig.renderDefaultValuesAsOptional && parameterEntity.initializer
+          ? "]"
+          : ""
       ];
     }
   });
@@ -138,7 +153,8 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
 
   const description = parameterEntity.description && convertDescriptionForType(ctx, parameterEntity.description);
   const rest = parameterEntity.rest === true && encapsulate(translate("rest"), renderConfig.tagEncapsulation);
-  const optional = parameterEntity.optional === true && encapsulate(translate("optional"), renderConfig.tagEncapsulation);
+  const optional = (parameterEntity.optional === true || renderConfig.renderDefaultValuesAsOptional && parameterEntity.initializer) &&
+   encapsulate(translate("optional"), renderConfig.tagEncapsulation);
   const initializer = parameterEntity.initializer && convertInitializerForType(ctx, parameterEntity.initializer);
 
   const { inlineType, multilineType } = convertType(ctx, parameterEntity.type);
@@ -149,8 +165,8 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
         nameAnchor,
         inlineType,
         description,
-        optional,
         rest,
+        optional,
         initializer?.inlineInitializer
       )
     ),
