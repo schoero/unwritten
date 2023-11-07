@@ -16,6 +16,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   parameterEncapsulation: ["`", "`"],
   propertyEncapsulation: ["`", "`"],
   renderClassMemberTitles: "tableOfContents",
+  renderDefaultValuesAsOptional: true,
   renderEntityPrefixes: "documentation",
   renderOrder: [
     EntityKind.Module,

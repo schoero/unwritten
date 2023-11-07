@@ -21,6 +21,9 @@ export interface MarkupRenderConfig {
   /** Defines whether the renderer should render titles for object members. */
   renderClassMemberTitles?: boolean | "documentation" | "tableOfContents";
 
+  /** Defines whether the renderer should render an additional optional tag for default values. */
+  renderDefaultValuesAsOptional?: boolean;
+
   /** Defines whether the renderer should render prefixes for entities. */
   renderEntityPrefixes?: boolean | "documentation" | "tableOfContents";
 

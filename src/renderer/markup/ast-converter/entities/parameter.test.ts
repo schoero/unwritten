@@ -121,12 +121,52 @@ scope("MarkupRenderer", EntityKind.Parameter, () => {
     const parameterEntities = functionEntity.signatures[0].parameters;
     const ctx = createRenderContext();
 
+    const convertedParametersForSignature = convertParameterEntitiesForSignature(ctx, parameterEntities);
     const convertedParameterForDocumentation = convertParameterEntitiesForDocumentation(ctx, parameterEntities);
 
+    const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
     const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
+
+    it("should encapsulate default parameters in '[]' by default", () => {
+      expect(renderedParametersForSignature).toBe("[a]");
+    });
 
     it("should render default values", () => {
       expect(renderedParameterForDocumentation).toContain("Default: 7");
+    });
+
+    it("should render an additional 'optional' tag by default", () => {
+      expect(renderedParameterForDocumentation).toContain("optional");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export function test(a: number = 7) {}
+    `;
+
+    const { ctx: compilerContext, exportedSymbols } = compile(testFileContent);
+
+    const symbol = exportedSymbols.find(s => s.name === "test")!;
+    const functionEntity = createFunctionEntity(compilerContext, symbol);
+    const parameterEntities = functionEntity.signatures[0].parameters;
+    const ctx = createRenderContext();
+    ctx.config.renderConfig.html.renderDefaultValuesAsOptional = false;
+
+    const convertedParametersForSignature = convertParameterEntitiesForSignature(ctx, parameterEntities);
+    const convertedParameterForDocumentation = convertParameterEntitiesForDocumentation(ctx, parameterEntities);
+
+    const renderedParametersForSignature = renderNode(ctx, convertedParametersForSignature);
+    const renderedParameterForDocumentation = renderNode(ctx, convertedParameterForDocumentation);
+
+    it("should be possible to disable the encapsulation of default parameters in '[]'", () => {
+      expect(renderedParametersForSignature).toBe("a");
+    });
+
+    it("should be possible to disable the rendering of an additional `optional` tag for default values", () => {
+      expect(renderedParameterForDocumentation).not.toContain("optional");
     });
 
   }
