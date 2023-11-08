@@ -1,4 +1,5 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withLockedType } from "unwritten:interpreter/utils/ts.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
@@ -9,7 +10,7 @@ import type { UnionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createUnionType(ctx: InterpreterContext, type: TSUnionType): UnionType {
+export const createUnionType = (ctx: InterpreterContext, type: TSUnionType): UnionType => withLockedType(ctx, type, () => {
 
   const typeId = getTypeId(ctx, type);
   const types = type.types.map(type => getTypeByType(ctx, type));
@@ -21,7 +22,7 @@ export function createUnionType(ctx: InterpreterContext, type: TSUnionType): Uni
     types
   };
 
-}
+});
 
 export function createUnionTypeByTypeNode(ctx: InterpreterContext, typeNode: UnionTypeNode): UnionType {
 
