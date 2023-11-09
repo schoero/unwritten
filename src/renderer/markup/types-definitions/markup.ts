@@ -20,9 +20,7 @@ export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer
   memberContext: string[];
   set nesting(value: number);
   get nesting(): number;
-  _currentFile?: SourceFile;
   _indentation?: number;
-  _links?: LinkRegistry;
   _nesting?: number;
 }
 
