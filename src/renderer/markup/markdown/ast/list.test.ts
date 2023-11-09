@@ -197,17 +197,21 @@ scope("MarkdownRenderer", "ListNode", () => {
 
   });
 
-  it("should collapse multiple newlines to a single new line", () => {
+  it("should collapse multiple empty lines to a single empty line", () => {
 
     const simpleListNode = createListNode([
-      "Line 1\nLine 2\n\nLine 3\n\n\nLine 4"
+      "Line 1\nLine 2\n\nLine 3\n\n\nLine 4\n\n\n\nLine 5"
     ]);
     expect(renderListNode(ctx, simpleListNode)).toBe(md`
         
       - Line 1
         Line 2
+        
         Line 3
+        
         Line 4
+        
+        Line 5
         
     `);
   });
