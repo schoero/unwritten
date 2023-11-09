@@ -37,8 +37,8 @@ scope("MarkupRenderer", TypeKind.Class, () => {
     const convertedType = convertClassTypeInline(ctx, type as ClassType);
     const renderedType = renderNode(ctx, convertedType);
 
-    it("should render the name of the type", () => {
-      expect(renderedType).toBe("class");
+    it("should render the name of the class", () => {
+      expect(renderedType).toBe("Class");
     });
 
   }
