@@ -242,7 +242,9 @@ function renderString(ctx: MarkdownRenderContext, node: string): string {
 
   // Indent all lines except the first one
   const indentedLines = escapedLines
-    .filter(node => !!node)
+    .filter((node, index, arr) =>
+      // Filter multiple empty lines
+      !(node === "" && arr[index - 1] === ""))
     .map((line, index) =>
       index === 0
         ? line

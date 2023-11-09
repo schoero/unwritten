@@ -1,4 +1,5 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withLockedType } from "unwritten:interpreter/utils/ts.js";
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByTypeNode } from "../type";
@@ -30,7 +31,7 @@ export function createConditionalTypeByTypeNode(ctx: InterpreterContext, typeNod
 
 }
 
-export function createConditionalType(ctx: InterpreterContext, type: TSConditionalType): ConditionalType {
+export const createConditionalType = (ctx: InterpreterContext, type: TSConditionalType): ConditionalType => withLockedType(ctx, type, () => {
 
   const root = type.root;
   const typeId = getTypeId(ctx, type);
@@ -50,4 +51,4 @@ export function createConditionalType(ctx: InterpreterContext, type: TSCondition
     typeId
   };
 
-}
+});

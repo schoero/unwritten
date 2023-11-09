@@ -106,5 +106,34 @@ scope("Renderer", "Render abstraction", () => {
       `);
     });
 
+    it("should preserve empty lines", () => {
+      const testString = md`
+        should preserve empty lines
+
+          before code fences
+
+          \`\`\`ts
+          inside code fences
+
+          inside code fences
+          \`\`\`
+
+          and after code fences
+      `;
+      expect(escapeMarkdown(testString)).toBe(md`
+        should preserve empty lines
+
+          before code fences
+
+          \`\`\`ts
+          inside code fences
+
+          inside code fences
+          \`\`\`
+
+          and after code fences
+      `);
+    });
+
   });
 });

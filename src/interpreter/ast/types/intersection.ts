@@ -1,4 +1,5 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withLockedType } from "unwritten:interpreter/utils/ts.js";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByType } from "../type";
@@ -9,7 +10,7 @@ import type { IntersectionType } from "unwritten:interpreter:type-definitions/ty
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createIntersectionType(ctx: InterpreterContext, type: TSIntersectionType): IntersectionType {
+export const createIntersectionType = (ctx: InterpreterContext, type: TSIntersectionType): IntersectionType => withLockedType(ctx, type, () => {
 
   const typeId = getTypeId(ctx, type);
   const types = type.types.map(type => getTypeByType(ctx, type));
@@ -21,4 +22,4 @@ export function createIntersectionType(ctx: InterpreterContext, type: TSIntersec
     types
   };
 
-}
+});
