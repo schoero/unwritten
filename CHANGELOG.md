@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.4
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.2.2...v0.2.4)
+
+### Fixes
+
+- **renderer:html:** Section node title rendering ([236929f](https://github.com/schoero/unwritten/commit/236929f))
+- Interpreting of circular types ([073f8ba](https://github.com/schoero/unwritten/commit/073f8ba))
+- Render class name instead of `class` ([428d443](https://github.com/schoero/unwritten/commit/428d443))
+
+### Refactors
+
+- Preserve empty lines ([3e463ca](https://github.com/schoero/unwritten/commit/3e463ca))
+
+### Chore
+
+- **release:** V0.2.3 ([dcba3fd](https://github.com/schoero/unwritten/commit/dcba3fd))
+- Remove unused types ([5a78055](https://github.com/schoero/unwritten/commit/5a78055))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.2.3
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.2.2...v0.2.3)

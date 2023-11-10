@@ -1,7 +1,6 @@
-import {
-  convertObjectTypeInline,
-  convertObjectTypeMultiline
-} from "unwritten:renderer:markup/ast-converter/types/index";
+import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index";
 
 import type { ClassType } from "unwritten:interpreter:type-definitions/types";
 import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
@@ -12,7 +11,14 @@ import type {
 
 
 export function convertClassTypeInline(ctx: MarkupRenderContexts, classType: ClassType): ConvertedClassTypeInline {
-  return convertObjectTypeInline(ctx, classType);
+
+  const renderConfig = getRenderConfig(ctx);
+
+  return encapsulate(
+    classType.name,
+    renderConfig.typeEncapsulation
+  );
+
 }
 
 export function convertClassTypeMultiline(ctx: MarkupRenderContexts, classType: ClassType): ConvertedClassTypeMultiline {
