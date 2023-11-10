@@ -19,8 +19,7 @@ export function compile(ctx: DefaultContext, entryFilePaths: string[], tsConfigO
     : tsConfigOrFilePath;
 
 
-  //-- Compile
-
+  // Compile
   const compilerOptions = getCompilerOptions(ctx, absoluteEntryFilePaths, tsConfigOrResolvedFilePath);
   const compilerHost = getCompilerHost(ctx, compilerOptions);
 
@@ -35,8 +34,7 @@ export function compile(ctx: DefaultContext, entryFilePaths: string[], tsConfigO
   const checker = program.getTypeChecker();
 
 
-  //-- Report any compiler messages
-
+  // Report any compiler messages
   void reportCompilerDiagnostics(ctx, program.getSemanticDiagnostics());
 
   return { checker, program };
