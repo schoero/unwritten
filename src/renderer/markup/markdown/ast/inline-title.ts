@@ -2,9 +2,9 @@ import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/mul
 import { renderNode } from "unwritten:renderer/markup/markdown/index";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
-import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
+import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { InlineTitleNode } from "unwritten:renderer:markup/types-definitions/nodes";
@@ -13,14 +13,13 @@ import type { InlineTitleNode } from "unwritten:renderer:markup/types-definition
 export function renderInlineTitleNode(ctx: MarkdownRenderContext, inlineTitleNode: InlineTitleNode): string {
 
   const renderConfig = getRenderConfig(ctx);
-  const renderedIndentation = renderIndentation(ctx);
 
   const renderedTitle = renderNode(ctx, inlineTitleNode.title);
   const encapsulatedTitle = renderNode(
     ctx,
     encapsulate(`${renderedTitle}:`, renderConfig.inlineTitleEncapsulation)
   );
-  const indentedTitle = `${renderedIndentation}${encapsulatedTitle}`;
+  const indentedTitle = renderWithIndentation(ctx, encapsulatedTitle);
 
   const renderedNewLine = renderNewLine(ctx);
   const renderedEmptyLine = renderEmptyLine(ctx);
@@ -30,7 +29,7 @@ export function renderInlineTitleNode(ctx: MarkdownRenderContext, inlineTitleNod
     return "";
   }
 
-  const childrenBeginsWithEmptyLine = renderedChildren.startsWith(renderedEmptyLine + renderedNewLine);
+  const childrenBeginsWithEmptyLine = startsWithEmptyLine(ctx, renderedChildren);
   const trailingEmptyLine = childrenBeginsWithEmptyLine ? "" : renderedEmptyLine;
 
   return [

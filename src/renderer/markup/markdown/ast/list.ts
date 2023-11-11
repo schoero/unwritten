@@ -2,7 +2,10 @@ import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-
 import { withIndentation } from "unwritten:renderer/markup/utils/context";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { isListNode } from "unwritten:renderer:markup/typeguards/renderer";
-import { renderIndentation as renderIndentationOriginal } from "unwritten:renderer:utils/indentation";
+import {
+  renderIndentation,
+  renderWithIndentation as renderWithIndentationOriginal
+} from "unwritten:renderer:utils/indentation";
 
 import { renderNode } from "../index";
 
@@ -78,11 +81,10 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNode): string {
       return "";
     }
 
-
     // Remove indentation from rendered item
-    const renderedOriginalIndentation = renderIndentationOriginal(ctx);
-    const renderedItemWithoutOriginalIndentation = renderedArrayItems.startsWith(renderedOriginalIndentation)
-      ? renderedArrayItems.slice(renderedOriginalIndentation.length)
+    const renderedIndentation = renderIndentation(ctx);
+    const renderedItemWithoutOriginalIndentation = renderedArrayItems.startsWith(renderedIndentation)
+      ? renderedArrayItems.slice(renderedIndentation.length)
       : renderedArrayItems;
 
     // Collapse multiple new lines into one
@@ -91,7 +93,7 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNode): string {
       renderedNewLine
     );
 
-    return `${renderIndentation(ctx)}- ${collapsedRenderedItem}`;
+    return renderWithIndentation(ctx, `- ${collapsedRenderedItem}`);
 
   }
 
@@ -107,9 +109,9 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNode): string {
   }
 
   // Remove indentation from rendered item
-  const renderedOriginalIndentation = renderIndentationOriginal(ctx);
-  const renderedItemWithoutOriginalIndentation = renderedItem.startsWith(renderedOriginalIndentation)
-    ? renderedItem.slice(renderedOriginalIndentation.length)
+  const renderedIndentation = renderIndentation(ctx);
+  const renderedItemWithoutOriginalIndentation = renderedItem.startsWith(renderedIndentation)
+    ? renderedItem.slice(renderedIndentation.length)
     : renderedItem;
 
   // Collapse multiple new lines into one
@@ -118,7 +120,7 @@ function renderListItem(ctx: MarkdownRenderContext, item: ASTNode): string {
     renderedNewLine
   );
 
-  return `${renderIndentation(ctx)}- ${collapsedRenderedItem}`;
+  return renderWithIndentation(ctx, `- ${collapsedRenderedItem}`);
 
 }
 
@@ -177,9 +179,9 @@ function renderArrayItems(ctx: MarkdownRenderContext, items: ASTNode[]): string 
 
 }
 
-function renderIndentation(ctx: MarkdownRenderContext): string {
+function renderWithIndentation(ctx: MarkdownRenderContext, renderedNode: string): string {
   ctx.indentation--;
-  const indentation = renderIndentationOriginal(ctx);
+  const indentation = renderWithIndentationOriginal(ctx, renderedNode);
   ctx.indentation++;
   return indentation;
 }

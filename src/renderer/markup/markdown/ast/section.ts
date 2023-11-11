@@ -3,7 +3,7 @@ import { renderTitle, renderTitleChildren, renderTitleNode } from "unwritten:ren
 import { isSectionNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
+import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes";
@@ -40,14 +40,14 @@ export function renderSectionNode(ctx: MarkdownRenderContext, sectionNode: Secti
 
     const renderedTitleChildren = renderTitleChildren(ctx, sectionNode.title);
 
-    const renderedTitleChildrenBeginsWithSeparator = renderedTitleChildren.startsWith(renderedSeparator);
+    const renderedTitleChildrenBeginsWithSeparator = startsWithEmptyLine(ctx, renderedTitleChildren);
     const renderedTitleChildrenWithoutInitialSectionSeparator = renderedTitleChildrenBeginsWithSeparator
       ? renderedTitleChildren.slice(renderedSeparator.length + 1) // +1 for the new line
       : renderedTitleChildren;
 
     const renderedTitle = renderTitle(ctx, sectionNode.title);
 
-    const childrenBeginsWithEmptyLine = renderedTitleChildrenWithoutInitialSectionSeparator.startsWith(renderedEmptyLine + renderedNewLine);
+    const childrenBeginsWithEmptyLine = startsWithEmptyLine(ctx, renderedTitleChildrenWithoutInitialSectionSeparator);
     const trailingEmptyLine = childrenBeginsWithEmptyLine ? "" : renderedEmptyLine;
 
     const renderedChildren = [
@@ -76,11 +76,11 @@ export function renderSectionNode(ctx: MarkdownRenderContext, sectionNode: Secti
     return "";
   }
 
-  const sectionChildrenBeginsWithSeparator = renderedSectionChildren.startsWith(renderedSeparator);
+  const sectionChildrenBeginsWithSeparator = startsWithEmptyLine(ctx, renderedSectionChildren);
 
   if(renderedTitleNode !== ""){
 
-    const renderedChildrenBeginWithEmptyLine = renderedTitleNode.startsWith(renderedEmptyLine);
+    const renderedChildrenBeginWithEmptyLine = startsWithEmptyLine(ctx, renderedTitleNode);
     const renderedCompensatedSeparator = renderedChildrenBeginWithEmptyLine
       ? separator.slice(0, -1).join(renderedNewLine)
       : separator.join(renderedNewLine);
@@ -96,7 +96,7 @@ export function renderSectionNode(ctx: MarkdownRenderContext, sectionNode: Secti
 
   if(renderedSectionChildren !== ""){
 
-    const renderedChildrenBeginWithEmptyLine = renderedSectionChildren.startsWith(renderedEmptyLine);
+    const renderedChildrenBeginWithEmptyLine = startsWithEmptyLine(ctx, renderedSectionChildren);
     const renderedCompensatedSeparator = renderedChildrenBeginWithEmptyLine
       ? separator.slice(0, -1).join(renderedNewLine)
       : separator.join(renderedNewLine);

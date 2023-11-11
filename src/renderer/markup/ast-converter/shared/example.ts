@@ -57,9 +57,7 @@ export function convertExamplesForType(ctx: MarkupRenderContexts, examples: Exam
   return createInlineTitleNode(
     title,
     anchor,
-    createParagraphNode(
-      ...convertedExamples
-    )
+    ...convertedExamples
   );
 
 }

@@ -1,5 +1,5 @@
-import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line";
-import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line";
+import { renderWithIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderNode } from "unwritten:renderer:markdown/index";
 
@@ -21,7 +21,6 @@ export function renderMultilineArray(ctx: MarkdownRenderContext, children: ASTNo
     .reduce<string[]>((acc, child) => {
 
     const renderedNode = renderNode(ctx, child);
-    const renderedIndentation = renderIndentation(ctx);
 
     if(renderedNode === ""){
       return acc;
@@ -37,16 +36,15 @@ export function renderMultilineArray(ctx: MarkdownRenderContext, children: ASTNo
 
     // Remove empty line if previously rendered node ends with an empty line and the current node starts with an empty line
     const renderedNodeWithoutDoubleEmptyLines = acc.at(-1)?.endsWith(renderedNewLine + renderedEmptyLine) &&
-      renderedNode.startsWith(renderedEmptyLine + renderedNewLine)
+      startsWithEmptyLine(ctx, renderedNode)
       ? renderedNode.slice((renderedEmptyLine + renderedNewLine).length)
       : renderedNode;
 
     // Render indentation for all children except empty lines
     const renderedNodeWithIndentation =
-      renderedNodeWithoutDoubleEmptyLines.startsWith(renderedEmptyLine + renderedNewLine) ||
-      renderedNodeWithoutDoubleEmptyLines.startsWith(renderedIndentation)
+      startsWithEmptyLine(ctx, renderedNodeWithoutDoubleEmptyLines)
         ? renderedNodeWithoutDoubleEmptyLines
-        : `${renderedIndentation}${renderedNodeWithoutDoubleEmptyLines}`;
+        : renderWithIndentation(ctx, renderedNodeWithoutDoubleEmptyLines);
 
     acc.push(renderedNodeWithIndentation);
 

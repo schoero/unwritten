@@ -7,7 +7,7 @@ import {
   isParagraphNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer";
-import { renderIndentation } from "unwritten:renderer:utils/indentation";
+import { renderWithIndentation } from "unwritten:renderer:utils/indentation";
 
 import { renderNode } from "../index";
 
@@ -55,12 +55,12 @@ function renderListItems(ctx: HTMLRenderContext, items: ASTNode[]): string[] {
 }
 
 function renderListStart(ctx: HTMLRenderContext): string {
-  const renderedListStart = `${renderIndentation(ctx)}<ul>`;
+  const renderedListStart = renderWithIndentation(ctx, "<ul>");
   return renderedListStart;
 }
 
 function renderListItemStart(ctx: HTMLRenderContext): string {
-  const renderedListStart = `${renderIndentation(ctx)}<li>`;
+  const renderedListStart = renderWithIndentation(ctx, "<li>");
   return renderedListStart;
 }
 
@@ -81,7 +81,7 @@ function renderListItem(ctx: HTMLRenderContext, item: ASTNode): string {
         return "";
       }
 
-      return `${renderIndentation(ctx)}${renderedArrayItems}`;
+      return renderWithIndentation(ctx, renderedArrayItems);
 
     }, item);
 
@@ -128,16 +128,16 @@ function renderListItem(ctx: HTMLRenderContext, item: ASTNode): string {
 
   return renderedItem === ""
     ? renderedItem
-    : `${renderIndentation(ctx)}<li>${renderedItem}</li>`;
+    : renderWithIndentation(ctx, `<li>${renderedItem}</li>`);
 
 }
 
 function renderListEnd(ctx: HTMLRenderContext): string {
-  return `${renderIndentation(ctx)}</ul>`;
+  return renderWithIndentation(ctx, "</ul>");
 }
 
 function renderListItemEnd(ctx: HTMLRenderContext): string {
-  return `${renderIndentation(ctx)}</li>`;
+  return renderWithIndentation(ctx, "</li>");
 }
 
 function flattenNestedArrayItems(items: ASTNode[]): ASTNode[] {

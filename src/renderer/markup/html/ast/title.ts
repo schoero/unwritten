@@ -1,6 +1,6 @@
 import { getAnchorId, hasAnchor, unregisterAnchor } from "unwritten:renderer/markup/registry/registry";
 import { withNesting } from "unwritten:renderer/markup/utils/context";
-import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderNode } from "unwritten:renderer:html/index";
 
@@ -10,7 +10,6 @@ import type { TitleNode } from "unwritten:renderer:markup/types-definitions/node
 
 export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): string {
 
-  const renderedIndentation = renderIndentation(ctx);
   const title = renderNode(ctx, titleNode.title);
 
   const id = hasAnchor(titleNode)
@@ -19,8 +18,7 @@ export function renderTitleNode(ctx: HTMLRenderContext, titleNode: TitleNode): s
 
   const idAttribute = id ? ` id="${id}"` : "";
 
-  const renderedTitle = `${renderedIndentation}<h${ctx.nesting}${idAttribute}>${title}</h${ctx.nesting}>`;
-
+  const renderedTitle = renderWithIndentation(ctx, `<h${ctx.nesting}${idAttribute}>${title}</h${ctx.nesting}>`);
   const renderedChildren = withNesting(ctx, ctx => titleNode.children.map(child => renderNode(ctx, child)));
 
   if(renderedChildren.every(renderedChild => renderedChild === "")){

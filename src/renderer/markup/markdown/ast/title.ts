@@ -3,7 +3,7 @@ import { renderNode } from "unwritten:renderer/markup/markdown/index";
 import { hasAnchor, unregisterAnchor } from "unwritten:renderer/markup/registry/registry";
 import { withNesting } from "unwritten:renderer/markup/utils/context";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
+import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { TitleNode } from "unwritten:renderer:markup/types-definitions/nodes";
@@ -21,7 +21,7 @@ export function renderTitleNode(ctx: MarkdownRenderContext, titleNode: TitleNode
     return "";
   }
 
-  const childrenBeginsWithEmptyLine = renderedChildren.startsWith(renderedEmptyLine + renderedNewLine);
+  const childrenBeginsWithEmptyLine = startsWithEmptyLine(ctx, renderedChildren);
   const trailingEmptyLine = childrenBeginsWithEmptyLine ? "" : renderedEmptyLine;
 
   return [
