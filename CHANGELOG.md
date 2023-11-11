@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.2.5
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.2.3...v0.2.5)
+
+### Fixes
+
+- Render class name instead of `class` ([428d443](https://github.com/schoero/unwritten/commit/428d443))
+- Rendering violation in user provided markdown ([6d562c0](https://github.com/schoero/unwritten/commit/6d562c0))
+
+### Refactors
+
+- Update logo ([9529487](https://github.com/schoero/unwritten/commit/9529487))
+- Update logo ([f076b20](https://github.com/schoero/unwritten/commit/f076b20))
+
+### Chore
+
+- Remove unused types ([5a78055](https://github.com/schoero/unwritten/commit/5a78055))
+- **release:** V0.2.4 ([3b4e32a](https://github.com/schoero/unwritten/commit/3b4e32a))
+
+### Styles
+
+- Code cleanup ([f0d7b8a](https://github.com/schoero/unwritten/commit/f0d7b8a))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.2.4
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.2.2...v0.2.4)
