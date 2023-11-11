@@ -15,7 +15,7 @@ import {
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file";
 import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes";
 import { capitalize } from "unwritten:renderer/markup/utils/translations";
-import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor";
 import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold";
@@ -230,9 +230,9 @@ function renderArray(ctx: MarkdownRenderContext, node: ASTNode[]): string {
 function renderString(ctx: MarkdownRenderContext, node: string): string {
 
   const renderedNewLine = renderNewLine(ctx);
-  const renderedIndentation = renderIndentation(ctx);
+  const renderedEmptyLine = renderEmptyLine(ctx);
 
-  // Escape markdown before splitting to allow catching code fences
+  // escape markdown before splitting to allow catching code fences
   const escapedMarkdown = escapeMarkdown(node);
   const escapedLines = escapedMarkdown.split("\n");
 
@@ -240,17 +240,50 @@ function renderString(ctx: MarkdownRenderContext, node: string): string {
     return escapedLines[0];
   }
 
-  // Indent all lines except the first one
-  const indentedLines = escapedLines
-    .filter((node, index, arr) =>
-      // Filter multiple empty lines
-      !(node === "" && arr[index - 1] === ""))
-    .map((line, index) =>
-      index === 0
-        ? line
-        : `${renderedIndentation}${line}`);
+  // correct user provided markdown
+  return escapedLines.reduce<{ insideCodeFence: boolean; lines: string[]; }>((acc, line, index, arr) => {
 
-  return indentedLines.join(renderedNewLine);
+    const previousLine = arr[index - 1] as string | undefined;
+    const nextLine = arr[index + 1] as string | undefined;
+
+    const isCodeFence = line.startsWith("```");
+    const previousLineIsEmptyLine = previousLine?.trim() === "";
+    const nextLineIsEmptyLine = nextLine?.trim() === "";
+
+    // ensure code fences are surrounded by empty lines
+    if(isCodeFence && !acc.insideCodeFence && !previousLineIsEmptyLine){
+      acc.lines.push(renderedEmptyLine);
+    }
+
+    // filter out multiple empty lines
+    if(line.trim() === "" && previousLineIsEmptyLine){
+      return acc;
+    }
+
+    if(!acc.insideCodeFence && line.trim() === ""){
+      // replace empty lines with proper empty lines outside of code fences
+      acc.lines.push(renderedEmptyLine);
+    } else if(acc.lines.length === 0){
+      // don't indent the first line because it will get indented by the parent node
+      acc.lines.push(line);
+    } else {
+      acc.lines.push(renderWithIndentation(ctx, line));
+    }
+
+    // ensure code fences are surrounded by empty lines
+    if(isCodeFence && acc.insideCodeFence && !nextLineIsEmptyLine){
+      acc.lines.push(renderedEmptyLine);
+    }
+
+    if(isCodeFence){
+      acc.insideCodeFence = !acc.insideCodeFence;
+    }
+
+    return acc;
+
+  }, { insideCodeFence: false, lines: [] as string[] })
+    .lines
+    .join(renderedNewLine);
 
 }
 

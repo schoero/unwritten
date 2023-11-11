@@ -4,8 +4,7 @@ import type { RenderContext } from "unwritten:type-definitions/context";
 import type { Renderer } from "unwritten:type-definitions/renderer";
 
 
-//-- Markup
-
+// Markup
 export interface MarkupRenderer extends Renderer {
   fileExtension: ".html" | ".md";
   initializeContext(ctx: MarkupRenderContexts): void;
@@ -28,8 +27,7 @@ export type MarkupRenderers = HTMLRenderer | MarkdownRenderer;
 export type MarkupRenderContexts = HTMLRenderContext | MarkdownRenderContext;
 
 
-//-- HTML
-
+// HTML
 export interface HTMLRenderer extends MarkupRenderer {
   fileExtension: ".html";
   name: BuiltInRenderers.HTML;
@@ -39,8 +37,7 @@ export interface HTMLRenderContext extends MarkupRenderContext<HTMLRenderer> {
 }
 
 
-//-- Markdown
-
+// Markdown
 export interface MarkdownRenderer extends MarkupRenderer {
   fileExtension: ".md";
   name: BuiltInRenderers.Markdown;

@@ -1,6 +1,3 @@
-//-- Categories
-
-
 export enum RenderCategories {
   Class = "class",
   Classes = "classes",

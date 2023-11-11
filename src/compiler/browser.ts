@@ -43,8 +43,7 @@ export function compile(ctx: DefaultContext, code: string, tsconfig?: CompilerOp
   const checker = program.getTypeChecker();
 
 
-  //-- Report any compiler messages
-
+  // Report any compiler messages
   void reportCompilerDiagnostics(ctx, program.getSemanticDiagnostics());
 
   return { checker, program };

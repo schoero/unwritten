@@ -1,6 +1,6 @@
 import { withIndentation } from "unwritten:renderer/markup/utils/context";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
-import { renderIndentation } from "unwritten:renderer/utils/indentation";
+import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderNode } from "unwritten:renderer:html/index";
 
@@ -14,7 +14,6 @@ export function renderSectionNode(ctx: HTMLRenderContext, sectionNode: SectionNo
   const tag = getTag(ctx, sectionNode.type);
   const classAttribute = sectionNode.type ? ` class="${sectionNode.type}"` : "";
 
-  const renderedIndentation = renderIndentation(ctx);
   const renderedNewLine = renderNewLine(ctx);
   const renderedOpeningTag = `<${tag}${classAttribute}>`;
   const renderedTitle = withIndentation(ctx, ctx => renderNode(ctx, sectionNode.title));
@@ -24,10 +23,10 @@ export function renderSectionNode(ctx: HTMLRenderContext, sectionNode: SectionNo
   return renderedChildren === "" && renderedTitle === ""
     ? ""
     : [
-      `${renderedIndentation}${renderedOpeningTag}`,
+      renderWithIndentation(ctx, renderedOpeningTag),
       renderedTitle,
       renderedChildren,
-      `${renderedIndentation}${renderedClosingTag}`
+      renderWithIndentation(ctx, renderedClosingTag)
     ]
       .filter(renderedNode => !!renderedNode)
       .join(renderedNewLine);
