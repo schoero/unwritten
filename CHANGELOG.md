@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.2.7
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.2.6...v0.2.7)
+
+### Fixes
+
+- Node import in browser ([c4ad480](https://github.com/schoero/unwritten/commit/c4ad480))
+
+### Chore
+
+- Auto import without file extensions ([2107256](https://github.com/schoero/unwritten/commit/2107256))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.2.6
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.2.5...v0.2.6)
