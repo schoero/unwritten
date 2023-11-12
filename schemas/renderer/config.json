@@ -199,6 +199,10 @@
           "description": "Defines whether the renderer should render links to the source code.",
           "type": "boolean"
         },
+        "renderTableOfContents": {
+          "description": "Defines whether the renderer should render the table of contents.",
+          "type": "boolean"
+        },
         "sidebar": {
           "description": "Renders the table of contents in an aside element and the documentation in a main element.",
           "type": "boolean"
@@ -667,6 +671,10 @@
         },
         "renderSourceCodeLinks": {
           "description": "Defines whether the renderer should render links to the source code.",
+          "type": "boolean"
+        },
+        "renderTableOfContents": {
+          "description": "Defines whether the renderer should render the table of contents.",
           "type": "boolean"
         },
         "sectionSeparator": {
