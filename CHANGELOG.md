@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.2.6
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.2.5...v0.2.6)
+
+### Features
+
+- Make rendering of table of contents optional ([ca33ef2](https://github.com/schoero/unwritten/commit/ca33ef2))
+
+### Fixes
+
+- Browser import ([c3dd914](https://github.com/schoero/unwritten/commit/c3dd914))
+
+### ❤️ Contributors
+
+- Roger Schönbächler
+
 ## v0.2.5
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.2.3...v0.2.5)

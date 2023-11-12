@@ -12,6 +12,7 @@ import {
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file";
 import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes";
 import { capitalize } from "unwritten:renderer/markup/utils/translations";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderAnchorNode } from "unwritten:renderer:html/ast/anchor";
 import { renderBoldNode } from "unwritten:renderer:html/ast/bold";
@@ -115,6 +116,8 @@ const htmlRenderer: HTMLRenderer = {
 
     htmlRenderer.initializeContext(ctx);
 
+    const renderConfig = getRenderConfig(ctx);
+
     return sourceFileEntities.reduce<(SourceFileEntity & { documentation: ASTNode[]; tableOfContents: ASTNode; title: string; titleAnchor: AnchorTarget; })[]>((convertedSourceFileEntities, sourceFileEntity) => {
 
       const destination = getDestinationFilePath(ctx, sourceFileEntities, sourceFileEntity);
@@ -143,11 +146,15 @@ const htmlRenderer: HTMLRenderer = {
 
       setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
+      const tableOfContents = renderConfig.renderTableOfContents &&
+        createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents);
+      const documentation = createSectionNode("documentation", ...convertedSourceFileEntity.documentation);
+
       const ast = createTitleNode(
         convertedSourceFileEntity.title,
         convertedSourceFileEntity.titleAnchor,
-        createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents),
-        createSectionNode("documentation", ...convertedSourceFileEntity.documentation)
+        tableOfContents,
+        documentation
       );
 
       const renderedNewLine = renderNewLine(ctx);

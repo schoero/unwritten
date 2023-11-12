@@ -15,6 +15,7 @@ import {
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file";
 import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes";
 import { capitalize } from "unwritten:renderer/markup/utils/translations";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor";
@@ -118,6 +119,8 @@ const markdownRenderer: MarkdownRenderer = {
 
     const { getFileName } = ctx.dependencies.path;
 
+    const renderConfig = getRenderConfig(ctx);
+
     const renderedNewLine = renderNewLine(ctx);
     const renderedEmptyLine = renderEmptyLine(ctx);
 
@@ -151,11 +154,15 @@ const markdownRenderer: MarkdownRenderer = {
 
       setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
+      const tableOfContents = renderConfig.renderTableOfContents &&
+        createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents);
+      const documentation = createSectionNode("documentation", ...convertedSourceFileEntity.documentation);
+
       const ast = createTitleNode(
         convertedSourceFileEntity.title,
         convertedSourceFileEntity.titleAnchor,
-        createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents),
-        createSectionNode("documentation", ...convertedSourceFileEntity.documentation)
+        tableOfContents,
+        documentation
       );
 
       const renderedContent = renderNode(ctx, ast);

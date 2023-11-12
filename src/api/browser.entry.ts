@@ -30,17 +30,14 @@ export async function unwritten(code: string, options?: BrowserAPIOptions): Prom
     ts
   });
 
-
   // Compile
   const { checker, program } = compile(defaultContext, code, options?.tsconfig);
-
 
   // Parse
   const config = await createConfig(defaultContext, options?.config);
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
   const entryFileSymbol = getEntryFileSymbolsFromProgram(interpreterContext, program);
   const parsedSymbols = interpret(interpreterContext, entryFileSymbol);
-
 
   // Render
   const renderer = await getRenderer(options?.renderer);

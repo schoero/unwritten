@@ -1,5 +1,5 @@
 {
-  "version": "0.2.5",
+  "version": "0.2.6",
   "type": "module",
   "name": "unwritten",
   "description": "unwritten is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
@@ -13,8 +13,8 @@
   "bugs": {
     "url": "https://github.com/schoero/unwritten/issues"
   },
-  "main": "./lib/api/node.js",
-  "browser": "./lib/api/browser.js",
+  "main": "./lib/api/node.entry.js",
+  "browser": "./lib/api/browser.entry.js",
   "bin": "./lib/bin/index.js",
   "scripts": {
     "build": "vite build",
