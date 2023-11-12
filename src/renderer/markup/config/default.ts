@@ -32,6 +32,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   renderParentNames: "documentation",
   renderPrivateMembers: false,
   renderSourceCodeLinks: true,
+  renderTableOfContents: true,
   stringLiteralEncapsulation: ["\"", "\""],
   tagEncapsulation: ["`", "`"],
   translations: {
