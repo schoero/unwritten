@@ -1,4 +1,5 @@
 import shebang from "rollup-plugin-preserve-shebang";
+import dts from "vite-plugin-dts";
 import noBundlePlugin from "vite-plugin-no-bundle";
 
 import { config, defineConfig } from "@schoero/vite-config";
@@ -9,7 +10,7 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     lib: {
-      entry: "/src/bin/index.ts",
+      entry: ["/src/bin/index.ts", "/src/api/browser.entry.ts"],
       formats: ["es"]
     },
     minify: false,
@@ -25,6 +26,11 @@ export default defineConfig({
   plugins: [
     ...config.plugins ?? [],
     noBundlePlugin(),
-    shebang()
+    shebang(),
+    dts({
+      entryRoot: "./src",
+      exclude: ["src/**/*.test.ts", "test/**"],
+      pathsToAliases: true
+    })
   ]
 });
