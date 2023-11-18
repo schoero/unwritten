@@ -20,8 +20,7 @@ export type TranslationWithoutSuffixes<T extends object> = RemoveTranslationsSuf
 
 // DeepPartialByKey
 export type DeepPartial<Type> = DeepPartialByKey<Type>;
-export type Partial<Type> = DeepPartialByKey<Type, PropertyKey, false>;
-export type PartialByKey<Type, SelectedKeys extends PropertyKey> = DeepPartialByKey<Type, SelectedKeys, false>;
+export type PartialByKey<Type extends object, SelectedKeys extends keyof Type> = DeepPartialByKey<Type, SelectedKeys, false>;
 
 export type DeepPartialByKey<Type, SelectedKeys extends PropertyKey = PropertyKey, Deep extends boolean = true> =
   Type extends Function
@@ -54,7 +53,7 @@ type DeepPartialByKeyObject<Type, SelectedKeys extends PropertyKey, Deep extends
 // DeepRequiredByKey
 export type DeepRequired<Type> = DeepRequiredByKey<Type>;
 export type Required<Type> = DeepRequiredByKey<Type, PropertyKey, false>;
-export type RequiredByKey<Type, SelectedKeys extends PropertyKey> = DeepRequiredByKey<Type, SelectedKeys, false>;
+export type RequiredByKey<Type extends object, SelectedKeys extends keyof Type> = DeepRequiredByKey<Type, SelectedKeys, false>;
 
 export type DeepRequiredByKey<Type, SelectedKeys extends PropertyKey = PropertyKey, Deep extends boolean = true> =
   Type extends Function

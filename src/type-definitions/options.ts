@@ -28,8 +28,6 @@ export interface BrowserAPIOptions extends Options {
    * You can also provide a path to a custom renderer that implements the Renderer interface.
    */
   renderer?: BuiltInRenderers | Renderer;
-  /** tsconfig */
-  tsconfig?: ts.CompilerOptions;
 }
 
 export interface APIOptions extends Options {

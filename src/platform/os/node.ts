@@ -1,6 +1,6 @@
 import { EOL as nodeEOL, homedir } from "node:os";
 
-import type { OS } from "unwritten:type-definitions/os";
+import type { OS } from "unwritten:type-definitions/platform";
 
 
 const os: OS = {

@@ -1,6 +1,6 @@
 import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
 import type { LinkRegistry, SourceFile } from "unwritten:renderer/markup/registry/registry";
-import type { RenderContext } from "unwritten:type-definitions/context";
+import type { RenderBrowserContext, RenderNodeContext } from "unwritten:type-definitions/context";
 import type { Renderer } from "unwritten:type-definitions/renderer";
 
 
@@ -11,7 +11,7 @@ export interface MarkupRenderer extends Renderer {
   name: BuiltInRenderers.HTML | BuiltInRenderers.Markdown;
 }
 
-export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> extends RenderContext<CustomMarkupRenderer> {
+export interface MarkupRenderBaseContext<CustomMarkupRenderer extends MarkupRenderer> {
   currentFile: SourceFile;
   set indentation(value: number);
   get indentation(): number;
@@ -23,6 +23,19 @@ export interface MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer
   _nesting?: number;
 }
 
+export interface MarkupRenderNodeContext<CustomMarkupRenderer extends MarkupRenderer> extends
+  MarkupRenderBaseContext<CustomMarkupRenderer>,
+  RenderNodeContext<CustomMarkupRenderer> {}
+
+export interface MarkupRenderBrowserContext<CustomMarkupRenderer extends MarkupRenderer> extends
+  MarkupRenderBaseContext<CustomMarkupRenderer>,
+  RenderBrowserContext<CustomMarkupRenderer> {}
+
+export type MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> =
+  | MarkupRenderBrowserContext<CustomMarkupRenderer>
+  | MarkupRenderNodeContext<CustomMarkupRenderer>;
+
+
 export type MarkupRenderers = HTMLRenderer | MarkdownRenderer;
 export type MarkupRenderContexts = HTMLRenderContext | MarkdownRenderContext;
 
@@ -33,8 +46,9 @@ export interface HTMLRenderer extends MarkupRenderer {
   name: BuiltInRenderers.HTML;
 }
 
-export interface HTMLRenderContext extends MarkupRenderContext<HTMLRenderer> {
-}
+export interface HTMLRenderNodeContext extends MarkupRenderNodeContext<HTMLRenderer> {}
+export interface HTMLRenderBrowserContext extends MarkupRenderBrowserContext<HTMLRenderer> {}
+export type HTMLRenderContext = HTMLRenderBrowserContext | HTMLRenderNodeContext;
 
 
 // Markdown
@@ -43,5 +57,6 @@ export interface MarkdownRenderer extends MarkupRenderer {
   name: BuiltInRenderers.Markdown;
 }
 
-export interface MarkdownRenderContext extends MarkupRenderContext<MarkdownRenderer> {
-}
+export interface MarkdownNodeRenderContext extends MarkupRenderNodeContext<MarkdownRenderer> {}
+export interface MarkdownBrowserRenderContext extends MarkupRenderBrowserContext<MarkdownRenderer> {}
+export type MarkdownRenderContext = MarkdownBrowserRenderContext | MarkdownNodeRenderContext;

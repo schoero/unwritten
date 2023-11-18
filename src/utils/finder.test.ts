@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
-import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs";
+import { clearVirtualFS } from "unwritten:tests:utils/virtual-fs";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { findFile } from "unwritten:utils/finder";

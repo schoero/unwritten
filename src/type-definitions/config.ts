@@ -4,12 +4,10 @@ import type { TypeKind } from "unwritten:interpreter/enums/type";
 import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config";
 import type { HTMLRenderConfig, MarkdownRenderConfig } from "unwritten:renderer:markup/types-definitions/config";
 
-import type { Complete } from "./utils";
+import type { Complete, PartialByKey } from "./utils";
 
 
-export interface Config {
-  /** Extend another config */
-  extends?: string;
+export interface BaseConfig {
   /** Links to external documentation of native types. */
   externalTypes?: ExternalTypes;
   /** Interpreter configuration. */
@@ -20,12 +18,18 @@ export interface Config {
   renderConfig?: RenderConfig;
 }
 
-export interface CompleteConfig extends Config {
-  externalTypes: ExternalTypes;
-  interpreterConfig: Complete<InterpreterConfig>;
-  outputDir: string;
-  renderConfig: CompleteRenderConfig;
+export interface BrowserConfig extends BaseConfig {}
+
+export interface NodeConfig extends BaseConfig {
+  /** Extend another config */
+  extends?: string;
 }
+
+export type Config = BrowserConfig | NodeConfig;
+
+export type CompleteNodeConfig = PartialByKey<Required<NodeConfig>, "extends">;
+export type CompleteBrowserConfig = Required<BrowserConfig>;
+export type CompleteConfig = Required<BaseConfig>;
 
 export interface CompleteRenderConfig {
   [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
@@ -42,7 +46,7 @@ export interface RenderConfig {
   };
 }
 
-export interface ConfigForSchema extends Config {
+export interface ConfigForSchema extends NodeConfig {
   $schema?: string;
   interpreterConfig?: InterpreterConfig;
   renderConfig?: {

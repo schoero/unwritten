@@ -1,8 +1,7 @@
+import { getDefaultConfig } from "unwritten:config/config";
 import { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node";
 import { absolute, getDirectory, join } from "unwritten:platform/path/node";
 import { cwd } from "unwritten:platform/process/node";
-
-import { getDefaultConfig } from "./config";
 
 import type { ConfigForSchema } from "unwritten:type-definitions/config";
 import type { Options } from "unwritten:type-definitions/options";

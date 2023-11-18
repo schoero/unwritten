@@ -1,7 +1,7 @@
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
-import type { FileExtension, FilePath } from "unwritten:type-definitions/file-system";
 
 import type { RenderContext } from "./context";
+import type { FileExtension, FilePath } from "./platform";
 
 
 export interface RenderOutput {

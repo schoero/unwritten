@@ -3,7 +3,7 @@ import { beforeAll, expect, it, vitest } from "vitest";
 
 import { createConfig } from "unwritten:config/config";
 import { mkdirSync, readFileSync, writeFileSync } from "unwritten:platform/file-system/browser";
-import { } from "unwritten:platform/file-system/virtual-fs";
+import { } from "unwritten:tests:utils/virtual-fs";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 

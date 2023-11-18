@@ -1,7 +1,6 @@
 import ts from "typescript";
 
 import { getDefaultConfig } from "unwritten:config/config";
-import fs from "unwritten:platform/file-system/browser";
 import { logger } from "unwritten:platform/logger/node";
 import os from "unwritten:platform/os/node";
 import path from "unwritten:platform/path/browser";
@@ -50,7 +49,6 @@ export function createRenderContext(rendererName?: BuiltInRenderers.JSON): JSONR
 export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRenderers.HTML): RenderContext {
 
   const defaultContext = createDefaultContext({
-    fs,
     logger,
     os,
     path,

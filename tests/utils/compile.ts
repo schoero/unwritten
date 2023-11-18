@@ -3,12 +3,12 @@ import ts, { ModuleResolutionKind } from "typescript";
 import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler:shared";
 import { getDefaultConfig } from "unwritten:config/config";
 import { createContext } from "unwritten:interpreter/utils/context";
-import * as fs from "unwritten:platform/file-system/browser";
 import { readFileSync as readFileSyncOriginal } from "unwritten:platform/file-system/node";
 import { logger } from "unwritten:platform/logger/node";
 import os from "unwritten:platform/os/node";
 import path from "unwritten:platform/path/browser";
 import process from "unwritten:platform/process/browser";
+import * as fs from "unwritten:tests:utils/virtual-fs";
 import { createContext as createDefaultContext } from "unwritten:utils/context";
 import { override } from "unwritten:utils/override";
 import { assert } from "unwritten:utils:general";
@@ -20,7 +20,7 @@ type CompilerInput = {
   [filePath: string]: string;
 };
 
-export function compile(code: CompilerInput | string, compilerOptions?: ts.CompilerOptions, config?: Config) {
+export function compile(code: CompilerInput | string, tsconfig?: ts.CompilerOptions, config?: Config) {
 
   const defaultContext = createDefaultContext({
     fs,
@@ -49,12 +49,19 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
     return acc;
   }, {});
 
+
+  const compilerOptions = {
+    ...getDefaultCompilerOptions(defaultContext),
+    moduleResolution: ModuleResolutionKind.Bundler,
+    target: ts.ScriptTarget.ESNext
+  };
+
   const compilerHost: ts.CompilerHost = {
     directoryExists: dirPath => dirPath === "/",
     fileExists: existsSync,
     getCanonicalFileName: fileName => fileName,
     getCurrentDirectory: () => "/",
-    getDefaultLibFileName: () => "node_modules/typescript/lib/lib.esnext.d.ts",
+    getDefaultLibFileName: () => ts.getDefaultLibFilePath(compilerOptions),
     getDirectories: () => [],
     getNewLine: () => "\n",
     getSourceFile: filePath =>
@@ -78,11 +85,7 @@ export function compile(code: CompilerInput | string, compilerOptions?: ts.Compi
 
   const program = ts.createProgram({
     host: compilerHost,
-    options: compilerOptions ?? {
-      ...getDefaultCompilerOptions(defaultContext),
-      moduleResolution: ModuleResolutionKind.Bundler,
-      target: ts.ScriptTarget.ESNext
-    },
+    options: compilerOptions,
     rootNames: Object.keys(sourceFiles)
   });
 

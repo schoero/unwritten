@@ -8,7 +8,7 @@ import {
   rmSync,
   writeFileSync
 } from "unwritten:platform/file-system/node";
-import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs";
+import { clearVirtualFS } from "unwritten:tests:utils/virtual-fs.js";
 
 
 describe("virtual fs", () => {

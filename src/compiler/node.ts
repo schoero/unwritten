@@ -3,10 +3,10 @@ import { findFile } from "unwritten:utils:finder";
 
 import type { CompilerOptions } from "typescript";
 
-import type { DefaultContext } from "unwritten:type-definitions/context";
+import type { DefaultNodeContext } from "unwritten:type-definitions/context";
 
 
-export function compile(ctx: DefaultContext, entryFilePaths: string[], tsConfigOrFilePath?: CompilerOptions | string) {
+export function compile(ctx: DefaultNodeContext, entryFilePaths: string[], tsConfigOrFilePath?: CompilerOptions | string) {
 
   const ts = ctx.dependencies.ts;
   const logger = ctx.dependencies.logger;
@@ -42,13 +42,13 @@ export function compile(ctx: DefaultContext, entryFilePaths: string[], tsConfigO
 }
 
 
-function getCompilerHost(ctx: DefaultContext, compilerOptions: CompilerOptions) {
+function getCompilerHost(ctx: DefaultNodeContext, compilerOptions: CompilerOptions) {
   const ts = ctx.dependencies.ts;
   return ts.createCompilerHost(compilerOptions, true);
 }
 
 
-function getCompilerOptions(ctx: DefaultContext, entryFilePaths: string[], tsConfigOrFilePath?: CompilerOptions | string): CompilerOptions {
+function getCompilerOptions(ctx: DefaultNodeContext, entryFilePaths: string[], tsConfigOrFilePath?: CompilerOptions | string): CompilerOptions {
 
   const ts = ctx.dependencies.ts;
   const logger = ctx.dependencies.logger;
@@ -123,7 +123,7 @@ function getCompilerOptions(ctx: DefaultContext, entryFilePaths: string[], tsCon
 }
 
 
-function readConfigFile(ctx: DefaultContext, path: string): CompilerOptions | undefined {
+function readConfigFile(ctx: DefaultNodeContext, path: string): CompilerOptions | undefined {
 
   const ts = ctx.dependencies.ts;
   const logger = ctx.dependencies.logger;

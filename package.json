@@ -1,5 +1,5 @@
 {
-  "version": "0.2.7",
+  "version": "0.2.8-beta.5",
   "type": "module",
   "name": "unwritten",
   "description": "unwritten is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
@@ -13,12 +13,18 @@
   "bugs": {
     "url": "https://github.com/schoero/unwritten/issues"
   },
-  "main": "./lib/api/node.entry.js",
-  "browser": "./lib/api/browser.entry.js",
-  "bin": "./lib/bin/index.js",
+  "sideEffects": false,
+  "exports": {
+    ".": "./lib/browser/api/node.entry.js",
+    "./custom": "./lib/node/api/custom.entry.js",
+    "./node": "./lib/node/api/node.entry.js"
+  },
+  "bin": "./lib/node/bin/index.js",
   "scripts": {
-    "build": "vite build",
-    "build:dev": "vite build",
+    "build": "npm run build:browser && npm run build:node",
+    "build:browser": "vite build --config vite.config.browser.ts",
+    "build:dev": "npm run build:browser && npm run build:node",
+    "build:node": "vite build",
     "eslint": "eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml,.md ./",
     "eslint:ci": "npm run eslint -- --max-warnings 0",
     "eslint:fix": "npm run eslint -- --fix",
@@ -61,18 +67,19 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@schoero/changelog-config": "^0.0.2",
-    "@schoero/cspell-config": "^1.8.2",
+    "@schoero/changelog-config": "^0.0.3",
+    "@schoero/cspell-config": "^1.9.0",
     "@schoero/eslint-config": "^1.42.0",
     "@schoero/markdownlint-config": "^1.1.7",
     "@schoero/ts-config": "^0.3.7",
     "@schoero/vite-config": "^0.0.28",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^20.8.10",
+    "@types/node": "^20.9.1",
     "changelogen": "^0.5.5",
     "eslint-plugin-sort-exports": "^0.8.0",
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "ts-json-schema-generator": "^1.4.0",
+    "vite": "^5.0.0",
     "vite-plugin-dts": "^3.6.3",
     "vite-plugin-no-bundle": "^3.0.0",
     "vitest": "^0.34.6"

@@ -7,7 +7,7 @@ import {
   createUnresolvedEntity
 } from "unwritten:interpreter/ast/entities/index";
 import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position";
-import { isSymbolLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
+import { isSymbolLocked, isSymbolUnresolved, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
 import {
   createClassEntity,
   createEnumEntity,
@@ -68,6 +68,10 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Entity
 
   if(isSymbolLocked(ctx, resolvedSymbol)){
     return createCircularEntity(ctx, resolvedSymbol);
+  }
+
+  if(isSymbolUnresolved(ctx, resolvedSymbol)){
+    return createUnresolvedEntity(ctx, resolvedSymbol);
   }
 
   // Exportable symbols

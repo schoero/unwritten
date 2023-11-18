@@ -2,7 +2,7 @@ import { homeDirectory } from "unwritten:platform/os/browser";
 import sharedPath from "unwritten:platform/path/shared";
 import { cwd } from "unwritten:platform/process/browser";
 
-import type { Path } from "unwritten:type-definitions/path";
+import type { Path } from "unwritten:type-definitions/platform";
 
 
 const deps = { cwd, homeDirectory, isAbsolute: (path: string) => path.startsWith("/"), separator: "/" };

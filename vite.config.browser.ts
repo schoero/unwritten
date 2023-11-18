@@ -1,4 +1,3 @@
-import shebang from "rollup-plugin-preserve-shebang";
 import dts from "vite-plugin-dts";
 import noBundlePlugin from "vite-plugin-no-bundle";
 
@@ -12,13 +11,15 @@ export default defineConfig(<UserConfig>{
   build: {
     emptyOutDir: true,
     lib: {
-      entry: ["/src/bin/index.ts"],
+      entry: ["/src/api/browser.entry.ts"],
       formats: ["es"]
     },
     minify: false,
-    outDir: "lib/node",
+    outDir: "lib/browser",
     rollupOptions: {
       external: [
+        "minimatch",
+        "typescript",
         /node_modules/,
         /^node:.*/
       ]
@@ -28,11 +29,11 @@ export default defineConfig(<UserConfig>{
   plugins: [
     ...config.plugins ?? [],
     noBundlePlugin(),
-    shebang(),
     dts({
       entryRoot: "./src",
       exclude: ["src/**/*.test.ts", "test/**"],
-      pathsToAliases: true
+      pathsToAliases: true,
+      strictOutput: true
     })
   ]
 });

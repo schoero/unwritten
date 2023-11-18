@@ -1,7 +1,7 @@
 import { sep } from "node:path";
 import { cwd as nodeCWD } from "node:process";
 
-import type { Process } from "unwritten:type-definitions/process";
+import type { Process } from "unwritten:type-definitions/platform";
 
 
 const process: Process = {

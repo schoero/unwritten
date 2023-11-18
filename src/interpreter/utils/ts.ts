@@ -29,10 +29,14 @@ export function getEntryFileSymbolsFromProgram(ctx: InterpreterContext, program:
 
 }
 
-
 // Locker
 export function isSymbolLocked(ctx: InterpreterContext, symbol: Symbol) {
   return locker.isSymbolLocked(ctx, symbol);
+}
+
+
+export function isSymbolUnresolved(ctx: InterpreterContext, symbol: Symbol) {
+  return symbol.declarations === undefined || symbol.declarations.length === 0;
 }
 
 export function isTypeLocked(ctx: InterpreterContext, type: TSType) {

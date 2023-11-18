@@ -2,7 +2,7 @@ import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
 import { generateConfig } from "unwritten:config/generator.entry";
 import { existsSync } from "unwritten:platform/file-system/browser";
-import { clearVirtualFS } from "unwritten:platform/file-system/virtual-fs";
+import { clearVirtualFS } from "unwritten:tests:utils/virtual-fs";
 import { scope } from "unwritten:tests:utils/scope";
 
 
