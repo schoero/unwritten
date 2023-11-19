@@ -32,7 +32,8 @@ export default defineConfig(<UserConfig>{
     dts({
       entryRoot: "./src",
       exclude: ["src/**/*.test.ts", "test/**"],
-      pathsToAliases: true
+      pathsToAliases: true,
+      strictOutput: true
     })
   ]
 });
