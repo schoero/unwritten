@@ -72,9 +72,9 @@
     "@schoero/eslint-config": "^1.42.0",
     "@schoero/markdownlint-config": "^1.1.7",
     "@schoero/ts-config": "^0.3.7",
-    "@schoero/vite-config": "^0.0.28",
+    "@schoero/vite-config": "^0.0.29",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^20.9.1",
+    "@types/node": "^20.9.2",
     "changelogen": "^0.5.5",
     "eslint-plugin-sort-exports": "^0.8.0",
     "rollup-plugin-preserve-shebang": "^1.0.1",
@@ -82,7 +82,7 @@
     "vite": "^5.0.0",
     "vite-plugin-dts": "^3.6.3",
     "vite-plugin-no-bundle": "^3.0.0",
-    "vitest": "^0.34.6"
+    "vitest": "^1.0.0-beta.5"
   },
   "keywords": [
     "documentation",
