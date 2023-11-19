@@ -10,12 +10,16 @@ import jsonRenderer from "unwritten:renderer:json/index";
 import htmlRenderer, { isHTMLRenderContext } from "unwritten:renderer:markup/html/index";
 import markdownRenderer, { isMarkdownRenderContext } from "unwritten:renderer:markup/markdown/index";
 import { attachTestRegistry } from "unwritten:tests:utils/registry";
+import * as fs from "unwritten:tests:utils/virtual-fs";
 import { createContext as createDefaultContext } from "unwritten:utils/context";
 import { assert } from "unwritten:utils/general";
 import { override } from "unwritten:utils:override";
 
 import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer";
-import type { HTMLRenderContext, MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
+import type {
+  HTMLRenderNodeContext,
+  MarkdownRenderNodeContext
+} from "unwritten:renderer:markup/types-definitions/markup";
 import type { CompleteConfig } from "unwritten:type-definitions/config";
 import type { RenderContext } from "unwritten:type-definitions/context";
 
@@ -43,12 +47,13 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
 });
 
 
-export function createRenderContext(rendererName?: BuiltInRenderers.HTML): HTMLRenderContext;
-export function createRenderContext(rendererName?: BuiltInRenderers.Markdown): MarkdownRenderContext;
+export function createRenderContext(rendererName?: BuiltInRenderers.HTML): HTMLRenderNodeContext;
+export function createRenderContext(rendererName?: BuiltInRenderers.Markdown): MarkdownRenderNodeContext;
 export function createRenderContext(rendererName?: BuiltInRenderers.JSON): JSONRenderContext;
 export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRenderers.HTML): RenderContext {
 
   const defaultContext = createDefaultContext({
+    fs,
     logger,
     os,
     path,
@@ -56,28 +61,47 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
     ts
   });
 
-  const ctx: RenderContext = {
-    ...defaultContext,
-    config: JSON.parse(JSON.stringify(testConfig)),
-    renderer: htmlRenderer
-  };
+  switch (rendererName){
+    case BuiltInRenderers.HTML: {
 
-  if(rendererName === BuiltInRenderers.HTML){
-    ctx.renderer = htmlRenderer;
-    assert(isHTMLRenderContext(ctx));
-    ctx.renderer.initializeContext(ctx);
-    void attachTestRegistry(ctx);
-    ctx.currentFile = ctx.links.at(0)!;
-  } else if(rendererName === BuiltInRenderers.Markdown){
-    ctx.renderer = markdownRenderer;
-    assert(isMarkdownRenderContext(ctx));
-    ctx.renderer.initializeContext(ctx);
-    void attachTestRegistry(ctx);
-    ctx.currentFile = ctx.links.at(0)!;
-  } else {
-    ctx.renderer = jsonRenderer;
+      const ctx = {
+        ...defaultContext,
+        config: JSON.parse(JSON.stringify(testConfig)),
+        renderer: htmlRenderer
+      } satisfies RenderContext;
+
+      assert(isHTMLRenderContext(ctx));
+      ctx.renderer.initializeContext(ctx);
+      void attachTestRegistry(ctx);
+      ctx.currentFile = ctx.links.at(0)!;
+
+      return ctx;
+    }
+    case BuiltInRenderers.Markdown: {
+
+      const ctx = {
+        ...defaultContext,
+        config: JSON.parse(JSON.stringify(testConfig)),
+        renderer: markdownRenderer
+      } satisfies RenderContext;
+
+      assert(isMarkdownRenderContext(ctx));
+      ctx.renderer.initializeContext(ctx);
+      void attachTestRegistry(ctx);
+      ctx.currentFile = ctx.links.at(0)!;
+
+      return ctx;
+    }
+    case BuiltInRenderers.JSON: {
+
+      const ctx = {
+        ...defaultContext,
+        config: JSON.parse(JSON.stringify(testConfig)),
+        renderer: jsonRenderer
+      } satisfies RenderContext;
+
+      return ctx;
+    }
   }
-
-  return ctx;
 
 }

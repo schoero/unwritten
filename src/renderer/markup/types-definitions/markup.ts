@@ -57,6 +57,6 @@ export interface MarkdownRenderer extends MarkupRenderer {
   name: BuiltInRenderers.Markdown;
 }
 
-export interface MarkdownNodeRenderContext extends MarkupRenderNodeContext<MarkdownRenderer> {}
+export interface MarkdownRenderNodeContext extends MarkupRenderNodeContext<MarkdownRenderer> {}
 export interface MarkdownBrowserRenderContext extends MarkupRenderBrowserContext<MarkdownRenderer> {}
-export type MarkdownRenderContext = MarkdownBrowserRenderContext | MarkdownNodeRenderContext;
+export type MarkdownRenderContext = MarkdownBrowserRenderContext | MarkdownRenderNodeContext;
