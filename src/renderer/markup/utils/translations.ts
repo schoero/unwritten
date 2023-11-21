@@ -1,9 +1,6 @@
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { HTMLRenderConfig, MarkdownRenderConfig, MarkupRenderConfig } from "../types-definitions/config";
-import type { HTMLRenderContext, MarkdownRenderContext, MarkupRenderContexts } from "../types-definitions/markup";
-
-import type { Complete, TranslationWithoutSuffixes } from "unwritten:type-definitions/utils";
+import type { MarkupRenderContext } from "../types-definitions/markup";
 
 
 interface TranslationOptions {
@@ -12,8 +9,20 @@ interface TranslationOptions {
   count?: number;
 }
 
-export type TranslationKeys<CustomRenderContext extends MarkupRenderContexts> =
-  keyof TranslationWithoutSuffixes<CustomRenderContext["config"]["renderConfig"][CustomRenderContext["renderer"]["name"]]["translations"]>;
+type RenderConfig<CustomRenderContext extends MarkupRenderContext> =
+  CustomRenderContext["config"]["renderConfig"][RendererName<CustomRenderContext>];
+
+type RendererName<CustomRenderContext extends MarkupRenderContext> = CustomRenderContext["renderer"]["name"];
+
+type RemoveTranslationsSuffix<Keys extends string, S extends "_many" | "_one"> =
+  Keys extends `${infer KeyWithoutSuffix}${S}` ? KeyWithoutSuffix : Keys;
+
+export type TranslationKeys =
+  TranslationWithoutSuffixes<keyof RenderConfig<MarkupRenderContext>["translations"]>;
+
+export type TranslationWithoutSuffixes<Keys extends string> =
+  RemoveTranslationsSuffix<RemoveTranslationsSuffix<Keys, "_one">, "_many">;
+
 
 export function capitalize(text: string): string {
   return text.length <= 0
@@ -21,7 +30,7 @@ export function capitalize(text: string): string {
     : text[0].toUpperCase() + text.slice(1);
 }
 
-function translate(ctx: MarkupRenderContexts, key: TranslationKeys<MarkupRenderContexts>, options?: TranslationOptions) {
+function translate(ctx: MarkupRenderContext, key: TranslationKeys, options?: TranslationOptions) {
 
   const translations = getTranslations(ctx);
   let translationKey = getTranslationKey(key, options);
@@ -53,15 +62,12 @@ function translate(ctx: MarkupRenderContexts, key: TranslationKeys<MarkupRenderC
 }
 
 
-function getTranslations<MarkupRenderContext extends MarkupRenderContexts>(ctx: MarkupRenderContext) {
+function getTranslations<CustomRenderContext extends MarkupRenderContext>(ctx: CustomRenderContext) {
   return getRenderConfig(ctx).translations;
 }
 
 
-function getTranslationKey(key: TranslationKeys<MarkdownRenderContext>, options?: TranslationOptions): keyof Complete<MarkdownRenderConfig>["translations"];
-function getTranslationKey(key: TranslationKeys<HTMLRenderContext>, options?: TranslationOptions): keyof Complete<HTMLRenderConfig>["translations"];
-function getTranslationKey(key: TranslationKeys<MarkupRenderContexts>, options?: TranslationOptions): keyof Complete<MarkupRenderConfig>["translations"];
-function getTranslationKey(key: TranslationKeys<MarkupRenderContexts>, options?: TranslationOptions) {
+function getTranslationKey(key: TranslationKeys, options?: TranslationOptions) {
 
   const count = options && "count" in options ? options.count : undefined;
 
@@ -77,6 +83,6 @@ function getTranslationKey(key: TranslationKeys<MarkupRenderContexts>, options?:
 
 }
 
-export function getTranslator(ctx: MarkupRenderContexts) {
-  return (key: TranslationKeys<MarkupRenderContexts>, options?: TranslationOptions) => translate(ctx, key, options);
+export function getTranslator<CustomRenderContext extends MarkupRenderContext>(ctx: CustomRenderContext) {
+  return (key: TranslationKeys, options?: TranslationOptions) => translate(ctx, key, options);
 }

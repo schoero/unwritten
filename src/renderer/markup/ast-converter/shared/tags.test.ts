@@ -19,8 +19,10 @@ scope("MarkupRenderer", "Tags", () => {
       {
         beta: "",
         modifiers: ["readonly"],
-        optional: true
-      } as PropertyEntity
+        name: "test",
+        optional: true,
+        type: {}
+      } as unknown as PropertyEntity
     );
 
     const renderedTags = renderNode(ctx, convertedTags);

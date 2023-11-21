@@ -12,14 +12,14 @@ import { getSectionType } from "unwritten:renderer:markup/types-definitions/sect
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 
 import type { ExportAssignmentEntity } from "unwritten:interpreter/type-definitions/entities";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedExportAssignmentEntityForDocumentation,
   ConvertedExportAssignmentEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertExportAssignmentEntityToAnchor(ctx: MarkupRenderContexts, exportAssignmentEntity: ExportAssignmentEntity, displayName?: string): ConvertedExportAssignmentEntityForTableOfContents {
+export function convertExportAssignmentEntityToAnchor(ctx: MarkupRenderContext, exportAssignmentEntity: ExportAssignmentEntity, displayName?: string): ConvertedExportAssignmentEntityForTableOfContents {
 
   const id = exportAssignmentEntity.symbolId;
   const name = exportAssignmentEntity.name;
@@ -48,11 +48,11 @@ export function convertExportAssignmentEntityToAnchor(ctx: MarkupRenderContexts,
 
 }
 
-export function convertExportAssignmentEntityForTableOfContents(ctx: MarkupRenderContexts, exportAssignmentEntity: ExportAssignmentEntity): ConvertedExportAssignmentEntityForTableOfContents {
+export function convertExportAssignmentEntityForTableOfContents(ctx: MarkupRenderContext, exportAssignmentEntity: ExportAssignmentEntity): ConvertedExportAssignmentEntityForTableOfContents {
   return convertExportAssignmentEntityToAnchor(ctx, exportAssignmentEntity);
 }
 
-export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderContexts, exportAssignmentEntity: ExportAssignmentEntity): ConvertedExportAssignmentEntityForDocumentation {
+export function convertExportAssignmentEntityForDocumentation(ctx: MarkupRenderContext, exportAssignmentEntity: ExportAssignmentEntity): ConvertedExportAssignmentEntityForDocumentation {
 
   const name = exportAssignmentEntity.name;
   const symbolId = exportAssignmentEntity.symbolId;

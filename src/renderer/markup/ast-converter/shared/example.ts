@@ -4,14 +4,14 @@ import { createInlineTitleNode, createParagraphNode, createTitleNode } from "unw
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { Example } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedExamples,
   ConvertedExamplesForType
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertExamplesForDocumentation(ctx: MarkupRenderContexts, examples: Example): ConvertedExamples {
+export function convertExamplesForDocumentation(ctx: MarkupRenderContext, examples: Example): ConvertedExamples {
 
   if(examples.length === 0){
     return;
@@ -37,7 +37,7 @@ export function convertExamplesForDocumentation(ctx: MarkupRenderContexts, examp
 }
 
 
-export function convertExamplesForType(ctx: MarkupRenderContexts, examples: Example): ConvertedExamplesForType {
+export function convertExamplesForType(ctx: MarkupRenderContext, examples: Example): ConvertedExamplesForType {
 
   if(examples.length === 0){
     return;

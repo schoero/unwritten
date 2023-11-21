@@ -18,7 +18,7 @@ import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { ParameterEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedParameterEntitiesForDocumentation,
   ConvertedParameterEntitiesForSignature,
@@ -26,7 +26,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertParameterEntityToAnchor(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity, displayName?: string): AnchorNode {
+export function convertParameterEntityToAnchor(ctx: MarkupRenderContext, parameterEntity: ParameterEntity, displayName?: string): AnchorNode {
 
   const name = parameterEntity.name;
   const id = parameterEntity.symbolId;
@@ -39,7 +39,7 @@ export function convertParameterEntityToAnchor(ctx: MarkupRenderContexts, parame
 
 }
 
-export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForSignature {
+export function convertParameterEntitiesForSignature(ctx: MarkupRenderContext, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForSignature {
 
   if(parameterEntities === undefined){
     return undefined;
@@ -82,7 +82,7 @@ export function convertParameterEntitiesForSignature(ctx: MarkupRenderContexts, 
 }
 
 
-export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForDocumentation {
+export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContext, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForDocumentation {
 
   if(!parameterEntities || parameterEntities.length === 0){
     return undefined;
@@ -108,7 +108,7 @@ export function convertParameterEntitiesForDocumentation(ctx: MarkupRenderContex
 }
 
 
-export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForType {
+export function convertParameterEntitiesForType(ctx: MarkupRenderContext, parameterEntities: ParameterEntity[] | undefined): ConvertedParameterEntitiesForType {
 
   if(!parameterEntities || parameterEntities.length === 0){
     return undefined;
@@ -134,7 +134,7 @@ export function convertParameterEntitiesForType(ctx: MarkupRenderContexts, param
 }
 
 
-function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity) {
+function convertParameterEntityForDocumentation(ctx: MarkupRenderContext, parameterEntity: ParameterEntity) {
 
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
@@ -177,7 +177,7 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContexts, param
 }
 
 
-function convertParameterEntityForSignature(ctx: MarkupRenderContexts, parameterEntity: ParameterEntity) {
+function convertParameterEntityForSignature(ctx: MarkupRenderContext, parameterEntity: ParameterEntity) {
 
   const rest = parameterEntity.rest === true ? "..." : "";
   const name = parameterEntity.name;

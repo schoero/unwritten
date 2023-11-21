@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "lib": ["ESNext", "DOM"],
     "noImplicitAny": false,
+    "outDir": "./lib",
     "paths": {
       "unwritten:*": ["src/*"],
       "unwritten:api:*": ["src/api/*"],
@@ -22,7 +23,7 @@
       "unwritten:types:*": ["src/type-definitions/*"],
       "unwritten:utils:*": ["src/utils/*"]
     },
-    "target": "ES6"
+    "target": "ES2020"
   },
   "include": [
     "src/**/*.ts",

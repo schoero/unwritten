@@ -83,7 +83,7 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
 
 }
 
-async function createConfigForBrowser(ctx: DefaultBrowserContext, config: Config | undefined): Promise<CompleteConfig> {
+async function createConfigForBrowser(ctx: DefaultBrowserContext, config: Config | undefined): Promise<CompleteBrowserConfig> {
   const defaultConfig = getDefaultConfig();
   return override(defaultConfig, config);
 }

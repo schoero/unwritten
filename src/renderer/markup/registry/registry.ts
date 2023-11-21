@@ -1,6 +1,6 @@
 import { assert } from "unwritten:utils/general";
 
-import type { MarkupRenderContexts } from "../types-definitions/markup";
+import type { MarkupRenderContext } from "../types-definitions/markup";
 
 import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc";
@@ -34,11 +34,11 @@ export type SourceFile = {
 
 export type LinkRegistry = SourceFile[];
 
-function getAnonymousId(ctx: MarkupRenderContexts): ID {
+function getAnonymousId(ctx: MarkupRenderContext): ID {
   return ctx.currentFile._anonymousId--;
 }
 
-export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID | ID[]): AnchorTarget {
+export function registerAnchor(ctx: MarkupRenderContext, name: Name, id: ID | ID[]): AnchorTarget {
 
   const anchorId = convertTextToAnchorId(name);
   const ids = Array.isArray(id) ? id : [id];
@@ -59,7 +59,7 @@ export function registerAnchor(ctx: MarkupRenderContexts, name: Name, id: ID | I
 
 }
 
-export function unregisterAnchor(ctx: MarkupRenderContexts, id: ID | ID[]): void {
+export function unregisterAnchor(ctx: MarkupRenderContext, id: ID | ID[]): void {
 
   const ids = Array.isArray(id) ? id : [id];
   const anchor = findRegisteredAnchorData(ctx, id);
@@ -83,7 +83,7 @@ export function unregisterAnchor(ctx: MarkupRenderContexts, id: ID | ID[]): void
 
 }
 
-export function registerAnonymousAnchor(ctx: MarkupRenderContexts, name: Name): AnchorTarget {
+export function registerAnonymousAnchor(ctx: MarkupRenderContext, name: Name): AnchorTarget {
 
   const anchorId = convertTextToAnchorId(name);
 
@@ -100,7 +100,7 @@ export function registerAnonymousAnchor(ctx: MarkupRenderContexts, name: Name): 
 
 }
 
-export function getAnchorLink(ctx: MarkupRenderContexts, id: ID | ID[]): string | undefined {
+export function getAnchorLink(ctx: MarkupRenderContext, id: ID | ID[]): string | undefined {
 
   const { relative } = ctx.dependencies.path;
 
@@ -120,7 +120,7 @@ export function getAnchorLink(ctx: MarkupRenderContexts, id: ID | ID[]): string 
 
 }
 
-export function getAnchorId(ctx: MarkupRenderContexts, id: ID | ID[]): string | undefined {
+export function getAnchorId(ctx: MarkupRenderContext, id: ID | ID[]): string | undefined {
 
   const ids = Array.isArray(id) ? id : [id];
 
@@ -134,7 +134,7 @@ export function getAnchorId(ctx: MarkupRenderContexts, id: ID | ID[]): string | 
 
 }
 
-export function getSourceFileById(ctx: MarkupRenderContexts, id: ID): SourceFile {
+export function getSourceFileById(ctx: MarkupRenderContext, id: ID): SourceFile {
   return ctx.links[id];
 }
 
@@ -158,7 +158,7 @@ export function isAnchor(input: any): input is AnchorTarget {
     Object.keys(input).length === 2;
 }
 
-export function createCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
+export function createCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
@@ -180,7 +180,7 @@ export function createCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEnt
 
 }
 
-export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity: SourceFileEntity): void {
+export function setCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEntity: SourceFileEntity): void {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
@@ -191,7 +191,7 @@ export function setCurrentSourceFile(ctx: MarkupRenderContexts, sourceFileEntity
 
 }
 
-function findRegisteredAnchorData(ctx: MarkupRenderContexts, id: ID | ID[]): { anchorId: AnchorID; index: number; sourceFile: SourceFile; } | undefined {
+function findRegisteredAnchorData(ctx: MarkupRenderContext, id: ID | ID[]): { anchorId: AnchorID; index: number; sourceFile: SourceFile; } | undefined {
 
   const ids = Array.isArray(id) ? id : [id];
 

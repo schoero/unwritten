@@ -9,8 +9,5 @@ import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createClassType = (ctx: InterpreterContext, type: ObjectType): ClassType => withLockedType(ctx, type, () => {
-  const fromObjectType = createObjectLikeType(ctx, type, TypeKind.Class);
-  return {
-    ...fromObjectType
-  };
+  return createObjectLikeType(ctx, type, TypeKind.Class);
 });

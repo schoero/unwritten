@@ -6,10 +6,10 @@ import { getTranslator } from "unwritten:renderer/markup/utils/translations";
 import { isMultilineType } from "unwritten:renderer/markup/utils/types";
 
 import type { Type } from "unwritten:interpreter/type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 
 
-export function convertInitializerForType(ctx: MarkupRenderContexts, type: Type) {
+export function convertInitializerForType(ctx: MarkupRenderContext, type: Type) {
 
   const translate = getTranslator(ctx);
 

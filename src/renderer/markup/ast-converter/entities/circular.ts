@@ -2,10 +2,10 @@ import { createAnchorNode } from "unwritten:renderer:markup/utils/nodes";
 
 import type { CircularEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 
 
-export function convertCircularEntityToAnchor(ctx: MarkupRenderContexts, circularEntity: CircularEntity, displayName?: string): AnchorNode {
+export function convertCircularEntityToAnchor(ctx: MarkupRenderContext, circularEntity: CircularEntity, displayName?: string): AnchorNode {
 
   const name = circularEntity.name;
   const id = circularEntity.symbolId;
@@ -19,6 +19,6 @@ export function convertCircularEntityToAnchor(ctx: MarkupRenderContexts, circula
 }
 
 
-export function convertCircularEntityForDocumentation(ctx: MarkupRenderContexts, circularEntity: CircularEntity): AnchorNode {
+export function convertCircularEntityForDocumentation(ctx: MarkupRenderContext, circularEntity: CircularEntity): AnchorNode {
   return convertCircularEntityToAnchor(ctx, circularEntity);
 }

@@ -6,14 +6,14 @@ import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 
 import type { IntersectionType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedIntersectionTypeInline,
   ConvertedIntersectionTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertIntersectionTypeInline(ctx: MarkupRenderContexts, intersectionType: IntersectionType): ConvertedIntersectionTypeInline {
+export function convertIntersectionTypeInline(ctx: MarkupRenderContext, intersectionType: IntersectionType): ConvertedIntersectionTypeInline {
 
   const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
@@ -29,7 +29,7 @@ export function convertIntersectionTypeInline(ctx: MarkupRenderContexts, interse
 
 }
 
-export function convertIntersectionTypeMultiline(ctx: MarkupRenderContexts, intersectionType: IntersectionType): ConvertedIntersectionTypeMultiline {
+export function convertIntersectionTypeMultiline(ctx: MarkupRenderContext, intersectionType: IntersectionType): ConvertedIntersectionTypeMultiline {
 
   const types = intersectionType.types.map(type => {
 

@@ -4,11 +4,11 @@ import { createLinkNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 
 import type { UnknownType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ConvertedUnknownTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertUnknownTypeInline(ctx: MarkupRenderContexts, unknownType: UnknownType): ConvertedUnknownTypeInline {
+export function convertUnknownTypeInline(ctx: MarkupRenderContext, unknownType: UnknownType): ConvertedUnknownTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

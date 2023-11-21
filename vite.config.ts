@@ -23,7 +23,7 @@ export default defineConfig(<UserConfig>{
         /^node:.*/
       ]
     },
-    target: "es6"
+    target: "ES2020"
   },
   plugins: [
     ...config.plugins ?? [],

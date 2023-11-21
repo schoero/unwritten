@@ -28,7 +28,7 @@ import { renderEntityPrefix, spaceBetween } from "unwritten:renderer:markup/util
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedEventPropertyEntityForDocumentation,
   ConvertedEventPropertyEntityForTableOfContents,
@@ -36,7 +36,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertEventPropertyEntityToAnchor(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {
+export function convertEventPropertyEntityToAnchor(ctx: MarkupRenderContext, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {
 
   const name = propertyEntity.name;
   const id = propertyEntity.symbolId;
@@ -66,12 +66,12 @@ export function convertEventPropertyEntityToAnchor(ctx: MarkupRenderContexts, pr
 }
 
 
-export function convertEventPropertyEntityForTableOfContents(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForTableOfContents {
+export function convertEventPropertyEntityForTableOfContents(ctx: MarkupRenderContext, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForTableOfContents {
   return convertEventPropertyEntityToAnchor(ctx, propertyEntity);
 }
 
 
-export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForDocumentation {
+export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderContext, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForDocumentation {
 
   const name = propertyEntity.name;
   const symbolId = propertyEntity.symbolId;
@@ -106,7 +106,7 @@ export function convertEventPropertyEntityForDocumentation(ctx: MarkupRenderCont
 
 }
 
-export function convertEventPropertyEntityForType(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForType {
+export function convertEventPropertyEntityForType(ctx: MarkupRenderContext, propertyEntity: PropertyEntity): ConvertedEventPropertyEntityForType {
 
   const name = propertyEntity.name;
   const nameWithContext = renderMemberContext(ctx, "documentation", name);

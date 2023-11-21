@@ -13,14 +13,14 @@ import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:
 
 import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedNamespaceEntityForDocumentation,
   ConvertedNamespaceEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertNamespaceEntityToAnchor(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity, displayName?: string): AnchorNode {
+export function convertNamespaceEntityToAnchor(ctx: MarkupRenderContext, namespaceEntity: NamespaceEntity, displayName?: string): AnchorNode {
 
   const id = namespaceEntity.symbolId;
   const name = namespaceEntity.name;
@@ -49,7 +49,7 @@ export function convertNamespaceEntityToAnchor(ctx: MarkupRenderContexts, namesp
 
 }
 
-export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForTableOfContents {
+export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContext, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForTableOfContents {
 
   const name = namespaceEntity.name;
   const anchor = convertNamespaceEntityToAnchor(ctx, namespaceEntity);
@@ -67,7 +67,7 @@ export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContex
 
 }
 
-export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContexts, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForDocumentation {
+export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContext, namespaceEntity: NamespaceEntity): ConvertedNamespaceEntityForDocumentation {
 
   const name = namespaceEntity.name;
   const symbolId = namespaceEntity.symbolId;

@@ -8,11 +8,11 @@ import {
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { Position } from "unwritten:interpreter:type-definitions/shared";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ConvertedPosition } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertPositionForDocumentation(ctx: MarkupRenderContexts, position?: Position): ConvertedPosition {
+export function convertPositionForDocumentation(ctx: MarkupRenderContext, position?: Position): ConvertedPosition {
 
   const renderConfig = getRenderConfig(ctx);
 

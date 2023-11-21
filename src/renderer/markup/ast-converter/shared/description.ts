@@ -5,14 +5,14 @@ import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { Description } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedDescriptionForDocumentation,
   ConvertedDescriptionForType
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertDescriptionForDocumentation(ctx: MarkupRenderContexts, description: Description): ConvertedDescriptionForDocumentation {
+export function convertDescriptionForDocumentation(ctx: MarkupRenderContext, description: Description): ConvertedDescriptionForDocumentation {
 
   const translate = getTranslator(ctx);
 
@@ -34,7 +34,7 @@ export function convertDescriptionForDocumentation(ctx: MarkupRenderContexts, de
 }
 
 
-export function convertDescriptionForType(ctx: MarkupRenderContexts, description: Description): ConvertedDescriptionForType {
+export function convertDescriptionForType(ctx: MarkupRenderContext, description: Description): ConvertedDescriptionForType {
   return spaceBetween(
     ...convertJSDocNodes(ctx, description)
   );

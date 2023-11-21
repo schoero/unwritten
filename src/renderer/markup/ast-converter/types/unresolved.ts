@@ -4,12 +4,12 @@ import { createLinkNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 
 import type { Type, UnresolvedType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type { ConvertedTypeReferenceTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolvedType: UnresolvedType): ConvertedTypeReferenceTypeInline {
+export function convertUnresolvedTypeInline(ctx: MarkupRenderContext, unresolvedType: UnresolvedType): ConvertedTypeReferenceTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -31,7 +31,7 @@ export function convertUnresolvedTypeInline(ctx: MarkupRenderContexts, unresolve
 }
 
 
-function convertTypeArguments(ctx: MarkupRenderContexts, typeArguments: Type[]): ASTNode {
+function convertTypeArguments(ctx: MarkupRenderContext, typeArguments: Type[]): ASTNode {
 
   const renderConfig = getRenderConfig(ctx);
 

@@ -1,11 +1,11 @@
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
-export function convertModifiers(ctx: MarkupRenderContexts, modifiers?: string[]): ASTNode[] {
+export function convertModifiers(ctx: MarkupRenderContext, modifiers?: string[]): ASTNode[] {
 
   const renderConfig = getRenderConfig(ctx);
 

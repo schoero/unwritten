@@ -4,11 +4,11 @@ import { createLinkNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 
 import type { VoidType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ConvertedVoidTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertVoidTypeInline(ctx: MarkupRenderContexts, voidType: VoidType): ConvertedVoidTypeInline {
+export function convertVoidTypeInline(ctx: MarkupRenderContext, voidType: VoidType): ConvertedVoidTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

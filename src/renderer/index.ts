@@ -3,7 +3,7 @@ import { isHTMLRenderContext, renderNode as renderNodeAsHTML } from "unwritten:r
 import { renderNode as renderNodeAsMarkdown } from "unwritten:renderer:markup/markdown/index";
 import { assert } from "unwritten:utils:general";
 
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type { Renderer } from "unwritten:type-definitions/renderer";
 
@@ -30,7 +30,7 @@ export async function getRenderer(renderer?: Renderer | string): Promise<Rendere
 
 }
 
-export function renderNode(ctx: MarkupRenderContexts, node: ASTNode): string {
+export function renderNode(ctx: MarkupRenderContext, node: ASTNode): string {
   if(isHTMLRenderContext(ctx)){
     return renderNodeAsHTML(ctx, node);
   } else {

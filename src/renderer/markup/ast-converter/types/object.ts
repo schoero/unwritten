@@ -12,7 +12,7 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { ObjectLikeTypes } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
   ConvertedObjectType,
@@ -21,7 +21,7 @@ import type {
 
 
 export function convertObjectTypeInline(
-  ctx: MarkupRenderContexts,
+  ctx: MarkupRenderContext,
   objectLikeType: ObjectLikeTypes
 ): ConvertedObjectType {
 
@@ -40,7 +40,7 @@ export function convertObjectTypeInline(
 
 
 export function convertObjectTypeMultiline(
-  ctx: MarkupRenderContexts,
+  ctx: MarkupRenderContext,
   objectLikeType: ObjectLikeTypes
 ): ConvertedObjectTypeMultiline {
 
@@ -104,7 +104,7 @@ export function convertObjectTypeMultiline(
 
 }
 
-function getObjectTypeName(ctx: MarkupRenderContexts, objectLikeType: ObjectLikeTypes) {
+function getObjectTypeName(ctx: MarkupRenderContext, objectLikeType: ObjectLikeTypes) {
 
   const translate = getTranslator(ctx);
 

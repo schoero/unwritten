@@ -31,7 +31,7 @@ import { encapsulate, renderEntityPrefix, spaceBetween } from "unwritten:rendere
 
 import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedPropertyEntityForDocumentation,
   ConvertedPropertyEntityForTableOfContents,
@@ -39,7 +39,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertPropertyEntityToAnchor(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {
+export function convertPropertyEntityToAnchor(ctx: MarkupRenderContext, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {
 
   const id = propertyEntity.symbolId;
   const name = propertyEntity.name;
@@ -69,11 +69,11 @@ export function convertPropertyEntityToAnchor(ctx: MarkupRenderContexts, propert
 }
 
 
-export function convertPropertyEntityForTableOfContents(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
+export function convertPropertyEntityForTableOfContents(ctx: MarkupRenderContext, propertyEntity: PropertyEntity): ConvertedPropertyEntityForTableOfContents {
   return convertPropertyEntityToAnchor(ctx, propertyEntity);
 }
 
-export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
+export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContext, propertyEntity: PropertyEntity): ConvertedPropertyEntityForDocumentation {
 
   const name = propertyEntity.name;
   const symbolId = propertyEntity.symbolId;
@@ -113,7 +113,7 @@ export function convertPropertyEntityForDocumentation(ctx: MarkupRenderContexts,
 
 }
 
-export function convertPropertyEntityForType(ctx: MarkupRenderContexts, propertyEntity: PropertyEntity): ConvertedPropertyEntityForType {
+export function convertPropertyEntityForType(ctx: MarkupRenderContext, propertyEntity: PropertyEntity): ConvertedPropertyEntityForType {
 
   const renderConfig = getRenderConfig(ctx);
 

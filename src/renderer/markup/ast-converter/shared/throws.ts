@@ -5,14 +5,14 @@ import { getTranslator } from "unwritten:renderer/markup/utils/translations";
 import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 
 import type { Throws } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedThrowsForDocumentation,
   ConvertedThrowsForType
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertThrowsForDocumentation(ctx: MarkupRenderContexts, throws: Throws): ConvertedThrowsForDocumentation {
+export function convertThrowsForDocumentation(ctx: MarkupRenderContext, throws: Throws): ConvertedThrowsForDocumentation {
 
   if(throws.length === 0){
     return;
@@ -36,7 +36,7 @@ export function convertThrowsForDocumentation(ctx: MarkupRenderContexts, throws:
 }
 
 
-export function convertThrowsForType(ctx: MarkupRenderContexts, throws: Throws): ConvertedThrowsForType {
+export function convertThrowsForType(ctx: MarkupRenderContext, throws: Throws): ConvertedThrowsForType {
 
   if(throws.length === 0){
     return;

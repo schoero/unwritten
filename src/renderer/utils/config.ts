@@ -2,7 +2,7 @@ import type { HTMLRenderConfig, MarkdownRenderConfig, MarkupRenderConfig } from 
 import type {
   HTMLRenderContext,
   MarkdownRenderContext,
-  MarkupRenderContexts
+  MarkupRenderContext
 } from "../markup/types-definitions/markup";
 
 import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config";
@@ -14,11 +14,11 @@ import type { Complete } from "unwritten:type-definitions/utils";
 
 export function getRenderConfig(ctx: MarkdownRenderContext): Complete<MarkdownRenderConfig>;
 export function getRenderConfig(ctx: HTMLRenderContext): Complete<HTMLRenderConfig>;
-export function getRenderConfig(ctx: MarkupRenderContexts): Complete<MarkupRenderConfig>;
+export function getRenderConfig(ctx: MarkupRenderContext): Complete<MarkupRenderConfig>;
 export function getRenderConfig(ctx: JSONRenderContext): Complete<JSONRenderConfig>;
-export function getRenderConfig(ctx: JSONRenderContext | MarkupRenderContexts): Complete<JSONRenderConfig | MarkupRenderConfig>;
+export function getRenderConfig(ctx: JSONRenderContext | MarkupRenderContext): Complete<JSONRenderConfig | MarkupRenderConfig>;
 export function getRenderConfig(ctx: RenderContext): Complete<RenderConfig>;
-export function getRenderConfig(ctx: JSONRenderContext | MarkupRenderContexts | RenderContext): Complete<JSONRenderConfig | MarkupRenderConfig | RenderConfig> {
+export function getRenderConfig(ctx: JSONRenderContext | MarkupRenderContext | RenderContext): Complete<JSONRenderConfig | MarkupRenderConfig | RenderConfig> {
   const name = ctx.renderer.name;
   return ctx.config.renderConfig[name];
 }

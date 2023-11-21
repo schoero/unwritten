@@ -33,14 +33,14 @@ import {
 
 import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedInterfaceEntityForDocumentation,
   ConvertedInterfaceEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity, displayName?: string): AnchorNode {
+export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContext, interfaceEntity: InterfaceEntity | MergedInterfaceEntity, displayName?: string): AnchorNode {
 
   const id = interfaceEntity.symbolId;
   const name = interfaceEntity.name;
@@ -69,11 +69,11 @@ export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContexts, interf
 
 }
 
-export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForTableOfContents {
+export function convertInterfaceEntityForTableOfContents(ctx: MarkupRenderContext, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForTableOfContents {
   return convertInterfaceEntityToAnchor(ctx, interfaceEntity);
 }
 
-export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContexts, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForDocumentation {
+export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContext, interfaceEntity: InterfaceEntity | MergedInterfaceEntity): ConvertedInterfaceEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
 

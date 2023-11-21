@@ -3,7 +3,7 @@ import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { ExportableEntity, ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup.js";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.js";
 import type { Encapsulation } from "unwritten:renderer:markup/types-definitions/config";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
@@ -45,12 +45,12 @@ export function getCategoryNameTranslationKey(entityKind: ExportableEntityKinds)
   }
 }
 
-export function isRenderEntityPrefixEnabled(ctx: MarkupRenderContexts, target: "documentation" | "tableOfContents"): boolean {
+export function isRenderEntityPrefixEnabled(ctx: MarkupRenderContext, target: "documentation" | "tableOfContents"): boolean {
   const renderConfig = getRenderConfig(ctx);
   return renderConfig.renderEntityPrefixes === true || renderConfig.renderEntityPrefixes === target;
 }
 
-export function isRenderObjectMemberTitlesEnabled(ctx: MarkupRenderContexts, target: "documentation" | "tableOfContents"): boolean {
+export function isRenderObjectMemberTitlesEnabled(ctx: MarkupRenderContext, target: "documentation" | "tableOfContents"): boolean {
   const renderConfig = getRenderConfig(ctx);
   return renderConfig.renderClassMemberTitles === true || renderConfig.renderClassMemberTitles === target;
 }
@@ -105,7 +105,7 @@ function getEntityPrefixTranslationKey(entityKind: EntityKind) {
 }
 
 
-export function renderCategoryName(ctx: MarkupRenderContexts, entities: ExportableEntity[]) {
+export function renderCategoryName(ctx: MarkupRenderContext, entities: ExportableEntity[]) {
 
   const translate = getTranslator(ctx);
   const translationKey = getCategoryNameTranslationKey(entities[0].kind);
@@ -114,7 +114,7 @@ export function renderCategoryName(ctx: MarkupRenderContexts, entities: Exportab
 
 }
 
-export function renderEntityPrefix(ctx: MarkupRenderContexts, target: "documentation" | "tableOfContents", entityKind: EntityKind) {
+export function renderEntityPrefix(ctx: MarkupRenderContext, target: "documentation" | "tableOfContents", entityKind: EntityKind) {
 
   if(!isRenderEntityPrefixEnabled(ctx, target)){
     return "";

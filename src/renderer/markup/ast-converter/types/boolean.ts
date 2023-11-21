@@ -4,11 +4,11 @@ import { createLinkNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 
 import type { BooleanType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ConvertedBooleanTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertBooleanTypeInline(ctx: MarkupRenderContexts, booleanType: BooleanType): ConvertedBooleanTypeInline {
+export function convertBooleanTypeInline(ctx: MarkupRenderContext, booleanType: BooleanType): ConvertedBooleanTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

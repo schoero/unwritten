@@ -27,9 +27,15 @@ export interface NodeConfig extends BaseConfig {
 
 export type Config = BrowserConfig | NodeConfig;
 
-export type CompleteNodeConfig = PartialByKey<Required<NodeConfig>, "extends">;
-export type CompleteBrowserConfig = Required<BrowserConfig>;
-export type CompleteConfig = Required<BaseConfig>;
+export interface CompleteNodeConfig extends PartialByKey<Required<NodeConfig>, "extends"> {
+  renderConfig: CompleteRenderConfig;
+}
+
+export interface CompleteBrowserConfig extends Required<BrowserConfig> {
+  renderConfig: CompleteRenderConfig;
+}
+
+export type CompleteConfig = CompleteBrowserConfig | CompleteNodeConfig;
 
 export interface CompleteRenderConfig {
   [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;

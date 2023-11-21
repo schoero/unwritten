@@ -8,14 +8,14 @@ import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type
 
 import type { UnionType } from "unwritten:interpreter:type-definitions/types";
 import type { ASTNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedUnionTypeInline,
   ConvertedUnionTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertUnionTypeInline(ctx: MarkupRenderContexts, unionType: UnionType): ConvertedUnionTypeInline {
+export function convertUnionTypeInline(ctx: MarkupRenderContext, unionType: UnionType): ConvertedUnionTypeInline {
 
   const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
@@ -47,7 +47,7 @@ export function convertUnionTypeInline(ctx: MarkupRenderContexts, unionType: Uni
 
 }
 
-export function convertUnionTypeMultiline(ctx: MarkupRenderContexts, unionType: UnionType): ConvertedUnionTypeMultiline {
+export function convertUnionTypeMultiline(ctx: MarkupRenderContext, unionType: UnionType): ConvertedUnionTypeMultiline {
 
   const types = unionType.types.map(type => {
 

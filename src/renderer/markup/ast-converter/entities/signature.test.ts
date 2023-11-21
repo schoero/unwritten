@@ -1,7 +1,6 @@
 import { assert, expect, it } from "vitest";
 
 import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index";
-import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { filterOutImplicitSignatures } from "unwritten:renderer/utils/private-members";
 import {
   convertSignatureEntityForDocumentation,
@@ -25,7 +24,7 @@ import { ts } from "unwritten:utils/template";
 import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types";
 
 
-scope("MarkupRenderer", EntityKind.Signature, () => {
+scope("MarkupRenderer", "Signature", () => {
 
   {
 

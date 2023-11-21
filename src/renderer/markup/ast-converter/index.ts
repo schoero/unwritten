@@ -56,7 +56,7 @@ import {
 import { assert } from "unwritten:utils/general.js";
 
 import type { Entity, ExportableEntity, LinkableEntity } from "unwritten:interpreter/type-definitions/entities";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ListNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
   ConvertedCategoryForDocumentation,
@@ -66,7 +66,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertEntityToAnchor(ctx: MarkupRenderContexts, entity: LinkableEntity, displayName?: string) {
+export function convertEntityToAnchor(ctx: MarkupRenderContext, entity: LinkableEntity, displayName?: string) {
 
   if(isExplicitSignatureEntity(entity)){
     return convertSignatureEntityToAnchor(ctx, entity, displayName);
@@ -100,7 +100,7 @@ export function convertEntityToAnchor(ctx: MarkupRenderContexts, entity: Linkabl
 
 }
 
-export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entity: ExportableEntity): ConvertedEntitiesForTableOfContents {
+export function convertEntityForTableOfContents(ctx: MarkupRenderContext, entity: ExportableEntity): ConvertedEntitiesForTableOfContents {
 
   if(isFunctionEntity(entity)){
     return convertFunctionLikeEntityForTableOfContents(ctx, entity);
@@ -127,7 +127,7 @@ export function convertEntityForTableOfContents(ctx: MarkupRenderContexts, entit
 }
 
 
-export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity: ExportableEntity): ConvertedEntitiesForDocumentation {
+export function convertEntityForDocumentation(ctx: MarkupRenderContext, entity: ExportableEntity): ConvertedEntitiesForDocumentation {
 
   if(isFunctionEntity(entity)){
     return convertFunctionLikeEntityForDocumentation(ctx, entity);
@@ -154,7 +154,7 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContexts, entity:
 }
 
 
-export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: ExportableEntity[]) {
+export function convertToMarkupAST(ctx: MarkupRenderContext, entities: ExportableEntity[]) {
 
   const sortedEntities = sortExportableEntities(ctx, entities);
 
@@ -169,7 +169,7 @@ export function convertToMarkupAST(ctx: MarkupRenderContexts, entities: Exportab
 }
 
 
-export function createTableOfContents(ctx: MarkupRenderContexts, entities: ExportableEntity[]): ListNode<ConvertedCategoryForTableOfContents[]> {
+export function createTableOfContents(ctx: MarkupRenderContext, entities: ExportableEntity[]): ListNode<ConvertedCategoryForTableOfContents[]> {
 
   const translate = getTranslator(ctx);
 
@@ -201,7 +201,7 @@ export function createTableOfContents(ctx: MarkupRenderContexts, entities: Expor
 }
 
 
-export function createDocumentation(ctx: MarkupRenderContexts, entities: ExportableEntity[]): ConvertedCategoryForDocumentation[] {
+export function createDocumentation(ctx: MarkupRenderContext, entities: ExportableEntity[]): ConvertedCategoryForDocumentation[] {
 
   const translate = getTranslator(ctx);
 

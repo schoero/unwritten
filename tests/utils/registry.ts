@@ -1,9 +1,9 @@
 import { MAX_ANONYMOUS_ID } from "unwritten:renderer/markup/registry/registry.js";
 
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 
 
-export function attachTestRegistry(ctx: MarkupRenderContexts): void {
+export function attachTestRegistry(ctx: MarkupRenderContext): void {
   ctx.links = [
     {
       _anonymousId: MAX_ANONYMOUS_ID,

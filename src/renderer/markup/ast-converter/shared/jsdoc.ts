@@ -21,11 +21,11 @@ import {
 } from "unwritten:typeguards/jsdoc";
 
 import type { JSDocProperties, JSDocTags } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 
 
-export function convertJSDocNodes(ctx: MarkupRenderContexts, jsdocTags: JSDocTags): ASTNode[] {
+export function convertJSDocNodes(ctx: MarkupRenderContext, jsdocTags: JSDocTags): ASTNode[] {
 
   return jsdocTags.map(jsdocTag => {
 
@@ -49,7 +49,7 @@ export function convertJSDocNodes(ctx: MarkupRenderContexts, jsdocTags: JSDocTag
 
 }
 
-export function convertJSDocTags(ctx: MarkupRenderContexts, entityWithTags: JSDocProperties): ASTNode[] {
+export function convertJSDocTags(ctx: MarkupRenderContext, entityWithTags: JSDocProperties): ASTNode[] {
 
   const jsdocKeyTagNames = Object.values(RenderableJSDocKeyTags);
   const jsdocValueTagNames = Object.values(RenderableJSDocValueTags);

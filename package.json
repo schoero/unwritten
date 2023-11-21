@@ -1,5 +1,5 @@
 {
-  "version": "0.2.8-beta.5",
+  "version": "0.2.8-beta.6",
   "type": "module",
   "name": "unwritten",
   "description": "unwritten is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
@@ -23,6 +23,7 @@
   "scripts": {
     "build": "npm run build:browser && npm run build:node",
     "build:browser": "vite build --config vite.config.browser.ts",
+    "build:declaration": "npx tsc --outDir lib --emitDeclarationOnly",
     "build:dev": "npm run build:browser && npm run build:node",
     "build:node": "vite build",
     "eslint": "eslint --ext .ts,.tsx,.js,.jsx,.json,.jsonc,.yml,.md ./",
@@ -47,13 +48,13 @@
     "release:alpha": "npm run release -- --prerelease alpha",
     "release:beta": "npm run release -- --prerelease beta",
     "release:latest": "changelogen --bump --output --no-tag",
-    "schema": "ts-json-schema-generator --path './src/type-definitions/config.d.ts' --type ConfigForSchema --tsconfig ./tsconfig.production.json --out schemas/renderer/config.json",
+    "schema": "ts-json-schema-generator --path './src/type-definitions/config.d.ts' --type ConfigForSchema --tsconfig ./tsconfig.schema.json --out schemas/renderer/config.json",
     "spellcheck": "cspell lint",
     "spellcheck:ci": "npm run spellcheck -- --no-progress",
     "test": "vitest -c ./vite.config.ts",
-    "test:interpreter": "vitest -c ./vite.config.ts --dir src/interpreter",
+    "test:interpreter": "vitest --c ./vite.config.ts --dir src/interpreter",
     "test:renderer": "vitest -c ./vite.config.ts --dir src/renderer",
-    "typecheck": "tsc --project tsconfig.production.json --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "engines": {
     "node": ">=16.9.0"
@@ -64,7 +65,7 @@
   "dependencies": {
     "cac": "^6.7.14",
     "minimatch": "^9.0.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   },
   "devDependencies": {
     "@schoero/changelog-config": "^0.0.3",
@@ -74,12 +75,12 @@
     "@schoero/ts-config": "^0.3.7",
     "@schoero/vite-config": "^0.0.29",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^20.9.2",
+    "@types/node": "^20.9.3",
     "changelogen": "^0.5.5",
     "eslint-plugin-sort-exports": "^0.8.0",
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "ts-json-schema-generator": "^1.4.0",
-    "vite": "^5.0.0",
+    "vite": "^5.0.2",
     "vite-plugin-dts": "^3.6.3",
     "vite-plugin-no-bundle": "^3.0.0",
     "vitest": "^1.0.0-beta.5"

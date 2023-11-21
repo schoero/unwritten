@@ -10,14 +10,6 @@ export type Mutable<T> = {
 // Complete
 export type Complete<ObjectType extends object> = DeepRequiredByKey<ObjectType>;
 
-
-// Remove translations suffix
-type RemoveTranslationsSuffix<T extends object, S extends "_many" | "_one"> = {
-  [Key in keyof T as Key extends `${infer KeyWithoutSuffix}${S}` ? KeyWithoutSuffix : Key]: T[Key];
-};
-
-export type TranslationWithoutSuffixes<T extends object> = RemoveTranslationsSuffix<RemoveTranslationsSuffix<T, "_one">, "_many">;
-
 // DeepPartialByKey
 export type DeepPartial<Type> = DeepPartialByKey<Type>;
 export type PartialByKey<Type extends object, SelectedKeys extends keyof Type> = DeepPartialByKey<Type, SelectedKeys, false>;

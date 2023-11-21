@@ -6,10 +6,10 @@ import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { See } from "unwritten:interpreter/type-definitions/jsdoc";
 import type { ConvertedSeeTags, ConvertedSeeTagsForType } from "unwritten:renderer/markup/types-definitions/renderer";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 
 
-export function convertSeeTagsForDocumentation(ctx: MarkupRenderContexts, seeTags: See): ConvertedSeeTags {
+export function convertSeeTagsForDocumentation(ctx: MarkupRenderContext, seeTags: See): ConvertedSeeTags {
 
   if(seeTags.length === 0){
     return;
@@ -33,7 +33,7 @@ export function convertSeeTagsForDocumentation(ctx: MarkupRenderContexts, seeTag
 }
 
 
-export function convertSeeTagsForType(ctx: MarkupRenderContexts, seeTags: See): ConvertedSeeTagsForType {
+export function convertSeeTagsForType(ctx: MarkupRenderContext, seeTags: See): ConvertedSeeTagsForType {
 
   if(seeTags.length === 0){
     return;

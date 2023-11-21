@@ -13,14 +13,14 @@ import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:
 
 import type { VariableEntity } from "unwritten:interpreter/type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedVariableEntityForDocumentation,
   ConvertedVariableEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertVariableEntityToAnchor(ctx: MarkupRenderContexts, variableEntity: VariableEntity, displayName?: string): AnchorNode {
+export function convertVariableEntityToAnchor(ctx: MarkupRenderContext, variableEntity: VariableEntity, displayName?: string): AnchorNode {
 
   const id = variableEntity.symbolId;
   const name = variableEntity.name;
@@ -52,11 +52,11 @@ export function convertVariableEntityToAnchor(ctx: MarkupRenderContexts, variabl
 
 }
 
-export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForTableOfContents {
+export function convertVariableEntityForTableOfContents(ctx: MarkupRenderContext, variableEntity: VariableEntity): ConvertedVariableEntityForTableOfContents {
   return convertVariableEntityToAnchor(ctx, variableEntity);
 }
 
-export function convertVariableEntityForDocumentation(ctx: MarkupRenderContexts, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
+export function convertVariableEntityForDocumentation(ctx: MarkupRenderContext, variableEntity: VariableEntity): ConvertedVariableEntityForDocumentation {
 
   const name = variableEntity.name;
   const symbolId = variableEntity.symbolId;

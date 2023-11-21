@@ -5,13 +5,13 @@ import type { Renderer } from "unwritten:type-definitions/renderer";
 
 
 // Markup
-export interface MarkupRenderer extends Renderer {
+interface BaseMarkupRenderer extends Renderer {
   fileExtension: ".html" | ".md";
-  initializeContext(ctx: MarkupRenderContexts): void;
+  initializeContext(ctx: MarkupRenderContext): void;
   name: BuiltInRenderers.HTML | BuiltInRenderers.Markdown;
 }
 
-export interface MarkupRenderBaseContext<CustomMarkupRenderer extends MarkupRenderer> {
+interface BaseMarkupRenderContext {
   currentFile: SourceFile;
   set indentation(value: number);
   get indentation(): number;
@@ -23,25 +23,20 @@ export interface MarkupRenderBaseContext<CustomMarkupRenderer extends MarkupRend
   _nesting?: number;
 }
 
-export interface MarkupRenderNodeContext<CustomMarkupRenderer extends MarkupRenderer> extends
-  MarkupRenderBaseContext<CustomMarkupRenderer>,
+export interface MarkupRenderNodeContext<CustomMarkupRenderer extends BaseMarkupRenderer> extends
+  BaseMarkupRenderContext,
   RenderNodeContext<CustomMarkupRenderer> {}
 
-export interface MarkupRenderBrowserContext<CustomMarkupRenderer extends MarkupRenderer> extends
-  MarkupRenderBaseContext<CustomMarkupRenderer>,
+export interface MarkupRenderBrowserContext<CustomMarkupRenderer extends BaseMarkupRenderer> extends
+  BaseMarkupRenderContext,
   RenderBrowserContext<CustomMarkupRenderer> {}
 
-export type MarkupRenderContext<CustomMarkupRenderer extends MarkupRenderer> =
-  | MarkupRenderBrowserContext<CustomMarkupRenderer>
-  | MarkupRenderNodeContext<CustomMarkupRenderer>;
-
-
-export type MarkupRenderers = HTMLRenderer | MarkdownRenderer;
-export type MarkupRenderContexts = HTMLRenderContext | MarkdownRenderContext;
+export type MarkupRenderer = HTMLRenderer | MarkdownRenderer;
+export type MarkupRenderContext = HTMLRenderContext | MarkdownRenderContext;
 
 
 // HTML
-export interface HTMLRenderer extends MarkupRenderer {
+export interface HTMLRenderer extends BaseMarkupRenderer {
   fileExtension: ".html";
   name: BuiltInRenderers.HTML;
 }
@@ -52,7 +47,7 @@ export type HTMLRenderContext = HTMLRenderBrowserContext | HTMLRenderNodeContext
 
 
 // Markdown
-export interface MarkdownRenderer extends MarkupRenderer {
+export interface MarkdownRenderer extends BaseMarkupRenderer {
   fileExtension: ".md";
   name: BuiltInRenderers.Markdown;
 }
