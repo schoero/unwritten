@@ -1,4 +1,4 @@
-import { renderNode } from "unwritten:renderer:html/index";
+import { renderNode } from "unwritten:renderer:html:index";
 
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { LinkNode } from "unwritten:renderer:markup/types-definitions/nodes";

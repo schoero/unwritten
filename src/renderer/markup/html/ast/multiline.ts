@@ -1,6 +1,6 @@
 import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderNode } from "unwritten:renderer:html/index";
+import { renderNode } from "unwritten:renderer:html:index";
 
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { MultilineNode } from "unwritten:renderer:markup/types-definitions/nodes";

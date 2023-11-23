@@ -1,7 +1,7 @@
 import type { BuiltInRenderers } from "../renderer/enums/renderer";
 
 import type { TypeKind } from "unwritten:interpreter/enums/type";
-import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config";
+import type { JSONRenderConfig } from "unwritten:renderer:json:type-definitions/config";
 import type { HTMLRenderConfig, MarkdownRenderConfig } from "unwritten:renderer:markup/types-definitions/config";
 
 import type { Complete, PartialByKey } from "./utils";

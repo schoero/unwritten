@@ -3,7 +3,7 @@ import { renderTitle, renderTitleChildren, renderTitleNode } from "unwritten:ren
 import { isSectionNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer:markdown/utils/empty-line";
+import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer:markdown:utils/empty-line";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes";

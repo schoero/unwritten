@@ -5,8 +5,8 @@ import type {
   MarkupRenderContext
 } from "../markup/types-definitions/markup";
 
-import type { JSONRenderConfig } from "unwritten:renderer:json/type-definitions/config";
-import type { JSONRenderContext } from "unwritten:renderer:json/type-definitions/renderer";
+import type { JSONRenderConfig } from "unwritten:renderer:json:type-definitions/config";
+import type { JSONRenderContext } from "unwritten:renderer:json:type-definitions/renderer";
 import type { RenderConfig } from "unwritten:type-definitions/config";
 import type { RenderContext } from "unwritten:type-definitions/context";
 import type { Complete } from "unwritten:type-definitions/utils";

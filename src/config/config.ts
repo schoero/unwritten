@@ -1,5 +1,5 @@
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
-import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default";
+import { defaultJSONRenderConfig } from "unwritten:renderer:json:config/default";
 import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default";
 import { isNodeContext } from "unwritten:utils/context";
 import { findFile } from "unwritten:utils:finder";

@@ -18,16 +18,16 @@ import { capitalize } from "unwritten:renderer/markup/utils/translations";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor";
-import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold";
-import { renderItalicNode } from "unwritten:renderer:markdown/ast/italic";
-import { renderLinkNode } from "unwritten:renderer:markdown/ast/link";
-import { renderListNode } from "unwritten:renderer:markdown/ast/list";
-import { renderParagraphNode } from "unwritten:renderer:markdown/ast/paragraph";
-import { renderSectionNode } from "unwritten:renderer:markdown/ast/section";
-import { renderSmallNode } from "unwritten:renderer:markdown/ast/small";
-import { renderSpanNode } from "unwritten:renderer:markdown/ast/span";
-import { renderStrikethroughNode } from "unwritten:renderer:markdown/ast/strikethrough";
+import { renderAnchorNode } from "unwritten:renderer:markdown:ast/anchor";
+import { renderBoldNode } from "unwritten:renderer:markdown:ast/bold";
+import { renderItalicNode } from "unwritten:renderer:markdown:ast/italic";
+import { renderLinkNode } from "unwritten:renderer:markdown:ast/link";
+import { renderListNode } from "unwritten:renderer:markdown:ast/list";
+import { renderParagraphNode } from "unwritten:renderer:markdown:ast/paragraph";
+import { renderSectionNode } from "unwritten:renderer:markdown:ast/section";
+import { renderSmallNode } from "unwritten:renderer:markdown:ast/small";
+import { renderSpanNode } from "unwritten:renderer:markdown:ast/span";
+import { renderStrikethroughNode } from "unwritten:renderer:markdown:ast/strikethrough";
 import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index";
 import {
   isAnchorNode,

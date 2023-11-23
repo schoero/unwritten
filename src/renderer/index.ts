@@ -17,7 +17,7 @@ export async function getRenderer(renderer?: Renderer | string): Promise<Rendere
     const { default: htmlRenderer } = await import("unwritten:renderer:markup/html/index.js");
     renderer = htmlRenderer;
   } else if(renderer === BuiltInRenderers.JSON){
-    const { default: jsonRenderer } = await import("unwritten:renderer:json/index.js");
+    const { default: jsonRenderer } = await import("unwritten:renderer:json:index.js");
     renderer = jsonRenderer;
   } else if(typeof renderer === "string"){
     const { default: importedRenderer } = await import(renderer);
