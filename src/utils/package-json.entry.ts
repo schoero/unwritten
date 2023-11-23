@@ -1,11 +1,7 @@
-import { readFileSync } from "unwritten:platform/file-system/node";
-import { absolute, getDirectory } from "unwritten:platform/path/node";
 import { assert } from "unwritten:utils:general";
 
+import packageJson from "unwritten:root:package.json";
 
-const currentDirectoryPath = getDirectory(import.meta.url);
-const packageJsonPath = absolute(currentDirectoryPath, "../../package.json");
-const packageJson = JSON.parse(readFileSync(packageJsonPath));
 
 const author: string = packageJson.author;
 const description: string = packageJson.description;

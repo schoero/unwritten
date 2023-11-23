@@ -19,6 +19,7 @@
       "unwritten:renderer:json*": ["src/renderer/json/*"],
       "unwritten:renderer:markdown*": ["src/renderer/markup/markdown/*"],
       "unwritten:renderer:ts*": ["src/renderer/typescript/*"],
+      "unwritten:root:*": ["*"],
       "unwritten:tests:*": ["tests/*"],
       "unwritten:types:*": ["src/type-definitions/*"],
       "unwritten:utils:*": ["src/utils/*"]
