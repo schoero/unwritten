@@ -18,8 +18,18 @@ import type { DefaultBrowserContext, DefaultContext, DefaultNodeContext } from "
 
 
 const CONFIG_NAMES = [
+  "unwritten.json",
+  "unwritten.js",
+  "unwritten.config.js",
+  "unwritten.config.mjs",
+  "unwritten.config.cjs",
+  "unwritten.mjs",
+  "unwritten.cjs",
   ".unwritten.json",
   ".unwritten.js",
+  ".unwritten.config.js",
+  ".unwritten.config.mjs",
+  ".unwritten.config.cjs",
   ".unwritten.mjs",
   ".unwritten.cjs"
 ];
