@@ -70,9 +70,9 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
     absoluteConfigPath = findFile(ctx, CONFIG_NAMES, configOrPath);
 
     if(absoluteConfigPath === undefined){
-      logger?.info("No unwritten.json found, continue using default configuration.");
+      logger?.stats(ctx, { unwritten: "default config" });
     } else {
-      logger?.info(`Using unwritten config found at ${logger.filePath(absoluteConfigPath)}`);
+      logger?.stats(ctx, { unwritten: absoluteConfigPath });
     }
 
   }

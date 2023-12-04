@@ -1,6 +1,16 @@
 export function assert(expression: any, message?: string): asserts expression {
   if(!expression){
-    throw new Error(message ?? "Assertion failed.");
+    const error = new Error(message ?? "Assertion failed.");
+
+    // fix stack trace
+    if(error.stack){
+      const stack = error.stack.split("\n");
+      stack.splice(1, 1);
+      error.stack = stack.join("\n");
+    }
+
+    throw error;
+
   }
 }
 

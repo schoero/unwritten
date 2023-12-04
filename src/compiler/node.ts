@@ -18,21 +18,14 @@ export function compile(ctx: DefaultNodeContext, entryFilePaths: string[], tsCon
     ? absolute(tsConfigOrFilePath)
     : tsConfigOrFilePath;
 
-
   // Compile
   const compilerOptions = getCompilerOptions(ctx, absoluteEntryFilePaths, tsConfigOrResolvedFilePath);
   const compilerHost = getCompilerHost(ctx, compilerOptions);
 
-  if(logger){
-    const formattedFileNames = absoluteEntryFilePaths.map(
-      entryFilePath => `${logger.filePath(entryFilePath)}`
-    );
-    logger.info("Invoking the TypeScript compiler to compile", formattedFileNames);
-  }
+  logger?.stats(ctx, { entryPoints: absoluteEntryFilePaths });
 
   const program = ts.createProgram(absoluteEntryFilePaths, compilerOptions, compilerHost);
   const checker = program.getTypeChecker();
-
 
   // Report any compiler messages
   void reportCompilerDiagnostics(ctx, program.getSemanticDiagnostics());
@@ -54,52 +47,58 @@ function getCompilerOptions(ctx: DefaultNodeContext, entryFilePaths: string[], t
   const logger = ctx.dependencies.logger;
   const { existsSync } = ctx.dependencies.fs;
 
+  let compilerOptions: CompilerOptions | undefined;
+  let tsconfigPath: string | undefined;
+
   // Use provided compiler options
   if(typeof tsConfigOrFilePath === "object"){
-    logger?.info("Using provided compiler options");
+    logger?.stats(ctx, { tsconfig: "provided config" });
     const { errors, options } = ts.convertCompilerOptionsFromJson(tsConfigOrFilePath, ".");
     void reportCompilerDiagnostics(ctx, errors);
-    return options;
+    compilerOptions = options;
   }
 
   // Get compiler options from provided tsconfig.json
   if(typeof tsConfigOrFilePath === "string"){
-    const compilerOptions = readConfigFile(ctx, tsConfigOrFilePath);
-    if(compilerOptions !== undefined){
-      return compilerOptions;
+    const compilerOptionsFromFile = readConfigFile(ctx, tsConfigOrFilePath);
+    if(compilerOptionsFromFile !== undefined){
+      compilerOptions = compilerOptionsFromFile;
+      tsconfigPath = tsConfigOrFilePath;
     }
   }
 
   // Try to find tsconfig via ts.findConfigFile
-  {
+  if(compilerOptions === undefined){
     const foundTSConfigFilePath = entryFilePaths.map(
       entryFilePath => ts.findConfigFile(entryFilePath, existsSync)
     ).filter(tsconfig => !!tsconfig)[0];
 
     if(foundTSConfigFilePath !== undefined){
-      const compilerOptions = readConfigFile(ctx, foundTSConfigFilePath);
-      if(compilerOptions !== undefined){
-        return compilerOptions;
+      const compilerOptionsFromFile = readConfigFile(ctx, foundTSConfigFilePath);
+      if(compilerOptionsFromFile !== undefined){
+        compilerOptions = compilerOptionsFromFile;
+        tsconfigPath = foundTSConfigFilePath;
       }
     }
   }
 
   // Try to find tsconfig via custom finder
-  {
+  if(compilerOptions === undefined){
     const foundTSConfigFilePath = entryFilePaths.map(
       entryFilePath => findFile(ctx, "tsconfig.json", entryFilePath)
     ).filter(tsconfig => !!tsconfig)[0];
 
     if(foundTSConfigFilePath !== undefined){
-      const compilerOptions = readConfigFile(ctx, foundTSConfigFilePath);
-      if(compilerOptions !== undefined){
-        return compilerOptions;
+      const compilerOptionsFromFile = readConfigFile(ctx, foundTSConfigFilePath);
+      if(compilerOptionsFromFile !== undefined){
+        compilerOptions = compilerOptionsFromFile;
+        tsconfigPath = foundTSConfigFilePath;
       }
     }
   }
 
   // Try to find project root by searching package.json via custom finder
-  {
+  if(compilerOptions === undefined){
     const foundPackageJsonFilePath = entryFilePaths.map(
       entryFilePath => findFile(ctx, "package.json", entryFilePath)
     ).filter(tsconfig => !!tsconfig)[0];
@@ -107,21 +106,28 @@ function getCompilerOptions(ctx: DefaultNodeContext, entryFilePaths: string[], t
     if(foundPackageJsonFilePath !== undefined){
       const foundTSConfigFilePath = ts.findConfigFile(foundPackageJsonFilePath, existsSync);
       if(foundTSConfigFilePath !== undefined){
-        const compilerOptions = readConfigFile(ctx, foundTSConfigFilePath);
-        if(compilerOptions !== undefined){
-          return compilerOptions;
+        const compilerOptionsFromFile = readConfigFile(ctx, foundTSConfigFilePath);
+        if(compilerOptionsFromFile !== undefined){
+          compilerOptions = compilerOptionsFromFile;
+          tsconfigPath = foundTSConfigFilePath;
         }
       }
     }
   }
 
-  // Return default compiler options
-  logger?.warn("No tsconfig found, continue using default compiler options but this may fail...");
+  if(compilerOptions !== undefined || tsconfigPath !== undefined){
+    logger?.stats(ctx, { tsconfig: tsconfigPath });
+    return {
+      ...compilerOptions,
+      noEmit: true
+    };
+  }
 
+  // Return default compiler options
+  logger?.stats(ctx, { tsconfig: "default compiler options" });
   return getDefaultCompilerOptions(ctx);
 
 }
-
 
 function readConfigFile(ctx: DefaultNodeContext, path: string): CompilerOptions | undefined {
 
@@ -135,14 +141,12 @@ function readConfigFile(ctx: DefaultNodeContext, path: string): CompilerOptions 
 
   if(configFile.error !== undefined){
     if(typeof configFile.error.messageText === "string"){
-      logger?.warn(`Could not read tsconfig.json: ${configFile.error.messageText}`);
+      logger?.warn("could not read tsconfig.json:", [configFile.error.messageText]);
     } else {
-      logger?.warn(`Could not read tsconfig.json: ${configFile.error.messageText.messageText}`);
+      logger?.warn("could not read tsconfig.json:", [configFile.error.messageText.messageText]);
     }
     return;
   }
-
-  logger?.info(`Using tsconfig.json at ${logger.filePath(path)}`);
 
   const options = ts.parseJsonConfigFileContent(configFile.config, ts.sys, configFileBasePath).options;
   return options;

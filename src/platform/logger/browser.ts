@@ -1,5 +1,8 @@
 import { lineEndings } from "unwritten:platform/os/browser";
 
+import type { DefaultContext } from "unwritten:type-definitions/context";
+import type { Logger } from "unwritten:type-definitions/platform";
+
 
 export module logger {
 
@@ -8,31 +11,57 @@ export module logger {
   }
 
   export function warn(message: string): void;
-  export function warn(title: string, body: string[]): void;
-  export function warn(title: string, badge: string, body: string[]): void;
-  export function warn(titleOrMessage: string, badgeOrBody?: string[] | string, bodyOrUndefined?: string[]): void {
-    const badge = typeof badgeOrBody === "string" ? badgeOrBody : "warn";
-    const body = typeof badgeOrBody === "object" ? badgeOrBody : bodyOrUndefined;
-    const bodyMessages = body ?? [];
+  export function warn(title: string, message: string[]): void;
+  export function warn(title: string, label: string, message: string[]): void;
+  export function warn(titleOrMessage: string, labelOrMessage?: string[] | string, messageOrUndefined?: string[]): void {
+    const label = typeof labelOrMessage === "string" ? labelOrMessage : "warn";
+    const message = typeof labelOrMessage === "object" ? labelOrMessage : messageOrUndefined;
 
-    const title = `${badge}: ${titleOrMessage}`;
-    const messages = [title, ...bodyMessages].join(lineEndings);
+    const title = `${label}: ${titleOrMessage}`;
+    const messages = [title, ...message ?? []].join(lineEndings);
 
     console.warn(messages);
   }
 
   export function info(message: string): void;
-  export function info(title: string, body: string[]): void;
-  export function info(title: string, badge: string, body: string[]): void;
-  export function info(titleOrMessage: string, badgeOrBody?: string[] | string, bodyOrUndefined?: string[]): void {
-    const badge = typeof badgeOrBody === "string" ? badgeOrBody : "info";
-    const body = typeof badgeOrBody === "object" ? badgeOrBody : bodyOrUndefined;
-    const bodyMessages = body ?? [];
+  export function info(title: string, message: string[]): void;
+  export function info(title: string, label: string, message: string[]): void;
+  export function info(titleOrMessage: string, labelOrMessage?: string[] | string, messageOrUndefined?: string[]): void {
+    const label = typeof labelOrMessage === "string" ? labelOrMessage : "info";
+    const message = typeof labelOrMessage === "object" ? labelOrMessage : messageOrUndefined;
 
-    const title = `${badge}: ${titleOrMessage}`;
-    const messages = [title, ...bodyMessages].join(lineEndings);
+    const title = `${label}: ${titleOrMessage}`;
+    const messages = [title, ...message ?? []].join(lineEndings);
 
     console.log(messages);
+  }
+
+  export function stats(ctx: DefaultContext, stats: Logger["_stats"]): void {
+
+    ctx.dependencies.logger!._stats ??= {};
+
+    const entryPoints = stats?.entryPoints ?? ctx.dependencies.logger!._stats.entryPoints;
+    const tsconfig = stats?.tsconfig ?? ctx.dependencies.logger!._stats.tsconfig;
+    const unwritten = stats?.unwritten ?? ctx.dependencies.logger!._stats.unwritten;
+
+    ctx.dependencies.logger!._stats.entryPoints = entryPoints;
+    ctx.dependencies.logger!._stats.tsconfig = tsconfig;
+    ctx.dependencies.logger!._stats.unwritten = unwritten;
+
+    if(!entryPoints || !tsconfig || !unwritten){
+      return;
+    }
+
+    const formattedEntryPoints = entryPoints.map(entryFilePath => filePath(entryFilePath));
+    const formattedTSConfigPath = filePath(tsconfig);
+    const formattedUnwrittenPath = filePath(unwritten);
+
+    console.log({
+      entryPoints: formattedEntryPoints,
+      tsconfig: formattedTSConfigPath,
+      unwritten: formattedUnwrittenPath
+    });
+
   }
 
   export function red(message: string): string {

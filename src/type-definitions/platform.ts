@@ -1,3 +1,6 @@
+import type { DefaultContext } from "unwritten:type-definitions/context";
+
+
 export type Platform = "browser" | "node";
 
 // os
@@ -44,19 +47,25 @@ export type Logger = {
   filePath(path: string): string;
   gray(message: string): string;
   green(message: string): string;
-  info(title: string, body: string[]): void;
-  info(title: string, badge: string, body: string[]): void;
-  info(message: string): void;
+  info(message: string[] | string): void;
+  info(title: string, message: string[] | string): void;
+  info(title: string, label: string, message: string[] | string): void;
   italic(message: string): string;
   log(message: string): void;
   red(message: string): string;
+  stats(ctx: DefaultContext, stats: Logger["_stats"]): void;
   strikethrough(message: string): string;
   underline(message: string): string;
-  warn(message: string): void;
-  warn(title: string, badge: string, body: string[]): void;
-  warn(title: string, body: string[]): void;
+  warn(message: string[] | string): void;
+  warn(title: string, message: string[] | string): void;
+  warn(title: string, label: string, message: string[] | string): void;
   white(message: string): string;
   yellow(message: string): string;
+  _stats?: {
+    entryPoints?: string[];
+    tsconfig?: string;
+    unwritten?: string;
+  };
 };
 
 // fs

@@ -3,41 +3,70 @@ import { stdout } from "node:process";
 import { lineEndings } from "unwritten:platform/os/node";
 import { name, version } from "unwritten:utils/package-json.entry";
 
+import type { WriteStream } from "node:tty";
+
+import type { DefaultContext } from "unwritten:type-definitions/context";
+import type { Logger } from "unwritten:type-definitions/platform";
+
+
+const modifiers = {
+  bgCyan: "\x1b[46m",
+  bgGreen: "\x1b[42m",
+  bgRed: "\x1b[41m",
+  bgYellow: "\x1b[43m",
+  fgCyan: "\x1b[36m",
+  fgGray: "\x1b[2m",
+  fgGreen: "\x1b[32m",
+  fgRed: "\x1b[31m",
+  fgWhite: "\x1b[37m",
+  fgYellow: "\x1b[33m",
+  reset: "\x1b[0m",
+  textBold: "\x1b[1m",
+  textItalic: "\x1b[3m",
+  textStrikethrough: "\x1b[9m",
+  textUnderline: "\x1b[4m"
+} as const;
+
 
 export namespace logger {
 
-  const _fgGreen = "\x1b[32m";
-  const _fgYellow = "\x1b[33m";
-  const _fgRed = "\x1b[31m";
-  const _fgWhite = "\x1b[37m";
-  const _fgCyan = "\x1b[36m";
-  const _fgGray = "\x1b[2m";
-
-  const _bgGreen = "\x1b[42m";
-  const _bgYellow = "\x1b[43m";
-  const _bgRed = "\x1b[41m";
-  const _bgCyan = "\x1b[46m";
-
-  const _bold = "\x1b[1m";
-  const _underline = "\x1b[4m";
-  const _italic = "\x1b[3m";
-  const _strikethrough = "\x1b[9m";
-
-  const _reset = "\x1b[0m";
-
+  const {
+    bgCyan,
+    bgGreen,
+    bgRed,
+    bgYellow,
+    fgCyan,
+    fgGray,
+    fgGreen,
+    fgRed,
+    fgWhite,
+    fgYellow,
+    reset,
+    textBold,
+    textItalic,
+    textStrikethrough,
+    textUnderline
+  } = modifiers;
 
   process.on("uncaughtException", err => {
 
     const stackOnly = err.stack?.replace(`${err.name}: ${err.message}`, "");
     const systemInfo = getSystemInfo();
 
-    println(`${lineEndings}${_bgRed}${_bold} ${err.name} ${_reset} ${red([
-      err.message,
-      err.cause,
-      stackOnly,
-      ...systemInfo
-    ].filter(message => !!message)
-      .join(lineEndings))}`);
+    println(
+      `${lineEndings}${bgRed}${textBold} ${err.name} ${reset} ${
+        red(
+          [
+            err.message,
+            err.cause,
+            stackOnly,
+            ...systemInfo
+          ]
+            .filter(message => !!message)
+            .join(lineEndings)
+        )}`,
+      process.stderr
+    );
 
     process.exit(1);
 
@@ -45,7 +74,7 @@ export namespace logger {
 
 
   export function log(message: string): void {
-    println(`${_reset}${message}${_reset}`);
+    println(`${reset}${message}${reset}`);
   }
 
 
@@ -59,8 +88,48 @@ export namespace logger {
     const bodyMessages = body ? ["", ...body.map(message => `    ${message}`), ""] : [];
 
     println([
-      `${_bgYellow}${_bold} ${badge} ${_reset} ${titleOrMessage}`,
+      `${bgYellow}${textBold} ${badge} ${reset} ${titleOrMessage}`,
       ...bodyMessages
+    ].join(lineEndings));
+
+  }
+
+
+  export function stats(ctx: DefaultContext, stats: Logger["_stats"]): void {
+
+    ctx.dependencies.logger!._stats ??= {};
+
+    const entryPoints = stats?.entryPoints ?? ctx.dependencies.logger!._stats.entryPoints;
+    const tsconfig = stats?.tsconfig ?? ctx.dependencies.logger!._stats.tsconfig;
+    const unwritten = stats?.unwritten ?? ctx.dependencies.logger!._stats.unwritten;
+
+    ctx.dependencies.logger!._stats.entryPoints = entryPoints;
+    ctx.dependencies.logger!._stats.tsconfig = tsconfig;
+    ctx.dependencies.logger!._stats.unwritten = unwritten;
+
+    if(!entryPoints || !tsconfig || !unwritten){
+      return;
+    }
+
+    const formattedEntryPoints = entryPoints.map(entryFilePath => filePath(entryFilePath));
+    const formattedTSConfigPath = filePath(tsconfig);
+    const formattedUnwrittenPath = filePath(unwritten);
+
+    const table = simpleTable({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      "entry points:": formattedEntryPoints,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      "tsconfig:": formattedTSConfigPath,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      "unwritten:": formattedUnwrittenPath
+    })
+      .map(row => `    ${row}`);
+
+    println([
+      `${bgGreen}${textBold} ${name} ${reset}`,
+      "",
+      ...table,
+      ""
     ].join(lineEndings));
 
   }
@@ -76,7 +145,7 @@ export namespace logger {
     const bodyMessages = body ? ["", ...body.map(message => `    ${message}`), ""] : [];
 
     println([
-      `${_bgGreen}${_bold} ${badge} ${_reset} ${titleOrMessage}`,
+      `${bgGreen}${textBold} ${badge} ${reset} ${titleOrMessage}`,
       ...bodyMessages
     ].join(lineEndings));
 
@@ -85,70 +154,121 @@ export namespace logger {
 
   export function filePath(path: string): string {
     const cwd = process.cwd();
+
+    if(!path.startsWith(cwd)){
+      return path;
+    }
+
     const relativePath = path.replace(cwd, "");
-    return `${_fgGray}${cwd}${_reset}${relativePath}`;
+    return `${fgGray}${cwd}${reset}${relativePath}`;
   }
 
   // Colors
   export function red(message: string): string {
-    return `${_fgRed}${message}${_reset}`;
+    return `${fgRed}${message}${reset}`;
   }
 
   export function gray(message: string): string {
-    return `${_fgGray}${message}${_reset}`;
+    return `${fgGray}${message}${reset}`;
   }
 
   export function green(message: string): string {
-    return `${_fgGreen}${message}${_reset}`;
+    return `${fgGreen}${message}${reset}`;
   }
 
   export function yellow(message: string): string {
-    return `${_fgYellow}${message}${_reset}`;
+    return `${fgYellow}${message}${reset}`;
   }
 
   export function white(message: string): string {
-    return `${_fgWhite}${message}${_reset}`;
+    return `${fgWhite}${message}${reset}`;
   }
 
   export function cyan(message: string): string {
-    return `${_fgCyan}${message}${_reset}`;
+    return `${fgCyan}${message}${reset}`;
   }
 
   export function bold(message: string): string {
-    return `${_bold}${message}${_reset}`;
+    return `${textBold}${message}${reset}`;
   }
 
   export function underline(message: string): string {
-    return `${_underline}${message}${_reset}`;
+    return `${textUnderline}${message}${reset}`;
   }
 
   export function italic(message: string): string {
-    return `${_italic}${message}${_reset}`;
+    return `${textItalic}${message}${reset}`;
   }
 
   export function strikethrough(message: string): string {
-    return `${_strikethrough}${message}${_reset}`;
+    return `${textStrikethrough}${message}${reset}`;
   }
 
 }
 
-function getSystemInfo(): string[] {
+function getSystemInfo(ctx?: DefaultContext): string[] {
+
+  const systemInfo = [
+    `on ${name} v${version}`,
+    ...ctx?.dependencies.ts
+      ? [`with TypeScript ${ctx.dependencies.ts.version}`]
+      : [],
+    `on ${process.release.name} ${process.version}`,
+    `${process.platform} ${process.arch}`,
+    `in ${process.uptime().toFixed(2)}s`
+  ].join(", ");
+
   const indentation = " ".repeat(4);
-  const systemInfo = `on ${name} v${version}, ${process.release.name} ${process.version}, ${process.platform} ${process.arch}, in ${process.uptime().toFixed(2)}s`;
   const dash = "-".repeat(systemInfo.length);
+
   return [
     `${indentation}${dash}`,
     `${indentation}${systemInfo}`
   ];
+
 }
 
-function print(message: string): void {
-  stdout.write(message);
+function simpleTable(table: { [key: string]: string[] | string; }): string[] {
+  const maxLength = Object.keys(table).reduce((acc, key) => {
+    return Math.max(acc, key.length);
+  }, 0);
+
+  return Object.entries(table).reduce<string[]>((acc, [key, value]) => {
+    if(typeof value === "string"){
+      const paddedTitle = key.padEnd(maxLength);
+      acc.push(`${paddedTitle} ${value}`);
+    } else {
+      value.forEach((entry, index) => {
+        const title = index === 0 ? key : "";
+        const paddedTitle = title.padEnd(maxLength);
+        acc.push(`${paddedTitle} ${entry}`);
+      });
+    }
+    return acc;
+  }, []);
 }
 
-function println(message: string): void {
-  print(message);
-  print(lineEndings);
+function print(message: string, output: WriteStream = stdout): void {
+  if(!supportsColor(output)){
+    message = forceUnstyled(message);
+  }
+
+  output.write(message);
+}
+
+function println(message: string, output?: WriteStream): void {
+  print(message, output);
+  print(lineEndings, output);
+}
+
+function supportsColor(output: WriteStream): boolean {
+  return "hasColors" in output && output.hasColors(16);
+}
+
+function forceUnstyled(message: string): string {
+  return Object.values(modifiers).reduce((acc, modifier) => {
+    return acc.replaceAll(modifier, "");
+  }, message);
 }
 
 export default logger;
