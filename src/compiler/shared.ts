@@ -9,7 +9,9 @@ export function getDefaultCompilerOptions(ctx: DefaultContext): CompilerOptions 
   const { ts } = ctx.dependencies;
   return {
     ...ts.getDefaultCompilerOptions(),
-    allowJs: true
+    allowJs: true,
+    checkJs: true,
+    noEmit: true
   };
 }
 
