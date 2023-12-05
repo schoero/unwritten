@@ -40,7 +40,6 @@
   // Markdown
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
-    "editor.formatOnSave": true,
     "editor.rulers": [
       40,
       80,
