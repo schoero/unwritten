@@ -60,7 +60,8 @@ import type {
 
 export function convertSignatureEntityToAnchor(ctx: MarkupRenderContext, signatureEntity: ExplicitSignatureEntity, displayName?: string): AnchorNode {
 
-  const id = signatureEntity.declarationId;
+  // TODO: Workaround collisions with symbol ids
+  const id = Number.MAX_SAFE_INTEGER - signatureEntity.declarationId;
 
   const convertedSignatureForDocumentation = convertSignature(ctx, signatureEntity, "documentation");
   const renderedSignatureForDocumentation = renderNode(ctx, convertedSignatureForDocumentation);
@@ -94,7 +95,8 @@ export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContex
 
 export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContext, signatureEntity: ExplicitSignatureEntity): ConvertedSignatureEntityForDocumentation {
 
-  const declarationId = signatureEntity.declarationId;
+  // TODO: Workaround collisions with symbol ids
+  const declarationId = Number.MAX_SAFE_INTEGER - signatureEntity.declarationId;
   const symbolId = signatureEntity.symbolId;
 
   const signature = convertSignature(ctx, signatureEntity, "documentation");

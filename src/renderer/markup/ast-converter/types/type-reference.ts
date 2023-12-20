@@ -64,6 +64,8 @@ export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContext, type
 
   const id = isSignatureEntity(typeReferenceType.target)
     ? typeReferenceType.target.declarationId
+      ? Number.MAX_SAFE_INTEGER - typeReferenceType.target.declarationId
+      : undefined
     : typeReferenceType.target.symbolId;
 
   if(!id){
