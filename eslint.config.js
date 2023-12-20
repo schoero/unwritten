@@ -3,7 +3,6 @@ import eslintPluginSortExports from "eslint-plugin-sort-exports";
 import eslintPluginVitest from "eslint-plugin-vitest";
 
 import eslintPluginTypeScript from "@typescript-eslint/eslint-plugin";
-import eslintParserTypeScript from "@typescript-eslint/parser";
 
 import sharedRules from "@schoero/configs/eslint";
 
@@ -46,19 +45,13 @@ export default [
 
   {
     files: ["**/*.ts"],
-    languageOptions: {
-      parser: eslintParserTypeScript,
-      parserOptions: {
-        project: "./tsconfig.json"
-      }
-    },
     plugins: {
-      "eslint-plugin-ts": eslintPluginTypeScript,
+      "eslint-plugin-typescript": eslintPluginTypeScript,
       "eslint-plugin-vitest": eslintPluginVitest
     },
     rules: {
-      "eslint-plugin-ts/no-duplicate-type-constituents": "off",
-      "eslint-plugin-ts/no-restricted-imports": ["error", {
+      "eslint-plugin-typescript/no-duplicate-type-constituents": "off",
+      "eslint-plugin-typescript/no-restricted-imports": ["error", {
         patterns: [
           ...indexImports,
           ...dependencyInjection
@@ -69,9 +62,6 @@ export default [
   },
   {
     files: ["schemas/renderer/config.json"],
-    languageOptions: {
-      parser: eslintPluginJsonc
-    },
     plugins: {
       "eslint-plugin-jsonc": eslintPluginJsonc
     },
@@ -96,17 +86,11 @@ export default [
     files: [
       "**/platform/**/browser.ts"
     ],
-    languageOptions: {
-      parser: eslintParserTypeScript,
-      parserOptions: {
-        project: "./tsconfig.json"
-      }
-    },
     plugins: {
-      "eslint-plugin-ts": eslintPluginTypeScript
+      "eslint-plugin-typescript": eslintPluginTypeScript
     },
     rules: {
-      "eslint-plugin-ts/no-restricted-imports": ["error", {
+      "eslint-plugin-typescript/no-restricted-imports": ["error", {
         patterns: [
           {
             allowTypeImports: true,
@@ -122,17 +106,11 @@ export default [
     files: [
       "**/platform/**/node.ts"
     ],
-    languageOptions: {
-      parser: eslintParserTypeScript,
-      parserOptions: {
-        project: "./tsconfig.json"
-      }
-    },
     plugins: {
-      "eslint-plugin-ts": eslintPluginTypeScript
+      "eslint-plugin-typescript": eslintPluginTypeScript
     },
     rules: {
-      "eslint-plugin-ts/no-restricted-imports": ["error", {
+      "eslint-plugin-typescript/no-restricted-imports": ["error", {
         patterns: [
           {
             allowTypeImports: true,
@@ -151,17 +129,11 @@ export default [
       "**/*.test-d.ts",
       "**/tests/**/*.ts"
     ],
-    languageOptions: {
-      parser: eslintParserTypeScript,
-      parserOptions: {
-        project: "./tsconfig.json"
-      }
-    },
     plugins: {
-      "eslint-plugin-ts": eslintPluginTypeScript
+      "eslint-plugin-typescript": eslintPluginTypeScript
     },
     rules: {
-      "eslint-plugin-ts/no-restricted-imports": ["error", {
+      "eslint-plugin-typescript/no-restricted-imports": ["error", {
         patterns: [
           {
             allowTypeImports: false,
@@ -197,17 +169,11 @@ export default [
     files: [
       "**/renderer/markup/html/**/*.ts"
     ],
-    languageOptions: {
-      parser: eslintParserTypeScript,
-      parserOptions: {
-        project: "./tsconfig.json"
-      }
-    },
     plugins: {
-      "eslint-plugin-ts": eslintPluginTypeScript
+      "eslint-plugin-typescript": eslintPluginTypeScript
     },
     rules: {
-      "eslint-plugin-ts/no-restricted-imports": ["error", {
+      "eslint-plugin-typescript/no-restricted-imports": ["error", {
         patterns: [
           ...dependencyInjection,
           ...indexImports,
@@ -228,17 +194,11 @@ export default [
     files: [
       "**/renderer/markup/markdown/**/*.ts"
     ],
-    languageOptions: {
-      parser: eslintParserTypeScript,
-      parserOptions: {
-        project: "./tsconfig.json"
-      }
-    },
     plugins: {
-      "eslint-plugin-ts": eslintPluginTypeScript
+      "eslint-plugin-typescript": eslintPluginTypeScript
     },
     rules: {
-      "eslint-plugin-ts/no-restricted-imports": ["error", {
+      "eslint-plugin-typescript/no-restricted-imports": ["error", {
         patterns: [
           ...dependencyInjection,
           ...indexImports,

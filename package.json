@@ -68,7 +68,7 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@schoero/configs": "^0.0.0-beta.2",
+    "@schoero/configs": "^0.0.0-beta.5",
     "@types/minimatch": "^5.1.2",
     "@types/node": "^20.10.5",
     "changelogen": "^0.5.5",
