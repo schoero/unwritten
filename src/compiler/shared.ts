@@ -32,7 +32,7 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
 
   diagnostics.filter(
     diagnostic => diagnostic.category === ts.DiagnosticCategory.Error ||
-     diagnostic.category === ts.DiagnosticCategory.Warning
+    diagnostic.category === ts.DiagnosticCategory.Warning
   ).forEach(diagnostic => {
 
     const color = diagnostic.category === ts.DiagnosticCategory.Error

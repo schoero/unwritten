@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/array-type */
+/* eslint-disable eslint-plugin-typescript/array-type */
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withLockedType } from "unwritten:interpreter/utils/ts.js";
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id";

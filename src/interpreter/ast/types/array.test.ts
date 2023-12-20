@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/array-type */
+/* eslint-disable eslint-plugin-typescript/array-type */
 
 import { assert, describe, expect, it } from "vitest";
 

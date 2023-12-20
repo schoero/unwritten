@@ -45,7 +45,7 @@ function translate(ctx: MarkupRenderContext, key: TranslationKeys, options?: Tra
     translationKey = getTranslationKey(key);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Purposefully returning the key
+  // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition -- Purposefully returning the key
   const translation = translations[translationKey] ?? key;
 
   if(options?.capitalize){

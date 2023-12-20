@@ -26,13 +26,13 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
 
     const type = getTypeByType(ctx, typeArgument);
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const symbolId = typeArgument.symbol && getSymbolId(ctx, typeArgument.symbol);
     const typeId = getTypeId(ctx, typeArgument);
     const elementFlag = typeReference.target.elementFlags[index];
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const optional = (elementFlag && elementFlag & ts.ElementFlags.Optional) !== 0;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const rest = (elementFlag && elementFlag & ts.ElementFlags.Rest) !== 0;
     const labelDeclaration = typeReference.target.labeledElementDeclarations?.[index];
     const name = labelDeclaration && getNameByDeclaration(ctx, labelDeclaration);

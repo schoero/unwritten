@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable eslint-plugin-typescript/naming-convention */
 import { beforeAll, expect, it, vitest } from "vitest";
 
 import { createConfig } from "unwritten:config/config";

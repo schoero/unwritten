@@ -23,13 +23,12 @@ import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> => withLockedSymbol(ctx, symbol, () => {
 
-  const declarations = symbol.declarations?.flatMap(declaration =>
-    isFunctionLikeDeclaration(ctx, declaration) ||
-      isCallSignatureDeclaration(ctx, declaration) ||
-      isConstructSignatureDeclaration(ctx, declaration) ||
-      isMethodSignatureDeclaration(ctx, declaration)
-      ? declaration
-      : []);
+  const declarations = symbol.declarations?.flatMap(declaration => isFunctionLikeDeclaration(ctx, declaration) ||
+    isCallSignatureDeclaration(ctx, declaration) ||
+    isConstructSignatureDeclaration(ctx, declaration) ||
+    isMethodSignatureDeclaration(ctx, declaration)
+    ? declaration
+    : []);
 
   const signatureDeclarations = declarations?.filter(declaration => functionOverloadDeclarationFilter(ctx, declaration, symbol));
 

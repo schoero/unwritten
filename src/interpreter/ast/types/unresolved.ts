@@ -16,7 +16,7 @@ export function createUnresolvedType(ctx: InterpreterContext, type: Type): Unres
 
   const kind = TypeKind.Unresolved;
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
   const symbolId = type.symbol ? getSymbolId(ctx, type.symbol) : undefined;
   const typeId = getTypeId(ctx, type);
   const position = getPositionByType(ctx, type);

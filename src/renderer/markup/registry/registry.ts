@@ -160,7 +160,7 @@ export function isAnchor(input: any): input is AnchorTarget {
 
 export function createCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
   const sourceFile: SourceFile = {
@@ -182,7 +182,7 @@ export function createCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEnti
 
 export function setCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEntity: SourceFileEntity): void {
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
   assert(index !== -1, `Source file ${sourceFileEntity.path} is not registered`);
@@ -204,9 +204,7 @@ function findRegisteredAnchorData(ctx: MarkupRenderContext, id: ID | ID[]): { an
     }
 
     for(const [anchorId, linkIds] of sourceFile.links.entries()){
-      const index = linkIds.findIndex(storedIds =>
-        storedIds.some(storedId =>
-          ids.includes(storedId)));
+      const index = linkIds.findIndex(storedIds => storedIds.some(storedId => ids.includes(storedId)));
       if(index !== -1){
         return { anchorId, index, sourceFile };
       }

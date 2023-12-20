@@ -9,10 +9,10 @@ export interface RenderOutput {
 }
 
 export interface Renderer {
-  /** The file extension the renderer generates */
+  /** The file extension the renderer generates. */
   fileExtension: FileExtension;
-  /** The name of the render extension */
+  /** The name of the render extension. */
   name: string;
-  /** The render function */
+  /** The render function. */
   render(ctx: RenderContext, sourceFileEntities: SourceFileEntity[]): RenderOutput;
 }

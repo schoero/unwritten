@@ -39,9 +39,10 @@ export function renderNode(ctx: MarkupRenderContext, node: ASTNode): string {
 }
 
 /**
- * Validates that the given object is a valid renderer object
- * @param renderer The renderer object to validate
- * @throws {Error} If the given object is not a valid renderer object
+ * Validates that the given object is a valid renderer object.
+ *
+ * @param renderer The renderer object to validate.
+ * @throws {Error} If the given object is not a valid renderer object.
  */
 function validateRenderer(renderer: unknown): asserts renderer is Renderer {
   assert(isObject(renderer), "Renderer must be an object that implements the `Renderer` interface");

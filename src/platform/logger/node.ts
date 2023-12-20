@@ -116,11 +116,11 @@ export namespace logger {
     const formattedUnwrittenPath = filePath(unwritten);
 
     const table = simpleTable({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
+      // eslint-disable-next-line eslint-plugin-typescript/naming-convention
       "entry points:": formattedEntryPoints,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
+      // eslint-disable-next-line eslint-plugin-typescript/naming-convention
       "tsconfig:": formattedTSConfigPath,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
+      // eslint-disable-next-line eslint-plugin-typescript/naming-convention
       "unwritten:": formattedUnwrittenPath
     })
       .map(row => `    ${row}`);

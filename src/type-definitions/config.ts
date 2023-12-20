@@ -12,7 +12,7 @@ export interface BaseConfig {
   externalTypes?: ExternalTypes;
   /** Interpreter configuration. */
   interpreterConfig?: InterpreterConfig;
-  /** Output dir */
+  /** Output dir. */
   outputDir?: string;
   /** Render configuration. */
   renderConfig?: RenderConfig;
@@ -21,7 +21,7 @@ export interface BaseConfig {
 export interface BrowserConfig extends BaseConfig {}
 
 export interface NodeConfig extends BaseConfig {
-  /** Extend another config */
+  /** Extend another config. */
   extends?: string;
 }
 

@@ -9,7 +9,7 @@
           "type": "string"
         },
         "extends": {
-          "description": "Extend another config",
+          "description": "Extend another config.",
           "type": "string"
         },
         "externalTypes": {
@@ -21,7 +21,7 @@
           "description": "Interpreter configuration."
         },
         "outputDir": {
-          "description": "Output dir",
+          "description": "Output dir.",
           "type": "string"
         },
         "renderConfig": {
@@ -84,7 +84,7 @@
       "additionalProperties": false,
       "properties": {
         "indentation": {
-          "description": "Indentation characters",
+          "description": "Indentation characters.",
           "type": "string"
         },
         "inlineTitleEncapsulation": {
@@ -100,7 +100,7 @@
           "description": "Defines how inline titles should be encapsulated in the rendered output."
         },
         "newLine": {
-          "description": "Newline character",
+          "description": "Newline character.",
           "enum": [
             "\n",
             "\r\n",
@@ -233,7 +233,7 @@
         },
         "translations": {
           "additionalProperties": false,
-          "description": "Translations for otherwise hardcoded labels",
+          "description": "Translations for otherwise hardcoded labels.",
           "properties": {
             "abstract": {
               "type": "string"
@@ -529,11 +529,11 @@
       "additionalProperties": false,
       "properties": {
         "includeIds": {
-          "description": "Whether ids should be included in the output",
+          "description": "Whether ids should be included in the output.",
           "type": "boolean"
         },
         "indentation": {
-          "description": "Indentation characters",
+          "description": "Indentation characters.",
           "type": "string"
         }
       },
@@ -555,10 +555,10 @@
               "type": "boolean"
             }
           ],
-          "description": "Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes"
+          "description": "Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes."
         },
         "indentation": {
-          "description": "Indentation characters",
+          "description": "Indentation characters.",
           "type": "string"
         },
         "inlineTitleEncapsulation": {
@@ -574,7 +574,7 @@
           "description": "Defines how inline titles should be encapsulated in the rendered output."
         },
         "newLine": {
-          "description": "Newline character",
+          "description": "Newline character.",
           "enum": [
             "\n",
             "\r\n",
@@ -715,7 +715,7 @@
         },
         "translations": {
           "additionalProperties": false,
-          "description": "Translations for otherwise hardcoded labels",
+          "description": "Translations for otherwise hardcoded labels.",
           "properties": {
             "abstract": {
               "type": "string"

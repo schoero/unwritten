@@ -64,16 +64,15 @@ export function compile(code: CompilerInput | string, tsconfig?: ts.CompilerOpti
     getDefaultLibFileName: () => ts.getDefaultLibFilePath(compilerOptions),
     getDirectories: () => [],
     getNewLine: () => "\n",
-    getSourceFile: filePath =>
-      filePath in sourceFiles
-        ? sourceFiles[filePath]
-        : ts.createSourceFile(
-          filePath,
-          existsSync(filePath)
-            ? readFileSync(filePath)
-            : readFileSyncOriginal(filePath),
-          ts.ScriptTarget.Latest
-        ),
+    getSourceFile: filePath => filePath in sourceFiles
+      ? sourceFiles[filePath]
+      : ts.createSourceFile(
+        filePath,
+        existsSync(filePath)
+          ? readFileSync(filePath)
+          : readFileSyncOriginal(filePath),
+        ts.ScriptTarget.Latest
+      ),
     readFile: filePath => {
       return existsSync(filePath)
         ? readFileSync(filePath)

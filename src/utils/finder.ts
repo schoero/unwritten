@@ -5,6 +5,7 @@ import type { DefaultNodeContext } from "unwritten:type-definitions/context";
 
 /**
  * Finds a file in a directory or its parent directories.
+ *
  * @param ctx The render context.
  * @param fileName Name or array of names of the file to find.
  * @param entryPath Entry point for the search to begin.

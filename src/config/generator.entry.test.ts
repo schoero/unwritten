@@ -28,7 +28,7 @@ scope("Integration", "generateConfig", () => {
     it("should create a config file at the provided location", async () => {
       const path = "/some/random/path/.unwritten.json";
       await generateConfig(path, { silent: true });
-      expect(existsSync(`${path}`)).toBe(true);
+      expect(existsSync(path)).toBe(true);
     });
 
   }

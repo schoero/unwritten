@@ -50,8 +50,8 @@ export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Sym
   }
 
   if(!isExportSpecifierSymbol(ctx, symbol) &&
-  !isImportSpecifierSymbol(ctx, symbol) &&
-  !isImportClauseSymbol(ctx, symbol)){
+    !isImportSpecifierSymbol(ctx, symbol) &&
+    !isImportClauseSymbol(ctx, symbol)){
     return symbol;
   }
 

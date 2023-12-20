@@ -80,7 +80,7 @@ const markdownRenderer: MarkdownRenderer = {
   name: BuiltInRenderers.Markdown,
 
 
-  // eslint-disable-next-line sort-keys/sort-keys-fix
+  // eslint-disable-next-line eslint-plugin-sort-keys/sort-keys-fix
   initializeContext: (ctx: MarkdownRenderContext) => {
 
     ctx.links = [];

@@ -19,18 +19,18 @@ import type { MultilineType, Type } from "unwritten:interpreter/type-definitions
 
 export function isMultilineType(type: Type): type is MultilineType {
   return isArrayType(type) ||
-  isObjectType(type) ||
-  isObjectLiteralType(type) ||
-  isFunctionType(type) ||
-  isTypeLiteralType(type) ||
-  isClassType(type) ||
-  isConditionalType(type) ||
-  isInterfaceType(type) ||
-  isTypeReferenceType(type) ||
-  isMultilineUnionType(type) ||
-  isIntersectionType(type) ||
-  isIndexedAccessType(type) ||
-  isTupleType(type);
+    isObjectType(type) ||
+    isObjectLiteralType(type) ||
+    isFunctionType(type) ||
+    isTypeLiteralType(type) ||
+    isClassType(type) ||
+    isConditionalType(type) ||
+    isInterfaceType(type) ||
+    isTypeReferenceType(type) ||
+    isMultilineUnionType(type) ||
+    isIntersectionType(type) ||
+    isIndexedAccessType(type) ||
+    isTupleType(type);
 }
 
 export function isMultilineUnionType(type: Type) {

@@ -131,7 +131,7 @@ const path = {
     const [fullDos, dosRoot] = path.match(/^\\?([A-Za-z]:\\|^\\)/) ?? [];
     const [fullPosix, posixRoot] = path.match(/^\/?(\/)/) ?? [];
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const root = uncRoot ?? dosRoot ?? posixRoot ?? "";
     const fullRoot = fullUnc ?? fullDos ?? fullPosix ?? "";
 
@@ -246,12 +246,12 @@ const path = {
 
     const pathWithCorrectedSeparators = pathWithoutProtocols
       .replace(new RegExp(`\\${dosSeparator}`, "g"), separator)
-      .replace(new RegExp(`${posixSeparator}`, "g"), separator);
+      .replace(new RegExp(posixSeparator, "g"), separator);
 
     const { pathWithoutRoot, root } = extractRoot(deps, pathWithCorrectedSeparators);
     const correctedRoot = root
       .replace(new RegExp(`\\${dosSeparator}`, "g"), separator)
-      .replace(new RegExp(`${posixSeparator}`, "g"), separator);
+      .replace(new RegExp(posixSeparator, "g"), separator);
 
     const pathWithNormalizedSeparators = pathWithoutRoot
       .replace(new RegExp(`\\${dosSeparator}+`, "g"), separator)

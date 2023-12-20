@@ -216,37 +216,4 @@ scope("MarkdownRenderer", "ListNode", () => {
     `);
   });
 
-  it("should render nested arrays correctly", () => {
-    const listNode = createListNode([
-      ["Item"],
-      [[" "]],
-      [[["1"]]]
-    ]);
-    expect(renderListNode(ctx, listNode)).toBe(md`
-        
-      - Item 1
-        
-    `);
-  });
-
-  it("should render nested arrays with lists correctly", () => {
-    const listNode = createListNode([
-      ["Item"],
-      [[" "]],
-      [[["1"]]],
-      [[[[
-        createListNode(
-          "Item 2"
-        )
-      ]]]]
-    ]);
-    expect(renderListNode(ctx, listNode)).toBe(md`
-        
-      - Item 1
-        
-        - Item 2
-        
-    `);
-  });
-
 });

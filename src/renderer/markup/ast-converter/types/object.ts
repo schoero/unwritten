@@ -63,33 +63,27 @@ export function convertObjectTypeMultiline(
   );
 
   const convertedCallSignatures = callSignatures.map(
-    callSignature =>
-      convertSignatureEntityForType(ctx, callSignature)
+    callSignature => convertSignatureEntityForType(ctx, callSignature)
   );
 
   const convertedProperties = properties.map(
-    propertyEntity =>
-      convertPropertyEntityForType(ctx, propertyEntity)
+    propertyEntity => convertPropertyEntityForType(ctx, propertyEntity)
   );
 
   const convertedEventProperties = events.map(
-    eventPropertyEntity =>
-      convertEventPropertyEntityForType(ctx, eventPropertyEntity)
+    eventPropertyEntity => convertEventPropertyEntityForType(ctx, eventPropertyEntity)
   );
 
   const convertedMethods = methods.flatMap(
-    methodEntity =>
-      convertFunctionLikeEntityForType(ctx, methodEntity)
+    methodEntity => convertFunctionLikeEntityForType(ctx, methodEntity)
   );
 
   const convertedSetters = setters.flatMap(
-    setterEntity =>
-      convertFunctionLikeEntityForType(ctx, setterEntity)
+    setterEntity => convertFunctionLikeEntityForType(ctx, setterEntity)
   );
 
   const convertedGetters = getters.flatMap(
-    getterEntity =>
-      convertFunctionLikeEntityForType(ctx, getterEntity)
+    getterEntity => convertFunctionLikeEntityForType(ctx, getterEntity)
   );
 
   return createMultilineNode(

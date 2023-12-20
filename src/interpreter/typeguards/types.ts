@@ -87,15 +87,15 @@ export function isEnumType(ctx: InterpreterContext, type: Type): boolean {
 export function isErrorType(ctx: InterpreterContext, type: Type): boolean {
   const { ts } = ctx.dependencies;
   return (type.flags & ts.TypeFlags.Any) !== 0 &&
-  "intrinsicName" in type && type.intrinsicName === "error";
+    "intrinsicName" in type && type.intrinsicName === "error";
 }
 
 export function isFunctionLikeType(ctx: InterpreterContext, type: Type): boolean {
   const { ts } = ctx.dependencies;
   return isObjectType(ctx, type) &&
     type.getCallSignatures().length > 0 &&
-    type.getConstructSignatures().length === 0 &&
-    type.getProperties().length === 0;
+      type.getConstructSignatures().length === 0 &&
+        type.getProperties().length === 0;
 }
 
 export function isGenericType(ctx: InterpreterContext, type: Type): type is GenericType {
@@ -217,8 +217,8 @@ export function isTupleTypeReferenceType(ctx: InterpreterContext, type: Type): t
 
 export function isType(ctx: InterpreterContext, typeNodeOrSymbolOrDeclarationOrType: Declaration | Symbol | Type | TypeNode): typeNodeOrSymbolOrDeclarationOrType is Type {
   return !isSymbol(ctx, typeNodeOrSymbolOrDeclarationOrType) &&
-  !isDeclaration(ctx, typeNodeOrSymbolOrDeclarationOrType) &&
-  !isTypeNode(ctx, typeNodeOrSymbolOrDeclarationOrType);
+    !isDeclaration(ctx, typeNodeOrSymbolOrDeclarationOrType) &&
+    !isTypeNode(ctx, typeNodeOrSymbolOrDeclarationOrType);
 }
 
 export function isTypeLiteralType(ctx: InterpreterContext, type: Type): type is ObjectType {

@@ -154,7 +154,7 @@ function convertParameterEntityForDocumentation(ctx: MarkupRenderContext, parame
   const description = parameterEntity.description && convertDescriptionForType(ctx, parameterEntity.description);
   const rest = parameterEntity.rest === true && encapsulate(translate("rest"), renderConfig.tagEncapsulation);
   const optional = (parameterEntity.optional === true || renderConfig.renderDefaultValuesAsOptional && parameterEntity.initializer) &&
-   encapsulate(translate("optional"), renderConfig.tagEncapsulation);
+    encapsulate(translate("optional"), renderConfig.tagEncapsulation);
   const initializer = parameterEntity.initializer && convertInitializerForType(ctx, parameterEntity.initializer);
 
   const { inlineType, multilineType } = convertType(ctx, parameterEntity.type);

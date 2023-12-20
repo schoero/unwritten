@@ -125,9 +125,10 @@ function isFile(object: VirtualFS | string): object is string {
 }
 
 /**
- * Get the containing virtual directory of a file by path
- * @param path The posix path to the file
- * @returns The containing virtual directory of the file
+ * Get the containing virtual directory of a file by path.
+ *
+ * @param path The posix path to the file.
+ * @returns The containing virtual directory of the file.
  */
 function getContainingDirectoryByPath(path: string) {
 

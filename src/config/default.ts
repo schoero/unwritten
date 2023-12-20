@@ -1,5 +1,5 @@
-/* eslint-disable sort-keys/sort-keys-fix */
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable eslint-plugin-sort-keys/sort-keys-fix */
+/* eslint-disable eslint-plugin-typescript/naming-convention */
 import { TypeKind } from "unwritten:interpreter/enums/type";
 
 import type { ExternalTypes, InterpreterConfig } from "unwritten:type-definitions/config";

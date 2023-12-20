@@ -170,10 +170,11 @@ export function getTypeByDeclaration(ctx: InterpreterContext, declaration: Decla
 }
 /**
  * Overrides the type of a type reference with the resolved type.
- * @param ctx The interpreter context
- * @param resolvedType The resolved type
- * @param declaredType The declared type
- * @returns The type to use
+ *
+ * @param ctx The interpreter context.
+ * @param resolvedType The resolved type.
+ * @param declaredType The declared type.
+ * @returns The type to use.
  */
 
 export function getTypeByResolvedAndDeclaredType(ctx: InterpreterContext, resolvedType: ResolvedType, declaredType?: DeclaredType): Type {

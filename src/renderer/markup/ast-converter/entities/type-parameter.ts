@@ -124,7 +124,7 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
     convertConstraintForType(ctx, typeParameterEntity.constraint);
 
   const initializer = typeParameterEntity.initializer &&
-     convertInitializerForType(ctx, typeParameterEntity.initializer);
+    convertInitializerForType(ctx, typeParameterEntity.initializer);
 
   const nameAnchor = !isMarkdownRenderContext(ctx) ||
     Array.isArray(ctx.config.renderConfig[ctx.renderer.name].allowedHTMLTags) &&

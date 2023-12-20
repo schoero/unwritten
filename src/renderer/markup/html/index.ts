@@ -75,7 +75,7 @@ const htmlRenderer: HTMLRenderer = {
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
 
-  // eslint-disable-next-line sort-keys/sort-keys-fix
+  // eslint-disable-next-line eslint-plugin-sort-keys/sort-keys-fix
   initializeContext: (ctx: HTMLRenderContext) => {
 
     ctx.links = [];

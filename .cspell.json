@@ -1,10 +1,10 @@
 {
-  "import": [
-    "@schoero/cspell-config"
-  ],
   "ignorePaths": [
     "schemas",
     "local"
+  ],
+  "import": [
+    "@schoero/configs/cspell"
   ],
   "words": [
     "anchortext",

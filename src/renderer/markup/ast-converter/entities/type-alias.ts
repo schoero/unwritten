@@ -113,7 +113,7 @@ function convertTypeAliasSignature(ctx: MarkupRenderContext, typeAliasEntity: Ty
     convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters);
 
   const encapsulatedTypeParameters = convertedTypeParameters &&
-     encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation);
+    encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation);
 
   return [
     entityPrefixWithContext,
