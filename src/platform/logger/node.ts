@@ -1,6 +1,6 @@
 import { stdout } from "node:process";
 
-import { lineEndings } from "unwritten:platform/os/node";
+import { homeDirectory, lineEndings } from "unwritten:platform/os/node";
 import { name, version } from "unwritten:utils/package-json.entry";
 
 import type { WriteStream } from "node:tty";
@@ -153,14 +153,19 @@ export namespace logger {
 
 
   export function filePath(path: string): string {
+
     const cwd = process.cwd();
+    const home = homeDirectory();
 
     if(!path.startsWith(cwd)){
       return path;
     }
 
     const relativePath = path.replace(cwd, "");
-    return `${fgGray}${cwd}${reset}${relativePath}`;
+    const simplifiedPath = cwd.replace(new RegExp(`^${home}`), "~");
+
+    return `${fgGray}${simplifiedPath}${reset}${relativePath}`;
+
   }
 
   // Colors
