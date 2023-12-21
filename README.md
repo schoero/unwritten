@@ -68,6 +68,9 @@ unwritten <path/to/entry-file.ts> [options]
 --silent                                # Disables any console output.
 -s
 
+--debug                                 # Enables verbose console output.
+-d
+
 --version                               # Returns the installed unwritten
 -v                                      # version.
 ```

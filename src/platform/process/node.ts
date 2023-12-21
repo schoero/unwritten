@@ -1,5 +1,5 @@
 import { sep } from "node:path";
-import { cwd as nodeCWD } from "node:process";
+import { cwd as nodeCWD, env as nodeENV } from "node:process";
 
 import type { Process } from "unwritten:type-definitions/platform";
 
@@ -10,11 +10,15 @@ const process: Process = {
     return currentWorkingDirectory.endsWith(sep)
       ? currentWorkingDirectory
       : `${currentWorkingDirectory}${sep}`;
+  },
+  env: {
+    DEBUG: nodeENV.DEBUG
   }
 };
 
 export const {
-  cwd
+  cwd,
+  env
 } = process;
 
 export default process;

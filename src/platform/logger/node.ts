@@ -1,6 +1,7 @@
 import { stdout } from "node:process";
 
 import { homeDirectory, lineEndings } from "unwritten:platform/os/node";
+import { env } from "unwritten:platform/process/node";
 import { name, version } from "unwritten:utils/package-json.entry";
 
 import type { WriteStream } from "node:tty";
@@ -78,6 +79,14 @@ export namespace logger {
   }
 
 
+  export function debug(message: string): void {
+    if(env.DEBUG === undefined){
+      return;
+    }
+    println(`${reset}${message}${reset}`);
+  }
+
+
   export function warn(message: string): void;
   export function warn(title: string, body: string[]): void;
   export function warn(title: string, badge: string, body: string[]): void;
@@ -102,21 +111,26 @@ export namespace logger {
     const entryPoints = stats?.entryPoints ?? ctx.dependencies.logger!._stats.entryPoints;
     const tsconfig = stats?.tsconfig ?? ctx.dependencies.logger!._stats.tsconfig;
     const unwritten = stats?.unwritten ?? ctx.dependencies.logger!._stats.unwritten;
+    const renderer = stats?.renderer ?? ctx.dependencies.logger!._stats.renderer;
 
     ctx.dependencies.logger!._stats.entryPoints = entryPoints;
     ctx.dependencies.logger!._stats.tsconfig = tsconfig;
     ctx.dependencies.logger!._stats.unwritten = unwritten;
+    ctx.dependencies.logger!._stats.renderer = renderer;
 
-    if(!entryPoints || !tsconfig || !unwritten){
+    if(!entryPoints || !tsconfig || !unwritten || !renderer){
       return;
     }
 
     const formattedEntryPoints = entryPoints.map(entryFilePath => filePath(entryFilePath));
     const formattedTSConfigPath = filePath(tsconfig);
     const formattedUnwrittenPath = filePath(unwritten);
+    const formattedRenderer = filePath(renderer);
 
     const table = simpleTable({
       // eslint-disable-next-line eslint-plugin-typescript/naming-convention
+      "renderer:": formattedRenderer,
+      // eslint-disable-next-line eslint-plugin-typescript/naming-convention, eslint-plugin-sort-keys/sort-keys-fix
       "entry points:": formattedEntryPoints,
       // eslint-disable-next-line eslint-plugin-typescript/naming-convention
       "tsconfig:": formattedTSConfigPath,

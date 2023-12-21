@@ -28,6 +28,7 @@ cli.command("<...entryFiles>", "Generate documentation")
   .option("-o, --output <path>", "Specify the output directory. Defaults to ./docs/api based on the current working directory.")
   .option("-r, --renderer <md | html | json | pathToCustomRenderer>", "Choose the format of the rendered output.", { default: BuiltInRenderers.Markdown })
   .option("-s, --silent", "Disables any console output.", { default: false })
+  .option("-d, --debug", "Enables verbose logging.", { default: false })
   .action(generate);
 
 cli.parse();

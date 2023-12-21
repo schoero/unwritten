@@ -13,6 +13,10 @@ export interface OS {
 export interface Process {
   /** Returns the current working directory. */
   cwd(): string;
+  env: {
+    /** Enables verbose logging. */
+    DEBUG?: string;
+  };
 }
 
 // path
@@ -44,12 +48,13 @@ export interface Path {
 export type Logger = {
   bold(message: string): string;
   cyan(message: string): string;
+  debug(message: string): void;
   filePath(path: string): string;
   gray(message: string): string;
   green(message: string): string;
-  info(message: string[] | string): void;
   info(title: string, message: string[] | string): void;
   info(title: string, label: string, message: string[] | string): void;
+  info(message: string[] | string): void;
   italic(message: string): string;
   log(message: string): void;
   red(message: string): string;
@@ -63,6 +68,7 @@ export type Logger = {
   yellow(message: string): string;
   _stats?: {
     entryPoints?: string[];
+    renderer?: string;
     tsconfig?: string;
     unwritten?: string;
   };

@@ -20,8 +20,13 @@ import type { RenderOutput } from "unwritten:type-definitions/renderer";
 
 export async function unwritten(program: Program, options?: BrowserAPIOptions): Promise<RenderOutput> {
 
-  // Dependencies
+  // logger
   const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:platform/logger/browser.js");
+
+  if(options?.debug){
+    process.env.DEBUG = "true";
+  }
+
   const defaultContext = createDefaultContext({
     logger,
     os,
@@ -30,21 +35,23 @@ export async function unwritten(program: Program, options?: BrowserAPIOptions): 
     ts
   } as const);
 
-  // Compile
+  // compile
   const checker = program.getTypeChecker();
   const diagnostics = program.getSemanticDiagnostics();
-  void reportCompilerDiagnostics(defaultContext, diagnostics);
+  reportCompilerDiagnostics(defaultContext, diagnostics);
 
-  // Parse
+  // renderer
+  const renderer = await getRenderer(defaultContext, options?.renderer);
+
+  // interpret
   const config = await createConfig(defaultContext, options?.config);
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
   const entryFileSymbol = getEntryFileSymbolsFromProgram(interpreterContext, program);
-  const parsedSymbols = interpret(interpreterContext, entryFileSymbol);
+  const interpretedFiles = interpret(interpreterContext, entryFileSymbol);
 
-  // Render
-  const renderer = await getRenderer(options?.renderer);
+  // render
   const renderContext = createRenderContext(defaultContext, renderer, config);
-  const renderedSymbols = renderer.render(renderContext, parsedSymbols);
+  const renderedSymbols = renderer.render(renderContext, interpretedFiles);
 
   return renderedSymbols;
 

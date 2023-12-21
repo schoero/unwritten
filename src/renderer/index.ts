@@ -5,10 +5,11 @@ import { assert } from "unwritten:utils:general";
 
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
+import type { DefaultContext } from "unwritten:type-definitions/context";
 import type { Renderer } from "unwritten:type-definitions/renderer";
 
 
-export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {
+export async function getRenderer(ctx: DefaultContext, renderer?: Renderer | string): Promise<Renderer> {
 
   if(renderer === undefined || renderer === BuiltInRenderers.Markdown || renderer === "md"){
     const { default: markdownRenderer } = await import("unwritten:renderer:markup/markdown/index.js");
@@ -25,6 +26,8 @@ export async function getRenderer(renderer?: Renderer | string): Promise<Rendere
   }
 
   validateRenderer(renderer);
+
+  ctx.dependencies.logger?.stats(ctx, { renderer: renderer.name });
 
   return renderer;
 

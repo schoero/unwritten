@@ -7,6 +7,8 @@ import type { Config } from "./config";
 
 
 export interface Options {
+  /** Verbose logging. */
+  debug?: boolean;
   /** Array of paths that should not be included in the documentation. */
   exclude?: string[];
   /**

@@ -52,8 +52,18 @@ import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 export function interpret(ctx: InterpreterContext, sourceFileSymbols: Symbol[]): SourceFileEntity[] {
   return sourceFileSymbols.map(sourceFileSymbol => {
+
     assert(isSourceFileSymbol(ctx, sourceFileSymbol), "Source file symbol is not a source file symbol");
+
+    const { logger } = ctx.dependencies;
+    const position = getPositionBySymbol(ctx, sourceFileSymbol);
+
+    if(logger && position){
+      logger.debug(`Interpreter: interpreting source file ${logger.filePath(position.file)}`);
+    }
+
     return createSourceFileEntity(ctx, sourceFileSymbol);
+
   });
 }
 
