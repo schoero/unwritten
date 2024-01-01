@@ -54,7 +54,7 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
 
     it("should render the referenced type, if the target symbol is not exported", () => {
       expect(extractTypeOfRenderedContent("PrimitiveType", content).inlineType).toContain("string");
-      expect(extractTypeOfRenderedContent("ObjectType", content).inlineType).toContain("interface");
+      expect(extractTypeOfRenderedContent("ObjectType", content).inlineType).toContain("Interface");
       expect(extractTypeOfRenderedContent("ObjectType", content).multilineType).toContain("prop");
       expect(extractTypeOfRenderedContent("ObjectType", content).multilineType).toContain("string");
     });

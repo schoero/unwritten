@@ -102,6 +102,10 @@ function getObjectTypeName(ctx: MarkupRenderContext, objectLikeType: ObjectLikeT
 
   const translate = getTranslator(ctx);
 
+  if(objectLikeType.name && !isAnonymousObjectType(ctx, objectLikeType)){
+    return objectLikeType.name;
+  }
+
   switch (objectLikeType.kind){
     case TypeKind.Class:
       return translate("class");
@@ -117,4 +121,8 @@ function getObjectTypeName(ctx: MarkupRenderContext, objectLikeType: ObjectLikeT
       return translate("object");
   }
 
+}
+
+function isAnonymousObjectType(ctx: MarkupRenderContext, objectLikeType: ObjectLikeTypes) {
+  return !objectLikeType.name || objectLikeType.name.startsWith("__");
 }
