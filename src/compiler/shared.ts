@@ -52,7 +52,6 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
     if(diagnostic.file){
 
       const startLocation: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
-      const endLocation: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start! + diagnostic.length!);
 
       const filePath = `${logger.gray("at")} ${logger.filePath(`${diagnostic.file.fileName}:${startLocation.line + 1}:${startLocation.character + 1}`)}`;
 
@@ -72,10 +71,12 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
         const lineIndicator = `${lineNumber.toString().padStart(maxLineNumberLength)}| `;
         const tabCount = linesAround[index].substring(0, startLocation.character + 1).match(/\t/g)?.length ?? 0;
         const tabCorrectedStartCharacter = startLocation.character - tabCount + tabCount * 4;
-        const tabCorrectedEndCharacter = endLocation.character - tabCount + tabCount * 4;
+        const tabCorrectedEndCharacter = tabCorrectedStartCharacter + diagnostic.length!;
         const tabCorrectedLine = line.replace(/\t/g, "    ");
 
         acc.push(logger.gray(`${lineIndicator}${tabCorrectedLine}`));
+
+        if(tabCorrectedEndCharacter < tabCorrectedStartCharacter){debugger;}
 
         if(lineNumber === startLocation.line + 1){
           acc.push(logger.yellow(`${
