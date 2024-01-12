@@ -46,17 +46,22 @@ export interface Path {
 
 // logger
 export type Logger = {
+  bgGreen(message: string): string;
+  bgRed(message: string): string;
+  bgYellow(message: string): string;
+  blue(message: string): string;
   bold(message: string): string;
   cyan(message: string): string;
   debug(message: string): void;
   filePath(path: string): string;
   gray(message: string): string;
   green(message: string): string;
-  info(title: string, message: string[] | string): void;
   info(title: string, label: string, message: string[] | string): void;
   info(message: string[] | string): void;
+  info(title: string, message: string[] | string): void;
   italic(message: string): string;
   log(message: string): void;
+  magenta(message: string): string;
   red(message: string): string;
   stats(ctx: DefaultContext, stats: Logger["_stats"]): void;
   strikethrough(message: string): string;

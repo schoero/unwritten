@@ -15,9 +15,11 @@ const modifiers = {
   bgGreen: "\x1b[42m",
   bgRed: "\x1b[41m",
   bgYellow: "\x1b[43m",
+  fgBlue: "\x1b[34m",
   fgCyan: "\x1b[36m",
   fgGray: "\x1b[2m",
   fgGreen: "\x1b[32m",
+  fgMagenta: "\x1b[35m",
   fgRed: "\x1b[31m",
   fgWhite: "\x1b[37m",
   fgYellow: "\x1b[33m",
@@ -31,31 +33,13 @@ const modifiers = {
 
 export namespace logger {
 
-  const {
-    bgCyan,
-    bgGreen,
-    bgRed,
-    bgYellow,
-    fgCyan,
-    fgGray,
-    fgGreen,
-    fgRed,
-    fgWhite,
-    fgYellow,
-    reset,
-    textBold,
-    textItalic,
-    textStrikethrough,
-    textUnderline
-  } = modifiers;
-
   process.on("uncaughtException", err => {
 
     const stackOnly = err.stack?.replace(`${err.name}: ${err.message}`, "");
     const systemInfo = getSystemInfo();
 
     println(
-      `${lineEndings}${bgRed}${textBold} ${err.name} ${reset} ${
+      `${lineEndings}${modifiers.bgRed}${modifiers.textBold} ${err.name} ${modifiers.reset} ${
         red(
           [
             err.message,
@@ -75,7 +59,7 @@ export namespace logger {
 
 
   export function log(message: string): void {
-    println(`${reset}${message}${reset}`);
+    println(`${modifiers.reset}${message}${modifiers.reset}`);
   }
 
 
@@ -83,7 +67,7 @@ export namespace logger {
     if(env.DEBUG === undefined){
       return;
     }
-    println(`${reset}${message}${reset}`);
+    println(`${modifiers.reset}${message}${modifiers.reset}`);
   }
 
 
@@ -97,7 +81,7 @@ export namespace logger {
     const bodyMessages = body ? ["", ...body.map(message => `    ${message}`), ""] : [];
 
     println([
-      `${bgYellow}${textBold} ${badge} ${reset} ${titleOrMessage}`,
+      `${modifiers.bgYellow}${modifiers.textBold} ${badge} ${modifiers.reset} ${titleOrMessage}`,
       ...bodyMessages
     ].join(lineEndings));
 
@@ -140,7 +124,7 @@ export namespace logger {
       .map(row => `    ${row}`);
 
     println([
-      `${bgGreen}${textBold} ${name} ${reset}`,
+      `${modifiers.bgGreen}${modifiers.textBold} ${name} ${modifiers.reset}`,
       "",
       ...table,
       ""
@@ -159,7 +143,7 @@ export namespace logger {
     const bodyMessages = body ? ["", ...body.map(message => `    ${message}`), ""] : [];
 
     println([
-      `${bgGreen}${textBold} ${badge} ${reset} ${titleOrMessage}`,
+      `${modifiers.bgGreen}${modifiers.textBold} ${badge} ${modifiers.reset} ${titleOrMessage}`,
       ...bodyMessages
     ].join(lineEndings));
 
@@ -178,49 +162,73 @@ export namespace logger {
     const relativePath = path.replace(cwd, "");
     const simplifiedPath = cwd.replace(new RegExp(`^${home}`), "~");
 
-    return `${fgGray}${simplifiedPath}${reset}${relativePath}`;
+    return `${modifiers.fgGray}${simplifiedPath}${modifiers.reset}${relativePath}`;
 
   }
 
-  // Colors
+  // colors
   export function red(message: string): string {
-    return `${fgRed}${message}${reset}`;
+    return `${modifiers.fgRed}${message}${modifiers.reset}`;
+  }
+
+  export function bgRed(message: string): string {
+    return `${modifiers.bgRed}${message}${modifiers.reset}`;
+  }
+
+  export function bgGreen(message: string): string {
+    return `${modifiers.bgGreen}${message}${modifiers.reset}`;
+  }
+
+  export function bgYellow(message: string): string {
+    return `${modifiers.bgYellow}${message}${modifiers.reset}`;
   }
 
   export function gray(message: string): string {
-    return `${fgGray}${message}${reset}`;
+    return `${modifiers.fgGray}${message}${modifiers.reset}`;
   }
 
   export function green(message: string): string {
-    return `${fgGreen}${message}${reset}`;
+    return `${modifiers.fgGreen}${message}${modifiers.reset}`;
   }
 
   export function yellow(message: string): string {
-    return `${fgYellow}${message}${reset}`;
+    return `${modifiers.fgYellow}${message}${modifiers.reset}`;
   }
 
   export function white(message: string): string {
-    return `${fgWhite}${message}${reset}`;
+    return `${modifiers.fgWhite}${message}${modifiers.reset}`;
   }
 
   export function cyan(message: string): string {
-    return `${fgCyan}${message}${reset}`;
+    return `${modifiers.fgCyan}${message}${modifiers.reset}`;
+  }
+
+  export function blue(message: string): string {
+    return `${modifiers.fgBlue}${message}${modifiers.reset}`;
+  }
+
+  export function magenta(message: string): string {
+    return `${modifiers.fgMagenta}${message}${modifiers.reset}`;
   }
 
   export function bold(message: string): string {
-    return `${textBold}${message}${reset}`;
+    return `${modifiers.textBold}${message}${modifiers.reset}`;
   }
 
   export function underline(message: string): string {
-    return `${textUnderline}${message}${reset}`;
+    return `${modifiers.textUnderline}${message}${modifiers.reset}`;
   }
 
   export function italic(message: string): string {
-    return `${textItalic}${message}${reset}`;
+    return `${modifiers.textItalic}${message}${modifiers.reset}`;
   }
 
   export function strikethrough(message: string): string {
-    return `${textStrikethrough}${message}${reset}`;
+    return `${modifiers.textStrikethrough}${message}${modifiers.reset}`;
+  }
+
+  export function unstyled(message: string): string {
+    return forceUnstyled(message);
   }
 
 }

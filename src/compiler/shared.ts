@@ -1,5 +1,8 @@
+import { highlight as tinyHighlight } from "tinyhighlight";
+
 import { findCommonIndentation, removeCommonIndentation } from "unwritten:utils/template";
 
+import type { TokenColors } from "tinyhighlight";
 import type { CompilerOptions, Diagnostic, LineAndCharacter } from "typescript";
 
 import type { DefaultContext } from "unwritten:type-definitions/context";
@@ -55,7 +58,7 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
 
       const filePath = `${logger.gray("at")} ${logger.filePath(`${diagnostic.file.fileName}:${startLocation.line + 1}:${startLocation.character + 1}`)}`;
 
-      const sourceFile = diagnostic.file.text.split(lineEndings);
+      const sourceFile = highlight(ctx, diagnostic.file.text).split(lineEndings);
       const minLine = Math.max(startLocation.line - 2, 0);
       const maxLine = Math.min(startLocation.line + 3, sourceFile.length);
       const maxLineNumberLength = (maxLine + 1).toString().length;
@@ -73,10 +76,9 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
         const tabCorrectedStartCharacter = startLocation.character - tabCount + tabCount * 4;
         const tabCorrectedEndCharacter = tabCorrectedStartCharacter + diagnostic.length!;
         const tabCorrectedLine = line.replace(/\t/g, "    ");
+        const syntaxHighlightedLine = tabCorrectedLine;
 
-        acc.push(logger.gray(`${lineIndicator}${tabCorrectedLine}`));
-
-        if(tabCorrectedEndCharacter < tabCorrectedStartCharacter){debugger;}
+        acc.push(logger.gray(`${lineIndicator}${syntaxHighlightedLine}`));
 
         if(lineNumber === startLocation.line + 1){
           acc.push(logger.yellow(`${
@@ -109,6 +111,55 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
       );
     }
 
+  });
+
+}
+
+
+function highlight(ctx: DefaultContext, code: string) {
+
+  const { logger } = ctx.dependencies;
+
+  if(!logger){
+    return code;
+  }
+
+  const colors = {
+    bgRed: (code: string) => logger.bgRed(code),
+    blue: (code: string) => logger.blue(code),
+    bold: (code: string) => logger.bold(code),
+    cyan: (code: string) => logger.cyan(code),
+    gray: (code: string) => logger.gray(code),
+    green: (code: string) => logger.green(code),
+    magenta: (code: string) => logger.magenta(code),
+    white: (code: string) => logger.white(code),
+    yellow: (code: string) => logger.yellow(code)
+  };
+
+  const tokenColors: TokenColors = {
+    IdentifierCallable: colors.blue,
+    IdentifierCapitalized: colors.yellow,
+    Invalid: (text: string) => colors.white(colors.bgRed(colors.bold(text))),
+    JSXIdentifier: colors.yellow,
+    JSXInvalid: (text: string) => colors.white(colors.bgRed(colors.bold(text))),
+    JSXPunctuator: colors.yellow,
+    JSXString: colors.green,
+    Keyword: colors.magenta,
+    MultiLineComment: colors.gray,
+    NoSubstitutionTemplate: colors.green,
+    NumericLiteral: colors.blue,
+    PrivateIdentifierCallable: text => `#${colors.blue(text.slice(1))}`,
+    Punctuator: colors.yellow,
+    RegularExpressionLiteral: colors.cyan,
+    SingleLineComment: colors.gray,
+    StringLiteral: colors.green,
+    TemplateHead: text => colors.green(text.slice(0, -2)) + colors.cyan(text.slice(-2)),
+    TemplateMiddle: text => colors.cyan(text.slice(0, 1)) + colors.green(text.slice(1, -2)) + colors.cyan(text.slice(-2)),
+    TemplateTail: text => colors.cyan(text.slice(0, 1)) + colors.green(text.slice(1))
+  };
+
+  return tinyHighlight(code, {
+    colors: tokenColors
   });
 
 }

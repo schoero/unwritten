@@ -121,6 +121,26 @@ export module logger {
     return path;
   }
 
+  export function bgGreen(message: string): string {
+    return message;
+  }
+
+  export function bgRed(message: string): string {
+    return message;
+  }
+
+  export function bgYellow(message: string): string {
+    return message;
+  }
+
+  export function blue(message: string): string {
+    return message;
+  }
+
+  export function magenta(message: string): string {
+    return message;
+  }
+
 }
 
 export default logger;
