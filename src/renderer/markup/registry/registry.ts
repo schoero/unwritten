@@ -68,7 +68,7 @@ export function unregisterAnchor(ctx: MarkupRenderContext, id: ID | ID[]): void 
     return;
   }
 
-  const newIds = anchor.sourceFile.links.get(anchor.anchorId)![anchor.index]!
+  const newIds = anchor.sourceFile.links.get(anchor.anchorId)![anchor.index]
     .filter(storedId => !ids.includes(storedId));
 
   if(newIds.length === 0){

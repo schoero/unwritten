@@ -16,7 +16,7 @@ export const createArrayType = (ctx: InterpreterContext, typeReference: TypeRefe
 
   const typeId = getTypeId(ctx, typeReference);
   const position = getPositionByType(ctx, typeReference);
-  const type = getTypeByType(ctx, typeReference.typeArguments![0]!);
+  const type = getTypeByType(ctx, typeReference.typeArguments![0]);
   const kind = TypeKind.Array;
 
   return {

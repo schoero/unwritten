@@ -57,7 +57,7 @@ scope("Interpreter", "Signature", () => {
     });
 
     it("should have a matching kind", () => {
-      expect(exportedFunction.signatures[0]!.kind).toBe(EntityKind.FunctionSignature);
+      expect(exportedFunction.signatures[0].kind).toBe(EntityKind.FunctionSignature);
     });
 
     it("should have a matching description", () => {
@@ -73,7 +73,7 @@ scope("Interpreter", "Signature", () => {
     });
 
     it("should have a matching position", () => {
-      expect(exportedFunction.signatures[0]!.position).toStrictEqual({
+      expect(exportedFunction.signatures[0].position).toStrictEqual({
         column: 0,
         file: "/index.ts",
         line: 5
@@ -81,7 +81,7 @@ scope("Interpreter", "Signature", () => {
     });
 
     it("should have a return type which is a boolean", () => {
-      expect(exportedFunction.signatures[0]!.returnType.kind).toBe(TypeKind.Boolean);
+      expect(exportedFunction.signatures[0].returnType.kind).toBe(TypeKind.Boolean);
     });
 
   }
@@ -116,21 +116,21 @@ scope("Interpreter", "Signature", () => {
     });
 
     it("should have a 'declarationId' for each signature", () => {
-      expect(exportedFunction.signatures[0]!.declarationId).toBeDefined();
-      expect(exportedInterface.callSignatures[0]!.declarationId).toBeDefined();
-      expect(exportedInterface.constructSignatures[0]!.declarationId).toBeDefined();
-      expect(exportedInterface.methodSignatures[0]!.declarationId).toBeDefined();
-      expect(exportedInterface.setterSignatures[0]!.declarationId).toBeDefined();
-      expect(exportedInterface.getterSignatures[0]!.declarationId).toBeDefined();
+      expect(exportedFunction.signatures[0].declarationId).toBeDefined();
+      expect(exportedInterface.callSignatures[0].declarationId).toBeDefined();
+      expect(exportedInterface.constructSignatures[0].declarationId).toBeDefined();
+      expect(exportedInterface.methodSignatures[0].declarationId).toBeDefined();
+      expect(exportedInterface.setterSignatures[0].declarationId).toBeDefined();
+      expect(exportedInterface.getterSignatures[0].declarationId).toBeDefined();
     });
 
     it("should have the correct kind for each signature", () => {
-      expect(exportedFunction.signatures[0]!.kind).toBe(EntityKind.FunctionSignature);
-      expect(exportedInterface.callSignatures[0]!.kind).toBe(EntityKind.CallSignature);
-      expect(exportedInterface.constructSignatures[0]!.kind).toBe(EntityKind.ConstructSignature);
-      expect(exportedInterface.methodSignatures[0]!.kind).toBe(EntityKind.MethodSignature);
-      expect(exportedInterface.setterSignatures[0]!.kind).toBe(EntityKind.SetterSignature);
-      expect(exportedInterface.getterSignatures[0]!.kind).toBe(EntityKind.GetterSignature);
+      expect(exportedFunction.signatures[0].kind).toBe(EntityKind.FunctionSignature);
+      expect(exportedInterface.callSignatures[0].kind).toBe(EntityKind.CallSignature);
+      expect(exportedInterface.constructSignatures[0].kind).toBe(EntityKind.ConstructSignature);
+      expect(exportedInterface.methodSignatures[0].kind).toBe(EntityKind.MethodSignature);
+      expect(exportedInterface.setterSignatures[0].kind).toBe(EntityKind.SetterSignature);
+      expect(exportedInterface.getterSignatures[0].kind).toBe(EntityKind.GetterSignature);
     });
 
   }
@@ -149,13 +149,13 @@ scope("Interpreter", "Signature", () => {
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should be able to handle type parameters", () => {
-      expect(exportedFunction.signatures[0]!.typeParameters).toHaveLength(1);
+      expect(exportedFunction.signatures[0].typeParameters).toHaveLength(1);
     });
 
     it("should link the function parameter to the type parameter", () => {
-      assert(exportedFunction.signatures[0]!.parameters![0]!.type.kind === TypeKind.TypeReference);
-      assert(exportedFunction.signatures[0]!.parameters![0]!.type.type?.kind === TypeKind.TypeParameter);
-      expect(exportedFunction.signatures[0]!.parameters![0]!.type.target!).toEqual(exportedFunction.signatures[0]!.typeParameters![0]);
+      assert(exportedFunction.signatures[0].parameters![0].type.kind === TypeKind.TypeReference);
+      assert(exportedFunction.signatures[0].parameters![0].type.type?.kind === TypeKind.TypeParameter);
+      expect(exportedFunction.signatures[0].parameters![0].type.target!).toEqual(exportedFunction.signatures[0].typeParameters![0]);
     });
 
   }
@@ -206,8 +206,8 @@ scope("Interpreter", "Signature", () => {
     const exportedFunction = createFunctionEntity(ctx, symbol);
 
     it("should return the declared type if available", () => {
-      assert(exportedFunction.signatures[0]!.returnType.kind === TypeKind.TypeReference);
-      expect(exportedFunction.signatures[0]!.returnType.name).toBe("Test");
+      assert(exportedFunction.signatures[0].returnType.kind === TypeKind.TypeReference);
+      expect(exportedFunction.signatures[0].returnType.name).toBe("Test");
     });
 
   }

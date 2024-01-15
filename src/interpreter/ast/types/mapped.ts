@@ -17,13 +17,16 @@ import type { InterpreterContext } from "unwritten:type-definitions/context";
 export function createMappedTypeByTypeNode(ctx: InterpreterContext, typeNode: MappedTypeNode): MappedType {
 
   const kind = TypeKind.Mapped;
-  const typeId = getIdByTypeNode(ctx, typeNode);
-  const position = getPositionByDeclaration(ctx, typeNode);
+
   const optional = typeNode.questionToken !== undefined;
   const readonly = typeNode.readonlyToken !== undefined;
+
+  const typeId = getIdByTypeNode(ctx, typeNode);
+  const position = getPositionByDeclaration(ctx, typeNode);
   const resolvedType = getResolvedTypeByTypeNode(ctx, typeNode);
   const type = getTypeByResolvedAndDeclaredType(ctx, resolvedType);
   const typeParameter = createTypeParameterEntityByDeclaration(ctx, typeNode.typeParameter);
+
   const valueType = typeNode.type && getTypeByTypeNode(ctx, typeNode.type);
 
   return {

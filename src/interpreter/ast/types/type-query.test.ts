@@ -89,17 +89,17 @@ scope("Interpreter", TypeKind.TypeQuery, () => {
     it("should return the declared type for type queries that are not instantiated", () => {
       assert(exportedDeclaredTypeQueryTypeAlias.type.kind === TypeKind.TypeQuery);
       assert(exportedDeclaredTypeQueryTypeAlias.type.type.kind === TypeKind.Function);
-      expect(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0]!.parameters).toHaveLength(1);
-      assert(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0]!.parameters![0]!.type.kind === TypeKind.TypeReference);
-      expect(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0]!.parameters![0]!.type.type?.kind).toBe(TypeKind.TypeParameter);
+      expect(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0].parameters).toHaveLength(1);
+      assert(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0].parameters![0].type.kind === TypeKind.TypeReference);
+      expect(exportedDeclaredTypeQueryTypeAlias.type.type.signatures[0].parameters![0].type.type?.kind).toBe(TypeKind.TypeParameter);
     });
 
     it("should return the resolved type for instantiated type queries", () => {
       assert(exportedResolvedTypeAlias.type.kind === TypeKind.TypeQuery);
       assert(exportedResolvedTypeAlias.type.type.kind === TypeKind.Function);
-      expect(exportedResolvedTypeAlias.type.type.signatures[0]!.parameters).toHaveLength(1);
-      assert(exportedResolvedTypeAlias.type.type.signatures[0]!.parameters![0]!.type.kind === TypeKind.TypeReference);
-      expect(exportedResolvedTypeAlias.type.type.signatures[0]!.parameters![0]!.type.type?.kind).toBe(TypeKind.StringLiteral);
+      expect(exportedResolvedTypeAlias.type.type.signatures[0].parameters).toHaveLength(1);
+      assert(exportedResolvedTypeAlias.type.type.signatures[0].parameters![0].type.kind === TypeKind.TypeReference);
+      expect(exportedResolvedTypeAlias.type.type.signatures[0].parameters![0].type.type?.kind).toBe(TypeKind.StringLiteral);
     });
 
   }

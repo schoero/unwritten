@@ -26,7 +26,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
     it("should be able to parse a parameter", () => {
       expect(exportedFunction.kind).toBe(EntityKind.Function);
       expect(exportedFunction.signatures).toHaveLength(1);
-      expect(exportedFunction.signatures[0]!.parameters).toHaveLength(1);
+      expect(exportedFunction.signatures[0].parameters).toHaveLength(1);
     });
 
   }
@@ -44,7 +44,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
-    const parameter = exportedFunction.signatures[0]!.parameters![0]!;
+    const parameter = exportedFunction.signatures[0].parameters![0];
 
     it("should have a matching kind", () => {
       expect(parameter.kind).toBe(EntityKind.Parameter);
@@ -84,7 +84,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
-    const parameter = exportedFunction.signatures[0]!.parameters![0]!;
+    const parameter = exportedFunction.signatures[0].parameters![0];
 
     it("should be able to handle optional types", () => {
       expect(parameter.type.kind).toBe(TypeKind.String);
@@ -103,7 +103,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
-    const parameter = exportedFunction.signatures[0]!.parameters![0]!;
+    const parameter = exportedFunction.signatures[0].parameters![0];
 
     it("should be able to handle initialized types", () => {
       expect(parameter.type.kind).toBe(TypeKind.String);
@@ -123,7 +123,7 @@ scope("Interpreter", EntityKind.Parameter, () => {
 
     const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
     const exportedFunction = createFunctionEntity(ctx, symbol);
-    const parameter = exportedFunction.signatures[0]!.parameters![0]!;
+    const parameter = exportedFunction.signatures[0].parameters![0];
 
     it("should be able to handle rest types", () => {
       expect(parameter.rest).toBe(true);

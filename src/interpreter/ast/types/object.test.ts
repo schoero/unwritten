@@ -23,7 +23,7 @@ scope("Interpreter", TypeKind.Object, () => {
     const { ctx, exportedSymbols } = compile(testFileContent);
 
     const symbol = exportedSymbols.find(s => s.name === "ObjectType")!;
-    const tsType = ctx.checker.getTypeAtLocation(symbol.declarations![0]!);
+    const tsType = ctx.checker.getTypeAtLocation(symbol.declarations![0]);
 
     assert(isObjectType(ctx, tsType), "tsType is not an object type");
 

@@ -92,7 +92,7 @@ scope("Interpreter", EntityKind.Class, () => {
     });
 
     it("should have a matching id", () => {
-      expect(exportedClass.symbolId).toBe(getSymbolId(ctx, exportedSymbols[0]!));
+      expect(exportedClass.symbolId).toBe(getSymbolId(ctx, exportedSymbols[0]));
     });
 
     it("should have a matching description", () => {

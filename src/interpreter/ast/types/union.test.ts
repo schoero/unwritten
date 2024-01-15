@@ -55,8 +55,8 @@ scope("Interpreter", TypeKind.Union, () => {
 
     it("should have the correct types", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Union);
-      expect(exportedTypeAlias.type.types[0]!.kind).toBe(TypeKind.String);
-      expect(exportedTypeAlias.type.types[1]!.kind).toBe(TypeKind.Number);
+      expect(exportedTypeAlias.type.types[0].kind).toBe(TypeKind.String);
+      expect(exportedTypeAlias.type.types[1].kind).toBe(TypeKind.Number);
     });
 
   }

@@ -99,7 +99,7 @@ scope("Interpreter", EntityKind.Function, () => {
 
     it("should have a matching return type", () => {
       assert(exportedTypeAlias1.type.kind === TypeKind.Function);
-      expect(exportedTypeAlias1.type.signatures[0]!.returnType.kind).toBe(TypeKind.Boolean);
+      expect(exportedTypeAlias1.type.signatures[0].returnType.kind).toBe(TypeKind.Boolean);
     });
 
   }

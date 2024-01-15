@@ -34,15 +34,15 @@ scope("Interpreter", EntityKind.Method, () => {
     });
 
     it("should have a matching kind", () => {
-      expect(exportedClass.methods[0]!.kind).toBe(EntityKind.Method);
+      expect(exportedClass.methods[0].kind).toBe(EntityKind.Method);
     });
 
     it("should have a matching name", () => {
-      expect(exportedClass.methods[0]!.name).toBe("method");
+      expect(exportedClass.methods[0].name).toBe("method");
     });
 
     it("should have one signature", () => {
-      expect(exportedClass.methods[0]!.signatures).toHaveLength(1);
+      expect(exportedClass.methods[0].signatures).toHaveLength(1);
     });
 
 
