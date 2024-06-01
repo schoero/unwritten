@@ -42,15 +42,13 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
   // config
   const config = await createConfig(defaultContext, options?.config, options?.output);
 
-  // renderer
-  const renderer = await getRenderer(defaultContext, options?.renderer);
-
   // interpret
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
   const entryFileSymbols = getEntryFileSymbolsFromProgram(interpreterContext, program);
   const interpretedFiles = interpret(interpreterContext, entryFileSymbols);
 
   // render
+  const renderer = await getRenderer(defaultContext, options?.renderer);
   const renderContext = createRenderContext(defaultContext, renderer, config);
   const renderedFiles = renderer.render(renderContext, interpretedFiles);
 

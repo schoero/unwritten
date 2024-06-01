@@ -40,9 +40,6 @@ export async function unwritten(program: Program, options?: BrowserAPIOptions): 
   const diagnostics = program.getSemanticDiagnostics();
   reportCompilerDiagnostics(defaultContext, diagnostics);
 
-  // renderer
-  const renderer = await getRenderer(defaultContext, options?.renderer);
-
   // interpret
   const config = await createConfig(defaultContext, options?.config);
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
@@ -50,6 +47,7 @@ export async function unwritten(program: Program, options?: BrowserAPIOptions): 
   const interpretedFiles = interpret(interpreterContext, entryFileSymbol);
 
   // render
+  const renderer = await getRenderer(defaultContext, options?.renderer);
   const renderContext = createRenderContext(defaultContext, renderer, config);
   const renderedSymbols = renderer.render(renderContext, interpretedFiles);
 
