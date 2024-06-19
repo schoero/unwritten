@@ -96,6 +96,6 @@
     "javascript"
   ],
   "volta": {
-    "node": "21.5.0"
+    "node": "22.3.0"
   }
 }
