@@ -61,18 +61,44 @@
       "type": "array"
     },
     "ExportableEntityKinds": {
-      "enum": [
-        "ClassEntity",
-        "EnumEntity",
-        "ExportAssignmentEntity",
-        "FunctionEntity",
-        "InterfaceEntity",
-        "ModuleEntity",
-        "NamespaceEntity",
-        "TypeAliasEntity",
-        "VariableEntity"
-      ],
-      "type": "string"
+      "anyOf": [
+        {
+          "const": "ClassEntity",
+          "type": "string"
+        },
+        {
+          "const": "EnumEntity",
+          "type": "string"
+        },
+        {
+          "const": "ExportAssignmentEntity",
+          "type": "string"
+        },
+        {
+          "const": "FunctionEntity",
+          "type": "string"
+        },
+        {
+          "const": "InterfaceEntity",
+          "type": "string"
+        },
+        {
+          "const": "ModuleEntity",
+          "type": "string"
+        },
+        {
+          "const": "NamespaceEntity",
+          "type": "string"
+        },
+        {
+          "const": "TypeAliasEntity",
+          "type": "string"
+        },
+        {
+          "const": "VariableEntity",
+          "type": "string"
+        }
+      ]
     },
     "ExternalTypes": {
       "additionalProperties": {
@@ -678,16 +704,11 @@
           "type": "boolean"
         },
         "sectionSeparator": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "const": false,
-              "type": "boolean"
-            }
+          "description": "Defines the string that should be used to separate sections in the rendered output.",
+          "enum": [
+            false
           ],
-          "description": "Defines the string that should be used to separate sections in the rendered output."
+          "type": "boolean"
         },
         "stringLiteralEncapsulation": {
           "anyOf": [
