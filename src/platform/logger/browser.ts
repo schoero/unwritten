@@ -97,6 +97,18 @@ export module logger {
     return message;
   }
 
+  export function black(message: string): string {
+    return message;
+  }
+
+  export function dim(message: string): string {
+    return message;
+  }
+
+  export function inverse(message: string): string {
+    return message;
+  }
+
   export function cyan(message: string): string {
     return message;
   }

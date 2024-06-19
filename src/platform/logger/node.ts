@@ -15,14 +15,17 @@ const modifiers = {
   bgGreen: "\x1b[42m",
   bgRed: "\x1b[41m",
   bgYellow: "\x1b[43m",
+  fgBlack: "\x1b[30m",
   fgBlue: "\x1b[34m",
   fgCyan: "\x1b[36m",
+  fgDim: "\x1b[2m",
   fgGray: "\x1b[2m",
   fgGreen: "\x1b[32m",
   fgMagenta: "\x1b[35m",
   fgRed: "\x1b[31m",
   fgWhite: "\x1b[37m",
   fgYellow: "\x1b[33m",
+  inverse: "\x1b[7m",
   reset: "\x1b[0m",
   textBold: "\x1b[1m",
   textItalic: "\x1b[3m",
@@ -36,20 +39,18 @@ export namespace logger {
   process.on("uncaughtException", err => {
 
     const stackOnly = err.stack?.replace(`${err.name}: ${err.message}`, "");
-    const systemInfo = getSystemInfo();
+    const systemInfo = getSystemInfo().map(dim);
 
     println(
-      `${lineEndings}${modifiers.bgRed}${modifiers.textBold} ${err.name} ${modifiers.reset} ${
-        red(
-          [
-            err.message,
-            err.cause,
-            stackOnly,
-            ...systemInfo
-          ]
-            .filter(message => !!message)
-            .join(lineEndings)
-        )}`,
+      `${lineEndings}${inverse(red(bold(` ${err.name} `)))} ${
+        [
+          red(bold(err.message)),
+          err.cause,
+          stackOnly && red(stackOnly),
+          ...systemInfo
+        ]
+          .filter(message => !!message)
+          .join(lineEndings)}`,
       process.stderr
     );
 
@@ -78,10 +79,16 @@ export namespace logger {
 
     const badge = typeof badgeOrBody === "string" ? badgeOrBody : "WARN";
     const body = typeof badgeOrBody === "object" ? badgeOrBody : bodyOrUndefined;
-    const bodyMessages = body ? ["", ...body.map(message => `    ${message}`), ""] : [];
+    const bodyMessages = body
+      ? [
+        "",
+        ...body.map(message => indent(message, 4)),
+        ""
+      ]
+      : [];
 
     println([
-      `${modifiers.bgYellow}${modifiers.textBold} ${badge} ${modifiers.reset} ${titleOrMessage}`,
+      `${inverse(yellow(bold(` ${badge} `)))} ${yellow(bold(titleOrMessage))}`,
       ...bodyMessages
     ].join(lineEndings));
 
@@ -121,10 +128,10 @@ export namespace logger {
       // eslint-disable-next-line eslint-plugin-typescript/naming-convention
       "unwritten:": formattedUnwrittenPath
     })
-      .map(row => `    ${row}`);
+      .map(row => indent(row, 4));
 
     println([
-      `${modifiers.bgGreen}${modifiers.textBold} ${name} ${modifiers.reset}`,
+      inverse(green(bold(` ${name} `))),
       "",
       ...table,
       ""
@@ -140,10 +147,17 @@ export namespace logger {
 
     const badge = typeof badgeOrBody === "string" ? badgeOrBody : "INFO";
     const body = typeof badgeOrBody === "object" ? badgeOrBody : bodyOrUndefined;
-    const bodyMessages = body ? ["", ...body.map(message => `    ${message}`), ""] : [];
+
+    const bodyMessages = body
+      ? [
+        "",
+        ...body.map(message => indent(message, 4)),
+        ""
+      ]
+      : [];
 
     println([
-      `${modifiers.bgGreen}${modifiers.textBold} ${badge} ${modifiers.reset} ${titleOrMessage}`,
+      `${inverse(cyan(bold(` ${badge} `)))} ${titleOrMessage}`,
       ...bodyMessages
     ].join(lineEndings));
 
@@ -162,7 +176,7 @@ export namespace logger {
     const relativePath = path.replace(cwd, "");
     const simplifiedPath = cwd.replace(new RegExp(`^${home}`), "~");
 
-    return `${modifiers.fgGray}${simplifiedPath}${modifiers.reset}${relativePath}`;
+    return `${modifiers.fgDim}${simplifiedPath}${modifiers.reset}${relativePath}`;
 
   }
 
@@ -197,6 +211,18 @@ export namespace logger {
 
   export function white(message: string): string {
     return `${modifiers.fgWhite}${message}${modifiers.reset}`;
+  }
+
+  export function black(message: string): string {
+    return `${modifiers.fgBlack}${message}${modifiers.reset}`;
+  }
+
+  export function dim(message: string): string {
+    return `${modifiers.fgDim}${message}${modifiers.reset}`;
+  }
+
+  export function inverse(message: string): string {
+    return `${modifiers.inverse}${message}${modifiers.reset}`;
   }
 
   export function cyan(message: string): string {
@@ -255,6 +281,16 @@ function getSystemInfo(ctx?: DefaultContext): string[] {
 
 }
 
+function indent(message: string, spaces: number): string {
+  return message.split(lineEndings).reduce((lines, line, index, arr) => {
+    if(index > 0){
+      lines += lineEndings;
+    }
+
+    return `${lines}${" ".repeat(spaces)}${line}`;
+  }, "");
+}
+
 function simpleTable(table: { [key: string]: string[] | string; }): string[] {
   const maxLength = Object.keys(table).reduce((acc, key) => {
     return Math.max(acc, key.length);
@@ -289,7 +325,17 @@ function println(message: string, output?: WriteStream): void {
 }
 
 function supportsColor(output: WriteStream): boolean {
-  return "hasColors" in output && output.hasColors(16);
+  if("NO_COLOR" in process.env || process.argv.includes("--no-color")){
+    return false;
+  }
+  if("GITHUB_ACTIONS" in process.env){
+    return false;
+  }
+  if(!("hasColors" in output) || !output.hasColors(16)){
+    return false;
+  }
+
+  return true;
 }
 
 function forceUnstyled(message: string): string {

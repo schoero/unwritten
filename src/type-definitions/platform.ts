@@ -53,12 +53,14 @@ export type Logger = {
   bold(message: string): string;
   cyan(message: string): string;
   debug(message: string): void;
+  dim(message: string): string;
   filePath(path: string): string;
   gray(message: string): string;
   green(message: string): string;
-  info(title: string, label: string, message: string[] | string): void;
   info(message: string[] | string): void;
   info(title: string, message: string[] | string): void;
+  info(title: string, label: string, message: string[] | string): void;
+  inverse(message: string): string;
   italic(message: string): string;
   log(message: string): void;
   magenta(message: string): string;
@@ -66,9 +68,9 @@ export type Logger = {
   stats(ctx: DefaultContext, stats: Logger["_stats"]): void;
   strikethrough(message: string): string;
   underline(message: string): string;
-  warn(message: string[] | string): void;
   warn(title: string, message: string[] | string): void;
   warn(title: string, label: string, message: string[] | string): void;
+  warn(message: string[] | string): void;
   white(message: string): string;
   yellow(message: string): string;
   _stats?: {
