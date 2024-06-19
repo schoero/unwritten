@@ -15,17 +15,23 @@ scope("Interpreter", EntityKind.Function, () => {
 
       const testFileContent = ts`
         export function functionSymbol(test: string): void {}
+        export function getterSymbol(test: string): void {}
+        export function methodSymbol(test: string): void {}
+        export function setterSymbol(test: string): void {}
       `;
 
       const { ctx, exportedSymbols } = compile(testFileContent);
 
-      const symbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
+      const functionSymbol = exportedSymbols.find(s => s.name === "functionSymbol")!;
+      const getterSymbol = exportedSymbols.find(s => s.name === "getterSymbol")!;
+      const methodSymbol = exportedSymbols.find(s => s.name === "methodSymbol")!;
+      const setterSymbol = exportedSymbols.find(s => s.name === "setterSymbol")!;
 
       it("should be able to create function like entities", () => {
-        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Function).kind).toBe(EntityKind.Function);
-        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Getter).kind).toBe(EntityKind.Getter);
-        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Method).kind).toBe(EntityKind.Method);
-        expect(createFunctionLikeEntity(ctx, symbol, EntityKind.Setter).kind).toBe(EntityKind.Setter);
+        expect(createFunctionLikeEntity(ctx, functionSymbol, EntityKind.Function).kind).toBe(EntityKind.Function);
+        expect(createFunctionLikeEntity(ctx, getterSymbol, EntityKind.Getter).kind).toBe(EntityKind.Getter);
+        expect(createFunctionLikeEntity(ctx, methodSymbol, EntityKind.Method).kind).toBe(EntityKind.Method);
+        expect(createFunctionLikeEntity(ctx, setterSymbol, EntityKind.Setter).kind).toBe(EntityKind.Setter);
       });
 
     }

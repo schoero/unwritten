@@ -1,13 +1,14 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { LiteralType } from "typescript";
 
-import type { BooleanLiteralType } from "unwritten:interpreter:type-definitions/types";
+import type { BooleanLiteralType } from "unwritten:interpreter/type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createBooleanLiteralType(ctx: InterpreterContext, type: LiteralType): BooleanLiteralType {
+export const createBooleanLiteralType = (ctx: InterpreterContext, type: LiteralType): BooleanLiteralType => withCachedType(ctx, type, () => {
 
   const typeId = getTypeId(ctx, type);
   // @ts-expect-error // Alternative way would be to use the typeChecker and typeToString()
@@ -22,4 +23,4 @@ export function createBooleanLiteralType(ctx: InterpreterContext, type: LiteralT
     value
   };
 
-}
+});

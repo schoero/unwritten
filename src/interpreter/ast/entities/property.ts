@@ -1,6 +1,6 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity } from "unwritten:interpreter/utils/ts";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers";
@@ -30,7 +30,7 @@ import type { PropertyEntity } from "unwritten:interpreter/type-definitions/enti
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createPropertyEntity = (ctx: InterpreterContext, symbol: Symbol): PropertyEntity => withLockedSymbol(ctx, symbol, () => {
+export const createPropertyEntity = (ctx: InterpreterContext, symbol: Symbol): PropertyEntity => withCachedEntity(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 

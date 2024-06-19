@@ -4,7 +4,7 @@ import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { isExportAssignment } from "unwritten:interpreter/typeguards/declarations";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { assert } from "unwritten:utils/general";
 
 import { getTypeByType } from "../type";
@@ -15,7 +15,7 @@ import type { ExportAssignmentEntity } from "unwritten:interpreter/type-definiti
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createExportAssignmentEntity = (ctx: InterpreterContext, symbol: Symbol): ExportAssignmentEntity => withLockedSymbol(ctx, symbol, () => {
+export const createExportAssignmentEntity = (ctx: InterpreterContext, symbol: Symbol): ExportAssignmentEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
 
@@ -38,4 +38,4 @@ export const createExportAssignmentEntity = (ctx: InterpreterContext, symbol: Sy
     type
   };
 
-});
+}));

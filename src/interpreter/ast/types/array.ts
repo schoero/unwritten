@@ -1,6 +1,6 @@
 /* eslint-disable eslint-plugin-typescript/array-type */
 import { TypeKind } from "unwritten:interpreter/enums/type";
-import { withLockedType } from "unwritten:interpreter/utils/ts.js";
+import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.js";
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position";
 
@@ -12,7 +12,7 @@ import type { ArrayType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createArrayType = (ctx: InterpreterContext, typeReference: TypeReference): ArrayType => withLockedType(ctx, typeReference, () => {
+export const createArrayType = (ctx: InterpreterContext, typeReference: TypeReference): ArrayType => withCachedType(ctx, typeReference, () => withLockedType(ctx, typeReference, () => {
 
   const typeId = getTypeId(ctx, typeReference);
   const position = getPositionByType(ctx, typeReference);
@@ -26,7 +26,7 @@ export const createArrayType = (ctx: InterpreterContext, typeReference: TypeRefe
     typeId
   };
 
-});
+}));
 
 
 export function createArrayTypeByArrayTypeNode(ctx: InterpreterContext, arrayTypeNode: ArrayTypeNode): ArrayType {

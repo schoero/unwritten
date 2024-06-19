@@ -1,5 +1,6 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { withCachedEntity } from "unwritten:interpreter/utils/ts";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
@@ -15,7 +16,7 @@ import type { VariableEntity } from "unwritten:interpreter/type-definitions/enti
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): VariableEntity {
+export const createVariableEntity = (ctx: InterpreterContext, symbol: Symbol): VariableEntity => withCachedEntity(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -41,4 +42,4 @@ export function createVariableEntity(ctx: InterpreterContext, symbol: Symbol): V
     type
   };
 
-}
+});

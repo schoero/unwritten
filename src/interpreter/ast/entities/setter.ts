@@ -8,8 +8,5 @@ import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function createSetterEntity(ctx: InterpreterContext, symbol: Symbol): SetterEntity {
-  const functionLike = createFunctionLikeEntity(ctx, symbol, EntityKind.Setter);
-  return {
-    ...functionLike
-  };
+  return createFunctionLikeEntity(ctx, symbol, EntityKind.Setter);
 }

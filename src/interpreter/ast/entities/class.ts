@@ -1,6 +1,6 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import {
   createConstructorEntity,
   createGetterEntity,
@@ -32,7 +32,7 @@ import type { ExpressionType } from "unwritten:interpreter:type-definitions/type
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): ClassEntity => withLockedSymbol(ctx, symbol, () => {
+export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): ClassEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -86,7 +86,7 @@ export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): Clas
     typeParameters
   };
 
-});
+}));
 
 
 function getSymbolsByTypeFromClassLikeDeclaration(

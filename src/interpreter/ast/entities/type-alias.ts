@@ -2,7 +2,7 @@ import { createTypeParameterEntityByDeclaration } from "unwritten:interpreter/as
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import { isTypeAliasDeclaration } from "unwritten:interpreter:typeguards/declarations";
@@ -16,7 +16,7 @@ import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/ent
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createTypeAliasEntity = (ctx: InterpreterContext, symbol: Symbol): TypeAliasEntity => withLockedSymbol(ctx, symbol, () => {
+export const createTypeAliasEntity = (ctx: InterpreterContext, symbol: Symbol): TypeAliasEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -49,4 +49,4 @@ export const createTypeAliasEntity = (ctx: InterpreterContext, symbol: Symbol): 
     typeParameters
   };
 
-});
+}));

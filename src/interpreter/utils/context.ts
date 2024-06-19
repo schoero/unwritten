@@ -17,6 +17,8 @@ export function createContext(defaultContext: DefaultContext, checker: TypeCheck
   return {
     checker,
     config,
+    entityCache: {},
+    typeCache: {},
     ...defaultContext
   };
 }

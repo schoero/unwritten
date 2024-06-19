@@ -1,6 +1,6 @@
 import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { isExportableEntity } from "unwritten:typeguards/entities";
 import { assert } from "unwritten:utils/general";
@@ -11,7 +11,7 @@ import type { ExportableEntity, SourceFileEntity } from "unwritten:interpreter/t
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol): SourceFileEntity => withLockedSymbol(ctx, symbol, () => {
+export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol): SourceFileEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const { getFileName } = ctx.dependencies.path;
 
@@ -46,4 +46,4 @@ export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol):
     symbolId
   };
 
-});
+}));

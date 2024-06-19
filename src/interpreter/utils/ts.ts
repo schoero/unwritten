@@ -1,3 +1,4 @@
+import { getSymbolId, getTypeId } from "unwritten:interpreter/ast/shared/id";
 import {
   isAliasedSymbol,
   isExportSpecifierSymbol,
@@ -29,11 +30,11 @@ export function getEntryFileSymbolsFromProgram(ctx: InterpreterContext, program:
 
 }
 
+
 // Locker
 export function isSymbolLocked(ctx: InterpreterContext, symbol: Symbol) {
   return locker.isSymbolLocked(ctx, symbol);
 }
-
 
 export function isSymbolUnresolved(ctx: InterpreterContext, symbol: Symbol) {
   return symbol.declarations === undefined || symbol.declarations.length === 0;
@@ -43,7 +44,6 @@ export function isTypeLocked(ctx: InterpreterContext, type: TSType) {
   return locker.isTypeLocked(ctx, type);
 }
 
-// Symbol helpers
 export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Symbol): Symbol {
   if(!isAliasedSymbol(ctx, symbol)){
     return symbol;
@@ -58,16 +58,42 @@ export function resolveSymbolInCaseOfImport(ctx: InterpreterContext, symbol: Sym
   return ctx.checker.getAliasedSymbol(symbol);
 }
 
-export function withLockedSymbol<T extends Entity>(ctx: InterpreterContext, symbol: Symbol, callback: (ctx: InterpreterContext, symbol: Symbol) => T): T {
+export function withCachedEntity<T extends Entity>(ctx: InterpreterContext, symbol: Symbol, interpretSymbol: (ctx: InterpreterContext, symbol: Symbol) => T): T {
+  const symbolId = getSymbolId(ctx, symbol);
+
+  if(symbolId in ctx.entityCache){
+    return ctx.entityCache[symbolId] as T;
+  }
+
+  const entity = interpretSymbol(ctx, symbol);
+  ctx.entityCache[symbolId] = entity;
+
+  return entity;
+}
+
+export function withCachedType<T extends Type>(ctx: InterpreterContext, type: TSType, interpretType: (ctx: InterpreterContext, type: TSType) => T): T {
+  const typeId = getTypeId(ctx, type);
+
+  if(typeId in ctx.typeCache){
+    return ctx.typeCache[typeId] as T;
+  }
+
+  const interpretedType = interpretType(ctx, type);
+  ctx.typeCache[typeId] = interpretedType;
+
+  return interpretedType;
+}
+
+export function withLockedSymbol<T extends Entity >(ctx: InterpreterContext, symbol: Symbol, interpretSymbol: (ctx: InterpreterContext, symbol: Symbol) => T): T {
   locker.lockSymbol(ctx, symbol);
-  const returnType = callback(ctx, symbol);
+  const returnType = interpretSymbol(ctx, symbol);
   locker.unlockSymbol(ctx, symbol);
   return returnType;
 }
 
-export function withLockedType<T extends Type>(ctx: InterpreterContext, type: TSType, callback: (ctx: InterpreterContext, type: TSType) => T): T {
+export function withLockedType<T extends Type>(ctx: InterpreterContext, type: TSType, interpretType: (ctx: InterpreterContext, type: TSType) => T): T {
   locker.lockType(ctx, type);
-  const returnType = callback(ctx, type);
+  const returnType = interpretType(ctx, type);
   locker.unlockType(ctx, type);
   return returnType;
 }

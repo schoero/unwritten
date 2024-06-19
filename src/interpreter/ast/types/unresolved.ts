@@ -1,5 +1,6 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { isTypeReferenceType } from "unwritten:interpreter/typeguards/types";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByType } from "unwritten:interpreter:ast/shared/position";
@@ -12,7 +13,7 @@ import type { UnresolvedType } from "unwritten:interpreter:type-definitions/type
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createUnresolvedType(ctx: InterpreterContext, type: Type): UnresolvedType {
+export const createUnresolvedType = (ctx: InterpreterContext, type: Type): UnresolvedType => withCachedType(ctx, type, () => {
 
   const kind = TypeKind.Unresolved;
 
@@ -35,7 +36,7 @@ export function createUnresolvedType(ctx: InterpreterContext, type: Type): Unres
     typeId
   };
 
-}
+});
 
 
 export function createUnresolved(ctx: InterpreterContext, type: Type): UnresolvedType {

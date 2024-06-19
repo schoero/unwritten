@@ -1,6 +1,7 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { getNameByDeclaration, getNameByTypeNode } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position";
@@ -16,7 +17,7 @@ import type { TupleType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeReference: TupleTypeReference): TupleType {
+export const createTupleTypeByTypeReference = (ctx: InterpreterContext, typeReference: TupleTypeReference): TupleType => withCachedType(ctx, typeReference, () => {
 
   const { ts } = ctx.dependencies;
 
@@ -61,7 +62,7 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
     typeId
   };
 
-}
+});
 
 
 export function createTupleByTupleTypeNode(ctx: InterpreterContext, typeNode: TupleTypeNode): TupleType {

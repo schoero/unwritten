@@ -1,6 +1,6 @@
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter/ast/shared/id";
 import { TypeKind } from "unwritten:interpreter/enums/type";
-import { withLockedType } from "unwritten:interpreter/utils/ts";
+import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
@@ -10,7 +10,7 @@ import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/t
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createIndexedAccessType = (ctx: InterpreterContext, indexedAccessType: TSIndexedAccessType): IndexedAccessType => withLockedType(ctx, indexedAccessType, () => {
+export const createIndexedAccessType = (ctx: InterpreterContext, indexedAccessType: TSIndexedAccessType): IndexedAccessType => withCachedType(ctx, indexedAccessType, () => withLockedType(ctx, indexedAccessType, () => {
 
   const indexType = getTypeByType(ctx, indexedAccessType.indexType);
   const objectType = getTypeByType(ctx, indexedAccessType.objectType);
@@ -29,7 +29,7 @@ export const createIndexedAccessType = (ctx: InterpreterContext, indexedAccessTy
     typeId
   };
 
-});
+}));
 
 export function createIndexedAccessTypeByTypeNode(ctx: InterpreterContext, typeNode: IndexedAccessTypeNode): IndexedAccessType {
 

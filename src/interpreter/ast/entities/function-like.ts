@@ -1,5 +1,5 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
@@ -21,7 +21,7 @@ import type {
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> => withLockedSymbol(ctx, symbol, () => {
+export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(ctx: InterpreterContext, symbol: Symbol, kind: Kind): InferFunctionLikeEntityKind<Kind> => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.declarations?.flatMap(declaration => isFunctionLikeDeclaration(ctx, declaration) ||
     isCallSignatureDeclaration(ctx, declaration) ||
@@ -48,7 +48,7 @@ export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(c
     symbolId
   };
 
-});
+}));
 
 const signatureKindMap = {
   [EntityKind.Function]: EntityKind.FunctionSignature,
