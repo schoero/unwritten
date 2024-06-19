@@ -24,8 +24,8 @@ export function sortKeys(_: string, value: any) {
   return Object.keys(value)
     .sort()
     .reduce<{ [key: string]: any; }>((sorted, key) => {
-    sorted[key] = value[key];
-    return sorted;
-  }, {});
+      sorted[key] = value[key];
+      return sorted;
+    }, {});
 
 }

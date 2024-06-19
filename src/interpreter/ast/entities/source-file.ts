@@ -22,16 +22,16 @@ export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol):
   const exports = ctx.checker.getExportsOfModule(symbol)
     .reduce<ExportableEntity[]>((parsedSymbols, exportedSymbol) => {
 
-    const parsedSymbol = interpretSymbol(ctx, exportedSymbol);
+      const parsedSymbol = interpretSymbol(ctx, exportedSymbol);
 
-    // Don't document unresolved entities
-    if(isExportableEntity(parsedSymbol)){
-      parsedSymbols.push(parsedSymbol);
-    }
+      // don't document unresolved entities
+      if(isExportableEntity(parsedSymbol)){
+        parsedSymbols.push(parsedSymbol);
+      }
 
-    return parsedSymbols;
+      return parsedSymbols;
 
-  }, []);
+    }, []);
 
   const symbolId = getSymbolId(ctx, symbol);
   const path = declaration.getSourceFile().fileName;

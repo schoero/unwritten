@@ -20,37 +20,37 @@ export function renderMultilineArray(ctx: MarkdownRenderContext, children: ASTNo
     .filter(child => child !== "")
     .reduce<string[]>((acc, child) => {
 
-    const renderedNode = renderNode(ctx, child);
+      const renderedNode = renderNode(ctx, child);
 
-    if(renderedNode === ""){
-      return acc;
-    }
+      if(renderedNode === ""){
+        return acc;
+      }
 
-    // Remove empty line for sibling list nodes
-    // const renderedNodeWithoutSiblingEmptyLine = isListNode(child) &&
-    //   index !== 0 && children[index - 1] &&
-    //   isListNode(children[index - 1]) &&
-    //   renderedNode.startsWith(renderedEmptyLine + renderedNewLine)
-    //   ? renderedNode.slice(renderedEmptyLine.length)
-    //   : renderedNode;
+      // remove empty line for sibling list nodes
+      // const renderedNodeWithoutSiblingEmptyLine = isListNode(child) &&
+      //   index !== 0 && children[index - 1] &&
+      //   isListNode(children[index - 1]) &&
+      //   renderedNode.startsWith(renderedEmptyLine + renderedNewLine)
+      //   ? renderedNode.slice(renderedEmptyLine.length)
+      //   : renderedNode;
 
-    // Remove empty line if previously rendered node ends with an empty line and the current node starts with an empty line
-    const renderedNodeWithoutDoubleEmptyLines = acc.at(-1)?.endsWith(renderedNewLine + renderedEmptyLine) &&
-      startsWithEmptyLine(ctx, renderedNode)
-      ? renderedNode.slice((renderedEmptyLine + renderedNewLine).length)
-      : renderedNode;
+      // Remove empty line if previously rendered node ends with an empty line and the current node starts with an empty line
+      const renderedNodeWithoutDoubleEmptyLines = acc.at(-1)?.endsWith(renderedNewLine + renderedEmptyLine) &&
+        startsWithEmptyLine(ctx, renderedNode)
+        ? renderedNode.slice((renderedEmptyLine + renderedNewLine).length)
+        : renderedNode;
 
-    // Render indentation for all children except empty lines
-    const renderedNodeWithIndentation =
+      // render indentation for all children except empty lines
+      const renderedNodeWithIndentation =
       startsWithEmptyLine(ctx, renderedNodeWithoutDoubleEmptyLines)
         ? renderedNodeWithoutDoubleEmptyLines
         : renderWithIndentation(ctx, renderedNodeWithoutDoubleEmptyLines);
 
-    acc.push(renderedNodeWithIndentation);
+      acc.push(renderedNodeWithIndentation);
 
-    return acc;
+      return acc;
 
-  }, []);
+    }, []);
 
   const joinedReturnValue = returnValue.join(renderedNewLine);
 

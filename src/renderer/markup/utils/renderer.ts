@@ -133,11 +133,11 @@ export function spaceBetween(...nodes: ASTNode[]) {
   return nodes
     .filter(node => !!node)
     .reduce<ASTNode[]>((acc, node, index) => {
-    if(index > 0){
-      acc.push(" ", node);
-    } else {
-      acc.push(node);
-    }
-    return acc;
-  }, []);
+      if(index > 0){
+        acc.push(" ", node);
+      } else {
+        acc.push(node);
+      }
+      return acc;
+    }, []);
 }

@@ -40,18 +40,18 @@ export function isExcluded(path: string, name: string = "*", excludedPaths: Inte
       const excludedFromName = normalizedExcludedNames
         .reduce<boolean | undefined>((excludedFromPreviousName, excludedName) => {
 
-        const nameIsInverted = (excludedName.match(/^!+/) ?? [""])[0].length % 2 !== 0;
-        const nameWithoutInverts = excludedName.replace(/^!+/, "");
+          const nameIsInverted = (excludedName.match(/^!+/) ?? [""])[0].length % 2 !== 0;
+          const nameWithoutInverts = excludedName.replace(/^!+/, "");
 
-        if(nameWithoutInverts === "*"){
-          return true;
-        } else if(nameWithoutInverts === name){
-          return !nameIsInverted;
-        } else {
-          return excludedFromPreviousName;
-        }
+          if(nameWithoutInverts === "*"){
+            return true;
+          } else if(nameWithoutInverts === name){
+            return !nameIsInverted;
+          } else {
+            return excludedFromPreviousName;
+          }
 
-      }, undefined);
+        }, undefined);
 
       if(excludedFromName === undefined){
         return excludedFromPreviousFile;

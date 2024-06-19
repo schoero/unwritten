@@ -140,31 +140,31 @@ const htmlRenderer: HTMLRenderer = {
     }, [])
       .reduce<RenderOutput>((files, convertedSourceFileEntity) => {
 
-      // Reset context
-      ctx.nesting = 1;
-      ctx.indentation = 0;
+        // reset context
+        ctx.nesting = 1;
+        ctx.indentation = 0;
 
-      setCurrentSourceFile(ctx, convertedSourceFileEntity);
+        setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
-      const tableOfContents = renderConfig.renderTableOfContents &&
-        createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents);
-      const documentation = createSectionNode("documentation", ...convertedSourceFileEntity.documentation);
+        const tableOfContents = renderConfig.renderTableOfContents &&
+          createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents);
+        const documentation = createSectionNode("documentation", ...convertedSourceFileEntity.documentation);
 
-      const ast = createTitleNode(
-        convertedSourceFileEntity.title,
-        convertedSourceFileEntity.titleAnchor,
-        tableOfContents,
-        documentation
-      );
+        const ast = createTitleNode(
+          convertedSourceFileEntity.title,
+          convertedSourceFileEntity.titleAnchor,
+          tableOfContents,
+          documentation
+        );
 
-      const renderedNewLine = renderNewLine(ctx);
-      const renderedContent = renderNode(ctx, ast);
-      const filePath = ctx.currentFile.dst;
+        const renderedNewLine = renderNewLine(ctx);
+        const renderedContent = renderNode(ctx, ast);
+        const filePath = ctx.currentFile.dst;
 
-      files[filePath] = `${renderedContent}${renderedNewLine}`;
-      return files;
+        files[filePath] = `${renderedContent}${renderedNewLine}`;
+        return files;
 
-    }, {});
+      }, {});
 
   })
 

@@ -94,8 +94,8 @@ export function isFunctionLikeType(ctx: InterpreterContext, type: Type): boolean
   const { ts } = ctx.dependencies;
   return isObjectType(ctx, type) &&
     type.getCallSignatures().length > 0 &&
-      type.getConstructSignatures().length === 0 &&
-        type.getProperties().length === 0;
+    type.getConstructSignatures().length === 0 &&
+    type.getProperties().length === 0;
 }
 
 export function isGenericType(ctx: InterpreterContext, type: Type): type is GenericType {
@@ -114,7 +114,7 @@ export function isInstanceType(ctx: InterpreterContext, type: Type): type is Typ
   const { ts } = ctx.dependencies;
   return isObjectType(ctx, type) && (type.objectFlags & ts.ObjectFlags.Reference) !== 0 &&
     ((type.objectFlags & ts.ObjectFlags.Instantiated) !== 0 ||
-    (type.objectFlags & ts.ObjectFlags.InstantiationExpressionType) !== 0);
+      (type.objectFlags & ts.ObjectFlags.InstantiationExpressionType) !== 0);
 }
 
 export function isInterfaceType(ctx: InterpreterContext, type: Type): type is InterfaceType {
