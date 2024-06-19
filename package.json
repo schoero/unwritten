@@ -1,5 +1,5 @@
 {
-  "version": "0.2.9",
+  "version": "0.2.8",
   "type": "module",
   "name": "unwritten",
   "description": "unwritten is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
