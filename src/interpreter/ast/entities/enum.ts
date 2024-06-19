@@ -11,7 +11,7 @@ import { getTypeByDeclaration } from "../type";
 
 import type { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
 
-import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

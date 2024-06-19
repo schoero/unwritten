@@ -6,7 +6,7 @@ import { getPositionBySymbol } from "unwritten:interpreter:ast/shared/position";
 
 import type { Symbol } from "typescript";
 
-import type { UnresolvedEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { UnresolvedEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

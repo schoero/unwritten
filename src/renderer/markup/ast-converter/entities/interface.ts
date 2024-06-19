@@ -31,7 +31,7 @@ import {
   extendInterfaceEntitySignaturesWithHeritage
 } from "unwritten:renderer:utils/heritage";
 
-import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {

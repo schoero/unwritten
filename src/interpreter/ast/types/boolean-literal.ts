@@ -4,7 +4,7 @@ import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { LiteralType } from "typescript";
 
-import type { BooleanLiteralType } from "unwritten:interpreter/type-definitions/types";
+import type { BooleanLiteralType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

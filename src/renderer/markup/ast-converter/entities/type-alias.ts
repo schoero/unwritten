@@ -17,7 +17,7 @@ import { getSectionType } from "unwritten:renderer:markup/types-definitions/sect
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate, renderEntityPrefix } from "unwritten:renderer:markup/utils/renderer";
 
-import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {

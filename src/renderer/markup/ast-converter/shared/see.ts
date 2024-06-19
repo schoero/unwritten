@@ -4,7 +4,7 @@ import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/regi
 import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { See } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { See } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { ConvertedSeeTags, ConvertedSeeTagsForType } from "unwritten:renderer/markup/types-definitions/renderer";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 

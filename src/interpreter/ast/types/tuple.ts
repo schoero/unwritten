@@ -12,7 +12,7 @@ import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { NamedTupleMember, TupleTypeNode, TupleTypeReference, TypeNode } from "typescript";
 
-import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { TupleMemberEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

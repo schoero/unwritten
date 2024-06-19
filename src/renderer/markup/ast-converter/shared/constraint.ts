@@ -5,7 +5,7 @@ import { spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations";
 import { isMultilineType } from "unwritten:renderer/markup/utils/types";
 
-import type { Type } from "unwritten:interpreter/type-definitions/types";
+import type { Type } from "unwritten:interpreter:type-definitions/types";
 import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 
 

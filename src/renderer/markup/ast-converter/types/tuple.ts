@@ -6,7 +6,7 @@ import { createLinkNode, createListNode, createMultilineNode } from "unwritten:r
 import { encapsulate, spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { TupleMemberEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {

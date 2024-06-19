@@ -46,7 +46,7 @@ import {
 import { encapsulate, renderEntityPrefix, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { ExplicitSignatureEntity, SignatureEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ExplicitSignatureEntity, SignatureEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { AnchorNode, ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {

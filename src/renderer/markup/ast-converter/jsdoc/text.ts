@@ -1,4 +1,4 @@
-import type { JSDocText } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { JSDocText } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 import type { ConvertedJSDocTags } from "unwritten:renderer/markup/types-definitions/renderer";
 

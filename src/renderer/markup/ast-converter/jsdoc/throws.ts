@@ -2,7 +2,7 @@ import { convertJSDocType } from "unwritten:renderer/markup/ast-converter/jsdoc/
 import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 
-import type { JSDocThrowsTag } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { JSDocThrowsTag } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 import type { ConvertedJSDocThrowsTag } from "unwritten:renderer/markup/types-definitions/renderer";
 

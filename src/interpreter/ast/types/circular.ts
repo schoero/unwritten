@@ -6,7 +6,7 @@ import { getPositionBySymbol } from "unwritten:interpreter:ast/shared/position";
 
 import type { Type } from "typescript";
 
-import type { CircularType } from "unwritten:interpreter/type-definitions/types";
+import type { CircularType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

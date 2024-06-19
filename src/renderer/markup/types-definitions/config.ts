@@ -1,4 +1,4 @@
-import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities";
+import type { ExportableEntityKinds } from "unwritten:interpreter:type-definitions/entities";
 
 
 export interface MarkupRenderConfig {

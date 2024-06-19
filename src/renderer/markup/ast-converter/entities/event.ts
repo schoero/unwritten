@@ -26,7 +26,7 @@ import {
 } from "unwritten:renderer:markup/utils/nodes";
 import { renderEntityPrefix, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 
-import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {

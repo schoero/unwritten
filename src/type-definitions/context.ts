@@ -1,6 +1,8 @@
 import type { TypeChecker } from "typescript";
 import type ts from "typescript";
 
+import type { Entity } from "unwritten:interpreter:type-definitions/entities";
+import type { Type } from "unwritten:interpreter:type-definitions/types";
 import type { OS } from "unwritten:type-definitions/platform";
 
 import type { CompleteConfig } from "./config";
@@ -33,15 +35,15 @@ export interface DefaultNodeContext {
 }
 
 interface BaseInterpreterContext {
+  /** @internal */
   checker: TypeChecker;
   config: CompleteConfig;
-  /**
-   * @internal
-   */
+  /** @internal */
+  entityCache: Record<number, Entity>;
+  /** @internal */
+  typeCache: Record<number, Type>;
   symbolLocker?: Set<number>;
-  /**
-   * @internal
-   */
+  /** @internal */
   typeLocker?: Set<number>;
 }
 

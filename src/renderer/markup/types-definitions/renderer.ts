@@ -1,6 +1,6 @@
 import type { RenderCategories } from "../enums/renderer";
 
-import type { Alpha, Beta, Deprecated, Example, Internal } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { Alpha, Beta, Deprecated, Example, Internal } from "unwritten:interpreter:type-definitions/jsdoc";
 
 import type {
   AnchorNode,
@@ -439,12 +439,12 @@ export type ConvertedInterfaceEntityForDocumentation = SectionNode<[
 export type ConvertedClassEntityForTableOfContents = [
   title: ASTNode,
   members: ListNode<
-  (
-    | ListNode<ConvertedEventPropertyEntityForTableOfContents[]>
-    | ListNode<ConvertedPropertyEntityForTableOfContents[]>
-    | ListNode<ConvertedSignatureEntityForTableOfContents[]>
-    | string
-  )[]
+    (
+      | ListNode<ConvertedEventPropertyEntityForTableOfContents[]>
+      | ListNode<ConvertedPropertyEntityForTableOfContents[]>
+      | ListNode<ConvertedSignatureEntityForTableOfContents[]>
+      | string
+    )[]
   >
 ];
 export type ConvertedClassEntityForDocumentation = SectionNode<[

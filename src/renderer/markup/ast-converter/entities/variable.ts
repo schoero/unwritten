@@ -11,7 +11,7 @@ import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-conve
 import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 
-import type { VariableEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {

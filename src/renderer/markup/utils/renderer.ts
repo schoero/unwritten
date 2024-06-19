@@ -2,7 +2,7 @@ import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
-import type { ExportableEntity, ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities";
+import type { ExportableEntity, ExportableEntityKinds } from "unwritten:interpreter:type-definitions/entities";
 import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.js";
 import type { Encapsulation } from "unwritten:renderer:markup/types-definitions/config";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";

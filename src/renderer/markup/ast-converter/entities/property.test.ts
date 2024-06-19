@@ -24,7 +24,7 @@ import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
 
-import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types";
+import type { ObjectLiteralType } from "unwritten:interpreter:type-definitions/types";
 
 
 scope("MarkupRenderer", EntityKind.Property, () => {

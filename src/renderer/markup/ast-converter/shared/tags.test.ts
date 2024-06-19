@@ -6,7 +6,7 @@ import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-conve
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 
-import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities";
 
 
 scope("MarkupRenderer", "Tags", () => {

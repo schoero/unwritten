@@ -20,7 +20,7 @@ import {
   isJSDocType
 } from "unwritten:typeguards/jsdoc";
 
-import type { JSDocProperties, JSDocTags } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { JSDocProperties, JSDocTags } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 

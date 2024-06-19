@@ -3,7 +3,7 @@ import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 
 import type { JSDocTag as TSJSDocTag } from "typescript";
 
-import type { JSDocGenericTag } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { JSDocGenericTag } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

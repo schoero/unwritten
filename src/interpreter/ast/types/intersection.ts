@@ -6,7 +6,7 @@ import { getTypeByType } from "../type";
 
 import type { IntersectionType as TSIntersectionType } from "typescript";
 
-import type { IntersectionType } from "unwritten:interpreter/type-definitions/types";
+import type { IntersectionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

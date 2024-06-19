@@ -5,7 +5,7 @@ import {
   convertSignatureEntityForType
 } from "unwritten:renderer:markup/ast-converter/entities/index";
 
-import type { FunctionLikeEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { FunctionLikeEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedFunctionEntityForDocumentation,

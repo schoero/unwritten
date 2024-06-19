@@ -197,6 +197,7 @@ export function getTypeByResolvedAndDeclaredType(ctx: InterpreterContext, resolv
   return declaredTypeWithoutBrand;
 
 }
+
 function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
 
   if(isArrayTypeNode(ctx, typeNode)){
@@ -227,6 +228,7 @@ function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
   return interpretType(ctx, type);
 
 }
+
 function interpretType(ctx: InterpreterContext, type: TSType): Type {
 
   if(type.getSymbol() && isSymbolExcluded(ctx, type.symbol, getNameByType(ctx, type))){

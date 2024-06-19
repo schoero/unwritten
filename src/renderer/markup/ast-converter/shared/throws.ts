@@ -4,7 +4,7 @@ import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/regi
 import { getTranslator } from "unwritten:renderer/markup/utils/translations";
 import { createInlineTitleNode, createListNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 
-import type { Throws } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { Throws } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedThrowsForDocumentation,

@@ -6,7 +6,7 @@ import { assert } from "unwritten:utils:general";
 
 import type { Type } from "typescript";
 
-import type { UnknownType } from "unwritten:interpreter/type-definitions/types";
+import type { UnknownType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

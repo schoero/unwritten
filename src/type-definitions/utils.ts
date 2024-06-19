@@ -1,4 +1,4 @@
-import type { Entity } from "unwritten:interpreter/type-definitions/entities";
+import type { Entity } from "unwritten:interpreter:type-definitions/entities";
 import type { Type } from "unwritten:interpreter:type-definitions/types";
 
 

@@ -8,7 +8,7 @@ import type {
   SignatureEntity,
   TupleMemberEntity,
   TypeParameterEntity
-} from "unwritten:interpreter/type-definitions/entities";
+} from "unwritten:interpreter:type-definitions/entities";
 import type { Modifiers, Position } from "unwritten:interpreter:type-definitions/shared";
 
 import type { ID, Name } from "./jsdoc";

@@ -10,7 +10,7 @@ import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/posit
 
 import type { MappedTypeNode } from "typescript";
 
-import type { MappedType } from "unwritten:interpreter/type-definitions/types";
+import type { MappedType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

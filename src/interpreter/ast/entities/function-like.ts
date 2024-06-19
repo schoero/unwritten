@@ -17,7 +17,7 @@ import type { Symbol } from "typescript";
 import type {
   FunctionLikeEntityKinds,
   InferFunctionLikeEntityKind
-} from "unwritten:interpreter/type-definitions/entities";
+} from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

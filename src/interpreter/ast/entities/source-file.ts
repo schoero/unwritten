@@ -7,7 +7,7 @@ import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";
 
-import type { ExportableEntity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ExportableEntity, SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

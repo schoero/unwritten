@@ -5,7 +5,7 @@ import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 
 import type { EntityName, JSDocMemberName } from "typescript";
 
-import type { JSDocReference } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { JSDocReference } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

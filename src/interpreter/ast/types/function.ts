@@ -6,7 +6,7 @@ import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { ObjectType } from "typescript";
 
-import type { FunctionType } from "unwritten:interpreter/type-definitions/types";
+import type { FunctionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

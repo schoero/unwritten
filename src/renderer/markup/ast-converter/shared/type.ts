@@ -86,7 +86,7 @@ import {
   isVoidType
 } from "unwritten:typeguards/types";
 
-import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types";
+import type { MultilineType, Type } from "unwritten:interpreter:type-definitions/types";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode, ConditionalNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {

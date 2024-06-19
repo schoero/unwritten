@@ -36,7 +36,6 @@ import {
 import { createListNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { renderCategoryName } from "unwritten:renderer:markup/utils/renderer";
 import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort";
-import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import {
   isCircularEntity,
   isClassEntity,
@@ -55,7 +54,7 @@ import {
 } from "unwritten:typeguards/entities";
 import { assert } from "unwritten:utils/general.js";
 
-import type { Entity, ExportableEntity, LinkableEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { Entity, ExportableEntity, LinkableEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ListNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
@@ -171,8 +170,6 @@ export function convertToMarkupAST(ctx: MarkupRenderContext, entities: Exportabl
 
 export function createTableOfContents(ctx: MarkupRenderContext, entities: ExportableEntity[]): ListNode<ConvertedCategoryForTableOfContents[]> {
 
-  const translate = getTranslator(ctx);
-
   const tableOfContents: ConvertedCategoryForTableOfContents[] = [];
 
   for(const entity of entities){
@@ -202,8 +199,6 @@ export function createTableOfContents(ctx: MarkupRenderContext, entities: Export
 
 
 export function createDocumentation(ctx: MarkupRenderContext, entities: ExportableEntity[]): ConvertedCategoryForDocumentation[] {
-
-  const translate = getTranslator(ctx);
 
   const documentation: ConvertedCategoryForDocumentation[] = [];
 

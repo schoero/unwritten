@@ -4,7 +4,7 @@ import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { NumberLiteralType as TSNumberLiteralType } from "typescript";
 
-import type { NumberLiteralType } from "unwritten:interpreter/type-definitions/types";
+import type { NumberLiteralType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

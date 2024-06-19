@@ -1,6 +1,6 @@
 import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
 
-import type { JSDocGenericTag } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { JSDocGenericTag } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 import type { ConvertedJSDocTags } from "unwritten:renderer/markup/types-definitions/renderer";
 

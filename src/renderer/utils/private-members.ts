@@ -5,7 +5,7 @@ import type {
   FunctionLikeEntity,
   PropertyEntity,
   SignatureEntity
-} from "unwritten:interpreter/type-definitions/entities";
+} from "unwritten:interpreter:type-definitions/entities";
 
 
 export function filterOutImplicitSignatures(signatures: SignatureEntity[]): ExplicitSignatureEntity[] {

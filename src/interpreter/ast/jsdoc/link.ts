@@ -7,8 +7,8 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 
 import type { EntityName, JSDocLink as TSJSDocLink, JSDocMemberName } from "typescript";
 
-import type { JSDocLink } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { TypeReferenceType } from "unwritten:interpreter/type-definitions/types";
+import type { JSDocLink } from "unwritten:interpreter:type-definitions/jsdoc";
+import type { TypeReferenceType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

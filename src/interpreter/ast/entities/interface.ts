@@ -24,7 +24,7 @@ import { assert } from "unwritten:utils:general";
 
 import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "typescript";
 
-import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { ExpressionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 import type { PartialByKey } from "unwritten:type-definitions/utils";

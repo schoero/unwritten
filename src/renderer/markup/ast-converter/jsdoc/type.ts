@@ -5,7 +5,7 @@ import { createAnchorNode, createConditionalNode } from "unwritten:renderer/mark
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { JSDocType } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { JSDocType } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 import type { ConvertedJSDocType } from "unwritten:renderer/markup/types-definitions/renderer";
 

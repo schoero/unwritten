@@ -11,7 +11,7 @@ import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-co
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 
-import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {

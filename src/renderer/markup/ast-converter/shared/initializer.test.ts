@@ -6,7 +6,7 @@ import { convertInitializerForType } from "unwritten:renderer/markup/ast-convert
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 
-import type { ArrayType, NumberLiteralType } from "unwritten:interpreter/type-definitions/types";
+import type { ArrayType, NumberLiteralType } from "unwritten:interpreter:type-definitions/types";
 
 
 scope("MarkupRenderer", "Example", () => {

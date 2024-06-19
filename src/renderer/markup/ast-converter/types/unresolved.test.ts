@@ -11,7 +11,7 @@ import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
 
-import type { TypeReferenceType } from "unwritten:interpreter/type-definitions/types";
+import type { TypeReferenceType } from "unwritten:interpreter:type-definitions/types";
 
 
 scope("MarkupRenderer", TypeKind.Unresolved, () => {

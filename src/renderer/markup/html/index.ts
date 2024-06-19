@@ -46,7 +46,7 @@ import { minMax } from "unwritten:renderer:markup/utils/renderer";
 
 import { renderTitleNode } from "./ast/title";
 
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
 import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";

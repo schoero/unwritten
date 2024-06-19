@@ -3,7 +3,7 @@ import { createFunctionLikeEntity } from "unwritten:interpreter:ast/entities/ind
 
 import type { Symbol } from "typescript";
 
-import type { SetterEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { SetterEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

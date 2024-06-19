@@ -12,7 +12,7 @@ import type {
   MethodEntity,
   PropertyEntity,
   SetterEntity
-} from "unwritten:interpreter/type-definitions/entities";
+} from "unwritten:interpreter:type-definitions/entities";
 
 
 type EntityKeys = "events" | "getters" | "methods" | "properties" | "setters";

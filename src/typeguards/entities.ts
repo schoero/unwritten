@@ -25,7 +25,7 @@ import type {
   TypeParameterEntity,
   UnresolvedEntity,
   VariableEntity
-} from "unwritten:interpreter/type-definitions/entities";
+} from "unwritten:interpreter:type-definitions/entities";
 
 
 export function isCircularEntity(entity: Entity): entity is CircularEntity {

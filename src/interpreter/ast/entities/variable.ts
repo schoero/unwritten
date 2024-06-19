@@ -12,7 +12,7 @@ import { getTypeByDeclaration } from "../type";
 
 import type { Symbol } from "typescript";
 
-import type { VariableEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

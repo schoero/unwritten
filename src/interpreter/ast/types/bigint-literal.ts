@@ -4,7 +4,7 @@ import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { BigIntLiteralType as TSBigIntLiteralType } from "typescript";
 
-import type { BigIntLiteralType } from "unwritten:interpreter/type-definitions/types";
+import type { BigIntLiteralType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

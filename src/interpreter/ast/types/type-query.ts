@@ -7,7 +7,7 @@ import { getResolvedTypeByTypeNode, getTypeByResolvedAndDeclaredType, getTypeByT
 
 import type { TypeQueryNode } from "typescript";
 
-import type { TypeQueryType } from "unwritten:interpreter/type-definitions/types";
+import type { TypeQueryType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

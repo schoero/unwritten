@@ -1,4 +1,4 @@
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { RenderContext } from "unwritten:type-definitions/context";
 import type { FilePath } from "unwritten:type-definitions/platform";
 

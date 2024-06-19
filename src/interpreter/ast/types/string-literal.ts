@@ -4,7 +4,7 @@ import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { StringLiteralType as TSStringLiteralType } from "typescript";
 
-import type { StringLiteralType } from "unwritten:interpreter/type-definitions/types";
+import type { StringLiteralType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
