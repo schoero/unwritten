@@ -2,8 +2,8 @@ import { assert } from "unwritten:utils/general";
 
 import type { MarkupRenderContext } from "../types-definitions/markup";
 
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
-import type { ID, Name } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
+import type { ID, Name } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { FilePath } from "unwritten:type-definitions/platform";
 
 
@@ -49,8 +49,7 @@ export function registerAnchor(ctx: MarkupRenderContext, name: Name, id: ID | ID
 
   if(
     !ctx.currentFile.links.get(anchorId)!
-      .flat()
-      .some(storedId => ids.includes(storedId))
+      .some(storedIds => storedIds.every(storedId => ids.includes(storedId)))
   ){
     ctx.currentFile.links.get(anchorId)!.push(ids);
   }
