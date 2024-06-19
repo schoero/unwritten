@@ -1,5 +1,5 @@
 {
-  "version": "0.2.8",
+  "version": "0.2.9",
   "type": "module",
   "name": "unwritten",
   "description": "unwritten is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
@@ -65,7 +65,8 @@
   "dependencies": {
     "cac": "^6.7.14",
     "minimatch": "^9.0.4",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "tinyhighlight": "^0.3.2"
   },
   "devDependencies": {
     "@schoero/configs": "^1.0.15",
@@ -76,7 +77,6 @@
     "eslint-plugin-jsonc": "^2.16.0",
     "eslint-plugin-sort-exports": "^0.9.1",
     "rollup-plugin-preserve-shebang": "^1.0.1",
-    "tinyhighlight": "^0.3.2",
     "ts-json-schema-generator": "^2.3.0",
     "vite": "^5.3.1",
     "vite-plugin-dts": "^3.9.1",
