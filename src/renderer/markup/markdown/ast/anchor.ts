@@ -11,9 +11,15 @@ export function renderAnchorNode(ctx: MarkdownRenderContext, anchorNode: AnchorN
   const anchorLink = getAnchorLink(ctx, anchorNode.id);
 
   if(!anchorLink){
-    throw new Error(`No anchor link and no fallback found for anchor node ${anchorNode.name} with id ${anchorNode.id}`);
+    // throw new Error(`No anchor link and no fallback found for anchor node ${anchorNode.name} with id ${anchorNode.id}`);
+    return anchorNode.displayName;
   }
 
   return renderLinkNode(ctx, createLinkNode(anchorNode.displayName, anchorLink));
 
 }
+
+
+// 9007199254711806     Method: SVGSVGInstance.attr(attributeName)
+
+// 23719 SVGInstance
