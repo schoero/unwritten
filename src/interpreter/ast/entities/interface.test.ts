@@ -176,23 +176,23 @@ scope("Interpreter", EntityKind.Interface, () => {
     it("should be able to parse inheritance", () => {
 
       expect(exportedInterfaceB.properties).toHaveLength(1);
-      expect(exportedInterfaceB.properties[0]!.name).toBe("b");
+      expect(exportedInterfaceB.properties[0].name).toBe("b");
       expect(exportedInterfaceB.heritage).toBeDefined();
       expect(exportedInterfaceB.heritage).toHaveLength(1);
 
-      assert(exportedInterfaceB.heritage![0]!.instanceType.kind === TypeKind.Interface);
-      expect(exportedInterfaceB.heritage![0]!.instanceType.properties).toHaveLength(1);
-      expect(exportedInterfaceB.heritage![0]!.instanceType.properties[0]!.name).toBe("a");
+      assert(exportedInterfaceB.heritage![0].instanceType.kind === TypeKind.Interface);
+      expect(exportedInterfaceB.heritage![0].instanceType.properties).toHaveLength(1);
+      expect(exportedInterfaceB.heritage![0].instanceType.properties[0].name).toBe("a");
 
       expect(exportedInterfaceC.properties).toHaveLength(1);
-      expect(exportedInterfaceC.properties[0]!.name).toBe("c");
+      expect(exportedInterfaceC.properties[0].name).toBe("c");
       expect(exportedInterfaceC.heritage).toBeDefined();
       expect(exportedInterfaceC.heritage).toHaveLength(1);
 
-      assert(exportedInterfaceC.heritage![0]!.instanceType.kind === TypeKind.Interface);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties).toHaveLength(2);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[1]!.name).toBe("a");
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[0]!.name).toBe("b");
+      assert(exportedInterfaceC.heritage![0].instanceType.kind === TypeKind.Interface);
+      expect(exportedInterfaceC.heritage![0].instanceType.properties).toHaveLength(2);
+      expect(exportedInterfaceC.heritage![0].instanceType.properties[1].name).toBe("a");
+      expect(exportedInterfaceC.heritage![0].instanceType.properties[0].name).toBe("b");
 
     });
 
@@ -224,13 +224,13 @@ scope("Interpreter", EntityKind.Interface, () => {
       expect(exportedInterfaceC.heritage).toBeDefined();
       expect(exportedInterfaceC.heritage).toHaveLength(2);
 
-      assert(exportedInterfaceC.heritage![0]!.instanceType.kind === TypeKind.Interface);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties).toHaveLength(1);
-      expect(exportedInterfaceC.heritage![0]!.instanceType.properties[0]!.name).toBe("a");
+      assert(exportedInterfaceC.heritage![0].instanceType.kind === TypeKind.Interface);
+      expect(exportedInterfaceC.heritage![0].instanceType.properties).toHaveLength(1);
+      expect(exportedInterfaceC.heritage![0].instanceType.properties[0].name).toBe("a");
 
-      assert(exportedInterfaceC.heritage![1]!.instanceType.kind === TypeKind.Interface);
-      expect(exportedInterfaceC.heritage![1]!.instanceType.properties).toHaveLength(1);
-      expect(exportedInterfaceC.heritage![1]!.instanceType.properties[0]!.name).toBe("b");
+      assert(exportedInterfaceC.heritage![1].instanceType.kind === TypeKind.Interface);
+      expect(exportedInterfaceC.heritage![1].instanceType.properties).toHaveLength(1);
+      expect(exportedInterfaceC.heritage![1].instanceType.properties[0].name).toBe("b");
 
     });
 
@@ -253,8 +253,8 @@ scope("Interpreter", EntityKind.Interface, () => {
       expect(exportedInterface.typeParameters).toBeDefined();
       expect(exportedInterface.typeParameters).toHaveLength(1);
       expect(exportedInterface.properties).toHaveLength(1);
-      assert(exportedInterface.properties[0]!.type.kind === TypeKind.TypeReference);
-      expect(exportedInterface.properties[0]!.type.type!.kind).toBe(TypeKind.TypeParameter);
+      assert(exportedInterface.properties[0].type.kind === TypeKind.TypeReference);
+      expect(exportedInterface.properties[0].type.type!.kind).toBe(TypeKind.TypeParameter);
     });
 
   }

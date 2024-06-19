@@ -1,6 +1,6 @@
 import type { Declaration, Symbol, Type, TypeNode } from "typescript";
 
-import type { ID } from "unwritten:interpreter/type-definitions/jsdoc";
+import type { ID } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

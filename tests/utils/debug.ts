@@ -9,7 +9,6 @@ export function getEnumFlagNames(enumObj: any, flags: number) {
     .map(f => {
       const power = Math.log2(f);
       if(Number.isInteger(power)){
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         return `${enumObj[f]} (2 ^ ${power})`;
       }
       return enumObj[f];

@@ -1,17 +1,17 @@
 import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { isExportableEntity } from "unwritten:typeguards/entities";
 import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";
 
-import type { ExportableEntity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ExportableEntity, SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol): SourceFileEntity => withLockedSymbol(ctx, symbol, () => {
+export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol): SourceFileEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const { getFileName } = ctx.dependencies.path;
 
@@ -22,16 +22,16 @@ export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol):
   const exports = ctx.checker.getExportsOfModule(symbol)
     .reduce<ExportableEntity[]>((parsedSymbols, exportedSymbol) => {
 
-    const parsedSymbol = interpretSymbol(ctx, exportedSymbol);
+      const parsedSymbol = interpretSymbol(ctx, exportedSymbol);
 
-    // Don't document unresolved entities
-    if(isExportableEntity(parsedSymbol)){
-      parsedSymbols.push(parsedSymbol);
-    }
+      // don't document unresolved entities
+      if(isExportableEntity(parsedSymbol)){
+        parsedSymbols.push(parsedSymbol);
+      }
 
-    return parsedSymbols;
+      return parsedSymbols;
 
-  }, []);
+    }, []);
 
   const symbolId = getSymbolId(ctx, symbol);
   const path = declaration.getSourceFile().fileName;
@@ -46,4 +46,4 @@ export const createSourceFileEntity = (ctx: InterpreterContext, symbol: Symbol):
     symbolId
   };
 
-});
+}));

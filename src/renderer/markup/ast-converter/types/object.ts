@@ -12,7 +12,7 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { ObjectLikeTypes } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
   ConvertedObjectType,
@@ -21,7 +21,7 @@ import type {
 
 
 export function convertObjectTypeInline(
-  ctx: MarkupRenderContexts,
+  ctx: MarkupRenderContext,
   objectLikeType: ObjectLikeTypes
 ): ConvertedObjectType {
 
@@ -40,7 +40,7 @@ export function convertObjectTypeInline(
 
 
 export function convertObjectTypeMultiline(
-  ctx: MarkupRenderContexts,
+  ctx: MarkupRenderContext,
   objectLikeType: ObjectLikeTypes
 ): ConvertedObjectTypeMultiline {
 
@@ -63,33 +63,27 @@ export function convertObjectTypeMultiline(
   );
 
   const convertedCallSignatures = callSignatures.map(
-    callSignature =>
-      convertSignatureEntityForType(ctx, callSignature)
+    callSignature => convertSignatureEntityForType(ctx, callSignature)
   );
 
   const convertedProperties = properties.map(
-    propertyEntity =>
-      convertPropertyEntityForType(ctx, propertyEntity)
+    propertyEntity => convertPropertyEntityForType(ctx, propertyEntity)
   );
 
   const convertedEventProperties = events.map(
-    eventPropertyEntity =>
-      convertEventPropertyEntityForType(ctx, eventPropertyEntity)
+    eventPropertyEntity => convertEventPropertyEntityForType(ctx, eventPropertyEntity)
   );
 
   const convertedMethods = methods.flatMap(
-    methodEntity =>
-      convertFunctionLikeEntityForType(ctx, methodEntity)
+    methodEntity => convertFunctionLikeEntityForType(ctx, methodEntity)
   );
 
   const convertedSetters = setters.flatMap(
-    setterEntity =>
-      convertFunctionLikeEntityForType(ctx, setterEntity)
+    setterEntity => convertFunctionLikeEntityForType(ctx, setterEntity)
   );
 
   const convertedGetters = getters.flatMap(
-    getterEntity =>
-      convertFunctionLikeEntityForType(ctx, getterEntity)
+    getterEntity => convertFunctionLikeEntityForType(ctx, getterEntity)
   );
 
   return createMultilineNode(
@@ -104,9 +98,13 @@ export function convertObjectTypeMultiline(
 
 }
 
-function getObjectTypeName(ctx: MarkupRenderContexts, objectLikeType: ObjectLikeTypes) {
+function getObjectTypeName(ctx: MarkupRenderContext, objectLikeType: ObjectLikeTypes) {
 
   const translate = getTranslator(ctx);
+
+  if(objectLikeType.name && !isAnonymousObjectType(ctx, objectLikeType)){
+    return objectLikeType.name;
+  }
 
   switch (objectLikeType.kind){
     case TypeKind.Class:
@@ -123,4 +121,8 @@ function getObjectTypeName(ctx: MarkupRenderContexts, objectLikeType: ObjectLike
       return translate("object");
   }
 
+}
+
+function isAnonymousObjectType(ctx: MarkupRenderContext, objectLikeType: ObjectLikeTypes) {
+  return !objectLikeType.name || objectLikeType.name.startsWith("__");
 }

@@ -14,16 +14,16 @@ import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/ut
 import { capitalize } from "unwritten:renderer/markup/utils/translations";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderAnchorNode } from "unwritten:renderer:html/ast/anchor";
-import { renderBoldNode } from "unwritten:renderer:html/ast/bold";
-import { renderItalicNode } from "unwritten:renderer:html/ast/italic";
-import { renderLinkNode } from "unwritten:renderer:html/ast/link";
-import { renderListNode } from "unwritten:renderer:html/ast/list";
-import { renderParagraphNode } from "unwritten:renderer:html/ast/paragraph";
-import { renderSectionNode } from "unwritten:renderer:html/ast/section";
-import { renderSmallNode } from "unwritten:renderer:html/ast/small";
-import { renderSpanNode } from "unwritten:renderer:html/ast/span";
-import { renderStrikethroughNode } from "unwritten:renderer:html/ast/strikethrough";
+import { renderAnchorNode } from "unwritten:renderer:html:ast/anchor";
+import { renderBoldNode } from "unwritten:renderer:html:ast/bold";
+import { renderItalicNode } from "unwritten:renderer:html:ast/italic";
+import { renderLinkNode } from "unwritten:renderer:html:ast/link";
+import { renderListNode } from "unwritten:renderer:html:ast/list";
+import { renderParagraphNode } from "unwritten:renderer:html:ast/paragraph";
+import { renderSectionNode } from "unwritten:renderer:html:ast/section";
+import { renderSmallNode } from "unwritten:renderer:html:ast/small";
+import { renderSpanNode } from "unwritten:renderer:html:ast/span";
+import { renderStrikethroughNode } from "unwritten:renderer:html:ast/strikethrough";
 import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index";
 import {
   isAnchorNode,
@@ -46,7 +46,7 @@ import { minMax } from "unwritten:renderer:markup/utils/renderer";
 
 import { renderTitleNode } from "./ast/title";
 
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
 import type { HTMLRenderContext, HTMLRenderer } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
@@ -75,7 +75,7 @@ const htmlRenderer: HTMLRenderer = {
   fileExtension: ".html",
   name: BuiltInRenderers.HTML,
 
-  // eslint-disable-next-line sort-keys/sort-keys-fix
+  // eslint-disable-next-line eslint-plugin-sort-keys/sort-keys-fix
   initializeContext: (ctx: HTMLRenderContext) => {
 
     ctx.links = [];
@@ -140,31 +140,31 @@ const htmlRenderer: HTMLRenderer = {
     }, [])
       .reduce<RenderOutput>((files, convertedSourceFileEntity) => {
 
-      // Reset context
-      ctx.nesting = 1;
-      ctx.indentation = 0;
+        // reset context
+        ctx.nesting = 1;
+        ctx.indentation = 0;
 
-      setCurrentSourceFile(ctx, convertedSourceFileEntity);
+        setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
-      const tableOfContents = renderConfig.renderTableOfContents &&
-        createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents);
-      const documentation = createSectionNode("documentation", ...convertedSourceFileEntity.documentation);
+        const tableOfContents = renderConfig.renderTableOfContents &&
+          createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents);
+        const documentation = createSectionNode("documentation", ...convertedSourceFileEntity.documentation);
 
-      const ast = createTitleNode(
-        convertedSourceFileEntity.title,
-        convertedSourceFileEntity.titleAnchor,
-        tableOfContents,
-        documentation
-      );
+        const ast = createTitleNode(
+          convertedSourceFileEntity.title,
+          convertedSourceFileEntity.titleAnchor,
+          tableOfContents,
+          documentation
+        );
 
-      const renderedNewLine = renderNewLine(ctx);
-      const renderedContent = renderNode(ctx, ast);
-      const filePath = ctx.currentFile.dst;
+        const renderedNewLine = renderNewLine(ctx);
+        const renderedContent = renderNode(ctx, ast);
+        const filePath = ctx.currentFile.dst;
 
-      files[filePath] = `${renderedContent}${renderedNewLine}`;
-      return files;
+        files[filePath] = `${renderedContent}${renderedNewLine}`;
+        return files;
 
-    }, {});
+      }, {});
 
   })
 

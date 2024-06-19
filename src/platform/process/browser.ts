@@ -1,12 +1,16 @@
-import type { Process } from "unwritten:type-definitions/process";
+import type { Process } from "unwritten:type-definitions/platform";
 
 
 const process: Process = {
-  cwd: () => "/"
+  cwd: () => "/",
+  env: {
+    DEBUG: undefined
+  }
 };
 
 export const {
-  cwd
+  cwd,
+  env
 } = process;
 
 export default process;

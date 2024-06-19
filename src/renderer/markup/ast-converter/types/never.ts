@@ -4,11 +4,11 @@ import { createLinkNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 
 import type { NeverType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ConvertedNeverTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertNeverTypeInline(ctx: MarkupRenderContexts, neverType: NeverType): ConvertedNeverTypeInline {
+export function convertNeverTypeInline(ctx: MarkupRenderContext, neverType: NeverType): ConvertedNeverTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

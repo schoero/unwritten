@@ -1,4 +1,4 @@
-/* eslint-disable sort-keys/sort-keys-fix */
+/* eslint-disable eslint-plugin-sort-keys/sort-keys-fix */
 import { describe, expect, it } from "vitest";
 
 import { scope } from "unwritten:tests:utils/scope";

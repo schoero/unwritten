@@ -26,8 +26,8 @@ scope("Interpreter", TypeKind.Circular, () => {
     const exportedInterfaceA = createInterfaceEntity(ctx, exportedInterfaceASymbol);
 
     it("should not create a circular type if the target type is not circular", () => {
-      assert(exportedInterfaceA.properties[0]!.type.kind === TypeKind.TypeReference);
-      expect(exportedInterfaceA.properties[0]!.type.type?.kind).toBe(TypeKind.Interface);
+      assert(exportedInterfaceA.properties[0].type.kind === TypeKind.TypeReference);
+      expect(exportedInterfaceA.properties[0].type.type?.kind).toBe(TypeKind.Interface);
     });
 
   }
@@ -49,10 +49,10 @@ scope("Interpreter", TypeKind.Circular, () => {
     const exportedInterfaceA = createInterfaceEntity(ctx, exportedInterfaceASymbol);
 
     it("should create a circular type for if the target type is circular", () => {
-      assert(exportedInterfaceA.properties[0]!.type.kind === TypeKind.TypeReference);
-      assert(exportedInterfaceA.properties[0]!.type.type!.kind === TypeKind.Interface);
-      assert(exportedInterfaceA.properties[0]!.type.type.properties[0].type.kind === TypeKind.TypeReference);
-      expect(exportedInterfaceA.properties[0]!.type.type.properties[0]!.type.type!.kind).toBe(TypeKind.Circular);
+      assert(exportedInterfaceA.properties[0].type.kind === TypeKind.TypeReference);
+      assert(exportedInterfaceA.properties[0].type.type!.kind === TypeKind.Interface);
+      assert(exportedInterfaceA.properties[0].type.type.properties[0].type.kind === TypeKind.TypeReference);
+      expect(exportedInterfaceA.properties[0].type.type.properties[0].type.type!.kind).toBe(TypeKind.Circular);
     });
 
   }

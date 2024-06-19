@@ -1,6 +1,6 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import {
   createPropertyEntity,
   createSignatureEntity,
@@ -24,13 +24,13 @@ import { assert } from "unwritten:utils:general";
 
 import type { HeritageClause, InterfaceDeclaration, NodeArray, Symbol } from "typescript";
 
-import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { ExpressionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 import type { PartialByKey } from "unwritten:type-definitions/utils";
 
 
-export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity => withLockedSymbol(ctx, symbol, () => {
+export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const interfaceDeclarations = symbol.getDeclarations()?.filter(declaration => isInterfaceDeclaration(ctx, declaration)) as InterfaceDeclaration[] | undefined;
 
@@ -81,7 +81,7 @@ export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
 
   }
 
-});
+}));
 
 
 function mergeMembers<Key extends keyof {

@@ -9,6 +9,5 @@ import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export const createTypeLiteralType = (ctx: InterpreterContext, type: ObjectType): TypeLiteralType => withLockedType(ctx, type, () => {
-  const objectType = createObjectLikeType(ctx, type, TypeKind.TypeLiteral);
-  return objectType;
+  return createObjectLikeType(ctx, type, TypeKind.TypeLiteral);
 });

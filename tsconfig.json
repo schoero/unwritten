@@ -1,8 +1,10 @@
 {
-  "extends": "@schoero/ts-config",
+  "extends": "@schoero/configs/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
     "lib": ["ESNext", "DOM"],
+    "noImplicitAny": false,
+    "outDir": "./lib",
     "paths": {
       "unwritten:*": ["src/*"],
       "unwritten:api:*": ["src/api/*"],
@@ -13,19 +15,22 @@
       "unwritten:interpreter:types": ["src/interpreter/ast/types/index.js"],
       "unwritten:logger:*": ["src/platform/logger/*"],
       "unwritten:renderer:*": ["src/renderer/*"],
-      "unwritten:renderer:html*": ["src/renderer/markup/html/*"],
-      "unwritten:renderer:json*": ["src/renderer/json/*"],
-      "unwritten:renderer:markdown*": ["src/renderer/markup/markdown/*"],
+      "unwritten:renderer:html:*": ["src/renderer/markup/html/*"],
+      "unwritten:renderer:json:*": ["src/renderer/json/*"],
+      "unwritten:renderer:markdown:*": ["src/renderer/markup/markdown/*"],
       "unwritten:renderer:ts*": ["src/renderer/typescript/*"],
+      "unwritten:root:*": ["*"],
       "unwritten:tests:*": ["tests/*"],
       "unwritten:types:*": ["src/type-definitions/*"],
       "unwritten:utils:*": ["src/utils/*"]
     },
-    "target": "ES6"
+    "target": "ES2020"
   },
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts"
+    "tests/**/*.ts",
+    "vite.config.ts",
+    "vite.config.browser.ts"
   ],
   "exclude": [
     "node_modules",

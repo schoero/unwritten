@@ -17,16 +17,16 @@ import { getSectionType } from "unwritten:renderer:markup/types-definitions/sect
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate, renderEntityPrefix } from "unwritten:renderer:markup/utils/renderer";
 
-import type { TypeAliasEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedTypeAliasEntityForDocumentation,
   ConvertedTypeAliasEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertTypeAliasEntityToAnchor(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity, displayName?: string): AnchorNode {
+export function convertTypeAliasEntityToAnchor(ctx: MarkupRenderContext, typeAliasEntity: TypeAliasEntity, displayName?: string): AnchorNode {
 
   const id = typeAliasEntity.symbolId;
 
@@ -54,11 +54,11 @@ export function convertTypeAliasEntityToAnchor(ctx: MarkupRenderContexts, typeAl
 
 }
 
-export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForTableOfContents {
+export function convertTypeAliasEntityForTableOfContents(ctx: MarkupRenderContext, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForTableOfContents {
   return convertTypeAliasEntityToAnchor(ctx, typeAliasEntity);
 }
 
-export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForDocumentation {
+export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContext, typeAliasEntity: TypeAliasEntity): ConvertedTypeAliasEntityForDocumentation {
 
   const signature = convertTypeAliasSignature(ctx, typeAliasEntity, "documentation");
   const position = convertPositionForDocumentation(ctx, typeAliasEntity.position);
@@ -96,7 +96,7 @@ export function convertTypeAliasEntityForDocumentation(ctx: MarkupRenderContexts
 }
 
 
-function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: TypeAliasEntity, target: "documentation" | "tableOfContents") {
+function convertTypeAliasSignature(ctx: MarkupRenderContext, typeAliasEntity: TypeAliasEntity, target: "documentation" | "tableOfContents") {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -113,7 +113,7 @@ function convertTypeAliasSignature(ctx: MarkupRenderContexts, typeAliasEntity: T
     convertTypeParameterEntitiesForSignature(ctx, typeAliasEntity.typeParameters);
 
   const encapsulatedTypeParameters = convertedTypeParameters &&
-     encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation);
+    encapsulate(convertedTypeParameters, renderConfig.typeParameterEncapsulation);
 
   return [
     entityPrefixWithContext,

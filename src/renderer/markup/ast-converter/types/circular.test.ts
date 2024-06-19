@@ -28,20 +28,20 @@ scope("Renderer", TypeKind.Circular, () => {
     const exportedInterfaceASymbol = exportedSymbols.find(s => s.name === "InterfaceA")!;
     const exportedInterfaceA = createInterfaceEntity(compilerContext, exportedInterfaceASymbol);
 
-    assert(isTypeReferenceType(exportedInterfaceA.properties[0]!.type));
-    const interfaceB = exportedInterfaceA.properties[0]!.type.type;
+    assert(isTypeReferenceType(exportedInterfaceA.properties[0].type));
+    const interfaceB = exportedInterfaceA.properties[0].type.type;
     assert(isInterfaceType(interfaceB!));
 
     it("should reference back to the original interface", () => {
-      assert(isTypeReferenceType(interfaceB.properties[0]!.type));
-      expect(isCircularEntity(interfaceB.properties[0]!.type.target!)).toBe(true);
-      expect(interfaceB.properties[0]!.type.target?.symbolId).toBe(exportedInterfaceA.symbolId);
+      assert(isTypeReferenceType(interfaceB.properties[0].type));
+      expect(isCircularEntity(interfaceB.properties[0].type.target!)).toBe(true);
+      expect(interfaceB.properties[0].type.target?.symbolId).toBe(exportedInterfaceA.symbolId);
     });
 
     it("should contain the circular type", () => {
-      assert(isTypeReferenceType(interfaceB.properties[0]!.type));
-      expect(isCircularType(interfaceB.properties[0]!.type.type!)).toBe(true);
-      expect(interfaceB.properties[0]!.type.type?.typeId).toBe(exportedInterfaceA.typeId);
+      assert(isTypeReferenceType(interfaceB.properties[0].type));
+      expect(isCircularType(interfaceB.properties[0].type.type!)).toBe(true);
+      expect(interfaceB.properties[0].type.type?.typeId).toBe(exportedInterfaceA.typeId);
     });
 
   }

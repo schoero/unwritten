@@ -2,15 +2,7 @@ import { describe, expectTypeOf, it, test } from "vitest";
 
 import { scope } from "unwritten:tests:utils/scope";
 
-import type {
-  Complete,
-  DeepPartialByKey,
-  DeepRequiredByKey,
-  Disable,
-  Enable,
-  Toggle,
-  TranslationWithoutSuffixes
-} from "./utils";
+import type { Complete, DeepPartialByKey, DeepRequiredByKey, Disable, Enable, Toggle } from "./utils";
 
 
 scope("Types", "Utils", () => {
@@ -242,19 +234,6 @@ scope("Types", "Utils", () => {
       nested: {
         nestedName: string;
       };
-    }>();
-
-  });
-
-  test("TranslationWithoutSuffixes", () => {
-
-    type TestType = {
-      name_many?: string;
-      name_one?: string;
-    };
-
-    expectTypeOf<TranslationWithoutSuffixes<TestType>>().toEqualTypeOf<{
-      name?: string;
     }>();
 
   });

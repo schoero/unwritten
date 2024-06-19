@@ -2,8 +2,8 @@ import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
 import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
-import type { JSONRenderContext, JSONRenderer } from "unwritten:renderer:json/type-definitions/renderer";
+import type { SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
+import type { JSONRenderContext, JSONRenderer } from "unwritten:renderer:json:type-definitions/renderer";
 import type { RenderContext } from "unwritten:type-definitions/context";
 import type { Renderer, RenderOutput } from "unwritten:type-definitions/renderer";
 

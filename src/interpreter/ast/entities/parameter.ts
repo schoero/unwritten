@@ -1,6 +1,7 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { isParameterDeclaration } from "unwritten:interpreter/typeguards/declarations";
+import { withCachedEntity } from "unwritten:interpreter/utils/ts";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { getInitializerByDeclaration } from "unwritten:interpreter:ast/shared/initializer";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
@@ -11,11 +12,11 @@ import { getTypeBySymbol } from "../type";
 
 import type { Symbol } from "typescript";
 
-import type { ParameterEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ParameterEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createParameterEntity(ctx: InterpreterContext, symbol: Symbol): ParameterEntity {
+export const createParameterEntity = (ctx: InterpreterContext, symbol: Symbol): ParameterEntity => withCachedEntity(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -47,4 +48,4 @@ export function createParameterEntity(ctx: InterpreterContext, symbol: Symbol): 
     type
   };
 
-}
+});

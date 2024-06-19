@@ -7,7 +7,7 @@ import {
   createUnresolvedEntity
 } from "unwritten:interpreter/ast/entities/index";
 import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position";
-import { isSymbolLocked, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
+import { isSymbolLocked, isSymbolUnresolved, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
 import {
   createClassEntity,
   createEnumEntity,
@@ -46,14 +46,24 @@ import { assert } from "unwritten:utils:general";
 
 import type { Symbol } from "typescript";
 
-import type { Entity, SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { Entity, SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
 export function interpret(ctx: InterpreterContext, sourceFileSymbols: Symbol[]): SourceFileEntity[] {
   return sourceFileSymbols.map(sourceFileSymbol => {
+
     assert(isSourceFileSymbol(ctx, sourceFileSymbol), "Source file symbol is not a source file symbol");
+
+    const { logger } = ctx.dependencies;
+    const position = getPositionBySymbol(ctx, sourceFileSymbol);
+
+    if(logger && position){
+      logger.debug(`Interpreter: interpreting source file ${logger.filePath(position.file)}`);
+    }
+
     return createSourceFileEntity(ctx, sourceFileSymbol);
+
   });
 }
 
@@ -68,6 +78,10 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Entity
 
   if(isSymbolLocked(ctx, resolvedSymbol)){
     return createCircularEntity(ctx, resolvedSymbol);
+  }
+
+  if(isSymbolUnresolved(ctx, resolvedSymbol)){
+    return createUnresolvedEntity(ctx, resolvedSymbol);
   }
 
   // Exportable symbols

@@ -35,27 +35,27 @@ scope("Interpreter", EntityKind.Setter, () => {
     });
 
     it("should have a matching kind", () => {
-      expect(exportedClass.setters[0]!.kind).toBe(EntityKind.Setter);
+      expect(exportedClass.setters[0].kind).toBe(EntityKind.Setter);
     });
 
     it("should have a matching name", () => {
-      expect(exportedClass.setters[0]!.name).toBe("setter");
+      expect(exportedClass.setters[0].name).toBe("setter");
     });
 
     it("should have one signature", () => {
-      expect(exportedClass.setters[0]!.signatures).toHaveLength(1);
+      expect(exportedClass.setters[0].signatures).toHaveLength(1);
     });
 
     it("should have a matching description", () => {
-      expect(exportedClass.setters[0]!.signatures[0].description).toHaveLength(1);
-      assert(isJSDocText(exportedClass.setters[0]!.signatures[0].description![0]));
-      expect(exportedClass.setters[0]!.signatures[0].description![0].text).toBe("Setter description");
+      expect(exportedClass.setters[0].signatures[0].description).toHaveLength(1);
+      assert(isJSDocText(exportedClass.setters[0].signatures[0].description![0]));
+      expect(exportedClass.setters[0].signatures[0].description![0].text).toBe("Setter description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.setters[0]!.signatures[0].example).toHaveLength(1);
-      assert(isJSDocText(exportedClass.setters[0]!.signatures[0].example![0].content[0]));
-      expect(exportedClass.setters[0]!.signatures[0].example![0].content[0].text).toBe("Setter example");
+      expect(exportedClass.setters[0].signatures[0].example).toHaveLength(1);
+      assert(isJSDocText(exportedClass.setters[0].signatures[0].example![0].content[0]));
+      expect(exportedClass.setters[0].signatures[0].example![0].content[0].text).toBe("Setter example");
     });
 
   }

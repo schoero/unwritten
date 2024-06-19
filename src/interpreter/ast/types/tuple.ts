@@ -1,6 +1,7 @@
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { getNameByDeclaration, getNameByTypeNode } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position";
@@ -11,12 +12,12 @@ import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { NamedTupleMember, TupleTypeNode, TupleTypeReference, TypeNode } from "typescript";
 
-import type { TupleMemberEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { TupleMemberEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { TupleType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeReference: TupleTypeReference): TupleType {
+export const createTupleTypeByTypeReference = (ctx: InterpreterContext, typeReference: TupleTypeReference): TupleType => withCachedType(ctx, typeReference, () => {
 
   const { ts } = ctx.dependencies;
 
@@ -26,13 +27,13 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
 
     const type = getTypeByType(ctx, typeArgument);
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const symbolId = typeArgument.symbol && getSymbolId(ctx, typeArgument.symbol);
     const typeId = getTypeId(ctx, typeArgument);
     const elementFlag = typeReference.target.elementFlags[index];
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const optional = (elementFlag && elementFlag & ts.ElementFlags.Optional) !== 0;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const rest = (elementFlag && elementFlag & ts.ElementFlags.Rest) !== 0;
     const labelDeclaration = typeReference.target.labeledElementDeclarations?.[index];
     const name = labelDeclaration && getNameByDeclaration(ctx, labelDeclaration);
@@ -61,7 +62,7 @@ export function createTupleTypeByTypeReference(ctx: InterpreterContext, typeRefe
     typeId
   };
 
-}
+});
 
 
 export function createTupleByTupleTypeNode(ctx: InterpreterContext, typeNode: TupleTypeNode): TupleType {

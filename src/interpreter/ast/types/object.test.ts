@@ -15,24 +15,40 @@ scope("Interpreter", TypeKind.Object, () => {
   {
 
     const testFileContent = ts`
-      export type ObjectType = {
-        [key: string]: string;
-      };
+      export type TypeLiteralType = { [key: string]: string; };
+      export type ObjectLiteralType = { [key: string]: string; };
+      export type ObjectType = { [key: string]: string; };
+      export type InterfaceType = { [key: string]: string; };
+      export type ClassType = { [key: string]: string; };
     `;
 
     const { ctx, exportedSymbols } = compile(testFileContent);
 
-    const symbol = exportedSymbols.find(s => s.name === "ObjectType")!;
-    const tsType = ctx.checker.getTypeAtLocation(symbol.declarations![0]!);
+    const typeLiteralSymbol = exportedSymbols.find(s => s.name === "TypeLiteralType")!;
+    const objectLiteralSymbol = exportedSymbols.find(s => s.name === "ObjectLiteralType")!;
+    const objectTypeSymbol = exportedSymbols.find(s => s.name === "ObjectType")!;
+    const interfaceTypeSymbol = exportedSymbols.find(s => s.name === "InterfaceType")!;
+    const classTypeSymbol = exportedSymbols.find(s => s.name === "ClassType")!;
 
-    assert(isObjectType(ctx, tsType), "tsType is not an object type");
+    const typeLiteralType = ctx.checker.getTypeAtLocation(typeLiteralSymbol.declarations![0]);
+    const objectLiteralType = ctx.checker.getTypeAtLocation(objectLiteralSymbol.declarations![0]);
+    const objectType = ctx.checker.getTypeAtLocation(objectTypeSymbol.declarations![0]);
+    const interfaceType = ctx.checker.getTypeAtLocation(interfaceTypeSymbol.declarations![0]);
+    const classType = ctx.checker.getTypeAtLocation(classTypeSymbol.declarations![0]);
+
+    assert(isObjectType(ctx, typeLiteralType), "typeLiteralType is not an object type");
+    assert(isObjectType(ctx, objectLiteralType), "objectLiteralType is not an object type");
+    assert(isObjectType(ctx, objectType), "objectType is not an object type");
+    assert(isObjectType(ctx, interfaceType), "interfaceType is not an object type");
+    assert(isObjectType(ctx, classType), "classType is not an object type");
+
 
     it("should be able to create object types", () => {
-      expect(createObjectLikeType(ctx, tsType, TypeKind.TypeLiteral).kind).toBe(TypeKind.TypeLiteral);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.ObjectLiteral).kind).toBe(TypeKind.ObjectLiteral);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.Object).kind).toBe(TypeKind.Object);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.Interface).kind).toBe(TypeKind.Interface);
-      expect(createObjectLikeType(ctx, tsType, TypeKind.Class).kind).toBe(TypeKind.Class);
+      expect(createObjectLikeType(ctx, typeLiteralType, TypeKind.TypeLiteral).kind).toBe(TypeKind.TypeLiteral);
+      expect(createObjectLikeType(ctx, objectLiteralType, TypeKind.ObjectLiteral).kind).toBe(TypeKind.ObjectLiteral);
+      expect(createObjectLikeType(ctx, objectType, TypeKind.Object).kind).toBe(TypeKind.Object);
+      expect(createObjectLikeType(ctx, interfaceType, TypeKind.Interface).kind).toBe(TypeKind.Interface);
+      expect(createObjectLikeType(ctx, classType, TypeKind.Class).kind).toBe(TypeKind.Class);
     });
 
   }

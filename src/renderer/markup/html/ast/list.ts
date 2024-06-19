@@ -100,10 +100,10 @@ function renderListItem(ctx: HTMLRenderContext, item: ASTNode): string {
 
   // Render nodes with indentation on a new line
   if(isListNode(item) ||
-  isMultilineNode(item) ||
-  isTitleNode(item) ||
-  isInlineTitleNode(item) ||
-  isParagraphNode(item)){
+    isMultilineNode(item) ||
+    isTitleNode(item) ||
+    isInlineTitleNode(item) ||
+    isParagraphNode(item)){
 
     const renderedStartTag = renderListItemStart(ctx);
     const renderedItem = withIndentation(ctx, ctx => renderNode(ctx, item));

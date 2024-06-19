@@ -170,10 +170,11 @@ export function getTypeByDeclaration(ctx: InterpreterContext, declaration: Decla
 }
 /**
  * Overrides the type of a type reference with the resolved type.
- * @param ctx The interpreter context
- * @param resolvedType The resolved type
- * @param declaredType The declared type
- * @returns The type to use
+ *
+ * @param ctx The interpreter context.
+ * @param resolvedType The resolved type.
+ * @param declaredType The declared type.
+ * @returns The type to use.
  */
 
 export function getTypeByResolvedAndDeclaredType(ctx: InterpreterContext, resolvedType: ResolvedType, declaredType?: DeclaredType): Type {
@@ -196,6 +197,7 @@ export function getTypeByResolvedAndDeclaredType(ctx: InterpreterContext, resolv
   return declaredTypeWithoutBrand;
 
 }
+
 function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
 
   if(isArrayTypeNode(ctx, typeNode)){
@@ -226,6 +228,7 @@ function interpretTypeNode(ctx: InterpreterContext, typeNode: TypeNode): Type {
   return interpretType(ctx, type);
 
 }
+
 function interpretType(ctx: InterpreterContext, type: TSType): Type {
 
   if(type.getSymbol() && isSymbolExcluded(ctx, type.symbol, getNameByType(ctx, type))){

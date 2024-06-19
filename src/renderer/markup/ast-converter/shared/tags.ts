@@ -5,16 +5,16 @@ import { convertOptional } from "unwritten:renderer:markup/ast-converter/shared/
 import { createParagraphNode } from "unwritten:renderer:markup/utils/nodes";
 import { spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 
-import type { Entity } from "unwritten:interpreter/type-definitions/entities";
-import type { JSDocProperties } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { Entity } from "unwritten:interpreter:type-definitions/entities";
+import type { JSDocProperties } from "unwritten:interpreter:type-definitions/jsdoc";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedTagsForDocumentation,
   ConvertedTagsForType
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertTagsForDocumentation(ctx: MarkupRenderContexts, entityWithTags: Entity & JSDocProperties): ConvertedTagsForDocumentation {
+export function convertTagsForDocumentation(ctx: MarkupRenderContext, entityWithTags: Entity & JSDocProperties): ConvertedTagsForDocumentation {
 
   const jsdocTags = convertJSDocTags(ctx, entityWithTags);
   const modifiers = "modifiers" in entityWithTags ? convertModifiers(ctx, entityWithTags.modifiers) : [];
@@ -33,7 +33,7 @@ export function convertTagsForDocumentation(ctx: MarkupRenderContexts, entityWit
 
 }
 
-export function convertTagsForType(ctx: MarkupRenderContexts, entityWithTags: Entity & JSDocProperties): ConvertedTagsForType {
+export function convertTagsForType(ctx: MarkupRenderContext, entityWithTags: Entity & JSDocProperties): ConvertedTagsForType {
 
   const jsdocTags = convertJSDocTags(ctx, entityWithTags);
   const modifiers = "modifiers" in entityWithTags ? convertModifiers(ctx, entityWithTags.modifiers) : [];

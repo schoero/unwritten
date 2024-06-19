@@ -48,7 +48,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedClass.heritage).toBeDefined();
       expect(exportedClass.heritage!.typeArguments).toBeDefined();
       expect(exportedClass.heritage!.typeArguments).toHaveLength(1);
-      expect(exportedClass.heritage!.typeArguments![0]!.kind).toBe(TypeKind.StringLiteral);
+      expect(exportedClass.heritage!.typeArguments![0].kind).toBe(TypeKind.StringLiteral);
     });
 
     it("should resolve properties based on a type argument of a class heritage clause", () => {
@@ -81,7 +81,7 @@ scope("Interpreter", TypeKind.Expression, () => {
       expect(exportedInterface.heritage).toBeDefined();
       expect(exportedInterface.heritage!).toHaveLength(1);
       expect(exportedInterface.heritage![0].typeArguments).toHaveLength(1);
-      expect(exportedInterface.heritage![0].typeArguments![0]!.kind).toBe(TypeKind.StringLiteral);
+      expect(exportedInterface.heritage![0].typeArguments![0].kind).toBe(TypeKind.StringLiteral);
     });
 
     it("should resolve properties based on a type argument of a interface heritage clause", () => {

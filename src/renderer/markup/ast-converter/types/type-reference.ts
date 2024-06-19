@@ -9,14 +9,14 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { isFunctionLikeEntity, isLinkableEntity, isSignatureEntity } from "unwritten:typeguards/entities";
 
 import type { TypeReferenceType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedTypeReferenceTypeInline,
   ConvertedTypeReferenceTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeInline {
+export function convertTypeReferenceTypeInline(ctx: MarkupRenderContext, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -54,7 +54,7 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContexts, typeRe
 }
 
 
-export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeMultiline | undefined {
+export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContext, typeReferenceType: TypeReferenceType): ConvertedTypeReferenceTypeMultiline | undefined {
 
   const fallback = typeReferenceType.type && convertType(ctx, typeReferenceType.type).multilineType;
 
@@ -64,6 +64,8 @@ export function convertTypeReferenceTypeMultiline(ctx: MarkupRenderContexts, typ
 
   const id = isSignatureEntity(typeReferenceType.target)
     ? typeReferenceType.target.declarationId
+      ? Number.MAX_SAFE_INTEGER - typeReferenceType.target.declarationId
+      : undefined
     : typeReferenceType.target.symbolId;
 
   if(!id){

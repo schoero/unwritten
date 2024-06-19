@@ -1,5 +1,5 @@
 import { evaluateCondition } from "unwritten:renderer/markup/utils/condition";
-import { renderNode } from "unwritten:renderer:markdown/index";
+import { renderNode } from "unwritten:renderer:markdown:index";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ConditionalNode } from "unwritten:renderer:markup/types-definitions/nodes";

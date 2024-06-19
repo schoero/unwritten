@@ -5,12 +5,12 @@ import { createAnchorNode, createConditionalNode } from "unwritten:renderer/mark
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 
-import type { JSDocType } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup";
+import type { JSDocType } from "unwritten:interpreter:type-definitions/jsdoc";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 import type { ConvertedJSDocType } from "unwritten:renderer/markup/types-definitions/renderer";
 
 
-export function convertJSDocType(ctx: MarkupRenderContexts, jsdocType: JSDocType): ConvertedJSDocType {
+export function convertJSDocType(ctx: MarkupRenderContext, jsdocType: JSDocType): ConvertedJSDocType {
 
   const renderConfig = getRenderConfig(ctx);
 

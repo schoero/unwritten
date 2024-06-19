@@ -1,4 +1,4 @@
-import type { OS } from "unwritten:type-definitions/os";
+import type { OS } from "unwritten:type-definitions/platform";
 
 
 function getEOL(): string {

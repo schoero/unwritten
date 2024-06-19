@@ -1,6 +1,6 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import {
   createConstructorEntity,
   createGetterEntity,
@@ -27,12 +27,12 @@ import { assert } from "unwritten:utils:general";
 
 import type { ClassLikeDeclaration, HeritageClause, NodeArray, Symbol } from "typescript";
 
-import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ClassEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { ExpressionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): ClassEntity => withLockedSymbol(ctx, symbol, () => {
+export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): ClassEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const declaration = symbol.valueDeclaration ?? symbol.getDeclarations()?.[0];
 
@@ -86,18 +86,18 @@ export const createClassEntity = (ctx: InterpreterContext, symbol: Symbol): Clas
     typeParameters
   };
 
-});
+}));
 
 
 function getSymbolsByTypeFromClassLikeDeclaration(
   ctx: InterpreterContext,
   classLikeDeclaration: ClassLikeDeclaration,
   filter:
-  | typeof isConstructorDeclaration
-  | typeof isGetterDeclaration
-  | typeof isMethodDeclaration
-  | typeof isPropertyDeclaration
-  | typeof isSetterDeclaration
+    | typeof isConstructorDeclaration
+    | typeof isGetterDeclaration
+    | typeof isMethodDeclaration
+    | typeof isPropertyDeclaration
+    | typeof isSetterDeclaration
 ) {
 
   const declarations = classLikeDeclaration.members.filter(member => filter(ctx, member));

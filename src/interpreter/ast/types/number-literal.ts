@@ -1,4 +1,5 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { NumberLiteralType as TSNumberLiteralType } from "typescript";
@@ -7,7 +8,7 @@ import type { NumberLiteralType } from "unwritten:interpreter:type-definitions/t
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createNumberLiteralType(ctx: InterpreterContext, type: TSNumberLiteralType): NumberLiteralType {
+export const createNumberLiteralType = (ctx: InterpreterContext, type: TSNumberLiteralType): NumberLiteralType => withCachedType(ctx, type, () => {
 
   const typeId = getTypeId(ctx, type);
   const value = type.value;
@@ -21,4 +22,4 @@ export function createNumberLiteralType(ctx: InterpreterContext, type: TSNumberL
     value
   };
 
-}
+});

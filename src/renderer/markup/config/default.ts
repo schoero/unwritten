@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable eslint-plugin-typescript/naming-convention */
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 import type {

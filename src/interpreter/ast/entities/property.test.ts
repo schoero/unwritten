@@ -95,24 +95,24 @@ scope("Interpreter", EntityKind.Property, () => {
 
     it("should have a matching name", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.name).toBe("property");
+      expect(exportedTypeAlias.type.properties[0].name).toBe("property");
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.name).toBe("property");
+      expect(exportedObjectLiteral.type.properties[0].name).toBe("property");
 
       expect(exportedClass.properties[0].name).toBe("property");
     });
 
     it("should have a matching description", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.description).toHaveLength(1);
-      assert(isJSDocText(exportedTypeAlias.type.properties[0]!.description![0]));
-      expect(exportedTypeAlias.type.properties[0]!.description![0].text).toBe("Property description");
+      expect(exportedTypeAlias.type.properties[0].description).toHaveLength(1);
+      assert(isJSDocText(exportedTypeAlias.type.properties[0].description![0]));
+      expect(exportedTypeAlias.type.properties[0].description![0].text).toBe("Property description");
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.description).toHaveLength(1);
-      assert(isJSDocText(exportedObjectLiteral.type.properties[0]!.description![0]));
-      expect(exportedObjectLiteral.type.properties[0]!.description![0].text).toBe("Property description");
+      expect(exportedObjectLiteral.type.properties[0].description).toHaveLength(1);
+      assert(isJSDocText(exportedObjectLiteral.type.properties[0].description![0]));
+      expect(exportedObjectLiteral.type.properties[0].description![0].text).toBe("Property description");
 
       expect(exportedClass.properties[0].description).toHaveLength(1);
       assert(isJSDocText(exportedClass.properties[0].description![0]));
@@ -121,14 +121,14 @@ scope("Interpreter", EntityKind.Property, () => {
 
     it("should have a matching example", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.example).toHaveLength(1);
-      assert(isJSDocText(exportedTypeAlias.type.properties[0]!.example![0].content[0]));
-      expect(exportedTypeAlias.type.properties[0]!.example![0].content[0].text).toBe("Property example");
+      expect(exportedTypeAlias.type.properties[0].example).toHaveLength(1);
+      assert(isJSDocText(exportedTypeAlias.type.properties[0].example![0].content[0]));
+      expect(exportedTypeAlias.type.properties[0].example![0].content[0].text).toBe("Property example");
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.example).toHaveLength(1);
-      assert(isJSDocText(exportedObjectLiteral.type.properties[0]!.example![0].content[0]));
-      expect(exportedObjectLiteral.type.properties[0]!.example![0].content[0].text).toBe("Property example");
+      expect(exportedObjectLiteral.type.properties[0].example).toHaveLength(1);
+      assert(isJSDocText(exportedObjectLiteral.type.properties[0].example![0].content[0]));
+      expect(exportedObjectLiteral.type.properties[0].example![0].content[0].text).toBe("Property example");
 
       expect(exportedClass.properties[0].example).toHaveLength(1);
       assert(isJSDocText(exportedClass.properties[0].example![0].content[0]));
@@ -137,10 +137,10 @@ scope("Interpreter", EntityKind.Property, () => {
 
     it("should have a matching type", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.properties[0]!.type.kind).toBe(TypeKind.String);
+      expect(exportedTypeAlias.type.properties[0].type.kind).toBe(TypeKind.String);
 
       assert(exportedObjectLiteral.type.kind === TypeKind.ObjectLiteral);
-      expect(exportedObjectLiteral.type.properties[0]!.type.kind).toBe(TypeKind.String);
+      expect(exportedObjectLiteral.type.properties[0].type.kind).toBe(TypeKind.String);
 
       expect(exportedClass.properties[0].type.kind).toBe(TypeKind.String);
     });
@@ -219,7 +219,7 @@ scope("Interpreter", EntityKind.Property, () => {
 
       assert(exportedTypeAlias.type.kind === TypeKind.TypeLiteral);
 
-      expect(exportedTypeAlias.type.properties[0]!.modifiers).toContain("readonly");
+      expect(exportedTypeAlias.type.properties[0].modifiers).toContain("readonly");
 
       expect(exportedClass.properties.find(property => property.name === "publicProperty")!.modifiers).toContain("public");
       expect(exportedClass.properties.find(property => property.name === "privateProperty")!.modifiers).toContain("private");

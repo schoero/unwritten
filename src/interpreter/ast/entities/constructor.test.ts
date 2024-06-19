@@ -39,20 +39,20 @@ scope("Interpreter", EntityKind.Getter, () => {
 
 
     it("should have a matching description", () => {
-      expect(exportedClass.ctor!.signatures[0]!.description).toHaveLength(1);
-      assert(isJSDocText(exportedClass.ctor!.signatures[0]!.description![0]));
-      expect(exportedClass.ctor!.signatures[0]!.description![0].text).toBe("Constructor description");
+      expect(exportedClass.ctor!.signatures[0].description).toHaveLength(1);
+      assert(isJSDocText(exportedClass.ctor!.signatures[0].description![0]));
+      expect(exportedClass.ctor!.signatures[0].description![0].text).toBe("Constructor description");
     });
 
     it("should have a matching example", () => {
-      expect(exportedClass.ctor!.signatures[0]!.example).toHaveLength(1);
-      assert(isJSDocText(exportedClass.ctor!.signatures[0]!.example![0].content[0]));
-      expect(exportedClass.ctor!.signatures[0]!.example![0].content[0].text).toBe("Constructor example");
+      expect(exportedClass.ctor!.signatures[0].example).toHaveLength(1);
+      assert(isJSDocText(exportedClass.ctor!.signatures[0].example![0].content[0]));
+      expect(exportedClass.ctor!.signatures[0].example![0].content[0].text).toBe("Constructor example");
     });
 
     it("should return the instance type of the class", () => {
-      assert(isCircularType(exportedClass.ctor!.signatures[0]!.returnType));
-      expect(exportedClass.ctor!.signatures[0]!.returnType.typeId).toBe(exportedClass.typeId);
+      assert(isCircularType(exportedClass.ctor!.signatures[0].returnType));
+      expect(exportedClass.ctor!.signatures[0].returnType.typeId).toBe(exportedClass.typeId);
     });
 
   }

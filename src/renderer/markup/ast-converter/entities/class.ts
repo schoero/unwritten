@@ -32,16 +32,16 @@ import {
   extendClassEntityEntitiesWithHeritage
 } from "unwritten:renderer:utils/heritage";
 
-import type { ClassEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ClassEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedClassEntityForDocumentation,
   ConvertedClassEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertClassEntityToAnchor(ctx: MarkupRenderContexts, classEntity: ClassEntity, displayName?: string): AnchorNode {
+export function convertClassEntityToAnchor(ctx: MarkupRenderContext, classEntity: ClassEntity, displayName?: string): AnchorNode {
 
   const id = classEntity.symbolId;
   const name = classEntity.name;
@@ -70,7 +70,7 @@ export function convertClassEntityToAnchor(ctx: MarkupRenderContexts, classEntit
 
 }
 
-export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
+export function convertClassEntityForTableOfContents(ctx: MarkupRenderContext, classEntity: ClassEntity): ConvertedClassEntityForTableOfContents {
 
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);
@@ -154,7 +154,7 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContexts, 
 }
 
 
-export function convertClassEntityForDocumentation(ctx: MarkupRenderContexts, classEntity: ClassEntity): ConvertedClassEntityForDocumentation {
+export function convertClassEntityForDocumentation(ctx: MarkupRenderContext, classEntity: ClassEntity): ConvertedClassEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);

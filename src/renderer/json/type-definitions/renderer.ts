@@ -1,5 +1,5 @@
 import type { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
-import type { RenderContext } from "unwritten:type-definitions/context";
+import type { RenderBrowserContext, RenderNodeContext } from "unwritten:type-definitions/context";
 import type { Renderer } from "unwritten:type-definitions/renderer";
 
 
@@ -8,5 +8,6 @@ export interface JSONRenderer extends Renderer {
   name: BuiltInRenderers.JSON;
 }
 
-export interface JSONRenderContext extends RenderContext<JSONRenderer> {
-}
+export interface JSONRenderNodeContext extends RenderNodeContext<JSONRenderer> {}
+export interface JSONRenderBrowserContext extends RenderBrowserContext<JSONRenderer> {}
+export type JSONRenderContext = JSONRenderBrowserContext | JSONRenderNodeContext;

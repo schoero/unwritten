@@ -11,16 +11,16 @@ import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-co
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 
-import type { ModuleEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ModuleEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedModuleEntityForDocumentation,
   ConvertedModuleEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertModuleEntityToAnchor(ctx: MarkupRenderContexts, moduleEntity: ModuleEntity, displayName?: string): AnchorNode {
+export function convertModuleEntityToAnchor(ctx: MarkupRenderContext, moduleEntity: ModuleEntity, displayName?: string): AnchorNode {
 
   const id = moduleEntity.symbolId;
   const name = moduleEntity.name;
@@ -49,7 +49,7 @@ export function convertModuleEntityToAnchor(ctx: MarkupRenderContexts, moduleEnt
 
 }
 
-export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContexts, moduleEntity: ModuleEntity): ConvertedModuleEntityForTableOfContents {
+export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContext, moduleEntity: ModuleEntity): ConvertedModuleEntityForTableOfContents {
 
   const name = moduleEntity.name;
   const anchor = convertModuleEntityToAnchor(ctx, moduleEntity);
@@ -67,7 +67,7 @@ export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContexts,
 }
 
 
-export function convertModuleEntityForDocumentation(ctx: MarkupRenderContexts, moduleEntity: ModuleEntity): ConvertedModuleEntityForDocumentation {
+export function convertModuleEntityForDocumentation(ctx: MarkupRenderContext, moduleEntity: ModuleEntity): ConvertedModuleEntityForDocumentation {
 
   const name = moduleEntity.name;
   const symbolId = moduleEntity.symbolId;

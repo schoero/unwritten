@@ -4,7 +4,7 @@ import { homeDirectory } from "unwritten:platform/os/node";
 import sharedPath from "unwritten:platform/path/shared";
 import { cwd } from "unwritten:platform/process/node";
 
-import type { Path } from "unwritten:type-definitions/path";
+import type { Path } from "unwritten:type-definitions/platform";
 
 
 const deps = { cwd, homeDirectory, isAbsolute, separator: sep };

@@ -20,8 +20,13 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
 
   entryFilePaths = Array.isArray(entryFilePaths) ? entryFilePaths : [entryFilePaths];
 
-  // Dependencies
+  // logger
   const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:platform/logger/node.js");
+
+  if(options?.debug){
+    process.env.DEBUG = "true";
+  }
+
   const defaultContext = createDefaultContext({
     fs,
     logger,
@@ -31,28 +36,28 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
     ts
   });
 
-  // Compile
+  // compile
   const { checker, program } = compile(defaultContext, entryFilePaths, options?.tsconfig);
 
-  // Config
+  // config
   const config = await createConfig(defaultContext, options?.config, options?.output);
 
-  // Interpret
+  // interpret
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
   const entryFileSymbols = getEntryFileSymbolsFromProgram(interpreterContext, program);
   const interpretedFiles = interpret(interpreterContext, entryFileSymbols);
 
-  // Render
-  const renderer = await getRenderer(options?.renderer);
+  // render
+  const renderer = await getRenderer(defaultContext, options?.renderer);
   const renderContext = createRenderContext(defaultContext, renderer, config);
   const renderedFiles = renderer.render(renderContext, interpretedFiles);
 
-  // Create output directory
+  // create output directory
   if(existsSync(config.outputDir) === false){
     mkdirSync(config.outputDir, { recursive: true });
   }
 
-  // Write output to files
+  // write output to files
   const outputPaths = Object.entries(renderedFiles).map(([filePath, renderedContent]) => {
     writeFileSync(filePath, renderedContent);
     return filePath;

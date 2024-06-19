@@ -43,10 +43,10 @@ scope("Interpreter", TypeKind.Mapped, () => {
     it("should have matching properties", () => {
       assert(exportedTypeAlias.type.kind === TypeKind.Mapped);
       assert(exportedTypeAlias.type.type.kind === TypeKind.TypeLiteral);
-      expect(exportedTypeAlias.type.type.properties[0]!.type.kind).toBe(TypeKind.String);
-      expect(exportedTypeAlias.type.type.properties[0]!.name).toBe("A");
-      expect(exportedTypeAlias.type.type.properties[1]!.type.kind).toBe(TypeKind.String);
-      expect(exportedTypeAlias.type.type.properties[1]!.name).toBe("B");
+      expect(exportedTypeAlias.type.type.properties[0].type.kind).toBe(TypeKind.String);
+      expect(exportedTypeAlias.type.type.properties[0].name).toBe("A");
+      expect(exportedTypeAlias.type.type.properties[1].type.kind).toBe(TypeKind.String);
+      expect(exportedTypeAlias.type.type.properties[1].name).toBe("B");
     });
 
     it("should have a correct type parameter", () => {

@@ -24,17 +24,15 @@ export function findCommonIndentation(content: string, eol: string = EOL) {
   }
 
   const spaces = lines.map(
-    line =>
-      line.match(/^[^\S\t\n\r]+\S/)
-        ? line.match(/^[^\S\t\n\r]*/)?.[0].length ?? 0
-        : undefined
+    line => line.match(/^[^\S\t\n\r]+\S/)
+      ? line.match(/^[^\S\t\n\r]*/)?.[0].length ?? 0
+      : undefined
   ).filter(space => space !== undefined);
 
   const tabs = lines.map(
-    line =>
-      line.match(/^\t+\S/)
-        ? line.match(/^\t*/)?.[0].length ?? 0
-        : undefined
+    line => line.match(/^\t+\S/)
+      ? line.match(/^\t*/)?.[0].length ?? 0
+      : undefined
   ).filter(tab => tab !== undefined);
 
 

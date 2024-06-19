@@ -7,7 +7,7 @@ import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { md } from "unwritten:utils/template";
 
-import type { Position } from "unwritten:interpreter/type-definitions/shared";
+import type { Position } from "unwritten:interpreter:type-definitions/shared";
 
 
 scope("MarkupRenderer", "Position", () => {

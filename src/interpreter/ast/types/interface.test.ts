@@ -192,13 +192,13 @@ scope("Interpreter", EntityKind.Interface, () => {
     it("should be able to parse inheritance", () => {
 
       expect(interfaceTypeB.properties).toHaveLength(2);
-      expect(interfaceTypeB.properties[0]!.name).toBe("b");
-      expect(interfaceTypeB.properties[1]!.name).toBe("a");
+      expect(interfaceTypeB.properties[0].name).toBe("b");
+      expect(interfaceTypeB.properties[1].name).toBe("a");
 
       expect(interfaceTypeC.properties).toHaveLength(3);
-      expect(interfaceTypeC.properties[0]!.name).toBe("c");
-      expect(interfaceTypeC.properties[1]!.name).toBe("b");
-      expect(interfaceTypeC.properties[2]!.name).toBe("a");
+      expect(interfaceTypeC.properties[0].name).toBe("c");
+      expect(interfaceTypeC.properties[1].name).toBe("b");
+      expect(interfaceTypeC.properties[2].name).toBe("a");
 
     });
 
@@ -231,9 +231,9 @@ scope("Interpreter", EntityKind.Interface, () => {
 
     it("should be able to handle multiple extended interfaces at the same time", () => {
       expect(interfaceTypeC.properties).toHaveLength(3);
-      expect(interfaceTypeC.properties[0]!.name).toBe("c");
-      expect(interfaceTypeC.properties[1]!.name).toBe("a");
-      expect(interfaceTypeC.properties[2]!.name).toBe("b");
+      expect(interfaceTypeC.properties[0].name).toBe("c");
+      expect(interfaceTypeC.properties[1].name).toBe("a");
+      expect(interfaceTypeC.properties[2].name).toBe("b");
     });
 
   }
@@ -253,11 +253,11 @@ scope("Interpreter", EntityKind.Interface, () => {
 
     it("should support generics", () => {
       expect(exportedInterface.typeParameters).toHaveLength(1);
-      expect(exportedInterface.typeParameters![0]!.name).toBe("T");
+      expect(exportedInterface.typeParameters![0].name).toBe("T");
 
       expect(exportedInterface.properties).toHaveLength(1);
-      assert(exportedInterface.properties[0]!.type.kind === TypeKind.TypeReference);
-      expect(exportedInterface.properties[0]!.type.type?.kind).toBe(TypeKind.TypeParameter);
+      assert(exportedInterface.properties[0].type.kind === TypeKind.TypeReference);
+      expect(exportedInterface.properties[0].type.type?.kind).toBe(TypeKind.TypeParameter);
     });
 
   }

@@ -1,9 +1,9 @@
 export interface JSONRenderConfig {
 
-  /** Whether ids should be included in the output */
+  /** Whether ids should be included in the output. */
   includeIds?: boolean;
 
-  /** Indentation characters */
+  /** Indentation characters. */
   indentation?: string;
 
 }

@@ -5,14 +5,14 @@ import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 
 import type { ArrayType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedArrayTypeInline,
   ConvertedArrayTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertArrayTypeInline(ctx: MarkupRenderContexts, arrayType: ArrayType): ConvertedArrayTypeInline {
+export function convertArrayTypeInline(ctx: MarkupRenderContext, arrayType: ArrayType): ConvertedArrayTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -28,7 +28,7 @@ export function convertArrayTypeInline(ctx: MarkupRenderContexts, arrayType: Arr
 }
 
 
-export function convertArrayTypeMultiline(ctx: MarkupRenderContexts, arrayType: ArrayType): ConvertedArrayTypeMultiline {
+export function convertArrayTypeMultiline(ctx: MarkupRenderContext, arrayType: ArrayType): ConvertedArrayTypeMultiline {
 
   const { inlineType, multilineType } = convertType(ctx, arrayType.type);
 

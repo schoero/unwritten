@@ -1,9 +1,9 @@
-import type { MarkupRenderContexts } from "../types-definitions/markup";
+import type { MarkupRenderContext } from "../types-definitions/markup";
 
-import type { ExportableEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { ExportableEntity } from "unwritten:interpreter:type-definitions/entities";
 
 
-export function sortExportableEntities(ctx: MarkupRenderContexts, entities: ExportableEntity[]): ExportableEntity[] {
+export function sortExportableEntities(ctx: MarkupRenderContext, entities: ExportableEntity[]): ExportableEntity[] {
 
   const order = ctx.config.renderConfig[ctx.renderer.name].renderOrder;
 

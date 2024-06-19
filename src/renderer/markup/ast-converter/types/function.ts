@@ -6,7 +6,7 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { FunctionType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedFunctionTypeInline,
   ConvertedFunctionTypeMultiline
@@ -14,7 +14,7 @@ import type {
 
 
 export function convertFunctionTypeInline(
-  ctx: MarkupRenderContexts,
+  ctx: MarkupRenderContext,
   functionType: FunctionType
 ): ConvertedFunctionTypeInline {
 
@@ -31,7 +31,7 @@ export function convertFunctionTypeInline(
 
 }
 
-export function convertFunctionTypeMultiline(ctx: MarkupRenderContexts, functionType: FunctionType): ConvertedFunctionTypeMultiline {
+export function convertFunctionTypeMultiline(ctx: MarkupRenderContext, functionType: FunctionType): ConvertedFunctionTypeMultiline {
 
   const convertedSignatures = functionType.signatures.map(
     signature => convertSignatureEntityForType(ctx, signature)

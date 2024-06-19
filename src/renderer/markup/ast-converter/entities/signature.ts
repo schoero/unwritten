@@ -46,8 +46,8 @@ import {
 import { encapsulate, renderEntityPrefix, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { ExplicitSignatureEntity, SignatureEntity } from "unwritten:interpreter/type-definitions/entities";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { ExplicitSignatureEntity, SignatureEntity } from "unwritten:interpreter:type-definitions/entities";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { AnchorNode, ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
   ConvertedPropertyEntityForTableOfContents,
@@ -58,9 +58,10 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertSignatureEntityToAnchor(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity, displayName?: string): AnchorNode {
+export function convertSignatureEntityToAnchor(ctx: MarkupRenderContext, signatureEntity: ExplicitSignatureEntity, displayName?: string): AnchorNode {
 
-  const id = signatureEntity.declarationId;
+  // TODO: Workaround collisions with symbol ids
+  const id = Number.MAX_SAFE_INTEGER - signatureEntity.declarationId;
 
   const convertedSignatureForDocumentation = convertSignature(ctx, signatureEntity, "documentation");
   const renderedSignatureForDocumentation = renderNode(ctx, convertedSignatureForDocumentation);
@@ -88,13 +89,14 @@ export function convertSignatureEntityToAnchor(ctx: MarkupRenderContexts, signat
 
 }
 
-export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity): ConvertedPropertyEntityForTableOfContents {
+export function convertSignatureEntityForTableOfContents(ctx: MarkupRenderContext, signatureEntity: ExplicitSignatureEntity): ConvertedPropertyEntityForTableOfContents {
   return convertSignatureEntityToAnchor(ctx, signatureEntity);
 }
 
-export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts, signatureEntity: ExplicitSignatureEntity): ConvertedSignatureEntityForDocumentation {
+export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContext, signatureEntity: ExplicitSignatureEntity): ConvertedSignatureEntityForDocumentation {
 
-  const declarationId = signatureEntity.declarationId;
+  // TODO: Workaround collisions with symbol ids
+  const declarationId = Number.MAX_SAFE_INTEGER - signatureEntity.declarationId;
   const symbolId = signatureEntity.symbolId;
 
   const signature = convertSignature(ctx, signatureEntity, "documentation");
@@ -141,7 +143,7 @@ export function convertSignatureEntityForDocumentation(ctx: MarkupRenderContexts
 }
 
 
-export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedSignatureEntityForType {
+export function convertSignatureEntityForType(ctx: MarkupRenderContext, signatureEntity: SignatureEntity): ConvertedSignatureEntityForType {
 
   const signature = convertSignature(ctx, signatureEntity, "documentation");
   const tags = convertTagsForType(ctx, signatureEntity);
@@ -173,7 +175,7 @@ export function convertSignatureEntityForType(ctx: MarkupRenderContexts, signatu
 }
 
 
-function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity, target: "documentation" | "tableOfContents"): ASTNode {
+function convertSignature(ctx: MarkupRenderContext, signatureEntity: SignatureEntity, target: "documentation" | "tableOfContents"): ASTNode {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -209,7 +211,7 @@ function convertSignature(ctx: MarkupRenderContexts, signatureEntity: SignatureE
 }
 
 
-function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeForDocumentation {
+function convertReturnTypeForDocumentation(ctx: MarkupRenderContext, signatureEntity: SignatureEntity): ConvertedReturnTypeForDocumentation {
 
   const translate = getTranslator(ctx);
 
@@ -233,7 +235,7 @@ function convertReturnTypeForDocumentation(ctx: MarkupRenderContexts, signatureE
 
 }
 
-function convertReturnTypeForType(ctx: MarkupRenderContexts, signatureEntity: SignatureEntity): ConvertedReturnTypeForType {
+function convertReturnTypeForType(ctx: MarkupRenderContext, signatureEntity: SignatureEntity): ConvertedReturnTypeForType {
 
   const translate = getTranslator(ctx);
 

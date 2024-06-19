@@ -3,12 +3,13 @@ import { isHTMLRenderContext, renderNode as renderNodeAsHTML } from "unwritten:r
 import { renderNode as renderNodeAsMarkdown } from "unwritten:renderer:markup/markdown/index";
 import { assert } from "unwritten:utils:general";
 
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
+import type { DefaultContext } from "unwritten:type-definitions/context";
 import type { Renderer } from "unwritten:type-definitions/renderer";
 
 
-export async function getRenderer(renderer?: Renderer | string): Promise<Renderer> {
+export async function getRenderer(ctx: DefaultContext, renderer?: Renderer | string): Promise<Renderer> {
 
   if(renderer === undefined || renderer === BuiltInRenderers.Markdown || renderer === "md"){
     const { default: markdownRenderer } = await import("unwritten:renderer:markup/markdown/index.js");
@@ -17,7 +18,7 @@ export async function getRenderer(renderer?: Renderer | string): Promise<Rendere
     const { default: htmlRenderer } = await import("unwritten:renderer:markup/html/index.js");
     renderer = htmlRenderer;
   } else if(renderer === BuiltInRenderers.JSON){
-    const { default: jsonRenderer } = await import("unwritten:renderer:json/index.js");
+    const { default: jsonRenderer } = await import("unwritten:renderer:json:index.js");
     renderer = jsonRenderer;
   } else if(typeof renderer === "string"){
     const { default: importedRenderer } = await import(renderer);
@@ -26,11 +27,13 @@ export async function getRenderer(renderer?: Renderer | string): Promise<Rendere
 
   validateRenderer(renderer);
 
+  ctx.dependencies.logger?.stats(ctx, { renderer: renderer.name });
+
   return renderer;
 
 }
 
-export function renderNode(ctx: MarkupRenderContexts, node: ASTNode): string {
+export function renderNode(ctx: MarkupRenderContext, node: ASTNode): string {
   if(isHTMLRenderContext(ctx)){
     return renderNodeAsHTML(ctx, node);
   } else {
@@ -39,9 +42,10 @@ export function renderNode(ctx: MarkupRenderContexts, node: ASTNode): string {
 }
 
 /**
- * Validates that the given object is a valid renderer object
- * @param renderer The renderer object to validate
- * @throws {Error} If the given object is not a valid renderer object
+ * Validates that the given object is a valid renderer object.
+ *
+ * @param renderer The renderer object to validate.
+ * @throws {Error} If the given object is not a valid renderer object.
  */
 function validateRenderer(renderer: unknown): asserts renderer is Renderer {
   assert(isObject(renderer), "Renderer must be an object that implements the `Renderer` interface");

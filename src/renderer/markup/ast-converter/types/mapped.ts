@@ -7,14 +7,14 @@ import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import { assert } from "unwritten:utils/general";
 
 import type { MappedType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedMappedTypeInline,
   ConvertedMappedTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertMappedTypeInline(ctx: MarkupRenderContexts, mappedType: MappedType): ConvertedMappedTypeInline {
+export function convertMappedTypeInline(ctx: MarkupRenderContext, mappedType: MappedType): ConvertedMappedTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -30,7 +30,7 @@ export function convertMappedTypeInline(ctx: MarkupRenderContexts, mappedType: M
 }
 
 
-export function convertMappedTypeMultiline(ctx: MarkupRenderContexts, mappedType: MappedType): ConvertedMappedTypeMultiline {
+export function convertMappedTypeMultiline(ctx: MarkupRenderContext, mappedType: MappedType): ConvertedMappedTypeMultiline {
 
   const renderConfig = getRenderConfig(ctx);
   const translate = getTranslator(ctx);

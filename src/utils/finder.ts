@@ -1,17 +1,18 @@
 import { assert } from "./general";
 
-import type { DefaultContext } from "unwritten:type-definitions/context";
+import type { DefaultNodeContext } from "unwritten:type-definitions/context";
 
 
 /**
  * Finds a file in a directory or its parent directories.
+ *
  * @param ctx The render context.
  * @param fileName Name or array of names of the file to find.
  * @param entryPath Entry point for the search to begin.
  * @returns The absolute file path of the first file found, otherwise undefined.
  * @throws { Error } Throws an error if the entry path does not exist.
  */
-export function findFile(ctx: DefaultContext, fileName: string[] | string, entryPath?: string): string | undefined {
+export function findFile(ctx: DefaultNodeContext, fileName: string[] | string, entryPath?: string): string | undefined {
 
   const { existsSync } = ctx.dependencies.fs;
   const { absolute, join } = ctx.dependencies.path;

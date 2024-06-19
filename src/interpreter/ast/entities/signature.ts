@@ -18,11 +18,11 @@ import {
 
 import type { Signature as TSSignature, SignatureDeclaration } from "typescript";
 
-import type { SignatureEntity, SignatureEntityKinds } from "unwritten:interpreter/type-definitions/entities";
+import type { SignatureEntity, SignatureEntityKinds } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export function createSignatureEntity(ctx: InterpreterContext, signature: TSSignature, kind: SignatureEntityKinds): SignatureEntity {
+export const createSignatureEntity = (ctx: InterpreterContext, signature: TSSignature, kind: SignatureEntityKinds): SignatureEntity => {
 
   // Implicit construct signatures have no declaration.
   const symbolId = signature.declaration && getSymbolIdByDeclaration(ctx, signature.declaration);
@@ -55,7 +55,7 @@ export function createSignatureEntity(ctx: InterpreterContext, signature: TSSign
     typeParameters
   };
 
-}
+};
 
 
 function getReturnTypeBySignature(ctx: InterpreterContext, signature: TSSignature) {

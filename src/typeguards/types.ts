@@ -99,9 +99,9 @@ export function isIntersectionType(type: Type): type is IntersectionType {
 
 export function isLiteralType(type: Type): type is LiteralType {
   return isStringLiteralType(type) ||
-  isNumberLiteralType(type) ||
-  isBooleanLiteralType(type) ||
-  isBigIntLiteralType(type);
+    isNumberLiteralType(type) ||
+    isBooleanLiteralType(type) ||
+    isBigIntLiteralType(type);
 }
 
 export function isMappedType(type: Type): type is MappedType {
@@ -126,10 +126,10 @@ export function isNumberType(type: Type): type is NumberType {
 
 export function isObjectLikeType(type: Type): type is ObjectLikeTypes {
   return isObjectType(type) ||
-  isInterfaceType(type) ||
-  isClassType(type) ||
-  isObjectLiteralType(type) ||
-  isTypeLiteralType(type);
+    isInterfaceType(type) ||
+    isClassType(type) ||
+    isObjectLiteralType(type) ||
+    isTypeLiteralType(type);
 }
 
 export function isObjectLiteralType(type: Type): type is ObjectLiteralType {

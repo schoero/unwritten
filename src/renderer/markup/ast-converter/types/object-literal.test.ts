@@ -8,7 +8,7 @@ import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { ts } from "unwritten:utils/template";
 
-import type { ObjectLiteralType } from "unwritten:interpreter/type-definitions/types";
+import type { ObjectLiteralType } from "unwritten:interpreter:type-definitions/types";
 
 
 scope("MarkupRenderer", TypeKind.ObjectLiteral, () => {

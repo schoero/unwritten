@@ -6,12 +6,12 @@ import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { isFunctionLikeEntity, isLinkableEntity } from "unwritten:typeguards/entities";
 
-import type { JSDocReference } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer/markup/types-definitions/markup";
+import type { JSDocReference } from "unwritten:interpreter:type-definitions/jsdoc";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 import type { ConvertedJSDocReference } from "unwritten:renderer/markup/types-definitions/renderer";
 
 
-export function convertJSDocReference(ctx: MarkupRenderContexts, jsdocReference: JSDocReference): ConvertedJSDocReference {
+export function convertJSDocReference(ctx: MarkupRenderContext, jsdocReference: JSDocReference): ConvertedJSDocReference {
 
   const renderConfig = getRenderConfig(ctx);
 

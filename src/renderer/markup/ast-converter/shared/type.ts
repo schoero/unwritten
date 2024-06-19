@@ -86,8 +86,8 @@ import {
   isVoidType
 } from "unwritten:typeguards/types";
 
-import type { MultilineType, Type } from "unwritten:interpreter/type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MultilineType, Type } from "unwritten:interpreter:type-definitions/types";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode, ConditionalNode, TitleNode } from "unwritten:renderer:markup/types-definitions/nodes";
 import type {
   ConvertedTypeInline,
@@ -95,7 +95,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Type): TitleNode<[ASTNode, ASTNode]> {
+export function convertTypeForDocumentation(ctx: MarkupRenderContext, type: Type): TitleNode<[ASTNode, ASTNode]> {
 
   const translate = getTranslator(ctx);
 
@@ -113,7 +113,7 @@ export function convertTypeForDocumentation(ctx: MarkupRenderContexts, type: Typ
 
 }
 
-export function convertType(ctx: MarkupRenderContexts, type: Type | Type) {
+export function convertType(ctx: MarkupRenderContext, type: Type | Type) {
 
   const inlineType = convertTypeForInlineType(ctx, type);
   const multilineType = isMultilineType(type)
@@ -127,7 +127,7 @@ export function convertType(ctx: MarkupRenderContexts, type: Type | Type) {
 
 }
 
-function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type | Type): ConvertedTypeInline {
+function convertTypeForInlineType(ctx: MarkupRenderContext, type: Type | Type): ConvertedTypeInline {
 
   if(isAnyType(type)){
     return convertAnyTypeInline(ctx, type);
@@ -201,7 +201,7 @@ function convertTypeForInlineType(ctx: MarkupRenderContexts, type: Type | Type):
 
 }
 
-function convertTypeForMultilineType(ctx: MarkupRenderContexts, type: MultilineType): ConditionalNode | ConvertedTypeMultiline | undefined {
+function convertTypeForMultilineType(ctx: MarkupRenderContext, type: MultilineType): ConditionalNode | ConvertedTypeMultiline | undefined {
 
   if(isObjectType(type)){
     return convertObjectTypeMultiline(ctx, type);

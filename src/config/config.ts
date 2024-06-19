@@ -1,26 +1,50 @@
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
-import { defaultJSONRenderConfig } from "unwritten:renderer:json/config/default";
+import { defaultJSONRenderConfig } from "unwritten:renderer:json:config/default";
 import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default";
+import { isNodeContext } from "unwritten:utils/context";
 import { findFile } from "unwritten:utils:finder";
 import { override } from "unwritten:utils:override";
 
 import { defaultExternalTypes, defaultInterpreterConfig, defaultOutputPath } from "./default";
 
-import type { CompleteConfig, Config } from "unwritten:type-definitions/config";
-import type { DefaultContext } from "unwritten:type-definitions/context";
+import type {
+  CompleteBrowserConfig,
+  CompleteConfig,
+  CompleteNodeConfig,
+  Config,
+  NodeConfig
+} from "unwritten:type-definitions/config";
+import type { DefaultBrowserContext, DefaultContext, DefaultNodeContext } from "unwritten:type-definitions/context";
 
 
 const CONFIG_NAMES = [
+  "unwritten.json",
+  "unwritten.js",
+  "unwritten.config.js",
+  "unwritten.config.mjs",
+  "unwritten.config.cjs",
+  "unwritten.mjs",
+  "unwritten.cjs",
   ".unwritten.json",
   ".unwritten.js",
+  ".unwritten.config.js",
+  ".unwritten.config.mjs",
+  ".unwritten.config.cjs",
   ".unwritten.mjs",
   ".unwritten.cjs"
 ];
 
+export async function createConfig(ctx: DefaultBrowserContext, config: Config | undefined): Promise<CompleteBrowserConfig>;
+export async function createConfig(ctx: DefaultNodeContext, configOrPath: Config | string | undefined, output?: string): Promise<CompleteNodeConfig>;
 export async function createConfig(ctx: DefaultContext, configOrPath: Config | string | undefined, output?: string): Promise<CompleteConfig> {
 
   const logger = ctx.dependencies.logger;
   const { absolute, getDirectory } = ctx.dependencies.path;
+
+  if(!isNodeContext(ctx)){
+    return createConfigForBrowser(ctx, configOrPath as Config | undefined);
+  }
+
   const { existsSync } = ctx.dependencies.fs;
 
   const defaultConfig = getDefaultConfig();
@@ -46,9 +70,9 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
     absoluteConfigPath = findFile(ctx, CONFIG_NAMES, configOrPath);
 
     if(absoluteConfigPath === undefined){
-      logger?.info("No unwritten.json found, continue using default configuration.");
+      logger?.stats(ctx, { unwritten: "default config" });
     } else {
-      logger?.info(`Using unwritten config found at ${logger.filePath(absoluteConfigPath)}`);
+      logger?.stats(ctx, { unwritten: absoluteConfigPath });
     }
 
   }
@@ -69,7 +93,12 @@ export async function createConfig(ctx: DefaultContext, configOrPath: Config | s
 
 }
 
-async function importFile(ctx: DefaultContext, path: string) {
+async function createConfigForBrowser(ctx: DefaultBrowserContext, config: Config | undefined): Promise<CompleteBrowserConfig> {
+  const defaultConfig = getDefaultConfig();
+  return override(defaultConfig, config);
+}
+
+async function importFile(ctx: DefaultNodeContext, path: string) {
 
   const { getFileExtension } = ctx.dependencies.path;
   const { readFileSync } = ctx.dependencies.fs;
@@ -84,7 +113,7 @@ async function importFile(ctx: DefaultContext, path: string) {
 
 }
 
-async function getExtendConfig(ctx: DefaultContext, config: Config): Promise<Config> {
+async function getExtendConfig(ctx: DefaultNodeContext, config: NodeConfig): Promise<Config> {
 
   const { cwd } = ctx.dependencies.process;
   const { join } = ctx.dependencies.path;
@@ -98,7 +127,7 @@ async function getExtendConfig(ctx: DefaultContext, config: Config): Promise<Con
     throw new TypeError("\"extends\" property in unwritten config must of type string if provided.");
   }
 
-  let loadedConfig: Config | undefined;
+  let loadedConfig: NodeConfig | undefined;
 
   // Load via direct import
   if(existsSync(config.extends)){
@@ -136,10 +165,9 @@ async function getExtendConfig(ctx: DefaultContext, config: Config): Promise<Con
 
 }
 
+export function getDefaultConfig(): CompleteNodeConfig {
 
-export function getDefaultConfig(): CompleteConfig {
-
-  const defaultConfig: CompleteConfig = {
+  const defaultConfig: CompleteNodeConfig = {
     externalTypes: defaultExternalTypes,
     interpreterConfig: defaultInterpreterConfig,
     outputDir: defaultOutputPath,

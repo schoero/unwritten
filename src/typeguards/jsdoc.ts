@@ -9,7 +9,7 @@ import type {
   JSDocText,
   JSDocThrowsTag,
   JSDocType
-} from "unwritten:interpreter/type-definitions/jsdoc";
+} from "unwritten:interpreter:type-definitions/jsdoc";
 
 
 export function isJSDocGenericTag(jsdocTag: JSDocTag): jsdocTag is JSDocGenericTag {

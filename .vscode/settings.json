@@ -16,6 +16,7 @@
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "eslint.experimental.useFlatConfig": true,
   "eslint.validate": ["javascript", "typescript", "json", "jsonc", "json5", "yaml"],
   "editor.formatOnSave": false,
 
@@ -26,7 +27,8 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "*.ts": "$(capture).test.ts,$(capture).test.snap,$(capture).test-d.ts"
+    "*.ts": "$(capture).test.ts,$(capture).test.snap,$(capture).test-d.ts",
+    "*.js": "$(capture).test.js,$(capture).cjs,$(capture).mjs,$(capture).d.ts,$(capture).d.ts.map,$(capture).js.map"
   },
 
   // ES module import
@@ -40,7 +42,6 @@
   // Markdown
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
-    "editor.formatOnSave": true,
     "editor.rulers": [
       40,
       80,
@@ -51,9 +52,9 @@
 
   // VSCode
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.markdownlint": true,
-    "source.organizeImports": false
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.markdownlint": "explicit",
+    "source.organizeImports": "never"
   },
   "editor.rulers": [
     119
@@ -61,5 +62,5 @@
   "search.exclude": {
     "lib": true
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

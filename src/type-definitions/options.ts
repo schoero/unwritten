@@ -7,6 +7,8 @@ import type { Config } from "./config";
 
 
 export interface Options {
+  /** Verbose logging. */
+  debug?: boolean;
   /** Array of paths that should not be included in the documentation. */
   exclude?: string[];
   /**
@@ -14,9 +16,9 @@ export interface Options {
    * Defaults to ./docs based on the current working directory.
    */
   output?: string;
-  /** Silence logging */
+  /** Silence logging. */
   silent?: boolean;
-  /** Path to tsconfig.json */
+  /** Path to tsconfig.json. */
   tsconfig?: ts.CompilerOptions | string;
 }
 
@@ -28,8 +30,6 @@ export interface BrowserAPIOptions extends Options {
    * You can also provide a path to a custom renderer that implements the Renderer interface.
    */
   renderer?: BuiltInRenderers | Renderer;
-  /** tsconfig */
-  tsconfig?: ts.CompilerOptions;
 }
 
 export interface APIOptions extends Options {
@@ -38,17 +38,15 @@ export interface APIOptions extends Options {
   /**
    * Whether the output should be rendered as HTML, Markdown, JSON or TypeScript.
    * You can also provide a path to a custom renderer that implements the Renderer interface.
-   * @defaultValue "markdown"
    */
   renderer?: BuiltInRenderers | Renderer | string;
 }
 
 export interface CLIOptions extends Options {
-  /** Path to .unwritten.json */
+  /** Path to .unwritten.json. */
   config?: string;
   /**
    * Whether the output should be rendered as HTML or Markdown.
-   * @defaultValue "markdown"
    */
   renderer?: BuiltInRenderers;
 }

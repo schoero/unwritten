@@ -1,6 +1,6 @@
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
@@ -11,11 +11,11 @@ import { getTypeByDeclaration } from "../type";
 
 import type { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
 
-import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createEnumEntity = (ctx: InterpreterContext, symbol: Symbol): EnumEntity | MergedEnumEntity => withLockedSymbol(ctx, symbol, () => {
+export const createEnumEntity = (ctx: InterpreterContext, symbol: Symbol): EnumEntity | MergedEnumEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const declarations = symbol.getDeclarations()?.flatMap(declaration => isEnumDeclaration(ctx, declaration) ? declaration : []);
 
@@ -45,7 +45,7 @@ export const createEnumEntity = (ctx: InterpreterContext, symbol: Symbol): EnumE
     };
   }
 
-});
+}));
 
 
 function mergeMembers(enums: ReturnType<typeof parseEnumDeclaration>[]): EnumEntity["members"] {

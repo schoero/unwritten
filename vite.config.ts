@@ -2,26 +2,28 @@ import shebang from "rollup-plugin-preserve-shebang";
 import dts from "vite-plugin-dts";
 import noBundlePlugin from "vite-plugin-no-bundle";
 
-import { config, defineConfig } from "@schoero/vite-config";
+import { config, defineConfig } from "@schoero/configs/vite";
 
-/** @type {import('vitest/config').UserConfig} */
-export default defineConfig({
+import type { UserConfig } from "vitest";
+
+
+export default defineConfig(<UserConfig>{
   ...config,
   build: {
     emptyOutDir: true,
     lib: {
-      entry: ["/src/bin/index.ts", "/src/api/browser.entry.ts"],
+      entry: ["/src/bin/index.ts"],
       formats: ["es"]
     },
     minify: false,
-    outDir: "lib",
+    outDir: "lib/node",
     rollupOptions: {
       external: [
         /node_modules/,
         /^node:.*/
       ]
     },
-    target: "es6"
+    target: "ES2020"
   },
   plugins: [
     ...config.plugins ?? [],
@@ -30,7 +32,8 @@ export default defineConfig({
     dts({
       entryRoot: "./src",
       exclude: ["src/**/*.test.ts", "test/**"],
-      pathsToAliases: true
+      pathsToAliases: true,
+      strictOutput: true
     })
   ]
 });

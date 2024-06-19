@@ -13,7 +13,7 @@ import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
 
-import type { InterfaceEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/entities";
 
 
 scope("Renderer", "utils", () => {

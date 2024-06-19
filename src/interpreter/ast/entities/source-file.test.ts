@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable eslint-plugin-typescript/naming-convention */
 import { expect, it } from "vitest";
 
 import { EntityKind } from "unwritten:interpreter/enums/entity";

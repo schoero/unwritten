@@ -6,7 +6,7 @@ import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-conve
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 
-import type { PropertyEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities";
 
 
 scope("MarkupRenderer", "Tags", () => {
@@ -19,8 +19,10 @@ scope("MarkupRenderer", "Tags", () => {
       {
         beta: "",
         modifiers: ["readonly"],
-        optional: true
-      } as PropertyEntity
+        name: "test",
+        optional: true,
+        type: {}
+      } as unknown as PropertyEntity
     );
 
     const renderedTags = renderNode(ctx, convertedTags);

@@ -4,11 +4,11 @@ import { createLinkNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 
 import type { SymbolType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ConvertedSymbolTypeInline } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertSymbolTypeInline(ctx: MarkupRenderContexts, symbolType: SymbolType): ConvertedSymbolTypeInline {
+export function convertSymbolTypeInline(ctx: MarkupRenderContext, symbolType: SymbolType): ConvertedSymbolTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 

@@ -8,7 +8,7 @@ import type {
   SignatureEntity,
   TupleMemberEntity,
   TypeParameterEntity
-} from "unwritten:interpreter/type-definitions/entities";
+} from "unwritten:interpreter:type-definitions/entities";
 import type { Modifiers, Position } from "unwritten:interpreter:type-definitions/shared";
 
 import type { ID, Name } from "./jsdoc";
@@ -197,7 +197,7 @@ export interface TypeReferenceType extends TypeBase<TypeKind.TypeReference> {
 export interface ExpressionType extends TypeBase<TypeKind.Expression> {
   instanceType: Type;
   staticType: Type;
-  /** @deprecated Expressions should render the type instead of rendering the name */
+  /** @deprecated Expressions should render the type instead of rendering the name. */
   name?: Name;
   position?: Position;
   typeArguments?: Type[];
@@ -234,7 +234,7 @@ export interface CircularType extends TypeBase<TypeKind.Circular> {
   symbolId?: ID;
 }
 
-/** The unresolved type will be used if a type cannot be parsed, or it is excluded from parsing */
+/** The unresolved type will be used if a type cannot be parsed, or it is excluded from parsing. */
 export interface UnresolvedType extends TypeBase<TypeKind.Unresolved> {
   name?: Name;
   position?: Position;

@@ -105,12 +105,12 @@ scope("Interpreter", EntityKind.Enum, () => {
     });
 
     it("should have a matching member types with values", () => {
-      expect(exportedEnum.members[0]!.name).toBe("A");
-      assert(exportedEnum.members[0]!.type.kind === TypeKind.NumberLiteral);
-      expect(exportedEnum.members[0]!.type.value).toBe(0);
-      expect(exportedEnum.members[1]!.name).toBe("B");
-      assert(exportedEnum.members[1]!.type.kind === TypeKind.NumberLiteral);
-      expect(exportedEnum.members[1]!.type.value).toBe(1);
+      expect(exportedEnum.members[0].name).toBe("A");
+      assert(exportedEnum.members[0].type.kind === TypeKind.NumberLiteral);
+      expect(exportedEnum.members[0].type.value).toBe(0);
+      expect(exportedEnum.members[1].name).toBe("B");
+      assert(exportedEnum.members[1].type.kind === TypeKind.NumberLiteral);
+      expect(exportedEnum.members[1].type.value).toBe(1);
     });
 
   }
@@ -133,12 +133,12 @@ scope("Interpreter", EntityKind.Enum, () => {
 
     it("should be able to merge multiple enums with the same name", () => {
       expect(exportedEnum.members).toHaveLength(2);
-      expect(exportedEnum.members[0]!.name).toBe("A");
-      assert(exportedEnum.members[0]!.type.kind === TypeKind.NumberLiteral);
-      expect(exportedEnum.members[0]!.type.value).toBe(0);
-      expect(exportedEnum.members[1]!.name).toBe("B");
-      assert(exportedEnum.members[1]!.type.kind === TypeKind.NumberLiteral);
-      expect(exportedEnum.members[1]!.type.value).toBe(1);
+      expect(exportedEnum.members[0].name).toBe("A");
+      assert(exportedEnum.members[0].type.kind === TypeKind.NumberLiteral);
+      expect(exportedEnum.members[0].type.value).toBe(0);
+      expect(exportedEnum.members[1].name).toBe("B");
+      assert(exportedEnum.members[1].type.kind === TypeKind.NumberLiteral);
+      expect(exportedEnum.members[1].type.value).toBe(1);
     });
 
   }

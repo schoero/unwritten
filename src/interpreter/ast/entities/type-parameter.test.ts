@@ -30,11 +30,11 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
     });
 
     it("should have a matching type parameter name", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.name).toBe("T");
+      expect(exportedTypeAlias.typeParameters![0].name).toBe("T");
     });
 
     it("should have a matching type parameter kind", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.kind).toBe(EntityKind.TypeParameter);
+      expect(exportedTypeAlias.typeParameters![0].kind).toBe(EntityKind.TypeParameter);
     });
 
   }
@@ -51,8 +51,8 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a matching constraint", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.constraint).toBeDefined();
-      expect(exportedTypeAlias.typeParameters![0]!.constraint!.kind).toBe(TypeKind.String);
+      expect(exportedTypeAlias.typeParameters![0].constraint).toBeDefined();
+      expect(exportedTypeAlias.typeParameters![0].constraint!.kind).toBe(TypeKind.String);
     });
 
   }
@@ -69,7 +69,7 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a matching initializer", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.initializer!.kind).toBe(TypeKind.StringLiteral);
+      expect(exportedTypeAlias.typeParameters![0].initializer!.kind).toBe(TypeKind.StringLiteral);
     });
 
   }
@@ -89,10 +89,10 @@ scope("Interpreter", EntityKind.TypeParameter, () => {
     const exportedTypeAlias = createTypeAliasEntity(ctx, symbol);
 
     it("should have a type parameter description", () => {
-      expect(exportedTypeAlias.typeParameters![0]!.description).toBeDefined();
-      expect(exportedTypeAlias.typeParameters![0]!.description).toHaveLength(1);
-      assert(isJSDocText(exportedTypeAlias.typeParameters![0]!.description![0]));
-      expect(exportedTypeAlias.typeParameters![0]!.description![0].text).toBe("Generic type parameter description");
+      expect(exportedTypeAlias.typeParameters![0].description).toBeDefined();
+      expect(exportedTypeAlias.typeParameters![0].description).toHaveLength(1);
+      assert(isJSDocText(exportedTypeAlias.typeParameters![0].description![0]));
+      expect(exportedTypeAlias.typeParameters![0].description![0].text).toBe("Generic type parameter description");
     });
 
   }

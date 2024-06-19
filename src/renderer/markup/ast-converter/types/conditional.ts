@@ -6,14 +6,14 @@ import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/rende
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
 import type { ConditionalType } from "unwritten:interpreter:type-definitions/types";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedConditionalTypeInline,
   ConvertedConditionalTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertConditionalTypeInline(ctx: MarkupRenderContexts, conditionalType: ConditionalType): ConvertedConditionalTypeInline {
+export function convertConditionalTypeInline(ctx: MarkupRenderContext, conditionalType: ConditionalType): ConvertedConditionalTypeInline {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -29,7 +29,7 @@ export function convertConditionalTypeInline(ctx: MarkupRenderContexts, conditio
 }
 
 
-export function convertConditionalTypeMultiline(ctx: MarkupRenderContexts, conditionalType: ConditionalType): ConvertedConditionalTypeMultiline {
+export function convertConditionalTypeMultiline(ctx: MarkupRenderContext, conditionalType: ConditionalType): ConvertedConditionalTypeMultiline {
 
   const translate = getTranslator(ctx);
 

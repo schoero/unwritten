@@ -1,15 +1,15 @@
-import type { ExportableEntityKinds } from "unwritten:interpreter/type-definitions/entities";
+import type { ExportableEntityKinds } from "unwritten:interpreter:type-definitions/entities";
 
 
 export interface MarkupRenderConfig {
 
-  /** Indentation characters */
+  /** Indentation characters. */
   indentation?: string;
 
   /** Defines how inline titles should be encapsulated in the rendered output. */
   inlineTitleEncapsulation?: Encapsulation | false;
 
-  /** Newline character */
+  /** Newline character. */
   newLine?: "\n" | "\r\n" | "os";
 
   /** Defines how parameters should be encapsulated in the rendered output. */
@@ -29,6 +29,7 @@ export interface MarkupRenderConfig {
 
   /**
    * Defines the order in which entities should be rendered.
+   *
    * @example
    * Class: MyClass instead of just MyClass
    */
@@ -36,6 +37,7 @@ export interface MarkupRenderConfig {
 
   /**
    * Defines whether the parent name of members should be rendered in the signature.
+   *
    * @example
    * Class.method() instead of method()
    */
@@ -56,7 +58,7 @@ export interface MarkupRenderConfig {
   /** Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output. */
   tagEncapsulation?: Encapsulation | false;
 
-  /** Translations for otherwise hardcoded labels */
+  /** Translations for otherwise hardcoded labels. */
   translations?: {
     keyType: string;
     valueType: string;
@@ -142,7 +144,7 @@ export interface MarkupRenderConfig {
 }
 
 export interface MarkdownRenderConfig extends MarkupRenderConfig {
-  /** Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes */
+  /** Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes. */
   allowedHTMLTags?: string[] | false;
 
   /** Defines the string that should be used to separate sections in the rendered output. */

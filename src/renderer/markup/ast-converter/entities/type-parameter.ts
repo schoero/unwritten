@@ -17,9 +17,9 @@ import {
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { TypeParameterEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { TypeParameterEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedTypeParameterEntitiesForDocumentation,
   ConvertedTypeParameterEntitiesForSignature,
@@ -28,7 +28,7 @@ import type {
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertTypeParameterEntityToAnchor(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity, displayName?: string): AnchorNode {
+export function convertTypeParameterEntityToAnchor(ctx: MarkupRenderContext, typeParameterEntity: TypeParameterEntity, displayName?: string): AnchorNode {
 
   const name = typeParameterEntity.name;
   const id = typeParameterEntity.symbolId;
@@ -41,7 +41,7 @@ export function convertTypeParameterEntityToAnchor(ctx: MarkupRenderContexts, ty
 
 }
 
-export function convertTypeParameterEntitiesForSignature(ctx: MarkupRenderContexts, typeParameterEntities: TypeParameterEntity[]): ConvertedTypeParameterEntitiesForSignature {
+export function convertTypeParameterEntitiesForSignature(ctx: MarkupRenderContext, typeParameterEntities: TypeParameterEntity[]): ConvertedTypeParameterEntitiesForSignature {
   const convertedTypeParameters = typeParameterEntities.flatMap((typeParameter, index) => {
     const convertedTypeParameter = convertTypeParameterEntityForSignature(ctx, typeParameter);
     if(index === 0){
@@ -55,7 +55,7 @@ export function convertTypeParameterEntitiesForSignature(ctx: MarkupRenderContex
 }
 
 
-export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderContexts, parameterEntities: TypeParameterEntity[] | undefined): ConvertedTypeParameterEntitiesForDocumentation {
+export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderContext, parameterEntities: TypeParameterEntity[] | undefined): ConvertedTypeParameterEntitiesForDocumentation {
 
   if(parameterEntities === undefined || parameterEntities.length === 0){
     return;
@@ -83,7 +83,7 @@ export function convertTypeParameterEntitiesForDocumentation(ctx: MarkupRenderCo
 }
 
 
-export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContexts, typeParameterEntities: TypeParameterEntity[] | undefined): ConvertedTypeParameterEntitiesForType {
+export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContext, typeParameterEntities: TypeParameterEntity[] | undefined): ConvertedTypeParameterEntitiesForType {
 
   const translate = getTranslator(ctx);
   const renderConfig = getRenderConfig(ctx);
@@ -109,7 +109,7 @@ export function convertTypeParameterEntitiesForType(ctx: MarkupRenderContexts, t
 
 }
 
-export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity): ConvertedTypeParameterEntityForDocumentation {
+export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderContext, typeParameterEntity: TypeParameterEntity): ConvertedTypeParameterEntityForDocumentation {
 
   const renderConfig = getRenderConfig(ctx);
 
@@ -124,7 +124,7 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
     convertConstraintForType(ctx, typeParameterEntity.constraint);
 
   const initializer = typeParameterEntity.initializer &&
-     convertInitializerForType(ctx, typeParameterEntity.initializer);
+    convertInitializerForType(ctx, typeParameterEntity.initializer);
 
   const nameAnchor = !isMarkdownRenderContext(ctx) ||
     Array.isArray(ctx.config.renderConfig[ctx.renderer.name].allowedHTMLTags) &&
@@ -150,10 +150,10 @@ export function convertTypeParameterEntityForDocumentation(ctx: MarkupRenderCont
 
 }
 
-function convertTypeParameterEntityForType(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity) {
+function convertTypeParameterEntityForType(ctx: MarkupRenderContext, typeParameterEntity: TypeParameterEntity) {
   return convertTypeParameterEntityForDocumentation(ctx, typeParameterEntity);
 }
 
-function convertTypeParameterEntityForSignature(ctx: MarkupRenderContexts, typeParameterEntity: TypeParameterEntity) {
+function convertTypeParameterEntityForSignature(ctx: MarkupRenderContext, typeParameterEntity: TypeParameterEntity) {
   return typeParameterEntity.name;
 }

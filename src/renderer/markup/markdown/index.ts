@@ -18,16 +18,16 @@ import { capitalize } from "unwritten:renderer/markup/utils/translations";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderAnchorNode } from "unwritten:renderer:markdown/ast/anchor";
-import { renderBoldNode } from "unwritten:renderer:markdown/ast/bold";
-import { renderItalicNode } from "unwritten:renderer:markdown/ast/italic";
-import { renderLinkNode } from "unwritten:renderer:markdown/ast/link";
-import { renderListNode } from "unwritten:renderer:markdown/ast/list";
-import { renderParagraphNode } from "unwritten:renderer:markdown/ast/paragraph";
-import { renderSectionNode } from "unwritten:renderer:markdown/ast/section";
-import { renderSmallNode } from "unwritten:renderer:markdown/ast/small";
-import { renderSpanNode } from "unwritten:renderer:markdown/ast/span";
-import { renderStrikethroughNode } from "unwritten:renderer:markdown/ast/strikethrough";
+import { renderAnchorNode } from "unwritten:renderer:markdown:ast/anchor";
+import { renderBoldNode } from "unwritten:renderer:markdown:ast/bold";
+import { renderItalicNode } from "unwritten:renderer:markdown:ast/italic";
+import { renderLinkNode } from "unwritten:renderer:markdown:ast/link";
+import { renderListNode } from "unwritten:renderer:markdown:ast/list";
+import { renderParagraphNode } from "unwritten:renderer:markdown:ast/paragraph";
+import { renderSectionNode } from "unwritten:renderer:markdown:ast/section";
+import { renderSmallNode } from "unwritten:renderer:markdown:ast/small";
+import { renderSpanNode } from "unwritten:renderer:markdown:ast/span";
+import { renderStrikethroughNode } from "unwritten:renderer:markdown:ast/strikethrough";
 import { convertToMarkupAST } from "unwritten:renderer:markup/ast-converter/index";
 import {
   isAnchorNode,
@@ -50,7 +50,7 @@ import { minMax } from "unwritten:renderer:markup/utils/renderer";
 
 import { renderTitleNode } from "./ast/title";
 
-import type { SourceFileEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
 import type { MarkdownRenderContext, MarkdownRenderer } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
@@ -80,7 +80,7 @@ const markdownRenderer: MarkdownRenderer = {
   name: BuiltInRenderers.Markdown,
 
 
-  // eslint-disable-next-line sort-keys/sort-keys-fix
+  // eslint-disable-next-line eslint-plugin-sort-keys/sort-keys-fix
   initializeContext: (ctx: MarkdownRenderContext) => {
 
     ctx.links = [];
@@ -148,39 +148,39 @@ const markdownRenderer: MarkdownRenderer = {
     }, [])
       .reduce<RenderOutput>((files, convertedSourceFileEntity) => {
 
-      // Reset context
-      ctx.nesting = 1;
-      ctx.indentation = 0;
+        // reset context
+        ctx.nesting = 1;
+        ctx.indentation = 0;
 
-      setCurrentSourceFile(ctx, convertedSourceFileEntity);
+        setCurrentSourceFile(ctx, convertedSourceFileEntity);
 
-      const tableOfContents = renderConfig.renderTableOfContents &&
-        createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents);
-      const documentation = createSectionNode("documentation", ...convertedSourceFileEntity.documentation);
+        const tableOfContents = renderConfig.renderTableOfContents &&
+          createSectionNode("table-of-contents", convertedSourceFileEntity.tableOfContents);
+        const documentation = createSectionNode("documentation", ...convertedSourceFileEntity.documentation);
 
-      const ast = createTitleNode(
-        convertedSourceFileEntity.title,
-        convertedSourceFileEntity.titleAnchor,
-        tableOfContents,
-        documentation
-      );
+        const ast = createTitleNode(
+          convertedSourceFileEntity.title,
+          convertedSourceFileEntity.titleAnchor,
+          tableOfContents,
+          documentation
+        );
 
-      const renderedContent = renderNode(ctx, ast);
+        const renderedContent = renderNode(ctx, ast);
 
-      const renderedContendWithoutTrailingEmptyLines = renderedContent.endsWith(renderedNewLine + renderedEmptyLine)
-        ? renderedContent.slice(0, -(renderedNewLine.length + renderedEmptyLine.length))
-        : renderedContent;
+        const renderedContendWithoutTrailingEmptyLines = renderedContent.endsWith(renderedNewLine + renderedEmptyLine)
+          ? renderedContent.slice(0, -(renderedNewLine.length + renderedEmptyLine.length))
+          : renderedContent;
 
-      const renderedContentWithTrailingNewLine = renderedContendWithoutTrailingEmptyLines.endsWith(renderedNewLine)
-        ? renderedContendWithoutTrailingEmptyLines
-        : `${renderedContendWithoutTrailingEmptyLines}${renderedNewLine}`;
+        const renderedContentWithTrailingNewLine = renderedContendWithoutTrailingEmptyLines.endsWith(renderedNewLine)
+          ? renderedContendWithoutTrailingEmptyLines
+          : `${renderedContendWithoutTrailingEmptyLines}${renderedNewLine}`;
 
-      const filePath = ctx.currentFile.dst;
+        const filePath = ctx.currentFile.dst;
 
-      files[filePath] = renderedContentWithTrailingNewLine;
-      return files;
+        files[filePath] = renderedContentWithTrailingNewLine;
+        return files;
 
-    }, {});
+      }, {});
 
   })
 

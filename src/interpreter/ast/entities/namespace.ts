@@ -3,18 +3,18 @@ import { getDeclarationId, getSymbolId } from "unwritten:interpreter/ast/shared/
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { isNamespaceExport } from "unwritten:interpreter/typeguards/declarations";
-import { withLockedSymbol } from "unwritten:interpreter/utils/ts";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";
 
-import type { NamespaceEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createNamespaceEntity = (ctx: InterpreterContext, symbol: Symbol): NamespaceEntity => withLockedSymbol(ctx, symbol, () => {
+export const createNamespaceEntity = (ctx: InterpreterContext, symbol: Symbol): NamespaceEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
   const fromSourceFile = createSourceFileEntity(ctx, symbol);
 
@@ -38,7 +38,7 @@ export const createNamespaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
     symbolId
   };
 
-});
+}));
 
 export const createNamespaceEntityFromNamespaceExport = (ctx: InterpreterContext, symbol: Symbol): NamespaceEntity => withLockedSymbol(ctx, symbol, () => {
 

@@ -3,15 +3,15 @@ import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/regi
 import { createInlineTitleNode, createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 
-import type { Remark } from "unwritten:interpreter/type-definitions/jsdoc";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { Remark } from "unwritten:interpreter:type-definitions/jsdoc";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedRemarksForDocumentation,
   ConvertedRemarksForType
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertRemarksForDocumentation(ctx: MarkupRenderContexts, remarks: Remark): ConvertedRemarksForDocumentation {
+export function convertRemarksForDocumentation(ctx: MarkupRenderContext, remarks: Remark): ConvertedRemarksForDocumentation {
 
   if(remarks.length === 0){
     return;
@@ -37,7 +37,7 @@ export function convertRemarksForDocumentation(ctx: MarkupRenderContexts, remark
 }
 
 
-export function convertRemarksForType(ctx: MarkupRenderContexts, remarks: Remark): ConvertedRemarksForType {
+export function convertRemarksForType(ctx: MarkupRenderContext, remarks: Remark): ConvertedRemarksForType {
 
   if(remarks.length === 0){
     return;

@@ -17,7 +17,7 @@ import {
   isSetterSymbol
 } from "unwritten:interpreter:typeguards/symbols";
 import { isThisType } from "unwritten:interpreter:typeguards/types";
-import { withLockedType } from "unwritten:interpreter:utils/ts";
+import { withCachedType, withLockedType } from "unwritten:interpreter:utils/ts";
 import { isSymbolExcluded } from "unwritten:utils/exclude";
 
 import type { ObjectType as TSObjectType } from "typescript";
@@ -26,7 +26,7 @@ import type { InferObjectLikeType, ObjectLikeTypeKind } from "unwritten:interpre
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 
-export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLikeTypeKind>(ctx: InterpreterContext, type: TSObjectType, kind: SpecificObjectLikeTypeKind = TypeKind.Object as SpecificObjectLikeTypeKind): InferObjectLikeType<SpecificObjectLikeTypeKind> => withLockedType(ctx, type, () => {
+export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLikeTypeKind>(ctx: InterpreterContext, type: TSObjectType, kind: SpecificObjectLikeTypeKind = TypeKind.Object as SpecificObjectLikeTypeKind): InferObjectLikeType<SpecificObjectLikeTypeKind> => withCachedType(ctx, type, () => withLockedType(ctx, type, () => {
 
   const tsConstructSignatures = type.getConstructSignatures();
   const tsCallSignatures = type.getCallSignatures();
@@ -76,4 +76,4 @@ export const createObjectLikeType = <SpecificObjectLikeTypeKind extends ObjectLi
     typeId
   };
 
-});
+}));

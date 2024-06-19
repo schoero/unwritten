@@ -17,16 +17,16 @@ import {
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes";
 
-import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
-import type { MarkupRenderContexts } from "unwritten:renderer:markup/types-definitions/markup";
+import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedEnumEntityForDocumentation,
   ConvertedEnumEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
 
 
-export function convertEnumEntityToAnchor(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity, displayName?: string): AnchorNode {
+export function convertEnumEntityToAnchor(ctx: MarkupRenderContext, enumEntity: EnumEntity | MergedEnumEntity, displayName?: string): AnchorNode {
 
   const id = enumEntity.symbolId;
   const name = enumEntity.name;
@@ -56,12 +56,12 @@ export function convertEnumEntityToAnchor(ctx: MarkupRenderContexts, enumEntity:
 }
 
 
-export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForTableOfContents {
+export function convertEnumEntityForTableOfContents(ctx: MarkupRenderContext, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForTableOfContents {
   return convertEnumEntityToAnchor(ctx, enumEntity);
 }
 
 
-export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForDocumentation {
+export function convertEnumEntityForDocumentation(ctx: MarkupRenderContext, enumEntity: EnumEntity | MergedEnumEntity): ConvertedEnumEntityForDocumentation {
 
   const name = enumEntity.name;
   const symbolId = enumEntity.symbolId;
@@ -102,7 +102,7 @@ export function convertEnumEntityForDocumentation(ctx: MarkupRenderContexts, enu
 
 }
 
-function convertEnumMember(ctx: MarkupRenderContexts, member: EnumMemberEntity) {
+function convertEnumMember(ctx: MarkupRenderContext, member: EnumMemberEntity) {
 
   const name = member.name;
 

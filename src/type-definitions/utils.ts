@@ -1,4 +1,4 @@
-import type { Entity } from "unwritten:interpreter/type-definitions/entities";
+import type { Entity } from "unwritten:interpreter:type-definitions/entities";
 import type { Type } from "unwritten:interpreter:type-definitions/types";
 
 
@@ -10,18 +10,9 @@ export type Mutable<T> = {
 // Complete
 export type Complete<ObjectType extends object> = DeepRequiredByKey<ObjectType>;
 
-
-// Remove translations suffix
-type RemoveTranslationsSuffix<T extends object, S extends "_many" | "_one"> = {
-  [Key in keyof T as Key extends `${infer KeyWithoutSuffix}${S}` ? KeyWithoutSuffix : Key]: T[Key];
-};
-
-export type TranslationWithoutSuffixes<T extends object> = RemoveTranslationsSuffix<RemoveTranslationsSuffix<T, "_one">, "_many">;
-
 // DeepPartialByKey
 export type DeepPartial<Type> = DeepPartialByKey<Type>;
-export type Partial<Type> = DeepPartialByKey<Type, PropertyKey, false>;
-export type PartialByKey<Type, SelectedKeys extends PropertyKey> = DeepPartialByKey<Type, SelectedKeys, false>;
+export type PartialByKey<Type extends object, SelectedKeys extends keyof Type> = DeepPartialByKey<Type, SelectedKeys, false>;
 
 export type DeepPartialByKey<Type, SelectedKeys extends PropertyKey = PropertyKey, Deep extends boolean = true> =
   Type extends Function
@@ -54,7 +45,7 @@ type DeepPartialByKeyObject<Type, SelectedKeys extends PropertyKey, Deep extends
 // DeepRequiredByKey
 export type DeepRequired<Type> = DeepRequiredByKey<Type>;
 export type Required<Type> = DeepRequiredByKey<Type, PropertyKey, false>;
-export type RequiredByKey<Type, SelectedKeys extends PropertyKey> = DeepRequiredByKey<Type, SelectedKeys, false>;
+export type RequiredByKey<Type extends object, SelectedKeys extends keyof Type> = DeepRequiredByKey<Type, SelectedKeys, false>;
 
 export type DeepRequiredByKey<Type, SelectedKeys extends PropertyKey = PropertyKey, Deep extends boolean = true> =
   Type extends Function
