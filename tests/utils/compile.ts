@@ -99,7 +99,7 @@ export function compile(code: CompilerInput | string, tsconfig?: ts.CompilerOpti
   const compiledSourceFiles = program.getSourceFiles();
   const fileSymbols = compiledSourceFiles.map(
     file => checker.getSymbolAtLocation(file)
-  ).filter(sourceFileSymbol => !!sourceFileSymbol) as ts.Symbol[];
+  ).filter(sourceFileSymbol => !!sourceFileSymbol);
 
   // File
   const file = compiledSourceFiles.find(file => file.fileName === entryFilePath);

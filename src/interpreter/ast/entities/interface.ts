@@ -32,7 +32,7 @@ import type { PartialByKey } from "unwritten:type-definitions/utils";
 
 export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): InterfaceEntity | MergedInterfaceEntity => withCachedEntity(ctx, symbol, () => withLockedSymbol(ctx, symbol, () => {
 
-  const interfaceDeclarations = symbol.getDeclarations()?.filter(declaration => isInterfaceDeclaration(ctx, declaration)) as InterfaceDeclaration[] | undefined;
+  const interfaceDeclarations = symbol.getDeclarations()?.filter(declaration => isInterfaceDeclaration(ctx, declaration));
 
   assert(interfaceDeclarations && interfaceDeclarations.length > 0, "Interface declarations not found");
 

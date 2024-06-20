@@ -72,7 +72,7 @@ export function readdirSync(path: string, options?: { recursive?: boolean; }) {
         if(isFile(object[key])){
           return [key];
         } else {
-          const subDirectory = object[key] as VirtualFS;
+          const subDirectory = object[key];
           const subDirectoryContent = readObject(subDirectory)
             .map(subDirectoryKey => `${key}/${subDirectoryKey}`);
           return [

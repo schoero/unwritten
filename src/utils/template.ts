@@ -36,7 +36,7 @@ export function findCommonIndentation(content: string, eol: string = EOL) {
   ).filter(tab => tab !== undefined);
 
 
-  const tabsInSpaces = tabs.map(tab => tab! * TABS_IN_SPACES);
+  const tabsInSpaces = tabs.map(tab => tab * TABS_IN_SPACES);
   const indentations = [...spaces, ...tabsInSpaces] as number[];
 
   if(indentations.length <= 0){

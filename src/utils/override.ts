@@ -19,15 +19,12 @@ export function override<Original extends AnyObject, Overrides extends AnyObject
   for(const originalKey in original){
     if(typeof original[originalKey] === "object" && typeof overrides[originalKey] === "object"){
       if(Array.isArray(original[originalKey]) || Array.isArray(overrides[originalKey])){
-        // @ts-expect-error - TS type inference is not working here
         result[originalKey] = overrides[originalKey];
       } else {
-      // @ts-expect-error - TS type inference is not working here
         result[originalKey] = override(original[originalKey], overrides[originalKey]);
       }
     } else {
       if(overrides[originalKey] !== undefined){
-        // @ts-expect-error - TS type inference is not working here
         result[originalKey] = overrides[originalKey];
       } else {
         // @ts-expect-error - TS type inference is not working here
