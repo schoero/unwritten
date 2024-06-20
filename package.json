@@ -69,11 +69,11 @@
     "tinyhighlight": "^0.3.2"
   },
   "devDependencies": {
-    "@schoero/configs": "^1.0.15",
+    "@schoero/configs": "^1.0.16",
     "@types/minimatch": "^5.1.2",
     "@types/node": "^20.14.6",
     "changelogen": "^0.5.5",
-    "cspell": "^8.9.0",
+    "cspell": "^8.9.1",
     "eslint-plugin-jsonc": "^2.16.0",
     "eslint-plugin-sort-exports": "^0.9.1",
     "rollup-plugin-preserve-shebang": "^1.0.1",
