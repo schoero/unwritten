@@ -11,8 +11,10 @@ export interface DiagnosticMessage {
   message: string;
   severity: DiagnosticSeverity;
   column?: number;
+  end?: number;
   line?: number;
   path?: string;
+  start?: number;
 }
 
 export interface UnwrittenOutput {

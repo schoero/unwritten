@@ -27,6 +27,9 @@ export function convertDiagnostics(ctx: DefaultContext, diagnostics: readonly Di
       column: diagnostic.file && diagnostic.start
         ? getColumnFromPosition(ctx, diagnostic.file, diagnostic.start)
         : undefined,
+      end: diagnostic.start && diagnostic.length
+        ? diagnostic.start + diagnostic.length
+        : undefined,
       line: diagnostic.file && diagnostic.start
         ? getLineFromPosition(ctx, diagnostic.file, diagnostic.start)
         : undefined,
@@ -34,7 +37,8 @@ export function convertDiagnostics(ctx: DefaultContext, diagnostics: readonly Di
       path: diagnostic.file?.fileName,
       severity: diagnostic.category === ctx.dependencies.ts.DiagnosticCategory.Error
         ? DiagnosticSeverity.Error
-        : DiagnosticSeverity.Warning
+        : DiagnosticSeverity.Warning,
+      start: diagnostic.start
     };
   });
 }
