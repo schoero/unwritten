@@ -1,11 +1,13 @@
 import { highlight as tinyHighlight } from "tinyhighlight";
 
+import { DiagnosticSeverity } from "unwritten:type-definitions/unwritten";
 import { findCommonIndentation, removeCommonIndentation } from "unwritten:utils/template";
 
 import type { TokenColors } from "tinyhighlight";
-import type { CompilerOptions, Diagnostic, LineAndCharacter } from "typescript";
+import type { CompilerOptions, Diagnostic, DiagnosticMessageChain, SourceFile } from "typescript";
 
 import type { DefaultContext } from "unwritten:type-definitions/context";
+import type { DiagnosticMessage } from "unwritten:type-definitions/unwritten";
 
 
 export function getDefaultCompilerOptions(ctx: DefaultContext): CompilerOptions {
@@ -16,6 +18,25 @@ export function getDefaultCompilerOptions(ctx: DefaultContext): CompilerOptions 
     checkJs: true,
     noEmit: true
   };
+}
+
+export function convertDiagnostics(ctx: DefaultContext, diagnostics: readonly Diagnostic[]): DiagnosticMessage[] {
+  return diagnostics.map(diagnostic => {
+    return {
+      code: diagnostic.code,
+      column: diagnostic.file && diagnostic.start
+        ? getColumnFromPosition(ctx, diagnostic.file, diagnostic.start)
+        : undefined,
+      line: diagnostic.file && diagnostic.start
+        ? getLineFromPosition(ctx, diagnostic.file, diagnostic.start)
+        : undefined,
+      message: convertDiagnosticMessageTextToString(ctx, diagnostic.messageText),
+      path: diagnostic.file?.fileName,
+      severity: diagnostic.category === ctx.dependencies.ts.DiagnosticCategory.Error
+        ? DiagnosticSeverity.Error
+        : DiagnosticSeverity.Warning
+    };
+  });
 }
 
 export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: readonly Diagnostic[]) {
@@ -50,41 +71,45 @@ export function reportCompilerDiagnostics(ctx: DefaultContext, diagnostics: read
       ? "The TypeScript compiler has reported an error"
       : "The TypeScript compiler has reported a warning";
 
-    const message = `${color(`${category}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, lineEndings)}`)} ${logger.gray(`ts(${diagnostic.code})`)}`;
+    const message = `${color(`${category}: ${convertDiagnosticMessageTextToString(ctx, diagnostic.messageText)}`)} ${logger.gray(`ts(${diagnostic.code})`)}`;
 
     if(diagnostic.file){
 
-      const startLocation: LineAndCharacter = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
+      const line = getLineFromPosition(ctx, diagnostic.file, diagnostic.start!);
+      const column = getColumnFromPosition(ctx, diagnostic.file, diagnostic.start!);
 
-      const filePath = `${logger.gray("at")} ${logger.filePath(`${diagnostic.file.fileName}:${startLocation.line + 1}:${startLocation.character + 1}`)}`;
+      const filePath = `${logger.gray("at")} ${logger.filePath(`${diagnostic.file.fileName}:${line}:${column}`)}`;
 
       const sourceFile = highlight(ctx, diagnostic.file.text).split(lineEndings);
-      const minLine = Math.max(startLocation.line - 2, 0);
-      const maxLine = Math.min(startLocation.line + 3, sourceFile.length);
-      const maxLineNumberLength = (maxLine + 1).toString().length;
-      const linesAround = sourceFile.slice(minLine, maxLine);
+      const minLine = Math.max(line - 2, 1);
+      const maxLine = Math.min(line + 2, sourceFile.length);
+
+
+      const maxLineNumberLength = maxLine.toString().length;
+      const linesAround = sourceFile.slice(minLine - 1, maxLine);
+
       const commonIndentation = findCommonIndentation(linesAround.join(lineEndings), lineEndings);
-      const cleanedLinesAround = linesAround.map(line => {
-        return removeCommonIndentation(line, commonIndentation);
-      });
+      const cleanedLinesAround = linesAround.map(line => removeCommonIndentation(line, commonIndentation));
 
-      const sourceCode = cleanedLinesAround.reduce<string[]>((acc, line, index) => {
+      const sourceCode = cleanedLinesAround.reduce<string[]>((acc, cleanedLine, index) => {
 
-        const lineNumber = minLine + 1 + index;
+        const lineNumber = minLine + index;
         const lineIndicator = `${lineNumber.toString().padStart(maxLineNumberLength)}| `;
-        const tabCount = linesAround[index].substring(0, startLocation.character + 1).match(/\t/g)?.length ?? 0;
-        const tabCorrectedStartCharacter = startLocation.character - tabCount + tabCount * 4;
-        const tabCorrectedEndCharacter = tabCorrectedStartCharacter + diagnostic.length!;
-        const tabCorrectedLine = line.replace(/\t/g, "    ");
+
+        const tabCount = linesAround[index].substring(0, column).match(/\t/g)?.length ?? 0;
+        const tabCorrectedStartColumn = column - 1 - tabCount + tabCount * 4;
+        const tabCorrectedEndColumn = tabCorrectedStartColumn + diagnostic.length!;
+        const tabCorrectedLine = cleanedLine.replace(/\t/g, "    ");
+
         const syntaxHighlightedLine = tabCorrectedLine;
 
         acc.push(logger.gray(`${lineIndicator}${syntaxHighlightedLine}`));
 
-        if(lineNumber === startLocation.line + 1){
+        if(lineNumber === line){
           acc.push(logger.yellow(`${
-            " ".repeat(lineIndicator.length + tabCorrectedStartCharacter - commonIndentation)
+            " ".repeat(lineIndicator.length + tabCorrectedStartColumn - commonIndentation)
           }${
-            color("~".repeat(tabCorrectedEndCharacter - tabCorrectedStartCharacter))
+            color("~".repeat(tabCorrectedEndColumn - tabCorrectedStartColumn))
           }`));
         }
 
@@ -162,4 +187,19 @@ function highlight(ctx: DefaultContext, code: string) {
     colors: tokenColors
   });
 
+}
+
+function getLineFromPosition(ctx: DefaultContext, sourceFile: SourceFile, position: number): number {
+  const { ts } = ctx.dependencies;
+  return ts.getLineAndCharacterOfPosition(sourceFile, position).line + 1;
+}
+
+function getColumnFromPosition(ctx: DefaultContext, sourceFile: SourceFile, position: number): number {
+  const { ts } = ctx.dependencies;
+  return ts.getLineAndCharacterOfPosition(sourceFile, position).character + 1;
+}
+
+function convertDiagnosticMessageTextToString(ctx: DefaultContext, message: DiagnosticMessageChain | string): string {
+  const { os, ts } = ctx.dependencies;
+  return ts.flattenDiagnosticMessageText(message, os.lineEndings);
 }

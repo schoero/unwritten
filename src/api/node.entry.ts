@@ -1,5 +1,6 @@
 import ts from "typescript";
 
+import { convertDiagnostics, reportCompilerDiagnostics } from "unwritten:compiler/shared";
 import { compile } from "unwritten:compiler:node";
 import { createConfig } from "unwritten:config/config";
 import { interpret } from "unwritten:interpreter/ast/symbol";
@@ -14,9 +15,10 @@ import { createContext as createRenderContext } from "unwritten:renderer:utils/c
 import { createContext as createDefaultContext } from "unwritten:utils:context";
 
 import type { APIOptions } from "unwritten:type-definitions/options";
+import type { UnwrittenOutput } from "unwritten:type-definitions/unwritten";
 
 
-export async function unwritten(entryFilePaths: string[] | string, options?: APIOptions): Promise<string[]> {
+export async function unwritten(entryFilePaths: string[] | string, options?: APIOptions): Promise<UnwrittenOutput> {
 
   entryFilePaths = Array.isArray(entryFilePaths) ? entryFilePaths : [entryFilePaths];
 
@@ -38,6 +40,9 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
 
   // compile
   const { checker, program } = compile(defaultContext, entryFilePaths, options?.tsconfig);
+  const diagnostics = program.getSemanticDiagnostics();
+  const diagnosticMessages = convertDiagnostics(defaultContext, diagnostics);
+  reportCompilerDiagnostics(defaultContext, diagnostics);
 
   // config
   const config = await createConfig(defaultContext, options?.config, options?.output);
@@ -63,6 +68,10 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
     return filePath;
   });
 
-  return outputPaths;
+  return {
+    compilerDiagnostics: diagnosticMessages,
+    paths: outputPaths,
+    rendered: renderedFiles
+  };
 
 }

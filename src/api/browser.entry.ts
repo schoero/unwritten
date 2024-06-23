@@ -1,6 +1,6 @@
 import ts from "typescript";
 
-import { reportCompilerDiagnostics } from "unwritten:compiler/shared";
+import { convertDiagnostics, reportCompilerDiagnostics } from "unwritten:compiler/shared";
 import { createConfig } from "unwritten:config/config";
 import { interpret } from "unwritten:interpreter/ast/symbol";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context";
@@ -15,10 +15,10 @@ import { createContext as createDefaultContext } from "unwritten:utils:context";
 import type { Program } from "typescript";
 
 import type { BrowserAPIOptions } from "unwritten:type-definitions/options";
-import type { RenderOutput } from "unwritten:type-definitions/renderer";
+import type { UnwrittenOutput } from "unwritten:type-definitions/unwritten";
 
 
-export async function unwritten(program: Program, options?: BrowserAPIOptions): Promise<RenderOutput> {
+export async function unwritten(program: Program, options?: BrowserAPIOptions): Promise<UnwrittenOutput> {
 
   // logger
   const { logger } = options?.silent ? { logger: undefined } : await import("unwritten:platform/logger/browser.js");
@@ -38,6 +38,7 @@ export async function unwritten(program: Program, options?: BrowserAPIOptions): 
   // compile
   const checker = program.getTypeChecker();
   const diagnostics = program.getSemanticDiagnostics();
+  const diagnosticMessages = convertDiagnostics(defaultContext, diagnostics);
   reportCompilerDiagnostics(defaultContext, diagnostics);
 
   // interpret
@@ -51,6 +52,9 @@ export async function unwritten(program: Program, options?: BrowserAPIOptions): 
   const renderContext = createRenderContext(defaultContext, renderer, config);
   const renderedSymbols = renderer.render(renderContext, interpretedFiles);
 
-  return renderedSymbols;
+  return {
+    compilerDiagnostics: diagnosticMessages,
+    rendered: renderedSymbols
+  };
 
 }

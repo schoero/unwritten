@@ -27,9 +27,6 @@ export function compile(ctx: DefaultNodeContext, entryFilePaths: string[], tsCon
   const program = ts.createProgram(absoluteEntryFilePaths, compilerOptions, compilerHost);
   const checker = program.getTypeChecker();
 
-  // Report any compiler messages
-  void reportCompilerDiagnostics(ctx, program.getSemanticDiagnostics());
-
   return { checker, program };
 
 }
