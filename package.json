@@ -1,5 +1,5 @@
 {
-  "version": "0.2.10",
+  "version": "0.2.11",
   "type": "module",
   "name": "unwritten",
   "description": "unwritten is a cli tool that auto generates documentation from your JavaScript or TypeScript project by utilizing TSDoc or JSDoc comments.",
@@ -15,7 +15,7 @@
   },
   "sideEffects": false,
   "exports": {
-    ".": "./lib/browser/api/node.entry.js",
+    ".": "./lib/node/api/node.entry.js",
     "./browser": "./lib/browser/api/browser.entry.js",
     "./node": "./lib/node/api/node.entry.js"
   },
