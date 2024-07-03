@@ -38,14 +38,15 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
     ts
   });
 
+  // setup
+  const config = await createConfig(defaultContext, options?.config, options?.output);
+  const renderer = await getRenderer(defaultContext, options?.renderer);
+
   // compile
   const { checker, program } = compile(defaultContext, entryFilePaths, options?.tsconfig);
   const diagnostics = program.getSemanticDiagnostics();
   const diagnosticMessages = convertDiagnostics(defaultContext, diagnostics);
   reportCompilerDiagnostics(defaultContext, diagnostics);
-
-  // config
-  const config = await createConfig(defaultContext, options?.config, options?.output);
 
   // interpret
   const interpreterContext = createInterpreterContext(defaultContext, checker, config);
@@ -53,7 +54,6 @@ export async function unwritten(entryFilePaths: string[] | string, options?: API
   const interpretedFiles = interpret(interpreterContext, entryFileSymbols);
 
   // render
-  const renderer = await getRenderer(defaultContext, options?.renderer);
   const renderContext = createRenderContext(defaultContext, renderer, config);
   const renderedFiles = renderer.render(renderContext, interpretedFiles);
 
