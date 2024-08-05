@@ -85,6 +85,10 @@ export function withCachedType<T extends Type>(ctx: InterpreterContext, type: TS
 }
 
 export function withLockedSymbol<T extends Entity >(ctx: InterpreterContext, symbol: Symbol, interpretSymbol: (ctx: InterpreterContext, symbol: Symbol) => T): T {
+  if(isSymbolLocked(ctx, symbol)){
+    return interpretSymbol(ctx, symbol);
+  }
+
   locker.lockSymbol(ctx, symbol);
   const returnType = interpretSymbol(ctx, symbol);
   locker.unlockSymbol(ctx, symbol);
@@ -92,6 +96,10 @@ export function withLockedSymbol<T extends Entity >(ctx: InterpreterContext, sym
 }
 
 export function withLockedType<T extends Type>(ctx: InterpreterContext, type: TSType, interpretType: (ctx: InterpreterContext, type: TSType) => T): T {
+  if(isTypeLocked(ctx, type)){
+    return interpretType(ctx, type);
+  }
+
   locker.lockType(ctx, type);
   const returnType = interpretType(ctx, type);
   locker.unlockType(ctx, type);
