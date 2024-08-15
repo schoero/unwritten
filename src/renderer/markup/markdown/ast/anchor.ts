@@ -18,8 +18,3 @@ export function renderAnchorNode(ctx: MarkdownRenderContext, anchorNode: AnchorN
   return renderLinkNode(ctx, createLinkNode(anchorNode.displayName, anchorLink));
 
 }
-
-
-// 9007199254711806     Method: SVGSVGInstance.attr(attributeName)
-
-// 23719 SVGInstance
