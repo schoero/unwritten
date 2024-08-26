@@ -24,15 +24,15 @@ export interface MarkupRenderConfig {
   /** Defines whether the renderer should render an additional optional tag for default values. */
   renderDefaultValuesAsOptional?: boolean;
 
-  /** Defines whether the renderer should render prefixes for entities. */
-  renderEntityPrefixes?: boolean | "documentation" | "tableOfContents";
-
   /**
-   * Defines the order in which entities should be rendered.
+   * Defines whether the renderer should render prefixes for entities.
    *
    * @example
    * Class: MyClass instead of just MyClass
    */
+  renderEntityPrefixes?: boolean | "documentation" | "tableOfContents";
+
+  /** Defines the order in which entities should be rendered. */
   renderOrder?: ExportableEntityKinds[];
 
   /**
