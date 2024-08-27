@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index";
+import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 import { convertJSDocLink } from "unwritten:renderer/markup/ast-converter/jsdoc/index";
 import { isAnchorNode, isConditionalNode, isLinkNode } from "unwritten:renderer/markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";

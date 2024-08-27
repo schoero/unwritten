@@ -1,4 +1,3 @@
-import { isSymbolLocked, isTypeLocked } from "unwritten:interpreter/utils/ts";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name";
 import {
   createAnyType,
@@ -85,10 +84,11 @@ import {
   isUnknownType,
   isVoidType
 } from "unwritten:interpreter:typeguards/types";
+import { isSymbolLocked, isTypeLocked } from "unwritten:interpreter/utils/ts";
 import { isTypeReferenceType } from "unwritten:typeguards/types";
 import { isSymbolExcluded } from "unwritten:utils/exclude";
 
-import type { Declaration, ObjectType as TSObjectType, Symbol, Type as TSType, TypeNode } from "typescript";
+import type { Declaration, Symbol, ObjectType as TSObjectType, Type as TSType, TypeNode } from "typescript";
 
 import type {
   DeclaredType,

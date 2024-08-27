@@ -1,14 +1,12 @@
-/* eslint-disable eslint-plugin-typescript/array-type */
-
 import { assert, describe, expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { TypeKind } from "unwritten:interpreter/enums/type";
 import {
   createInterfaceEntity,
   createTypeAliasEntity,
   createVariableEntity
 } from "unwritten:interpreter:ast/entities/index";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { ts } from "unwritten:utils/template";

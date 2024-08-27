@@ -2,12 +2,12 @@ import { expect, it } from "vitest";
 
 import { createInterfaceEntity } from "unwritten:interpreter/ast/entities/index";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { isAnchorNode, isSectionNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
 import { renderNode } from "unwritten:renderer/index";
 import {
   convertEventPropertyEntityForDocumentation,
   convertEventPropertyEntityForTableOfContents
 } from "unwritten:renderer/markup/ast-converter/entities/event";
-import { isAnchorNode, isSectionNode, isTitleNode } from "unwritten:renderer:markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";

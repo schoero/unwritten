@@ -2,7 +2,6 @@ import { expect, it } from "vitest";
 
 import { createInterfaceEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
-import { renderNode } from "unwritten:renderer/index";
 import {
   convertInterfaceEntityForDocumentation,
   convertInterfaceEntityForTableOfContents
@@ -15,6 +14,7 @@ import {
   isSectionNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer";
+import { renderNode } from "unwritten:renderer/index";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";

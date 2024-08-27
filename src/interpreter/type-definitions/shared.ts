@@ -7,16 +7,7 @@ export type Rest = {
 };
 
 export type Modifiers =
-  | NativeModifiers
-  | "abstract"
-  | "accessor"
-  | "async"
-  | "override"
-  | "private"
-  | "protected"
-  | "public"
-  | "readonly"
-  | "static";
+  "abstract" | "accessor" | "async" | "override" | "private" | "protected" | "public" | "readonly" | "static" | NativeModifiers;
 
 export type NativeModifiers =
   | "nativePrivate";

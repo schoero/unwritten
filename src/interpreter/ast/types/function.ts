@@ -1,8 +1,8 @@
+import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index";
+import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { EntityKind } from "unwritten:interpreter/enums/entity.js";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.js";
-import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index";
-import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { ObjectType } from "typescript";
 

@@ -1,13 +1,3 @@
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
-import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
-import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
-import {
-  implicitSignatureFilter,
-  internalMemberFilter,
-  privateMemberFilter
-} from "unwritten:renderer/markup/utils/filter";
-import { isRenderObjectMemberTitlesEnabled, renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config";
 import {
   convertEventPropertyEntityForDocumentation,
   convertEventPropertyEntityForTableOfContents,
@@ -35,14 +25,24 @@ import {
   extendClassEntityConstructorsWithHeritage,
   extendClassEntityEntitiesWithHeritage
 } from "unwritten:renderer:utils/heritage";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
+import {
+  implicitSignatureFilter,
+  internalMemberFilter,
+  privateMemberFilter
+} from "unwritten:renderer/markup/utils/filter";
+import { isRenderObjectMemberTitlesEnabled, renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
 import type { ClassEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedClassEntityForDocumentation,
   ConvertedClassEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertClassEntityToAnchor(ctx: MarkupRenderContext, classEntity: ClassEntity, displayName?: string): AnchorNode {

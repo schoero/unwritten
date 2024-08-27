@@ -1,9 +1,9 @@
-import { implicitSignatureFilter } from "unwritten:renderer/markup/utils/filter";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents,
   convertSignatureEntityForType
 } from "unwritten:renderer:markup/ast-converter/entities/index";
+import { implicitSignatureFilter } from "unwritten:renderer/markup/utils/filter";
 
 import type { FunctionLikeEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";

@@ -1,9 +1,9 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
-import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type";
-import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
+import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { assert } from "unwritten:utils/general";
 
 import type { MappedType } from "unwritten:interpreter:type-definitions/types";

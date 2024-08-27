@@ -1,7 +1,7 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import { getPositionBySymbol } from "unwritten:interpreter:ast/shared/position";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 import type { Symbol } from "typescript";
 

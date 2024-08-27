@@ -1,9 +1,9 @@
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
 import { defaultJSONRenderConfig } from "unwritten:renderer:json:config/default";
 import { defaultHTMLRenderConfig, defaultMarkdownRenderConfig } from "unwritten:renderer:markup/config/default";
-import { isNodeContext } from "unwritten:utils/context";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
 import { findFile } from "unwritten:utils:finder";
 import { override } from "unwritten:utils:override";
+import { isNodeContext } from "unwritten:utils/context";
 
 import { defaultExternalTypes, defaultInterpreterConfig, defaultOutputPath } from "./default";
 
@@ -172,9 +172,9 @@ export function getDefaultConfig(): CompleteNodeConfig {
     interpreterConfig: defaultInterpreterConfig,
     outputDir: defaultOutputPath,
     renderConfig: {
-      [BuiltInRenderers.Markdown]: defaultMarkdownRenderConfig,
       [BuiltInRenderers.HTML]: defaultHTMLRenderConfig,
-      [BuiltInRenderers.JSON]: defaultJSONRenderConfig
+      [BuiltInRenderers.JSON]: defaultJSONRenderConfig,
+      [BuiltInRenderers.Markdown]: defaultMarkdownRenderConfig
     }
   };
 

@@ -1,6 +1,6 @@
-import { TypeKind } from "unwritten:interpreter/enums/type";
 import { createObjectLikeType } from "unwritten:interpreter:ast/types/index";
 import { withCachedType, withLockedType } from "unwritten:interpreter:utils/ts";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 
 import { getTypeByType } from "../type";
 

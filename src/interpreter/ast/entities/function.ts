@@ -1,5 +1,5 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { createFunctionLikeEntity } from "unwritten:interpreter:ast/entities/index";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 import type { Symbol } from "typescript";
 

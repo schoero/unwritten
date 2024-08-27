@@ -1,6 +1,3 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
-import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import {
   createPropertyEntity,
   createSignatureEntity,
@@ -19,6 +16,9 @@ import {
   isPropertySignatureDeclaration,
   isSetterDeclaration
 } from "unwritten:interpreter:typeguards/declarations";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { isExpressionType } from "unwritten:typeguards/types";
 import { assert } from "unwritten:utils:general";
 

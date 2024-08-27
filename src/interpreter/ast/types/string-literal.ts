@@ -1,6 +1,6 @@
+import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withCachedType } from "unwritten:interpreter/utils/ts";
-import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { StringLiteralType as TSStringLiteralType } from "typescript";
 

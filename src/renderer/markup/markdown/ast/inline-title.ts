@@ -1,10 +1,10 @@
+import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer:markdown:utils/empty-line";
 import { renderMultilineArray } from "unwritten:renderer/markup/markdown/ast/multiline";
 import { renderNode } from "unwritten:renderer/markup/markdown/index";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer:markdown:utils/empty-line";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { InlineTitleNode } from "unwritten:renderer:markup/types-definitions/nodes";

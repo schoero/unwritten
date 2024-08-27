@@ -1,11 +1,11 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { TypeKind } from "unwritten:interpreter/enums/type";
-import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes";
-import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { getNameByDeclaration, getNameByTypeNode } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position";
 import { isNamedTupleMember, isTupleTypeReferenceType } from "unwritten:interpreter:typeguards/types";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { isOptionalTypeNode, isRestTypeNode } from "unwritten:interpreter/typeguards/type-nodes";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { assert } from "unwritten:utils:general";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
@@ -27,13 +27,12 @@ export const createTupleTypeByTypeReference = (ctx: InterpreterContext, typeRefe
 
     const type = getTypeByType(ctx, typeArgument);
 
-    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const symbolId = typeArgument.symbol && getSymbolId(ctx, typeArgument.symbol);
     const typeId = getTypeId(ctx, typeArgument);
     const elementFlag = typeReference.target.elementFlags[index];
-    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
+
     const optional = (elementFlag && elementFlag & ts.ElementFlags.Optional) !== 0;
-    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
+
     const rest = (elementFlag && elementFlag & ts.ElementFlags.Rest) !== 0;
     const labelDeclaration = typeReference.target.labeledElementDeclarations?.[index];
     const name = labelDeclaration && getNameByDeclaration(ctx, labelDeclaration);

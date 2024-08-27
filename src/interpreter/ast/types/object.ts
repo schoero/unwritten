@@ -1,5 +1,3 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { TypeKind } from "unwritten:interpreter/enums/type";
 import {
   createGetterEntity,
   createMethodEntity,
@@ -18,6 +16,8 @@ import {
 } from "unwritten:interpreter:typeguards/symbols";
 import { isThisType } from "unwritten:interpreter:typeguards/types";
 import { withCachedType, withLockedType } from "unwritten:interpreter:utils/ts";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 import { isSymbolExcluded } from "unwritten:utils/exclude";
 
 import type { ObjectType as TSObjectType } from "typescript";

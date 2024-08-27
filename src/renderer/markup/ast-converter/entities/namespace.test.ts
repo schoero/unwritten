@@ -2,7 +2,6 @@ import { expect, it } from "vitest";
 
 import { createNamespaceEntity } from "unwritten:interpreter/ast/entities/index";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { renderNode } from "unwritten:renderer/index";
 import {
   convertNamespaceEntityForDocumentation,
   convertNamespaceEntityForTableOfContents
@@ -13,6 +12,7 @@ import {
   isSectionNode,
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer";
+import { renderNode } from "unwritten:renderer/index";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";

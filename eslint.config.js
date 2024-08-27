@@ -1,10 +1,8 @@
+import sharedRules from "@schoero/configs/eslint";
+import eslintPluginTypeScript from "@typescript-eslint/eslint-plugin";
 import eslintPluginJsonc from "eslint-plugin-jsonc";
 import eslintPluginSortExports from "eslint-plugin-sort-exports";
 import eslintPluginVitest from "eslint-plugin-vitest";
-
-import eslintPluginTypeScript from "@typescript-eslint/eslint-plugin";
-
-import sharedRules from "@schoero/configs/eslint";
 
 
 const indexImports = [

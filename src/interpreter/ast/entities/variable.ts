@@ -1,11 +1,11 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
-import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withCachedEntity } from "unwritten:interpreter/utils/ts";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 import { isVariableDeclaration } from "unwritten:interpreter:typeguards/declarations";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { withCachedEntity } from "unwritten:interpreter/utils/ts";
 import { assert } from "unwritten:utils:general";
 
 import { getTypeByDeclaration } from "../type";

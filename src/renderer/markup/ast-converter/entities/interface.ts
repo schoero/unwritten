@@ -1,15 +1,3 @@
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
-import {
-  implicitSignatureFilter,
-  internalMemberFilter,
-  internalSignatureFilter,
-  privateMemberFilter,
-  privateSignatureFilter
-} from "unwritten:renderer/markup/utils/filter";
-import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
-import { getRenderConfig } from "unwritten:renderer/utils/config";
 import {
   convertEventPropertyEntityForType,
   convertPropertyEntityForType,
@@ -32,14 +20,26 @@ import {
   extendInterfaceEntityPropertiesWithHeritage,
   extendInterfaceEntitySignaturesWithHeritage
 } from "unwritten:renderer:utils/heritage";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import {
+  implicitSignatureFilter,
+  internalMemberFilter,
+  internalSignatureFilter,
+  privateMemberFilter,
+  privateSignatureFilter
+} from "unwritten:renderer/markup/utils/filter";
+import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
 import type { InterfaceEntity, MergedInterfaceEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedInterfaceEntityForDocumentation,
   ConvertedInterfaceEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertInterfaceEntityToAnchor(ctx: MarkupRenderContext, interfaceEntity: InterfaceEntity | MergedInterfaceEntity, displayName?: string): AnchorNode {

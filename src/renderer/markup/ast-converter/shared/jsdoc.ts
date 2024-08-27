@@ -1,3 +1,5 @@
+import { RenderableJSDocKeyTags, RenderableJSDocValueTags } from "unwritten:renderer:markup/enums/jsdoc";
+import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import { renderNode } from "unwritten:renderer/index";
 import {
   convertJSDocGenericTag,
@@ -8,8 +10,6 @@ import {
   convertJSDocType
 } from "unwritten:renderer/markup/ast-converter/jsdoc/index";
 import { convertJSDocText } from "unwritten:renderer/markup/ast-converter/jsdoc/text";
-import { RenderableJSDocKeyTags, RenderableJSDocValueTags } from "unwritten:renderer:markup/enums/jsdoc";
-import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import {
   isJSDocGenericTag,
   isJSDocLink,

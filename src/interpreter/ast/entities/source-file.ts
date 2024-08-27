@@ -1,7 +1,7 @@
+import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
-import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { isExportableEntity } from "unwritten:typeguards/entities";
 import { assert } from "unwritten:utils/general";
 

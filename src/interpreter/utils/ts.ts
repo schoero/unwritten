@@ -1,3 +1,4 @@
+import * as locker from "unwritten:interpreter:utils/locker";
 import { getSymbolId, getTypeId } from "unwritten:interpreter/ast/shared/id";
 import {
   isAliasedSymbol,
@@ -5,7 +6,6 @@ import {
   isImportClauseSymbol,
   isImportSpecifierSymbol
 } from "unwritten:interpreter/typeguards/symbols";
-import * as locker from "unwritten:interpreter:utils/locker";
 import { assert } from "unwritten:utils:general";
 
 import type { Program, Symbol, Type as TSType } from "typescript";

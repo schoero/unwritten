@@ -1,11 +1,11 @@
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
+import { createConditionalNode } from "unwritten:renderer:markup/utils/nodes";
+import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { renderNode } from "unwritten:renderer/index";
 import { convertEntityToAnchor } from "unwritten:renderer/markup/ast-converter/index";
 import { getAnchorLink } from "unwritten:renderer/markup/registry/registry";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
-import { createConditionalNode } from "unwritten:renderer:markup/utils/nodes";
-import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { isFunctionLikeEntity, isLinkableEntity, isSignatureEntity } from "unwritten:typeguards/entities";
 
 import type { TypeReferenceType } from "unwritten:interpreter:type-definitions/types";

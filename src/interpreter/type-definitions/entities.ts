@@ -1,6 +1,6 @@
-import type { EntityKind } from "unwritten:interpreter/enums/entity";
 import type { Modifiers, Position } from "unwritten:interpreter:type-definitions/shared";
 import type { ExpressionType, Type } from "unwritten:interpreter:type-definitions/types";
+import type { EntityKind } from "unwritten:interpreter/enums/entity";
 import type { PartialByKey } from "unwritten:type-definitions/utils";
 
 import type { Description, ID, JSDocProperties, Name } from "./jsdoc";

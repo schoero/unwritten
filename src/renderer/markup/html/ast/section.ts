@@ -1,8 +1,8 @@
+import { renderNode } from "unwritten:renderer:html:index";
 import { withIndentation } from "unwritten:renderer/markup/utils/context";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderNode } from "unwritten:renderer:html:index";
 
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { SectionNode } from "unwritten:renderer:markup/types-definitions/nodes";

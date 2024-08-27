@@ -2,26 +2,26 @@ import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 
 const ENTITY_SECTIONS = {
-  [EntityKind.FunctionSignature]: "signature",
-  [EntityKind.MethodSignature]: "signature",
-  [EntityKind.SetterSignature]: "signature",
-  [EntityKind.GetterSignature]: "signature",
   [EntityKind.CallSignature]: "signature",
-  [EntityKind.ConstructSignature]: "signature",
-  [EntityKind.Namespace]: "namespace",
-  [EntityKind.Module]: "module",
   [EntityKind.Class]: "class",
-  [EntityKind.Property]: "property",
+  [EntityKind.Constructor]: "constructor",
+  [EntityKind.ConstructSignature]: "signature",
   [EntityKind.Enum]: "enum",
   [EntityKind.ExportAssignment]: "export-assignment",
-  [EntityKind.Constructor]: "constructor",
-  [EntityKind.Variable]: "variable",
-  [EntityKind.TypeAlias]: "type",
-  [EntityKind.Interface]: "interface",
   [EntityKind.Function]: "function",
+  [EntityKind.FunctionSignature]: "signature",
   [EntityKind.Getter]: "getter",
+  [EntityKind.GetterSignature]: "signature",
+  [EntityKind.Interface]: "interface",
+  [EntityKind.Method]: "method",
+  [EntityKind.MethodSignature]: "signature",
+  [EntityKind.Module]: "module",
+  [EntityKind.Namespace]: "namespace",
+  [EntityKind.Property]: "property",
   [EntityKind.Setter]: "setter",
-  [EntityKind.Method]: "method"
+  [EntityKind.SetterSignature]: "signature",
+  [EntityKind.TypeAlias]: "type",
+  [EntityKind.Variable]: "variable"
 } as const;
 
 

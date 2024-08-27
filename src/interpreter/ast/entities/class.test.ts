@@ -1,8 +1,8 @@
 import { expect, it } from "vitest";
 
-import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { createClassEntity } from "unwritten:interpreter:ast/entities/index";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { isJSDocText } from "unwritten:typeguards/jsdoc";

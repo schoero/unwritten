@@ -1,11 +1,4 @@
 import {
-  convertSeeTagsForDocumentation,
-  convertSeeTagsForType
-} from "unwritten:renderer/markup/ast-converter/shared/see";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
-import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
-import {
   convertDescriptionForDocumentation,
   convertDescriptionForType
 } from "unwritten:renderer:markup/ast-converter/shared/description";
@@ -25,15 +18,22 @@ import {
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes";
 import { renderEntityPrefix, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
+import {
+  convertSeeTagsForDocumentation,
+  convertSeeTagsForType
+} from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
 
 import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedEventPropertyEntityForDocumentation,
   ConvertedEventPropertyEntityForTableOfContents,
   ConvertedEventPropertyEntityForType
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertEventPropertyEntityToAnchor(ctx: MarkupRenderContext, propertyEntity: PropertyEntity, displayName?: string): AnchorNode {

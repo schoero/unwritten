@@ -1,7 +1,7 @@
-import type { ASTNodeKinds } from "../enums/nodes";
-
-import type { AnchorLink, AnchorTarget } from "unwritten:renderer/markup/registry/registry";
 import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections";
+import type { AnchorLink, AnchorTarget } from "unwritten:renderer/markup/registry/registry";
+
+import type { ASTNodeKinds } from "../enums/nodes";
 
 
 export type Empty = false | null | undefined;

@@ -1,10 +1,10 @@
+import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.js";
-import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByTypeNode } from "../type";
 
-import type { ConditionalType as TSConditionalType, ConditionalTypeNode } from "typescript";
+import type { ConditionalTypeNode, ConditionalType as TSConditionalType } from "typescript";
 
 import type { ConditionalType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";

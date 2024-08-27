@@ -1,5 +1,5 @@
-import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";

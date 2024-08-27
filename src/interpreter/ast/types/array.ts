@@ -1,8 +1,7 @@
-/* eslint-disable eslint-plugin-typescript/array-type */
-import { TypeKind } from "unwritten:interpreter/enums/type";
-import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.js";
 import { getIdByTypeNode, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { getPositionByNode, getPositionByType } from "unwritten:interpreter:ast/shared/position";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.js";
 
 import { getTypeByType, getTypeByTypeNode } from "../type";
 

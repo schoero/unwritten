@@ -1,14 +1,4 @@
 import {
-  createCircularEntity,
-  createGetterEntity,
-  createMethodEntity,
-  createPropertyEntity,
-  createSetterEntity,
-  createUnresolvedEntity
-} from "unwritten:interpreter/ast/entities/index";
-import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position";
-import { isSymbolLocked, isSymbolUnresolved, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
-import {
   createClassEntity,
   createEnumEntity,
   createExportAssignmentEntity,
@@ -41,8 +31,18 @@ import {
   isTypeParameterSymbol,
   isVariableSymbol
 } from "unwritten:interpreter:typeguards/symbols";
-import { isSymbolExcluded } from "unwritten:utils/exclude";
+import {
+  createCircularEntity,
+  createGetterEntity,
+  createMethodEntity,
+  createPropertyEntity,
+  createSetterEntity,
+  createUnresolvedEntity
+} from "unwritten:interpreter/ast/entities/index";
+import { getPositionBySymbol } from "unwritten:interpreter/ast/shared/position";
+import { isSymbolLocked, isSymbolUnresolved, resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
 import { assert } from "unwritten:utils:general";
+import { isSymbolExcluded } from "unwritten:utils/exclude";
 
 import type { Symbol } from "typescript";
 

@@ -1,8 +1,8 @@
+import { renderNode } from "unwritten:renderer:html:index";
 import { getAnchorId, hasAnchor, unregisterAnchor } from "unwritten:renderer/markup/registry/registry";
 import { withNesting } from "unwritten:renderer/markup/utils/context";
 import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderNode } from "unwritten:renderer:html:index";
 
 import type { HTMLRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { TitleNode } from "unwritten:renderer:markup/types-definitions/nodes";

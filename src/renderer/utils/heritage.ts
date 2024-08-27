@@ -139,7 +139,7 @@ export function extendInterfaceEntitySignaturesWithHeritage<Key extends Signatur
     heritage.instanceType[map[key]].forEach(
       entity => {
         if(isSignatureEntity(entity)){
-          // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition -- Bug in eslint rule
+
           result[entity.name ?? key] ??= [];
           result[entity.name ?? key].push(entity);
         } else {
@@ -153,7 +153,6 @@ export function extendInterfaceEntitySignaturesWithHeritage<Key extends Signatur
   const groupedSignatures = interfaceEntity[key].reduceRight<{
     [key: string]: InterfaceEntity[Key];
   }>((result, signatureEntity) => {
-    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition -- Bug in eslint rule
     result[signatureEntity.name ?? key] ??= [];
     result[signatureEntity.name ?? key].push(signatureEntity);
     return result;

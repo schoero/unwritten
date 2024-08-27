@@ -1,8 +1,8 @@
-import { TypeKind } from "unwritten:interpreter/enums/type";
-import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name";
 import { getPositionBySymbol } from "unwritten:interpreter:ast/shared/position";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 
 import type { Type } from "typescript";
 

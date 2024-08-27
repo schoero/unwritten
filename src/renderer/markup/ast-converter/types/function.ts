@@ -1,9 +1,9 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
-import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { convertSignatureEntityForType } from "unwritten:renderer:markup/ast-converter/entities/index";
 import { createLinkNode, createListNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
 import type { FunctionType } from "unwritten:interpreter:type-definitions/types";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";

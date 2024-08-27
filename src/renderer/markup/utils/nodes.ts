@@ -3,6 +3,10 @@ import { isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 
 import { ASTNodeKinds } from "../enums/nodes";
 
+import type { ID, Name } from "unwritten:interpreter:type-definitions/jsdoc";
+import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections";
+import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
+
 import type {
   AnchorNode,
   ASTNode,
@@ -22,10 +26,6 @@ import type {
   StrikethroughNode,
   TitleNode
 } from "../types-definitions/nodes";
-
-import type { ID, Name } from "unwritten:interpreter:type-definitions/jsdoc";
-import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
-import type { SectionType } from "unwritten:renderer:markup/types-definitions/sections";
 
 
 export function createAnchorNode(name: Name, id: ID, displayName = name): AnchorNode {

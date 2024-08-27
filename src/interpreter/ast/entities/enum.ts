@@ -1,15 +1,15 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
-import { EntityKind } from "unwritten:interpreter/enums/entity";
-import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 import { isEnumDeclaration } from "unwritten:interpreter:typeguards/declarations";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
+import { EntityKind } from "unwritten:interpreter/enums/entity";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { assert } from "unwritten:utils:general";
 
 import { getTypeByDeclaration } from "../type";
 
-import type { EnumDeclaration, EnumMember as TSEnumMember, Symbol } from "typescript";
+import type { EnumDeclaration, Symbol, EnumMember as TSEnumMember } from "typescript";
 
 import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";

@@ -1,7 +1,6 @@
 import { assert, expect, it } from "vitest";
 
 import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index";
-import { implicitSignatureFilter } from "unwritten:renderer/markup/utils/filter";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
@@ -16,6 +15,7 @@ import {
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer";
 import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
+import { implicitSignatureFilter } from "unwritten:renderer/markup/utils/filter";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";

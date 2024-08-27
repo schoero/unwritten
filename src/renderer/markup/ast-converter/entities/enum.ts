@@ -1,8 +1,3 @@
-import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
-import { renderEntityPrefix, spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
@@ -16,14 +11,19 @@ import {
   createSectionNode,
   createTitleNode
 } from "unwritten:renderer:markup/utils/nodes";
+import { convertJSDocNodes } from "unwritten:renderer/markup/ast-converter/shared/jsdoc";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import { renderEntityPrefix, spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 
 import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedEnumEntityForDocumentation,
   ConvertedEnumEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertEnumEntityToAnchor(ctx: MarkupRenderContext, enumEntity: EnumEntity | MergedEnumEntity, displayName?: string): AnchorNode {

@@ -1,8 +1,3 @@
-import { convertDescriptionForType } from "unwritten:renderer/markup/ast-converter/shared/description";
-import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer";
-import { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index";
-import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
-import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 import {
   createAnchorNode,
@@ -15,15 +10,20 @@ import {
 } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate, spaceBetween } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
+import { convertDescriptionForType } from "unwritten:renderer/markup/ast-converter/shared/description";
+import { convertInitializerForType } from "unwritten:renderer/markup/ast-converter/shared/initializer";
+import { isMarkdownRenderContext } from "unwritten:renderer/markup/markdown/index";
+import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
 import type { ParameterEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedParameterEntitiesForDocumentation,
   ConvertedParameterEntitiesForSignature,
   ConvertedParameterEntitiesForType
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertParameterEntityToAnchor(ctx: MarkupRenderContext, parameterEntity: ParameterEntity, displayName?: string): AnchorNode {

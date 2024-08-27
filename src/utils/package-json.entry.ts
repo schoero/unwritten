@@ -1,6 +1,5 @@
-import { assert } from "unwritten:utils:general";
-
 import packageJson from "unwritten:root:package.json";
+import { assert } from "unwritten:utils:general";
 
 
 const author: string = packageJson.author;

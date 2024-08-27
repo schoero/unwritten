@@ -9,9 +9,9 @@ import os from "unwritten:platform/os/node";
 import path from "unwritten:platform/path/browser";
 import process from "unwritten:platform/process/browser";
 import * as fs from "unwritten:tests:utils/virtual-fs";
+import { assert } from "unwritten:utils:general";
 import { createContext as createDefaultContext } from "unwritten:utils/context";
 import { override } from "unwritten:utils/override";
-import { assert } from "unwritten:utils:general";
 
 import type { Config } from "unwritten:type-definitions/config";
 

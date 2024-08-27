@@ -1,5 +1,3 @@
-import { EntityKind } from "unwritten:interpreter/enums/entity.js";
-import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { createSignatureEntity } from "unwritten:interpreter:ast/entities/index";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
@@ -10,6 +8,8 @@ import {
   isMethodSignatureDeclaration
 } from "unwritten:interpreter:typeguards/declarations";
 import { functionOverloadDeclarationFilter } from "unwritten:interpreter:utils/filter";
+import { EntityKind } from "unwritten:interpreter/enums/entity.js";
+import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
 import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";
@@ -51,9 +51,9 @@ export const createFunctionLikeEntity = <Kind extends FunctionLikeEntityKinds>(c
 }));
 
 const signatureKindMap = {
+  [EntityKind.Constructor]: EntityKind.ConstructSignature,
   [EntityKind.Function]: EntityKind.FunctionSignature,
-  [EntityKind.Method]: EntityKind.MethodSignature,
-  [EntityKind.Setter]: EntityKind.SetterSignature,
   [EntityKind.Getter]: EntityKind.GetterSignature,
-  [EntityKind.Constructor]: EntityKind.ConstructSignature
+  [EntityKind.Method]: EntityKind.MethodSignature,
+  [EntityKind.Setter]: EntityKind.SetterSignature
 } as const;

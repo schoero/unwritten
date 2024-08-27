@@ -5,7 +5,7 @@ import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
 import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 
-import type { EntityName, JSDocLink as TSJSDocLink, JSDocMemberName } from "typescript";
+import type { EntityName, JSDocMemberName, JSDocLink as TSJSDocLink } from "typescript";
 
 import type { JSDocLink } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { TypeReferenceType } from "unwritten:interpreter:type-definitions/types";

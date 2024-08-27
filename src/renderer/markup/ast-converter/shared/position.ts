@@ -1,4 +1,3 @@
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 import {
   createLinkNode,
   createPaddedNode,
@@ -6,6 +5,7 @@ import {
   createSmallNode
 } from "unwritten:renderer:markup/utils/nodes";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { Position } from "unwritten:interpreter:type-definitions/shared";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";

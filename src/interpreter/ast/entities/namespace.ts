@@ -1,11 +1,11 @@
+import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index";
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { getDeclarationId, getSymbolId } from "unwritten:interpreter/ast/shared/id";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { isNamespaceExport } from "unwritten:interpreter/typeguards/declarations";
 import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
-import { createSourceFileEntity } from "unwritten:interpreter:ast/entities/index";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";

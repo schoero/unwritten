@@ -1,10 +1,10 @@
 import { assert } from "unwritten:utils/general";
 
-import type { MarkupRenderContext } from "../types-definitions/markup";
-
 import type { SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { ID, Name } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { FilePath } from "unwritten:type-definitions/platform";
+
+import type { MarkupRenderContext } from "../types-definitions/markup";
 
 
 export const MAX_ANONYMOUS_ID = -10;
@@ -159,7 +159,6 @@ export function isAnchor(input: any): input is AnchorTarget {
 
 export function createCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEntity: SourceFileEntity, destination: FilePath): void {
 
-  // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
   const sourceFile: SourceFile = {
@@ -181,7 +180,6 @@ export function createCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEnti
 
 export function setCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEntity: SourceFileEntity): void {
 
-  // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
   const index = ctx.links.findIndex(sourceFile => sourceFile.id === sourceFileEntity.symbolId);
 
   assert(index !== -1, `Source file ${sourceFileEntity.path} is not registered`);
@@ -190,7 +188,7 @@ export function setCurrentSourceFile(ctx: MarkupRenderContext, sourceFileEntity:
 
 }
 
-function findRegisteredAnchorData(ctx: MarkupRenderContext, id: ID | ID[]): { anchorId: AnchorID; index: number; sourceFile: SourceFile; } | undefined {
+function findRegisteredAnchorData(ctx: MarkupRenderContext, id: ID | ID[]): undefined | { anchorId: AnchorID; index: number; sourceFile: SourceFile; } {
 
   const ids = Array.isArray(id) ? id : [id];
 

@@ -15,7 +15,6 @@ export function getAvailableFileName(ctx: RenderContext, usedFilePaths: FilePath
   const fileExtension = getFileExtension(filePath);
   const fileNameWithoutExtension = getFileName(filePath).replace(fileExtension, "");
 
-  // eslint-disable-next-line no-control-regex
   const invalidCharsRegex = /[\s\x00-\x1F"*/:<>?\\|]/g;
 
   const validFileNameWithoutExtension = fileNameWithoutExtension.replace(invalidCharsRegex, "-")

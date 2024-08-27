@@ -1,7 +1,7 @@
+import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id";
 import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
-import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id";
 
 import { getResolvedTypeByTypeNode, getTypeByResolvedAndDeclaredType, getTypeByTypeNode } from "../type";
 

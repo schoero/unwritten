@@ -1,11 +1,11 @@
+import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
+import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
+import { isTypeAliasDeclaration } from "unwritten:interpreter:typeguards/declarations";
 import { createTypeParameterEntityByDeclaration } from "unwritten:interpreter/ast/entities/index";
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { getPositionByDeclaration } from "unwritten:interpreter/ast/shared/position";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
-import { getDeclarationId, getSymbolId } from "unwritten:interpreter:ast/shared/id";
-import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
-import { isTypeAliasDeclaration } from "unwritten:interpreter:typeguards/declarations";
 import { assert } from "unwritten:utils:general";
 
 import { getTypeByTypeNode } from "../type";

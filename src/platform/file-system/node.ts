@@ -13,8 +13,8 @@ import type { FileSystem } from "unwritten:type-definitions/platform";
 const fileSystem: FileSystem = {
   existsSync: nodeExistsSync,
   mkdirSync: nodeMkdirSync,
-  readFileSync: (path: string) => nodeReadFileSync(path, "utf-8"),
   readdirSync: (path: string, options) => nodeReaddirSync(path, { encoding: "utf-8", ...options }),
+  readFileSync: (path: string) => nodeReadFileSync(path, "utf-8"),
   rmSync: nodeRmSync,
   writeFileSync: nodeWriteFileSync
 };
@@ -22,8 +22,8 @@ const fileSystem: FileSystem = {
 export const {
   existsSync,
   mkdirSync,
-  readFileSync,
   readdirSync,
+  readFileSync,
   rmSync,
   writeFileSync
 } = fileSystem;

@@ -1,12 +1,5 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import {
-  internalMemberFilter,
-  internalSignatureFilter,
-  privateMemberFilter,
-  privateSignatureFilter
-} from "unwritten:renderer/markup/utils/filter";
-import { getRenderConfig } from "unwritten:renderer/utils/config";
-import {
   convertEventPropertyEntityForType,
   convertFunctionLikeEntityForType,
   convertPropertyEntityForType,
@@ -15,6 +8,13 @@ import {
 import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
+import {
+  internalMemberFilter,
+  internalSignatureFilter,
+  privateMemberFilter,
+  privateSignatureFilter
+} from "unwritten:renderer/markup/utils/filter";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
 import type { ObjectLikeTypes } from "unwritten:interpreter:type-definitions/types";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";

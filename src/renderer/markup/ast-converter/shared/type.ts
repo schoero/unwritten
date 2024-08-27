@@ -1,4 +1,3 @@
-import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
 import {
   convertAnyTypeInline,
   convertArrayTypeInline,
@@ -50,6 +49,7 @@ import {
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import { isMultilineType, isMultilineUnionType } from "unwritten:renderer:markup/utils/types";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
 import {
   isAnyType,
   isArrayType,

@@ -3,12 +3,12 @@ import { getTranslator } from "unwritten:renderer/markup/utils/translations.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
 
 import type { ExportableEntity, ExportableEntityKinds } from "unwritten:interpreter:type-definitions/entities";
-import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.js";
 import type { Encapsulation } from "unwritten:renderer:markup/types-definitions/config";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup.js";
 
 
-export function encapsulate(node: ASTNode, encapsulation: Encapsulation | string[] | false | undefined) {
+export function encapsulate(node: ASTNode, encapsulation: false | Encapsulation | string[] | undefined) {
 
   if(encapsulation === undefined || encapsulation === false){
     return node;

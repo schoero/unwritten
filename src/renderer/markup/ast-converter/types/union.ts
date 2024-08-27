@@ -1,18 +1,18 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations";
 import { isMultilineUnionType } from "unwritten:renderer/markup/utils/types";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 
 import type { UnionType } from "unwritten:interpreter:type-definitions/types";
-import type { ASTNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedUnionTypeInline,
   ConvertedUnionTypeMultiline
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { ASTNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertUnionTypeInline(ctx: MarkupRenderContext, unionType: UnionType): ConvertedUnionTypeInline {

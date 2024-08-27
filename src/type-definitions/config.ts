@@ -1,9 +1,8 @@
-import type { BuiltInRenderers } from "../renderer/enums/renderer";
-
 import type { TypeKind } from "unwritten:interpreter/enums/type";
 import type { JSONRenderConfig } from "unwritten:renderer:json:type-definitions/config";
 import type { HTMLRenderConfig, MarkdownRenderConfig } from "unwritten:renderer:markup/types-definitions/config";
 
+import type { BuiltInRenderers } from "../renderer/enums/renderer";
 import type { Complete, PartialByKey } from "./utils";
 
 
@@ -38,9 +37,9 @@ export interface CompleteBrowserConfig extends Required<BrowserConfig> {
 export type CompleteConfig = CompleteBrowserConfig | CompleteNodeConfig;
 
 export interface CompleteRenderConfig {
-  [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
   [BuiltInRenderers.HTML]: Complete<HTMLRenderConfig>;
   [BuiltInRenderers.JSON]: Complete<JSONRenderConfig>;
+  [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
   [key: string]: {
     [key: string]: any;
   };
@@ -56,9 +55,9 @@ export interface ConfigForSchema extends NodeConfig {
   $schema?: string;
   interpreterConfig?: InterpreterConfig;
   renderConfig?: {
-    [BuiltInRenderers.Markdown]?: MarkdownRenderConfig;
     [BuiltInRenderers.HTML]?: HTMLRenderConfig;
     [BuiltInRenderers.JSON]?: JSONRenderConfig;
+    [BuiltInRenderers.Markdown]?: MarkdownRenderConfig;
   } & {
     [key: string]: {
       [key: string]: any;
@@ -69,10 +68,10 @@ export interface ConfigForSchema extends NodeConfig {
 export interface InterpreterConfig {
   /** An array or object of excluded directories. */
   exclude?: string[] | {
-    [key: string]: string[] | "*";
+    [key: string]: "*" | string[];
   };
 }
 
 export type ExternalTypes = {
-  [Key in TypeKind | (string & {}) ]?: string;
+  [Key in string & {} | TypeKind ]?: string;
 };

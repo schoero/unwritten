@@ -1,15 +1,15 @@
+import type { JSONRenderConfig } from "unwritten:renderer:json:type-definitions/config";
+import type { JSONRenderContext } from "unwritten:renderer:json:type-definitions/renderer";
+import type { RenderConfig } from "unwritten:type-definitions/config";
+import type { RenderContext } from "unwritten:type-definitions/context";
+import type { Complete } from "unwritten:type-definitions/utils";
+
 import type { HTMLRenderConfig, MarkdownRenderConfig, MarkupRenderConfig } from "../markup/types-definitions/config";
 import type {
   HTMLRenderContext,
   MarkdownRenderContext,
   MarkupRenderContext
 } from "../markup/types-definitions/markup";
-
-import type { JSONRenderConfig } from "unwritten:renderer:json:type-definitions/config";
-import type { JSONRenderContext } from "unwritten:renderer:json:type-definitions/renderer";
-import type { RenderConfig } from "unwritten:type-definitions/config";
-import type { RenderContext } from "unwritten:type-definitions/context";
-import type { Complete } from "unwritten:type-definitions/utils";
 
 
 export function getRenderConfig(ctx: MarkdownRenderContext): Complete<MarkdownRenderConfig>;

@@ -1,4 +1,3 @@
-import type { TypeKind } from "unwritten:interpreter/enums/type";
 import type {
   Entity,
   GetterEntity,
@@ -10,6 +9,7 @@ import type {
   TypeParameterEntity
 } from "unwritten:interpreter:type-definitions/entities";
 import type { Modifiers, Position } from "unwritten:interpreter:type-definitions/shared";
+import type { TypeKind } from "unwritten:interpreter/enums/type";
 
 import type { ID, Name } from "./jsdoc";
 

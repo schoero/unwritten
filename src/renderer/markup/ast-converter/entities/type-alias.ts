@@ -1,8 +1,3 @@
-import { renderNode } from "unwritten:renderer/index";
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
-import { getRenderConfig } from "unwritten:renderer/utils/config";
 import {
   convertTypeParameterEntitiesForDocumentation,
   convertTypeParameterEntitiesForSignature
@@ -16,14 +11,19 @@ import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-conve
 import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { encapsulate, renderEntityPrefix } from "unwritten:renderer:markup/utils/renderer";
+import { renderNode } from "unwritten:renderer/index";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import { getRenderConfig } from "unwritten:renderer/utils/config";
 
 import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedTypeAliasEntityForDocumentation,
   ConvertedTypeAliasEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertTypeAliasEntityToAnchor(ctx: MarkupRenderContext, typeAliasEntity: TypeAliasEntity, displayName?: string): AnchorNode {

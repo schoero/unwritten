@@ -14,5 +14,5 @@ export interface Renderer {
   /** The name of the render extension. */
   name: string;
   /** The render function. */
-  render(ctx: RenderContext, sourceFileEntities: SourceFileEntity[]): RenderOutput;
+  render: (ctx: RenderContext, sourceFileEntities: SourceFileEntity[]) => RenderOutput;
 }

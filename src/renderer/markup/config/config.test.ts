@@ -2,13 +2,13 @@ import { describe, expect, it } from "vitest";
 
 import { createClassEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
-import { isSectionNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { convertClassEntityForDocumentation } from "unwritten:renderer:markup/ast-converter/entities/index";
 import {
   convertStringLiteralTypeInline,
   convertStringTypeInline
 } from "unwritten:renderer:markup/ast-converter/types/index";
 import { renderNode } from "unwritten:renderer:markup/html/index";
+import { isSectionNode, isTitleNode } from "unwritten:renderer/markup/typeguards/renderer.js";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";

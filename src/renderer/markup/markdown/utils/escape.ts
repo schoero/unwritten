@@ -8,7 +8,7 @@ function escapeString(text: string): string {
   return escapedText;
 }
 
-export function escapeCodeBlocks(text: string): string | false {
+export function escapeCodeBlocks(text: string): false | string {
 
   const codeSpanRegex = /(.*?)(`)(.*?)(`)(.*?)/gms;
   const splittedCodeBlocks = Array.from(text.matchAll(codeSpanRegex));
@@ -19,7 +19,7 @@ export function escapeCodeBlocks(text: string): string | false {
 
 }
 
-export function escapeCodeFences(text: string): string | false {
+export function escapeCodeFences(text: string): false | string {
 
   const codeBlockRegex = /(.*?)(```\w*\s*\n)(.*?)(```\s*\n?)(.*?$)/gms;
   const splittedCodeFences = Array.from(text.matchAll(codeBlockRegex));

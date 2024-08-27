@@ -1,6 +1,6 @@
+import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.js";
-import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import { getTypeByType } from "../type";
 

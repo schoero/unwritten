@@ -1,7 +1,3 @@
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
-import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
-import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
 import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/position";
@@ -10,14 +6,18 @@ import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-conve
 import { convertTypeForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/type";
 import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 
 import type { VariableEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedVariableEntityForDocumentation,
   ConvertedVariableEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertVariableEntityToAnchor(ctx: MarkupRenderContext, variableEntity: VariableEntity, displayName?: string): AnchorNode {

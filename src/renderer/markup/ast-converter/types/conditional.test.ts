@@ -2,11 +2,11 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
-import { isAnchorNode, isConditionalNode } from "unwritten:renderer/markup/typeguards/renderer";
 import {
   convertConditionalTypeInline,
   convertConditionalTypeMultiline
 } from "unwritten:renderer:markup/ast-converter/types/index";
+import { isAnchorNode, isConditionalNode } from "unwritten:renderer/markup/typeguards/renderer";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";

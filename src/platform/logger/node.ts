@@ -121,7 +121,7 @@ export namespace logger {
     const table = simpleTable({
       // eslint-disable-next-line eslint-plugin-typescript/naming-convention
       "renderer:": formattedRenderer,
-      // eslint-disable-next-line eslint-plugin-typescript/naming-convention, eslint-plugin-sort-keys/sort-keys-fix
+      // eslint-disable-next-line eslint-plugin-typescript/naming-convention, eslint-plugin-perfectionist/sort-objects
       "entry points:": formattedEntryPoints,
       // eslint-disable-next-line eslint-plugin-typescript/naming-convention
       "tsconfig:": formattedTSConfigPath,

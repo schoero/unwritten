@@ -1,9 +1,9 @@
-import { TypeKind } from "unwritten:interpreter/enums/type";
-import { isTypeReferenceType } from "unwritten:interpreter/typeguards/types";
-import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { getNameByType } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByType } from "unwritten:interpreter:ast/shared/position";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { isTypeReferenceType } from "unwritten:interpreter/typeguards/types";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 
 import { getTypeByType } from "../type";
 
@@ -17,7 +17,6 @@ export const createUnresolvedType = (ctx: InterpreterContext, type: Type): Unres
 
   const kind = TypeKind.Unresolved;
 
-  // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
   const symbolId = type.symbol ? getSymbolId(ctx, type.symbol) : undefined;
   const typeId = getTypeId(ctx, type);
   const position = getPositionByType(ctx, type);

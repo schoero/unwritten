@@ -1,6 +1,6 @@
+import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { convertObjectTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index";
 
 import type { ClassType } from "unwritten:interpreter:type-definitions/types";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";

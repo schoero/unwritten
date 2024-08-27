@@ -1,7 +1,6 @@
-import type { RenderCategories } from "../enums/renderer";
-
 import type { Alpha, Beta, Deprecated, Example, Internal } from "unwritten:interpreter:type-definitions/jsdoc";
 
+import type { RenderCategories } from "../enums/renderer";
 import type {
   AnchorNode,
   ASTNode,

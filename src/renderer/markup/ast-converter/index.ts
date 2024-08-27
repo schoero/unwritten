@@ -1,7 +1,3 @@
-import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
-import { getSectionType, pluralizeEntityKind } from "unwritten:renderer/markup/types-definitions/sections.js";
-import { filterExportableEntities } from "unwritten:renderer/markup/utils/filter";
-import { sortExportableEntities } from "unwritten:renderer/markup/utils/sort";
 import {
   convertCircularEntityToAnchor,
   convertClassEntityForDocumentation,
@@ -37,6 +33,10 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index";
 import { createListNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { renderCategoryName } from "unwritten:renderer:markup/utils/renderer";
+import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
+import { getSectionType, pluralizeEntityKind } from "unwritten:renderer/markup/types-definitions/sections.js";
+import { filterExportableEntities } from "unwritten:renderer/markup/utils/filter";
+import { sortExportableEntities } from "unwritten:renderer/markup/utils/sort";
 import {
   isCircularEntity,
   isClassEntity,

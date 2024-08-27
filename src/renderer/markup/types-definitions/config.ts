@@ -7,19 +7,19 @@ export interface MarkupRenderConfig {
   indentation?: string;
 
   /** Defines how inline titles should be encapsulated in the rendered output. */
-  inlineTitleEncapsulation?: Encapsulation | false;
+  inlineTitleEncapsulation?: false | Encapsulation;
 
   /** Newline character. */
   newLine?: "\n" | "\r\n" | "os";
 
   /** Defines how parameters should be encapsulated in the rendered output. */
-  parameterEncapsulation?: Encapsulation | false;
+  parameterEncapsulation?: false | Encapsulation;
 
   /** Defines how properties should be encapsulated in the rendered output. */
-  propertyEncapsulation?: Encapsulation | false;
+  propertyEncapsulation?: false | Encapsulation;
 
   /** Defines whether the renderer should render titles for object members. */
-  renderClassMemberTitles?: boolean | "documentation" | "tableOfContents";
+  renderClassMemberTitles?: "documentation" | "tableOfContents" | boolean;
 
   /** Defines whether the renderer should render an additional optional tag for default values. */
   renderDefaultValuesAsOptional?: boolean;
@@ -30,7 +30,10 @@ export interface MarkupRenderConfig {
    * @example
    * Class: MyClass instead of just MyClass
    */
-  renderEntityPrefixes?: boolean | "documentation" | "tableOfContents";
+  renderEntityPrefixes?: "documentation" | "tableOfContents" | boolean;
+
+  /** Defines whether entities marked with an `@internal` tag should appear in the rendered output. */
+  renderInternalEntities?: boolean;
 
   /** Defines the order in which entities should be rendered. */
   renderOrder?: ExportableEntityKinds[];
@@ -41,13 +44,10 @@ export interface MarkupRenderConfig {
    * @example
    * Class.method() instead of method()
    */
-  renderParentNames?: boolean | "documentation" | "tableOfContents";
+  renderParentNames?: "documentation" | "tableOfContents" | boolean;
 
   /** Defines whether the renderer should render private members. */
   renderPrivateMembers?: boolean;
-
-  /** Defines whether entities marked with an `@internal` tag should appear in the rendered output. */
-  renderInternalEntities?: boolean;
 
   /** Defines whether the renderer should render links to the source code. */
   renderSourceCodeLinks?: boolean;
@@ -56,10 +56,10 @@ export interface MarkupRenderConfig {
   renderTableOfContents?: boolean;
 
   /** Defines how string literal type annotations should be encapsulated in the rendered output. */
-  stringLiteralEncapsulation?: Encapsulation | false;
+  stringLiteralEncapsulation?: false | Encapsulation;
 
   /** Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output. */
-  tagEncapsulation?: Encapsulation | false;
+  tagEncapsulation?: false | Encapsulation;
 
   /** Translations for otherwise hardcoded labels. */
   translations?: {
@@ -140,18 +140,18 @@ export interface MarkupRenderConfig {
   };
 
   /** Defines how type annotations should be encapsulated in the rendered output. */
-  typeEncapsulation?: Encapsulation | false;
+  typeEncapsulation?: false | Encapsulation;
 
   /** Defines how type parameters should be encapsulated in the rendered output.*/
-  typeParameterEncapsulation?: Encapsulation | false;
+  typeParameterEncapsulation?: false | Encapsulation;
 }
 
 export interface MarkdownRenderConfig extends MarkupRenderConfig {
   /** Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes. */
-  allowedHTMLTags?: string[] | false;
+  allowedHTMLTags?: false | string[];
 
   /** Defines the string that should be used to separate sections in the rendered output. */
-  sectionSeparator?: string | false;
+  sectionSeparator?: false | string;
 }
 
 export interface HTMLRenderConfig extends MarkupRenderConfig {

@@ -1,8 +1,3 @@
-import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
-import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
-import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
-import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
-import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 import { convertEntityForDocumentation, createTableOfContents } from "unwritten:renderer:markup/ast-converter/index";
 import { convertDescriptionForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/description";
 import { convertExamplesForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/example";
@@ -10,14 +5,19 @@ import { convertPositionForDocumentation } from "unwritten:renderer:markup/ast-c
 import { convertRemarksForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/remarks";
 import { convertTagsForDocumentation } from "unwritten:renderer:markup/ast-converter/shared/tags";
 import { createAnchorNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
+import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
+import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
+import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
+import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
+import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 
 import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type {
   ConvertedNamespaceEntityForDocumentation,
   ConvertedNamespaceEntityForTableOfContents
 } from "unwritten:renderer:markup/types-definitions/renderer";
+import type { AnchorNode } from "unwritten:renderer/markup/types-definitions/nodes";
 
 
 export function convertNamespaceEntityToAnchor(ctx: MarkupRenderContext, namespaceEntity: NamespaceEntity, displayName?: string): AnchorNode {

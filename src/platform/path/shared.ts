@@ -1,7 +1,7 @@
 interface Dependencies {
-  cwd(): string;
-  homeDirectory(): string;
-  isAbsolute(path: string): boolean;
+  cwd: () => string;
+  homeDirectory: () => string;
+  isAbsolute: (path: string) => boolean;
   separator: string;
 }
 
@@ -131,7 +131,6 @@ const path = {
     const [fullDos, dosRoot] = path.match(/^\\?([A-Za-z]:\\|^\\)/) ?? [];
     const [fullPosix, posixRoot] = path.match(/^\/?(\/)/) ?? [];
 
-    // eslint-disable-next-line eslint-plugin-typescript/no-unnecessary-condition
     const root = uncRoot ?? dosRoot ?? posixRoot ?? "";
     const fullRoot = fullUnc ?? fullDos ?? fullPosix ?? "";
 

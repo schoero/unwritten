@@ -1,23 +1,3 @@
-/* eslint-disable arrow-body-style */
-
-import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
-import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/conditional";
-import { renderInlineTitleNode } from "unwritten:renderer/markup/markdown/ast/inline-title";
-import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/multiline";
-import { renderPaddedNode } from "unwritten:renderer/markup/markdown/ast/padded";
-import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line";
-import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape";
-import {
-  createCurrentSourceFile,
-  registerAnonymousAnchor,
-  setCurrentSourceFile
-} from "unwritten:renderer/markup/registry/registry";
-import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file";
-import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes";
-import { capitalize } from "unwritten:renderer/markup/utils/translations";
-import { getRenderConfig } from "unwritten:renderer/utils/config.js";
-import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
-import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { renderAnchorNode } from "unwritten:renderer:markdown:ast/anchor";
 import { renderBoldNode } from "unwritten:renderer:markdown:ast/bold";
 import { renderItalicNode } from "unwritten:renderer:markdown:ast/italic";
@@ -47,13 +27,31 @@ import {
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer";
 import { minMax } from "unwritten:renderer:markup/utils/renderer";
+import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
+import { renderConditionalNode } from "unwritten:renderer/markup/markdown/ast/conditional";
+import { renderInlineTitleNode } from "unwritten:renderer/markup/markdown/ast/inline-title";
+import { renderMultilineNode } from "unwritten:renderer/markup/markdown/ast/multiline";
+import { renderPaddedNode } from "unwritten:renderer/markup/markdown/ast/padded";
+import { renderEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line";
+import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape";
+import {
+  createCurrentSourceFile,
+  registerAnonymousAnchor,
+  setCurrentSourceFile
+} from "unwritten:renderer/markup/registry/registry";
+import { getDestinationFilePath } from "unwritten:renderer/markup/utils/file";
+import { createSectionNode, createTitleNode } from "unwritten:renderer/markup/utils/nodes";
+import { capitalize } from "unwritten:renderer/markup/utils/translations";
+import { getRenderConfig } from "unwritten:renderer/utils/config.js";
+import { renderWithIndentation } from "unwritten:renderer/utils/indentation";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
 
 import { renderTitleNode } from "./ast/title";
 
 import type { SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
-import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
 import type { MarkdownRenderContext, MarkdownRenderer } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
+import type { AnchorTarget } from "unwritten:renderer/markup/registry/registry";
 import type { RenderContext } from "unwritten:type-definitions/context";
 import type { RenderOutput } from "unwritten:type-definitions/renderer";
 
@@ -79,8 +77,6 @@ const markdownRenderer: MarkdownRenderer = {
   fileExtension: ".md",
   name: BuiltInRenderers.Markdown,
 
-
-  // eslint-disable-next-line eslint-plugin-sort-keys/sort-keys-fix
   initializeContext: (ctx: MarkdownRenderContext) => {
 
     ctx.links = [];

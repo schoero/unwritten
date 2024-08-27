@@ -1,7 +1,7 @@
-import { TypeKind } from "unwritten:interpreter/enums/type";
-import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getTypeId } from "unwritten:interpreter:ast/shared/id";
 import { isSymbolType } from "unwritten:interpreter:typeguards/types";
+import { TypeKind } from "unwritten:interpreter/enums/type";
+import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { assert } from "unwritten:utils:general";
 
 import type { Type } from "typescript";

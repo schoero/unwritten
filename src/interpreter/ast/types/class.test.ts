@@ -1,7 +1,7 @@
 import { assert, expect, it } from "vitest";
 
-import { TypeKind } from "unwritten:interpreter/enums/type";
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { isJSDocText } from "unwritten:typeguards/jsdoc";

@@ -1,4 +1,3 @@
-import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import {
   createParameterEntity,
   createTypeParameterEntityByTypeParameter
@@ -7,6 +6,7 @@ import { getDeclarationId, getSymbolIdByDeclaration } from "unwritten:interprete
 import { getModifiersByDeclaration } from "unwritten:interpreter:ast/shared/modifiers";
 import { getNameByDeclaration } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
+import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { assert } from "unwritten:utils:general";
 
 import {
@@ -16,7 +16,7 @@ import {
   getTypeByResolvedAndDeclaredType
 } from "../type";
 
-import type { Signature as TSSignature, SignatureDeclaration } from "typescript";
+import type { SignatureDeclaration, Signature as TSSignature } from "typescript";
 
 import type { SignatureEntity, SignatureEntityKinds } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";

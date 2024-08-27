@@ -1,5 +1,3 @@
-import { withIndentation } from "unwritten:renderer/markup/utils/context";
-import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import {
   isInlineTitleNode,
   isListNode,
@@ -8,6 +6,8 @@ import {
   isTitleNode
 } from "unwritten:renderer:markup/typeguards/renderer";
 import { renderWithIndentation } from "unwritten:renderer:utils/indentation";
+import { withIndentation } from "unwritten:renderer/markup/utils/context";
+import { renderNewLine } from "unwritten:renderer/utils/new-line";
 
 import { renderNode } from "../index";
 

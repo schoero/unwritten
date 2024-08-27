@@ -2,9 +2,9 @@ import { expect, it } from "vitest";
 
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { convertTypeReferenceTypeInline } from "unwritten:renderer:markup/ast-converter/types/index";
 import { renderNode } from "unwritten:renderer/index";
 import { isLinkNode } from "unwritten:renderer/markup/typeguards/renderer";
-import { convertTypeReferenceTypeInline } from "unwritten:renderer:markup/ast-converter/types/index";
 import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";

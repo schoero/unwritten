@@ -69,7 +69,7 @@ export module logger {
 
     console.log({
       renderer: formattedRenderer,
-      // eslint-disable-next-line eslint-plugin-sort-keys/sort-keys-fix
+      /* eslint-disable eslint-plugin-perfectionist/sort-objects */
       entryPoints: formattedEntryPoints,
       tsconfig: formattedTSConfigPath,
       unwritten: formattedUnwrittenPath

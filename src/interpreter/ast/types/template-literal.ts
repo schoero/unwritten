@@ -1,5 +1,5 @@
-import { TypeKind } from "unwritten:interpreter/enums/type";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 
 import { getTypeByTypeNode } from "../type";
 

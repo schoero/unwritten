@@ -1,7 +1,7 @@
+import { renderNode } from "unwritten:renderer:markdown:index";
 import { renderEmptyLine, startsWithEmptyLine } from "unwritten:renderer/markup/markdown/utils/empty-line";
 import { renderWithIndentation } from "unwritten:renderer/utils/indentation.js";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
-import { renderNode } from "unwritten:renderer:markdown:index";
 
 import type { MarkdownRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
 import type { ASTNode, MultilineNode } from "unwritten:renderer:markup/types-definitions/nodes";

@@ -1,9 +1,9 @@
+import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { getDeclarationId } from "unwritten:interpreter/ast/shared/id";
 import { getNameBySymbol } from "unwritten:interpreter/ast/shared/name";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
-import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 
 import { createSourceFileEntity } from "./source-file";
 

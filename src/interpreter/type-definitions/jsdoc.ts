@@ -1,7 +1,7 @@
-import type { JSDocKind, JSDocTagNames } from "unwritten:interpreter/enums/jsdoc";
 import type { Entity } from "unwritten:interpreter:type-definitions/entities";
 import type { Position } from "unwritten:interpreter:type-definitions/shared";
 import type { Type } from "unwritten:interpreter:type-definitions/types";
+import type { JSDocKind, JSDocTagNames } from "unwritten:interpreter/enums/jsdoc";
 
 
 type JSDocBase<Kind extends JSDocKind> = {
@@ -81,15 +81,15 @@ export type Param = [] | [JSDocGenericTag];
 export interface JSDocProperties {
   [JSDocTagNames.Alpha]?: Alpha;
   [JSDocTagNames.Beta]?: Beta;
-  [JSDocTagNames.See]?: See;
   [JSDocTagNames.Deprecated]?: Deprecated;
   [JSDocTagNames.Description]?: Description;
   [JSDocTagNames.EventProperty]?: EventProperty;
   [JSDocTagNames.Example]?: Example;
-  [JSDocTagNames.Param]?: Param;
-  [JSDocTagNames.Returns]?: Returns;
-  [JSDocTagNames.Remarks]?: Remark;
-  [JSDocTagNames.Throws]?: Throws;
   [JSDocTagNames.Internal]?: Internal;
+  [JSDocTagNames.Param]?: Param;
+  [JSDocTagNames.Remarks]?: Remark;
+  [JSDocTagNames.Returns]?: Returns;
+  [JSDocTagNames.See]?: See;
   [JSDocTagNames.Template]?: Template;
+  [JSDocTagNames.Throws]?: Throws;
 }

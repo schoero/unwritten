@@ -1,11 +1,11 @@
 import ts from "typescript";
 
-import { convertDiagnostics, reportCompilerDiagnostics } from "unwritten:compiler/shared";
 import { compile } from "unwritten:compiler:node";
+import { convertDiagnostics, reportCompilerDiagnostics } from "unwritten:compiler/shared";
 import { createConfig } from "unwritten:config/config";
-import { interpret } from "unwritten:interpreter/ast/symbol";
 import { createContext as createInterpreterContext } from "unwritten:interpreter:utils/context";
 import { getEntryFileSymbolsFromProgram } from "unwritten:interpreter:utils/ts";
+import { interpret } from "unwritten:interpreter/ast/symbol";
 import fs, { existsSync, mkdirSync, writeFileSync } from "unwritten:platform/file-system/node";
 import os from "unwritten:platform/os/node";
 import path from "unwritten:platform/path/node";

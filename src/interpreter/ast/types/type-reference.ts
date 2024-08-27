@@ -1,13 +1,13 @@
-import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
-import { TypeKind } from "unwritten:interpreter/enums/type";
 import { getIdByTypeNode } from "unwritten:interpreter:ast/shared/id";
 import { getNameByTypeNode } from "unwritten:interpreter:ast/shared/name";
 import { createExpressionType } from "unwritten:interpreter:ast/types/index";
 import { isTypeReferenceNode } from "unwritten:interpreter:typeguards/type-nodes";
+import { interpretSymbol } from "unwritten:interpreter/ast/symbol";
+import { TypeKind } from "unwritten:interpreter/enums/type";
 
 import { getResolvedTypeByTypeNode, getTypeByTypeNode } from "../type";
 
-import type { TypeReferenceNode, TypeReferenceType as TSTypeReferenceType } from "typescript";
+import type { TypeReferenceType as TSTypeReferenceType, TypeReferenceNode } from "typescript";
 
 import type { ExpressionType, TypeReferenceType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";

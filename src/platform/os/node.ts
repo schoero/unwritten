@@ -1,4 +1,4 @@
-import { EOL as nodeEOL, homedir } from "node:os";
+import { homedir, EOL as nodeEOL } from "node:os";
 
 import type { OS } from "unwritten:type-definitions/platform";
 

@@ -1,8 +1,8 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 import { createLinkNode, createListNode, createMultilineNode } from "unwritten:renderer/markup/utils/nodes";
 import { encapsulate } from "unwritten:renderer/markup/utils/renderer";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
-import { convertType } from "unwritten:renderer:markup/ast-converter/shared/type";
 
 import type { ArrayType } from "unwritten:interpreter:type-definitions/types";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
