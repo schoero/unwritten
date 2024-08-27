@@ -1,4 +1,4 @@
-import { filterOutImplicitSignatures } from "unwritten:renderer/utils/private-members";
+import { implicitSignatureFilter } from "unwritten:renderer/markup/utils/filter";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents,
@@ -15,14 +15,14 @@ import type {
 
 
 export function convertFunctionLikeEntityForTableOfContents(ctx: MarkupRenderContext, functionLikeEntity: FunctionLikeEntity): ConvertedFunctionEntityForTableOfContents {
-  const explicitSignatures = filterOutImplicitSignatures(functionLikeEntity.signatures);
+  const explicitSignatures = functionLikeEntity.signatures.filter(implicitSignatureFilter);
   return explicitSignatures.map(
     signature => convertSignatureEntityForTableOfContents(ctx, signature)
   );
 }
 
 export function convertFunctionLikeEntityForDocumentation(ctx: MarkupRenderContext, functionLikeEntity: FunctionLikeEntity): ConvertedFunctionEntityForDocumentation {
-  const explicitSignatures = filterOutImplicitSignatures(functionLikeEntity.signatures);
+  const explicitSignatures = functionLikeEntity.signatures.filter(implicitSignatureFilter);
   return explicitSignatures.map(
     signature => convertSignatureEntityForDocumentation(ctx, signature)
   );

@@ -1,9 +1,13 @@
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
 import { registerAnchor, registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
 import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
+import {
+  implicitSignatureFilter,
+  internalMemberFilter,
+  privateMemberFilter
+} from "unwritten:renderer/markup/utils/filter";
 import { isRenderObjectMemberTitlesEnabled, renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
-import { filterOutImplicitSignatures, filterOutPrivateMembers } from "unwritten:renderer/utils/private-members";
 import {
   convertEventPropertyEntityForDocumentation,
   convertEventPropertyEntityForTableOfContents,
@@ -86,14 +90,33 @@ export function convertClassEntityForTableOfContents(ctx: MarkupRenderContext, c
     const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
     const eventPropertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "events");
 
-    const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterOutPrivateMembers([constructorEntity])[0];
-    const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterOutPrivateMembers(propertyEntities);
-    const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterOutPrivateMembers(methodEntities);
-    const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterOutPrivateMembers(setterEntities);
-    const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterOutPrivateMembers(getterEntities);
-    const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterOutPrivateMembers(eventPropertyEntities);
+    const publicConstructorEntity = [constructorEntity]
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx)[0];
 
-    const explicitConstructSignatures = publicConstructorEntity?.signatures && filterOutImplicitSignatures(publicConstructorEntity.signatures);
+    const publicPropertyEntities = propertyEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const publicMethodEntities = methodEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const publicSetterEntities = setterEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const publicGetterEntities = getterEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const publicEventPropertyEntities = eventPropertyEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const explicitConstructSignatures = publicConstructorEntity?.signatures
+      ?.filter(implicitSignatureFilter);
+
     const convertedConstructSignatures = explicitConstructSignatures?.map(signatureEntity => convertSignatureEntityForTableOfContents(ctx, signatureEntity));
     const convertedProperties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForTableOfContents(ctx, propertyEntity));
     const convertedMethods = publicMethodEntities.flatMap(methodEntity => convertFunctionLikeEntityForTableOfContents(ctx, methodEntity)).flat();
@@ -189,14 +212,32 @@ export function convertClassEntityForDocumentation(ctx: MarkupRenderContext, cla
     const getterEntities = extendClassEntityEntitiesWithHeritage(classEntity, "getters");
     const eventPropertyEntities = extendClassEntityEntitiesWithHeritage(classEntity, "events");
 
-    const publicConstructorEntity = renderConfig.renderPrivateMembers ? constructorEntity : constructorEntity && filterOutPrivateMembers([constructorEntity])[0];
-    const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterOutPrivateMembers(propertyEntities);
-    const publicMethodEntities = renderConfig.renderPrivateMembers ? methodEntities : filterOutPrivateMembers(methodEntities);
-    const publicSetterEntities = renderConfig.renderPrivateMembers ? setterEntities : filterOutPrivateMembers(setterEntities);
-    const publicGetterEntities = renderConfig.renderPrivateMembers ? getterEntities : filterOutPrivateMembers(getterEntities);
-    const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterOutPrivateMembers(eventPropertyEntities);
+    const publicConstructorEntity = [constructorEntity]
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx)[0];
 
-    const explicitConstructSignatures = publicConstructorEntity?.signatures && filterOutImplicitSignatures(publicConstructorEntity.signatures);
+    const publicPropertyEntities = propertyEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const publicMethodEntities = methodEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const publicSetterEntities = setterEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const publicGetterEntities = getterEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const publicEventPropertyEntities = eventPropertyEntities
+      .filter(privateMemberFilter, ctx)
+      .filter(internalMemberFilter, ctx);
+
+    const explicitConstructSignatures = publicConstructorEntity?.signatures
+      ?.filter(implicitSignatureFilter);
 
     const hasConstructSignatures = explicitConstructSignatures && explicitConstructSignatures.length > 0;
     const constructSignaturesTranslation = translate("constructSignature", { capitalizeEach: true, count: explicitConstructSignatures?.length });

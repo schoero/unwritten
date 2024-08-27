@@ -1,13 +1,15 @@
 import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-converter/shared/see";
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
 import { renderMemberContext } from "unwritten:renderer/markup/utils/context";
+import {
+  implicitSignatureFilter,
+  internalMemberFilter,
+  internalSignatureFilter,
+  privateMemberFilter,
+  privateSignatureFilter
+} from "unwritten:renderer/markup/utils/filter";
 import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
-import {
-  filterOutImplicitSignatures,
-  filterOutPrivateMembers,
-  filterOutPrivateSignatures
-} from "unwritten:renderer/utils/private-members";
 import {
   convertEventPropertyEntityForType,
   convertPropertyEntityForType,
@@ -106,19 +108,19 @@ export function convertInterfaceEntityForDocumentation(ctx: MarkupRenderContext,
   const setterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "setterSignatures");
   const getterSignatures = extendInterfaceEntitySignaturesWithHeritage(interfaceEntity, "getterSignatures");
 
-  const publicPropertyEntities = renderConfig.renderPrivateMembers ? propertyEntities : filterOutPrivateMembers(propertyEntities);
-  const publicEventPropertyEntities = renderConfig.renderPrivateMembers ? eventPropertyEntities : filterOutPrivateMembers(eventPropertyEntities);
-  const publicConstructSignatures = renderConfig.renderPrivateMembers ? constructSignatureEntities : filterOutPrivateSignatures(constructSignatureEntities);
-  const publicCallSignatures = renderConfig.renderPrivateMembers ? callSignatureEntities : filterOutPrivateSignatures(callSignatureEntities);
-  const publicMethodSignatures = renderConfig.renderPrivateMembers ? methodSignatures : filterOutPrivateSignatures(methodSignatures);
-  const publicSetterSignatures = renderConfig.renderPrivateMembers ? setterSignatures : filterOutPrivateSignatures(setterSignatures);
-  const publicGetterSignatures = renderConfig.renderPrivateMembers ? getterSignatures : filterOutPrivateSignatures(getterSignatures);
+  const publicPropertyEntities = propertyEntities.filter(privateMemberFilter, ctx).filter(internalMemberFilter, ctx);
+  const publicEventPropertyEntities = eventPropertyEntities.filter(privateMemberFilter, ctx).filter(internalMemberFilter, ctx);
+  const publicConstructSignatures = constructSignatureEntities.filter(privateSignatureFilter, ctx).filter(internalSignatureFilter, ctx);
+  const publicCallSignatures = callSignatureEntities.filter(privateSignatureFilter, ctx).filter(internalSignatureFilter, ctx);
+  const publicMethodSignatures = methodSignatures.filter(privateSignatureFilter, ctx).filter(internalSignatureFilter, ctx);
+  const publicSetterSignatures = setterSignatures.filter(privateSignatureFilter, ctx).filter(internalSignatureFilter, ctx);
+  const publicGetterSignatures = getterSignatures.filter(privateSignatureFilter, ctx).filter(internalSignatureFilter, ctx);
 
-  const explicitConstructSignatures = filterOutImplicitSignatures(publicConstructSignatures);
-  const explicitCallSignatures = filterOutImplicitSignatures(publicCallSignatures);
-  const explicitMethodSignatures = filterOutImplicitSignatures(publicMethodSignatures);
-  const explicitSetterSignatures = filterOutImplicitSignatures(publicSetterSignatures);
-  const explicitGetterSignatures = filterOutImplicitSignatures(publicGetterSignatures);
+  const explicitConstructSignatures = publicConstructSignatures.filter(implicitSignatureFilter);
+  const explicitCallSignatures = publicCallSignatures.filter(implicitSignatureFilter);
+  const explicitMethodSignatures = publicMethodSignatures.filter(implicitSignatureFilter);
+  const explicitSetterSignatures = publicSetterSignatures.filter(implicitSignatureFilter);
+  const explicitGetterSignatures = publicGetterSignatures.filter(implicitSignatureFilter);
 
   const properties = publicPropertyEntities.map(propertyEntity => convertPropertyEntityForType(ctx, propertyEntity));
   const eventProperties = publicEventPropertyEntities.map(eventPropertyEntity => convertEventPropertyEntityForType(ctx, eventPropertyEntity));

@@ -1,6 +1,11 @@
 import { TypeKind } from "unwritten:interpreter/enums/type";
+import {
+  internalMemberFilter,
+  internalSignatureFilter,
+  privateMemberFilter,
+  privateSignatureFilter
+} from "unwritten:renderer/markup/utils/filter";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
-import { filterOutPrivateMembers, filterOutPrivateSignatures } from "unwritten:renderer/utils/private-members";
 import {
   convertEventPropertyEntityForType,
   convertFunctionLikeEntityForType,
@@ -46,13 +51,13 @@ export function convertObjectTypeMultiline(
 
   const renderConfig = getRenderConfig(ctx);
 
-  const constructSignatures = renderConfig.renderPrivateMembers ? objectLikeType.constructSignatures : filterOutPrivateSignatures(objectLikeType.constructSignatures);
-  const callSignatures = renderConfig.renderPrivateMembers ? objectLikeType.callSignatures : filterOutPrivateSignatures(objectLikeType.callSignatures);
-  const properties = renderConfig.renderPrivateMembers ? objectLikeType.properties : filterOutPrivateMembers(objectLikeType.properties);
-  const methods = renderConfig.renderPrivateMembers ? objectLikeType.methods : filterOutPrivateMembers(objectLikeType.methods);
-  const setters = renderConfig.renderPrivateMembers ? objectLikeType.setters : filterOutPrivateMembers(objectLikeType.setters);
-  const getters = renderConfig.renderPrivateMembers ? objectLikeType.getters : filterOutPrivateMembers(objectLikeType.getters);
-  const events = renderConfig.renderPrivateMembers ? objectLikeType.events : filterOutPrivateMembers(objectLikeType.events);
+  const constructSignatures = objectLikeType.constructSignatures.filter(privateSignatureFilter, ctx).filter(internalSignatureFilter, ctx);
+  const callSignatures = objectLikeType.callSignatures.filter(privateSignatureFilter, ctx).filter(internalSignatureFilter, ctx);
+  const properties = objectLikeType.properties.filter(privateMemberFilter, ctx).filter(internalMemberFilter, ctx);
+  const methods = objectLikeType.methods.filter(privateMemberFilter, ctx).filter(internalMemberFilter, ctx);
+  const setters = objectLikeType.setters.filter(privateMemberFilter, ctx).filter(internalMemberFilter, ctx);
+  const getters = objectLikeType.getters.filter(privateMemberFilter, ctx).filter(internalMemberFilter, ctx);
+  const events = objectLikeType.events.filter(privateMemberFilter, ctx).filter(internalMemberFilter, ctx);
 
   const convertedConstructSignatures = constructSignatures.map(
     constructSignature => {

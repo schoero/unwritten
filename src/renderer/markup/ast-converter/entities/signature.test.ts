@@ -1,7 +1,7 @@
 import { assert, expect, it } from "vitest";
 
 import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index";
-import { filterOutImplicitSignatures } from "unwritten:renderer/utils/private-members";
+import { implicitSignatureFilter } from "unwritten:renderer/markup/utils/filter";
 import {
   convertSignatureEntityForDocumentation,
   convertSignatureEntityForTableOfContents
@@ -46,7 +46,7 @@ scope("MarkupRenderer", "Signature", () => {
 
     const symbol = exportedSymbols.find(s => s.name === "testSignature")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
-    const signatureEntity = filterOutImplicitSignatures(functionEntity.signatures)[0];
+    const signatureEntity = functionEntity.signatures.filter(implicitSignatureFilter)[0];
     const ctx = createRenderContext();
 
     const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
@@ -156,7 +156,7 @@ scope("MarkupRenderer", "Signature", () => {
 
     const symbol = exportedSymbols.find(s => s.name === "testSignature")!;
     const functionEntity = createFunctionEntity(compilerContext, symbol);
-    const signatureEntity = filterOutImplicitSignatures(functionEntity.signatures)[0];
+    const signatureEntity = functionEntity.signatures.filter(implicitSignatureFilter)[0];
     const ctx = createRenderContext();
 
     const convertedSignatureForTableOfContents = convertSignatureEntityForTableOfContents(ctx, signatureEntity);
