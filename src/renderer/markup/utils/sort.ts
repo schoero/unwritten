@@ -1,6 +1,5 @@
-import type { MarkupRenderContext } from "../types-definitions/markup";
-
-import type { ExportableEntity } from "unwritten:interpreter:type-definitions/entities";
+import type { ExportableEntity } from "unwritten:interpreter/type-definitions/entities";
+import type { MarkupRenderContext } from "unwritten:renderer/markup/types-definitions/markup";
 
 
 export function sortExportableEntities(ctx: MarkupRenderContext, entities: ExportableEntity[]): ExportableEntity[] {

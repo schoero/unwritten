@@ -18,6 +18,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
   renderClassMemberTitles: "tableOfContents",
   renderDefaultValuesAsOptional: true,
   renderEntityPrefixes: "documentation",
+  renderInternalEntities: false,
   renderOrder: [
     EntityKind.Module,
     EntityKind.Namespace,

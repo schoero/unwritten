@@ -46,6 +46,9 @@ export interface MarkupRenderConfig {
   /** Defines whether the renderer should render private members. */
   renderPrivateMembers?: boolean;
 
+  /** Defines whether entities marked with an `@internal` tag should appear in the rendered output. */
+  renderInternalEntities?: boolean;
+
   /** Defines whether the renderer should render links to the source code. */
   renderSourceCodeLinks?: boolean;
 

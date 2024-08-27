@@ -205,4 +205,91 @@ scope("Renderer", "Config", () => {
 
   });
 
+  describe("renderInternalEntities", async () => {
+
+    {
+
+      const testFileContent = ts`
+        export class Class {
+          /** @internal */
+          public constructor() {}
+          /** @internal */
+          public property: number = 1;
+          /** @internal */
+          public method(): void {}
+        }
+      `;
+
+      const { ctx: compilerContext, exportedSymbols, fileSymbols } = compile(testFileContent);
+
+      const classSymbol = exportedSymbols.find(s => s.name === "Class")!;
+      const classEntity = createClassEntity(compilerContext, classSymbol);
+
+      const ctx = createRenderContext();
+
+      {
+        const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
+
+        const titleNode = convertedClassForDocumentation.title;
+
+        assert(isSectionNode(convertedClassForDocumentation));
+        assert(isTitleNode(titleNode));
+
+        const [
+          position,
+          tags,
+          description,
+          remarks,
+          example,
+          constructSignatures,
+          properties,
+          methods,
+          setters,
+          getters
+        ] = titleNode.children;
+
+        it("should not have any internal members when disabled", () => {
+          expect(constructSignatures).toBeFalsy();
+          expect(properties).toBeFalsy();
+          expect(methods).toBeFalsy();
+        });
+
+      }
+
+      ctx.config.renderConfig.html.renderInternalEntities = true;
+
+      {
+        const convertedClassForDocumentation = convertClassEntityForDocumentation(ctx, classEntity);
+
+        const titleNode = convertedClassForDocumentation.title;
+
+        assert(isSectionNode(convertedClassForDocumentation));
+        assert(isTitleNode(titleNode));
+
+        const [
+          position,
+          tags,
+          description,
+          remarks,
+          example,
+          see,
+          constructSignatures,
+          properties,
+          methods,
+          setters,
+          getters
+        ] = titleNode.children;
+
+        it("should have internal members when enabled", () => {
+          expect(constructSignatures && constructSignatures.children).toHaveLength(1);
+          expect(properties && properties.children.flat()).toHaveLength(1);
+          expect(methods && methods.children.flat()).toHaveLength(1);
+        });
+
+      }
+
+    }
+
+  });
+
 });

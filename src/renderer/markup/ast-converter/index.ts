@@ -1,5 +1,7 @@
 import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
 import { getSectionType, pluralizeEntityKind } from "unwritten:renderer/markup/types-definitions/sections.js";
+import { filterExportableEntities } from "unwritten:renderer/markup/utils/filter";
+import { sortExportableEntities } from "unwritten:renderer/markup/utils/sort";
 import {
   convertCircularEntityToAnchor,
   convertClassEntityForDocumentation,
@@ -35,7 +37,6 @@ import {
 } from "unwritten:renderer:markup/ast-converter/entities/index";
 import { createListNode, createSectionNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { renderCategoryName } from "unwritten:renderer:markup/utils/renderer";
-import { sortExportableEntities } from "unwritten:renderer:markup/utils/sort";
 import {
   isCircularEntity,
   isClassEntity,
@@ -156,9 +157,10 @@ export function convertEntityForDocumentation(ctx: MarkupRenderContext, entity: 
 export function convertToMarkupAST(ctx: MarkupRenderContext, entities: ExportableEntity[]) {
 
   const sortedEntities = sortExportableEntities(ctx, entities);
+  const filteredEntities = filterExportableEntities(ctx, sortedEntities);
 
-  const tableOfContents = createTableOfContents(ctx, sortedEntities);
-  const documentation = createDocumentation(ctx, sortedEntities);
+  const tableOfContents = createTableOfContents(ctx, filteredEntities);
+  const documentation = createDocumentation(ctx, filteredEntities);
 
   return {
     documentation,
