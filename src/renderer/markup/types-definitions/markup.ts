@@ -7,7 +7,7 @@ import type { Renderer } from "unwritten:type-definitions/renderer";
 // Markup
 interface BaseMarkupRenderer extends Renderer {
   fileExtension: ".html" | ".md";
-  initializeContext: (ctx: MarkupRenderContext) => void;
+  initializeContext(ctx: MarkupRenderContext): void;
   name: BuiltInRenderers.HTML | BuiltInRenderers.Markdown;
 }
 

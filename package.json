@@ -69,9 +69,9 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "@schoero/configs": "^1.0.39",
+    "@schoero/configs": "^1.0.40",
     "@types/minimatch": "^5.1.2",
-    "@types/node": "^22.5.0",
+    "@types/node": "^22.5.1",
     "changelogen": "^0.5.5",
     "cspell": "^8.14.2",
     "eslint-plugin-jsonc": "^2.16.0",

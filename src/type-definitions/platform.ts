@@ -44,29 +44,33 @@ export interface Path {
 
 // logger
 export type Logger = {
-  bgGreen: (message: string) => string;
-  bgRed: (message: string) => string;
-  bgYellow: (message: string) => string;
-  blue: (message: string) => string;
-  bold: (message: string) => string;
-  cyan: (message: string) => string;
-  debug: (message: string) => void;
-  dim: (message: string) => string;
-  filePath: (path: string) => string;
-  gray: (message: string) => string;
-  green: (message: string) => string;
-  info: ((message: string[] | string) => void) & ((title: string, label: string, message: string[] | string) => void) & ((title: string, message: string[] | string) => void);
-  inverse: (message: string) => string;
-  italic: (message: string) => string;
-  log: (message: string) => void;
-  magenta: (message: string) => string;
-  red: (message: string) => string;
-  stats: (ctx: DefaultContext, stats: Logger["_stats"]) => void;
-  strikethrough: (message: string) => string;
-  underline: (message: string) => string;
-  warn: ((message: string[] | string) => void) & ((title: string, label: string, message: string[] | string) => void) & ((title: string, message: string[] | string) => void);
-  white: (message: string) => string;
-  yellow: (message: string) => string;
+  bgGreen(message: string): string;
+  bgRed(message: string): string;
+  bgYellow(message: string): string;
+  blue(message: string): string;
+  bold(message: string): string;
+  cyan(message: string): string;
+  debug(message: string): void;
+  dim(message: string): string;
+  filePath(path: string): string;
+  gray(message: string): string;
+  green(message: string): string;
+  info(message: string[] | string): void;
+  info(title: string, label: string, message: string[] | string): void;
+  info(title: string, message: string[] | string): void;
+  inverse(message: string): string;
+  italic(message: string): string;
+  log(message: string): void;
+  magenta(message: string): string;
+  red(message: string): string;
+  stats(ctx: DefaultContext, stats: Logger["_stats"]): void;
+  strikethrough(message: string): string;
+  underline(message: string): string;
+  warn(message: string[] | string): void;
+  warn(title: string, label: string, message: string[] | string): void;
+  warn(title: string, message: string[] | string): void;
+  white(message: string): string;
+  yellow(message: string): string;
   _stats?: {
     entryPoints?: string[];
     renderer?: string;
