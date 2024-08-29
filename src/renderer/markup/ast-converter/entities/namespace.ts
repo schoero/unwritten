@@ -9,7 +9,9 @@ import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-co
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
 import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
 import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
+import { filterExportableEntities } from "unwritten:renderer/markup/utils/filter";
 import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
+import { sortExportableEntities } from "unwritten:renderer/markup/utils/sort";
 
 import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
@@ -56,7 +58,10 @@ export function convertNamespaceEntityForTableOfContents(ctx: MarkupRenderContex
 
   return withMemberContext(ctx, name, () => {
 
-    const moduleExports = createTableOfContents(ctx, namespaceEntity.exports);
+    const sortedEntities = sortExportableEntities(ctx, namespaceEntity.exports);
+    const filteredEntities = filterExportableEntities(ctx, sortedEntities);
+
+    const moduleExports = createTableOfContents(ctx, filteredEntities);
 
     return [
       anchor,
@@ -91,7 +96,12 @@ export function convertNamespaceEntityForDocumentation(ctx: MarkupRenderContext,
     const example = namespaceEntity.example && convertExamplesForDocumentation(ctx, namespaceEntity.example);
     const see = namespaceEntity.see && convertSeeTagsForDocumentation(ctx, namespaceEntity.see);
 
-    const children = namespaceEntity.exports.map(exportedEntity => convertEntityForDocumentation(ctx, exportedEntity));
+    const sortedEntities = sortExportableEntities(ctx, namespaceEntity.exports);
+    const filteredEntities = filterExportableEntities(ctx, sortedEntities);
+
+    const children = filteredEntities.map(
+      exportedEntity => convertEntityForDocumentation(ctx, exportedEntity)
+    );
 
     return createSectionNode(
       getSectionType(namespaceEntity.kind),

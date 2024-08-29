@@ -9,7 +9,9 @@ import { convertSeeTagsForDocumentation } from "unwritten:renderer/markup/ast-co
 import { registerAnchor } from "unwritten:renderer/markup/registry/registry";
 import { getSectionType } from "unwritten:renderer/markup/types-definitions/sections.js";
 import { renderMemberContext, withMemberContext } from "unwritten:renderer/markup/utils/context";
+import { filterExportableEntities } from "unwritten:renderer/markup/utils/filter";
 import { renderEntityPrefix } from "unwritten:renderer/markup/utils/renderer.js";
+import { sortExportableEntities } from "unwritten:renderer/markup/utils/sort";
 
 import type { ModuleEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { MarkupRenderContext } from "unwritten:renderer:markup/types-definitions/markup";
@@ -54,8 +56,11 @@ export function convertModuleEntityForTableOfContents(ctx: MarkupRenderContext, 
   const name = moduleEntity.name;
   const anchor = convertModuleEntityToAnchor(ctx, moduleEntity);
 
+  const sortedEntities = sortExportableEntities(ctx, moduleEntity.exports);
+  const filteredEntities = filterExportableEntities(ctx, sortedEntities);
+
   return withMemberContext(ctx, name, () => {
-    const moduleExports = createTableOfContents(ctx, moduleEntity.exports);
+    const moduleExports = createTableOfContents(ctx, filteredEntities);
 
     return [
       anchor,
@@ -91,7 +96,10 @@ export function convertModuleEntityForDocumentation(ctx: MarkupRenderContext, mo
     const example = moduleEntity.example && convertExamplesForDocumentation(ctx, moduleEntity.example);
     const see = moduleEntity.see && convertSeeTagsForDocumentation(ctx, moduleEntity.see);
 
-    const children = moduleEntity.exports.map(
+    const sortedEntities = sortExportableEntities(ctx, moduleEntity.exports);
+    const filteredEntities = filterExportableEntities(ctx, sortedEntities);
+
+    const children = filteredEntities.map(
       exportedEntity => convertEntityForDocumentation(ctx, exportedEntity)
     );
 

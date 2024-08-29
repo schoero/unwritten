@@ -15,9 +15,15 @@ export function filterExportableEntities(ctx: MarkupRenderContext, entities: Exp
 
   const renderInternal = ctx.config.renderConfig[ctx.renderer.name].renderInternalEntities;
 
+  if(renderInternal){
+    return entities;
+  }
+
   return entities.filter(entity => {
-    const isInternal = "internal" in entity && entity.internal;
-    return renderInternal || !isInternal;
+    if(isFunctionLikeEntity(entity)){
+      return entity.signatures.every(signature => !signature.internal);
+    }
+    return !entity.internal;
   });
 
 }
