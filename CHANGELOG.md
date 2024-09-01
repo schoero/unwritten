@@ -1,5 +1,99 @@
 # Changelog
 
+## v0.2.13
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.2.7...v0.2.13)
+
+### Features
+
+- Allow more config names ([bf6eea96](https://github.com/schoero/unwritten/commit/bf6eea96))
+- **logger:** Display paths from user directory if shorter ([820a821f](https://github.com/schoero/unwritten/commit/820a821f))
+- Add verbose logging ([acf9ed0a](https://github.com/schoero/unwritten/commit/acf9ed0a))
+- Add syntax highlighting for errors and warnings ([b15f1efd](https://github.com/schoero/unwritten/commit/b15f1efd))
+- Cache types and entities ([5442e5d3](https://github.com/schoero/unwritten/commit/5442e5d3))
+- Return diagnostic messages ([931d97ee](https://github.com/schoero/unwritten/commit/931d97ee))
+- Add option to exclude internal entities ([e73b8465](https://github.com/schoero/unwritten/commit/e73b8465))
+
+### Fixes
+
+- Testing issues ([ef9e74cd](https://github.com/schoero/unwritten/commit/ef9e74cd))
+- Entry point ([9bdad6c5](https://github.com/schoero/unwritten/commit/9bdad6c5))
+- Package json import path ([ba348143](https://github.com/schoero/unwritten/commit/ba348143))
+- Add workaround for `id` collisions ([8435e2e6](https://github.com/schoero/unwritten/commit/8435e2e6))
+- End position sometimes off by 1 ([56d6e070](https://github.com/schoero/unwritten/commit/56d6e070))
+- Render unregistered anchors ([e0d21ad4](https://github.com/schoero/unwritten/commit/e0d21ad4))
+- Not registering all anchors ([6c8245d2](https://github.com/schoero/unwritten/commit/6c8245d2))
+- Add `tinyhighlight` as a dependency ([5aecea5f](https://github.com/schoero/unwritten/commit/5aecea5f))
+- Node entry ([7a5bec1e](https://github.com/schoero/unwritten/commit/7a5bec1e))
+- Add diagnostic start and end position ([cc6fc1a6](https://github.com/schoero/unwritten/commit/cc6fc1a6))
+- Make sure stats are logged before trying to interpret ([c3f4b9fc](https://github.com/schoero/unwritten/commit/c3f4b9fc))
+- Eslint regressions ([5a284b4f](https://github.com/schoero/unwritten/commit/5a284b4f))
+- Filtering of internal entities ([6e1e2bf8](https://github.com/schoero/unwritten/commit/6e1e2bf8))
+- Create enum type ([7b524912](https://github.com/schoero/unwritten/commit/7b524912))
+
+### Refactors
+
+- Browser api ([60d03a49](https://github.com/schoero/unwritten/commit/60d03a49))
+- Type cleanup ([048a9526](https://github.com/schoero/unwritten/commit/048a9526))
+- Harmonize path aliases ([f7d0ccc8](https://github.com/schoero/unwritten/commit/f7d0ccc8))
+- Allow js with default compiler options ([93af68ce](https://github.com/schoero/unwritten/commit/93af68ce))
+- Improve logging ([f0238058](https://github.com/schoero/unwritten/commit/f0238058))
+- Switch to flat eslint config and config monorepo ([39337684](https://github.com/schoero/unwritten/commit/39337684))
+- Return object name if available ([fabdf905](https://github.com/schoero/unwritten/commit/fabdf905))
+- Migrate to latest overload definitions ([30c3d729](https://github.com/schoero/unwritten/commit/30c3d729))
+- Improve console output ([f2cea7eb](https://github.com/schoero/unwritten/commit/f2cea7eb))
+- Don't undo something you haven't done ([cbc2a406](https://github.com/schoero/unwritten/commit/cbc2a406))
+
+### Documentation
+
+- Update warning ([e7ae1e28](https://github.com/schoero/unwritten/commit/e7ae1e28))
+- Fix jsdoc descriptions ([9999e046](https://github.com/schoero/unwritten/commit/9999e046))
+
+### Build
+
+- Enforce strict `.dts` output ([d4f3a59a](https://github.com/schoero/unwritten/commit/d4f3a59a))
+
+### Chore
+
+- Update dependencies ([5ef2607a](https://github.com/schoero/unwritten/commit/5ef2607a))
+- Regenerate package-lock.json ([990ecbed](https://github.com/schoero/unwritten/commit/990ecbed))
+- Update dependencies ([0d806c4d](https://github.com/schoero/unwritten/commit/0d806c4d))
+- Clean up vscode settings ([8e463fc8](https://github.com/schoero/unwritten/commit/8e463fc8))
+- Update dependencies ([3f2a8e32](https://github.com/schoero/unwritten/commit/3f2a8e32))
+- Update vscode settings ([dfdc50d9](https://github.com/schoero/unwritten/commit/dfdc50d9))
+- Simplify eslint typescript parser ([5bd5ac20](https://github.com/schoero/unwritten/commit/5bd5ac20))
+- Add spell check exception ([35f317cd](https://github.com/schoero/unwritten/commit/35f317cd))
+- Eslint fixes ([27a888b5](https://github.com/schoero/unwritten/commit/27a888b5))
+- Update dependencies ([d08626eb](https://github.com/schoero/unwritten/commit/d08626eb))
+- Load renderer after interpreter ([7e3c47b7](https://github.com/schoero/unwritten/commit/7e3c47b7))
+- Code cleanup ([edf76999](https://github.com/schoero/unwritten/commit/edf76999))
+- Update dependencies ([77950ea3](https://github.com/schoero/unwritten/commit/77950ea3))
+- Correct version number ([bf78a1c2](https://github.com/schoero/unwritten/commit/bf78a1c2))
+- Upgrade node versions ([66a9315b](https://github.com/schoero/unwritten/commit/66a9315b))
+- Update dependencies ([37a1d1a0](https://github.com/schoero/unwritten/commit/37a1d1a0))
+- Update to typescript `5.5` ([a7e74f82](https://github.com/schoero/unwritten/commit/a7e74f82))
+- Simplify vscode config ([d69cc051](https://github.com/schoero/unwritten/commit/d69cc051))
+- Code cleanup ([48a4062d](https://github.com/schoero/unwritten/commit/48a4062d))
+- Update eslint rules ([40846c6c](https://github.com/schoero/unwritten/commit/40846c6c))
+- Lint github actions ([eb1668a2](https://github.com/schoero/unwritten/commit/eb1668a2))
+- Update schema ([7def50e8](https://github.com/schoero/unwritten/commit/7def50e8))
+- Fix lint scripts ([48d5f96c](https://github.com/schoero/unwritten/commit/48d5f96c))
+
+### Tests
+
+- Disable multi threading in debugger ([8e5f55fb](https://github.com/schoero/unwritten/commit/8e5f55fb))
+
+### Styles
+
+- Fix eslint issues ([eecfff0f](https://github.com/schoero/unwritten/commit/eecfff0f))
+- Eslint fixes ([1808da5b](https://github.com/schoero/unwritten/commit/1808da5b))
+- Linting issues ([4de221bc](https://github.com/schoero/unwritten/commit/4de221bc))
+
+### CI
+
+- Ignore invalid peerDependency from `github-actions-reporter` ([161b3d29](https://github.com/schoero/unwritten/commit/161b3d29))
+- Remove vitest  beta workaround ([d2332b23](https://github.com/schoero/unwritten/commit/d2332b23))
+
 ## v0.2.7
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.2.6...v0.2.7)
