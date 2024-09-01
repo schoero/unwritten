@@ -116,11 +116,11 @@
         "inlineTitleEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how inline titles should be encapsulated in the rendered output."
@@ -137,11 +137,11 @@
         "parameterEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how parameters should be encapsulated in the rendered output."
@@ -149,11 +149,11 @@
         "propertyEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how properties should be encapsulated in the rendered output."
@@ -161,15 +161,15 @@
         "renderClassMemberTitles": {
           "anyOf": [
             {
-              "type": "boolean"
-            },
-            {
               "const": "documentation",
               "type": "string"
             },
             {
               "const": "tableOfContents",
               "type": "string"
+            },
+            {
+              "type": "boolean"
             }
           ],
           "description": "Defines whether the renderer should render titles for object members."
@@ -181,18 +181,22 @@
         "renderEntityPrefixes": {
           "anyOf": [
             {
-              "type": "boolean"
-            },
-            {
               "const": "documentation",
               "type": "string"
             },
             {
               "const": "tableOfContents",
               "type": "string"
+            },
+            {
+              "type": "boolean"
             }
           ],
           "description": "Defines whether the renderer should render prefixes for entities."
+        },
+        "renderInternalEntities": {
+          "description": "Defines whether entities marked with an `@internal` tag should appear in the rendered output.",
+          "type": "boolean"
         },
         "renderOrder": {
           "description": "Defines the order in which entities should be rendered.",
@@ -204,15 +208,15 @@
         "renderParentNames": {
           "anyOf": [
             {
-              "type": "boolean"
-            },
-            {
               "const": "documentation",
               "type": "string"
             },
             {
               "const": "tableOfContents",
               "type": "string"
+            },
+            {
+              "type": "boolean"
             }
           ],
           "description": "Defines whether the parent name of members should be rendered in the signature."
@@ -236,11 +240,11 @@
         "stringLiteralEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how string literal type annotations should be encapsulated in the rendered output."
@@ -248,11 +252,11 @@
         "tagEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output."
@@ -493,11 +497,11 @@
         "typeEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how type annotations should be encapsulated in the rendered output."
@@ -505,11 +509,11 @@
         "typeParameterEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how type parameters should be encapsulated in the rendered output."
@@ -532,14 +536,14 @@
               "additionalProperties": {
                 "anyOf": [
                   {
+                    "const": "*",
+                    "type": "string"
+                  },
+                  {
                     "items": {
                       "type": "string"
                     },
                     "type": "array"
-                  },
-                  {
-                    "const": "*",
-                    "type": "string"
                   }
                 ]
               },
@@ -571,14 +575,14 @@
         "allowedHTMLTags": {
           "anyOf": [
             {
+              "const": false,
+              "type": "boolean"
+            },
+            {
               "items": {
                 "type": "string"
               },
               "type": "array"
-            },
-            {
-              "const": false,
-              "type": "boolean"
             }
           ],
           "description": "Defines which HTML tags are allowed in the rendered output. Will be used in the future to render anchor nodes."
@@ -590,11 +594,11 @@
         "inlineTitleEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how inline titles should be encapsulated in the rendered output."
@@ -611,11 +615,11 @@
         "parameterEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how parameters should be encapsulated in the rendered output."
@@ -623,11 +627,11 @@
         "propertyEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how properties should be encapsulated in the rendered output."
@@ -635,15 +639,15 @@
         "renderClassMemberTitles": {
           "anyOf": [
             {
-              "type": "boolean"
-            },
-            {
               "const": "documentation",
               "type": "string"
             },
             {
               "const": "tableOfContents",
               "type": "string"
+            },
+            {
+              "type": "boolean"
             }
           ],
           "description": "Defines whether the renderer should render titles for object members."
@@ -655,18 +659,22 @@
         "renderEntityPrefixes": {
           "anyOf": [
             {
-              "type": "boolean"
-            },
-            {
               "const": "documentation",
               "type": "string"
             },
             {
               "const": "tableOfContents",
               "type": "string"
+            },
+            {
+              "type": "boolean"
             }
           ],
           "description": "Defines whether the renderer should render prefixes for entities."
+        },
+        "renderInternalEntities": {
+          "description": "Defines whether entities marked with an `@internal` tag should appear in the rendered output.",
+          "type": "boolean"
         },
         "renderOrder": {
           "description": "Defines the order in which entities should be rendered.",
@@ -678,15 +686,15 @@
         "renderParentNames": {
           "anyOf": [
             {
-              "type": "boolean"
-            },
-            {
               "const": "documentation",
               "type": "string"
             },
             {
               "const": "tableOfContents",
               "type": "string"
+            },
+            {
+              "type": "boolean"
             }
           ],
           "description": "Defines whether the parent name of members should be rendered in the signature."
@@ -713,11 +721,11 @@
         "stringLiteralEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how string literal type annotations should be encapsulated in the rendered output."
@@ -725,11 +733,11 @@
         "tagEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how tags like `@beta` or `@deprecated` should be encapsulated in the rendered output."
@@ -970,11 +978,11 @@
         "typeEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how type annotations should be encapsulated in the rendered output."
@@ -982,11 +990,11 @@
         "typeParameterEncapsulation": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Encapsulation"
-            },
-            {
               "const": false,
               "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
             }
           ],
           "description": "Defines how type parameters should be encapsulated in the rendered output."
