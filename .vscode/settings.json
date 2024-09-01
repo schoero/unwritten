@@ -4,7 +4,7 @@
   "[javascript][typescript][json][json5][jsonc][yaml]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "eslint.validate": ["javascript", "typescript", "json", "jsonc", "json5", "yaml"],
+  "eslint.validate": ["javascript", "typescript", "json", "jsonc", "json5", "yaml", "github-actions-workflow"],
   "editor.formatOnSave": false,
 
   // Prettier
