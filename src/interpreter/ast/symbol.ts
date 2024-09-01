@@ -1,6 +1,7 @@
 import {
   createClassEntity,
   createEnumEntity,
+  createEnumMemberEntity,
   createExportAssignmentEntity,
   createFunctionEntity,
   createInterfaceEntity,
@@ -15,6 +16,7 @@ import {
 import { getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import {
   isClassSymbol,
+  isEnumMemberSymbol,
   isEnumSymbol,
   isExportAssignmentSymbol,
   isFunctionSymbol,
@@ -107,6 +109,8 @@ export function interpretSymbol(ctx: InterpreterContext, symbol: Symbol): Entity
     return createExportAssignmentEntity(ctx, resolvedSymbol);
   } else if(isTypeParameterSymbol(ctx, resolvedSymbol)){
     return createTypeParameterEntity(ctx, resolvedSymbol);
+  } else if(isEnumMemberSymbol(ctx, resolvedSymbol)){
+    return createEnumMemberEntity(ctx, resolvedSymbol);
   }
 
   // Internal symbols

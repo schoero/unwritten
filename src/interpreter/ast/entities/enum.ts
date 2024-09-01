@@ -1,7 +1,7 @@
 import { getDeclarationId, getSymbolId, getSymbolIdByDeclaration } from "unwritten:interpreter:ast/shared/id";
 import { getNameByDeclaration, getNameBySymbol } from "unwritten:interpreter:ast/shared/name";
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
-import { isEnumDeclaration } from "unwritten:interpreter:typeguards/declarations";
+import { isEnumDeclaration, isEnumMemberDeclaration } from "unwritten:interpreter:typeguards/declarations";
 import { getJSDocProperties } from "unwritten:interpreter/ast/jsdoc";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/ts";
@@ -47,6 +47,13 @@ export const createEnumEntity = (ctx: InterpreterContext, symbol: Symbol): EnumE
 
 }));
 
+export const createEnumMemberEntity = (ctx: InterpreterContext, symbol: Symbol): EnumMemberEntity => withCachedEntity(ctx, symbol, () => {
+  const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
+
+  assert(declaration && isEnumMemberDeclaration(ctx, declaration), "Enum member declaration not found");
+
+  return createEnumMemberByDeclaration(ctx, declaration);
+});
 
 function mergeMembers(enums: ReturnType<typeof parseEnumDeclaration>[]): EnumEntity["members"] {
   return enums.reduce<EnumEntity["members"]>((acc, declaration) => [
@@ -71,7 +78,6 @@ function parseEnumDeclaration(ctx: InterpreterContext, declaration: EnumDeclarat
   };
 
 }
-
 
 function createEnumMemberByDeclaration(ctx: InterpreterContext, declaration: TSEnumMember): EnumMemberEntity {
 
