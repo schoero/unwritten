@@ -38,7 +38,6 @@ import type {
   TypeParameterDeclaration,
   VariableDeclaration
 } from "typescript";
-
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

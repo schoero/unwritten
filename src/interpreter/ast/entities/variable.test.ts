@@ -1,5 +1,3 @@
-import { expect, it } from "vitest";
-
 import { createVariableEntity } from "unwritten:interpreter:ast/entities/index";
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
@@ -9,6 +7,7 @@ import { scope } from "unwritten:tests:utils/scope";
 import { isJSDocText } from "unwritten:typeguards/jsdoc";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
+import { expect, it } from "vitest";
 
 
 scope("Interpreter", EntityKind.Variable, () => {

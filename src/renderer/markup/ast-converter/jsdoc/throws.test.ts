@@ -1,5 +1,3 @@
-import { describe, expect, it } from "vitest";
-
 import { createFunctionEntity } from "unwritten:interpreter:ast/entities/index";
 import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 import { TypeKind } from "unwritten:interpreter/enums/type";
@@ -7,6 +5,7 @@ import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
+import { describe, expect, it } from "vitest";
 
 
 scope("MarkupRenderer", JSDocKind.Throws, () => {

@@ -5,7 +5,6 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { getTypeByType } from "../type";
 
 import type { InterfaceType as TSInterfaceType } from "typescript";
-
 import type { InterfaceType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

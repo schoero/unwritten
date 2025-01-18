@@ -1,5 +1,3 @@
-import { expect, it } from "vitest";
-
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { convertBigIntLiteralTypeInline } from "unwritten:renderer:markup/ast-converter/types/index";
@@ -8,6 +6,7 @@ import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { ts } from "unwritten:utils/template";
+import { expect, it } from "vitest";
 
 import type { BigIntLiteralType } from "unwritten:interpreter:type-definitions/types";
 

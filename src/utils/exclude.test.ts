@@ -1,8 +1,7 @@
 /* eslint-disable eslint-plugin-perfectionist/sort-objects */
 /* eslint-disable eslint-plugin-typescript/naming-convention */
-import { describe, expect, it } from "vitest";
-
 import { scope } from "unwritten:tests:utils/scope";
+import { describe, expect, it } from "vitest";
 
 import { isExcluded } from "./exclude";
 

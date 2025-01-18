@@ -1,7 +1,6 @@
-import { expect, it } from "vitest";
-
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
+import { expect, it } from "vitest";
 
 import { renderIndentation } from "./indentation";
 

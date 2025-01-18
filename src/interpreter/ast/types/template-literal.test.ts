@@ -1,10 +1,9 @@
-import { assert, expect, it } from "vitest";
-
 import { createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
+import { assert, expect, it } from "vitest";
 
 
 scope("Interpreter", TypeKind.TemplateLiteral, () => {

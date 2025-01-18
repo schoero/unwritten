@@ -1,11 +1,9 @@
 import { highlight as tinyHighlight } from "tinyhighlight";
-
 import { DiagnosticSeverity } from "unwritten:type-definitions/unwritten";
 import { findCommonIndentation, removeCommonIndentation } from "unwritten:utils/template";
 
 import type { TokenColors } from "tinyhighlight";
 import type { CompilerOptions, Diagnostic, DiagnosticMessageChain, SourceFile } from "typescript";
-
 import type { DefaultContext } from "unwritten:type-definitions/context";
 import type { DiagnosticMessage } from "unwritten:type-definitions/unwritten";
 

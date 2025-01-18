@@ -1,8 +1,7 @@
-import { afterEach, beforeAll, expect, it, vitest } from "vitest";
-
 import { generateConfig } from "unwritten:config/generator.entry";
 import { scope } from "unwritten:tests:utils/scope";
 import { clearVirtualFS, existsSync } from "unwritten:tests:utils/virtual-fs";
+import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
 
 scope("Integration", "generateConfig", () => {

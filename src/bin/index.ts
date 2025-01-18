@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import { cac } from "cac";
-
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
 import { name, version } from "unwritten:utils/package-json.entry";
 

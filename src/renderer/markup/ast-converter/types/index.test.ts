@@ -1,7 +1,6 @@
-import { expect, it } from "vitest";
-
 import { getExportsFromIndexFile, getFilesInDirectory } from "unwritten:tests:utils/export";
 import { scope } from "unwritten:tests:utils/scope";
+import { expect, it } from "vitest";
 
 
 scope("Interpreter", "Entities", () => {

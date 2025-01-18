@@ -1,7 +1,6 @@
 import { getSymbolId, getTypeId } from "unwritten:interpreter:ast/shared/id";
 
 import type { Symbol, Type } from "typescript";
-
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

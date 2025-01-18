@@ -1,5 +1,3 @@
-import { afterEach, beforeAll, describe, expect, it, vitest } from "vitest";
-
 import {
   existsSync,
   mkdirSync,
@@ -9,6 +7,7 @@ import {
   writeFileSync
 } from "unwritten:platform/file-system/node";
 import { clearVirtualFS } from "unwritten:tests:utils/virtual-fs.js";
+import { afterEach, beforeAll, describe, expect, it, vitest } from "vitest";
 
 
 describe("virtual fs", () => {

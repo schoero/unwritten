@@ -1,8 +1,7 @@
-import { describe, expect, it } from "vitest";
-
 import { escapeMarkdown } from "unwritten:renderer/markup/markdown/utils/escape";
 import { scope } from "unwritten:tests:utils/scope";
 import { md } from "unwritten:utils/template";
+import { describe, expect, it } from "vitest";
 
 
 scope("Renderer", "Render abstraction", () => {

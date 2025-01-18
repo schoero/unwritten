@@ -11,7 +11,6 @@ import type {
   MethodSignature,
   Symbol
 } from "typescript";
-
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

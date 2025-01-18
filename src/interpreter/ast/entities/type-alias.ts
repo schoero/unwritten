@@ -11,7 +11,6 @@ import { assert } from "unwritten:utils:general";
 import { getTypeByTypeNode } from "../type";
 
 import type { Symbol } from "typescript";
-
 import type { TypeAliasEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

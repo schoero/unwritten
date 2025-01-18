@@ -89,7 +89,6 @@ import { isTypeReferenceType } from "unwritten:typeguards/types";
 import { isSymbolExcluded } from "unwritten:utils/exclude";
 
 import type { Declaration, Symbol, ObjectType as TSObjectType, Type as TSType, TypeNode } from "typescript";
-
 import type {
   DeclaredType,
   ResolvedType,

@@ -1,10 +1,9 @@
-import { expect, it } from "vitest";
-
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
 import { convertConstraintForType } from "unwritten:renderer/markup/ast-converter/shared/constraint";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
+import { expect, it } from "vitest";
 
 import type { ArrayType, NumberLiteralType } from "unwritten:interpreter:type-definitions/types";
 

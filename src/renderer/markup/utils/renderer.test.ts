@@ -1,7 +1,6 @@
-import { describe, expect, it } from "vitest";
-
 import { minMax } from "unwritten:renderer:markup/utils/renderer";
 import { scope } from "unwritten:tests:utils/scope";
+import { describe, expect, it } from "vitest";
 
 import type { ASTNode } from "unwritten:renderer:markup/types-definitions/nodes";
 

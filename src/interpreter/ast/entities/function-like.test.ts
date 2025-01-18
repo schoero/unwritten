@@ -1,10 +1,9 @@
-import { describe, expect, it } from "vitest";
-
 import { createFunctionLikeEntity } from "unwritten:interpreter:ast/entities/index";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { ts } from "unwritten:utils/template";
+import { describe, expect, it } from "vitest";
 
 
 scope("Interpreter", EntityKind.Function, () => {

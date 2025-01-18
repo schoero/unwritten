@@ -5,7 +5,6 @@ import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts";
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { IndexedAccessTypeNode, IndexedAccessType as TSIndexedAccessType } from "typescript";
-
 import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

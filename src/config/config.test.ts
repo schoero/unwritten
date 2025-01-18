@@ -1,10 +1,9 @@
 /* eslint-disable eslint-plugin-typescript/naming-convention */
-import { beforeAll, expect, it, vitest } from "vitest";
-
 import { createConfig } from "unwritten:config/config";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { mkdirSync, readFileSync, writeFileSync } from "unwritten:tests:utils/virtual-fs";
+import { beforeAll, expect, it, vitest } from "vitest";
 
 
 scope("Integration", "Config", async () => {

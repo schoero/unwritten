@@ -1,9 +1,8 @@
-import { afterEach, beforeAll, expect, it, vitest } from "vitest";
-
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { clearVirtualFS } from "unwritten:tests:utils/virtual-fs";
 import { findFile } from "unwritten:utils/finder";
+import { afterEach, beforeAll, expect, it, vitest } from "vitest";
 
 
 scope("Integration", "finder", async () => {

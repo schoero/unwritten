@@ -9,7 +9,6 @@ import {
 import { TypeKind } from "unwritten:interpreter/enums/type";
 
 import type { MappedTypeNode } from "typescript";
-
 import type { MappedType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

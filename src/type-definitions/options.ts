@@ -1,5 +1,4 @@
 import type ts from "typescript";
-
 import type { Renderer } from "unwritten:type-definitions/renderer";
 
 import type { BuiltInRenderers } from "../renderer/enums/renderer";

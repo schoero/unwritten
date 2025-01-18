@@ -1,5 +1,4 @@
 import { isAbsolute, sep } from "node:path";
-
 import { homeDirectory } from "unwritten:platform/os/node";
 import sharedPath from "unwritten:platform/path/shared";
 import { cwd } from "unwritten:platform/process/node";

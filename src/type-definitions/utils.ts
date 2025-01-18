@@ -29,14 +29,14 @@ export type DeepPartialByKey<Type, SelectedKeys extends PropertyKey = PropertyKe
         : Type;
 
 type DeepPartialByKeyObject<Type, SelectedKeys extends PropertyKey, Deep extends boolean> =
+  { [Key in keyof Type as Key extends SelectedKeys ? Key : never]?: Deep extends true
+    ? DeepPartialByKey<Type[Key], SelectedKeys>
+    : Type[Key]
+  } &
   {
     [Key in keyof Type as Key extends SelectedKeys ? never : Key]: Deep extends true
       ? DeepPartialByKey<Type[Key], SelectedKeys>
       : Type[Key]
-  } &
-  { [Key in keyof Type as Key extends SelectedKeys ? Key : never]?: Deep extends true
-    ? DeepPartialByKey<Type[Key], SelectedKeys>
-    : Type[Key]
   } extends infer IntersectionType ? (
       { [key in keyof IntersectionType]: IntersectionType[key] }
     ) : never;

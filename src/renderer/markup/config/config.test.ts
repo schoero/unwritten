@@ -1,5 +1,3 @@
-import { describe, expect, it } from "vitest";
-
 import { createClassEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { convertClassEntityForDocumentation } from "unwritten:renderer:markup/ast-converter/entities/index";
@@ -14,6 +12,7 @@ import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general.js";
 import { ts } from "unwritten:utils/template";
+import { describe, expect, it } from "vitest";
 
 import type { StringLiteralType, StringType } from "unwritten:interpreter:type-definitions/types";
 import type { Testable } from "unwritten:type-definitions/utils";

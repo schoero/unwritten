@@ -3,7 +3,6 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withCachedType } from "unwritten:interpreter/utils/ts";
 
 import type { StringLiteralType as TSStringLiteralType } from "typescript";
-
 import type { StringLiteralType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

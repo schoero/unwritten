@@ -1,6 +1,5 @@
 import type { TypeChecker } from "typescript";
 import type ts from "typescript";
-
 import type { Entity } from "unwritten:interpreter:type-definitions/entities";
 import type { Type } from "unwritten:interpreter:type-definitions/types";
 import type { OS } from "unwritten:type-definitions/platform";

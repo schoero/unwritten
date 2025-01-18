@@ -14,10 +14,10 @@ interface BaseMarkupRenderer extends Renderer {
 interface BaseMarkupRenderContext {
   currentFile: SourceFile;
   get indentation(): number;
-  get nesting(): number;
+  set indentation(value: number);
   links: LinkRegistry;
   memberContext: string[];
-  set indentation(value: number);
+  get nesting(): number;
   set nesting(value: number);
   _indentation?: number;
   _nesting?: number;

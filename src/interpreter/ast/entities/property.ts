@@ -25,7 +25,6 @@ import type {
   ShorthandPropertyAssignment,
   Symbol
 } from "typescript";
-
 import type { PropertyEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

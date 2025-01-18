@@ -47,7 +47,6 @@ import { assert } from "unwritten:utils:general";
 import { isSymbolExcluded } from "unwritten:utils/exclude";
 
 import type { Symbol } from "typescript";
-
 import type { Entity, SourceFileEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

@@ -1,5 +1,3 @@
-import { expect, it } from "vitest";
-
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/type-alias";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type";
@@ -8,6 +6,7 @@ import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
+import { expect, it } from "vitest";
 
 // TODO: Implement this test
 

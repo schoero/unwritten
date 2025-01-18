@@ -9,7 +9,6 @@ import type {
   JSDocText,
   JSDocThrowsTag
 } from "typescript";
-
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

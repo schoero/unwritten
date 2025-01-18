@@ -7,7 +7,6 @@ import {
 import { getTypeByType } from "../type";
 
 import type { Declaration } from "typescript";
-
 import type { Type } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

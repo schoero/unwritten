@@ -6,7 +6,6 @@ import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.j
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { ArrayTypeNode, TypeReference } from "typescript";
-
 import type { ArrayType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

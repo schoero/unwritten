@@ -1,5 +1,3 @@
-import { expect, it } from "vitest";
-
 import { createExportAssignmentEntity } from "unwritten:interpreter/ast/entities/index";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import {
@@ -19,6 +17,7 @@ import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
+import { expect, it } from "vitest";
 
 import type { ConvertedObjectTypeMultiline } from "unwritten:renderer/markup/types-definitions/renderer";
 

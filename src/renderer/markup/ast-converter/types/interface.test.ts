@@ -1,5 +1,3 @@
-import { expect, it } from "vitest";
-
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { convertInterfaceTypeMultiline } from "unwritten:renderer:markup/ast-converter/types/index";
@@ -10,6 +8,7 @@ import { scope } from "unwritten:tests:utils/scope";
 import { isTypeReferenceType } from "unwritten:typeguards/types";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
+import { expect, it } from "vitest";
 
 import type { InterfaceType } from "unwritten:interpreter:type-definitions/types";
 

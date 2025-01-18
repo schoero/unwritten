@@ -9,7 +9,6 @@ import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/
 import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";
-
 import type { NamespaceEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

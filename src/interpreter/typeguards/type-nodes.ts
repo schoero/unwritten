@@ -17,7 +17,6 @@ import type {
   TypeReferenceNode,
   UnionTypeNode
 } from "typescript";
-
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
 

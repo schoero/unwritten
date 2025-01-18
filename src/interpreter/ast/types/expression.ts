@@ -5,7 +5,6 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { ExpressionWithTypeArguments } from "typescript";
-
 import type { ExpressionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

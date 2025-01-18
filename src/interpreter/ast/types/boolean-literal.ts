@@ -3,7 +3,6 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withCachedType } from "unwritten:interpreter/utils/ts";
 
 import type { LiteralType } from "typescript";
-
 import type { BooleanLiteralType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

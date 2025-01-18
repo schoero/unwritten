@@ -5,7 +5,6 @@ import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.j
 import { getTypeByTypeNode } from "../type";
 
 import type { ConditionalTypeNode, ConditionalType as TSConditionalType } from "typescript";
-
 import type { ConditionalType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

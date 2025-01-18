@@ -1,6 +1,5 @@
-import { describe, expectTypeOf, it, test } from "vitest";
-
 import { scope } from "unwritten:tests:utils/scope";
+import { describe, expectTypeOf, it, test } from "vitest";
 
 import type { Complete, DeepPartialByKey, DeepRequiredByKey, Disable, Enable, Toggle } from "./utils";
 
