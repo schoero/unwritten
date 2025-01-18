@@ -1,5 +1,4 @@
 import ts, { ModuleResolutionKind } from "typescript";
-
 import { getDefaultCompilerOptions, reportCompilerDiagnostics } from "unwritten:compiler:shared";
 import { getDefaultConfig } from "unwritten:config/config";
 import { createContext } from "unwritten:interpreter/utils/context";
@@ -49,7 +48,6 @@ export function compile(code: CompilerInput | string, tsconfig?: ts.CompilerOpti
     return acc;
   }, {});
 
-
   const compilerOptions = {
     ...getDefaultCompilerOptions(defaultContext),
     moduleResolution: ModuleResolutionKind.Bundler,
@@ -96,7 +94,7 @@ export function compile(code: CompilerInput | string, tsconfig?: ts.CompilerOpti
   const checker = program.getTypeChecker();
 
   // Source files
-  const compiledSourceFiles = program.getSourceFiles();
+  const compiledSourceFiles = Object.values(sourceFiles);
   const fileSymbols = compiledSourceFiles.map(
     file => checker.getSymbolAtLocation(file)
   ).filter(sourceFileSymbol => !!sourceFileSymbol);

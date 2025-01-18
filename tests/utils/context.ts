@@ -1,5 +1,4 @@
 import ts from "typescript";
-
 import { getDefaultConfig } from "unwritten:config/config";
 import { logger } from "unwritten:platform/logger/node";
 import os from "unwritten:platform/os/node";
@@ -49,10 +48,11 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
 });
 
 
-export function createRenderContext(rendererName?: BuiltInRenderers.HTML): HTMLRenderNodeContext;
-export function createRenderContext(rendererName?: BuiltInRenderers.Markdown): MarkdownRenderNodeContext;
-export function createRenderContext(rendererName?: BuiltInRenderers.JSON): JSONRenderContext;
-export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRenderers.HTML): RenderContext {
+export function createRenderContext(): HTMLRenderNodeContext;
+export function createRenderContext(rendererName: BuiltInRenderers.HTML, useTestConfig?: boolean): HTMLRenderNodeContext;
+export function createRenderContext(rendererName: BuiltInRenderers.Markdown, useTestConfig?: boolean): MarkdownRenderNodeContext;
+export function createRenderContext(rendererName: BuiltInRenderers.JSON, useTestConfig?: boolean): JSONRenderContext;
+export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRenderers.HTML, useTestConfig: boolean = true): RenderContext {
 
   const defaultContext = createDefaultContext({
     fs,
@@ -68,7 +68,7 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
 
       const ctx = {
         ...defaultContext,
-        config: JSON.parse(JSON.stringify(testConfig)),
+        config: structuredClone(useTestConfig ? testConfig : getDefaultConfig()),
         renderer: htmlRenderer
       } satisfies RenderContext;
 
@@ -83,7 +83,7 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
 
       const ctx = {
         ...defaultContext,
-        config: JSON.parse(JSON.stringify(testConfig)),
+        config: structuredClone(useTestConfig ? testConfig : getDefaultConfig()),
         renderer: markdownRenderer
       } satisfies RenderContext;
 
@@ -98,7 +98,7 @@ export function createRenderContext(rendererName: BuiltInRenderers = BuiltInRend
 
       const ctx = {
         ...defaultContext,
-        config: JSON.parse(JSON.stringify(testConfig)),
+        config: structuredClone(useTestConfig ? testConfig : getDefaultConfig()),
         renderer: jsonRenderer
       } satisfies RenderContext;
 
