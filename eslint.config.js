@@ -37,7 +37,7 @@ const dependencyInjection = [
   }
 ];
 
-/** @type { import("eslint").Linter.FlatConfig[] } */
+/** @type { import("eslint").Linter.Config[] } */
 export default [
   ...sharedRules,
 
