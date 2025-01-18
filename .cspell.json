@@ -1,7 +1,8 @@
 {
   "ignorePaths": [
     "schemas",
-    "local"
+    "local",
+    ".vscode"
   ],
   "import": [
     "@schoero/configs/cspell"
