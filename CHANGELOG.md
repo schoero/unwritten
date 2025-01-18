@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.2.14
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.2.13...v0.2.14)
+
+### Features
+
+- Add `typeQuery` type ([3ddd6c66](https://github.com/schoero/unwritten/commit/3ddd6c66))
+
+### Fixes
+
+- Add type arguments ([4dcbdb11](https://github.com/schoero/unwritten/commit/4dcbdb11))
+- Rendering of additional whitespaces ([83b808c2](https://github.com/schoero/unwritten/commit/83b808c2))
+
+### Styles
+
+- Eslint fixes ([cf979713](https://github.com/schoero/unwritten/commit/cf979713))
+
 ## v0.2.13
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.2.7...v0.2.13)

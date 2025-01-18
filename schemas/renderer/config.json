@@ -494,6 +494,18 @@
           ],
           "type": "object"
         },
+        "typeArgumentEncapsulation": {
+          "anyOf": [
+            {
+              "const": false,
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
+            }
+          ],
+          "description": "Defines how type arguments should be encapsulated in the rendered output."
+        },
         "typeEncapsulation": {
           "anyOf": [
             {
@@ -974,6 +986,18 @@
             "valueType"
           ],
           "type": "object"
+        },
+        "typeArgumentEncapsulation": {
+          "anyOf": [
+            {
+              "const": false,
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/Encapsulation"
+            }
+          ],
+          "description": "Defines how type arguments should be encapsulated in the rendered output."
         },
         "typeEncapsulation": {
           "anyOf": [
