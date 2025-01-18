@@ -102,6 +102,7 @@ export type ConvertedTypeInline =
   | ConvertedMappedTypeInline
   | ConvertedPrimitiveTypeInline
   | ConvertedTupleTypeInline
+  | ConvertedTypeQueryTypeInline
   | ConvertedUnionTypeInline;
 
 
@@ -188,6 +189,9 @@ export type ConvertedIndexedAccessTypeMultiline = ConditionalNode | ConvertedTyp
 
 // Type parameter
 export type ConvertedTypeParameterTypeInline = ASTNode;
+
+// Type query
+export type ConvertedTypeQueryTypeInline = ASTNode;
 
 // Array type
 export type ConvertedArrayTypeInline = ASTNode;
@@ -496,11 +500,6 @@ export type ConvertedTypeParameterEntityForDocumentation = Empty | MultilineNode
   constraint: Empty | InlineTitleNode,
   initializer: Empty | InlineTitleNode
 ]>;
-
-// Type Argument
-export type ConvertedTypeArgumentEntityForSignature = ASTNode;
-export type ConvertedTypeArgumentEntitiesForSignature = ASTNode[];
-export type ConvertedTypeArgumentEntityForDocumentation = ASTNode[];
 
 // Property
 export type ConvertedPropertyEntityForTableOfContents = AnchorNode;

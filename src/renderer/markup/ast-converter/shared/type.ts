@@ -49,6 +49,7 @@ import {
 import { createParagraphNode, createTitleNode } from "unwritten:renderer:markup/utils/nodes";
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import { isMultilineType, isMultilineUnionType } from "unwritten:renderer:markup/utils/types";
+import { convertTypeQueryTypeInline } from "unwritten:renderer/markup/ast-converter/types/type-query";
 import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
 import {
   isAnyType,
@@ -78,6 +79,7 @@ import {
   isTupleType,
   isTypeLiteralType,
   isTypeParameterType,
+  isTypeQueryType,
   isTypeReferenceType,
   isUndefinedType,
   isUnionType,
@@ -195,6 +197,8 @@ function convertTypeForInlineType(ctx: MarkupRenderContext, type: Type | Type): 
     return convertConditionalTypeInline(ctx, type);
   } else if(isIndexedAccessType(type)){
     return convertIndexedAccessTypeInline(ctx, type);
+  } else if(isTypeQueryType(type)){
+    return convertTypeQueryTypeInline(ctx, type);
   }
 
   throw new Error(`Type ${type.kind} is not yet implemented`);
@@ -233,6 +237,6 @@ function convertTypeForMultilineType(ctx: MarkupRenderContext, type: MultilineTy
     return convertIndexedAccessTypeMultiline(ctx, type);
   }
 
-  throw new Error("Type is not yet implemented");
+  throw new Error(`Type ${type.kind} is not yet implemented`);
 
 }

@@ -32,6 +32,7 @@ import type {
   Type,
   TypeLiteralType,
   TypeParameterType,
+  TypeQueryType,
   TypeReferenceType,
   UndefinedType,
   UnionType,
@@ -166,6 +167,10 @@ export function isTypeLiteralType(type: Type): type is TypeLiteralType {
 
 export function isTypeParameterType(type: Type): type is TypeParameterType {
   return type.kind === TypeKind.TypeParameter;
+}
+
+export function isTypeQueryType(type: Type): type is TypeQueryType {
+  return type.kind === TypeKind.TypeQuery;
 }
 
 export function isTypeReferenceType(type: Type): type is TypeReferenceType {

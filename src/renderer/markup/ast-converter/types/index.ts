@@ -25,6 +25,7 @@ export * from "./template-literal";
 export * from "./tuple";
 export * from "./type-literal";
 export * from "./type-parameter";
+export * from "./type-query";
 export * from "./type-reference";
 export * from "./undefined";
 export * from "./union";
