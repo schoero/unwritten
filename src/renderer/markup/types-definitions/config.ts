@@ -139,6 +139,9 @@ export interface MarkupRenderConfig {
     variable_one?: string;
   };
 
+  /** Defines how type arguments should be encapsulated in the rendered output.*/
+  typeArgumentEncapsulation?: false | Encapsulation;
+
   /** Defines how type annotations should be encapsulated in the rendered output. */
   typeEncapsulation?: false | Encapsulation;
 

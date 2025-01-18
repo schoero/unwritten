@@ -112,6 +112,7 @@ const defaultRenderConfig: Complete<MarkupRenderConfig> = {
     variable_many: "variables",
     variable_one: "variable"
   },
+  typeArgumentEncapsulation: ["&lt;", "&gt;"],
   typeEncapsulation: ["`", "`"],
   typeParameterEncapsulation: ["&lt;", "&gt;"]
 };

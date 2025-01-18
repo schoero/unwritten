@@ -4,6 +4,7 @@ import { encapsulate } from "unwritten:renderer:markup/utils/renderer";
 import { renderNode } from "unwritten:renderer/index";
 import { convertEntityToAnchor } from "unwritten:renderer/markup/ast-converter/index";
 import { getAnchorLink } from "unwritten:renderer/markup/registry/registry";
+import { convertTypeArguments } from "unwritten:renderer/markup/utils/type-arguments";
 import { getRenderConfig } from "unwritten:renderer/utils/config";
 import { renderNewLine } from "unwritten:renderer/utils/new-line";
 import { isFunctionLikeEntity, isLinkableEntity, isSignatureEntity } from "unwritten:typeguards/entities";
@@ -29,6 +30,7 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContext, typeRef
   }
 
   // Use the first signature if the target is a function-like entity
+  // TODO: find the correct signature
   const entity = isFunctionLikeEntity(typeReferenceType.target)
     ? typeReferenceType.target.signatures[0]
     : typeReferenceType.target;
@@ -37,7 +39,13 @@ export function convertTypeReferenceTypeInline(ctx: MarkupRenderContext, typeRef
     return fallback;
   }
 
-  const encapsulatedName = encapsulate(typeReferenceType.name ?? entity.name, renderConfig.typeEncapsulation);
+  const typeArguments = typeReferenceType.typeArguments && typeReferenceType.typeArguments.length > 0 &&
+    convertTypeArguments(ctx, typeReferenceType.typeArguments);
+
+  const encapsulatedName = encapsulate([
+    typeReferenceType.name ?? entity.name,
+    typeArguments
+  ], renderConfig.typeEncapsulation);
   const renderedName = renderNode(ctx, encapsulatedName);
 
   const anchor = convertEntityToAnchor(ctx, entity, renderedName);

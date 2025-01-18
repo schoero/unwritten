@@ -1,6 +1,4 @@
 /* eslint-disable eslint-plugin-typescript/naming-convention */
-import { expect, it } from "vitest";
-
 import { createSourceFileEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { BuiltInRenderers } from "unwritten:renderer/enums/renderer";
@@ -8,6 +6,7 @@ import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { ts } from "unwritten:utils/template";
+import { expect, it } from "vitest";
 
 
 function extractTypeOfRenderedContent(typeName: string, content: string) {
@@ -120,11 +119,46 @@ scope("MarkupRenderer", TypeKind.TypeReference, () => {
 
     const renderedOutput = ctx.renderer.render(ctx, sourceFileEntities);
 
-    const [typesPath, typesContent] = Object.entries(renderedOutput)[0];
-    const [indexPath, indexContent] = Object.entries(renderedOutput)[1];
+    const [indexPath, indexContent] = Object.entries(renderedOutput)[0];
+    const [typesPath, typesContent] = Object.entries(renderedOutput)[1];
 
-    it("should render a link to the referenced target, if the target symbol is exported", () => {
+    it("should render a link to the referenced in another file target, if the target symbol is exported", () => {
       expect(extractTypeOfRenderedContent("test", indexContent).inlineType).toContain("[Test](./types.md#test)");
+    });
+
+  }
+
+  {
+
+    const testFileContent = ts`
+      export interface Interface<T> {
+        prop: T;
+      }
+
+      type Internal = "internal";
+      export type Exported = "exported"
+
+      export type DirectGenericType = Interface<"direct">;
+      export type InternalGenericType = Interface<Internal>;
+      export type ExportedGenericType = Interface<Exported>;
+    `;
+
+    const { ctx: compilerContext, fileSymbols } = compile(testFileContent);
+
+    const sourceFileEntities = fileSymbols.map(fileSymbol => {
+      return createSourceFileEntity(compilerContext, fileSymbol);
+    });
+
+    const ctx = createRenderContext(BuiltInRenderers.Markdown);
+
+    const renderedOutput = ctx.renderer.render(ctx, sourceFileEntities);
+
+    const [filePath, content] = Object.entries(renderedOutput)[0];
+
+    it("should render type arguments", () => {
+      expect(extractTypeOfRenderedContent("DirectGenericType", content).inlineType).toContain("\"direct\"");
+      expect(extractTypeOfRenderedContent("InternalGenericType", content).inlineType).toContain("\"internal\"");
+      expect(extractTypeOfRenderedContent("ExportedGenericType", content).inlineType).toContain("<[Exported](#exported)>");
     });
 
   }

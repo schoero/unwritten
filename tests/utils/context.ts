@@ -32,6 +32,7 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
       propertyEncapsulation: false,
       renderEntityPrefixes: false,
       tagEncapsulation: false,
+      typeArgumentEncapsulation: ["<", ">"],
       typeEncapsulation: false,
       typeParameterEncapsulation: ["<", ">"]
     },
@@ -40,6 +41,7 @@ const testConfig: CompleteConfig = override(getDefaultConfig(), {
       propertyEncapsulation: false,
       renderEntityPrefixes: false,
       tagEncapsulation: false,
+      typeArgumentEncapsulation: ["<", ">"],
       typeEncapsulation: false,
       typeParameterEncapsulation: ["<", ">"]
     }
