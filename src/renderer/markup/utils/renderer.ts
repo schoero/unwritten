@@ -131,7 +131,7 @@ export function renderEntityPrefix(ctx: MarkupRenderContext, target: "documentat
 
 export function spaceBetween(...nodes: ASTNode[]) {
   return nodes
-    .filter(node => !!node)
+    .filter(node => !!node && (!Array.isArray(node) || node.length > 0))
     .reduce<ASTNode[]>((acc, node, index) => {
       if(index > 0){
         acc.push(" ", node);

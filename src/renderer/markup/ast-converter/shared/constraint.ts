@@ -1,6 +1,6 @@
 import { convertType } from "unwritten:renderer/markup/ast-converter/shared/type";
 import { registerAnonymousAnchor } from "unwritten:renderer/markup/registry/registry";
-import { createInlineTitleNode, createParagraphNode } from "unwritten:renderer/markup/utils/nodes";
+import { createInlineTitleNode } from "unwritten:renderer/markup/utils/nodes";
 import { spaceBetween } from "unwritten:renderer/markup/utils/renderer";
 import { getTranslator } from "unwritten:renderer/markup/utils/translations";
 import { isMultilineType } from "unwritten:renderer/markup/utils/types";
@@ -16,11 +16,9 @@ export function convertConstraintForType(ctx: MarkupRenderContext, type: Type) {
   const { inlineType, multilineType } = convertType(ctx, type);
 
   const inlineConstraint = !isMultilineType(type) || !multilineType
-    ? createParagraphNode(
-      spaceBetween(
-        `${translate("constraint", { capitalize: true })}:`,
-        inlineType
-      )
+    ? spaceBetween(
+      `${translate("constraint", { capitalize: true })}:`,
+      inlineType
     )
     : undefined;
 
