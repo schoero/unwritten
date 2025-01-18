@@ -34,5 +34,5 @@ export function isMultilineType(type: Type): type is MultilineType {
 }
 
 export function isMultilineUnionType(type: Type) {
-  return isUnionType(type) && type.types.some(type => isMultilineType(type));
+  return isUnionType(type) && (type.types.some(type => isMultilineType(type)) || type.types.length > 10);
 }
