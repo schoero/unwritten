@@ -9,6 +9,7 @@ import {
 import { assert } from "unwritten:utils:general";
 
 import type { Program, Symbol, Type as TSType } from "typescript";
+
 import type { Entity } from "unwritten:interpreter:type-definitions/entities";
 import type { Type } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";

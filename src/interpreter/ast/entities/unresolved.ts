@@ -5,6 +5,7 @@ import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { withCachedEntity } from "unwritten:interpreter/utils/ts";
 
 import type { Symbol } from "typescript";
+
 import type { UnresolvedEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

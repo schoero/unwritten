@@ -1,8 +1,9 @@
+import { expect, it } from "vitest";
+
 import { createItalicNode } from "unwritten:renderer:markup/utils/nodes";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { html } from "unwritten:utils/template";
-import { expect, it } from "vitest";
 
 import { renderItalicNode } from "./italic";
 

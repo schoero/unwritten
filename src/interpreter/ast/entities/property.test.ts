@@ -1,3 +1,5 @@
+import { assert, expect, it } from "vitest";
+
 import {
   createClassEntity,
   createTypeAliasEntity,
@@ -10,7 +12,6 @@ import { scope } from "unwritten:tests:utils/scope";
 import { isJSDocText } from "unwritten:typeguards/jsdoc";
 import { isObjectType, isStringLiteralType, isTypeReferenceType } from "unwritten:typeguards/types";
 import { ts } from "unwritten:utils/template";
-import { assert, expect, it } from "vitest";
 
 
 scope("Interpreter", EntityKind.Property, () => {

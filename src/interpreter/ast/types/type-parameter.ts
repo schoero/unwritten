@@ -6,6 +6,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { getTypeByType } from "../type";
 
 import type { TypeParameter } from "typescript";
+
 import type { TypeParameterType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

@@ -1,8 +1,9 @@
 /* eslint-disable eslint-plugin-typescript/naming-convention */
+import { expect, it } from "vitest";
+
 import { getTranslator } from "unwritten:renderer:markup/utils/translations";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
-import { expect, it } from "vitest";
 
 
 scope("Renderer", "translations", () => {

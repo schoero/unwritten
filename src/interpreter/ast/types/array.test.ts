@@ -1,3 +1,5 @@
+import { assert, describe, expect, it } from "vitest";
+
 import {
   createInterfaceEntity,
   createTypeAliasEntity,
@@ -8,7 +10,6 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { ts } from "unwritten:utils/template";
-import { assert, describe, expect, it } from "vitest";
 
 
 scope("Interpreter", TypeKind.Array, () => {

@@ -1,4 +1,5 @@
 import type { TypeChecker } from "typescript";
+
 import type { CompleteConfig } from "unwritten:type-definitions/config";
 import type {
   DefaultBrowserContext,

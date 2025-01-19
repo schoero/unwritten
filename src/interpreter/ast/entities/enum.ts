@@ -10,6 +10,7 @@ import { assert } from "unwritten:utils:general";
 import { getTypeByDeclaration } from "../type";
 
 import type { EnumDeclaration, Symbol, EnumMember as TSEnumMember } from "typescript";
+
 import type { EnumEntity, EnumMemberEntity, MergedEnumEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

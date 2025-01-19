@@ -2,6 +2,7 @@ import { createFunctionLikeEntity } from "unwritten:interpreter:ast/entities/ind
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 
 import type { Symbol } from "typescript";
+
 import type { GetterEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

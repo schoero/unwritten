@@ -8,6 +8,7 @@ import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/
 import { createSourceFileEntity } from "./source-file";
 
 import type { Symbol } from "typescript";
+
 import type { ModuleEntity } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

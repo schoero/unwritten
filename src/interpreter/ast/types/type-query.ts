@@ -6,6 +6,7 @@ import { resolveSymbolInCaseOfImport } from "unwritten:interpreter/utils/ts";
 import { getResolvedTypeByTypeNode, getTypeByResolvedAndDeclaredType, getTypeByTypeNode } from "../type";
 
 import type { TypeQueryNode } from "typescript";
+
 import type { TypeQueryType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

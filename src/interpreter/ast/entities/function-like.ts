@@ -13,6 +13,7 @@ import { withCachedEntity, withLockedSymbol } from "unwritten:interpreter/utils/
 import { assert } from "unwritten:utils/general";
 
 import type { Symbol } from "typescript";
+
 import type {
   FunctionLikeEntityKinds,
   InferFunctionLikeEntityKind

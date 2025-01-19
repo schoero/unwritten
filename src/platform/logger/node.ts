@@ -1,9 +1,11 @@
 import { stdout } from "node:process";
+
 import { homeDirectory, lineEndings } from "unwritten:platform/os/node";
 import { env } from "unwritten:platform/process/node";
 import { name, version } from "unwritten:utils/package-json.entry";
 
 import type { WriteStream } from "node:tty";
+
 import type { DefaultContext } from "unwritten:type-definitions/context";
 import type { Logger } from "unwritten:type-definitions/platform";
 

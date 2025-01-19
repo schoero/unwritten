@@ -13,6 +13,7 @@ import {
 } from "unwritten:interpreter/typeguards/jsdoc";
 
 import type { Declaration, JSDoc, JSDocComment, NodeArray, JSDocTag as TSJSDocTag } from "typescript";
+
 import type { JSDocProperties, JSDocTag, JSDocTags } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

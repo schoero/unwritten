@@ -17,6 +17,7 @@ import {
 } from "../type";
 
 import type { SignatureDeclaration, Signature as TSSignature } from "typescript";
+
 import type { SignatureEntity, SignatureEntityKinds } from "unwritten:interpreter:type-definitions/entities";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

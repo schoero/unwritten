@@ -1,3 +1,5 @@
+import { assert, expect, it } from "vitest";
+
 import { createInterfaceEntity, createTypeAliasEntity } from "unwritten:interpreter:ast/entities/index";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { TypeKind } from "unwritten:interpreter/enums/type";
@@ -5,7 +7,6 @@ import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { isJSDocText } from "unwritten:typeguards/jsdoc";
 import { ts } from "unwritten:utils/template";
-import { assert, expect, it } from "vitest";
 
 
 scope("Interpreter", EntityKind.Interface, () => {

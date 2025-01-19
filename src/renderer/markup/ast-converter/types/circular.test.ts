@@ -1,3 +1,5 @@
+import { expect, it } from "vitest";
+
 import { createInterfaceEntity } from "unwritten:interpreter:ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { compile } from "unwritten:tests:utils/compile";
@@ -6,7 +8,6 @@ import { isCircularEntity } from "unwritten:typeguards/entities";
 import { isCircularType, isInterfaceType, isTypeReferenceType } from "unwritten:typeguards/types";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
-import { expect, it } from "vitest";
 
 
 scope("Renderer", TypeKind.Circular, () => {

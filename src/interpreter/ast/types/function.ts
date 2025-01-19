@@ -5,6 +5,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.js";
 
 import type { ObjectType } from "typescript";
+
 import type { FunctionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

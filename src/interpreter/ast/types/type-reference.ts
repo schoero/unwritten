@@ -8,6 +8,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { getResolvedTypeByTypeNode, getTypeByTypeNode } from "../type";
 
 import type { TypeReferenceType as TSTypeReferenceType, TypeReferenceNode } from "typescript";
+
 import type { ExpressionType, TypeReferenceType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

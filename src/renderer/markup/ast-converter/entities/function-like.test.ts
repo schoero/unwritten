@@ -1,3 +1,5 @@
+import { expect, it } from "vitest";
+
 import { createFunctionEntity, createVariableEntity } from "unwritten:interpreter/ast/entities/index";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import {
@@ -9,7 +11,6 @@ import { compile } from "unwritten:tests:utils/compile";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { ts } from "unwritten:utils/template";
-import { expect, it } from "vitest";
 
 import type { ObjectLiteralType } from "unwritten:interpreter:type-definitions/types";
 

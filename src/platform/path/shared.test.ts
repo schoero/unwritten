@@ -1,5 +1,6 @@
-import { scope } from "unwritten:tests:utils/scope";
 import { describe, expect, it } from "vitest";
+
+import { scope } from "unwritten:tests:utils/scope";
 
 import {
   absolute,

@@ -1,8 +1,10 @@
 import { minimatch } from "minimatch";
+
 import { getPositionByDeclaration } from "unwritten:interpreter:ast/shared/position";
 import { getNameByDeclaration } from "unwritten:interpreter/ast/shared/name";
 
 import type { Declaration, Symbol } from "typescript";
+
 import type { InterpreterConfig } from "unwritten:type-definitions/config";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

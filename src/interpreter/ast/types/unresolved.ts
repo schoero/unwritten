@@ -8,6 +8,7 @@ import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { getTypeByType } from "../type";
 
 import type { Type, TypeNode } from "typescript";
+
 import type { UnresolvedType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

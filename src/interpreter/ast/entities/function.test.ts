@@ -1,3 +1,5 @@
+import { expect, it } from "vitest";
+
 import { getSymbolId } from "unwritten:interpreter:ast/shared/id";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { TypeKind } from "unwritten:interpreter/enums/type";
@@ -7,7 +9,6 @@ import { isJSDocText } from "unwritten:typeguards/jsdoc";
 import { isUnresolvedType } from "unwritten:typeguards/types";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
-import { expect, it } from "vitest";
 
 import { createFunctionEntity } from "./function";
 

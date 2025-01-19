@@ -1,6 +1,7 @@
+import { describe, expect, it } from "vitest";
+
 import { evaluateCondition } from "unwritten:renderer/markup/utils/condition";
 import { scope } from "unwritten:tests:utils/scope";
-import { describe, expect, it } from "vitest";
 
 
 scope("Renderer", "utils", () => {

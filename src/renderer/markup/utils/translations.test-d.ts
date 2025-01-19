@@ -1,5 +1,6 @@
-import { scope } from "unwritten:tests:utils/scope";
 import { expectTypeOf, test } from "vitest";
+
+import { scope } from "unwritten:tests:utils/scope";
 
 import type { TranslationWithoutSuffixes } from "./translations";
 

@@ -1,3 +1,5 @@
+import { expect, it } from "vitest";
+
 import { createObjectLikeType } from "unwritten:interpreter:ast/types/index";
 import { isObjectType } from "unwritten:interpreter:typeguards/types";
 import { createTypeAliasEntity } from "unwritten:interpreter/ast/entities/index";
@@ -6,7 +8,6 @@ import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
-import { expect, it } from "vitest";
 
 
 scope("Interpreter", TypeKind.Object, () => {

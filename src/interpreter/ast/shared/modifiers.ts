@@ -1,6 +1,7 @@
 import { isPropertyDeclaration } from "unwritten:interpreter:typeguards/declarations";
 
 import type { Declaration } from "typescript";
+
 import type { Modifiers, NativeModifiers } from "unwritten:interpreter:type-definitions/shared";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

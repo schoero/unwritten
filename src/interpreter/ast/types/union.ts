@@ -5,6 +5,7 @@ import { withCachedType, withLockedType } from "unwritten:interpreter/utils/ts.j
 import { getTypeByType, getTypeByTypeNode } from "../type";
 
 import type { UnionType as TSUnionType, UnionTypeNode } from "typescript";
+
 import type { UnionType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

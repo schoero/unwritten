@@ -1,6 +1,7 @@
 import { isConstructorDeclaration } from "unwritten:interpreter:typeguards/declarations";
 
 import type { Declaration, Node, Symbol, Type } from "typescript";
+
 import type { Name } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

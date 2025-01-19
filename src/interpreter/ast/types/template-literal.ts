@@ -4,6 +4,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { getTypeByTypeNode } from "../type";
 
 import type { TemplateLiteralTypeNode } from "typescript";
+
 import type { TemplateLiteralType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

@@ -3,6 +3,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { withCachedType } from "unwritten:interpreter/utils/ts";
 
 import type { NumberLiteralType as TSNumberLiteralType } from "typescript";
+
 import type { NumberLiteralType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

@@ -1,3 +1,5 @@
+import { describe, expect, it } from "vitest";
+
 import { createClassEntity, createInterfaceEntity } from "unwritten:interpreter/ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import {
@@ -10,7 +12,6 @@ import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
-import { describe, expect, it } from "vitest";
 
 import type { InterfaceEntity } from "unwritten:interpreter:type-definitions/entities";
 

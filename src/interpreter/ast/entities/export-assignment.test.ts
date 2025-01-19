@@ -1,3 +1,5 @@
+import { expect, it } from "vitest";
+
 import { createExportAssignmentEntity } from "unwritten:interpreter:ast/entities/index";
 import { TypeKind } from "unwritten:interpreter/enums/type";
 import { compile } from "unwritten:tests:utils/compile";
@@ -6,7 +8,6 @@ import { isExportAssignmentEntity } from "unwritten:typeguards/entities";
 import { isJSDocText } from "unwritten:typeguards/jsdoc";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
-import { expect, it } from "vitest";
 
 
 scope("Interpreter", "Export assignment", () => {

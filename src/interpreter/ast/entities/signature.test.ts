@@ -1,3 +1,5 @@
+import { expect, it } from "vitest";
+
 import { createClassEntity, createFunctionEntity } from "unwritten:interpreter:ast/entities/index";
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { TypeKind } from "unwritten:interpreter/enums/type";
@@ -6,7 +8,6 @@ import { scope } from "unwritten:tests:utils/scope";
 import { isJSDocText } from "unwritten:typeguards/jsdoc";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
-import { expect, it } from "vitest";
 
 import { createInterfaceEntity } from "./interface";
 

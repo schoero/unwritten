@@ -1,3 +1,5 @@
+import { assert, expect, it } from "vitest";
+
 import {
   createFunctionEntity,
   createTypeAliasEntity,
@@ -11,7 +13,6 @@ import { compile } from "unwritten:tests:utils/compile";
 import { scope } from "unwritten:tests:utils/scope";
 import { isTypeQueryType } from "unwritten:typeguards/types";
 import { ts } from "unwritten:utils/template";
-import { assert, expect, it } from "vitest";
 
 
 scope("MarkupRenderer", TypeKind.TypeQuery, () => {

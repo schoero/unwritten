@@ -21,6 +21,7 @@ import { TypeKind } from "unwritten:interpreter/enums/type";
 import { isSymbolExcluded } from "unwritten:utils/exclude";
 
 import type { ObjectType as TSObjectType } from "typescript";
+
 import type { InferObjectLikeType, ObjectLikeTypeKind } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

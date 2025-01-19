@@ -5,6 +5,7 @@ import { withCachedType } from "unwritten:interpreter/utils/ts";
 import { assert } from "unwritten:utils:general";
 
 import type { Type } from "typescript";
+
 import type { AnyType } from "unwritten:interpreter:type-definitions/types";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

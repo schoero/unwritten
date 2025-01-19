@@ -4,6 +4,7 @@ import { getTypeByTypeNode } from "unwritten:interpreter/ast/type";
 import { JSDocKind } from "unwritten:interpreter/enums/jsdoc";
 
 import type { JSDocTypeExpression } from "typescript";
+
 import type { JSDocType } from "unwritten:interpreter:type-definitions/jsdoc";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 

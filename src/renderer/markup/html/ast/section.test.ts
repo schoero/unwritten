@@ -1,10 +1,11 @@
+import { expect, it } from "vitest";
+
 import { EntityKind } from "unwritten:interpreter/enums/entity";
 import { getSectionType } from "unwritten:renderer:markup/types-definitions/sections";
 import { createParagraphNode, createSectionNode } from "unwritten:renderer:markup/utils/nodes";
 import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { html } from "unwritten:utils/template";
-import { expect, it } from "vitest";
 
 import { renderSectionNode } from "./section";
 

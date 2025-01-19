@@ -1,4 +1,5 @@
 import type { Declaration, Node, Symbol, Type } from "typescript";
+
 import type { Position } from "unwritten:interpreter:type-definitions/shared";
 import type { InterpreterContext } from "unwritten:type-definitions/context";
 
