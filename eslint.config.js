@@ -48,8 +48,6 @@ export default [
       "eslint-plugin-vitest": eslintPluginVitest
     },
     rules: {
-      "eslint-plugin-typescript/no-base-to-string": "off",
-
       "eslint-plugin-typescript/no-duplicate-type-constituents": "off",
       "eslint-plugin-typescript/no-restricted-imports": ["error", {
         patterns: [
