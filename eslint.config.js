@@ -1,8 +1,7 @@
 import sharedRules from "@schoero/configs/eslint";
 import eslintPluginTypeScript from "@typescript-eslint/eslint-plugin";
+import eslintPluginVitest from "@vitest/eslint-plugin";
 import eslintPluginJsonc from "eslint-plugin-jsonc";
-import eslintPluginSortExports from "eslint-plugin-sort-exports";
-import eslintPluginVitest from "eslint-plugin-vitest";
 
 
 const indexImports = [
@@ -65,19 +64,6 @@ export default [
     },
     rules: {
       "eslint-plugin-jsonc/sort-keys": "off"
-    }
-  },
-  {
-    files: [
-      "**/typeguards/*.ts",
-      "**/utils/*.ts",
-      "**/interpreter/shared/jsdoc.ts"
-    ],
-    plugins: {
-      "eslint-plugin-sort-exports": eslintPluginSortExports
-    },
-    rules: {
-      "eslint-plugin-sort-exports/sort-exports": ["warn", { sortDir: "asc" }]
     }
   },
   {

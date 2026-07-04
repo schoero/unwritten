@@ -3,10 +3,10 @@ import shebang from "rollup-plugin-preserve-shebang";
 import dts from "vite-plugin-dts";
 import noBundlePlugin from "vite-plugin-no-bundle";
 
-import type { UserConfig } from "vitest";
+import type { RuntimeConfig } from "vitest";
 
 
-export default defineConfig(<UserConfig>{
+export default defineConfig(<RuntimeConfig>{
   ...config,
   build: {
     emptyOutDir: true,
