@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.2.15
+
+[compare changes](https://github.com/schoero/unwritten/compare/v0.2.13...v0.2.15)
+
+### Fixes
+
+- Ignore `.` prefixed directories in path ([efc2168](https://github.com/schoero/unwritten/commit/efc2168))
+
 ## v0.2.14
 
 [compare changes](https://github.com/schoero/unwritten/compare/v0.2.13...v0.2.14)
