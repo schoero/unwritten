@@ -46,13 +46,13 @@ export const createInterfaceEntity = (ctx: InterpreterContext, symbol: Symbol): 
   const kind = EntityKind.Interface;
 
   if(declarations.length === 1){
-    return <InterfaceEntity>{
+    return {
       ...declarations[0],
       kind,
       name,
       symbolId,
       typeId
-    };
+    } satisfies InterfaceEntity;
   } else {
 
     const properties = mergeMembers(declarations, "properties");

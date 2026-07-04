@@ -1,8 +1,8 @@
 interface Dependencies {
+  separator: string;
   cwd: () => string;
   homeDirectory: () => string;
   isAbsolute: (path: string) => boolean;
-  separator: string;
 }
 
 const path = {

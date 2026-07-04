@@ -28,13 +28,13 @@ export const createEnumEntity = (ctx: InterpreterContext, symbol: Symbol): EnumE
   const members = mergeMembers(fromDeclarations);
 
   if(fromDeclarations.length === 1){
-    return <EnumEntity>{
+    return {
       ...fromDeclarations[0],
       kind,
       members,
       name,
       symbolId
-    };
+    } satisfies EnumEntity;
   } else {
     return <MergedEnumEntity>{
       declarations: fromDeclarations,

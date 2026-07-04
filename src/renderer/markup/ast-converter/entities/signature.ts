@@ -182,13 +182,13 @@ function convertSignature(ctx: MarkupRenderContext, signatureEntity: SignatureEn
   const name = signatureEntity.name;
   const withRenderContext = isRenderParentNamesEnabled(ctx, target);
   const nameWithContext =
-  name === "constructor"
-    ? withRenderContext
-      ? `new ${renderMemberContext(ctx, target)}`
-      : ctx.memberContext.length > 0
-        ? `new ${ctx.memberContext.at(-1)}`
-        : name
-    : renderMemberContext(ctx, target, name);
+    name === "constructor"
+      ? withRenderContext
+        ? `new ${renderMemberContext(ctx, target)}`
+        : ctx.memberContext.length > 0
+          ? `new ${ctx.memberContext.at(-1)}`
+          : name
+      : renderMemberContext(ctx, target, name);
 
 
   const convertedTypeParameters = signatureEntity.typeParameters && signatureEntity.typeParameters.length > 0 &&

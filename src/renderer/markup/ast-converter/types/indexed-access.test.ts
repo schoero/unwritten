@@ -8,8 +8,6 @@ import { createRenderContext } from "unwritten:tests:utils/context";
 import { scope } from "unwritten:tests:utils/scope";
 import { ts } from "unwritten:utils/template";
 
-import type { IndexedAccessType } from "unwritten:interpreter:type-definitions/types";
-
 
 scope("MarkupRenderer", TypeKind.IndexedAccess, () => {
 
@@ -28,7 +26,7 @@ scope("MarkupRenderer", TypeKind.IndexedAccess, () => {
     const type = typeAliasEntity.type;
     const ctx = createRenderContext();
 
-    const { inlineType, multilineType } = convertType(ctx, type as IndexedAccessType);
+    const { inlineType, multilineType } = convertType(ctx, type);
 
     it("should render the resulting type", () => {
       expect(inlineType).toBe("string");

@@ -39,7 +39,7 @@ scope("Renderer", "utils", () => {
       const interfaceEntity = createInterfaceEntity(compilerContext, symbol);
 
       it("should inherit properties from parent interface", () => {
-        const extendedInterfaceProperties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity as InterfaceEntity);
+        const extendedInterfaceProperties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity);
         expect(extendedInterfaceProperties).toHaveLength(2);
         expect(extendedInterfaceProperties[0].name).toBe("propA");
         expect(extendedInterfaceProperties[1].name).toBe("propB");
@@ -73,7 +73,7 @@ scope("Renderer", "utils", () => {
       const interfaceEntity = createInterfaceEntity(compilerContext, symbol);
 
       it("should override properties from parent interface", () => {
-        const extendedInterfaceProperties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity as InterfaceEntity);
+        const extendedInterfaceProperties = extendInterfaceEntityPropertiesWithHeritage(interfaceEntity);
         expect(extendedInterfaceProperties).toHaveLength(1);
         expect(extendedInterfaceProperties[0].name).toBe("prop");
         expect(extendedInterfaceProperties[0].type.kind).toBe(TypeKind.String);

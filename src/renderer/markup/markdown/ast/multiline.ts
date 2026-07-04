@@ -42,9 +42,9 @@ export function renderMultilineArray(ctx: MarkdownRenderContext, children: ASTNo
 
       // render indentation for all children except empty lines
       const renderedNodeWithIndentation =
-      startsWithEmptyLine(ctx, renderedNodeWithoutDoubleEmptyLines)
-        ? renderedNodeWithoutDoubleEmptyLines
-        : renderWithIndentation(ctx, renderedNodeWithoutDoubleEmptyLines);
+        startsWithEmptyLine(ctx, renderedNodeWithoutDoubleEmptyLines)
+          ? renderedNodeWithoutDoubleEmptyLines
+          : renderWithIndentation(ctx, renderedNodeWithoutDoubleEmptyLines);
 
       acc.push(renderedNodeWithIndentation);
 

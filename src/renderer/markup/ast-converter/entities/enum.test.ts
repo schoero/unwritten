@@ -14,8 +14,6 @@ import { scope } from "unwritten:tests:utils/scope";
 import { assert } from "unwritten:utils/general";
 import { ts } from "unwritten:utils/template";
 
-import type { EnumEntity } from "unwritten:interpreter:type-definitions/entities";
-
 
 scope("MarkupRenderer", EntityKind.Enum, () => {
 
@@ -48,8 +46,8 @@ scope("MarkupRenderer", EntityKind.Enum, () => {
     const enumEntity = createEnumEntity(compilerContext, symbol);
     const ctx = createRenderContext();
 
-    const convertedEnumEntityForTableOfContents = convertEnumEntityForTableOfContents(ctx, enumEntity as EnumEntity);
-    const convertedEnumEntityForDocumentation = convertEnumEntityForDocumentation(ctx, enumEntity as EnumEntity);
+    const convertedEnumEntityForTableOfContents = convertEnumEntityForTableOfContents(ctx, enumEntity);
+    const convertedEnumEntityForDocumentation = convertEnumEntityForDocumentation(ctx, enumEntity);
 
     const titleNode = convertedEnumEntityForDocumentation.title;
 

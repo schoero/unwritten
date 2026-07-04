@@ -129,7 +129,7 @@ export interface FunctionEntity extends FunctionLikeEntityBase<EntityKind.Functi
 }
 
 export interface SignatureEntity extends EntityBase<SignatureEntityKinds>, JSDocProperties {
-  returnType: Type & { description?: Description; } ;
+  returnType: Type & { description?: Description; };
   declarationId?: ID;
   modifiers?: Modifiers[];
   name?: Name;

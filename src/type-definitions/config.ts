@@ -37,12 +37,12 @@ export interface CompleteBrowserConfig extends Required<BrowserConfig> {
 export type CompleteConfig = CompleteBrowserConfig | CompleteNodeConfig;
 
 export interface CompleteRenderConfig {
-  [BuiltInRenderers.HTML]: Complete<HTMLRenderConfig>;
-  [BuiltInRenderers.JSON]: Complete<JSONRenderConfig>;
-  [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
   [key: string]: {
     [key: string]: any;
   };
+  [BuiltInRenderers.HTML]: Complete<HTMLRenderConfig>;
+  [BuiltInRenderers.JSON]: Complete<JSONRenderConfig>;
+  [BuiltInRenderers.Markdown]: Complete<MarkdownRenderConfig>;
 }
 
 export interface RenderConfig {

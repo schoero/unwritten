@@ -34,7 +34,7 @@ scope("MarkupRenderer", "JSDocTags", () => {
       ))
     );
 
-    expect(renderedJSDocTags.join("")).toBe(Object.values(jsdocTagNames).join(" "));
+    expect((renderedJSDocTags as string[]).join("")).toBe(Object.values(jsdocTagNames).join(" "));
 
   });
 

@@ -5,18 +5,18 @@ export type Platform = "browser" | "node";
 
 // os
 export interface OS {
-  homeDirectory: () => string;
   lineEndings: string;
+  homeDirectory: () => string;
 }
 
 // process
 export interface Process {
-  /** Returns the current working directory. */
-  cwd: () => string;
   env: {
     /** Enables verbose logging. */
     DEBUG?: string;
   };
+  /** Returns the current working directory. */
+  cwd: () => string;
 }
 
 // path
@@ -82,7 +82,7 @@ export type Logger = {
 // fs
 export type FileExtension = `.${string}`;
 export type FileName = `${string}${FileExtension}`;
-export type FilePath = `${Directory}${FileName}` | `${FileName}`;
+export type FilePath = `${Directory}${FileName}` | FileName;
 export type Directory = `${string}/`;
 
 export interface FileSystem {

@@ -7,16 +7,16 @@ import type { Renderer } from "unwritten:type-definitions/renderer";
 // Markup
 interface BaseMarkupRenderer extends Renderer {
   fileExtension: ".html" | ".md";
-  initializeContext(ctx: MarkupRenderContext): void;
   name: BuiltInRenderers.HTML | BuiltInRenderers.Markdown;
+  initializeContext(ctx: MarkupRenderContext): void;
 }
 
 interface BaseMarkupRenderContext {
   currentFile: SourceFile;
-  get indentation(): number;
-  set indentation(value: number);
   links: LinkRegistry;
   memberContext: string[];
+  get indentation(): number;
+  set indentation(value: number);
   get nesting(): number;
   set nesting(value: number);
   _indentation?: number;
