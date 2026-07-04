@@ -29,7 +29,7 @@ export function isExcluded(path: string, name: string = "*", excludedPaths: Inte
       const pathWithoutInverts = excludedPath.replace(/^!+/, "");
       const pathWithoutLeadingSlash = pathWithoutInverts.replace(/^\//, "");
       const prefixedPath = `**/${pathWithoutLeadingSlash}`;
-      const fileMatch = minimatch(path, prefixedPath);
+      const fileMatch = minimatch(path, prefixedPath, { dot: true });
 
       if(!fileMatch){
         return excludedFromPreviousFile;
